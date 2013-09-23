@@ -1,0 +1,15 @@
+AM_FCFLAGS  = $(FCLIBS)
+AM_LDFLAGS = $(top_builddir)/lib/libAPFEL.la -L$(shell lhapdf-config --libdir) -lLHAPDF
+
+noinst_PROGRAMS = Tabulation SumRules LHgridProduction
+Tabulation_SOURCES = Tabulation.f
+SumRules_SOURCES = SumRules.f
+LHgridProduction_SOURCES = LHgridProduction.f
+
+noinst_PROGRAMS += TabulationCxx SumRulesCxx LHgridProductionCxx Timing
+TabulationCxx_SOURCES = TabulationCxx.cc
+SumRulesCxx_SOURCES = SumRulesCxx.cc
+LHgridProductionCxx_SOURCES = LHgridProductionCxx.cc
+Timing_SOURCES = Timing.cc
+
+EXTRA_DIST = TabulationPython SumRulesPython LHgridProductionPython
