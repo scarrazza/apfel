@@ -43,8 +43,8 @@
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,80,3,1d-5)
-         call SetGridParameters(2,40,5,2d-1)
-         call SetGridParameters(3,20,5,8d-1)
+         call SetGridParameters(2,50,5,1d-1)
+         call SetGridParameters(3,40,5,8d-1)
       endif
 *
 *     Report of the evolution parameters and check consistency
