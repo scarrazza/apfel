@@ -78,7 +78,7 @@
          nfdn = 3
       endif
 *
-      e2sig = 2d0 * nc * ( nfup * e2u + nfdn * e2d )
+      e2sig = nc * ( nfup * e2u + nfdn * e2d )
 *
       etap = ( e2u + e2d ) / 2d0
       etam = ( e2u - e2d ) / 2d0
