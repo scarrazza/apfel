@@ -10,6 +10,9 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QFileDialog>
+#include <QStatusBar>
+#include <QStandardPaths>
+#include <QDebug>
 
 #include "apfelmainwindow.h"
 #include "ui_apfelmainwindow.h"
@@ -21,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
   thread(0)
 {
   ui->setupUi(this);
+
+  statusBar()->showMessage("APFEL: V. Bertone, S. Carrazza and J. Rojo (arXiv:1310.1394)");
 
   //center mainwindow position on desktop
   QDesktopWidget *desktop = QApplication::desktop();
@@ -72,8 +77,9 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::ThreadFinished()
 {
   ui->pushButton->setEnabled(true);
+  ui->pushButton_2->setEnabled(true);
 
-  QImage image("plot.png");
+  QImage image("apfelplot.svg");
 
   // plot to canvas
   QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
@@ -138,5 +144,20 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 
       ui->comboBox_2->setEnabled(true);
     }
+
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+  QString path;
+  path = QFileDialog::getSaveFileName(this,tr("Save as"),QStandardPaths::displayName(QStandardPaths::DesktopLocation),tr("*.eps (*.eps);;All files (*.*)"));
+
+  if(path != 0){
+      qDebug() << path;
+      thread->savecanvas(path.toStdString() + ".eps");
+    }
+
+
 
 }
