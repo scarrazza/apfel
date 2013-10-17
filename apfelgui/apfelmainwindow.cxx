@@ -21,7 +21,10 @@
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow),
-  thread(0)
+  thread(0),
+  thread2(0),
+  d(0),
+  d2(0)
 {
   ui->setupUi(this);
 
@@ -50,10 +53,18 @@ MainWindow::MainWindow(QWidget *parent) :
   move ( x, y );
 
   d = new QProgressDialog("Computing, please wait...", "", 0, 10, this);
+  d->setWindowTitle("Please wait");
   d->setModal(true);
   d->setCancelButton(0);
-  thread = new apfelthread(this,ui,d);
+  thread  = new apfelthread(this,ui,d,0);
+
+  d2 = new QProgressDialog("Computing, please wait...", "", 0, 500, this);
+  d2->setWindowTitle("Please wait");
+  d2->setModal(true);
+  d2->setCancelButton(0);
+  thread2 = new apfelthread(this,ui,d2,1);
   connect(thread, SIGNAL(finished()), this, SLOT(ThreadFinished()));
+  connect(thread2, SIGNAL(finished()), this, SLOT(Thread2Finished()));
 
 }
 
@@ -65,7 +76,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-  ui->pushButton->setEnabled(false);
+  ui->pushButton->setEnabled(false);  
 
   d->setValue(1);
   d->show();
@@ -89,6 +100,23 @@ void MainWindow::ThreadFinished()
   ui->graphicsView->show();
 
   d->setValue(10);
+}
+
+void MainWindow::Thread2Finished()
+{
+  ui->pushButton_3->setEnabled(true);
+  ui->pushButton_4->setEnabled(true);
+
+  QImage image("apfelplot2.svg");
+
+  // plot to canvas
+  QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView_2);
+  QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
+  scene->addItem(item);
+  ui->graphicsView_2->setScene(scene);
+  ui->graphicsView_2->show();
+
+  d2->setValue(4 + 5*ui->spinBox_5->value());
 }
 
 void MainWindow::on_comboBox_3_currentIndexChanged(int index)
@@ -153,11 +181,26 @@ void MainWindow::on_pushButton_2_clicked()
   QString path;
   path = QFileDialog::getSaveFileName(this,tr("Save as"),QStandardPaths::displayName(QStandardPaths::DesktopLocation),tr("*.eps (*.eps);;All files (*.*)"));
 
-  if(path != 0){
-      qDebug() << path;
-      thread->savecanvas(path.toStdString() + ".eps");
-    }
+  if(path != 0) thread->savecanvas(path.toStdString() + ".eps");
+}
 
+void MainWindow::on_pushButton_3_clicked()
+{
+  ui->pushButton_3->setEnabled(false);
 
+  d2->setMaximum(4 + 5*ui->spinBox_5->value());
 
+  d2->setValue(1);
+  d2->show();
+  QApplication::processEvents();
+
+  thread2->start();
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+  QString path;
+  path = QFileDialog::getSaveFileName(this,tr("Save as"),QStandardPaths::displayName(QStandardPaths::DesktopLocation),tr("*.eps (*.eps);;All files (*.*)"));
+
+  if(path != 0) thread2->savecanvas(path.toStdString() + ".eps");
 }
