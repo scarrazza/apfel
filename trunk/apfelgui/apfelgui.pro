@@ -27,3 +27,6 @@ HEADERS  += apfelmainwindow.h \
     apfelthread.h
 
 FORMS    += apfelmainwindow.ui
+
+RESOURCES += \
+    resource.qrc

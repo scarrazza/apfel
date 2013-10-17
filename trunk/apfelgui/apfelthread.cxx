@@ -39,6 +39,11 @@ void apfelthread::run()
   // Initialize apfel
   APFEL::SetPerturbativeOrder(ui->comboBox_2->currentIndex());
 
+  APFEL::SetNumberOfGrids(3);
+  APFEL::SetGridParameters(1,150,3,1e-9);
+  APFEL::SetGridParameters(2,60,5,1e-1);
+  APFEL::SetGridParameters(3,20,5,8e-1);
+
   if (ui->comboBox_3->currentIndex() == 0)
     APFEL::SetVFNS();
   else
