@@ -65,6 +65,14 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      function flumi(i,j,S)
+      integer i,j      
+      double precision S,flumi
+      flumi = LUMI(i,j,S)
+      return
+      end
+
+ccccccccccccc      
       subroutine fsetalphaqcdref(alpharef,Qref)
       double precision alpharef,Qref      
       call SetAlphaQCDRef(alpharef,Qref)

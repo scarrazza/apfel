@@ -133,6 +133,10 @@ def Ngamma(*args):
   return _apfel.Ngamma(*args)
 Ngamma = _apfel.Ngamma
 
+def LUMI(*args):
+  return _apfel.LUMI(*args)
+LUMI = _apfel.LUMI
+
 def SetAlphaQCDRef(*args):
   return _apfel.SetAlphaQCDRef(*args)
 SetAlphaQCDRef = _apfel.SetAlphaQCDRef

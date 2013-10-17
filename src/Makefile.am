@@ -27,7 +27,7 @@ EVOLUTIONQED = EvolutionOperatorsQED.f IdentityOperatorsQED.f \
 
 PDF = PDFphys2evQCD.f PDFevQCD2phys.f PDFphys2evQED.f PDFevQED2phys.f \
 	EvolvePDFs.f switchGluonPhoton.f EvolveQCD.f EvolveQED.f toyLHPDFs.f \
-	xPDF.f xgamma.f NPDF.f Ngamma.f
+	xPDF.f xgamma.f NPDF.f Ngamma.f LUMI.f
 
 UTILITIES = dgauss.f wgplg.f ddilog.f
 
