@@ -37,8 +37,92 @@
       <property name="title">
        <string>APFEL Results:</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0" colspan="2">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="lineEdit_5">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;s&lt;span style=&quot; vertical-align:sub;&quot;&gt;v&lt;/span&gt; sum rule =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLineEdit" name="lineEdit_4">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="lineEdit_3">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;a&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;S &lt;/span&gt;(&lt;span style=&quot; font-family:'Symbol';&quot;&gt;m&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;F&lt;/span&gt;) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;a &lt;/span&gt;(&lt;span style=&quot; font-family:'Symbol';&quot;&gt;m&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;F&lt;/span&gt;) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;d&lt;span style=&quot; vertical-align:sub;&quot;&gt;v&lt;/span&gt; sum rule =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="lineEdit_7">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLineEdit" name="lineEdit_8">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Momentum sum rule = &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLineEdit" name="lineEdit_6">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;u&lt;span style=&quot; vertical-align:sub;&quot;&gt;v&lt;/span&gt; sum rule =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" colspan="4">
         <widget class="QTabWidget" name="tabWidget">
          <property name="minimumSize">
           <size>
@@ -53,92 +137,8 @@
           <attribute name="title">
            <string>Quark, Gluon and Photon PDFs</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_3">
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_10">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;a&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;S &lt;/span&gt;(&lt;span style=&quot; font-family:'Symbol';&quot;&gt;m&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;F&lt;/span&gt;) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="lineEdit_3">
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="label_11">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;a &lt;/span&gt;(&lt;span style=&quot; font-family:'Symbol';&quot;&gt;m&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;F&lt;/span&gt;) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="QLineEdit" name="lineEdit_4">
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_12">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Momentum sum rule = &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="lineEdit_5">
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="label_13">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;u&lt;span style=&quot; vertical-align:sub;&quot;&gt;v&lt;/span&gt; sum rule =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="3">
-            <widget class="QLineEdit" name="lineEdit_6">
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_14">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;d&lt;span style=&quot; vertical-align:sub;&quot;&gt;v&lt;/span&gt; sum rule =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="QLineEdit" name="lineEdit_7">
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="2">
-            <widget class="QLabel" name="label_15">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;s&lt;span style=&quot; vertical-align:sub;&quot;&gt;v&lt;/span&gt; sum rule =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="3">
-            <widget class="QLineEdit" name="lineEdit_8">
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="4">
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="0">
             <widget class="QGraphicsView" name="graphicsView">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -151,6 +151,13 @@
                <width>628</width>
                <height>499</height>
               </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_2">
+             <property name="text">
+              <string>Save Plot As</string>
              </property>
             </widget>
            </item>
@@ -167,13 +174,6 @@
        <string>APFEL Configuration</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_7">
-       <item row="1" column="0">
-        <widget class="QPushButton" name="pushButton">
-         <property name="text">
-          <string>Compute</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="0">
         <widget class="QTabWidget" name="tabWidget_2">
          <property name="currentIndex">
@@ -255,10 +255,30 @@
              </property>
             </widget>
            </item>
+           <item row="16" column="1">
+            <widget class="QSpinBox" name="spinBox_2">
+             <property name="minimum">
+              <number>3</number>
+             </property>
+             <property name="maximum">
+              <number>6</number>
+             </property>
+             <property name="value">
+              <number>6</number>
+             </property>
+            </widget>
+           </item>
            <item row="12" column="0">
             <widget class="QLabel" name="label_17">
              <property name="text">
               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Q&lt;span style=&quot; vertical-align:sub;&quot;&gt;ref&lt;/span&gt; (GeV) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Scheme:</string>
              </property>
             </widget>
            </item>
@@ -277,26 +297,6 @@
                <string>MSbar</string>
               </property>
              </item>
-            </widget>
-           </item>
-           <item row="16" column="1">
-            <widget class="QSpinBox" name="spinBox_2">
-             <property name="minimum">
-              <number>3</number>
-             </property>
-             <property name="maximum">
-              <number>6</number>
-             </property>
-             <property name="value">
-              <number>6</number>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_5">
-             <property name="text">
-              <string>Scheme:</string>
-             </property>
             </widget>
            </item>
            <item row="3" column="1">
@@ -350,6 +350,13 @@
              </property>
             </widget>
            </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Initial scale (GeV):</string>
+             </property>
+            </widget>
+           </item>
            <item row="17" column="0">
             <widget class="QLabel" name="label_25">
              <property name="text">
@@ -370,20 +377,6 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Initial scale (GeV):</string>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="0">
-            <widget class="QLabel" name="label_23">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;m&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;R &lt;/span&gt;/&lt;span style=&quot; vertical-align:sub;&quot;/&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;m&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;F&lt;/span&gt; =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
            <item row="15" column="1">
             <widget class="QDoubleSpinBox" name="doubleSpinBox_10">
              <property name="value">
@@ -398,17 +391,17 @@
              </property>
             </widget>
            </item>
+           <item row="15" column="0">
+            <widget class="QLabel" name="label_23">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;m&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;R &lt;/span&gt;/&lt;span style=&quot; vertical-align:sub;&quot;/&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;m&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;F&lt;/span&gt; =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
            <item row="16" column="0">
             <widget class="QLabel" name="label_24">
              <property name="text">
               <string>Max. Flavor PDFs:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="0">
-            <widget class="QLabel" name="label_22">
-             <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;m&lt;span style=&quot; vertical-align:sub;&quot;&gt;t&lt;/span&gt; (GeV) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -419,23 +412,10 @@
              </property>
             </widget>
            </item>
-           <item row="11" column="0">
-            <widget class="QLabel" name="label_16">
+           <item row="10" column="0">
+            <widget class="QLabel" name="label_22">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;a&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;S &lt;/span&gt;(Q&lt;span style=&quot; vertical-align:sub;&quot;&gt;ref&lt;/span&gt;) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1">
-            <widget class="QSpinBox" name="spinBox">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="minimum">
-              <number>3</number>
-             </property>
-             <property name="maximum">
-              <number>6</number>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;m&lt;span style=&quot; vertical-align:sub;&quot;&gt;t&lt;/span&gt; (GeV) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -453,6 +433,13 @@
              </item>
             </widget>
            </item>
+           <item row="11" column="0">
+            <widget class="QLabel" name="label_16">
+             <property name="text">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;a&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;S &lt;/span&gt;(Q&lt;span style=&quot; vertical-align:sub;&quot;&gt;ref&lt;/span&gt;) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="1">
             <widget class="QLineEdit" name="lineEdit_9">
              <property name="text">
@@ -460,10 +447,16 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="lineEdit_2">
-             <property name="text">
-              <string>1.4142135623731</string>
+           <item row="6" column="1">
+            <widget class="QSpinBox" name="spinBox">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimum">
+              <number>3</number>
+             </property>
+             <property name="maximum">
+              <number>6</number>
              </property>
             </widget>
            </item>
@@ -474,24 +467,17 @@
              </property>
             </widget>
            </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="lineEdit_2">
+             <property name="text">
+              <string>1.4142135623731</string>
+             </property>
+            </widget>
+           </item>
            <item row="9" column="1">
             <widget class="QLineEdit" name="lineEdit_11">
              <property name="text">
               <string>4.5</string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="1">
-            <widget class="QLineEdit" name="lineEdit_12">
-             <property name="text">
-              <string>175.0</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="1">
-            <widget class="QLineEdit" name="lineEdit_13">
-             <property name="text">
-              <string>0.350</string>
              </property>
             </widget>
            </item>
@@ -505,6 +491,13 @@
              </property>
             </widget>
            </item>
+           <item row="10" column="1">
+            <widget class="QLineEdit" name="lineEdit_12">
+             <property name="text">
+              <string>175.0</string>
+             </property>
+            </widget>
+           </item>
            <item row="13" column="1">
             <widget class="QLineEdit" name="lineEdit_15">
              <property name="enabled">
@@ -512,6 +505,13 @@
              </property>
              <property name="text">
               <string>0.007496252</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="1">
+            <widget class="QLineEdit" name="lineEdit_13">
+             <property name="text">
+              <string>0.350</string>
              </property>
             </widget>
            </item>
@@ -582,6 +582,13 @@
            </item>
           </layout>
          </widget>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Compute PDFs</string>
+         </property>
         </widget>
        </item>
       </layout>
