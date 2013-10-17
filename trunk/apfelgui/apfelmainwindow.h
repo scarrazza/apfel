@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 class apfelthread;
+class QProgressDialog;
 
 namespace Ui {
   class MainWindow;
@@ -20,9 +21,14 @@ private slots:
   void on_pushButton_clicked();
   void ThreadFinished();
 
+  void on_comboBox_3_currentIndexChanged(int index);
+
+  void on_comboBox_currentIndexChanged(int index);
+
 private:
   Ui::MainWindow *ui;
   apfelthread *thread;
+  QProgressDialog *d;
 };
 
 #endif // MAINWINDOW_H
