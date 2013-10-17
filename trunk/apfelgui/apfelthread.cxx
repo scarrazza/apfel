@@ -149,11 +149,11 @@ void apfelthread::run()
   cb->SetLineWidth(2);
   bb->SetLineWidth(2);
 
-  ub->SetLineStyle(2);
-  db->SetLineStyle(2);
-  sb->SetLineStyle(2);
-  cb->SetLineStyle(2);
-  bb->SetLineStyle(2);
+  ub->SetLineStyle(7);
+  db->SetLineStyle(7);
+  sb->SetLineStyle(7);
+  cb->SetLineStyle(7);
+  bb->SetLineStyle(7);
 
   g->SetLineColor(kRed);
   u->SetLineColor(kBlue);
@@ -218,5 +218,8 @@ void apfelthread::run()
   leg->Draw("same");
 
   C->SaveAs("plot.png");
+
+  C->SaveAs("plot.root");
+
 
 }

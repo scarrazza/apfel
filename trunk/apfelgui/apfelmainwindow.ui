@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1041</width>
+    <width>1043</width>
     <height>728</height>
    </rect>
   </property>
@@ -141,6 +141,12 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>628</width>
+               <height>499</height>
+              </size>
              </property>
             </widget>
            </item>
@@ -487,6 +493,9 @@
            </item>
            <item row="12" column="1">
             <widget class="QLineEdit" name="lineEdit_14">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>1.4142135623731</string>
              </property>
@@ -494,6 +503,9 @@
            </item>
            <item row="13" column="1">
             <widget class="QLineEdit" name="lineEdit_15">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="text">
               <string>0.007496252</string>
              </property>
@@ -581,7 +593,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1041</width>
+     <width>1043</width>
      <height>25</height>
     </rect>
    </property>
