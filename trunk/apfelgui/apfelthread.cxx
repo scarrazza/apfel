@@ -149,11 +149,11 @@ void apfelthread::run()
   cb->SetLineWidth(2);
   bb->SetLineWidth(2);
 
-  ub->SetLineStyle(7);
-  db->SetLineStyle(7);
-  sb->SetLineStyle(7);
-  cb->SetLineStyle(7);
-  bb->SetLineStyle(7);
+  ub->SetLineStyle(2);
+  db->SetLineStyle(2);
+  sb->SetLineStyle(2);
+  cb->SetLineStyle(2);
+  bb->SetLineStyle(2);
 
   g->SetLineColor(kRed);
   u->SetLineColor(kBlue);
@@ -173,7 +173,6 @@ void apfelthread::run()
                         + ", Q = " + QString::number(ui->lineEdit_9->text().toDouble(),'g',1).toStdString() + " GeV") );
 
   mg->Add(p,"l");
-
   mg->Add(g,"l");
   mg->Add(u,"l");
   mg->Add(d,"l");
@@ -218,8 +217,4 @@ void apfelthread::run()
   leg->Draw("same");
 
   C->SaveAs("plot.png");
-
-  C->SaveAs("plot.root");
-
-
 }

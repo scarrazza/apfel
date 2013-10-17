@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1043</width>
-    <height>728</height>
+    <height>729</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -67,7 +67,7 @@
            <item row="1" column="2">
             <widget class="QLabel" name="label_11">
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;a&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;/&gt;(&lt;span style=&quot; font-family:'Symbol';&quot;&gt;m&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;F&lt;/span&gt;) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'Symbol';&quot;&gt;a &lt;/span&gt;(&lt;span style=&quot; font-family:'Symbol';&quot;&gt;m&lt;/span&gt;&lt;span style=&quot; vertical-align:sub;&quot;&gt;F&lt;/span&gt;) =&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
