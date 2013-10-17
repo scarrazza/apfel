@@ -47,6 +47,9 @@ namespace APFEL {
   /// Returns the N-th Mellin moment of the photon PDF 
   /// in the physical basis at the final scale
   double Ngamma(int N);
+
+  /// Returns the Luminosity 
+  double LUMI(int i, int j, double S);
   
   /*
    * Set Methods
@@ -101,6 +104,8 @@ namespace APFEL {
   
   /// Set the VFNS as a default
   void SetVFNS(void);
+
+  
 
 }
 

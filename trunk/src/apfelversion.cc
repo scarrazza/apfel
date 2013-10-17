@@ -6,7 +6,7 @@
 using namespace std;
 
 #ifndef APFEL_VERSION
-#define APFEL_VERSION "1.0.0"
+#define APFEL_VERSION "1.0.1"
 #endif
 
 

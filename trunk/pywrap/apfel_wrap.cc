@@ -4664,6 +4664,46 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_LUMI(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int arg2 ;
+  double arg3 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:LUMI",&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "LUMI" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LUMI" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "LUMI" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  result = (double)APFEL::LUMI(arg1,arg2,arg3);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_SetAlphaQCDRef(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
@@ -5124,6 +5164,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AlphaQED", _wrap_AlphaQED, METH_VARARGS, NULL},
 	 { (char *)"NPDF", _wrap_NPDF, METH_VARARGS, NULL},
 	 { (char *)"Ngamma", _wrap_Ngamma, METH_VARARGS, NULL},
+	 { (char *)"LUMI", _wrap_LUMI, METH_VARARGS, NULL},
 	 { (char *)"SetAlphaQCDRef", _wrap_SetAlphaQCDRef, METH_VARARGS, NULL},
 	 { (char *)"SetAlphaQEDRef", _wrap_SetAlphaQEDRef, METH_VARARGS, NULL},
 	 { (char *)"SetQLimits", _wrap_SetQLimits, METH_VARARGS, NULL},

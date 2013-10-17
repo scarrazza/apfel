@@ -59,6 +59,11 @@ namespace APFEL {
     return fngamma(&N);
   }
 
+  double LUMI(int i, int j, double S)
+  {
+    return flumi(&i,&j,&S);
+  }
+
   void SetAlphaQCDRef(double alpharef, double Qref)
   {
     fsetalphaqcdref(&alpharef,&Qref);

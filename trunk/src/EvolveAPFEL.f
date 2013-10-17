@@ -24,6 +24,8 @@
 *
       Q20 = Q0 * Q0
       Q2  = Q * Q
+      Q2ini = Q20
+      Q2fin = Q2
 *
       if(Q20.lt.Q2min.or.Q20.gt.Q2max)then
          write(6,*) "Initial Energy out of range:"

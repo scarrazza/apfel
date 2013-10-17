@@ -92,7 +92,7 @@ am__objects_7 = EvolutionOperatorsQED.lo IdentityOperatorsQED.lo \
 am__objects_8 = PDFphys2evQCD.lo PDFevQCD2phys.lo PDFphys2evQED.lo \
 	PDFevQED2phys.lo EvolvePDFs.lo switchGluonPhoton.lo \
 	EvolveQCD.lo EvolveQED.lo toyLHPDFs.lo xPDF.lo xgamma.lo \
-	NPDF.lo Ngamma.lo
+	NPDF.lo Ngamma.lo LUMI.lo
 am__objects_9 = dgauss.lo wgplg.lo ddilog.lo
 am_libAPFELCore_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
@@ -287,7 +287,7 @@ EVOLUTIONQED = EvolutionOperatorsQED.f IdentityOperatorsQED.f \
 
 PDF = PDFphys2evQCD.f PDFevQCD2phys.f PDFphys2evQED.f PDFevQED2phys.f \
 	EvolvePDFs.f switchGluonPhoton.f EvolveQCD.f EvolveQED.f toyLHPDFs.f \
-	xPDF.f xgamma.f NPDF.f Ngamma.f
+	xPDF.f xgamma.f NPDF.f Ngamma.f LUMI.f
 
 UTILITIES = dgauss.f wgplg.f ddilog.f
 libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) \

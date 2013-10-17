@@ -52,8 +52,9 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 noinst_PROGRAMS = Tabulation$(EXEEXT) SumRules$(EXEEXT) \
-	LHgridProduction$(EXEEXT) TabulationCxx$(EXEEXT) \
-	SumRulesCxx$(EXEEXT) LHgridProductionCxx$(EXEEXT) \
+	LHgridProduction$(EXEEXT) Luminosity$(EXEEXT) \
+	TabulationCxx$(EXEEXT) SumRulesCxx$(EXEEXT) \
+	LHgridProductionCxx$(EXEEXT) LuminosityCxx$(EXEEXT) \
 	Timing$(EXEEXT)
 subdir = examples
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
@@ -77,6 +78,12 @@ LHgridProduction_LDADD = $(LDADD)
 am_LHgridProductionCxx_OBJECTS = LHgridProductionCxx.$(OBJEXT)
 LHgridProductionCxx_OBJECTS = $(am_LHgridProductionCxx_OBJECTS)
 LHgridProductionCxx_LDADD = $(LDADD)
+am_Luminosity_OBJECTS = Luminosity.$(OBJEXT)
+Luminosity_OBJECTS = $(am_Luminosity_OBJECTS)
+Luminosity_LDADD = $(LDADD)
+am_LuminosityCxx_OBJECTS = LuminosityCxx.$(OBJEXT)
+LuminosityCxx_OBJECTS = $(am_LuminosityCxx_OBJECTS)
+LuminosityCxx_LDADD = $(LDADD)
 am_SumRules_OBJECTS = SumRules.$(OBJEXT)
 SumRules_OBJECTS = $(am_SumRules_OBJECTS)
 SumRules_LDADD = $(LDADD)
@@ -112,11 +119,13 @@ F77LD = $(F77)
 F77LINK = $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link \
 	$(F77LD) $(AM_FFLAGS) $(FFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 SOURCES = $(LHgridProduction_SOURCES) $(LHgridProductionCxx_SOURCES) \
+	$(Luminosity_SOURCES) $(LuminosityCxx_SOURCES) \
 	$(SumRules_SOURCES) $(SumRulesCxx_SOURCES) \
 	$(Tabulation_SOURCES) $(TabulationCxx_SOURCES) \
 	$(Timing_SOURCES)
 DIST_SOURCES = $(LHgridProduction_SOURCES) \
-	$(LHgridProductionCxx_SOURCES) $(SumRules_SOURCES) \
+	$(LHgridProductionCxx_SOURCES) $(Luminosity_SOURCES) \
+	$(LuminosityCxx_SOURCES) $(SumRules_SOURCES) \
 	$(SumRulesCxx_SOURCES) $(Tabulation_SOURCES) \
 	$(TabulationCxx_SOURCES) $(Timing_SOURCES)
 am__can_run_installinfo = \
@@ -266,11 +275,13 @@ AM_LDFLAGS = $(top_builddir)/lib/libAPFEL.la -L$(shell lhapdf-config --libdir) -
 Tabulation_SOURCES = Tabulation.f
 SumRules_SOURCES = SumRules.f
 LHgridProduction_SOURCES = LHgridProduction.f
+Luminosity_SOURCES = Luminosity.f
 TabulationCxx_SOURCES = TabulationCxx.cc
 SumRulesCxx_SOURCES = SumRulesCxx.cc
 LHgridProductionCxx_SOURCES = LHgridProductionCxx.cc
 Timing_SOURCES = Timing.cc
-EXTRA_DIST = TabulationPython SumRulesPython LHgridProductionPython
+LuminosityCxx_SOURCES = LuminosityCxx.cc
+EXTRA_DIST = TabulationPython SumRulesPython LHgridProductionPython LuminosityPython
 all: all-am
 
 .SUFFIXES:
@@ -320,6 +331,12 @@ LHgridProduction$(EXEEXT): $(LHgridProduction_OBJECTS) $(LHgridProduction_DEPEND
 LHgridProductionCxx$(EXEEXT): $(LHgridProductionCxx_OBJECTS) $(LHgridProductionCxx_DEPENDENCIES) $(EXTRA_LHgridProductionCxx_DEPENDENCIES) 
 	@rm -f LHgridProductionCxx$(EXEEXT)
 	$(CXXLINK) $(LHgridProductionCxx_OBJECTS) $(LHgridProductionCxx_LDADD) $(LIBS)
+Luminosity$(EXEEXT): $(Luminosity_OBJECTS) $(Luminosity_DEPENDENCIES) $(EXTRA_Luminosity_DEPENDENCIES) 
+	@rm -f Luminosity$(EXEEXT)
+	$(F77LINK) $(Luminosity_OBJECTS) $(Luminosity_LDADD) $(LIBS)
+LuminosityCxx$(EXEEXT): $(LuminosityCxx_OBJECTS) $(LuminosityCxx_DEPENDENCIES) $(EXTRA_LuminosityCxx_DEPENDENCIES) 
+	@rm -f LuminosityCxx$(EXEEXT)
+	$(CXXLINK) $(LuminosityCxx_OBJECTS) $(LuminosityCxx_LDADD) $(LIBS)
 SumRules$(EXEEXT): $(SumRules_OBJECTS) $(SumRules_DEPENDENCIES) $(EXTRA_SumRules_DEPENDENCIES) 
 	@rm -f SumRules$(EXEEXT)
 	$(F77LINK) $(SumRules_OBJECTS) $(SumRules_LDADD) $(LIBS)
@@ -343,6 +360,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LHgridProductionCxx.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LuminosityCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SumRulesCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TabulationCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Timing.Po@am__quote@
