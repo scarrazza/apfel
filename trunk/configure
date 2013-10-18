@@ -2368,10 +2368,10 @@ ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $
 ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
-#if test "$prefix" = "$PWD"; then
-#  AC_MSG_ERROR([Installation into the build directory is not supported:\
-# use a different --prefix argument])
-#fi
+if test "$prefix" = "$PWD"; then
+  as_fn_error $? "Installation into the build directory is not supported:\
+ use a different --prefix argument" "$LINENO" 5
+fi
 ac_aux_dir=
 for ac_dir in config "$srcdir"/config; do
   if test -f "$ac_dir/install-sh"; then
@@ -19641,7 +19641,8 @@ ac_config_files="$ac_config_files pywrap/Makefile pywrap/setup.py"
 
 ac_config_files="$ac_config_files doc/Makefile"
 
-#AC_CONFIG_FILES([bin/Makefile bin/lhapdf-config])
+ac_config_files="$ac_config_files bin/Makefile bin/apfel-config"
+
 #AC_CONFIG_FILES([tests/Makefile])
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -20856,6 +20857,8 @@ do
     "pywrap/Makefile") CONFIG_FILES="$CONFIG_FILES pywrap/Makefile" ;;
     "pywrap/setup.py") CONFIG_FILES="$CONFIG_FILES pywrap/setup.py" ;;
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
+    "bin/Makefile") CONFIG_FILES="$CONFIG_FILES bin/Makefile" ;;
+    "bin/apfel-config") CONFIG_FILES="$CONFIG_FILES bin/apfel-config" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

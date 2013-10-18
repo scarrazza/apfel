@@ -11,14 +11,12 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = apfelgui
 TEMPLATE = app
 
-# Add the following lines if apfel is installed in a custom location
-#INCLUDEPATH += /opt/apfel/include
-#LIBS += -L/opt/apfel/lib -lAPFEL
 
 INCLUDEPATH += $$system(root-config --incdir)
+INCLUDEPATH += $$system(apfel-config --incdir)
 INCLUDEPATH += include
 
-LIBS += -lAPFEL
+LIBS += $$system(apfel-config --ldflags)
 LIBS += $$system(lhapdf-config --ldflags)
 LIBS += $$system(root-config --glibs)
 
