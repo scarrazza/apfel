@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+using std::string;
 
 /**
  * @mainpage A C++ wrapper for the APFEL library
@@ -50,6 +51,9 @@ namespace APFEL {
 
   /// Returns the Luminosity 
   double LUMI(int i, int j, double S);
+
+  /// Get APFEL version
+  string GetVersion();
   
   /*
    * Set Methods
@@ -104,9 +108,6 @@ namespace APFEL {
   
   /// Set the VFNS as a default
   void SetVFNS(void);
-
-  
-
 }
 
 #endif

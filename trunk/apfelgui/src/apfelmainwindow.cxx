@@ -1,3 +1,21 @@
+/****************************************************************************
+*   APFEL GUI                                                               *
+*   Copyright (C) 2013- Stefano Carrazza. All rights reserved.              *
+*									    *
+*   This program is free software: you can redistribute it and/or modify    *
+*   it under the terms of the GNU General Public License as published by    *
+*   the Free Software Foundation, either version 3 of the License, or	    *
+*   (at your option) any later version.				            *
+*									    *
+*   This program is distributed in the hope that it will be useful,	    *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of	    *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the	    *
+*   GNU General Public License for more details.			    *
+*									    *
+*   You should have received a copy of the GNU General Public License	    *
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.   *
+*****************************************************************************/
+
 #include <QWidget>
 #include <QMessageBox>
 #include <QAction>
@@ -22,8 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
   ui(new Ui::MainWindow),
   thread(0),
   thread2(0),
-  d(0),
-  d2(0)
+  d(0)
 {
   ui->setupUi(this);
 
@@ -55,28 +72,29 @@ MainWindow::MainWindow(QWidget *parent) :
   d->setWindowTitle("Please wait");
   d->setModal(true);
   d->setCancelButton(0);
-  thread  = new apfelthread(this,ui,d,0);
 
-  d2 = new QProgressDialog("Computing, please wait...", "", 0, 500, this);
-  d2->setWindowTitle("Please wait");
-  d2->setModal(true);
-  d2->setCancelButton(0);
-  thread2 = new apfelthread(this,ui,d2,1);
+  thread  = new apfelthread(this,ui,0);
+  thread2 = new apfelthread(this,ui,1);
+
   connect(thread, SIGNAL(finished()), this, SLOT(ThreadFinished()));
   connect(thread2, SIGNAL(finished()), this, SLOT(Thread2Finished()));
 
+  connect(thread, SIGNAL(progress(int)), this, SLOT(ThreadProgress(int)));
+  connect(thread2, SIGNAL(progress()), this, SLOT(Thread2Progress()));
 }
 
 MainWindow::~MainWindow()
 {
   delete ui;
   delete thread;
+  delete thread2;
 }
 
 void MainWindow::on_pushButton_clicked()
 {
   ui->pushButton->setEnabled(false);  
 
+  d->setMaximum(10);
   d->setValue(1);
   d->show();
   QApplication::processEvents();
@@ -98,9 +116,26 @@ void MainWindow::ThreadFinished()
   ui->graphicsView->setScene(scene);
   ui->graphicsView->show();
 
-  d->setValue(10);
+  d->setValue(10);  
 
   QFile::remove("apfelplot.svg") ;
+
+  ui->lineEdit_3->setText(thread->getresult(0));
+  ui->lineEdit_4->setText(thread->getresult(1));
+  ui->lineEdit_5->setText(thread->getresult(2));
+  ui->lineEdit_6->setText(thread->getresult(3));
+  ui->lineEdit_7->setText(thread->getresult(4));
+  ui->lineEdit_8->setText(thread->getresult(5));
+}
+
+void MainWindow::ThreadProgress(int i)
+{
+  d->setValue(i);
+}
+
+void MainWindow::Thread2Progress()
+{
+  d->setValue(d->value()+1);
 }
 
 void MainWindow::Thread2Finished()
@@ -117,9 +152,16 @@ void MainWindow::Thread2Finished()
   ui->graphicsView_2->setScene(scene);
   ui->graphicsView_2->show();  
 
-  d2->setValue(4 + 10*ui->spinBox_5->value());
+  d->setValue(4 + 10*ui->spinBox_5->value());
 
   QFile::remove("apfelplot2.svg") ;
+
+  ui->lineEdit_3->setText(thread->getresult(0));
+  ui->lineEdit_4->setText(thread->getresult(1));
+  ui->lineEdit_5->setText(thread->getresult(2));
+  ui->lineEdit_6->setText(thread->getresult(3));
+  ui->lineEdit_7->setText(thread->getresult(4));
+  ui->lineEdit_8->setText(thread->getresult(5));
 }
 
 void MainWindow::on_comboBox_3_currentIndexChanged(int index)
@@ -191,10 +233,10 @@ void MainWindow::on_pushButton_3_clicked()
 {
   ui->pushButton_3->setEnabled(false);
 
-  d2->setMaximum(4 + 10*ui->spinBox_5->value());
+  d->setMaximum(4 + 10*ui->spinBox_5->value());
 
-  d2->setValue(1);
-  d2->show();
+  d->setValue(1);
+  d->show();
   QApplication::processEvents();
 
   thread2->start();

@@ -20,7 +20,7 @@
    <string>APFEL GUI</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="resource.qrc">
+   <iconset resource="../resources/resource.qrc">
     <normaloff>:/new/prefix1/logo.png</normaloff>:/new/prefix1/logo.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
@@ -177,7 +177,11 @@
               </sizepolicy>
              </property>
              <property name="styleSheet">
-              <string notr="true"/>
+              <string notr="true">background-image: url(:/new/prefix1/splash.png);
+background-repeat: no;
+background-position: center;
+background-color: rgb(255, 255, 255);
+</string>
              </property>
              <property name="dragMode">
               <enum>QGraphicsView::NoDrag</enum>
@@ -230,7 +234,11 @@
               </sizepolicy>
              </property>
              <property name="styleSheet">
-              <string notr="true"/>
+              <string notr="true">background-image: url(:/new/prefix1/splash.png);
+background-repeat: no;
+background-position: center;
+background-color: rgb(255, 255, 255);
+</string>
              </property>
              <property name="dragMode">
               <enum>QGraphicsView::NoDrag</enum>
@@ -757,7 +765,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="resource.qrc"/>
+  <include location="../resources/resource.qrc"/>
  </resources>
  <connections/>
 </ui>
