@@ -3,6 +3,8 @@
 #include <cstring>
 #include <cassert>
 
+#include <iostream>
+
 using namespace std;
 
 #ifndef APFEL_VERSION
@@ -14,8 +16,8 @@ extern "C" {
 
   #define fgetapfelversion FC_FUNC(getapfelversion, GETAPFELVERSION)
   void fgetapfelversion(char* fversion, int length) {
-    string version = APFEL_VERSION;
-    strncpy(fversion, version.c_str(), length);
+    string version = APFEL_VERSION;    
+    strncpy(fversion, version.c_str(), length);    
     for (size_t i = strlen(fversion); i < (unsigned) length; ++i) {
       fversion[i] = ' ';
     }

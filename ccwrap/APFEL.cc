@@ -64,11 +64,11 @@ namespace APFEL {
     return flumi(&i,&j,&S);
   }
 
-  string GetVersion()
-  {
-    char name[6];
-    fgetapfelversion(name,6);
-    return string(name);
+  char* GetVersion(void)
+  {    
+    char* apfelversion = new char[6];
+    fgetapfelversion(apfelversion,6);
+    return apfelversion;
   }
 
   void SetAlphaQCDRef(double alpharef, double Qref)

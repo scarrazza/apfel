@@ -19643,7 +19643,8 @@ ac_config_files="$ac_config_files doc/Makefile"
 
 ac_config_files="$ac_config_files bin/Makefile bin/apfel-config"
 
-#AC_CONFIG_FILES([tests/Makefile])
+ac_config_files="$ac_config_files apfelgui/Makefile"
+
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
 # tests run on this system so they can be shared between configure
@@ -20859,6 +20860,7 @@ do
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "bin/Makefile") CONFIG_FILES="$CONFIG_FILES bin/Makefile" ;;
     "bin/apfel-config") CONFIG_FILES="$CONFIG_FILES bin/apfel-config" ;;
+    "apfelgui/Makefile") CONFIG_FILES="$CONFIG_FILES apfelgui/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

@@ -181,5 +181,5 @@ AC_CONFIG_FILES([examples/Makefile])
 AC_CONFIG_FILES([pywrap/Makefile pywrap/setup.py])
 AC_CONFIG_FILES([doc/Makefile])
 AC_CONFIG_FILES([bin/Makefile bin/apfel-config])
-#AC_CONFIG_FILES([tests/Makefile])
+AC_CONFIG_FILES([apfelgui/Makefile])
 AC_OUTPUT
