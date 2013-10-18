@@ -115,7 +115,7 @@ void MainWindow::Thread2Finished()
   ui->graphicsView_2->setScene(scene);
   ui->graphicsView_2->show();
 
-  d2->setValue(4 + 5*ui->spinBox_5->value());
+  d2->setValue(4 + 9*ui->spinBox_5->value());
 }
 
 void MainWindow::on_comboBox_3_currentIndexChanged(int index)
@@ -187,7 +187,7 @@ void MainWindow::on_pushButton_3_clicked()
 {
   ui->pushButton_3->setEnabled(false);
 
-  d2->setMaximum(4 + 5*ui->spinBox_5->value());
+  d2->setMaximum(4 + 9*ui->spinBox_5->value());
 
   d2->setValue(1);
   d2->show();
