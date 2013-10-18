@@ -177,10 +177,7 @@
               </sizepolicy>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-image: url(:/new/prefix1/splash.png);
-background-repeat: no;
-background-position: center;
-background-color: rgb(255, 255, 255);
+              <string notr="true">
 </string>
              </property>
              <property name="dragMode">
