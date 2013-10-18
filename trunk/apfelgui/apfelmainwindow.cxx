@@ -199,7 +199,7 @@ void MainWindow::on_pushButton_3_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
   QString path;
-  path = QFileDialog::getSaveFileName(this,tr("Save as"),QStandardPaths::displayName(QStandardPaths::DesktopLocation),tr("*.eps (*.eps);;All files (*.*)"));
+  path = QFileDialog::getSaveFileName(this,tr("Save as"),"",tr("*.eps (*.eps);;All files (*.*)"));
 
   if(path != 0) thread2->savecanvas(path.toStdString() + ".eps");
 }
