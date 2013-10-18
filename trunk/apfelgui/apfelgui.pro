@@ -23,7 +23,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = apfelgui
 TEMPLATE = app
 
-
 INCLUDEPATH += $$system(root-config --incdir)
 INCLUDEPATH += $$system(apfel-config --incdir)
 INCLUDEPATH += include

@@ -176,6 +176,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="minimumSize">
+              <size>
+               <width>628</width>
+               <height>433</height>
+              </size>
+             </property>
              <property name="styleSheet">
               <string notr="true">background-image: url(:/new/prefix1/splash.png);
 background-repeat: no;

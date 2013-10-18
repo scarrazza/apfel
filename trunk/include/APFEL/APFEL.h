@@ -53,7 +53,7 @@ namespace APFEL {
   double LUMI(int i, int j, double S);
 
   /// Get APFEL version
-  string GetVersion();
+  char* GetVersion(void);
   
   /*
    * Set Methods
