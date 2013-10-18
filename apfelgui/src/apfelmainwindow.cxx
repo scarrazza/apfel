@@ -34,6 +34,7 @@
 #include "apfelmainwindow.h"
 #include "ui_apfelmainwindow.h"
 #include "apfelthread.h"
+#include "APFEL/APFEL.h"
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -44,7 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  statusBar()->showMessage("APFEL: V. Bertone, S. Carrazza and J. Rojo (arXiv:1310.1394)");
+  QString version(APFEL::GetVersion().c_str());
+  statusBar()->showMessage(QString("APFEL") + version + QString(": V. Bertone, S. Carrazza and J. Rojo (arXiv:1310.1394)"));
 
   //center mainwindow position on desktop
   QDesktopWidget *desktop = QApplication::desktop();
