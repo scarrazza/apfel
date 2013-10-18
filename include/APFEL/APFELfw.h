@@ -34,7 +34,7 @@ extern "C" {
 #define fngamma FC_FUNC(ngamma,NGAMMA)
   double fngamma(int*);
 
-#define flumi FC_FUNC(lumi,NPDF)
+#define flumi FC_FUNC(lumi,LUMI)
   double flumi(int*,int*,double*);
 
 #define fsetalphaqcdref FC_FUNC(setalphaqcdref, SETALPHAQCDREF)

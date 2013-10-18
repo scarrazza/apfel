@@ -64,6 +64,13 @@ namespace APFEL {
     return flumi(&i,&j,&S);
   }
 
+  string GetVersion()
+  {
+    char name[6];
+    fgetapfelversion(name,6);
+    return string(name);
+  }
+
   void SetAlphaQCDRef(double alpharef, double Qref)
   {
     fsetalphaqcdref(&alpharef,&Qref);
