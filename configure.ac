@@ -1,9 +1,9 @@
 AC_PREREQ(2.61)
 AC_INIT([APFEL],[1.0.1],[stefano.carrazza@mi.infn.it],[apfel])
-#if test "$prefix" = "$PWD"; then
-#  AC_MSG_ERROR([Installation into the build directory is not supported:\
-# use a different --prefix argument])
-#fi
+if test "$prefix" = "$PWD"; then
+  AC_MSG_ERROR([Installation into the build directory is not supported:\
+ use a different --prefix argument])
+fi
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE()
@@ -180,6 +180,6 @@ AC_CONFIG_FILES([lib/Makefile])
 AC_CONFIG_FILES([examples/Makefile])
 AC_CONFIG_FILES([pywrap/Makefile pywrap/setup.py])
 AC_CONFIG_FILES([doc/Makefile])
-#AC_CONFIG_FILES([bin/Makefile bin/lhapdf-config])
+AC_CONFIG_FILES([bin/Makefile bin/apfel-config])
 #AC_CONFIG_FILES([tests/Makefile])
 AC_OUTPUT
