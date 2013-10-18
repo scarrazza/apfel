@@ -120,7 +120,7 @@ void MainWindow::ThreadFinished()
 
   d->setValue(10);  
 
-  QFile::remove("apfelplot.svg") ;
+  //QFile::remove("apfelplot.svg") ;
 
   ui->lineEdit_3->setText(thread->getresult(0));
   ui->lineEdit_4->setText(thread->getresult(1));
@@ -156,7 +156,7 @@ void MainWindow::Thread2Finished()
 
   d->setValue(4 + 10*ui->spinBox_5->value());
 
-  QFile::remove("apfelplot2.svg") ;
+  //QFile::remove("apfelplot2.svg") ;
 
   ui->lineEdit_3->setText(thread->getresult(0));
   ui->lineEdit_4->setText(thread->getresult(1));
