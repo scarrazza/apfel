@@ -188,7 +188,7 @@ void apfelthread::run()
 
       TMultiGraph *mg = new TMultiGraph();
       mg->SetTitle( "APFEL: " + TString(ui->comboBox->currentText().toStdString() + " evolution @ " + ui->comboBox_2->currentText().toStdString()
-                            + ", " + ui->comboBox_3->currentText().toStdString() + ", Q = " + QString::number(ui->lineEdit_9->text().toDouble(),'g',1).toStdString() + " GeV") );
+                            + ", " + ui->comboBox_3->currentText().toStdString() + ", Q = " + QString::number(ui->lineEdit_9->text().toDouble(),'g',2).toStdString() + " GeV") );
 
       mg->Add(p,"l");
       mg->Add(g,"l");
@@ -258,6 +258,11 @@ void apfelthread::run()
       TGraph *q = new TGraph(NMX-1);
       TGraph *qg = new TGraph(NMX-1);
       TGraph *qq = new TGraph(NMX-1);
+      TGraph *cc = new TGraph(NMX-1);
+      TGraph *bb = new TGraph(NMX-1);
+      TGraph *cg = new TGraph(NMX-1);
+      TGraph *bg = new TGraph(NMX-1);
+      TGraph *pg = new TGraph(NMX-1);
 
       for (int i=1; i < NMX; i++)
         {
@@ -288,6 +293,21 @@ void apfelthread::run()
             for (int z = j; z <= 6; z++)
                result2 += APFEL::LUMI(j,z,S);
           qq->SetPoint(i-1,Q,result2);
+
+          d->setValue(d->value()+1);
+          cc->SetPoint(i-1,Q, APFEL::LUMI(4,-4,S));
+
+          d->setValue(d->value()+1);
+          bb->SetPoint(i-1,Q, APFEL::LUMI(5,-5,S));
+
+          d->setValue(d->value()+1);
+          cg->SetPoint(i-1,Q, APFEL::LUMI(4,0,S));
+
+          d->setValue(d->value()+1);
+          bg->SetPoint(i-1,Q, APFEL::LUMI(5,0,S));
+
+          d->setValue(d->value()+1);
+          pg->SetPoint(i-1,Q, APFEL::LUMI(7,0,S));
         }
 
       g->SetLineWidth(2);
@@ -295,12 +315,20 @@ void apfelthread::run()
       q->SetLineWidth(2);
       qg->SetLineWidth(2);
       qq->SetLineWidth(2);
+      cc->SetLineWidth(2);
+      bb->SetLineWidth(2);
+      cg->SetLineWidth(2);
+      bg->SetLineWidth(2);
 
       g->SetLineColor(kRed);
       p->SetLineColor(kBlack);
       q->SetLineColor(kBlue);
       qg->SetLineColor(kGreen);
       qq->SetLineColor(kViolet);
+      cc->SetLineColor(kOrange);
+      bb->SetLineColor(kCyan);
+      cg->SetLineColor(kGray);
+      bg->SetLineColor(kGreen+2);
 
       C = new TCanvas("c2","",625,466);
       C->SetLogx();
@@ -310,13 +338,17 @@ void apfelthread::run()
 
       TMultiGraph *mgr = new TMultiGraph();
       mgr->SetTitle( "APFEL: " + TString(ui->comboBox->currentText().toStdString() + " luminosities @ " + ui->comboBox_2->currentText().toStdString()
-                            + ", " + ui->comboBox_3->currentText().toStdString() + ", #sqrt{S} = " + QString::number(ui->lineEdit_17->text().toDouble(),'g',1).toStdString() + " GeV") );
+                            + ", " + ui->comboBox_3->currentText().toStdString() + ", #sqrt{S} = " + QString::number(ui->lineEdit_17->text().toDouble(),'g',2).toStdString() + " GeV") );
 
       mgr->Add(g,"l");
       mgr->Add(p,"l");
       mgr->Add(q,"l");
       mgr->Add(qg,"l");
       mgr->Add(qq,"l");
+      mgr->Add(cc,"l");
+      mgr->Add(bb,"l");
+      mgr->Add(cg,"l");
+      mgr->Add(bg,"l");
 
       mgr->SetMinimum(1e-7);
 
@@ -337,6 +369,10 @@ void apfelthread::run()
       leg->AddEntry(p,"#gamma-#gamma","l");
       leg->AddEntry(q,"quark-antiquark","l");
       leg->AddEntry(qg,"quark-gluon","l");
+      leg->AddEntry(cc,"charm-anticharm","l");
+      leg->AddEntry(bb,"bottom-antibottom","l");
+      leg->AddEntry(cg,"charm-gluon","l");
+      leg->AddEntry(bg,"bottom-gluon","l");
       leg->AddEntry(qq,"quark-quark","l");
 
       leg->Draw("same");

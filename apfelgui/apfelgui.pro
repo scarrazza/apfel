@@ -11,22 +11,33 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = apfelgui
 TEMPLATE = app
 
-INCLUDEPATH += /opt/apfel/include
-INCLUDEPATH += $$system(root-config --incdir)
+# Add the following lines if apfel is installed in a custom location
+#INCLUDEPATH += /opt/apfel/include
+#LIBS += -L/opt/apfel/lib -lAPFEL
 
-LIBS += -L/opt/apfel/lib -lAPFEL
+INCLUDEPATH += $$system(root-config --incdir)
+INCLUDEPATH += include
+
+LIBS += -lAPFEL
 LIBS += $$system(lhapdf-config --ldflags)
 LIBS += $$system(root-config --glibs)
 
+DEPENDPATH += . forms resources src include
 
-SOURCES += main.cxx \
-           apfelmainwindow.cxx \
-    apfelthread.cxx
+CONFIG += release
+OBJECTS_DIR = src
+UI_DIR = include/
+MOC_DIR = src/
+RCC_DIR = resources/
+DISTFILES += apfelgui
 
-HEADERS  += apfelmainwindow.h \
-    apfelthread.h
+SOURCES += src/main.cxx \
+           src/apfelmainwindow.cxx \
+           src/apfelthread.cxx
 
-FORMS    += apfelmainwindow.ui
+HEADERS  += include/apfelmainwindow.h \
+            include/apfelthread.h
 
-RESOURCES += \
-    resource.qrc
+FORMS    += forms/apfelmainwindow.ui
+
+RESOURCES += resources/resource.qrc
