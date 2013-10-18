@@ -11,7 +11,6 @@
 #include <QPushButton>
 #include <QFileDialog>
 #include <QStatusBar>
-#include <QStandardPaths>
 #include <QDebug>
 
 #include "apfelmainwindow.h"
@@ -179,7 +178,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 void MainWindow::on_pushButton_2_clicked()
 {
   QString path;
-  path = QFileDialog::getSaveFileName(this,tr("Save as"),QStandardPaths::displayName(QStandardPaths::DesktopLocation),tr("*.eps (*.eps);;All files (*.*)"));
+  path = QFileDialog::getSaveFileName(this,tr("Save as"),"",tr("*.eps (*.eps);;All files (*.*)"));
 
   if(path != 0) thread->savecanvas(path.toStdString() + ".eps");
 }
