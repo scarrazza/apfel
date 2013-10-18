@@ -99,6 +99,8 @@ void MainWindow::ThreadFinished()
   ui->graphicsView->show();
 
   d->setValue(10);
+
+  QFile::remove("apfelplot.svg") ;
 }
 
 void MainWindow::Thread2Finished()
@@ -113,9 +115,11 @@ void MainWindow::Thread2Finished()
   QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(image));
   scene->addItem(item);
   ui->graphicsView_2->setScene(scene);
-  ui->graphicsView_2->show();
+  ui->graphicsView_2->show();  
 
-  d2->setValue(4 + 9*ui->spinBox_5->value());
+  d2->setValue(4 + 10*ui->spinBox_5->value());
+
+  QFile::remove("apfelplot2.svg") ;
 }
 
 void MainWindow::on_comboBox_3_currentIndexChanged(int index)
@@ -187,7 +191,7 @@ void MainWindow::on_pushButton_3_clicked()
 {
   ui->pushButton_3->setEnabled(false);
 
-  d2->setMaximum(4 + 9*ui->spinBox_5->value());
+  d2->setMaximum(4 + 10*ui->spinBox_5->value());
 
   d2->setValue(1);
   d2->show();
