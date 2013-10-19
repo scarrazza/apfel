@@ -1,0 +1,243 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{amsmath,amssymb,bm,makeidx,subfigure}
+\usepackage[italian,english]{babel}
+\usepackage[center,small]{caption}[2007/01/07]
+\usepackage{fancyhdr}
+\usepackage{color}
+
+\begin{document}
+
+\newpage
+
+\section{QCD Evolution Implementation}
+
+The QCD DGLAP equation looks like this:
+\begin{equation}\label{dglap}
+\mu^{2}\frac{\partial q_{i}(x,\mu^{2})}{\partial \mu^{2}}=\int^{1}_{x}\frac{dy}y P_{ij}\left(\frac{x}{y},\alpha_{s}(\mu^{2})\right)q_{j}(y,\mu^{2})
+\end{equation}
+Now let us make the following definitions $t=\ln(\mu^{2})$, $\tilde{q}(x,t)=xq(x,\mu^{2})$, $\tilde{P}_{ij}(x,t)=xP_{ij}(x,\alpha_{s}(\mu^{2}))$ so that eq (\ref{dglap}) becomes:
+\begin{equation}\label{dglap2}
+\frac{\partial \tilde{q}_{i}(x,t)}{\partial t}=\int^{1}_{x}\frac{dy}y \tilde{P}_{ij}\left(\frac{x}{y},t\right)\tilde{q}_{j}(y,t)
+\end{equation}
+
+\section{Interpolation}
+In order to numerically solve the above equation, we need to write PDFs as interpolated functions over an $x$ grid. In particular we want to have something like this:
+\begin{equation}
+\tilde{q}(y,t)=\sum^{N_{x}}_{\alpha=0}w_{\alpha}^{(k)}(y)\tilde{q}(x_{\alpha},t)\,,
+\end{equation}
+where $w_{\alpha}^{(k)}$ are the interpolation functions of degree $k$ we are looking for.
+
+Using the Lagrange formula, we find that:
+\begin{equation}\label{LagrangeFormula}
+w_{\alpha}^{(k)}(x) = \sum_{j=0,j \leq \alpha}^{k}\theta(x-x_{\alpha-j})\theta(x_{\alpha-j+1}-x)\prod^{k}_{\delta=0,\delta\ne j}\left[\frac{x-x_{\alpha-j+\delta}}{x_{\alpha}-x_{\alpha-j+\delta}}\right]\,.
+\end{equation}
+This automatically means that:
+\begin{equation}\label{nonzero}
+w_{\alpha}^{(k)}(x) \neq 0 \quad\mbox{for}\quad x_{\alpha-k} < x < x_{\alpha+1}.  
+\end{equation}
+
+This way we have that eq. (\ref{dglap2}) becomes:
+\begin{equation}\label{dglap3}
+\frac{\partial \tilde{q}_{i}(x,t)}{\partial t}=\sum_{\alpha}\int^{1}_{x}\frac{dy}y \tilde{P}_{ij}\left(\frac{x}{y},t\right)w_{\alpha}^{(k)}(y)\tilde{q}_{j}(x_{\alpha},t)
+\end{equation}
+more in particular, if $x$ is one of the grid points $x_\beta$, simplifying a bit the notation we have that:
+\begin{equation}\label{dglap4}
+\frac{\partial \tilde{q}_{i}(x_\beta,t)}{\partial t}=\sum_{\alpha}\underbrace{\left[\int^{1}_{x_\beta}\frac{dy}y \tilde{P}_{ij}\left(\frac{x_\beta}{y},t\right)w_{\alpha}^{(k)}(y)\right]}_{\Pi_{ij,\beta\alpha}(t)}\tilde{q}_{j}(x_{\alpha},t)\,.
+\end{equation}
+Given eq.~(\ref{nonzero}), it follows the condition:
+\begin{equation}\label{nonzero2}
+\Pi_{ij,\beta\alpha}(t) \neq 0 \quad\mbox{for}\quad \beta \leq \alpha.  
+\end{equation}
+In addition, the integral in eq.~(\ref{dglap4}) which gives $\Pi_{ij,\beta\alpha}$ can be optimized again using eq.~(\ref{nonzero}) and it can be written as:
+\begin{equation}\label{optimization}
+\Pi_{ij,\beta\alpha}(t) = \int^{b}_{a}\frac{dy}y \tilde{P}_{ij}\left(\frac{x_\beta}{y},t\right)w_{\alpha}^{(k)}(y)
+\end{equation}
+where:
+\begin{equation}
+a =  \mbox{max}(x_\beta,x_{\alpha-k})\quad\mbox{and}\quad b = \mbox{min}(1,x_{\alpha+1})\,.
+\end{equation}
+However, performing a change of variables, $\Pi_{ij,\beta\alpha}$ can also be written as:
+\begin{equation}\label{optimization2}
+\Pi_{ij,\beta\alpha}(t) = \int^{d}_{c}\frac{dy}y \tilde{P}_{ij}(y,t)w_{\alpha}\left(\frac{x_\beta}{y}\right)
+\end{equation}
+where this time:
+\begin{equation}\label{bounds2}
+c =  \mbox{max}(x_\beta,x_\beta/x_{\alpha+1}) \quad\mbox{and}\quad d = \mbox{min}(1,x_\beta/x_{\alpha-k}) \,.
+\end{equation}
+Verifying that eqs.~(\ref{optimization}) and~(\ref{optimization2}) give the same numerical result provides a cross-check of the correctness of the procedure.
+
+Now, if rather than eq. (\ref{LagrangeFormula}), one uses a logarithmic interpolation of the form:
+\begin{equation}\label{LagrangeFormulaLog}
+w_{\alpha}^{(k)}(x) = \sum_{j=0,j \leq \alpha}^{k}\theta(x-x_{\alpha-j})\theta(x_{\alpha-j+1}-x)\prod^{k}_{\delta=0,\delta\ne j}\left[\frac{\ln(x)-\ln(x_{\alpha-j+\delta})}{\ln(x_{\alpha})-\ln(x_{\alpha-j+\delta})}\right]
+\end{equation}
+over a logarithmically distributed grid, i.e. such that $\ln(x_{\beta})-\ln(x_{\alpha})=(\beta-\alpha)\delta x$, where the step $\delta x$ is a constant, one has that:
+\begin{equation}\label{LagrangeFormulaLog}
+w_{\alpha}^{(k)}(x) = \sum_{j=0,j \leq \alpha}^{k}\theta(x-x_{\alpha-j})\theta(x_{\alpha-j+1}-x)\prod^{k}_{\delta=0,\delta\ne j}\left[\frac{1}{\delta x} \ln\left(\frac{x}{x_\alpha}\right)\frac{1}{j-\delta}+1\right]
+\end{equation}
+that in general means that $w_\alpha^{(k)}(x)\equiv w_\alpha^{(k)}[\ln(x)-\ln(x_\alpha)]$. Therefore in eq.~(\ref{optimization2}) we have that:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right) &\equiv& w_\alpha^{(k)}[\ln(x_{\beta})-\ln(x_\alpha)-\ln(y)]\\
+\\
+                                      &=&w_\alpha^{(k)}[(\beta-\alpha)\delta x-\ln(y)]
+\end{array}
+\end{equation}
+which means that $w_{\alpha}^{(k)}(x_\beta/y)$ only depends on the difference $(\beta-\alpha)$ with the consequence that also $\Pi_{ij,\beta\alpha}$ only depends on $(\beta-\alpha)$. Now, one can use this information with eq.~(\ref{nonzero2}) to represent $\Pi_{ij,\beta\alpha}(t)$ as a matrix, where $\beta$ is the row index and $\alpha$ the column index. In this way  $\Pi_{ij,\beta\alpha}(t)$ would look like this:
+\begin{equation}\label{MatrixRep}
+\displaystyle \Pi_{ij}(t) = 
+\begin{pmatrix}
+a_0 &  a_1 & a_2 & \cdots & a_{N_x} \\
+ 0  & a_0 & a_1 & \cdots & a_{N_x-1} \\
+ 0  & 0   &  a_0 & \cdots & a_{N_x-2} \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+ 0  &   0  &   0 & \cdots & a_0 
+\end{pmatrix}
+\end{equation}
+therefore, if one knows the first raw of the matrix above, i.e. $\Pi_{ij,0\alpha}(t)$, it is possible to reconstruct the whole matrix. Of course, this feature must be numerically verified but it makes the computation of the evolution operators much faster because it reduces the number of integrals to be computed by a factor $N_x$.
+
+
+\section{Splitting Functions Treatment}
+
+The general form DGLAP splitting functions is the following:
+\begin{equation}
+\tilde{P}_{ij}(x,t) = xP_{ij}^{R}(x,t) + \frac{xP_{ij}^{S}(t)}{(1-x)_+} + P_{ij}^{L}(t)x\delta(1-x)
+\end{equation}
+where $P_{ij}^{R}(x,t)$ is the regular term that can be integrated without any problem over any range, $P_{ij}^{S}(x,t)$ is instead the function that multiplies the singular term which is regularized by means of the plus prescription whose definition, referring to eq.~(\ref{optimization2}), is:
+\begin{equation}
+\begin{array}{c}
+\displaystyle \int_c^d dy \frac{f(y)}{(1-y)_+} = \int_c^d dy \frac{f(y) - f(1)\theta(d-1)}{1-y} - f(1)\theta(d-1)\int_0^c \frac{dy}{1-y} = \\
+\\
+\displaystyle \int_c^d dy \frac{f(y) - f(1)\theta(d-1)}{1-y} + f(1)\ln(1-c)\theta(d-1)\,.
+\end{array}
+\end{equation}
+Finally $P_{ij}^{L}(t)$ is the coefficient of the local term, i.e. the term proportional to $\delta(1-x)$. Each of these terms has a perturbative expansion that at N$^k$LO looks like this:
+\begin{equation}
+P_{ij}^{J}(x,t) = \sum_{n=0}^{k}a_s^{n+1}(t)P_{ij}^{J,(n)}(x)\qquad\mbox{with}\qquad J=R,S,L
+\end{equation}
+Therefore one has that:
+\begin{equation}
+\begin{array}{c}
+\displaystyle \Pi_{ij,\beta\alpha}(t) = \\
+\\
+\displaystyle \sum_{n=0}^{k} a_s^{n+1}(t) \bigg\{\int^{d}_{c}dy\left[{P}_{ij}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{P}_{ij}^{S,(n)}}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-w_{\alpha}^{(k)}(x_\beta)\theta(d-1)\right)\right]\\
+\\
+\displaystyle +\left[{P}_{ij}^{S,(n)}\ln(1-c)\theta(d-1)+{P}_{ij}^{L,(n)}\right]w_{\alpha}^{(k)}(x_\beta)\bigg\}\,.
+\end{array}
+\end{equation}
+Moreover it is easy to see that $w_{\alpha}^{(k)}(x_\beta)=\delta_{\beta\alpha}$, so that:
+\begin{equation}
+\begin{array}{c}
+\displaystyle \Pi_{ij,\beta\alpha}(t) = \\
+\\
+\displaystyle \sum_{n=0}^{k} a_s^{n+1}(t) \bigg\{\int^{d}_{c}dy\left[{P}_{ij}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{P}_{ij}^{S,(n)}}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\theta(d-1)\right)\right]\\
+\\
+\displaystyle +\left[{P}_{ij}^{S,(n)}\ln(1-c)\theta(d-1)+{P}_{ij}^{L,(n)}\right]\delta_{\beta\alpha}\bigg\}\,.
+\end{array}
+\end{equation}
+
+Calling:
+\begin{equation}\label{pertExp}
+\begin{array}{c}
+\displaystyle \Pi_{ij,\beta\alpha}^{(n)} = \\
+\\
+\displaystyle \int^{d}_{c}dy\left[{P}_{ij}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{P}_{ij}^{S,(n)}}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\theta(d-1)\right)\right]\\
+\\
+\displaystyle +\left[{P}_{ij}^{S,(n)}\ln(1-c)\theta(d-1)+{P}_{ij}^{L,(n)}\right]\delta_{\beta\alpha}\,,
+\end{array}
+\end{equation}
+we have that:
+\begin{equation}
+\Pi_{ij,\beta\alpha}(t) = \sum_{n=0}^{k} a_s^{n+1}(t) \Pi_{ij,\beta\alpha}^{(n)}\,,
+\end{equation}
+and the integrals $\Pi_{ij,\beta\alpha}^{(n)}$ do not depend on the energy therefore, once the grid (and the number of active flavours) has been fixed, they can be evaluate once and for all at the beginning and used for the evolution to any scale.
+
+It is not very easy to see that eq.~(\ref{pertExp}) respects the symmetry described in eq.~(\ref{MatrixRep}). To show this, we distinguish two case: 1) $d < 1$ and 2) $d = 1$. In the case 1), due to the presence of the Heaviside's functions $\theta(d-1)$, eq.~(\ref{pertExp}) reduces to:
+\begin{equation}\label{pertExp2}
+\Pi_{ij,\beta\alpha}^{(n)} = \int^{d}_{c}dy\left[{P}_{ij}^{R,(n)}(y)+\frac{{P}_{ij}^{S,(n)}}{1-y}\right]w_{\alpha}\left(\frac{x_\beta}{y}\right) + {P}_{ij}^{L,(n)}\delta_{\beta\alpha}\,,
+\end{equation}
+which evidently obeys eq.~(\ref{MatrixRep}). In the case 2), instead, we have:
+\begin{equation}\label{pertExp3}
+\begin{array}{c}
+\displaystyle \Pi_{ij,\beta\alpha}^{(n)} = \int^{1}_{c}dy\left[{P}_{ij}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{P}_{ij}^{S,(n)}}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\right)\right]\\
+\\
+\displaystyle +\left[{P}_{ij}^{S,(n)}\ln(1-c)+{P}_{ij}^{L,(n)}\right]\delta_{\beta\alpha}\,,
+\end{array}
+\end{equation}
+and apparently, if $\alpha=\beta$, the term $\ln(1-c)$ seems to break the symmetry. However, this is not the case. In fact, from eq.~(\ref{bounds2}), we know that in this particular case:
+\begin{equation}
+c = \mbox{max}(x_\beta,x_\beta/x_{\beta+1}) = \frac{x_\beta}{x_{\beta+1}}
+\end{equation}
+because $x_{\beta+1}<1$. In addition, on a logarithmically distributed grid, $x_{\beta+1}=x_{\beta}\exp(\delta x)$, where $\delta x$ is the constant step. Therefore, it turns out that:
+\begin{equation}
+\ln(1-c) = \ln\left(1-\frac{x_{\beta}}{x_{\beta+1}}\right) = \ln[1 - \exp(-\delta x)]\,,
+\end{equation}
+that is a constant which does not depend on the indices $\alpha$ and $\beta$ and therefore does not break the symmetry given in eq.~(\ref{MatrixRep}).
+
+
+\section{Solution of the DGLAP Equation}
+
+As a consequence of the DGLAP equation form, we can assume that $\tilde{q}_{i}(x_\beta,t)\equiv q_{i,\beta}(t)$ evolves between the energies $t$ and $t_0$ according to the following (discretized) evolution equation:
+\begin{equation}
+\tilde{q}_{i,\beta}(t) = \sum_{\gamma,k} M_{ik,\beta\gamma}(t,t_0)\tilde{q}_{k,\gamma}(t_0) 
+\end{equation}
+with the boundary condition $M_{ik,\beta\gamma}(t_0,t_0)=\delta_{ik}\delta_{\beta\gamma}$. It follows that eq. (\ref{dglap4}) takes the form:
+\begin{equation}\label{tosolve}
+\left\{\begin{array}{l}
+\displaystyle \frac{\partial  M_{ij,\alpha\beta}(t,t_0)}{\partial t}=\sum_{\gamma,k} \Pi_{ik,\alpha\gamma}(t)M_{kj,\gamma\beta}(t,t_0)\\
+\\
+\displaystyle M_{ij,\alpha\beta}(t_0,t_0)=\delta_{ij}\delta_{\alpha\beta}
+\end{array}\right.
+\end{equation}
+which is a first order linear differential equation in the quantity
+$M_{ij,\alpha\beta}(t,t_0)$ that, as we actually do, can be
+numerically solved using the fourth order Adaptive Step-size Control Runge-Kutta algorithm.
+Using the arguments we discussed above, we do not need to compute all
+the entries of $\Pi_{ik,\gamma\alpha}(t)$. In addition, as we have already shown, the
+perturbative contributions to $\Pi_{ik,\gamma\alpha}(t)$ can be
+precomputed before solving the differential equation in eq. (\ref{tosolve}).
+
+
+\subsection{The Non Singlet}
+
+The non-singlet case is the easiest one because the differential equations in eq.~(\ref{tosolve}) decouple in the flavour pair $(i,j)$, and we can write them as:
+\begin{equation}\label{tosolveNS}
+\left\{\begin{array}{l}
+\displaystyle \frac{\partial  \mathcal{M}_{\alpha\beta}^{(i)}(t,t_0)}{\partial t}=\sum_{\gamma=0}^{N_x} \mathcal{P}_{\alpha\gamma}^{(i)}(t)\mathcal{M}_{\gamma\beta}^{(i)}(t,t_0)\\
+\\
+\displaystyle \mathcal{M}_{\alpha\beta}^{(i)}(t_0,t_0)=\delta_{\alpha\beta}
+\end{array}\right.\quad\mbox{with } i=+,-,V\,.
+\end{equation}
+As a further simplification, we can use the fact that at LO $+$, $-$ and $V$ all the evolution operators are equal, therefore solving only one of them is enough. at NLO instead only $-$ and $V$ are equal while at NNLO they are all different.
+
+Now, given the symmetries carried by $\Pi_{ij,\alpha\beta}$, we can write:
+\begin{equation}
+\mathcal{P}_{\alpha\gamma}^{(i)} = \mathcal{P}_{0(\gamma-\alpha)}^{(i)}\theta(\gamma-\alpha)\,,
+\end{equation}
+so that eq.~(\ref{tosolveNS}) becomes:
+\begin{equation}\label{tosolveNS1}
+\left\{\begin{array}{l}
+\displaystyle \frac{\partial  \mathcal{M}_{\alpha\beta}^{(i)}(t,t_0)}{\partial t}= \sum_{\delta=0}^{N_x-\alpha} \mathcal{P}_{0\delta}^{(i)}(t)\mathcal{M}_{(\alpha+\delta)\beta}^{(i)}(t,t_0)\\
+\\
+\displaystyle \mathcal{M}_{\alpha\beta}^{(i)}(t_0,t_0)=\delta_{\alpha\beta}
+\end{array}\right.\quad\mbox{with } i=+,-,V\,.
+\end{equation}
+
+\subsection{The Singlet}
+
+The singlet sector is totally analogous to the non-singlet one, the only difference is that there is one additional summation over the flavours. In practice we have that:
+\begin{equation}\label{tosolveSG}
+\left\{\begin{array}{l}
+\displaystyle \frac{\partial  \mathcal{M}_{ij,\alpha\beta}^{\rm SG}(t,t_0)}{\partial t}= \sum_k \sum_{\delta=0}^{N_x-\alpha} \mathcal{P}_{ik,0\delta}^{\rm SG}(t)\mathcal{M}_{kj,(\alpha+\delta)\beta}^{\rm SG}(t,t_0)\\
+\\
+\displaystyle \mathcal{M}_{ij,\alpha\beta}^{\rm SG}(t_0,t_0)=\delta_{ij}\delta_{\alpha\beta}
+\end{array}\right.\quad\mbox{with }i,j,k=q,g\,.
+\end{equation}
+
+\section{Large-$x$ Grid and Density Factor}
+
+As is well known, the DGLAP evolution at large $x$ requires a denser grid while a looser grid is enough at small $x$. However, the approach that we have described above is based on the fact that the $x$ grid is logarithmically distributed all over the place in order to ensure a symmetry that allows to drastically reduce the number of integrals to be computed. As a consequence, this approach seems to be incompatible with a denser large-$x$ grid.
+
+
+
+
+\end{document}
