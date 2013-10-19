@@ -158,12 +158,12 @@ void MainWindow::Thread2Finished()
 
   QFile::remove("apfelplot2.svg") ;
 
-  ui->lineEdit_3->setText(thread->getresult(0));
-  ui->lineEdit_4->setText(thread->getresult(1));
-  ui->lineEdit_5->setText(thread->getresult(2));
-  ui->lineEdit_6->setText(thread->getresult(3));
-  ui->lineEdit_7->setText(thread->getresult(4));
-  ui->lineEdit_8->setText(thread->getresult(5));
+  ui->lineEdit_3->setText(thread2->getresult(0));
+  ui->lineEdit_4->setText(thread2->getresult(1));
+  ui->lineEdit_5->setText(thread2->getresult(2));
+  ui->lineEdit_6->setText(thread2->getresult(3));
+  ui->lineEdit_7->setText(thread2->getresult(4));
+  ui->lineEdit_8->setText(thread2->getresult(5));
 }
 
 void MainWindow::on_comboBox_3_currentIndexChanged(int index)
