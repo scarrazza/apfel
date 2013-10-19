@@ -3579,6 +3579,34 @@ SWIG_AsPtr_std_string (PyObject * obj, std::string **val)
   return SWIG_ERROR;
 }
 
+
+SWIGINTERNINLINE PyObject *
+SWIG_FromCharPtrAndSize(const char* carray, size_t size)
+{
+  if (carray) {
+    if (size > INT_MAX) {
+      swig_type_info* pchar_descriptor = SWIG_pchar_descriptor();
+      return pchar_descriptor ? 
+	SWIG_InternalNewPointerObj(const_cast< char * >(carray), pchar_descriptor, 0) : SWIG_Py_Void();
+    } else {
+#if PY_VERSION_HEX >= 0x03000000
+      return PyUnicode_FromStringAndSize(carray, static_cast< int >(size));
+#else
+      return PyString_FromStringAndSize(carray, static_cast< int >(size));
+#endif
+    }
+  } else {
+    return SWIG_Py_Void();
+  }
+}
+
+
+SWIGINTERNINLINE PyObject * 
+SWIG_FromCharPtr(const char *cptr)
+{ 
+  return SWIG_FromCharPtrAndSize(cptr, (cptr ? strlen(cptr) : 0));
+}
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -4704,6 +4732,19 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_GetVersion(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetVersion")) SWIG_fail;
+  result = (char *)APFEL::GetVersion();
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_SetAlphaQCDRef(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
@@ -5165,6 +5206,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"NPDF", _wrap_NPDF, METH_VARARGS, NULL},
 	 { (char *)"Ngamma", _wrap_Ngamma, METH_VARARGS, NULL},
 	 { (char *)"LUMI", _wrap_LUMI, METH_VARARGS, NULL},
+	 { (char *)"GetVersion", _wrap_GetVersion, METH_VARARGS, NULL},
 	 { (char *)"SetAlphaQCDRef", _wrap_SetAlphaQCDRef, METH_VARARGS, NULL},
 	 { (char *)"SetAlphaQEDRef", _wrap_SetAlphaQEDRef, METH_VARARGS, NULL},
 	 { (char *)"SetQLimits", _wrap_SetQLimits, METH_VARARGS, NULL},
