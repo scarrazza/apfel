@@ -253,7 +253,6 @@ void apfelthread::run()
 
       C->SaveAs("apfelplot.svg");
 
-      qDebug() << APFEL::GetVersion() << endl;
     }
   else
     {
@@ -420,7 +419,7 @@ void apfelthread::savecanvas(string file)
 QString apfelthread::getresult(int i)
 {
   if (i == 0)
-    return QString::number(APFEL::AlphaQCD(ui->lineEdit_2->text().toDouble()),'f',10);
+    return QString::number(APFEL::AlphaQCD(ui->lineEdit_9->text().toDouble()),'f',10);
   else if (i == 1)
     return QString::number(APFEL::AlphaQED(ui->lineEdit_9->text().toDouble()),'f',10);
   else if (i == 2)
