@@ -137,6 +137,10 @@ def LUMI(*args):
   return _apfel.LUMI(*args)
 LUMI = _apfel.LUMI
 
+def GetVersion():
+  return _apfel.GetVersion()
+GetVersion = _apfel.GetVersion
+
 def SetAlphaQCDRef(*args):
   return _apfel.SetAlphaQCDRef(*args)
 SetAlphaQCDRef = _apfel.SetAlphaQCDRef
