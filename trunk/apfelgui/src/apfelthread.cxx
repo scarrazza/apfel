@@ -253,7 +253,6 @@ void apfelthread::run()
 
       C->SaveAs("apfelplot.svg");
 
-      qDebug() << APFEL::GetVersion() << endl;
     }
   else
     {
