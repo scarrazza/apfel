@@ -54,6 +54,15 @@ namespace APFEL {
 
   /// Get APFEL version
   char* GetVersion(void);
+
+  /// Cleanup parameters
+  void CleanUp(void);
+
+  /// Enable welcome message
+  void EnableWelcomeMessage(bool);
+
+  /// Returns Heavy Quark Masses
+  double HeavyQuarkMass(int,double);
   
   /*
    * Set Methods

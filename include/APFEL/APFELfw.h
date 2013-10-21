@@ -37,6 +37,15 @@ extern "C" {
 #define flumi FC_FUNC(lumi,LUMI)
   double flumi(int*,int*,double*);
 
+#define fcleanup FC_FUNC(cleanup,CLEANUP)
+  void fcleanup(void);
+
+#define fenablewelcomemessage FC_FUNC(enablewelcomemessage,ENABLEWELCOMEMESSAGE)
+  void fenablewelcomemessage(bool*);
+
+#define fheavyquarkmass FC_FUNC(heavyquarkmass,HEAVYQUARKMASS)
+  double fheavyquarkmass(int*,double*);
+
 #define fsetalphaqcdref FC_FUNC(setalphaqcdref, SETALPHAQCDREF)
   void fsetalphaqcdref(double*,double*);
 

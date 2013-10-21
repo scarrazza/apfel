@@ -71,6 +71,21 @@ namespace APFEL {
     return apfelversion;
   }
 
+  void CleanUp(void)
+  {
+    fcleanup();
+  }
+
+  void EnableWelcomeMessage(bool wc)
+  {
+    fenablewelcomemessage(&wc);
+  }
+
+  double HeavyQuarkMass(int i,double Q)
+  {
+    return fheavyquarkmass(&i,&Q);
+  }
+
   void SetAlphaQCDRef(double alpharef, double Qref)
   {
     fsetalphaqcdref(&alpharef,&Qref);
