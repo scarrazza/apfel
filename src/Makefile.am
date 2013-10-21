@@ -8,13 +8,14 @@ SETTINGS = SetAlphaQCDRef.f SetAlphaQEDRef.f SetQLimits.f \
 	SetPerturbativeOrder.f SetFFNS.f SetGridParameters.f \
 	SetMSbarMasses.f SetNumberOfGrids.f SetPDFSet.f SetPoleMasses.f \
 	SetRenFacRatio.f SetTheory.f SetVFNS.f SetMaxFlavourPDFs.f \
-	SetMaxFlavourAlpha.f SetReplica.f AlphaQCD.f AlphaQED.f LHAPDFgrid.f
+	SetMaxFlavourAlpha.f SetReplica.f AlphaQCD.f AlphaQED.f HeavyQuarkMass.f \
+	LHAPDFgrid.f CleanUp.f
 
 INTER = interpolants.f
 
 SPLITTING_FUNCTIONS = SplittingFunctions.f
 
-COUPLINGS = a_QCD.f a_QED.f lambda.f
+COUPLINGS = a_QCD.f a_QED.f MSbarmass.f lambda.f
 
 EVOLUTIONQCD = EvolutionOperatorsQCD.f IdentityOperatorsQCD.f \
 	EqualOperatorsQCDnf.f integrandsQCD.f integralsQCD.f RSLintegralsQCD.f \

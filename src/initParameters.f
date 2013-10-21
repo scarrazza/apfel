@@ -2,8 +2,8 @@
 *
 *     initParameters.f:
 *
-*     It reads all the user set parameters from the file "input.dat"
-*     and store them in common blocks.
+*     It sets all the evoution parameters if they were not set exernally
+*     before by the user.
 *
 ************************************************************************
       subroutine initParameters

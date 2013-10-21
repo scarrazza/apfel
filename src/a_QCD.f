@@ -102,11 +102,11 @@ c      kappa = 1d0          ! mu_R / mu_F
 *     MSbar mass
       elseif(mass_scheme.eq."MSbar")then
          if(nff.gt.nfi)then
-            c1 = 0d0
-            c2 = - 22d0 / 9d0
+            c1 = 2d0 / 3d0 * ln
+            c2 = 4d0 / 9d0 * ln**2d0 + 22d0 / 3d0 * ln - 22d0 / 9d0
          elseif(nff.lt.nfi)then
-            c1 = 0d0
-            c2 = 22d0 / 9d0
+            c1 = - 2d0 / 3d0 * ln
+            c2 = 4d0 / 9d0 * ln**2d0 - 22d0 / 3d0 * ln + 22d0 / 9d0
          endif
       endif
 *
