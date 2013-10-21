@@ -73,6 +73,25 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      subroutine fcleanup
+      call CleanUp
+      end subroutine fcleanup
+
+ccccccccccccc      
+      subroutine fenablewelcomemessage(wc)
+      logical wc
+      call EnableWelcomeMessage(wc)
+      end subroutine fenablewelcomemessage
+
+ccccccccccccc      
+      function fheavyquarkmass(i,Q)
+      integer i
+      double precision Q,fheavyquarkmass
+      fheavyquarkmass = HeavyQuarkMass(i,Q)
+      return
+      end
+
+ccccccccccccc      
       subroutine fsetalphaqcdref(alpharef,Qref)
       double precision alpharef,Qref      
       call SetAlphaQCDRef(alpharef,Qref)
