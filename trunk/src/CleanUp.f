@@ -10,6 +10,7 @@
 *
       implicit none
 *
+      include "../commons/Welcome.h"
       include "../commons/scales.h"
       include "../commons/Evs.h"
       include "../commons/Nf_FF.h"
@@ -29,22 +30,23 @@
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
 *
-      InScales = "xxxx"
-      InPt     = "xxxx"    
-      InEvs    = "xxxx"   
-      InTheory = "xxxx"
-      InAlpQCD = "xxxx"
-      InAlpQED = "xxxx"
-      InKren   = "xxxx"  
-      InMasses = "xxxx"
-      InMFP    = "xxxx"
-      InMFA    = "xxxx"
-      InPDFs   = "xxxx"
-      InRep    = "xxxx"   
-      InGrid   = "xxxx"
+      InWelcome = "xxxx"
+      InScales  = "xxxx"
+      InPt      = "xxxx"
+      InEvs     = "xxxx"   
+      InTheory  = "xxxx"
+      InAlpQCD  = "xxxx"
+      InAlpQED  = "xxxx"
+      InKren    = "xxxx"  
+      InMasses  = "xxxx"
+      InMFP     = "xxxx"
+      InMFA     = "xxxx"
+      InPDFs    = "xxxx"
+      InRep     = "xxxx"   
+      InGrid    = "xxxx"
 *
-      write(6,*) "Parameters unset!"
-      write(6,*) " "
+c      write(6,*) "Parameters unset!"
+c      write(6,*) " "
 *
       return
       end
