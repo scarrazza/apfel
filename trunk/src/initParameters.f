@@ -10,6 +10,7 @@
 *
       implicit none
 *
+      include "../commons/Welcome.h"
       include "../commons/scales.h"
       include "../commons/Evs.h"
       include "../commons/Nf_FF.h"
@@ -28,18 +29,19 @@
 *
 *     Initialize default parameters (those that were not initialized before)
 *
-      if(InScales.ne."done") call SetQLimits(0.5d0,400d0)
-      if(InPt.ne."done")     call SetPerturbativeOrder(2)
-      if(InEvs.ne."done")    call SetVFNS
-      if(InTheory.ne."done") call SetTheory("QCD")
-      if(InAlpQCD.ne."done") call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
-      if(InAlpQED.ne."done") call SetAlphaQEDRef(7.496252d-3,1.777d0)
-      if(InKren.ne."done")   call SetRenFacRatio(1d0)
-      if(InMasses.ne."done") call SetPoleMasses(dsqrt(2d0),4.5d0,175d0)
-      if(InMFP.ne."done")    call SetMaxFlavourPDFs(6)
-      if(InMFA.ne."done")    call SetMaxFlavourAlpha(6)
-      if(InPDFs.ne."done")   call SetPDFset("ToyLH")
-      if(InRep.ne."done")    call SetReplica(0)
+      if(InWelcome.ne."done") call EnableWelcomeMessage(.true.)
+      if(InScales.ne."done")  call SetQLimits(0.5d0,400d0)
+      if(InPt.ne."done")      call SetPerturbativeOrder(2)
+      if(InEvs.ne."done")     call SetVFNS
+      if(InTheory.ne."done")  call SetTheory("QCD")
+      if(InAlpQCD.ne."done")  call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
+      if(InAlpQED.ne."done")  call SetAlphaQEDRef(7.496252d-3,1.777d0)
+      if(InKren.ne."done")    call SetRenFacRatio(1d0)
+      if(InMasses.ne."done")  call SetPoleMasses(dsqrt(2d0),4.5d0,175d0)
+      if(InMFP.ne."done")     call SetMaxFlavourPDFs(6)
+      if(InMFA.ne."done")     call SetMaxFlavourAlpha(6)
+      if(InPDFs.ne."done")    call SetPDFset("ToyLH")
+      if(InRep.ne."done")     call SetReplica(0)
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,80,3,1d-5)
@@ -47,10 +49,7 @@
          call SetGridParameters(3,40,5,8d-1)
       endif
 *
-*     Report of the evolution parameters and check consistency
-*
-      write(6,*) "Report of the evolution parameters:"
-      write(6,*) "  "
+*     Check the consistency of the input parameters
 *
       if(Th.ne."QCD".and.Th.ne."QED".and.
      1   Th.ne."QCEDP".and.Th.ne."QCEDS".and.
@@ -62,7 +61,6 @@
          write(6,*) "  "
          call exit(-10)
       endif
-      write(6,"(a,a,a)") " ",Th," evolution"
 *
       if(Evs.ne."FF".and.Evs.ne."VF")then
          write(6,*) "Evolution scheme not allowed:"
@@ -87,17 +85,6 @@
          write(6,*) "  "
          call exit(-10)
       endif
-      write(6,"(a,a,a,i1,a)") " Evolution scheme = ",Evs,
-     1                        "NS at N",ipt,"LO"
-*
-      write(6,"(a,f10.4,a,f10.4,a)") " Evolution range [ ",dsqrt(Q2min),
-     1                              " : ",dsqrt(Q2max)," ] GeV"
-*
-      write(6,*) "Coupling reference values:"
-      write(6,"(a,f8.4,a,f10.6)") " - AlphaQCD(",dsqrt(q2_ref_qcd),
-     1                            " GeV) = ",alpha_ref_qcd
-      write(6,"(a,f8.4,a,f10.6)") " - AlphaQED(",dsqrt(q2_ref_qed),
-     1                            " GeV) = ",alpha_ref_qed
 *
       if(mass_scheme.ne."Pole".and.mass_scheme.ne."MSbar")then
          write(6,*) "Mass scheme not allowed:"
@@ -106,12 +93,36 @@
          write(6,*) "  "
          call exit(-10)
       endif
-      write(6,"(a,a,a)") " ",mass_scheme," heavy quark thresholds:"
-      write(6,"(a,f10.4,a)") " - mc = ",dsqrt(m2th(4))," GeV"
-      write(6,"(a,f10.4,a)") " - mb = ",dsqrt(m2th(5))," GeV"
-      write(6,"(a,f10.4,a)") " - mt = ",dsqrt(m2th(6))," GeV"
 *
-      write(6,*) " "
+*     Print welcome message and report of the parameters (if enabled)
+*
+      if(Welcome)then
+*
+         call WelcomeMessage
+*
+         write(6,*) "Report of the evolution parameters:"
+         write(6,*) "  "
+*
+         write(6,"(a,a,a)") " ",Th," evolution"
+         write(6,"(a,a,a,i1,a)") " Evolution scheme = ",Evs,
+     1                           "NS at N",ipt,"LO"
+*
+         write(6,"(a,f10.4,a,f10.4,a)") " Evolution range [ ",
+     1               dsqrt(Q2min)," : ",dsqrt(Q2max)," ] GeV"
+*
+         write(6,*) "Coupling reference values:"
+         write(6,"(a,f8.4,a,f10.6)") " - AlphaQCD(",dsqrt(q2_ref_qcd),
+     1                               " GeV) = ",alpha_ref_qcd
+         write(6,"(a,f8.4,a,f10.6)") " - AlphaQED(",dsqrt(q2_ref_qed),
+     1                               " GeV) = ",alpha_ref_qed
+*
+         write(6,"(a,a,a)") " ",mass_scheme," heavy quark thresholds:"
+         write(6,"(a,f10.4,a)") " - mc = ",dsqrt(m2th(4))," GeV"
+         write(6,"(a,f10.4,a)") " - mb = ",dsqrt(m2th(5))," GeV"
+         write(6,"(a,f10.4,a)") " - mt = ",dsqrt(m2th(6))," GeV"
+*
+         write(6,*) " "
+      endif
 *
       return
       end

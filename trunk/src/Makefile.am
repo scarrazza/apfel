@@ -9,7 +9,7 @@ SETTINGS = SetAlphaQCDRef.f SetAlphaQEDRef.f SetQLimits.f \
 	SetMSbarMasses.f SetNumberOfGrids.f SetPDFSet.f SetPoleMasses.f \
 	SetRenFacRatio.f SetTheory.f SetVFNS.f SetMaxFlavourPDFs.f \
 	SetMaxFlavourAlpha.f SetReplica.f AlphaQCD.f AlphaQED.f HeavyQuarkMass.f \
-	LHAPDFgrid.f CleanUp.f
+	LHAPDFgrid.f CleanUp.f EnableWelcomeMessage.f
 
 INTER = interpolants.f
 
