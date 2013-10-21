@@ -84,7 +84,7 @@ c      call lambda(3,lref,lambda3)
       endif
 *
       qref = dsqrt(q2_ref_qcd)
-      do i=3,6
+      do i=4,6
          mth(i) = dsqrt(m2th(i))
       enddo
 *
