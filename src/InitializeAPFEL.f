@@ -10,6 +10,7 @@
 *
       implicit none
 *
+      include "../commons/Welcome.h"
       include "../commons/grid.h"
       include "../commons/m2th.h"
       include "../commons/Th.h"
@@ -23,10 +24,6 @@
       double precision t1,t2
 *
       call cpu_time(t1)
-*
-*     Print welcome message
-*
-      call WelcomeMessage
 *
 *     Read input parameters
 *
@@ -90,8 +87,8 @@
       enddo
       call cpu_time(t2)
 *
-      write(6,*) "Initialization done in",t2-t1," s"
-      write(6,*) " "
+c      write(6,*) "Initialization done in",t2-t1," s"
+c      write(6,*) " "
 *
       return
       end
