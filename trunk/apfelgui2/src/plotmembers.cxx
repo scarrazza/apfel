@@ -23,8 +23,9 @@ using namespace std;
 #include "TString.h"
 #include "TLegend.h"
 
-#include "LHAPDF/LHAPDF.h"
 #include "APFEL/APFEL.h"
+#include "LHAPDF/LHAPDF.h"
+
 
 PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
   QWidget(parent),
