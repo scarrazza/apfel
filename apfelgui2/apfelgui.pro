@@ -16,8 +16,8 @@ INCLUDEPATH += $$system(apfel-config --incdir)
 INCLUDEPATH += $$system(lhapdf-config --ldflags)
 INCLUDEPATH += inc
 
-INCLUDEPATH += /opt/apfel/include
-INCLUDEPATH += /opt/lhapdf/include
+#INCLUDEPATH += /opt/apfel/include
+#INCLUDEPATH += /opt/lhapdf/include
 #LIBS += -L/opt/apfel/lib -lAPFEL -L/opt/lhapdf/lib -lLHAPDF
 
 DEPENDPATH += . forms src inc
