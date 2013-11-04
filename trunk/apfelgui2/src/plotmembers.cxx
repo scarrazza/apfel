@@ -236,7 +236,7 @@ void memberthread::run()
               else
                 x= xmin+j*(xmax-xmin)/N;
 
-              qDebug() << LHAPDF::xfx(x,(fp->ui->Qf->text()).toDouble(),fp->ui->PDFflavor->currentIndex()-6);
+              qDebug() << LHAPDF::xfx((double)x,(double)(fp->ui->Qf->text()).toDouble(),(int)(fp->ui->PDFflavor->currentIndex()-6));
         }
         }
 
