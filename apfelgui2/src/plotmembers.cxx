@@ -192,6 +192,10 @@ void memberthread::run()
   if (fp->fPDF->isLHAPDF())
     {
       LHAPDF::initPDFSetByName(fp->fPDF->PDFname().toStdString());
+      qDebug() << LHAPDF::numberPDF();
+      qDebug() << LHAPDF::xfx(0.1, 2, 0);
+
+      /*
       const int N = fp->ui->xpoints->value();
       double xmin = lharanges[fp->ui->PDFflavor->currentIndex()][0];
       double xmax = lharanges[fp->ui->PDFflavor->currentIndex()][1];
@@ -226,19 +230,7 @@ void memberthread::run()
             }
         }
 
-      for (int i = 0; i < Nrep; i++)
-        {
-          for (int j = 0; j < N; j++)
-            {
-              double x = 0;
-              if (fp->ui->log->isChecked())
-                x= exp(log(xmin)+j*(log(xmax)-log(xmin)/N));
-              else
-                x= xmin+j*(xmax-xmin)/N;
-
-              qDebug() << LHAPDF::xfx(0.1,2,0);
-        }
-        }
+        */
 
       /*
       for (int i = memi; i <= memf; i++)
