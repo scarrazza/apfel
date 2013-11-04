@@ -182,7 +182,42 @@ void memberthread::run()
   if (fp->ui->log->isChecked())
     fC->SetLogx();
 
-  TMultiGraph *mg = new TMultiGraph();
+  // Initialize PDFs
+  fp->fPDF->InitPDFset();
+
+  const int N = fp->ui->xpoints->value();
+  double xmin = lharanges[fp->ui->PDFflavor->currentIndex()][0];
+  double xmax = lharanges[fp->ui->PDFflavor->currentIndex()][1];
+  double ymin = lharanges[fp->ui->PDFflavor->currentIndex()][2];
+  double ymax = lharanges[fp->ui->PDFflavor->currentIndex()][3];
+
+  if (fp->ui->lin->isChecked())
+    {
+      ymin = lharanges[fp->ui->PDFflavor->currentIndex()][4];
+      ymax = lharanges[fp->ui->PDFflavor->currentIndex()][5];
+    }
+
+  if (!fp->ui->automaticrange->isChecked())
+    {
+      xmin = fp->ui->xmin->text().toDouble();
+      xmax = fp->ui->xmax->text().toDouble();
+      ymin = fp->ui->ymin->text().toDouble();
+      ymax = fp->ui->ymax->text().toDouble();
+    }
+
+  const int Nrep = fp->fPDF->numberPDF();
+  double xPDF[Nrep][N];
+
+  int memi = 1;
+  int memf = Nrep;
+  if (!fp->ui->checkBox->isChecked())
+    {
+      memf = 1;
+      if (fp->ui->setmember->value() > Nrep || fp->ui->setmember->value() < 0) {
+          finished();
+          return;
+        }
+    }
 
   TLegend *leg = new TLegend(0.603448,0.673729,0.981322,0.883475);
   leg->SetBorderSize(0);
@@ -190,227 +225,151 @@ void memberthread::run()
   leg->SetFillStyle(0);
   int legindex = 0;
 
-  if (fp->fPDF->isLHAPDF())
+  TMultiGraph *mg = new TMultiGraph();
+
+  for (int i = memi; i <= memf; i++)
     {
-      LHAPDF::initPDFSetByName(fp->fPDF->PDFname().toStdString());
-      const int N = fp->ui->xpoints->value();
-      double xmin = lharanges[fp->ui->PDFflavor->currentIndex()][0];
-      double xmax = lharanges[fp->ui->PDFflavor->currentIndex()][1];
+      emit progress((i-1)*100/memf);
 
-      double ymin = lharanges[fp->ui->PDFflavor->currentIndex()][2];
-      double ymax = lharanges[fp->ui->PDFflavor->currentIndex()][3];
-      if (fp->ui->lin->isChecked())
+      if (memf == 1)
+        LHAPDF::initPDF(fp->ui->setmember->value());
+      else
+        LHAPDF::initPDF(i);
+
+      TGraph *g = new TGraph(N);
+      g->SetLineWidth(2);
+      g->SetLineColor(kGreen);
+
+      for (int j = 0; j < N; j++)
         {
-          ymin = lharanges[fp->ui->PDFflavor->currentIndex()][4];
-          ymax = lharanges[fp->ui->PDFflavor->currentIndex()][5];
-        }
-
-      if (!fp->ui->automaticrange->isChecked())
-        {
-          xmin = fp->ui->xmin->text().toDouble();
-          xmax = fp->ui->xmax->text().toDouble();
-          ymin = fp->ui->ymin->text().toDouble();
-          ymax = fp->ui->ymax->text().toDouble();
-        }
-
-      const int Nrep = LHAPDF::numberPDF();
-      double xPDF[Nrep][N];
-
-      int memi = 1;
-      int memf = Nrep;
-      if (!fp->ui->checkBox->isChecked())
-        {
-          memf = 1;
-          if (fp->ui->setmember->value() > Nrep || fp->ui->setmember->value() < 0) {
-              finished();
-              return;
-            }
-        }
-
-      for (int i = memi; i <= memf; i++)
-        {
-          emit progress((i-1)*100/memf);
-
-          if (memf == 1)
-            LHAPDF::initPDF(fp->ui->setmember->value());
+          double x = 0;
+          if (fp->ui->log->isChecked())
+            x= exp(log(xmin)+j*(log(xmax)-log(xmin)/N));
           else
-            LHAPDF::initPDF(i);
+            x= xmin+j*(xmax-xmin)/N;
 
-          TGraph *g = new TGraph(N);          
-          g->SetLineWidth(2);
-          g->SetLineColor(kGreen);
-
-          for (int j = 0; j < N; j++)
+          if (!LHAPDF::hasPhoton())
             {
-              double x = 0;
-              if (fp->ui->log->isChecked())
-                x= exp(log(xmin)+j*(log(xmax)-log(xmin)/N));
-              else
-                x= xmin+j*(xmax-xmin)/N;
-
-              if (!LHAPDF::hasPhoton())
-                {
-                  xPDF[i-1][j] = LHAPDF::xfx(x,(fp->ui->Qf->text()).toDouble(),fp->ui->PDFflavor->currentIndex()-6);
-                  g->SetPoint(j, x, LHAPDF::xfx(x,(fp->ui->Qf->text()).toDouble(),fp->ui->PDFflavor->currentIndex()-6));
-                }
-              else
-                {
-                  xPDF[i-1][j] = LHAPDF::xfxphoton(x,(fp->ui->Qf->text()).toDouble(),fp->ui->PDFflavor->currentIndex()-6);
-                  g->SetPoint(j, x, LHAPDF::xfxphoton(x,(fp->ui->Qf->text()).toDouble(),fp->ui->PDFflavor->currentIndex()-6));
-                }
+              xPDF[i-1][j] = LHAPDF::xfx(x,(fp->ui->Qf->text()).toDouble(),fp->ui->PDFflavor->currentIndex()-6);
+              g->SetPoint(j, x, LHAPDF::xfx(x,(fp->ui->Qf->text()).toDouble(),fp->ui->PDFflavor->currentIndex()-6));
             }
-          mg->Add(g,"l");
-          if (i == 1) { leg->AddEntry(g,"Replica","l"); legindex++;}
-        }
-
-      if (fp->ui->mean->isChecked())
-        {
-          TGraph *gcv = new TGraph(N);
-          gcv->SetLineWidth(2);
-          gcv->SetLineStyle(2);
-          gcv->SetLineColor(kRed);
-
-          for (int i = 0; i < N; i++)
+          else
             {
-              double sum = 0;
-              for (int j = 0; j < Nrep; j++)
-                sum += xPDF[j][i];
-
-              double x = 0;
-              if (fp->ui->log->isChecked())
-                x= exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
-              else
-                x= xmin+i*(xmax-xmin)/N;
-
-              gcv->SetPoint(i, x, sum/Nrep);
+              xPDF[i-1][j] = LHAPDF::xfxphoton(x,(fp->ui->Qf->text()).toDouble(),fp->ui->PDFflavor->currentIndex()-6);
+              g->SetPoint(j, x, LHAPDF::xfxphoton(x,(fp->ui->Qf->text()).toDouble(),fp->ui->PDFflavor->currentIndex()-6));
             }
-          mg->Add(gcv,"l");
-          leg->AddEntry(gcv,"Mean value","l");
-          legindex++;
         }
-
-      if (fp->ui->stddev->isChecked())
-        {
-          TGraph *gstd = new TGraph(N);
-          gstd->SetLineWidth(2);
-          gstd->SetLineColor(kBlue);
-
-          TGraph *gstd2 = new TGraph(N);
-          gstd2->SetLineWidth(2);
-          gstd2->SetLineColor(kBlue);
-
-          for (int i = 0; i < N; i++)
-            {
-              double sum = 0;
-              for (int j = 0; j < Nrep; j++)
-                sum += xPDF[j][i];
-              sum/=Nrep;
-
-              double sum2 = 0;
-              for (int j = 0; j < Nrep; j++)
-                sum2 += pow(xPDF[j][i] - sum,2);
-              sum2 /= Nrep-1;
-              sum2 = sqrt(sum2);
-
-              double x = 0;
-              if (fp->ui->log->isChecked())
-                x= exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
-              else
-                x= xmin+i*(xmax-xmin)/N;
-
-              gstd->SetPoint(i, x, sum+sum2);
-              gstd2->SetPoint(i, x, sum-sum2);
-            }
-          mg->Add(gstd,"l");
-          mg->Add(gstd2,"l");
-          leg->AddEntry(gstd,"Std. deviation","l");
-          legindex++;
-        }
-
-      if (fp->ui->cl->isChecked())
-        {
-          TGraph *up = new TGraph(N);
-          up->SetLineWidth(2);
-          TGraph *dn = new TGraph(N);
-          dn->SetLineWidth(2);
-          for (int i = 0; i < N; i++)
-            {
-              double x = 0;
-              if (fp->ui->log->isChecked())
-                x= exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
-              else
-                x= xmin+i*(xmax-xmin)/N;
-
-              vector<double> xval;
-              for (int r = 0; r < Nrep; r++)
-                xval.push_back(xPDF[r][i]);
-              sort(xval.begin(),xval.end());
-
-              int esc = Nrep*(1-0.68)/2;
-
-              up->SetPoint(i, x, xval[Nrep-esc-1]);
-              dn->SetPoint(i, x, xval[esc]);
-            }
-          mg->Add(up,"l");
-          mg->Add(dn,"l");
-          leg->AddEntry(up,"68% c.l.","l");
-          legindex++;
-        }
-
-      mg->SetTitle(TString(name[fp->ui->PDFflavor->currentIndex()].toStdString() + ", " + fp->fPDF->PDFname().toStdString() + " members"));
-
-      mg->Draw("AL");
-
-      mg->GetXaxis()->SetTitle("x");
-      mg->GetXaxis()->CenterTitle(true);
-
-      mg->GetXaxis()->SetTitleSize(0.05);
-      mg->GetXaxis()->SetLabelSize(0.05);
-      mg->GetYaxis()->SetLabelSize(0.05);
-
-      mg->GetXaxis()->SetLimits(xmin,xmax);
-      mg->GetYaxis()->SetRangeUser(ymin,ymax);
-
+      mg->Add(g,"l");
+      if (i == 1) { leg->AddEntry(g,"Replica","l"); legindex++;}
     }
-  else
+
+  if (fp->ui->mean->isChecked())
     {
-      // Initialize apfel
-      APFEL::SetQLimits(0e0,1e4);
-      APFEL::SetPerturbativeOrder(fp->fPDF->ptord());
+      TGraph *gcv = new TGraph(N);
+      gcv->SetLineWidth(2);
+      gcv->SetLineStyle(2);
+      gcv->SetLineColor(kRed);
 
-      if (fp->fPDF->scheme() == 0)
-        APFEL::SetVFNS();
-      else
-        APFEL::SetFFNS(fp->fPDF->nf());
+      for (int i = 0; i < N; i++)
+        {
+          double sum = 0;
+          for (int j = 0; j < Nrep; j++)
+            sum += xPDF[j][i];
 
-      APFEL::SetTheory(fp->fPDF->theory().toStdString());
-/*
-      APFEL::SetAlphaQCDRef(ui->lineEdit_13->text().toDouble(),ui->lineEdit_14->text().toDouble());
+          double x = 0;
+          if (fp->ui->log->isChecked())
+            x= exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
+          else
+            x= xmin+i*(xmax-xmin)/N;
 
-      APFEL::SetAlphaQEDRef(ui->lineEdit_15->text().toDouble(),ui->lineEdit_16->text().toDouble());
-
-      if (ui->comboBox_4->currentIndex() == 0)
-        APFEL::SetPoleMasses(ui->lineEdit_10->text().toDouble(),
-                             ui->lineEdit_11->text().toDouble(),
-                             ui->lineEdit_12->text().toDouble());
-      else
-        APFEL::SetMSbarMasses(ui->lineEdit_10->text().toDouble(),
-                              ui->lineEdit_11->text().toDouble(),
-                              ui->lineEdit_12->text().toDouble());
-
-      APFEL::SetMaxFlavourPDFs(ui->spinBox_2->value());
-      APFEL::SetMaxFlavourAlpha(ui->spinBox_3->value());
-
-      APFEL::SetRenFacRatio(ui->doubleSpinBox_10->value());
-
-      APFEL::SetPDFSet(ui->lineEdit->text().toStdString());
-      APFEL::SetReplica(ui->spinBox_4->value());
-
-      APFEL::InitializeAPFEL();
-
-      APFEL::EvolveAPFEL(fp->ui->Qi, fp->ui->Qf);
-*/
+          gcv->SetPoint(i, x, sum/Nrep);
+        }
+      mg->Add(gcv,"l");
+      leg->AddEntry(gcv,"Mean value","l");
+      legindex++;
     }
+
+  if (fp->ui->stddev->isChecked())
+    {
+      TGraph *gstd = new TGraph(N);
+      gstd->SetLineWidth(2);
+      gstd->SetLineColor(kBlue);
+
+      TGraph *gstd2 = new TGraph(N);
+      gstd2->SetLineWidth(2);
+      gstd2->SetLineColor(kBlue);
+
+      for (int i = 0; i < N; i++)
+        {
+          double sum = 0;
+          for (int j = 0; j < Nrep; j++)
+            sum += xPDF[j][i];
+          sum/=Nrep;
+
+          double sum2 = 0;
+          for (int j = 0; j < Nrep; j++)
+            sum2 += pow(xPDF[j][i] - sum,2);
+          sum2 /= Nrep-1;
+          sum2 = sqrt(sum2);
+
+          double x = 0;
+          if (fp->ui->log->isChecked())
+            x= exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
+          else
+            x= xmin+i*(xmax-xmin)/N;
+
+          gstd->SetPoint(i, x, sum+sum2);
+          gstd2->SetPoint(i, x, sum-sum2);
+        }
+      mg->Add(gstd,"l");
+      mg->Add(gstd2,"l");
+      leg->AddEntry(gstd,"Std. deviation","l");
+      legindex++;
+    }
+
+  if (fp->ui->cl->isChecked())
+    {
+      TGraph *up = new TGraph(N);
+      up->SetLineWidth(2);
+      TGraph *dn = new TGraph(N);
+      dn->SetLineWidth(2);
+      for (int i = 0; i < N; i++)
+        {
+          double x = 0;
+          if (fp->ui->log->isChecked())
+            x= exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
+          else
+            x= xmin+i*(xmax-xmin)/N;
+
+          vector<double> xval;
+          for (int r = 0; r < Nrep; r++)
+            xval.push_back(xPDF[r][i]);
+          sort(xval.begin(),xval.end());
+
+          int esc = Nrep*(1-0.68)/2;
+
+          up->SetPoint(i, x, xval[Nrep-esc-1]);
+          dn->SetPoint(i, x, xval[esc]);
+        }
+      mg->Add(up,"l");
+      mg->Add(dn,"l");
+      leg->AddEntry(up,"68% c.l.","l");
+      legindex++;
+    }
+
+  mg->SetTitle(TString(name[fp->ui->PDFflavor->currentIndex()].toStdString() + ", " + fp->fPDF->PDFname().toStdString() + " members"));
+
+  mg->Draw("AL");
+
+  mg->GetXaxis()->SetTitle("x");
+  mg->GetXaxis()->CenterTitle(true);
+
+  mg->GetXaxis()->SetTitleSize(0.05);
+  mg->GetXaxis()->SetLabelSize(0.05);
+  mg->GetYaxis()->SetLabelSize(0.05);
+
+  mg->GetXaxis()->SetLimits(xmin,xmax);
+  mg->GetYaxis()->SetRangeUser(ymin,ymax);
 
   if (legindex < 4)
     for (int i = legindex; i < 4; i++)

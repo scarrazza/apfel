@@ -5,6 +5,10 @@
 #include <QDir>
 #include <QProcess>
 #include <QDebug>
+#include <cmath>
+
+#include "LHAPDF/LHAPDF.h"
+#include "APFEL/APFEL.h"
 
 PDFDialog::PDFDialog(QWidget *parent) :
   QDialog(parent),
@@ -25,6 +29,55 @@ PDFDialog::PDFDialog(QWidget *parent) :
 PDFDialog::~PDFDialog()
 {
   delete ui;
+}
+
+void PDFDialog::InitPDFset()
+{
+  if (isLHAPDF())
+    {
+      LHAPDF::initPDFSetByName(PDFname().toStdString());
+    }
+  else
+    {
+      // Initialize apfel
+      APFEL::SetQLimits(0e0,1e4);
+      APFEL::SetPerturbativeOrder(ptord());
+
+      if (scheme() == 0)
+        APFEL::SetVFNS();
+      else
+        APFEL::SetFFNS(nf());
+
+      APFEL::SetTheory(theory().toStdString());
+      APFEL::SetAlphaQCDRef(alphas(),Qalphas());
+      APFEL::SetAlphaQEDRef(alpha(),Qalpha());
+
+      if (ui->comboBox_hqscheme->currentIndex() == 0)
+        APFEL::SetPoleMasses(ui->lineEdit_mc->text().toDouble(),
+                             ui->lineEdit_mb->text().toDouble(),
+                             ui->lineEdit_mt->text().toDouble());
+      else
+        APFEL::SetMSbarMasses(ui->lineEdit_mc->text().toDouble(),
+                              ui->lineEdit_mb->text().toDouble(),
+                              ui->lineEdit_mt->text().toDouble());
+
+      APFEL::SetMaxFlavourPDFs(ui->spinBox_maxpdf->value());
+      APFEL::SetMaxFlavourAlpha(ui->spinBox_maxa->value());
+
+      APFEL::SetRenFacRatio(ui->doubleSpinBox_murmuf->value());
+
+      QString apset = "ToyLH";
+      if (ui->comboPDFset->currentIndex() != 0)
+        apset = PDFname();
+
+      qDebug() << apset;
+      APFEL::SetPDFSet(apset.toStdString());
+
+      //APFEL::SetReplica(0);
+
+      APFEL::InitializeAPFEL();
+      APFEL::EvolveAPFEL(sqrt(2.0),sqrt(2.0));
+    }
 }
 
 void PDFDialog::on_comboBox_theory_currentIndexChanged(int index)
@@ -82,7 +135,6 @@ void PDFDialog::on_dialDLAGP_valueChanged(int value)
     ui->groupBox->setEnabled(false);
   else
     ui->groupBox->setEnabled(true);
-
 }
 
 void PDFDialog::on_buttonBox_accepted()
@@ -137,4 +189,39 @@ int PDFDialog::nf()
 QString PDFDialog::theory()
 {
   return ui->comboBox_theory->currentText();
+}
+
+double PDFDialog::alpha()
+{
+  return ui->lineEdit_a->text().toDouble();
+}
+
+double PDFDialog::Qalpha()
+{
+  return ui->lineEdit_Qa->text().toDouble();
+}
+
+double PDFDialog::alphas()
+{
+  return ui->lineEdit_as->text().toDouble();
+}
+
+double PDFDialog::Qalphas()
+{
+  return ui->lineEdit_Qas->text().toDouble();
+}
+
+int PDFDialog::numberPDF()
+{
+  if (isLHAPDF())
+    {
+      return LHAPDF::numberPDF();
+    }
+  else
+    {
+      if (ui->comboPDFset->currentIndex() != 0)
+        return LHAPDF::numberPDF();
+      else
+        return 1;
+    }
 }

@@ -18,13 +18,19 @@ class PDFDialog : public QDialog
 public:
   explicit PDFDialog(QWidget *parent = 0);
   ~PDFDialog();
+  void InitPDFset();
   QString PDFname();  
+  QString theory();
   bool    isAccept() { return fisAccept; }
   bool    isLHAPDF();  
   int     ptord();
   int     scheme();
   int     nf();
-  QString theory();
+  int     numberPDF();
+  double  alpha();
+  double  Qalpha();
+  double  alphas();
+  double  Qalphas();
 
 private slots:
   void on_comboBox_theory_currentIndexChanged(int index);
