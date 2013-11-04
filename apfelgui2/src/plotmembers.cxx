@@ -54,7 +54,11 @@ void PlotMembers::on_playButton_clicked()
 {
   ui->playButton->setEnabled(false);
   QApplication::processEvents();
-  thread->start();
+
+  LHAPDF::initPDFSetByName(fPDF->PDFname().toStdString());
+  qDebug() << LHAPDF::numberPDF();
+  qDebug() << LHAPDF::xfx(0.1, 2, 0);
+  //thread->start();
 }
 
 void PlotMembers::on_checkBox_toggled(bool checked)
