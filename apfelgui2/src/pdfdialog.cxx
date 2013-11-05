@@ -41,6 +41,11 @@ void PDFDialog::InitPDFset()
     {
       // Initialize apfel
       APFEL::SetQLimits(0e0,1e4);
+      APFEL::SetNumberOfGrids(3);
+      APFEL::SetGridParameters(1,100,3,1e-9);
+      APFEL::SetGridParameters(2,50,5,0.1);
+      APFEL::SetGridParameters(3,20,5,8e-1);
+
       APFEL::SetPerturbativeOrder(ptord());
 
       if (scheme() == 0)
@@ -70,10 +75,8 @@ void PDFDialog::InitPDFset()
       if (ui->comboPDFset->currentIndex() != 0)
         apset = PDFname();
 
-      qDebug() << apset;
       APFEL::SetPDFSet(apset.toStdString());
-
-      //APFEL::SetReplica(0);
+      APFEL::SetReplica(0);
 
       APFEL::InitializeAPFEL();
       APFEL::EvolveAPFEL(sqrt(2.0),sqrt(2.0));
@@ -225,3 +228,32 @@ int PDFDialog::numberPDF()
         return 1;
     }
 }
+
+void PDFDialog::initPDF(int i)
+{
+  if (isLHAPDF())
+    LHAPDF::initPDF(i);
+  else
+    APFEL::SetReplica(i);
+}
+
+double PDFDialog::GetFlvrPDF(double x, double Q0, double Q, int f)
+{
+  if (isLHAPDF())
+    {
+      if (LHAPDF::hasPhoton() == true)
+        return (double) LHAPDF::xfxphoton(x,Q,f);
+      else
+        return (double) LHAPDF::xfx(x,Q,f);
+    }
+  else
+    {
+      APFEL::EvolveAPFEL(Q0,Q);
+      if (f != 7)
+        return (double) APFEL::xPDF(f,x);
+      else
+        return (double) APFEL::xgamma(x);
+    }
+}
+
+
