@@ -369,6 +369,11 @@ background-color: rgb(255, 255, 255);</string>
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Plot editor:</string>
+      </attribute>
+     </widget>
     </widget>
    </item>
    <item row="1" column="1">
