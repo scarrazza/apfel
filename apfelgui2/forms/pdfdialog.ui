@@ -107,6 +107,9 @@
      </item>
      <item row="0" column="1" colspan="2">
       <widget class="QDial" name="dialDLAGP">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="minimum">
         <number>0</number>
        </property>

@@ -14,6 +14,7 @@ using namespace std;
 #include <QtSvg/QSvgWidget>
 #include <QDebug>
 #include <QFileDialog>
+#include <QDesktopWidget>
 
 #include "TCanvas.h"
 #include "TF1.h"
@@ -94,6 +95,10 @@ PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
   fPlotName("memberplot.svg")
 {
   ui->setupUi(this);
+
+  QRect frect = frameGeometry();
+  frect.moveCenter(QDesktopWidget().availableGeometry().center());
+  move(frect.topLeft());
 
   long int t = static_cast<long int> (time(NULL));
   QString str;
@@ -192,9 +197,13 @@ void PlotMembers::ThreadProgress(int i)
 void PlotMembers::on_saveButton_clicked()
 {
   QString path;
-  path = QFileDialog::getSaveFileName(this,tr("Save as"),"",tr("*.eps (*.eps);;All files (*.*)"));
+  QFileDialog d(this,tr("Save as"),"",tr(".eps;;.ps;;.pdf;;.png"));
 
-  if(path != 0) thread->SaveCanvas(path + ".eps");
+  if (d.exec())
+    {
+      path = d.selectedFiles()[0];
+      if(path != 0) thread->SaveCanvas(QString(path + d.selectedNameFilter()));
+    }
 
 }
 

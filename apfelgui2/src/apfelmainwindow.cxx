@@ -11,6 +11,7 @@
 #include <QDebug>
 #include <QListView>
 #include <QListWidgetItem>
+#include <QDesktopWidget>
 
 #include "APFEL/APFEL.h"
 
@@ -21,6 +22,10 @@ APFELMainWindow::APFELMainWindow(QWidget *parent) :
   fLHAPDFpath("")
 {
   ui->setupUi(this);
+
+  QRect frect = frameGeometry();
+  frect.moveCenter(QDesktopWidget().availableGeometry().center());
+  move(frect.topLeft());
 
   connect(ui->tablePDFs, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(showDialog(QListWidgetItem*)));
 
