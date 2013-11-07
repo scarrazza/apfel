@@ -17,10 +17,11 @@ class memberthread: public QThread
   Q_OBJECT
 
 public:
-  memberthread(QObject *parent);
+  memberthread(QObject *parent,QString filename);
   ~memberthread();
   void run();      //start calculation
   void SaveCanvas(QString filename);
+  QString getFileName() { return fFileName; }
 
 signals:
   void progress(int i);
@@ -28,6 +29,7 @@ signals:
 private:
   TCanvas *fC;
   PlotMembers *fp;
+  QString fFileName;
 };
 
 
@@ -51,6 +53,7 @@ private:
   Ui::PlotMembers *ui;
   memberthread *thread;
   PDFDialog *fPDF;
+  QString fPlotName;
 
 
   friend class memberthread;

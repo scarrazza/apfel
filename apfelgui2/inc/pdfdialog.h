@@ -18,7 +18,7 @@ class PDFDialog : public QDialog
 public:
   explicit PDFDialog(QWidget *parent = 0);
   ~PDFDialog();
-  void InitPDFset();
+  void InitPDFset(double,double);
   void    initPDF(int);
   QString PDFname();  
   QString theory();
@@ -32,7 +32,7 @@ public:
   double  Qalpha();
   double  alphas();
   double  Qalphas();
-  double  GetFlvrPDF(double,double,double,int);
+  double  GetFlvrPDF(double,double,int);
 
 private slots:
   void on_comboBox_theory_currentIndexChanged(int index);
@@ -45,6 +45,9 @@ private slots:
 private:
   Ui::PDFDialog *ui;
   bool fisAccept;
+  double fQi;
+  double fQf;
+  void Evolve(int,double,double);
 };
 
 #endif // PDFDIALOG_H

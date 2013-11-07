@@ -4,6 +4,7 @@
 #include <cmath>
 #include <algorithm>
 #include <vector>
+#include <ctime>
 using namespace std;
 
 #include <QGraphicsScene>
@@ -25,6 +26,45 @@ using namespace std;
 
 #include "APFEL/APFEL.h"
 #include "LHAPDF/LHAPDF.h"
+
+
+double lharanges[][6] = {
+  {1e-5, 1.0, -0.1, 1.3, -0.5, 0.5}, // tbar
+  {1e-5, 1.0, -0.1, 1.3, -0.5, 0.5}, // bbar
+  {1e-5, 1.0, -1.0, 1.0, -0.1, 0.1}, // cbar
+  {1e-5, 1.0, -1.5, 2.5, -0.1, 0.1}, // sbar
+  {1e-5, 1.0, -0.1, 1.3, -0.1, 0.4}, // ubar
+  {1e-5, 1.0, -0.1, 1.3, -0.1, 0.4}, // dbar
+  {1e-5, 1.0, -2.5, 7.0, -0.1, 0.6}, // g
+  {1e-5, 1.0, -0.1, 1.3, -0.1, 0.6}, // d
+  {1e-5, 1.0, -0.1, 1.3, -0.1, 1.0}, // u
+  {1e-5, 1.0, -1.5, 2.5, -0.1, 0.1}, // s
+  {1e-3, 1.0, -0.1, 1.0, -0.1, 0.1}, // c
+  {1e-3, 1.0, -0.1, 1.0, -0.1, 0.5}, // b
+  {1e-5, 1.0, -0.1, 1.3, -0.5, 0.5}, // t
+  {1e-5, 1.0, -3.0, 3.0, -1.0, 1.0}, // photon
+                        };
+
+QString name[] = {
+  "x#bar{t}(x,Q)",
+  "x#bar{b}(x,Q)",
+  "x#bar{c}(x,Q)",
+  "x#bar{s}(x,Q)",
+  "x#bar{u}(x,Q)",
+  "x#bar{d}(x,Q)",
+  "xg(x,Q)",
+  "xd(x,Q)",
+  "xu(x,Q)",
+  "xs(x,Q)",
+  "xc(x,Q)",
+  "xb(x,Q)",
+  "xt(x,Q)",
+  "x#gamma(x,Q)"
+};
+
+int colors[] = { kGreen, kBlue, kRed, kOrange,
+               kViolet, kMagenta, kBlack, kYellow,
+                 kCyan, kGray};
 
 double ComputeAVG(int n, int ix, double **x)
 {
@@ -50,11 +90,17 @@ PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
   QWidget(parent),
   ui(new Ui::PlotMembers),
   thread(NULL),
-  fPDF(pdf)
+  fPDF(pdf),
+  fPlotName("memberplot.svg")
 {
   ui->setupUi(this);
 
-  thread  = new memberthread(this);
+  long int t = static_cast<long int> (time(NULL));
+  QString str;
+  str.append(QString("%1").arg(t));
+
+  fPlotName = "memberplot_" + str + ".svg";
+  thread  = new memberthread(this,fPlotName);
 
   connect(thread, SIGNAL(finished()), this, SLOT(ThreadFinished()));
   connect(thread, SIGNAL(progress(int)), this, SLOT(ThreadProgress(int)));
@@ -62,6 +108,10 @@ PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
   ui->graphicsView->scale(1.2,1.2);
 
   if (fPDF->isLHAPDF()) ui->Qi->setEnabled(false);
+
+  ui->xtitle->setText("x");
+  ui->ytitle->setText("");
+  ui->title->setText(name[ui->PDFflavor->currentIndex()]+ ", " + fPDF->PDFname()+ " members");
 }
 
 PlotMembers::~PlotMembers()
@@ -124,14 +174,14 @@ void PlotMembers::ThreadFinished()
 
   // plot to canvas
   QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
-  QGraphicsSvgItem * item = new QGraphicsSvgItem("memberplot.svg");
+  QGraphicsSvgItem * item = new QGraphicsSvgItem(fPlotName);
   scene->addItem(item);
   ui->graphicsView->setScene(scene);
   ui->graphicsView->show();
 
   ui->progressBar->setValue(0);
 
-  QFile::remove("memberplot.svg") ;
+  QFile::remove(fPlotName) ;
 }
 
 void PlotMembers::ThreadProgress(int i)
@@ -148,49 +198,16 @@ void PlotMembers::on_saveButton_clicked()
 
 }
 
-memberthread::memberthread(QObject *parent):
+memberthread::memberthread(QObject *parent, QString filename):
   QThread(parent),
-  fp((PlotMembers*)parent)
+  fp((PlotMembers*)parent),
+  fFileName(filename)
 {
 }
 
 memberthread::~memberthread()
 {
 }
-
-double lharanges[][6] = {
-  {1e-5, 1.0, -0.1, 1.3, -0.5, 0.5}, // tbar
-  {1e-5, 1.0, -0.1, 1.3, -0.5, 0.5}, // bbar
-  {1e-5, 1.0, -1.0, 1.0, -0.1, 0.1}, // cbar
-  {1e-5, 1.0, -1.5, 2.5, -0.1, 0.1}, // sbar
-  {1e-5, 1.0, -0.1, 1.3, -0.1, 0.4}, // ubar
-  {1e-5, 1.0, -0.1, 1.3, -0.1, 0.4}, // dbar
-  {1e-5, 1.0, -2.5, 7.0, -0.1, 0.6}, // g
-  {1e-5, 1.0, -0.1, 1.3, -0.1, 0.6}, // d
-  {1e-5, 1.0, -0.1, 1.3, -0.1, 1.0}, // u
-  {1e-5, 1.0, -1.5, 2.5, -0.1, 0.1}, // s
-  {1e-3, 1.0, -0.1, 1.0, -0.1, 0.1}, // c
-  {1e-3, 1.0, -0.1, 1.0, -0.1, 0.5}, // b
-  {1e-5, 1.0, -0.1, 1.3, -0.5, 0.5}, // t
-  {1e-5, 1.0, -3.0, 3.0, -1.0, 1.0}, // photon
-                        };
-
-QString name[] = {
-  "x#bar{t}(x,Q)",
-  "x#bar{b}(x,Q)",
-  "x#bar{c}(x,Q)",
-  "x#bar{s}(x,Q)",
-  "x#bar{u}(x,Q)",
-  "x#bar{d}(x,Q)",
-  "xg(x,Q)",
-  "xd(x,Q)",
-  "xu(x,Q)",
-  "xs(x,Q)",
-  "xc(x,Q)",
-  "xb(x,Q)",
-  "xt(x,Q)",
-  "x#gamma(x,Q)"
-};
 
 void memberthread::run()
 {
@@ -202,7 +219,6 @@ void memberthread::run()
     fC->SetLogx();
 
   // Initialize PDFs
-  fp->fPDF->InitPDFset();
 
   const int N = fp->ui->xpoints->value();
   double xmin = lharanges[fp->ui->PDFflavor->currentIndex()][0];
@@ -224,9 +240,10 @@ void memberthread::run()
       ymax = fp->ui->ymax->text().toDouble();
     }
 
-  const int Nrep = fp->fPDF->numberPDF();
   const double Qi = fp->ui->Qi->text().toDouble();
   const double Qf = fp->ui->Qf->text().toDouble();
+  fp->fPDF->InitPDFset(Qi,Qf);
+  const int Nrep = fp->fPDF->numberPDF();
   const int f = fp->ui->PDFflavor->currentIndex()-6;
   double **xPDF = new double*[Nrep];
   for (int i = 0; i < Nrep; i++)
@@ -267,7 +284,7 @@ void memberthread::run()
 
       TGraph *g = new TGraph(N);
       g->SetLineWidth(2);
-      g->SetLineColor(kGreen);
+      g->SetLineColor(colors[fp->ui->colorreplica->currentIndex()]);
 
       for (int ix = 0; ix < N; ix++)
         {
@@ -277,7 +294,7 @@ void memberthread::run()
           else
             x = xmin+ix*(xmax-xmin)/N;
 
-          xPDF[r-1][ix] = fp->fPDF->GetFlvrPDF(x,Qi,Qf,f);
+          xPDF[r-1][ix] = fp->fPDF->GetFlvrPDF(x,Qf,f);
           g->SetPoint(ix, x, xPDF[r-1][ix]);
 
         }
@@ -290,7 +307,7 @@ void memberthread::run()
       TGraph *gcv = new TGraph(N);
       gcv->SetLineWidth(2);
       gcv->SetLineStyle(2);
-      gcv->SetLineColor(kRed);
+      gcv->SetLineColor(colors[fp->ui->coloravg->currentIndex()]);
 
       for (int i = 0; i < N; i++)
         {
@@ -311,11 +328,11 @@ void memberthread::run()
     {
       TGraph *gstd = new TGraph(N);
       gstd->SetLineWidth(2);
-      gstd->SetLineColor(kBlue);
+      gstd->SetLineColor(colors[fp->ui->colorstddev->currentIndex()]);
 
       TGraph *gstd2 = new TGraph(N);
       gstd2->SetLineWidth(2);
-      gstd2->SetLineColor(kBlue);
+      gstd2->SetLineColor(colors[fp->ui->colorstddev->currentIndex()]);
 
       for (int i = 0; i < N; i++)
         {
@@ -341,8 +358,10 @@ void memberthread::run()
     {
       TGraph *up = new TGraph(N);
       up->SetLineWidth(2);
+      up->SetLineColor(colors[fp->ui->color68cl->currentIndex()]);
       TGraph *dn = new TGraph(N);
       dn->SetLineWidth(2);
+      dn->SetLineColor(colors[fp->ui->color68cl->currentIndex()]);
       for (int i = 0; i < N; i++)
         {
           double x = 0;
@@ -367,15 +386,18 @@ void memberthread::run()
       legindex++;
     }
 
-  mg->SetTitle(TString(name[fp->ui->PDFflavor->currentIndex()].toStdString() + ", " + fp->fPDF->PDFname().toStdString() + " members"));
-
+  mg->SetTitle(fp->ui->title->text().toStdString().c_str());
   mg->Draw("AL");
 
-  mg->GetXaxis()->SetTitle("x");
+  mg->GetXaxis()->SetTitle(fp->ui->xtitle->text().toStdString().c_str());
   mg->GetXaxis()->CenterTitle(true);
+
+  mg->GetYaxis()->SetTitle(fp->ui->ytitle->text().toStdString().c_str());
+  mg->GetYaxis()->CenterTitle(true);
 
   mg->GetXaxis()->SetTitleSize(0.05);
   mg->GetXaxis()->SetLabelSize(0.05);
+  mg->GetYaxis()->SetTitleSize(0.05);
   mg->GetYaxis()->SetLabelSize(0.05);
 
   mg->GetXaxis()->SetLimits(xmin,xmax);
@@ -394,7 +416,7 @@ void memberthread::run()
   l.SetTextColor(kBlack);
   l.DrawLatex(0.95,0.15,TString("Generated by APFEL" + TString(APFEL::GetVersion()) + ": V.Bertone, S.Carrazza, J.Rojo (arXiv:1310.1394)"));
 
-  fC->SaveAs("memberplot.svg");
+  fC->SaveAs(fFileName.toStdString().c_str());
 
   for(int i = 0; i < Nrep; i++)
     if (xPDF[i]) delete[] xPDF[i];

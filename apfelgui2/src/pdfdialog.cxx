@@ -13,7 +13,9 @@
 PDFDialog::PDFDialog(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::PDFDialog),
-  fisAccept(false)
+  fisAccept(false),
+  fQi(2),
+  fQf(2)
 {
   ui->setupUi(this);
   ui->groupBox->setEnabled(true);
@@ -31,7 +33,7 @@ PDFDialog::~PDFDialog()
   delete ui;
 }
 
-void PDFDialog::InitPDFset()
+void PDFDialog::InitPDFset(double Q0, double Q)
 {
   if (isLHAPDF())
     {
@@ -39,6 +41,8 @@ void PDFDialog::InitPDFset()
     }
   else
     {
+      fQi = Q0;
+      fQf = Q;
       // Initialize apfel
       APFEL::SetQLimits(0e0,1e4);
       APFEL::SetNumberOfGrids(3);
@@ -76,10 +80,9 @@ void PDFDialog::InitPDFset()
         apset = PDFname();
 
       APFEL::SetPDFSet(apset.toStdString());
-      APFEL::SetReplica(0);
 
       APFEL::InitializeAPFEL();
-      APFEL::EvolveAPFEL(sqrt(2.0),sqrt(2.0));
+      Evolve(0,Q0,Q);
     }
 }
 
@@ -234,10 +237,10 @@ void PDFDialog::initPDF(int i)
   if (isLHAPDF())
     LHAPDF::initPDF(i);
   else
-    APFEL::SetReplica(i);
+    Evolve(i,fQi,fQf);
 }
 
-double PDFDialog::GetFlvrPDF(double x, double Q0, double Q, int f)
+double PDFDialog::GetFlvrPDF(double x, double Q, int f)
 {
   if (isLHAPDF())
     {
@@ -248,7 +251,6 @@ double PDFDialog::GetFlvrPDF(double x, double Q0, double Q, int f)
     }
   else
     {
-      APFEL::EvolveAPFEL(Q0,Q);
       if (f != 7)
         return (double) APFEL::xPDF(f,x);
       else
@@ -256,4 +258,9 @@ double PDFDialog::GetFlvrPDF(double x, double Q0, double Q, int f)
     }
 }
 
+void PDFDialog::Evolve(int i,double Q0,double Q)
+{
+  APFEL::SetReplica(i);
+  APFEL::EvolveAPFEL(Q0,Q);
+}
 
