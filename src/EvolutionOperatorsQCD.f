@@ -109,18 +109,33 @@
             call EqualOperatorsQCDnf(nfi,M0sg,M0nsp,M0nsm,M0nsv,
      1                               MQCDsg,MQCDnsp,MQCDnsm,MQCDnsv)
             return
+         elseif(muF2.gt.muF20)then
+            sgn = 1
+         elseif(muF2.lt.muF20)then
+            sgn = - 1
          endif
 *
          mu2i(nfi) = muF20
-         do inf=nfi+1,nff
-            mu2i(inf) = m2th(inf)
-         enddo
-         do inf=nfi,nff-1
-            mu2f(inf) = m2th(inf+1) - tiny
-         enddo
+         if(sgn.eq.1)then
+            do inf=nfi+1,nff
+               mu2i(inf) = m2th(inf)
+            enddo
+            do inf=nfi,nff-1
+               mu2f(inf) = m2th(inf+1) - tiny
+            enddo
+         elseif(sgn.eq.-1)then
+            do inf=nfi-1,nff,sgn
+               mu2i(inf) = m2th(inf+1) + tiny
+            enddo
+            do inf=nfi,nff+1,sgn
+               mu2f(inf) = m2th(inf)
+            enddo
+         endif
          mu2f(nff) = muF2
 *
-         do inf=nfi,nff
+         write(62,*) nfi,nff
+         do inf=nfi,nff,sgn
+            write(62,*) nfi,nff,inf,mu2i(inf),mu2f(inf)
             wnf = inf
 *     Singlet
             call odeintsgQCD(mu2i(inf),mu2f(inf),M0sg,Msg)
