@@ -95,15 +95,28 @@
             call EqualOperatorsQEDnf(nfi,M0sg,M0nsp,M0nsm,
      1                                   MQEDsg,MQEDnsp,MQEDnsm)
             return
+         elseif(muF2.gt.muF20)then
+            sgn = 1
+         elseif(muF2.lt.muF20)then
+            sgn = - 1
          endif
 *
          mu2i(nfi) = muF20
-         do inf=nfi+1,nff
-            mu2i(inf) = m2th(inf)
-         enddo
-         do inf=nfi,nff-1
-            mu2f(inf) = m2th(inf+1)
-         enddo
+         if(sgn.eq.1)then
+            do inf=nfi+1,nff
+               mu2i(inf) = m2th(inf)
+            enddo
+            do inf=nfi,nff-1
+               mu2f(inf) = m2th(inf+1)
+            enddo
+         elseif(sgn.eq.-1)then
+            do inf=nfi-1,nff,sgn
+               mu2i(inf) = m2th(inf+1)
+            enddo
+            do inf=nfi,nff+1,sgn
+               mu2f(inf) = m2th(inf)
+            enddo
+         endif
          mu2f(nff) = muF2
 *
          do inf=nfi,nff
