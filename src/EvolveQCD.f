@@ -28,6 +28,10 @@
 *
       double precision fevQCD(0:13,0:nint_max)
 *
+      if(sgn.eq.-1)then
+         if(nf.lt.nfi) call MatchPDFs(nf,fevQCD)
+      endif
+*
       do alpha=0,nin(igrid)
 *     Initialize backup PDF
          do i=1,13
@@ -115,7 +119,9 @@
 *
 *     Apply matching conditions
 *
-      if(nf.lt.nff) call MatchPDFs(nf+1,fevQCDb)
+      if(sgn.eq.1)then
+         if(nf.lt.nff) call MatchPDFs(nf+1,fevQCDb)
+      endif
 *
 *     Copy backup PDFs into main PDFs
 *

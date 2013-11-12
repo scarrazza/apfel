@@ -43,7 +43,7 @@
 *     Rotate initial PDFs from physical to QCD evolution basis
          call PDFphys2evQCD(f0ph,fevQCD)
 *     Evolve PDFs using the QCD evolution operators
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
             call EvolveQCD(inf,fevQCD)
          enddo
 *     Rotate evolved PDFs from QCD evolution to physical basis
@@ -64,7 +64,7 @@
 *     Rotate initial PDFs from physical to QED evolution basis
          call PDFphys2evQED(f0ph,fevQED)
 *     Evolve PDFs using the QED evolution operators
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
             call EvolveQED(inf,fevQED)
          enddo
 *     Rotate evolved PDFs from QED evolution to physical basis
@@ -88,7 +88,7 @@
             fgm(alpha) = f0bos(alpha)
          enddo
 *     Evolve PDFs
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
 *     QCD evolution first
             call EvolveQCD(inf,fevQCD)
 *     Rotate QCD evolved PDFs from QCD evolution to physical basis
@@ -127,7 +127,7 @@
 *     Rotate initial PDFs from physical to QCD evolution basis
          call PDFphys2evQCD(f0ph,fevQCD)
 *     Evolve PDFs using the QCD evolution operators
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
             call EvolveQCD(inf,fevQCD)
          enddo
 *     Rotate QCD evolved PDFs from QCD evolution to physical basis
@@ -140,7 +140,7 @@
 *     Rotate PDFs from physical to QED evolution basis
          call PDFphys2evQED(fphQCD,fevQED)
 *     Evolve PDFs using the QED evolution operators
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
             call EvolveQED(inf,fevQED)
          enddo
 *     Rotate evolved PDFs from QED evolution to physical basis
@@ -166,7 +166,7 @@
             fgl(alpha) = f0bos(alpha)
          enddo
 *     Evolve PDFs
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
 *     QED evolution first
             call EvolveQED(inf,fevQED)
 *     Rotate QED evolved PDFs from QED evolution to physical basis
@@ -209,7 +209,7 @@
 *     Rotate initial PDFs from physical to QED evolution basis
          call PDFphys2evQED(f0ph,fevQED)
 *     Evolve PDFs using the QED evolution operators
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
             call EvolveQED(inf,fevQED)
          enddo
 *     Rotate evolved PDFs from QED evolution to physical basis
@@ -222,7 +222,7 @@
 *     Rotate PDFs from physical to QCD evolution basis
          call PDFphys2evQCD(fphQED,fevQCD)
 *     Evolve PDFs using the QCD evolution operators
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
             call EvolveQCD(inf,fevQCD)
          enddo
 *     Rotate evolved PDFs from QCD evolution to physical basis
@@ -248,7 +248,7 @@
             fgl(alpha) = f0bos(alpha)
          enddo
 *
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
 *        QCD x QED
             call EvolveQCD(inf,fevQCD)
             call PDFevQCD2phys(fevQCD,fphQCD)
@@ -314,7 +314,7 @@
             fgm(alpha) = f0bos(alpha)
          enddo
 *
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
             call EvolveQCD(inf,fevQCD)
             call PDFevQCD2phys(fevQCD,fphQCD)
             do alpha=0,nin(igrid)
@@ -337,7 +337,7 @@
          do alpha=0,nin(igrid)
             fgl(alpha) = f0bos(alpha)
          enddo
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
             call EvolveQED(inf,fevQED)
             call PDFevQED2phys(fevQED,fphQED)
             do alpha=0,nin(igrid)

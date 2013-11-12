@@ -175,7 +175,7 @@ c      call lambda(3,lref,lambda3)
          endif
       enddo
 * 
-      write(13,* ) "'End:'"
+      write(13,*) "'End:'"
       close(13)
 *
       write(6,*) "File ",fname(1:ln),".LHgrid produced!"
