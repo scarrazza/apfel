@@ -8,7 +8,7 @@
 using namespace std;
 
 #ifndef APFEL_VERSION
-#define APFEL_VERSION "1.0.1"
+#define APFEL_VERSION "1.0.2"
 #endif
 
 

@@ -1,5 +1,5 @@
 AC_PREREQ(2.61)
-AC_INIT([APFEL],[1.0.1],[stefano.carrazza@mi.infn.it],[apfel])
+AC_INIT([APFEL],[1.0.2],[stefano.carrazza@mi.infn.it],[apfel])
 if test "$prefix" = "$PWD"; then
   AC_MSG_ERROR([Installation into the build directory is not supported:\
  use a different --prefix argument])
