@@ -133,9 +133,7 @@
          endif
          mu2f(nff) = muF2
 *
-         write(62,*) nfi,nff
          do inf=nfi,nff,sgn
-            write(62,*) nfi,nff,inf,mu2i(inf),mu2f(inf)
             wnf = inf
 *     Singlet
             call odeintsgQCD(mu2i(inf),mu2f(inf),M0sg,Msg)
