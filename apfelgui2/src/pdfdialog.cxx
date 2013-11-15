@@ -163,11 +163,13 @@ void PDFDialog::on_comboPDFset_currentIndexChanged(int index)
   if (index == 0) {
     ui->dialDLAGP->setValue(1);
     ui->dialDLAGP->setEnabled(false);
+    ui->comboPDFerror->setCurrentIndex(0);
     ui->comboPDFerror->setEnabled(false);
   } else {
     ui->dialDLAGP->setValue(0);
     ui->dialDLAGP->setEnabled(true);
     ui->comboPDFerror->setEnabled(true);
+    ui->comboPDFerror->setCurrentIndex(1);
   }
 }
 

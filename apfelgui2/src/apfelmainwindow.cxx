@@ -2,6 +2,7 @@
 #include "ui_apfelmainwindow.h"
 #include "pdfdialog.h"
 #include "plotmembers.h"
+#include "plotall.h"
 
 #include <QInputDialog>
 #include <QDir>
@@ -160,4 +161,27 @@ void APFELMainWindow::closeEvent(QCloseEvent*)
 void APFELMainWindow::on_pushButton_2_clicked()
 {
     qApp->quit();
+}
+
+void APFELMainWindow::on_pushButton_5_clicked()
+{
+  if (ui->tablePDFs->count() != 0)
+    {
+      int i1 = 0, i2 = 0;
+      for (int i = 0; i < ui->tablePDFs->count(); i++)
+        {
+          i1 += ui->tablePDFs->item(i)->checkState()/2;
+          if (i1 == 1) i2 = i;
+        }
+
+      if (i1 == 1)
+        {
+          PlotAll *A = new PlotAll(0,fPDFs[i2]);
+          A->show();
+        }
+      else
+        QMessageBox::information(this,"Information","Please select only one PDF set before continue.");
+    }
+  else
+    QMessageBox::information(this,"Information","Please add a PDF set before continue.");
 }

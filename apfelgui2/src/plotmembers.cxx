@@ -1,10 +1,11 @@
-#include "inc/plotmembers.h"
+#include "plotmembers.h"
 #include "ui_plotmembers.h"
 #include "pdfdialog.h"
-#include <cmath>
 #include <algorithm>
 #include <vector>
 #include <ctime>
+#include <cmath>
+#include "common.h"
 using namespace std;
 
 #include <QGraphicsScene>
@@ -16,76 +17,8 @@ using namespace std;
 #include <QFileDialog>
 #include <QDesktopWidget>
 
-#include "TCanvas.h"
-#include "TF1.h"
-#include "TGraph.h"
-#include "TAxis.h"
-#include "TMultiGraph.h"
-#include "TLatex.h"
-#include "TString.h"
-#include "TLegend.h"
-
 #include "APFEL/APFEL.h"
 #include "LHAPDF/LHAPDF.h"
-
-
-double lharanges[][6] = {
-  {1e-5, 1.0, -0.1, 1.3, -0.5, 0.5}, // tbar
-  {1e-5, 1.0, -0.1, 1.3, -0.5, 0.5}, // bbar
-  {1e-5, 1.0, -1.0, 1.0, -0.1, 0.1}, // cbar
-  {1e-5, 1.0, -1.5, 2.5, -0.1, 0.1}, // sbar
-  {1e-5, 1.0, -0.1, 1.3, -0.1, 0.4}, // ubar
-  {1e-5, 1.0, -0.1, 1.3, -0.1, 0.4}, // dbar
-  {1e-5, 1.0, -2.5, 7.0, -0.1, 0.6}, // g
-  {1e-5, 1.0, -0.1, 1.3, -0.1, 0.6}, // d
-  {1e-5, 1.0, -0.1, 1.3, -0.1, 1.0}, // u
-  {1e-5, 1.0, -1.5, 2.5, -0.1, 0.1}, // s
-  {1e-3, 1.0, -0.1, 1.0, -0.1, 0.1}, // c
-  {1e-3, 1.0, -0.1, 1.0, -0.1, 0.5}, // b
-  {1e-5, 1.0, -0.1, 1.3, -0.5, 0.5}, // t
-  {1e-5, 1.0, -3.0, 3.0, -1.0, 1.0}, // photon
-                        };
-
-QString name[] = {
-  "x#bar{t}(x,Q)",
-  "x#bar{b}(x,Q)",
-  "x#bar{c}(x,Q)",
-  "x#bar{s}(x,Q)",
-  "x#bar{u}(x,Q)",
-  "x#bar{d}(x,Q)",
-  "xg(x,Q)",
-  "xd(x,Q)",
-  "xu(x,Q)",
-  "xs(x,Q)",
-  "xc(x,Q)",
-  "xb(x,Q)",
-  "xt(x,Q)",
-  "x#gamma(x,Q)"
-};
-
-int colors[] = { kGreen, kBlue, kRed, kOrange,
-               kViolet, kMagenta, kBlack, kYellow,
-                 kCyan, kGray};
-
-double ComputeAVG(int n, int ix, double **x)
-{
-  double sum = 0.0;
-  for (int i = 0; i < n; i++)
-    sum += x[i][ix];
-  return sum / n;
-}
-
-double ComputeStdDev(int n, int ix, double **x)
-{
-  double sum = 0.0;
-  double avg = ComputeAVG(n, ix, x);
-  for (int i = 0; i < n; i++)
-    sum += (x[i][ix]-avg)*(x[i][ix]-avg);
-
-  sum /= n-1;
-
-  return sqrt(sum);
-}
 
 PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
   QWidget(parent),
