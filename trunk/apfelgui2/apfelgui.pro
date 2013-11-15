@@ -35,15 +35,20 @@ DISTFILES += apfelgui
 SOURCES += src/main.cxx\
            src/apfelmainwindow.cxx \
            src/pdfdialog.cxx \
-           src/plotmembers.cxx
+           src/plotmembers.cxx \
+           src/plotall.cxx \
+           src/common.cxx
 
 HEADERS  += inc/apfelmainwindow.h \
             inc/pdfdialog.h \
-            inc/plotmembers.h
+            inc/plotmembers.h \
+            inc/plotall.h \
+            inc/common.h
 
 FORMS    += forms/apfelmainwindow.ui \
             forms/pdfdialog.ui \
-            forms/plotmembers.ui
+            forms/plotmembers.ui \
+    forms/plotall.ui
 
 RESOURCES += \
     resources/resource.qrc
