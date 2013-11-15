@@ -26,6 +26,8 @@ PDFDialog::PDFDialog(QWidget *parent) :
   ui->comboPDFset->addItems(files);
 
   exec();
+
+
 }
 
 PDFDialog::~PDFDialog()

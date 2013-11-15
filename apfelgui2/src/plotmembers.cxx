@@ -83,7 +83,6 @@ void PlotMembers::on_checkBox_toggled(bool checked)
       ui->stddev->setChecked(false);
       ui->cl->setEnabled(false);
       ui->cl->setChecked(false);
-
     }
 }
 
@@ -130,7 +129,7 @@ void PlotMembers::ThreadProgress(int i)
 void PlotMembers::on_saveButton_clicked()
 {
   QString path;
-  QFileDialog d(this,tr("Save as"),"",tr(".eps;;.ps;;.pdf;;.png"));
+  QFileDialog d(this,tr("Save as"),"",tr(".eps;;.ps;;.pdf;;.png;;.root"));
 
   if (d.exec())
     {
@@ -345,6 +344,7 @@ void memberthread::run()
   mg->GetXaxis()->SetLimits(xmin,xmax);
   mg->GetYaxis()->SetRangeUser(ymin,ymax);
 
+  leg->AddEntry("",TString("Q = " + QString::number(fp->ui->Qf->text().toDouble(),'g',3).toStdString() + " GeV"),"");
   if (legindex < 4)
     for (int i = legindex; i < 4; i++)
       leg->AddEntry(""," ","");
