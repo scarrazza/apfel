@@ -4,6 +4,7 @@
 #include "TCanvas.h"
 #include "TF1.h"
 #include "TGraph.h"
+#include "TGraphErrors.h"
 #include "TAxis.h"
 #include "TMultiGraph.h"
 #include "TLatex.h"
@@ -49,6 +50,11 @@ const QString name[] = {
 const int colors[] = { kGreen, kBlue, kRed, kOrange,
                  kViolet, kMagenta, kBlack, kYellow,
                  kCyan, kGray};
+
+const int colors2[] = {kYellow, kBlack, kMagenta, kCyan+1, kBlue+1, kGreen+1,
+                       kRed,
+                       kGreen, kBlue, kCyan+1, kMagenta, kBlack, kYellow};
+
 
 double ComputeAVG(int n, int ix, double **x);
 

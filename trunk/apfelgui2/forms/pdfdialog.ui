@@ -76,21 +76,6 @@
        <string>NNPDF (Monte Carlo)</string>
       </property>
      </item>
-     <item>
-      <property name="text">
-       <string>MSTW/CTEQ</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>ABM</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>HERAPDF</string>
-      </property>
-     </item>
     </widget>
    </item>
    <item row="0" column="3" rowspan="2">
