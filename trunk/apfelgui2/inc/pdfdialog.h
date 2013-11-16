@@ -33,6 +33,7 @@ public:
   double  alphas();
   double  Qalphas();
   double  GetFlvrPDF(double,double,int);
+  double  getLum(double,double,std::string,double);
 
 private slots:
   void on_comboBox_theory_currentIndexChanged(int index);

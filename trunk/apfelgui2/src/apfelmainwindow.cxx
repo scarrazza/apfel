@@ -4,6 +4,7 @@
 #include "plotmembers.h"
 #include "plotall.h"
 #include "plotcomparison.h"
+#include "plotlumi.h"
 
 #include <QInputDialog>
 #include <QDir>
@@ -207,6 +208,36 @@ void APFELMainWindow::on_pushButton_6_clicked()
           else
             {
               PlotComparison *A = new PlotComparison(0,pdfs);
+              A->show();
+            }
+        }
+      else
+        QMessageBox::information(this,"Information","Please select at least one PDF set before continue.");
+    }
+  else
+    QMessageBox::information(this,"Information","Please add a PDF set before continue.");
+}
+
+void APFELMainWindow::on_pushButton_7_clicked()
+{
+  if (ui->tablePDFs->count() != 0)
+    {
+      std::vector<PDFDialog*> pdfs;
+      for (int i = 0; i < ui->tablePDFs->count(); i++)
+        {
+          if (ui->tablePDFs->item(i)->checkState()/2 == 1)
+            pdfs.push_back(fPDFs[i]);
+        }
+
+      if (pdfs.size() > 0)
+        {
+          if (pdfs.size() > 40)
+            {
+              QMessageBox::information(this,"Information","Too many PDFs selected, remove sets before continue.");
+            }
+          else
+            {
+              PlotLumi *A = new PlotLumi(0,pdfs);
               A->show();
             }
         }

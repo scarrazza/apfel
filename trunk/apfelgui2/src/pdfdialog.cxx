@@ -1,6 +1,7 @@
 #include "pdfdialog.h"
 #include "ui_pdfdialog.h"
 #include "apfelmainwindow.h"
+#include "lumiintegral.h"
 
 #include <QDir>
 #include <QProcess>
@@ -26,8 +27,6 @@ PDFDialog::PDFDialog(QWidget *parent) :
   ui->comboPDFset->addItems(files);
 
   exec();
-
-
 }
 
 PDFDialog::~PDFDialog()
@@ -266,5 +265,54 @@ void PDFDialog::Evolve(int i,double Q0,double Q)
 {
   APFEL::SetReplica(i);
   APFEL::EvolveAPFEL(Q0,Q);
+}
+
+double PDFDialog::getLum(double i, double S, std::string lumi, double eps)
+{
+  if (isLHAPDF())
+    {
+      LumiIntegral *l = new LumiIntegral(eps);
+      return l->getLum(i,S,lumi);
+
+      delete l;
+    }
+  else
+    {
+      APFEL::EvolveAPFEL(fQi,i);
+
+      double res = 0;
+      if (lumi == "GG")
+        res = APFEL::LUMI(0,0,S);
+      else if (lumi == "PP")
+        res = APFEL::LUMI(7,7,S);
+      else if (lumi == "QG")
+        {
+          for (int j = 1; j <= 6; j++)
+            res += APFEL::LUMI(j,0,S) + APFEL::LUMI(-j,0,S);
+        }
+      else if (lumi == "QQ")
+        {
+          for (int j = 1; j <= 6; j++)
+            res += APFEL::LUMI(j,-j,S);
+        }
+      else if (lumi == "Q2")
+        {
+          for (int j = 1; j <= 6; j++)
+            for (int z = j; z <= 6; z++)
+               res += APFEL::LUMI(j,z,S);
+        }
+      else if (lumi == "BB")
+        res = APFEL::LUMI(5,-5,S);
+      else if (lumi == "CC")
+        res = APFEL::LUMI(4,-4,S);
+      else if (lumi == "BG")
+        res = APFEL::LUMI(5,0,S);
+      else if (lumi == "GC")
+        res = APFEL::LUMI(4,0,S);
+      else if (lumi == "PG")
+        res = APFEL::LUMI(7,0,S);
+
+      return res;
+    }
 }
 
