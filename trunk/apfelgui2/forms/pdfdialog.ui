@@ -68,11 +68,6 @@
      </property>
      <item>
       <property name="text">
-       <string>No Error (replica 0)</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
        <string>NNPDF (Monte Carlo)</string>
       </property>
      </item>

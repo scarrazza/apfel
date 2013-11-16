@@ -55,6 +55,7 @@ PlotAll::PlotAll(QWidget *parent, PDFDialog *pdf) :
 PlotAll::~PlotAll()
 {
   delete ui;
+  delete thread;
 }
 
 void PlotAll::on_playButton_clicked()

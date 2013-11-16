@@ -139,6 +139,11 @@ void PlotMembers::on_saveButton_clicked()
 
 }
 
+void PlotMembers::on_PDFflavor_currentIndexChanged(int index)
+{
+  ui->title->setText(name[index]+ ", " + fPDF->PDFname()+ " members");
+}
+
 memberthread::memberthread(QObject *parent, QString filename):
   QThread(parent),
   fp((PlotMembers*)parent),

@@ -23,18 +23,13 @@ public:
   
 private slots:
   void on_buttonAddPDF_clicked();
-
   void on_actionPreferences_triggered();
-
   void on_buttonDelPDF_clicked();
-
   void showDialog(QListWidgetItem*);
-
   void on_pushButton_clicked();
-
   void on_pushButton_2_clicked();
-
   void on_pushButton_5_clicked();
+  void on_pushButton_6_clicked();
 
 protected:
   void  closeEvent(QCloseEvent*);

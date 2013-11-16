@@ -48,13 +48,13 @@ private slots:
   void ThreadProgress(int);
   void on_automaticrange_toggled(bool checked);
   void on_saveButton_clicked();
+  void on_PDFflavor_currentIndexChanged(int index);
 
 private:
   Ui::PlotMembers *ui;
   memberthread *thread;
   PDFDialog *fPDF;
   QString fPlotName;
-
 
   friend class memberthread;
 };

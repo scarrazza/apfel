@@ -48,13 +48,22 @@ const QString name[] = {
 };
 
 const int colors[] = { kGreen, kBlue, kRed, kOrange,
-                 kViolet, kMagenta, kBlack, kYellow,
-                 kCyan, kGray};
+                       kViolet, kMagenta, kBlack, kYellow,
+                       kCyan, kGray};
 
 const int colors2[] = {kYellow, kBlack, kMagenta, kCyan+1, kBlue+1, kGreen+1,
                        kRed,
                        kGreen, kBlue, kCyan+1, kMagenta, kBlack, kYellow};
 
+const int fillcolor[] = {kGreen, kBlue, kRed, kCyan, kViolet,kYellow,kOrange,kAzure,kBlack,kGray,
+                        kGreen+1, kBlue+1, kRed+1, kCyan+1, kViolet+1,kYellow+1,kOrange+1,kAzure+1,kBlack+1,kGray+1,
+                        kGreen+2, kBlue+2, kRed+2, kCyan+2, kViolet+2,kYellow+2,kOrange+2,kAzure+2,kBlack+2,kGray+2,
+                        kGreen+3, kBlue+3, kRed+3, kCyan+3, kViolet+3,kYellow+3,kOrange+3,kAzure+3,kBlack+3,kGray+3};
+
+const int fillStyle[] = {1001, 3005, 3004, 3006, 3007, 3001, 3002, 3003, 3004, 3005,
+                         3005, 3004, 3006, 3007, 3001, 3002, 3003, 3004, 3005,
+                         3005, 3004, 3006, 3007, 3001, 3002, 3003, 3004, 3005,
+                         3005, 3004, 3006, 3007, 3001, 3002, 3003, 3004, 3005};
 
 double ComputeAVG(int n, int ix, double **x);
 
