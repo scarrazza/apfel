@@ -94,6 +94,7 @@
          if(muF2.eq.muF20)then
             call EqualOperatorsQEDnf(nfi,M0sg,M0nsp,M0nsm,
      1                                   MQEDsg,MQEDnsp,MQEDnsm)
+            sgn = 1
             return
          elseif(muF2.gt.muF20)then
             sgn = 1
