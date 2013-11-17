@@ -136,20 +136,19 @@ void APFELMainWindow::on_pushButton_clicked()
 {
   if (ui->tablePDFs->count() != 0)
     {
-      int i1 = 0, i2 = 0;
+      std::vector<int> ind;
       for (int i = 0; i < ui->tablePDFs->count(); i++)
         {
-          i1 += ui->tablePDFs->item(i)->checkState()/2;
-          if (i1 == 1) i2 = i;
+          if (ui->tablePDFs->item(i)->checkState()/2 == 1)
+            ind.push_back(i);
         }
-
-      if (i1 == 1)
+      if ((int)ind.size() > 1)
+        QMessageBox::information(this,"Information","Please select only one PDF set before continue.");
+      else
         {
-          PlotMembers *A = new PlotMembers(0,fPDFs[i2]);
+          PlotMembers *A = new PlotMembers(0,fPDFs[ind[0]]);
           A->show();
         }
-      else
-        QMessageBox::information(this,"Information","Please select only one PDF set before continue.");
     }
   else
     QMessageBox::information(this,"Information","Please add a PDF set before continue.");
@@ -169,20 +168,19 @@ void APFELMainWindow::on_pushButton_5_clicked()
 {
   if (ui->tablePDFs->count() != 0)
     {
-      int i1 = 0, i2 = 0;
+      std::vector<int> ind;
       for (int i = 0; i < ui->tablePDFs->count(); i++)
         {
-          i1 += ui->tablePDFs->item(i)->checkState()/2;
-          if (i1 == 1) i2 = i;
+          if (ui->tablePDFs->item(i)->checkState()/2 == 1)
+            ind.push_back(i);
         }
-
-      if (i1 == 1)
+      if ((int)ind.size() > 1)
+        QMessageBox::information(this,"Information","Please select only one PDF set before continue.");
+      else
         {
-          PlotAll *A = new PlotAll(0,fPDFs[i2]);
+          PlotAll *A = new PlotAll(0,fPDFs[ind[0]]);
           A->show();
         }
-      else
-        QMessageBox::information(this,"Information","Please select only one PDF set before continue.");
     }
   else
     QMessageBox::information(this,"Information","Please add a PDF set before continue.");
