@@ -51,6 +51,8 @@
          nfi = Nf_FF
          nff = Nf_FF
          wnf = Nf_FF
+*
+         sgn = 1
 *     If initial and final energies are equal return immediately the intial conditions
          if(muF2.eq.muF20)then
             call EqualOperatorsQCDnf(Nf_FF,M0sg,M0nsp,M0nsm,M0nsv,
@@ -108,6 +110,7 @@
          if(muF2.eq.muF20)then
             call EqualOperatorsQCDnf(nfi,M0sg,M0nsp,M0nsm,M0nsv,
      1                               MQCDsg,MQCDnsp,MQCDnsm,MQCDnsv)
+            sgn = 1
             return
          elseif(muF2.gt.muF20)then
             sgn = 1
