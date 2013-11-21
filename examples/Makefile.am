@@ -6,7 +6,7 @@ Tabulation_SOURCES = Tabulation.f
 SumRules_SOURCES = SumRules.f
 LHgridProduction_SOURCES = LHgridProduction.f
 Luminosity_SOURCES = Luminosity.f
-DISObservables_SOURCE = DISObservables.f
+DISObservables_SOURCES = DISObservables.f
 
 noinst_PROGRAMS += TabulationCxx SumRulesCxx LHgridProductionCxx LuminosityCxx Timing
 TabulationCxx_SOURCES = TabulationCxx.cc
