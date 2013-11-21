@@ -84,7 +84,7 @@ DIST_COMMON = INSTALL NEWS README AUTHORS ChangeLog \
 	$(top_srcdir)/configure $(am__configure_deps) \
 	$(top_srcdir)/config/config.h.in $(dist_doc_DATA) COPYING \
 	config/config.guess config/config.sub config/depcomp \
-	config/install-sh config/missing ltmain.sh config/ltmain.sh \
+	config/install-sh config/missing config/ltmain.sh \
 	$(top_srcdir)/config/config.guess \
 	$(top_srcdir)/config/config.sub \
 	$(top_srcdir)/config/install-sh $(top_srcdir)/config/ltmain.sh \
