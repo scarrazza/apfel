@@ -1,17 +1,17 @@
 AC_PREREQ(2.61)
-AC_INIT([APFEL],[1.0.2],[stefano.carrazza@mi.infn.it],[apfel])
+AC_INIT([APFEL],[2.0.0],[stefano.carrazza@mi.infn.it],[apfel])
 if test "$prefix" = "$PWD"; then
   AC_MSG_ERROR([Installation into the build directory is not supported:\
  use a different --prefix argument])
 fi
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
-AM_INIT_AUTOMAKE()
+AM_INIT_AUTOMAKE([subdir-objects])
 #m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 
 ## Library version flags (at least update the version comment with each new release version)
-VERSIONFLAGS="-version-info 1.0.1" ## for 1.0.1
+VERSIONFLAGS="-version-info 2.0.0" ## for 2.0.0
 AC_SUBST(VERSIONFLAGS)
 AC_DEFINE_UNQUOTED(APFEL_VERSION, "$PACKAGE_VERSION", "APFEL version string")
 
@@ -174,7 +174,6 @@ AC_SUBST(AM_CXXFLAGS)
 AC_CONFIG_FILES([Makefile])
 AC_CONFIG_FILES([src/Makefile])
 AC_CONFIG_FILES([include/Makefile include/APFEL/Makefile])
-AC_CONFIG_FILES([commons/Makefile])
 AC_CONFIG_FILES([ccwrap/Makefile])
 AC_CONFIG_FILES([lib/Makefile])
 AC_CONFIG_FILES([examples/Makefile])
@@ -182,4 +181,5 @@ AC_CONFIG_FILES([pywrap/Makefile pywrap/setup.py])
 AC_CONFIG_FILES([doc/Makefile])
 AC_CONFIG_FILES([bin/Makefile bin/apfel-config])
 AC_CONFIG_FILES([apfelgui/Makefile])
+AC_CONFIG_FILES([apfelgui2/Makefile])
 AC_OUTPUT

@@ -78,7 +78,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-subdir = ccwrap
+subdir = src
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/config/depcomp
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -95,9 +95,59 @@ CONFIG_HEADER = $(top_builddir)/config/config.h \
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
-libAPFELCCWrap_la_LIBADD =
-am_libAPFELCCWrap_la_OBJECTS = APFELfw.lo APFEL.lo
-libAPFELCCWrap_la_OBJECTS = $(am_libAPFELCCWrap_la_OBJECTS)
+libAPFELCore_la_LIBADD =
+am__dirstamp = $(am__leading_dot)dirstamp
+am__objects_1 = Evolution/apfelversion.lo Evolution/WelcomeMessage.lo \
+	Evolution/initParameters.lo Evolution/initGrid.lo \
+	Evolution/initIntegralsQCD.lo Evolution/initIntegralsQED.lo \
+	Evolution/initIntegralsMatching.lo Evolution/initPDFs.lo \
+	Evolution/InitializeAPFEL.lo Evolution/EvolveAPFEL.lo
+am__objects_2 = Evolution/SetAlphaQCDRef.lo \
+	Evolution/SetAlphaQEDRef.lo Evolution/SetQLimits.lo \
+	Evolution/SetPerturbativeOrder.lo Evolution/SetFFNS.lo \
+	Evolution/SetGridParameters.lo Evolution/SetMSbarMasses.lo \
+	Evolution/SetNumberOfGrids.lo Evolution/SetPDFSet.lo \
+	Evolution/SetPoleMasses.lo Evolution/SetRenFacRatio.lo \
+	Evolution/SetTheory.lo Evolution/SetVFNS.lo \
+	Evolution/SetMaxFlavourPDFs.lo Evolution/SetMaxFlavourAlpha.lo \
+	Evolution/SetReplica.lo Evolution/AlphaQCD.lo \
+	Evolution/AlphaQED.lo Evolution/HeavyQuarkMass.lo \
+	Evolution/LHAPDFgrid.lo Evolution/CleanUp.lo \
+	Evolution/EnableWelcomeMessage.lo
+am__objects_3 = Evolution/interpolants.lo
+am__objects_4 = Evolution/SplittingFunctions.lo
+am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
+	Evolution/MSbarmass.lo Evolution/lambda.lo
+am__objects_6 = Evolution/EvolutionOperatorsQCD.lo \
+	Evolution/IdentityOperatorsQCD.lo \
+	Evolution/EqualOperatorsQCDnf.lo Evolution/integrandsQCD.lo \
+	Evolution/integralsQCD.lo Evolution/RSLintegralsQCD.lo \
+	Evolution/odeintnsQCD.lo Evolution/odeintsgQCD.lo \
+	Evolution/MatchingConditions.lo \
+	Evolution/integrandsMatching.lo Evolution/integralsMatching.lo \
+	Evolution/RSLintegralsMatching.lo Evolution/MatchPDFs.lo
+am__objects_7 = Evolution/EvolutionOperatorsQED.lo \
+	Evolution/IdentityOperatorsQED.lo \
+	Evolution/EqualOperatorsQEDnf.lo Evolution/integrandsQED.lo \
+	Evolution/integralsQED.lo Evolution/RSLintegralsQED.lo \
+	Evolution/odeintnsQED.lo Evolution/odeintsgQED.lo
+am__objects_8 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
+	Evolution/PDFphys2evQED.lo Evolution/PDFevQED2phys.lo \
+	Evolution/EvolvePDFs.lo Evolution/switchGluonPhoton.lo \
+	Evolution/EvolveQCD.lo Evolution/EvolveQED.lo \
+	Evolution/toyLHPDFs.lo Evolution/xPDF.lo Evolution/xgamma.lo \
+	Evolution/NPDF.lo Evolution/Ngamma.lo Evolution/LUMI.lo
+am__objects_9 = core/dgauss.lo core/wgplg.lo core/ddilog.lo
+am__objects_10 = DIS/cc_dis.lo DIS/FF0CoefficientFunctions.lo \
+	DIS/integrands_cc.lo DIS/nc_dis.lo DIS/xcoeffunc_cc.lo \
+	DIS/xpdfs.lo DIS/dis_xsec.lo DIS/FFCoefficientFunctions.lo \
+	DIS/integrands_nc.lo DIS/PDFparam.lo DIS/xcoeffunc_nc.lo \
+	DIS/ZMCoefficientFunctions.lo
+am_libAPFELCore_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
+	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
+	$(am__objects_6) $(am__objects_7) $(am__objects_8) \
+	$(am__objects_9) $(am__objects_10)
+libAPFELCore_la_OBJECTS = $(am_libAPFELCore_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -151,8 +201,8 @@ AM_V_F77LD = $(am__v_F77LD_@AM_V@)
 am__v_F77LD_ = $(am__v_F77LD_@AM_DEFAULT_V@)
 am__v_F77LD_0 = @echo "  F77LD   " $@;
 am__v_F77LD_1 = 
-SOURCES = $(libAPFELCCWrap_la_SOURCES)
-DIST_SOURCES = $(libAPFELCCWrap_la_SOURCES)
+SOURCES = $(libAPFELCore_la_SOURCES)
+DIST_SOURCES = $(libAPFELCore_la_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -313,10 +363,37 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-EXTRA_DIST = Doxyfile
-noinst_LTLIBRARIES = libAPFELCCWrap.la
-libAPFELCCWrap_la_SOURCES = APFELfw.f APFEL.cc
-@WITH_DOXYGEN_TRUE@.PHONY = dox
+noinst_LTLIBRARIES = libAPFELCore.la
+INIT = Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParameters.f Evolution/initGrid.f Evolution/initIntegralsQCD.f \
+	Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f Evolution/initPDFs.f \
+	Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f
+
+SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
+	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f \
+	Evolution/SetMSbarMasses.f Evolution/SetNumberOfGrids.f Evolution/SetPDFSet.f Evolution/SetPoleMasses.f \
+	Evolution/SetRenFacRatio.f Evolution/SetTheory.f Evolution/SetVFNS.f Evolution/SetMaxFlavourPDFs.f \
+	Evolution/SetMaxFlavourAlpha.f Evolution/SetReplica.f Evolution/AlphaQCD.f Evolution/AlphaQED.f Evolution/HeavyQuarkMass.f \
+	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f
+
+INTER = Evolution/interpolants.f
+SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f
+COUPLINGS = Evolution/a_QCD.f Evolution/a_QED.f Evolution/MSbarmass.f Evolution/lambda.f
+EVOLUTIONQCD = Evolution/EvolutionOperatorsQCD.f Evolution/IdentityOperatorsQCD.f \
+	Evolution/EqualOperatorsQCDnf.f Evolution/integrandsQCD.f Evolution/integralsQCD.f Evolution/RSLintegralsQCD.f \
+	Evolution/odeintnsQCD.f Evolution/odeintsgQCD.f Evolution/MatchingConditions.f Evolution/integrandsMatching.f \
+	Evolution/integralsMatching.f Evolution/RSLintegralsMatching.f Evolution/MatchPDFs.f
+
+EVOLUTIONQED = Evolution/EvolutionOperatorsQED.f Evolution/IdentityOperatorsQED.f \
+	Evolution/EqualOperatorsQEDnf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f \
+	Evolution/odeintnsQED.f Evolution/odeintsgQED.f
+
+PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQED.f Evolution/PDFevQED2phys.f \
+	Evolution/EvolvePDFs.f Evolution/switchGluonPhoton.f Evolution/EvolveQCD.f Evolution/EvolveQED.f Evolution/toyLHPDFs.f \
+	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f
+
+UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f
+DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/minimax.tbl DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
+libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS)
 all: all-am
 
 .SUFFIXES:
@@ -330,9 +407,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu ccwrap/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu ccwrap/Makefile
+	  $(AUTOMAKE) --gnu src/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -362,17 +439,207 @@ clean-noinstLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
+Evolution/$(am__dirstamp):
+	@$(MKDIR_P) Evolution
+	@: > Evolution/$(am__dirstamp)
+Evolution/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) Evolution/$(DEPDIR)
+	@: > Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/apfelversion.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/WelcomeMessage.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/initParameters.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/initGrid.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/initIntegralsQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/initIntegralsQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/initIntegralsMatching.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/initPDFs.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/InitializeAPFEL.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EvolveAPFEL.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetAlphaQCDRef.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetAlphaQEDRef.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetQLimits.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetPerturbativeOrder.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetFFNS.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetGridParameters.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetMSbarMasses.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetNumberOfGrids.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetPDFSet.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetPoleMasses.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetRenFacRatio.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetTheory.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetVFNS.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetMaxFlavourPDFs.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetMaxFlavourAlpha.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetReplica.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/AlphaQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/AlphaQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/HeavyQuarkMass.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/LHAPDFgrid.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/CleanUp.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EnableWelcomeMessage.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SplittingFunctions.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/a_QCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/a_QED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/MSbarmass.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/lambda.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EvolutionOperatorsQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/IdentityOperatorsQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EqualOperatorsQCDnf.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/integrandsQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/integralsQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/RSLintegralsQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/odeintnsQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/odeintsgQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/MatchingConditions.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/integrandsMatching.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/integralsMatching.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/RSLintegralsMatching.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/MatchPDFs.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EvolutionOperatorsQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/IdentityOperatorsQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EqualOperatorsQEDnf.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/integrandsQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/integralsQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/RSLintegralsQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/odeintnsQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/odeintsgQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/PDFphys2evQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/PDFevQCD2phys.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/PDFphys2evQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/PDFevQED2phys.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EvolvePDFs.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/switchGluonPhoton.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EvolveQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EvolveQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/toyLHPDFs.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/xPDF.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/xgamma.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/NPDF.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/Ngamma.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/LUMI.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+core/$(am__dirstamp):
+	@$(MKDIR_P) core
+	@: > core/$(am__dirstamp)
+core/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) core/$(DEPDIR)
+	@: > core/$(DEPDIR)/$(am__dirstamp)
+core/dgauss.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
+core/wgplg.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
+core/ddilog.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
+DIS/$(am__dirstamp):
+	@$(MKDIR_P) DIS
+	@: > DIS/$(am__dirstamp)
+DIS/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) DIS/$(DEPDIR)
+	@: > DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/cc_dis.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/FF0CoefficientFunctions.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/integrands_cc.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/nc_dis.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/xcoeffunc_cc.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/xpdfs.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/dis_xsec.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/FFCoefficientFunctions.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/integrands_nc.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/PDFparam.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/xcoeffunc_nc.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/ZMCoefficientFunctions.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
 
-libAPFELCCWrap.la: $(libAPFELCCWrap_la_OBJECTS) $(libAPFELCCWrap_la_DEPENDENCIES) $(EXTRA_libAPFELCCWrap_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(CXXLINK)  $(libAPFELCCWrap_la_OBJECTS) $(libAPFELCCWrap_la_LIBADD) $(LIBS)
+libAPFELCore.la: $(libAPFELCore_la_OBJECTS) $(libAPFELCore_la_DEPENDENCIES) $(EXTRA_libAPFELCore_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(CXXLINK)  $(libAPFELCore_la_OBJECTS) $(libAPFELCore_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
+	-rm -f DIS/*.$(OBJEXT)
+	-rm -f DIS/*.lo
+	-rm -f Evolution/*.$(OBJEXT)
+	-rm -f Evolution/*.lo
+	-rm -f core/*.$(OBJEXT)
+	-rm -f core/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/APFEL.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Evolution/$(DEPDIR)/apfelversion.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -412,6 +679,9 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf DIS/.libs DIS/_libs
+	-rm -rf Evolution/.libs Evolution/_libs
+	-rm -rf core/.libs core/_libs
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -497,8 +767,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-@WITH_DOXYGEN_FALSE@all-local:
-all-am: Makefile $(LTLIBRARIES) all-local
+all-am: Makefile $(LTLIBRARIES)
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -526,20 +795,23 @@ clean-generic:
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
+	-rm -f DIS/$(DEPDIR)/$(am__dirstamp)
+	-rm -f DIS/$(am__dirstamp)
+	-rm -f Evolution/$(DEPDIR)/$(am__dirstamp)
+	-rm -f Evolution/$(am__dirstamp)
+	-rm -f core/$(DEPDIR)/$(am__dirstamp)
+	-rm -f core/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-@WITH_DOXYGEN_FALSE@uninstall-local:
-@WITH_DOXYGEN_FALSE@install-data-local:
-@WITH_DOXYGEN_FALSE@mostlyclean-local:
 clean: clean-am
 
 clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR)
+	-rm -rf Evolution/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -556,7 +828,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-data-local
+install-data-am:
 
 install-dvi: install-dvi-am
 
@@ -585,14 +857,14 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR)
+	-rm -rf Evolution/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
 mostlyclean: mostlyclean-am
 
 mostlyclean-am: mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool mostlyclean-local
+	mostlyclean-libtool
 
 pdf: pdf-am
 
@@ -602,36 +874,24 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-local
+uninstall-am:
 
 .MAKE: install-am install-strip
 
-.PHONY: CTAGS GTAGS TAGS all all-am all-local check check-am clean \
-	clean-generic clean-libtool clean-noinstLTLIBRARIES \
-	cscopelist-am ctags ctags-am distclean distclean-compile \
-	distclean-generic distclean-libtool distclean-tags distdir dvi \
-	dvi-am html html-am info info-am install install-am \
-	install-data install-data-am install-data-local install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	mostlyclean-local pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am uninstall-local
+.PHONY: CTAGS GTAGS TAGS all all-am check check-am clean clean-generic \
+	clean-libtool clean-noinstLTLIBRARIES cscopelist-am ctags \
+	ctags-am distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-man install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am
 
-@WITH_DOXYGEN_TRUE@dox:
-@WITH_DOXYGEN_TRUE@	$(DOXYGEN) $(top_srcdir)/ccwrap/Doxyfile || true
-@WITH_DOXYGEN_TRUE@all-local: dox
-@WITH_DOXYGEN_TRUE@	@true
-@WITH_DOXYGEN_TRUE@install-data-local:
-@WITH_DOXYGEN_TRUE@	$(install_sh_DATA) doxy/html/* $(DESTDIR)$(pkgdatadir)/doc/html
-@WITH_DOXYGEN_TRUE@mostlyclean-local:
-@WITH_DOXYGEN_TRUE@	rm -rf $(top_builddir)/ccwrap/doxy
-@WITH_DOXYGEN_TRUE@uninstall-local:
-@WITH_DOXYGEN_TRUE@	rm -rf $(DESTDIR)$(pkgdatadir)/doc; \
-@WITH_DOXYGEN_TRUE@	test ! -d $(DESTDIR)$(pkgdatadir) || rmdir --ignore-fail-on-non-empty $(DESTDIR)$(pkgdatadir)
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
