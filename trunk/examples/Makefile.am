@@ -1,11 +1,12 @@
 AM_FCFLAGS  = $(FCLIBS)
 AM_LDFLAGS = $(top_builddir)/lib/libAPFEL.la -L$(shell lhapdf-config --libdir) -lLHAPDF
 
-noinst_PROGRAMS = Tabulation SumRules LHgridProduction Luminosity
+noinst_PROGRAMS = Tabulation SumRules LHgridProduction Luminosity DISObservables
 Tabulation_SOURCES = Tabulation.f
 SumRules_SOURCES = SumRules.f
 LHgridProduction_SOURCES = LHgridProduction.f
 Luminosity_SOURCES = Luminosity.f
+DISObservables_SOURCE = DISObservables.f
 
 noinst_PROGRAMS += TabulationCxx SumRulesCxx LHgridProductionCxx LuminosityCxx Timing
 TabulationCxx_SOURCES = TabulationCxx.cc
