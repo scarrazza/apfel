@@ -18,7 +18,7 @@
       include "../commons/xbj.h"
       include "../commons/scale.h"
       include "../commons/beta.h"
-      include "../commons/ipt.h"
+      include "../commons/jpt.h"
       include "../commons/nf.h"
 **
 *     Input Varibles
