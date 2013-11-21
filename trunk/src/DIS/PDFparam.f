@@ -16,7 +16,7 @@
       include "../commons/nf.h"
       include "../commons/vfns.h"
       include "../commons/pdf.h"
-      include "../commons/ipt.h"
+      include "../commons/jpt.h"
 **
 *     Input Varibles
 *

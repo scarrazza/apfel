@@ -17,7 +17,7 @@
       include "../commons/vfns.h"
       include "../commons/heavythr.h"
       include "../commons/beta.h"
-      include "../commons/ipt.h"
+      include "../commons/jpt.h"
       include "../commons/asq.h"
       include "../commons/nf.h"
 **
