@@ -2,20 +2,20 @@
 *
 *     Parameter of the MINIMAX tabulations
 *
-      data m_coef(  1 ) /          15  /
-      data m_coef(  2 ) /          15  /
-      data m_coef(  3 ) /          15  /
-      data m_coef(  4 ) /          15  /
-      data m_coef(  5 ) /          15  /
-      data m_coef(  6 ) /          15  /
-      data m_coef(  7 ) /          15  /
-      data m_coef(  8 ) /          15  /
-      data m_coef(  9 ) /          15  /
-      data m_coef( 10 ) /          15  /
-      data m_coef( 11 ) /          15  /
-      data m_coef( 12 ) /          15  /
-      data m_coef( 13 ) /          15  /
-      data m_coef( 14 ) /          15  /
+      data m_coef(  1 ) /  15  /
+      data m_coef(  2 ) /  15  /
+      data m_coef(  3 ) /  15  /
+      data m_coef(  4 ) /  15  /
+      data m_coef(  5 ) /  15  /
+      data m_coef(  6 ) /  15  /
+      data m_coef(  7 ) /  15  /
+      data m_coef(  8 ) /  15  /
+      data m_coef(  9 ) /  15  /
+      data m_coef( 10 ) /  15  /
+      data m_coef( 11 ) /  15  /
+      data m_coef( 12 ) /  15  /
+      data m_coef( 13 ) /  15  /
+      data m_coef( 14 ) /  15  /
    
       data ximin /  0.69999999999999996D0     /
       data ximax /   10000.000000000000D0     /
