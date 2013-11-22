@@ -17,20 +17,17 @@
 ************************************************************************
       subroutine initFFNStables
 *
-      implicit real*8 (a-h, o-z)
+      implicit none
 *
       include "../commons/coeffhqmellin.h"
 *
-      open (unit=41,file="minimax.tbl",status="old")
-      read (41,fmt="(10i10)") m_coef
-      read (41,fmt="(6e23.16)") ximin,ximax,xigrid,
-     1    coef_p1,coef_p2,coef
-      close(41)
+      include "../commons/minimax.h"
 *
-*     Originally ximin = 0.4, but from a test with F2b it came out that for
-*     0.4 < xi < 0.7 the Bluemlein's parametrization is not raliable
-*
-      ximin = 0.7d0
+c      open (unit=41,file="minimax.tbl",status="old")
+c      read (41,fmt="(10i10)") m_coef
+c      read (41,fmt="(6e23.16)") ximin,ximax,xigrid,
+c     1    coef_p1,coef_p2,coef
+c      close(41)
 *
       return
       end
@@ -162,7 +159,7 @@
          DO I=0,M_COEF(ICOEF)-1
            TRANS = TRANS + COEF(ICOEF,IXI,I+1) * Z**I
          ENDDO
-         TRANS = Z**(-P1) * ( RHO -Z )**(-P2) * TRANS
+         TRANS = Z**(-P1) * ( RHO - Z )**(-P2) * TRANS
       ENDIF
 *
       RETURN
