@@ -186,3 +186,20 @@ ccccccccccccc
       subroutine fsetvfns 
       call SetVFNS
       end subroutine fsetvfns
+
+ccccccccccccc
+      subroutine fdisxsec(x,qi,qf,y,proc,scheme,pto,pdfset,irep,target,
+     1     proj,F2,F3,FL,SIGMA)
+      double precision x,qi,qf,y
+      character*2  proc
+      character*5  scheme
+      character*53 pdfset
+      character*9  target
+      character*12 proj
+      integer pto, irep
+      double precision F2(3:7),F3(3:7),FL(3:7),SIGMA(3:7)
+      
+      call DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset,irep,
+     1     target,proj,F2,F3,FL,SIGMA)
+
+      end subroutine fdisxsec

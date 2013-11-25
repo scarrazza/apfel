@@ -82,7 +82,8 @@ noinst_PROGRAMS = Tabulation$(EXEEXT) SumRules$(EXEEXT) \
 	LHgridProduction$(EXEEXT) Luminosity$(EXEEXT) \
 	DISObservables$(EXEEXT) TabulationCxx$(EXEEXT) \
 	SumRulesCxx$(EXEEXT) LHgridProductionCxx$(EXEEXT) \
-	LuminosityCxx$(EXEEXT) Timing$(EXEEXT)
+	LuminosityCxx$(EXEEXT) Timing$(EXEEXT) \
+	DISObservablesCxx$(EXEEXT)
 subdir = examples
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/config/depcomp
@@ -107,6 +108,9 @@ AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+am_DISObservablesCxx_OBJECTS = DISObservablesCxx.$(OBJEXT)
+DISObservablesCxx_OBJECTS = $(am_DISObservablesCxx_OBJECTS)
+DISObservablesCxx_LDADD = $(LDADD)
 am_LHgridProduction_OBJECTS = LHgridProduction.$(OBJEXT)
 LHgridProduction_OBJECTS = $(am_LHgridProduction_OBJECTS)
 LHgridProduction_LDADD = $(LDADD)
@@ -183,16 +187,18 @@ AM_V_F77LD = $(am__v_F77LD_@AM_V@)
 am__v_F77LD_ = $(am__v_F77LD_@AM_DEFAULT_V@)
 am__v_F77LD_0 = @echo "  F77LD   " $@;
 am__v_F77LD_1 = 
-SOURCES = $(DISObservables_SOURCES) $(LHgridProduction_SOURCES) \
-	$(LHgridProductionCxx_SOURCES) $(Luminosity_SOURCES) \
-	$(LuminosityCxx_SOURCES) $(SumRules_SOURCES) \
-	$(SumRulesCxx_SOURCES) $(Tabulation_SOURCES) \
-	$(TabulationCxx_SOURCES) $(Timing_SOURCES)
-DIST_SOURCES = $(DISObservables_SOURCES) $(LHgridProduction_SOURCES) \
-	$(LHgridProductionCxx_SOURCES) $(Luminosity_SOURCES) \
-	$(LuminosityCxx_SOURCES) $(SumRules_SOURCES) \
-	$(SumRulesCxx_SOURCES) $(Tabulation_SOURCES) \
-	$(TabulationCxx_SOURCES) $(Timing_SOURCES)
+SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
+	$(LHgridProduction_SOURCES) $(LHgridProductionCxx_SOURCES) \
+	$(Luminosity_SOURCES) $(LuminosityCxx_SOURCES) \
+	$(SumRules_SOURCES) $(SumRulesCxx_SOURCES) \
+	$(Tabulation_SOURCES) $(TabulationCxx_SOURCES) \
+	$(Timing_SOURCES)
+DIST_SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
+	$(LHgridProduction_SOURCES) $(LHgridProductionCxx_SOURCES) \
+	$(Luminosity_SOURCES) $(LuminosityCxx_SOURCES) \
+	$(SumRules_SOURCES) $(SumRulesCxx_SOURCES) \
+	$(Tabulation_SOURCES) $(TabulationCxx_SOURCES) \
+	$(Timing_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -365,6 +371,7 @@ SumRulesCxx_SOURCES = SumRulesCxx.cc
 LHgridProductionCxx_SOURCES = LHgridProductionCxx.cc
 Timing_SOURCES = Timing.cc
 LuminosityCxx_SOURCES = LuminosityCxx.cc
+DISObservablesCxx_SOURCES = DISObservablesCxx.cc
 EXTRA_DIST = TabulationPython SumRulesPython LHgridProductionPython LuminosityPython
 all: all-am
 
@@ -414,6 +421,10 @@ DISObservables$(EXEEXT): $(DISObservables_OBJECTS) $(DISObservables_DEPENDENCIES
 	@rm -f DISObservables$(EXEEXT)
 	$(AM_V_F77LD)$(F77LINK) $(DISObservables_OBJECTS) $(DISObservables_LDADD) $(LIBS)
 
+DISObservablesCxx$(EXEEXT): $(DISObservablesCxx_OBJECTS) $(DISObservablesCxx_DEPENDENCIES) $(EXTRA_DISObservablesCxx_DEPENDENCIES) 
+	@rm -f DISObservablesCxx$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(DISObservablesCxx_OBJECTS) $(DISObservablesCxx_LDADD) $(LIBS)
+
 LHgridProduction$(EXEEXT): $(LHgridProduction_OBJECTS) $(LHgridProduction_DEPENDENCIES) $(EXTRA_LHgridProduction_DEPENDENCIES) 
 	@rm -f LHgridProduction$(EXEEXT)
 	$(AM_V_F77LD)$(F77LINK) $(LHgridProduction_OBJECTS) $(LHgridProduction_LDADD) $(LIBS)
@@ -456,6 +467,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DISObservablesCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LHgridProductionCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LuminosityCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SumRulesCxx.Po@am__quote@
