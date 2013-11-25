@@ -96,6 +96,10 @@ extern "C" {
 
 #define fgetapfelversion FC_FUNC(getapfelversion, GETAPFELVERSION)
   void fgetapfelversion(char*,int len);
+
+#define fdisxsec FC_FUNC(fdisxsec, FDISXSEC)
+  void fdisxsec(double*,double*,double*,double*,char*,char*,int*,char*,
+		 int*,char*,char*,double*,double*,double*,double*);
 }
 
 #endif
