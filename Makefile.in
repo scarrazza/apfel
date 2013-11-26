@@ -871,6 +871,8 @@ uninstall-am: uninstall-dist_docDATA
 
 mostlyclean-local:
 	rm -rf a.out
+	rm -rf autom4te.cache
+	rm -rf src/DIS/.deps src/core/.deps
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

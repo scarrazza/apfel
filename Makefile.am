@@ -6,4 +6,6 @@ dist_doc_DATA = README
 
 mostlyclean-local:
 	rm -rf a.out
+	rm -rf autom4te.cache
+	rm -rf src/DIS/.deps src/core/.deps
 
