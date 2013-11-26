@@ -99,7 +99,7 @@ extern "C" {
 
 #define fdisxsec FC_FUNC(fdisxsec, FDISXSEC)
   void fdisxsec(double*,double*,double*,double*,char*,char*,int*,char*,
-		 int*,char*,char*,double*,double*,double*,double*);
+		int*,char*,char*,double*,double*,double*,double*);
 }
 
 #endif

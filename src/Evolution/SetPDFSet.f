@@ -18,9 +18,9 @@
       character*100 name
 *
 c      ln = index(name,char(0)) - 1
-      if(name.eq."ToyLH")then
+      if(name(1:5).eq."ToyLH")then
          ln = 5
-      elseif(name.eq."private")then
+      elseif(name(1:7).eq."private")then
          ln = 7
       else
          ln = index(name,"LHgrid") + 5

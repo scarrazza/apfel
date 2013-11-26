@@ -345,11 +345,11 @@
 *     Define Observable and check the consistency of the
 *     input parameters.
 *
-      IF(TARGET.EQ."PROTON")THEN
+      IF(TARGET(1:6).EQ."PROTON")THEN
          INUCL = 0
-      ELSEIF(TARGET.EQ."NEUTRON")THEN
+      ELSEIF(TARGET(1:7).EQ."NEUTRON")THEN
          INUCL = 1
-      ELSEIF(TARGET.EQ."ISOSCALAR")THEN
+      ELSEIF(TARGET(1:9).EQ."ISOSCALAR")THEN
          INUCL = 2
       ELSE
          WRITE(6,*) "In nc_dis.f:"
@@ -357,9 +357,9 @@
          CALL EXIT(-10)
       ENDIF
 *
-      IF(PROJ.EQ."ELECTRON")THEN
+      IF(PROJ(1:8).EQ."ELECTRON")THEN
          IE = 1
-      ELSEIF(PROJ.EQ."POSITRON")THEN
+      ELSEIF(PROJ(1:8).EQ."POSITRON")THEN
          IE = 0
       ELSE
          WRITE(6,*) "In nc_dis.f:"
@@ -367,13 +367,13 @@
          CALL EXIT(-10)
       ENDIF
 *
-      IF(PROC.EQ."EM")THEN
+      IF(PROC(1:2).EQ."EM")THEN
          INC = 0
          DO I=1,6
             BQ(I) = EQ2(I) 
             DQ(I) = 0.0D0
          ENDDO
-      ELSEIF(PROC.EQ."NC")THEN
+      ELSEIF(PROC(1:2).EQ."NC")THEN
          INC = 1
          PZ = Q2 / ( Q2 + MZ**2D0 ) / ( 4D0 * SW * ( 1D0 - SW ) )
          DO I=1,6
@@ -391,8 +391,8 @@
 *
       VFNS  = SCHEME
       WVFNS = VFNS
-      IF(VFNS.NE."ZMVN".AND.VFNS.NE."FFNS".AND.
-     1   VFNS.NE."FFN0".AND.VFNS.NE."FONLL")THEN
+      IF(VFNS(1:4).NE."ZMVN".AND.VFNS(1:4).NE."FFNS".AND.
+     1   VFNS(1:4).NE."FFN0".AND.VFNS(1:5).NE."FONLL")THEN
          WRITE(6,*) "In nc_dis.f:"
          WRITE(6,*) "Invalid evolution scheme: VFNS = ",VFNS
          CALL EXIT(-10)
