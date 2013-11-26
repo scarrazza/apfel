@@ -8,7 +8,7 @@ AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
 AM_MAINTAINER_MODE([disable])
-#m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 
 ## Library version flags (at least update the version comment with each new release version)
@@ -126,12 +126,6 @@ fi
 
 ## SWIG version checks
 if test x$enable_pywrap == xyes -a ! -e pywrap/apfel_wrap.cc; then
-#  AC_DEFUN(AC_PROG_SWIG, [AC_CHECK_PROG(SWIG,swig,yes)])
-#  AC_PROG_SWIG
-#  if test x"${SWIG}" != x"yes" ; then
-#      AC_MSG_ERROR([Please install SWIG before trying to build.])
-#  fi    
-
   AC_PATH_PROG(SWIG, swig)
   if test -x "$SWIG"; then
     swig_version=`$SWIG -version 2>&1 | grep Version | cut -f3 -d" "`
