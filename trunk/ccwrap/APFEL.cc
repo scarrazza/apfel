@@ -191,7 +191,7 @@ namespace APFEL {
     char cproj[SIZE+1];
     strncpy(cproj, proj.c_str(), SIZE);
 
-    fdisxsec(&x,&qi,&qf,&y,cproc,cscheme,&pto,cpdfset,
-	     &irep,ctarget,cproj,F2,F3,FL,sigma);
+    fdisxsec(&x,&qi,&qf,&y,cproc,cscheme,&pto,cpdfset,&irep,ctarget, cproj,
+	     F2,F3,FL,sigma);
   }
 }

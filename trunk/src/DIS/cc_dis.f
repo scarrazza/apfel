@@ -221,19 +221,19 @@
 *
 *     Define Observable
 *
-      IF(TARGET.EQ."PROTON")THEN
+      IF(TARGET(1:6).EQ."PROTON")THEN
          IBENCH = 2
          ZNUCL  = 1D0
          ANUCL  = 1D0
-      ELSEIF(TARGET.EQ."NEUTRON")THEN
+      ELSEIF(TARGET(1:7).EQ."NEUTRON")THEN
          IBENCH = 2
          ZNUCL  = 0D0
          ANUCL  = 1D0
-      ELSEIF(TARGET.EQ."ISOSCALAR")THEN
+      ELSEIF(TARGET(1:9).EQ."ISOSCALAR")THEN
          IBENCH = 1
          ZNUCL  = 1D0
          ANUCL  = 2D0
-      ELSEIF(TARGET.EQ."IRON")THEN
+      ELSEIF(TARGET(1:4).EQ."IRON")THEN
          IBENCH = 0
          ZNUCL  = 23.403D0
          ANUCL  = 49.618D0
@@ -244,16 +244,16 @@
       ENDIF
       FRAT = ZNUCL / ANUCL
 *
-      IF(PROJ.EQ."ELECTRON")THEN
+      IF(PROJ(1:8).EQ."ELECTRON")THEN
          NEUT  = - 1
          F3SGN = 1
-      ELSEIF(PROJ.EQ."POSITRON")THEN
+      ELSEIF(PROJ(1:8).EQ."POSITRON")THEN
          NEUT  = 1
          F3SGN = 1
-      ELSEIF(PROJ.EQ."NEUTRINO")THEN
+      ELSEIF(PROJ(1:8).EQ."NEUTRINO")THEN
          NEUT  = 1
          F3SGN = - 1
-      ELSEIF(PROJ.EQ."ANTINEUTRINO")THEN
+      ELSEIF(PROJ(1:12).EQ."ANTINEUTRINO")THEN
          NEUT  = - 1
          F3SGN = - 1
       ELSE
@@ -264,8 +264,8 @@
 *
       VFNS  = SCHEME
       WVFNS = VFNS
-      IF(VFNS.NE."ZMVN".AND.VFNS.NE."FFNS".AND.
-     1   VFNS.NE."FFN0".AND.VFNS.NE."FONLL")THEN
+      IF(VFNS(1:4).NE."ZMVN".AND.VFNS(1:4).NE."FFNS".AND.
+     1   VFNS(1:4).NE."FFN0".AND.VFNS(1:5).NE."FONLL")THEN
          WRITE(6,*) "In cc_dis.f:"
          WRITE(6,*) "Invalid evolution scheme: VFNS = ",VFNS
          CALL EXIT(-10)
