@@ -65,10 +65,8 @@ namespace APFEL {
   }
 
   char* GetVersion(void)
-  {    
-    char* apfelversion = new char[5];
-    fgetapfelversion(apfelversion,5);
-    return apfelversion;
+  {        
+    return "2.0.0";
   }
 
   void CleanUp(void)
