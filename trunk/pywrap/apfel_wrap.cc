@@ -3610,10 +3610,10 @@ SWIG_FromCharPtrAndSize(const char* carray, size_t size)
 }
 
 
-SWIGINTERNINLINE PyObject * 
-SWIG_FromCharPtr(const char *cptr)
-{ 
-  return SWIG_FromCharPtrAndSize(cptr, (cptr ? strlen(cptr) : 0));
+SWIGINTERNINLINE PyObject *
+SWIG_From_std_string  (const std::string& s)
+{
+  return SWIG_FromCharPtrAndSize(s.data(), s.size());
 }
 
 
@@ -4754,11 +4754,11 @@ fail:
 
 SWIGINTERN PyObject *_wrap_GetVersion(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  char *result = 0 ;
+  std::string result;
   
   if (!PyArg_ParseTuple(args,(char *)":GetVersion")) SWIG_fail;
-  result = (char *)APFEL::GetVersion();
-  resultobj = SWIG_FromCharPtr((const char *)result);
+  result = APFEL::GetVersion();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
   return resultobj;
 fail:
   return NULL;
