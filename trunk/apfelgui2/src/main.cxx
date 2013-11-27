@@ -4,10 +4,7 @@
 
 int main(int argc, char *argv[])
 {
-  QLocale loc = QLocale::system(); // current locale
-  loc.setNumberOptions(QLocale::c().numberOptions()); // borrow number options from the "C" locale
-  QLocale::setDefault(loc); // set as default
- 
+  QLocale::setDefault(QLocale(QLocale::English, QLocale::UnitedStates));
   QApplication a(argc, argv);
   APFELMainWindow w;
   w.show();
