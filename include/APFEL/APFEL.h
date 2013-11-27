@@ -53,7 +53,7 @@ namespace APFEL {
   double LUMI(int i, int j, double S);
 
   /// Get APFEL version
-  char* GetVersion(void);
+  std::string GetVersion(void);
 
   /// Cleanup parameters
   void CleanUp(void);
