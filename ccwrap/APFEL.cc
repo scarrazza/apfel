@@ -66,8 +66,8 @@ namespace APFEL {
 
   char* GetVersion(void)
   {    
-    char* apfelversion = new char[6];
-    fgetapfelversion(apfelversion,6);
+    char* apfelversion = new char[5];
+    fgetapfelversion(apfelversion,5);
     return apfelversion;
   }
 
