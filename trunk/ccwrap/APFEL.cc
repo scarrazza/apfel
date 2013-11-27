@@ -64,7 +64,7 @@ namespace APFEL {
     return flumi(&i,&j,&S);
   }
 
-  char* GetVersion(void)
+  std::string GetVersion(void)
   {        
     return "2.0.0";
   }
