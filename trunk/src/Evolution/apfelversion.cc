@@ -17,8 +17,8 @@ extern "C" {
   #define fgetapfelversion FC_FUNC(getapfelversion, GETAPFELVERSION)
   void fgetapfelversion(char* fversion, int length) {
     string version = APFEL_VERSION;    
-    strncpy(fversion, version.c_str(), length);    
-    for (size_t i = strlen(fversion); i < (unsigned) length; ++i) {
+    strncpy(fversion, version.c_str(),  version.length()+1);    
+    for (size_t i = strlen(fversion); i < (unsigned) version.length()+1; ++i) {
       fversion[i] = ' ';
     }
   }
