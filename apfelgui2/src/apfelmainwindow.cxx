@@ -34,7 +34,7 @@ APFELMainWindow::APFELMainWindow(QWidget *parent) :
 
   // Set Status bar text
   statusBar()->showMessage(QString("APFEL ") +
-                           APFEL::GetVersion() +
+                           QString(APFEL::GetVersion().c_str()) +
                            QString(": V. Bertone, S. Carrazza and J. Rojo (arXiv:1310.1394)"));
 
   QFile input("apfelconfig.ini");

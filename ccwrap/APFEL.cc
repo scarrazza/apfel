@@ -9,6 +9,7 @@
 using namespace std;
 
 #define SIZE 999
+#define VERSION "2.0.0"
 
 namespace APFEL {
 
@@ -64,9 +65,9 @@ namespace APFEL {
     return flumi(&i,&j,&S);
   }
 
-  std::string GetVersion(void)
-  {        
-    return "2.0.0";
+  std::string GetVersion(void) 
+  { 
+    return VERSION; 
   }
 
   void CleanUp(void)
