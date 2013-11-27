@@ -250,7 +250,7 @@ double PDFDialog::GetFlvrPDF(double x, double Q, int f)
       if (LHAPDF::hasPhoton() == true)
         return (double) LHAPDF::xfxphoton(x,Q,f);
       else
-        return (double) LHAPDF::xfx(x,Q,f);
+        return (double) LHAPDF::xfx((double)x,(double)Q,f);
     }
   else
     {
