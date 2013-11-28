@@ -128,14 +128,15 @@ void PlotMembers::ThreadProgress(int i)
 
 void PlotMembers::on_saveButton_clicked()
 {
-  QString path;
-  QFileDialog d(this,tr("Save as"),"",tr(".eps;;.ps;;.pdf;;.png;;.root"));
+  QString path = QFileDialog::getSaveFileName(this,tr("Save as"),"",tr(".eps;;.ps;;.pdf;;.png;;.root"));
 
+  /*
   if (d.exec())
     {
       path = d.selectedFiles()[0];
       if(path != 0) thread->SaveCanvas(QString(path + d.selectedNameFilter()));
     }
+    */
 
 }
 
