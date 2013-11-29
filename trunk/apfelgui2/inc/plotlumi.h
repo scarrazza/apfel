@@ -54,6 +54,7 @@ private:
   lumithread *thread;
   std::vector<PDFDialog*> fPDF;
   QString fPlotName;
+  int fRef;
 
   friend class lumithread;
 

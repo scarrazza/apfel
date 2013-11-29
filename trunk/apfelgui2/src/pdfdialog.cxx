@@ -166,10 +166,22 @@ void PDFDialog::on_comboPDFset_currentIndexChanged(int index)
     ui->dialDLAGP->setEnabled(false);    
     ui->comboPDFerror->setEnabled(false);
     ui->comboPDFerror->setCurrentIndex(0);
+    ui->member->setEnabled(false);
+    ui->member->setValue(0);
   } else {
     ui->dialDLAGP->setValue(0);
     ui->dialDLAGP->setEnabled(true);
     ui->comboPDFerror->setEnabled(true);
+    if (ui->comboPDFerror->currentIndex() == 0)
+      {
+        ui->member->setEnabled(true);
+        ui->member->setValue(0);
+      }
+    else
+      {
+        ui->member->setEnabled(false);
+        ui->member->setValue(0);
+      }
   }
 }
 
@@ -256,6 +268,14 @@ double PDFDialog::GetFlvrPDFCV(double x, double Q, int f)
     {
       switch (Etype) {
         case ER_NONE:
+          {
+            initPDF(ui->member->value());
+            if (LHAPDF::hasPhoton() == true)
+              avg = LHAPDF::xfxphoton(x,Q,f);
+            else
+              avg = LHAPDF::xfx(x,Q,f);
+            break;
+          }
         case ER_EIG:
         case ER_EIG90:
         case ER_SYMEIG:
@@ -288,6 +308,14 @@ double PDFDialog::GetFlvrPDFCV(double x, double Q, int f)
     {
       switch (Etype) {
         case ER_NONE:
+          {
+            initPDF(ui->member->value());
+            if (f != 7)
+              avg = APFEL::xPDF(f,x);
+            else
+              avg = APFEL::xgamma(x);
+            break;
+          }
         case ER_EIG:
         case ER_EIG90:
         case ER_SYMEIG:
@@ -551,3 +579,22 @@ int PDFDialog::GetErrorType()
   return ui->comboPDFerror->currentIndex();
 }
 
+
+void PDFDialog::on_comboPDFerror_currentIndexChanged(int index)
+{
+  if (index == 0)
+    {
+      ui->member->setEnabled(true);
+      ui->member->setValue(0);
+    }
+  else
+    {
+      ui->member->setEnabled(false);
+      ui->member->setValue(0);
+    }
+}
+
+int PDFDialog::GetReplica()
+{
+  return ui->member->value();
+}

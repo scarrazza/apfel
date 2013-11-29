@@ -167,7 +167,7 @@ void plotthread::run()
   double ymax = 1;;
   int legindex = 0;
 
-  if (fp->ui->logy->isChecked()) ymin = 1e-9;
+  if (fp->ui->logy->isChecked()) ymin = 1e-5;
 
   if (!fp->ui->automaticrange->isChecked())
     {
@@ -200,6 +200,10 @@ void plotthread::run()
       else x[i] = xmin+i*(xmax-xmin)/N;
     }
 
+  int scales [] = { fp->ui->gluon->value(),
+                    fp->ui->down->value(),fp->ui->up->value(),fp->ui->strange->value(),
+                    fp->ui->charm->value(),fp->ui->bottom->value(),fp->ui->top->value()
+                  };
   for (int fl = -nf; fl <= nf; fl++)
     {
       emit progress( (fl+nf)*100./(2*nf+1));
@@ -221,15 +225,24 @@ void plotthread::run()
           else
             xf = fp->fPDF->GetFlvrPDFCV(x[ix],Qf,fl);
 
+          xf /= scales[abs(fl)];
+
           g->SetPoint(ix,x[ix],xf);
 
           if (fp->ui->stddev->isChecked())
-            g->SetPointError(ix,0, fp->fPDF->GetFlvrError(x[ix],Qf,fl,up,dn));
+            {
+              double std = fp->fPDF->GetFlvrError(x[ix],Qf,fl,up,dn)/scales[abs(fl)];
+              g->SetPointError(ix,0,std);
+            }
           else
             g->SetPointError(ix,0, 0);
         }
 
-      leg->AddEntry(g,name[fl+6].toStdString().c_str(),"l"); legindex++;
+      if (scales[abs(fl)] != 1)
+        leg->AddEntry(g,TString(name[fl+6].toStdString() + "/" + Form("%d",scales[abs(fl)])),"l");
+      else
+        leg->AddEntry(g,name[fl+6].toStdString().c_str(),"l");
+      legindex++;
       mg->Add(g,"le3");
     }
 

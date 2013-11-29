@@ -22,7 +22,8 @@ PlotLumi::PlotLumi(QWidget *parent,std::vector<PDFDialog*> pdf) :
   ui(new Ui::PlotLumi),
   thread(NULL),
   fPDF(pdf),
-  fPlotName("lumiplot.png")
+  fPlotName("lumiplot.png"),
+  fRef(0)
 {
   ui->setupUi(this);
 
@@ -63,11 +64,7 @@ PlotLumi::~PlotLumi()
 
 void PlotLumi::on_referenceSet_currentIndexChanged(int index)
 {
-  PDFDialog *tmp = fPDF[index];
-  PDFDialog *pre = fPDF[0];
-
-  fPDF[0] = tmp;
-  fPDF[index] = pre;
+  fRef = index;
 }
 
 void PlotLumi::on_automaticrange_toggled(bool checked)
@@ -204,10 +201,16 @@ void lumithread::run()
   TMultiGraph *mg = new TMultiGraph();
 
   double *refx = new double[N];
+
+  vector<int> indRef;
+  indRef.push_back(fp->fRef);
+  for (int i = 0; i < (int) fp->fPDF.size(); i++)
+    if (i != fp->fRef) indRef.push_back(i);
+
   for (int set = 0; set < (int) fp->fPDF.size(); set++)
     {
-      fp->fPDF[set]->InitPDFset(Qi,xmax);
-      const int Nrep = fp->fPDF[set]->numberPDF();
+      fp->fPDF[indRef[set]]->InitPDFset(Qi,xmax);
+      const int Nrep = fp->fPDF[indRef[set]]->numberPDF();
 
       int memi = 1;
       int memf = Nrep;
@@ -244,9 +247,9 @@ void lumithread::run()
 
           for (int r = memi; r <= memf; r++)
             {
-              fp->fPDF[set]->initPDF(r);
+              fp->fPDF[indRef[set]]->initPDF(r);
 
-              ggflux[r-memi] = fp->fPDF[set]->getLum(mH, S, lumis[fp->ui->PDFflavor->currentIndex()],eps);
+              ggflux[r-memi] = fp->fPDF[indRef[set]]->getLum(mH, S, lumis[fp->ui->PDFflavor->currentIndex()],eps);
               xmH[imH-1]   = mH; //sqrt(mH*mH/S);
 
             }
@@ -285,7 +288,7 @@ void lumithread::run()
           mg->Add(gdn,"l");
         }
 
-      leg->AddEntry(g,TString(fp->fPDF[set]->PDFname().toStdString()),"fl");
+      leg->AddEntry(g,TString(fp->fPDF[indRef[set]]->PDFname().toStdString()),"fl");
 
     }
 
