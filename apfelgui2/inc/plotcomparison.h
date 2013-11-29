@@ -54,6 +54,7 @@ private:
   comparisonthread *thread;
   std::vector<PDFDialog*> fPDF;
   QString fPlotName;
+  int fRef;
 
   friend class comparisonthread;
 };

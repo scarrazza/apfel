@@ -44,34 +44,17 @@ background-color: rgb(255, 255, 255);</string>
        <string>Physical setup</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="10" column="1" colspan="2">
-        <widget class="QRadioButton" name="lin">
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="text">
-          <string>Linear x scale</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0" colspan="2">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Initial scale (GeV):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLineEdit" name="Qi">
-         <property name="text">
-          <string>1.4142135623731</string>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0" colspan="3">
         <widget class="Line" name="line">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="cmenergy">
+         <property name="text">
+          <string>8000</string>
          </property>
         </widget>
        </item>
@@ -132,10 +115,10 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_3">
+       <item row="7" column="2">
+        <widget class="QLineEdit" name="integration">
          <property name="text">
-          <string>Luminosity:</string>
+          <string>1e-5</string>
          </property>
         </widget>
        </item>
@@ -146,10 +129,31 @@ background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="0" colspan="2">
-        <widget class="QLabel" name="label_9">
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_13">
          <property name="text">
-          <string>Number x points:</string>
+          <string>Integration eps:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="Qi">
+         <property name="text">
+          <string>1.4142135623731</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Luminosity:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Reference set:</string>
          </property>
         </widget>
        </item>
@@ -173,26 +177,6 @@ background-color: rgb(255, 255, 255);</string>
          </property>
          <property name="text">
           <string>Automatic range selection</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Reference set:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0">
-        <widget class="QRadioButton" name="log">
-         <property name="layoutDirection">
-          <enum>Qt::RightToLeft</enum>
-         </property>
-         <property name="text">
-          <string>Log. x scale</string>
          </property>
          <property name="checked">
           <bool>true</bool>
@@ -283,10 +267,10 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </layout>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_13">
+       <item row="9" column="0" colspan="2">
+        <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>Integration eps:</string>
+          <string>Number x points:</string>
          </property>
         </widget>
        </item>
@@ -300,8 +284,12 @@ background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="4" column="2">
-        <widget class="QComboBox" name="referenceSet"/>
+       <item row="0" column="0" colspan="2">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Initial scale (GeV):</string>
+         </property>
+        </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="label_14">
@@ -310,17 +298,29 @@ background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="2">
-        <widget class="QLineEdit" name="integration">
+       <item row="4" column="2">
+        <widget class="QComboBox" name="referenceSet"/>
+       </item>
+       <item row="10" column="1" colspan="2">
+        <widget class="QRadioButton" name="lin">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
          <property name="text">
-          <string>1e-5</string>
+          <string>Linear x scale</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="cmenergy">
+       <item row="10" column="0">
+        <widget class="QRadioButton" name="log">
+         <property name="layoutDirection">
+          <enum>Qt::RightToLeft</enum>
+         </property>
          <property name="text">
-          <string>8000</string>
+          <string>Log. x scale</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

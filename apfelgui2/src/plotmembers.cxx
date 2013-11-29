@@ -190,7 +190,7 @@ void memberthread::run()
       ymin = lharanges[fp->ui->PDFflavor->currentIndex()][4];
       ymax = lharanges[fp->ui->PDFflavor->currentIndex()][5];
     }
-  if (fp->ui->logy->isChecked()) ymin = 1e-9;
+  if (fp->ui->logy->isChecked()) ymin = 1e-5;
 
   if (!fp->ui->automaticrange->isChecked())
     {
@@ -241,7 +241,7 @@ void memberthread::run()
       emit progress(r*100/memf);
 
       int rep = r;
-      if (memf == 1) rep = fp->ui->setmember->value();
+      if (memf == 1) rep = fp->fPDF->GetReplica();
       fp->fPDF->initPDF(rep);
 
       TGraph *g = new TGraph(N);

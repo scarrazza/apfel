@@ -37,6 +37,7 @@ public:
   double  getLum(double,double,std::string,double);
   double  GetFlvrError(double x, double Q, int f,double& uperr, double& dnerr);
   int     GetErrorType();
+  int     GetReplica();
 
 private slots:
   void on_comboBox_theory_currentIndexChanged(int index);
@@ -45,6 +46,8 @@ private slots:
   void on_buttonBox_accepted();
   void on_buttonBox_rejected();
   void on_comboPDFset_currentIndexChanged(int index);
+
+  void on_comboPDFerror_currentIndexChanged(int index);
 
 private:
   Ui::PDFDialog *ui;

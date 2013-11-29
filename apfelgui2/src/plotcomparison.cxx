@@ -3,6 +3,7 @@
 #include "pdfdialog.h"
 #include "common.h"
 #include <cmath>
+#include <vector>
 
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
@@ -15,13 +16,15 @@
 
 #include "APFEL/APFEL.h"
 #include "LHAPDF/LHAPDF.h"
+using namespace std;
 
 PlotComparison::PlotComparison(QWidget *parent,std::vector<PDFDialog*> pdf) :
   QWidget(parent),
   ui(new Ui::PlotComparison),
   thread(NULL),
   fPDF(pdf),
-  fPlotName("compareplot.png")
+  fPlotName("compareplot.png"),
+  fRef(0)
 {
   ui->setupUi(this);
 
@@ -106,11 +109,7 @@ void PlotComparison::on_PDFflavor_currentIndexChanged(int index)
 
 void PlotComparison::on_referenceSet_currentIndexChanged(int index)
 {
-  PDFDialog *tmp = fPDF[index];
-  PDFDialog *pre = fPDF[0];
-
-  fPDF[0] = tmp;
-  fPDF[index] = pre;
+  fRef = index;
 }
 
 void PlotComparison::on_ratio_toggled(bool checked)
@@ -156,8 +155,11 @@ void comparisonthread::run()
   fC->SetTickx();
   fC->SetTicky();
 
-  if (fp->ui->log->isChecked())
+  if (fp->ui->logx->isChecked())
     fC->SetLogx();
+
+  if (fp->ui->logy->isChecked())
+    fC->SetLogy();
 
   // Initialize PDFs
 
@@ -167,11 +169,13 @@ void comparisonthread::run()
   double ymin = lharanges[fp->ui->PDFflavor->currentIndex()][2];
   double ymax = lharanges[fp->ui->PDFflavor->currentIndex()][3];
 
-  if (fp->ui->lin->isChecked())
+  if (!fp->ui->logx->isChecked())
     {
       ymin = lharanges[fp->ui->PDFflavor->currentIndex()][4];
       ymax = lharanges[fp->ui->PDFflavor->currentIndex()][5];
     }
+
+  if (fp->ui->logy->isChecked()) ymin = 1e-5;
 
   if (fp->ui->ratio->isChecked())
     {
@@ -191,7 +195,7 @@ void comparisonthread::run()
   const double Qf = fp->ui->Qf->text().toDouble();
 
   TLegend *leg = NULL;
-  if (fp->ui->log->isChecked())
+  if (fp->ui->logx->isChecked())
     leg = new TLegend(0.479885,0.673729,0.859195,0.883475);
   else
     leg = new TLegend(0.12931,0.673729,0.507184,0.883475);
@@ -202,14 +206,24 @@ void comparisonthread::run()
   TMultiGraph *mg = new TMultiGraph();
 
   double *refx = new double[N];
+
+  double *x = new double[N];
+  for (int i = 0; i < N; i++)
+    {
+      if (fp->ui->logx->isChecked()) x[i] = exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
+      else x[i] = xmin+i*(xmax-xmin)/N;
+    }
+
+  vector<int> indRef;
+  indRef.push_back(fp->fRef);
+  for (int i = 0; i < (int) fp->fPDF.size(); i++)
+    if (i != fp->fRef) indRef.push_back(i);
+
   for (int set = 0; set < (int) fp->fPDF.size(); set++)
     {
-      fp->fPDF[set]->InitPDFset(Qi,Qf);
-      const int Nrep = fp->fPDF[set]->numberPDF();
+      emit progress(set*100/fp->fPDF.size());
+      fp->fPDF[indRef[set]]->InitPDFset(Qi,Qf);
       const int f = fp->ui->PDFflavor->currentIndex()-6;
-
-      int memi = 1;
-      int memf = Nrep;
 
       TGraphErrors *g = new TGraphErrors(N);
       g->SetLineWidth(2);
@@ -233,51 +247,25 @@ void comparisonthread::run()
       gdn->SetLineStyle(1);
       gdn->SetLineColor(fillcolor[set]+2);
 
-      double **xPDF = new double*[Nrep];
-      for (int r = memi; r <= memf; r++)
-        {
-          emit progress((r-1)*100/memf);
-
-          xPDF[r-memi] = new double[N];
-          fp->fPDF[set]->initPDF(r);
-
-          for (int ix = 0; ix < N; ix++)
-            {
-              double x = 0;
-              if (fp->ui->log->isChecked())
-                x = exp(log(xmin)+ix*(log(xmax)-log(xmin)/N));
-              else
-                x = xmin+ix*(xmax-xmin)/N;
-
-              xPDF[r-memi][ix] = fp->fPDF[set]->GetFlvrPDFCV(x,Qf,f);
-            }
-        }
-
+      double up = 0, dn = 0;
       for (int ix = 0; ix < N; ix++)
-        {
-          double x = 0;
-          if (fp->ui->log->isChecked())
-            x = exp(log(xmin)+ix*(log(xmax)-log(xmin)/N));
-          else
-            x = xmin+ix*(xmax-xmin)/N;
-
-          double xf = xPDF[0][ix];
-          if (memf > 1) xf = ComputeAVG(Nrep, ix, xPDF);
+        {         
+          double xf = fp->fPDF[indRef[set]]->GetFlvrPDFCV(x[ix],Qf,f);
 
           if (fp->ui->ratio->isChecked()) {
               if (set == 0) refx[ix] = xf;
               xf /= refx[ix];
             }
 
-          g->SetPoint(ix,x, xf);
-          gcv->SetPoint(ix, x, xf);
+          g->SetPoint(ix,x[ix], xf);
+          gcv->SetPoint(ix, x[ix], xf);
 
-          if (fp->ui->stddev->isChecked() && memf > 1) {
-              double xferr = ComputeStdDev(Nrep, ix, xPDF);
+          if (fp->ui->stddev->isChecked() && fp->fPDF[indRef[set]]->numberPDF() > 1) {
+              double xferr = fp->fPDF[indRef[set]]->GetFlvrError(x[ix],Qf,f,up,dn);
               if (fp->ui->ratio->isChecked()) xferr /= refx[ix];
               g->SetPointError(ix,0, xferr);
-              gup->SetPoint(ix,x,xf+xferr);
-              gdn->SetPoint(ix,x,xf-xferr);
+              gup->SetPoint(ix,x[ix],xf+xferr);
+              gdn->SetPoint(ix,x[ix],xf-xferr);
             }
           else
             g->SetPointError(ix,0, 0);
@@ -293,15 +281,11 @@ void comparisonthread::run()
           mg->Add(gdn,"l");
         }
 
-      leg->AddEntry(g,TString(fp->fPDF[set]->PDFname().toStdString()),"fl");
-
-      for (int i = 0; i < memf; i++)
-        if (xPDF[i]) delete[] xPDF[i];
-      delete[] xPDF;
-
+      leg->AddEntry(g,TString(fp->fPDF[indRef[set]]->PDFname().toStdString()),"fl");
     }
 
   delete[] refx;
+  delete[] x;
 
   mg->SetTitle(fp->ui->title->text().toStdString().c_str());
   mg->Draw("AL");
