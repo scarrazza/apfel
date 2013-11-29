@@ -68,7 +68,32 @@
      </property>
      <item>
       <property name="text">
-       <string>NNPDF (Monte Carlo)</string>
+       <string>No error</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Monte Carlo - Standard Deviation</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Monte Carlo - 68% c.l.</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Hessian - Eigenstate 68% c.l.</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Hessian - Eigenstate 90% c.l.</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Hessian - Symmetric Eigenstate</string>
       </property>
      </item>
     </widget>

@@ -6,6 +6,7 @@
 #include <ctime>
 #include <cmath>
 #include "common.h"
+#include "utils.h"
 using namespace std;
 
 #include <QGraphicsScene>
@@ -46,6 +47,19 @@ PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
   ui->graphicsView->scale(1.2,1.2);
 
   if (fPDF->isLHAPDF()) ui->Qi->setEnabled(false);
+  if (fPDF->numberPDF() == 1)
+    {
+      ui->checkBox->setEnabled(false);
+      ui->stddev->setEnabled(false);
+      ui->stddev->setChecked(false);
+      ui->cl->setEnabled(false);
+      ui->cl->setChecked(false);
+    }
+
+  if (fPDF->GetErrorType() != ER_MC && fPDF->GetErrorType() != ER_MC68) {
+    ui->cl->setEnabled(false);
+    ui->cl->setChecked(false);
+  }
 
   ui->xtitle->setText("x");
   ui->ytitle->setText("");
@@ -128,16 +142,11 @@ void PlotMembers::ThreadProgress(int i)
 
 void PlotMembers::on_saveButton_clicked()
 {
-  QString path = QFileDialog::getSaveFileName(this,tr("Save as"),"",tr(".eps;;.ps;;.pdf;;.png;;.root"));
-
-  /*
-  if (d.exec())
-    {
-      path = d.selectedFiles()[0];
-      if(path != 0) thread->SaveCanvas(QString(path + d.selectedNameFilter()));
-    }
-    */
-
+  QString selectedFilter;
+  QString path = QFileDialog::getSaveFileName(this,
+                                              tr("Save as"),"",
+                                              tr(".eps;;.ps;;.pdf;;.png;;.root"),&selectedFilter);
+  if (path != 0) thread->SaveCanvas(path + selectedFilter);
 }
 
 void PlotMembers::on_PDFflavor_currentIndexChanged(int index)
@@ -162,8 +171,11 @@ void memberthread::run()
   fC->SetTickx();
   fC->SetTicky();
 
-  if (fp->ui->log->isChecked())
+  if (fp->ui->logx->isChecked())
     fC->SetLogx();
+
+  if (fp->ui->logy->isChecked())
+    fC->SetLogy();
 
   // Initialize PDFs
 
@@ -173,11 +185,12 @@ void memberthread::run()
   double ymin = lharanges[fp->ui->PDFflavor->currentIndex()][2];
   double ymax = lharanges[fp->ui->PDFflavor->currentIndex()][3];
 
-  if (fp->ui->lin->isChecked())
+  if (!fp->ui->logx->isChecked())
     {
       ymin = lharanges[fp->ui->PDFflavor->currentIndex()][4];
       ymax = lharanges[fp->ui->PDFflavor->currentIndex()][5];
     }
+  if (fp->ui->logy->isChecked()) ymin = 1e-9;
 
   if (!fp->ui->automaticrange->isChecked())
     {
@@ -200,8 +213,7 @@ void memberthread::run()
         xPDF[i][j] = 0.0;
     }
 
-
-  int memi = 1;
+  int memi = 0;
   int memf = Nrep;
   if (!fp->ui->checkBox->isChecked())
     {
@@ -212,43 +224,47 @@ void memberthread::run()
         }
     }
 
+  TMultiGraph *mg = new TMultiGraph();
+  mg->SetTitle(fp->ui->title->text().toStdString().c_str());
+
   TLegend *leg = new TLegend(0.603448,0.673729,0.981322,0.883475);
   leg->SetBorderSize(0);
   leg->SetFillColor(0);
   leg->SetFillStyle(0);
   int legindex = 0;
 
-  TMultiGraph *mg = new TMultiGraph();
+  double *x = new double[N];
+  for (int i = 0; i < N; i++)
+    {
+      if (fp->ui->logx->isChecked()) x[i] = exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
+      else x[i] = xmin+i*(xmax-xmin)/N;
+    }
 
+  //////////////////////////////
+  /// REPLICAS
+  //////////////////////////////
   for (int r = memi; r <= memf; r++)
     {
-      emit progress((r-1)*100/memf);
+      emit progress(r*100/memf);
 
-      if (memf == 1)
-        fp->fPDF->initPDF(fp->ui->setmember->value());
-      else
-        fp->fPDF->initPDF(r);
+      int rep = r;
+      if (memf == 1) rep = fp->ui->setmember->value();
+      fp->fPDF->initPDF(rep);
 
       TGraph *g = new TGraph(N);
       g->SetLineWidth(2);
       g->SetLineColor(colors[fp->ui->colorreplica->currentIndex()]);
 
-      for (int ix = 0; ix < N; ix++)
-        {
-          double x = 0;          
-          if (fp->ui->log->isChecked())
-            x = exp(log(xmin)+ix*(log(xmax)-log(xmin)/N));
-          else
-            x = xmin+ix*(xmax-xmin)/N;
+      for (int i = 0; i < N; i++)
+        g->SetPoint(i, x[i], fp->fPDF->GetFlvrPDF(x[i],Qf,f));
 
-          xPDF[r-1][ix] = fp->fPDF->GetFlvrPDF(x,Qf,f);
-          g->SetPoint(ix, x, xPDF[r-1][ix]);
-
-        }
       mg->Add(g,"l");
-      if (r == 1) { leg->AddEntry(g,"Replica","l"); legindex++;}
+      if (r == 1) { leg->AddEntry(g,"Members","l"); legindex++;}
     }
 
+  //////////////////////////////
+  /// Central values
+  //////////////////////////////
   if (fp->ui->mean->isChecked())
     {
       TGraph *gcv = new TGraph(N);
@@ -257,20 +273,15 @@ void memberthread::run()
       gcv->SetLineColor(colors[fp->ui->coloravg->currentIndex()]);
 
       for (int i = 0; i < N; i++)
-        {
-          double x = 0;
-          if (fp->ui->log->isChecked())
-            x= exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
-          else
-            x= xmin+i*(xmax-xmin)/N;
+        gcv->SetPoint(i, x[i], fp->fPDF->GetFlvrPDFCV(x[i],Qf,f));
 
-          gcv->SetPoint(i, x, ComputeAVG(Nrep,i,xPDF));
-        }
       mg->Add(gcv,"l");
-      leg->AddEntry(gcv,"Mean value","l");
-      legindex++;
+      leg->AddEntry(gcv,"Central value","l"); legindex++;
     }
 
+  //////////////////////////////
+  /// Std. dev
+  //////////////////////////////
   if (fp->ui->stddev->isChecked())
     {
       TGraph *gstd = new TGraph(N);
@@ -281,59 +292,48 @@ void memberthread::run()
       gstd2->SetLineWidth(2);
       gstd2->SetLineColor(colors[fp->ui->colorstddev->currentIndex()]);
 
+      double uperr, dnerr;
       for (int i = 0; i < N; i++)
-        {
-          double x = 0;
-          if (fp->ui->log->isChecked())
-            x= exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
-          else
-            x= xmin+i*(xmax-xmin)/N;
-
-          double avg = ComputeAVG(Nrep,i,xPDF);
-          double stddev = ComputeStdDev(Nrep,i,xPDF);
-
-          gstd->SetPoint(i, x, avg+stddev);
-          gstd2->SetPoint(i, x, avg-stddev);
+        {          
+          const double avg = fp->fPDF->GetFlvrPDFCV(x[i],Qf,f);
+          const double stddev = fp->fPDF->GetFlvrError(x[i],Qf,f,uperr,dnerr);
+          gstd->SetPoint(i, x[i], avg+stddev);
+          gstd2->SetPoint(i, x[i], avg-stddev);          
         }
+
       mg->Add(gstd,"l");
       mg->Add(gstd2,"l");
-      leg->AddEntry(gstd,"Std. deviation","l");
-      legindex++;
+      leg->AddEntry(gstd,"Std. deviation","l"); legindex++;
     }
 
+  //////////////////////////////
+  /// 68% cl.
+  //////////////////////////////
   if (fp->ui->cl->isChecked())
     {
       TGraph *up = new TGraph(N);
       up->SetLineWidth(2);
       up->SetLineColor(colors[fp->ui->color68cl->currentIndex()]);
+
       TGraph *dn = new TGraph(N);
       dn->SetLineWidth(2);
       dn->SetLineColor(colors[fp->ui->color68cl->currentIndex()]);
+
+      double uperr, dnerr;
       for (int i = 0; i < N; i++)
-        {
-          double x = 0;
-          if (fp->ui->log->isChecked())
-            x= exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
-          else
-            x= xmin+i*(xmax-xmin)/N;                  
-
-          vector<double> xval;
-          for (int r = 0; r < Nrep; r++)
-            xval.push_back(xPDF[r][i]);
-          sort(xval.begin(),xval.end());
-
-          int esc = Nrep*(1-0.68)/2;
-
-          up->SetPoint(i, x, xval[Nrep-esc-1]);
-          dn->SetPoint(i, x, xval[esc]);
+        {              
+          fp->fPDF->GetFlvrError(x[i],Qf,f,uperr,dnerr);
+          up->SetPoint(i, x[i], uperr);
+          dn->SetPoint(i, x[i], dnerr);
         }
+
       mg->Add(up,"l");
       mg->Add(dn,"l");
-      leg->AddEntry(up,"68% c.l.","l");
-      legindex++;
+      leg->AddEntry(up,"68% c.l.","l"); legindex++;
     }
 
-  mg->SetTitle(fp->ui->title->text().toStdString().c_str());
+  delete[] x;
+
   mg->Draw("AL");
 
   mg->GetXaxis()->SetTitle(fp->ui->xtitle->text().toStdString().c_str());
@@ -365,11 +365,6 @@ void memberthread::run()
   l.DrawLatex(0.95,0.15,TString("Generated by APFEL" + TString(APFEL::GetVersion()) + ": V.Bertone, S.Carrazza, J.Rojo (arXiv:1310.1394)"));
 
   fC->SaveAs(fFileName.toStdString().c_str());
-
-  for(int i = 0; i < Nrep; i++)
-    if (xPDF[i]) delete[] xPDF[i];
-  delete[] xPDF;
-
 }
 
 void memberthread::SaveCanvas(QString filename)

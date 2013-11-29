@@ -247,29 +247,6 @@ background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
-        <widget class="QRadioButton" name="log">
-         <property name="layoutDirection">
-          <enum>Qt::RightToLeft</enum>
-         </property>
-         <property name="text">
-          <string>Log. x scale</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1" colspan="2">
-        <widget class="QRadioButton" name="lin">
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
-         </property>
-         <property name="text">
-          <string>Linear x scale</string>
-         </property>
-        </widget>
-       </item>
        <item row="10" column="0" colspan="3">
         <widget class="QCheckBox" name="automaticrange">
          <property name="layoutDirection">
@@ -367,6 +344,29 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </layout>
        </item>
+       <item row="9" column="0">
+        <widget class="QCheckBox" name="logx">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string>Log. x scale</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1" colspan="2">
+        <widget class="QCheckBox" name="logy">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="text">
+          <string>Log. y scale</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
@@ -405,7 +405,7 @@ background-color: rgb(255, 255, 255);</string>
        <item row="7" column="0">
         <widget class="QLabel" name="label_13">
          <property name="text">
-          <string>Replica color:</string>
+          <string>Member color:</string>
          </property>
         </widget>
        </item>
