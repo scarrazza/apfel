@@ -69,14 +69,11 @@ void PlotComparison::on_playButton_clicked()
 
 void PlotComparison::on_saveButton_clicked()
 {
-  QString path;
-  QFileDialog d(this,tr("Save as"),"",tr(".eps;;.ps;;.pdf;;.png;;.root"));
-
-  if (d.exec())
-    {
-      path = d.selectedFiles()[0];
-      if(path != 0) thread->SaveCanvas(QString(path + d.selectedNameFilter()));
-    }
+  QString selectedFilter;
+  QString path = QFileDialog::getSaveFileName(this,
+                                              tr("Save as"),"",
+                                              tr(".eps;;.ps;;.pdf;;.png;;.root"),&selectedFilter);
+  if (path != 0) thread->SaveCanvas(path + selectedFilter);
 }
 
 void PlotComparison::ThreadFinished()
@@ -252,7 +249,7 @@ void comparisonthread::run()
               else
                 x = xmin+ix*(xmax-xmin)/N;
 
-              xPDF[r-memi][ix] = fp->fPDF[set]->GetFlvrPDF(x,Qf,f);
+              xPDF[r-memi][ix] = fp->fPDF[set]->GetFlvrPDFCV(x,Qf,f);
             }
         }
 

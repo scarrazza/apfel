@@ -122,14 +122,11 @@ void PlotAll::ThreadProgress(int i)
 
 void PlotAll::on_saveButton_clicked()
 {
-  QString path;
-  QFileDialog d(this,tr("Save as"),"",tr(".eps;;.ps;;.pdf;;.png;;.root"));
-
-  if (d.exec())
-    {
-      path = d.selectedFiles()[0];
-      if(path != 0) thread->SaveCanvas(QString(path + d.selectedNameFilter()));
-    }
+  QString selectedFilter;
+  QString path = QFileDialog::getSaveFileName(this,
+                                              tr("Save as"),"",
+                                              tr(".eps;;.ps;;.pdf;;.png;;.root"),&selectedFilter);
+  if (path != 0) thread->SaveCanvas(path + selectedFilter);
 }
 
 plotthread::plotthread(QObject *parent, QString filename):
@@ -223,7 +220,7 @@ void plotthread::run()
               else
                 x = xmin+ix*(xmax-xmin)/N;
 
-              xPDF[r-memi][ix] = fp->fPDF->GetFlvrPDF(x,Qf,fl);
+              xPDF[r-memi][ix] = fp->fPDF->GetFlvrPDFCV(x,Qf,fl);
               if (fl == 0)
                 xPDF[r-memi][ix] /= 10;
             }

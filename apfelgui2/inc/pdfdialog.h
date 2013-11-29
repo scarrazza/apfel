@@ -32,8 +32,11 @@ public:
   double  Qalpha();
   double  alphas();
   double  Qalphas();
+  double  GetFlvrPDFCV(double,double,int);
   double  GetFlvrPDF(double,double,int);
   double  getLum(double,double,std::string,double);
+  double  GetFlvrError(double x, double Q, int f,double& uperr, double& dnerr);
+  int     GetErrorType();
 
 private slots:
   void on_comboBox_theory_currentIndexChanged(int index);

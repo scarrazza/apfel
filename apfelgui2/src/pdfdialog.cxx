@@ -15,8 +15,8 @@ PDFDialog::PDFDialog(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::PDFDialog),
   fisAccept(false),
-  fQi(2),
-  fQf(2)
+  fQi(sqrt(2.0)),
+  fQf(sqrt(2.0))
 {
   ui->setupUi(this);
   ui->groupBox->setEnabled(true);
@@ -163,8 +163,9 @@ void PDFDialog::on_comboPDFset_currentIndexChanged(int index)
 {
   if (index == 0) {
     ui->dialDLAGP->setValue(1);
-    ui->dialDLAGP->setEnabled(false);
+    ui->dialDLAGP->setEnabled(false);    
     ui->comboPDFerror->setEnabled(false);
+    ui->comboPDFerror->setCurrentIndex(0);
   } else {
     ui->dialDLAGP->setValue(0);
     ui->dialDLAGP->setEnabled(true);
@@ -224,11 +225,14 @@ int PDFDialog::numberPDF()
 {
   if (isLHAPDF())
     {
-      return LHAPDF::numberPDF();
+      if (ui->comboPDFerror->currentIndex() != ER_NONE)
+        return LHAPDF::numberPDF();
+      else
+        return 1;
     }
   else
     {
-      if (ui->comboPDFset->currentIndex() != 0)
+      if (ui->comboPDFerror->currentIndex() != ER_NONE)
         return LHAPDF::numberPDF();
       else
         return 1;
@@ -243,14 +247,43 @@ void PDFDialog::initPDF(int i)
     Evolve(i,fQi,fQf);
 }
 
-double PDFDialog::GetFlvrPDF(double x, double Q, int f)
+double PDFDialog::GetFlvrPDFCV(double x, double Q, int f)
 {
+  double avg = 0;
+  int Etype = ui->comboPDFerror->currentIndex();
+
   if (isLHAPDF())
     {
-      if (LHAPDF::hasPhoton() == true)
-        return (double) LHAPDF::xfxphoton(x,Q,f);
-      else
-        return (double) LHAPDF::xfx((double)x,(double)Q,f);
+      switch (Etype) {
+        case ER_NONE:
+        case ER_EIG:
+        case ER_EIG90:
+        case ER_SYMEIG:
+          {
+            initPDF(0);
+            if (LHAPDF::hasPhoton() == true)
+              avg = LHAPDF::xfxphoton(x,Q,f);
+            else
+              avg = LHAPDF::xfx(x,Q,f);
+            break;
+          }
+        case ER_MC:
+        case ER_MC68:
+          {
+            double *y = new double[numberPDF()];
+            for (int i = 0; i < numberPDF(); i++)
+              {
+                initPDF(i+1);
+                if (LHAPDF::hasPhoton() == true)
+                  y[i] = LHAPDF::xfxphoton(x,Q,f);
+                else
+                  y[i] = LHAPDF::xfx(x,Q,f);
+              }
+            avg = ComputeAVG(numberPDF(),y);
+            delete[] y;
+            break;
+          }
+        }
     }
   else
     {
@@ -258,7 +291,146 @@ double PDFDialog::GetFlvrPDF(double x, double Q, int f)
         return (double) APFEL::xPDF(f,x);
       else
         return (double) APFEL::xgamma(x);
+
+      switch (Etype) {
+        case ER_NONE:
+        case ER_EIG:
+        case ER_EIG90:
+        case ER_SYMEIG:
+          {
+            initPDF(0);
+            if (f != 7)
+              avg = APFEL::xPDF(f,x);
+            else
+              avg = APFEL::xgamma(x);
+            break;
+          }
+        case ER_MC:
+        case ER_MC68:
+          {
+            double *y = new double[numberPDF()];
+            for (int i = 0; i < numberPDF(); i++)
+              {
+                initPDF(i+1);
+                if (f != 7)
+                  y[i] = APFEL::xPDF(f,x);
+                else
+                  y[i] = APFEL::xgamma(x);
+              }
+            avg = ComputeAVG(numberPDF(),y);
+            delete[] y;
+            break;
+          }
+        }
     }
+
+  return avg;
+}
+
+double PDFDialog::GetFlvrError(double x, double Q, int f,double &uperr, double &dnerr)
+{
+  double err = 0;
+  int Etype = ui->comboPDFerror->currentIndex();
+
+  if (isLHAPDF())
+    {
+      switch (Etype) {
+        case ER_NONE:
+          {
+            break;
+          }
+        case ER_MC:
+        case ER_MC68:
+          {
+            double *y = new double[numberPDF()];
+            vector<double> yval;
+            for (int i = 0; i < numberPDF(); i++)
+              {
+                initPDF(i+1);
+                if (LHAPDF::hasPhoton() == true)
+                  y[i] = LHAPDF::xfxphoton(x,Q,f);
+                else
+                  y[i] = LHAPDF::xfx(x,Q,f);
+                yval.push_back(y[i]);
+              }
+            err = ComputeStdDev(numberPDF(),y);
+
+            delete[] y;
+
+            sort(yval.begin(), yval.end());
+            int esc = numberPDF()*(1-0.68)/2;
+
+            uperr = yval[numberPDF()-esc-1];
+            dnerr = yval[esc];
+
+            break;
+          }
+        case ER_EIG:
+        case ER_EIG90:
+          {
+            double *y = new double[numberPDF()];
+            for (int i = 0; i < numberPDF(); i++)
+              {
+                initPDF(i+1);
+                if (LHAPDF::hasPhoton() == true)
+                  y[i] = LHAPDF::xfxphoton(x,Q,f);
+                else
+                  y[i] = LHAPDF::xfx(x,Q,f);
+              }
+            err = ComputeEigErr(numberPDF(),y);
+            if (Etype == ER_EIG90) err /= 1.64485;
+
+            delete[] y;
+
+            break;
+          }
+        case ER_SYMEIG:
+          {
+            double *y = new double[numberPDF()];
+            for (int i = 0; i < numberPDF(); i++)
+              {
+                initPDF(i+1);
+                if (LHAPDF::hasPhoton() == true)
+                  y[i] = LHAPDF::xfxphoton(x,Q,f);
+                else
+                  y[i] = LHAPDF::xfx(x,Q,f);
+              }
+
+            err = ComputeSymEigErr(numberPDF(),GetFlvrPDFCV(x,Q,f),y);
+
+            delete[] y;
+            break;
+          }
+        }
+    }
+  else
+    {
+
+    }
+
+  return err;
+}
+
+double PDFDialog::GetFlvrPDF(double x, double Q, int f)
+{
+  double res = 0;
+
+  if (isLHAPDF())
+    {
+      if (LHAPDF::hasPhoton() == true)
+        res = LHAPDF::xfxphoton(x,Q,f);
+      else
+        res = LHAPDF::xfx(x,Q,f);
+    }
+  else
+    {
+      if (f != 7)
+        res = APFEL::xPDF(f,x);
+      else
+        res = APFEL::xgamma(x);
+    }
+
+  return res;
 }
 
 void PDFDialog::Evolve(int i,double Q0,double Q)
@@ -314,5 +486,10 @@ double PDFDialog::getLum(double i, double S, std::string lumi, double eps)
 
       return res;
     }
+}
+
+int PDFDialog::GetErrorType()
+{
+  return ui->comboPDFerror->currentIndex();
 }
 
