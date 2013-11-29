@@ -210,10 +210,6 @@ void lumithread::run()
   for (int set = 0; set < (int) fp->fPDF.size(); set++)
     {
       fp->fPDF[indRef[set]]->InitPDFset(Qi,xmax);
-      const int Nrep = fp->fPDF[indRef[set]]->numberPDF();
-
-      int memi = 1;
-      int memf = Nrep;
 
       TGraphErrors *g = new TGraphErrors(N);
       g->SetLineWidth(2);
@@ -242,38 +238,24 @@ void lumithread::run()
         {
           emit progress((imH-1)*100/N);
           double mH = xmin * pow(xmax/xmin, double(imH-1)/(N-1));
-
-          double *ggflux = new double[memf];
-
-          for (int r = memi; r <= memf; r++)
-            {
-              fp->fPDF[indRef[set]]->initPDF(r);
-
-              ggflux[r-memi] = fp->fPDF[indRef[set]]->getLum(mH, S, lumis[fp->ui->PDFflavor->currentIndex()],eps);
-              xmH[imH-1]   = mH; //sqrt(mH*mH/S);
-
-            }
-
-	  double cv = ggflux[0];
-	  if (fp->ui->stddev->isChecked()) cv = ComputeAVG(memf,ggflux);
-	  if (set == 0) refx[imH-1] = cv;
-	  cv /= refx[imH-1];
+          xmH[imH-1] = mH;
 
 	  double cverr = 0;
-	  if (fp->ui->stddev->isChecked() && memf > 1) cverr = ComputeStdDev(memf,ggflux);
+	  double cv = fp->fPDF[indRef[set]]->getLum(mH, S, lumis[fp->ui->PDFflavor->currentIndex()],eps,cverr);
+
+	  if (set == 0) refx[imH-1] = cv;
+	  cv /= refx[imH-1];
 	  cverr /= refx[imH-1];
 
 	  g->SetPoint(imH-1, xmH[imH-1], cv);
-	  g->SetPointError(imH-1,0,cverr);
-
 	  gcv->SetPoint(imH-1,xmH[imH-1], cv);
-	  if (fp->ui->stddev->isChecked())
+
+	  if (fp->ui->stddev->isChecked() && fp->fPDF[indRef[set]]->numberPDF() > 1)
 	    {
+	      g->SetPointError(imH-1,0,cverr);
 	      gup->SetPoint(imH-1,xmH[imH-1], cv+cverr);
 	      gdn->SetPoint(imH-1,xmH[imH-1], cv-cverr);
 	    }
-
-          delete[] ggflux;
         }
 
       delete[] xmH;

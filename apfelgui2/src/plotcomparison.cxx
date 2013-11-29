@@ -195,7 +195,7 @@ void comparisonthread::run()
   const double Qf = fp->ui->Qf->text().toDouble();
 
   TLegend *leg = NULL;
-  if (fp->ui->logx->isChecked())
+  if (!fp->ui->logx->isChecked())
     leg = new TLegend(0.479885,0.673729,0.859195,0.883475);
   else
     leg = new TLegend(0.12931,0.673729,0.507184,0.883475);
