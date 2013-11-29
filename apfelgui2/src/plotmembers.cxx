@@ -56,7 +56,7 @@ PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
       ui->cl->setChecked(false);
     }
 
-  if (fPDF->GetErrorType() != ER_MC && fPDF->GetErrorType() != ER_MC68) {
+  if (fPDF->GetErrorType() != ER_MC) {
     ui->cl->setEnabled(false);
     ui->cl->setChecked(false);
   }
@@ -205,13 +205,6 @@ void memberthread::run()
   fp->fPDF->InitPDFset(Qi,Qf);
   const int Nrep = fp->fPDF->numberPDF();
   const int f = fp->ui->PDFflavor->currentIndex()-6;
-  double **xPDF = new double*[Nrep];
-  for (int i = 0; i < Nrep; i++)
-    {
-      xPDF[i] = new double[N];
-      for (int j = 0; j < N; j++)
-        xPDF[i][j] = 0.0;
-    }
 
   int memi = 0;
   int memf = Nrep;

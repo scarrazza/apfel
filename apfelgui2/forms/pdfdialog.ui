@@ -78,11 +78,6 @@
      </item>
      <item>
       <property name="text">
-       <string>Monte Carlo - 68% c.l.</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
        <string>Hessian - Eigenstate 68% c.l.</string>
       </property>
      </item>
