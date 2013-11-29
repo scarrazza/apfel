@@ -39,7 +39,6 @@ SOURCES += src/main.cxx\
            src/pdfdialog.cxx \
            src/plotmembers.cxx \
            src/plotall.cxx \
-           src/common.cxx \
            src/plotcomparison.cxx \
            src/plotlumi.cxx \
            src/utils.cxx \

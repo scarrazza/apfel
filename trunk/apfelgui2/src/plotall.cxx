@@ -204,6 +204,7 @@ void plotthread::run()
                     fp->ui->down->value(),fp->ui->up->value(),fp->ui->strange->value(),
                     fp->ui->charm->value(),fp->ui->bottom->value(),fp->ui->top->value()
                   };
+
   for (int fl = -nf; fl <= nf; fl++)
     {
       emit progress( (fl+nf)*100./(2*nf+1));
@@ -213,30 +214,35 @@ void plotthread::run()
       g->SetLineColor(colors2[fl+6]);
       g->SetFillColor(colors2[fl+6]);      
 
-      double up = 0,dn = 0;
-      for (int ix = 0; ix < N; ix++)
+      double *xPDF = new double[N];
+      double *xPDFErr = new double[N];
+      double *upErr = new double[N];
+      double *dnErr = new double[N];
+
+      if (!fp->ui->checkBox->isChecked())
         {
-          double xf = 0;
-          if (!fp->ui->checkBox->isChecked())
-            {
-              fp->fPDF->initPDF(fp->ui->setmember->value());
-              xf = fp->fPDF->GetFlvrPDF(x[ix],Qf,fl);
-            }
-          else
-            xf = fp->fPDF->GetFlvrPDFCV(x[ix],Qf,fl);
+          fp->fPDF->initPDF(fp->ui->setmember->value());
+          for (int i = 0; i < N; i++) {
+            xPDF[i] = fp->fPDF->GetFlvrPDF(x[i],Qf,fl);
+            xPDFErr[i] = 0;
+          }
+        }
+      else
+        fp->fPDF->GetFlvrPDFCVErr(N,x,Qf,fl,xPDF,xPDFErr,upErr,dnErr);
 
-          xf /= scales[abs(fl)];
-
-          g->SetPoint(ix,x[ix],xf);
+      for (int i = 0; i < N; i++)
+        {
+          xPDF[i] /= scales[abs(fl)];
+          g->SetPoint(i,x[i],xPDF[i]);
 
           if (fp->ui->stddev->isChecked())
-            {
-              double std = fp->fPDF->GetFlvrError(x[ix],Qf,fl,up,dn)/scales[abs(fl)];
-              g->SetPointError(ix,0,std);
-            }
-          else
-            g->SetPointError(ix,0, 0);
+            g->SetPointError(i,0,xPDFErr[i]);
         }
+
+      delete[] xPDF;
+      delete[] xPDFErr;
+      delete[] upErr;
+      delete[] dnErr;
 
       if (scales[abs(fl)] != 1)
         leg->AddEntry(g,TString(name[fl+6].toStdString() + "/" + Form("%d",scales[abs(fl)])),"l");

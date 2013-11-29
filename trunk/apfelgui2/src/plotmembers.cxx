@@ -50,6 +50,8 @@ PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
   if (fPDF->numberPDF() == 1)
     {
       ui->checkBox->setEnabled(false);
+      ui->mean->setEnabled(false);
+      ui->mean->setChecked(false);
       ui->stddev->setEnabled(false);
       ui->stddev->setChecked(false);
       ui->cl->setEnabled(false);
@@ -257,73 +259,75 @@ void memberthread::run()
     }
 
   //////////////////////////////
-  /// Central values
+  /// Central values / Errors
   //////////////////////////////
-  if (fp->ui->mean->isChecked())
+  if (fp->ui->mean->isChecked() || fp->ui->stddev->isChecked() || fp->ui->cl->isChecked())
     {
-      TGraph *gcv = new TGraph(N);
-      gcv->SetLineWidth(2);
-      gcv->SetLineStyle(2);
-      gcv->SetLineColor(colors[fp->ui->coloravg->currentIndex()]);
+      double *xPDF = new double[N];
+      double *xPDFErr = new double[N];
+      double *upErr = new double[N];
+      double *dnErr = new double[N];
+      fp->fPDF->GetFlvrPDFCVErr(N,x,Qf,f,xPDF,xPDFErr,upErr,dnErr);
 
-      for (int i = 0; i < N; i++)
-        gcv->SetPoint(i, x[i], fp->fPDF->GetFlvrPDFCV(x[i],Qf,f));
+      if (fp->ui->mean->isChecked())
+        {
+          TGraph *gcv = new TGraph(N);
+          gcv->SetLineWidth(2);
+          gcv->SetLineStyle(2);
+          gcv->SetLineColor(colors[fp->ui->coloravg->currentIndex()]);
 
-      mg->Add(gcv,"l");
-      leg->AddEntry(gcv,"Central value","l"); legindex++;
-    }
+          for (int i = 0; i < N; i++)
+            gcv->SetPoint(i, x[i], xPDF[i]);
 
-  //////////////////////////////
-  /// Std. dev
-  //////////////////////////////
-  if (fp->ui->stddev->isChecked())
-    {
-      TGraph *gstd = new TGraph(N);
-      gstd->SetLineWidth(2);
-      gstd->SetLineColor(colors[fp->ui->colorstddev->currentIndex()]);
-
-      TGraph *gstd2 = new TGraph(N);
-      gstd2->SetLineWidth(2);
-      gstd2->SetLineColor(colors[fp->ui->colorstddev->currentIndex()]);
-
-      double uperr, dnerr;
-      for (int i = 0; i < N; i++)
-        {          
-          const double avg = fp->fPDF->GetFlvrPDFCV(x[i],Qf,f);
-          const double stddev = fp->fPDF->GetFlvrError(x[i],Qf,f,uperr,dnerr);
-          gstd->SetPoint(i, x[i], avg+stddev);
-          gstd2->SetPoint(i, x[i], avg-stddev);          
+          mg->Add(gcv,"l");
+          leg->AddEntry(gcv,"Central value","l"); legindex++;
         }
 
-      mg->Add(gstd,"l");
-      mg->Add(gstd2,"l");
-      leg->AddEntry(gstd,"Std. deviation","l"); legindex++;
-    }
+      if (fp->ui->stddev->isChecked())
+        {
+          TGraph *gstd = new TGraph(N);
+          gstd->SetLineWidth(2);
+          gstd->SetLineColor(colors[fp->ui->colorstddev->currentIndex()]);
 
-  //////////////////////////////
-  /// 68% cl.
-  //////////////////////////////
-  if (fp->ui->cl->isChecked())
-    {
-      TGraph *up = new TGraph(N);
-      up->SetLineWidth(2);
-      up->SetLineColor(colors[fp->ui->color68cl->currentIndex()]);
+          TGraph *gstd2 = new TGraph(N);
+          gstd2->SetLineWidth(2);
+          gstd2->SetLineColor(colors[fp->ui->colorstddev->currentIndex()]);
 
-      TGraph *dn = new TGraph(N);
-      dn->SetLineWidth(2);
-      dn->SetLineColor(colors[fp->ui->color68cl->currentIndex()]);
+          for (int i = 0; i < N; i++)
+            {
+              gstd->SetPoint(i, x[i], xPDF[i]+xPDFErr[i]);
+              gstd2->SetPoint(i, x[i], xPDF[i]-xPDFErr[i]);
+            }
 
-      double uperr, dnerr;
-      for (int i = 0; i < N; i++)
-        {              
-          fp->fPDF->GetFlvrError(x[i],Qf,f,uperr,dnerr);
-          up->SetPoint(i, x[i], uperr);
-          dn->SetPoint(i, x[i], dnerr);
+          mg->Add(gstd,"l");
+          mg->Add(gstd2,"l");
+          leg->AddEntry(gstd,"Std. deviation","l"); legindex++;
         }
 
-      mg->Add(up,"l");
-      mg->Add(dn,"l");
-      leg->AddEntry(up,"68% c.l.","l"); legindex++;
+      if (fp->ui->cl->isChecked())
+        {
+          TGraph *up = new TGraph(N);
+          up->SetLineWidth(2);
+          up->SetLineColor(colors[fp->ui->color68cl->currentIndex()]);
+
+          TGraph *dn = new TGraph(N);
+          dn->SetLineWidth(2);
+          dn->SetLineColor(colors[fp->ui->color68cl->currentIndex()]);
+
+          mg->Add(up,"l");
+          mg->Add(dn,"l");
+          leg->AddEntry(up,"68% c.l.","l"); legindex++;
+
+          for (int i = 0; i < N; i++) {
+            up->SetPoint(i, x[i], upErr[i]);
+            dn->SetPoint(i, x[i], dnErr[i]);
+          }
+        }
+
+      delete[] xPDF;
+      delete[] xPDFErr;
+      delete[] upErr;
+      delete[] dnErr;
     }
 
   delete[] x;
