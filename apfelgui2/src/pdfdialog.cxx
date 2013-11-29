@@ -287,11 +287,6 @@ double PDFDialog::GetFlvrPDFCV(double x, double Q, int f)
     }
   else
     {
-      if (f != 7)
-        return (double) APFEL::xPDF(f,x);
-      else
-        return (double) APFEL::xgamma(x);
-
       switch (Etype) {
         case ER_NONE:
         case ER_EIG:
@@ -405,7 +400,74 @@ double PDFDialog::GetFlvrError(double x, double Q, int f,double &uperr, double &
     }
   else
     {
+      switch (Etype) {
+        case ER_NONE:
+          {
+            break;
+          }
+        case ER_MC:
+        case ER_MC68:
+          {
+            double *y = new double[numberPDF()];
+            vector<double> yval;
+            for (int i = 0; i < numberPDF(); i++)
+              {
+                initPDF(i+1);
+                if (f != 7)
+                  y[i] = APFEL::xPDF(f,x);
+                else
+                  y[i] = APFEL::xgamma(x);
+                yval.push_back(y[i]);
+              }
+            err = ComputeStdDev(numberPDF(),y);
 
+            delete[] y;
+
+            sort(yval.begin(), yval.end());
+            int esc = numberPDF()*(1-0.68)/2;
+
+            uperr = yval[numberPDF()-esc-1];
+            dnerr = yval[esc];
+
+            break;
+          }
+        case ER_EIG:
+        case ER_EIG90:
+          {
+            double *y = new double[numberPDF()];
+            for (int i = 0; i < numberPDF(); i++)
+              {
+                initPDF(i+1);
+                if (f != 7)
+                  y[i] = APFEL::xPDF(f,x);
+                else
+                  y[i] = APFEL::xgamma(x);
+              }
+            err = ComputeEigErr(numberPDF(),y);
+            if (Etype == ER_EIG90) err /= 1.64485;
+
+            delete[] y;
+
+            break;
+          }
+        case ER_SYMEIG:
+          {
+            double *y = new double[numberPDF()];
+            for (int i = 0; i < numberPDF(); i++)
+              {
+                initPDF(i+1);
+                if (f != 7)
+                  y[i] = APFEL::xPDF(f,x);
+                else
+                  y[i] = APFEL::xgamma(x);
+              }
+
+            err = ComputeSymEigErr(numberPDF(),GetFlvrPDFCV(x,Q,f),y);
+
+            delete[] y;
+            break;
+          }
+        }
     }
 
   return err;
