@@ -236,11 +236,11 @@ void memberthread::run()
   //////////////////////////////
   /// REPLICAS
   //////////////////////////////
-  for (int r = memi; r <= memf; r++)
+  for (int r = memi; r < memf; r++)
     {
       emit progress(r*100/memf);
 
-      int rep = r;
+      int rep = r+1;
       if (memf == 1) rep = fp->fPDF->GetReplica();
       fp->fPDF->initPDF(rep);
 
