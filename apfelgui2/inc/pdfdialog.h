@@ -33,6 +33,7 @@ public:
   double  alphas();
   double  Qalphas();
   double  GetFlvrPDFCV(double,double,int);
+  void    GetFlvrPDFCVErr(int,double*,double,int,double*,double*,double*,double*);
   double  GetFlvrPDF(double,double,int);
   double  getLum(double,double,std::string,double,double&);
   double  GetFlvrError(double x, double Q, int f,double& uperr, double& dnerr);

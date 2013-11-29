@@ -194,11 +194,7 @@ void comparisonthread::run()
   const double Qi = fp->ui->Qi->text().toDouble();
   const double Qf = fp->ui->Qf->text().toDouble();
 
-  TLegend *leg = NULL;
-  if (fp->ui->logx->isChecked())
-    leg = new TLegend(0.479885,0.673729,0.859195,0.883475);
-  else
-    leg = new TLegend(0.12931,0.673729,0.507184,0.883475);
+  TLegend *leg =  new TLegend(0.479885,0.673729,0.859195,0.883475);
   leg->SetBorderSize(0);
   leg->SetFillColor(0);
   leg->SetFillStyle(0);
@@ -247,29 +243,37 @@ void comparisonthread::run()
       gdn->SetLineStyle(1);
       gdn->SetLineColor(fillcolor[set]+2);
 
-      double up = 0, dn = 0;
-      for (int ix = 0; ix < N; ix++)
-        {         
-          double xf = fp->fPDF[indRef[set]]->GetFlvrPDFCV(x[ix],Qf,f);
+      double *xPDF = new double[N];
+      double *xPDFErr = new double[N];
+      double *upErr = new double[N];
+      double *dnErr = new double[N];
 
+      fp->fPDF[indRef[set]]->GetFlvrPDFCVErr(N,x,Qf,f,xPDF,xPDFErr,upErr,dnErr);
+
+      for (int ix = 0; ix < N; ix++)
+        {
           if (fp->ui->ratio->isChecked()) {
-              if (set == 0) refx[ix] = xf;
-              xf /= refx[ix];
+              if (set == 0) refx[ix] = xPDF[ix];
+              xPDF[ix] /= refx[ix];
             }
 
-          g->SetPoint(ix,x[ix], xf);
-          gcv->SetPoint(ix, x[ix], xf);
+          g->SetPoint(ix,x[ix], xPDF[ix]);
+          gcv->SetPoint(ix, x[ix], xPDF[ix]);
 
           if (fp->ui->stddev->isChecked() && fp->fPDF[indRef[set]]->numberPDF() > 1) {
-              double xferr = fp->fPDF[indRef[set]]->GetFlvrError(x[ix],Qf,f,up,dn);
-              if (fp->ui->ratio->isChecked()) xferr /= refx[ix];
-              g->SetPointError(ix,0, xferr);
-              gup->SetPoint(ix,x[ix],xf+xferr);
-              gdn->SetPoint(ix,x[ix],xf-xferr);
+              if (fp->ui->ratio->isChecked()) xPDFErr[ix] /= refx[ix];
+              g->SetPointError(ix,0, xPDFErr[ix]);
+              gup->SetPoint(ix,x[ix],xPDF[ix]+xPDFErr[ix]);
+              gdn->SetPoint(ix,x[ix],xPDF[ix]-xPDFErr[ix]);
             }
           else
             g->SetPointError(ix,0, 0);
         }
+
+      delete[] xPDF;
+      delete[] xPDFErr;
+      delete[] upErr;
+      delete[] dnErr;
 
       mg->Add(g,"le3");
       if (set == 0)

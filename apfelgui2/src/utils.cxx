@@ -162,6 +162,17 @@ double ComputeEigErr(int p, const double *x)
   return sqrt(err)/2.0;
 }
 
+double ComputeEigErr(int p, int n, double **x)
+{
+  double err = 0;
+  const int nvec = p/2;
+
+  for (int i = 0; i < nvec; i++)
+    err += pow(x[2*i][n]-x[2*i+1][n], 2); // Eigenvector
+
+  return sqrt(err)/2.0;
+}
+
 /**
   * Compute the errors for the Hessian method
   * \param p number of pdfs
@@ -180,7 +191,6 @@ double ComputeEigErr(int p, int n, const double *x)
   return sqrt(err)/2.0;
 }
 
-
 /**
   * Compute the errors for the Hessian method
   * \param p number of pdfs
@@ -195,4 +205,35 @@ double ComputeSymEigErr(int p, double cv, const double *x)
     err += pow(x[i]-cv, 2.0); // Eigenvector
 
   return sqrt(err);
+}
+
+double ComputeSymEigErr(int p, int n, double cv, double **x)
+{
+  double err = 0;
+
+  for (int i = 0; i < p; i++)
+    err += pow(x[i][n]-cv, 2.0); // Eigenvector
+
+  return sqrt(err);
+}
+
+double ComputeAVG(int n, int ix, double **x)
+{
+  double sum = 0.0;
+  for (int i = 0; i < n; i++)
+    sum += x[i][ix];
+  return sum / n;
+}
+
+
+double ComputeStdDev(int n, int ix, double **x)
+{
+  double sum = 0.0;
+  double avg = ComputeAVG(n, ix, x);
+  for (int i = 0; i < n; i++)
+    sum += (x[i][ix]-avg)*(x[i][ix]-avg);
+
+  sum /= n-1;
+
+  return sqrt(sum);
 }

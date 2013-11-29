@@ -65,9 +65,4 @@ const int fillStyle[] = {1001, 3005, 3004, 3006, 3007, 3001, 3002, 3003, 3004, 3
                          3005, 3004, 3006, 3007, 3001, 3002, 3003, 3004, 3005,
                          3005, 3004, 3006, 3007, 3001, 3002, 3003, 3004, 3005};
 
-double ComputeAVG(int n, int ix, double **x);
-
-double ComputeStdDev(int n, int ix, double **x);
-
-
 #endif // COMMON_H

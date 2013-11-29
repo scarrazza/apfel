@@ -259,6 +259,99 @@ void PDFDialog::initPDF(int i)
     Evolve(i,fQi,fQf);
 }
 
+void PDFDialog::GetFlvrPDFCVErr(int N, double *x, double Q, int f,
+                                double *xPDF, double *xPDFerr,double* upErr,double* dnErr)
+{
+  int Etype = ui->comboPDFerror->currentIndex();
+
+  switch (Etype) {
+    case ER_NONE:
+      {
+        initPDF(ui->member->value());
+        for (int i = 0; i < N; i++) {
+          xPDF[i] = GetFlvrPDF(x[i],Q,f);
+          xPDFerr[i] = upErr[i] = dnErr[i] = 0;
+        }
+        break;
+      }
+    case ER_EIG:
+    case ER_EIG90:
+    case ER_SYMEIG:
+      {
+        initPDF(0);
+        for (int i = 0; i < N; i++) {
+          xPDF[i] = GetFlvrPDF(x[i],Q,f);
+          upErr[i] = dnErr[i] = 0;
+        }
+
+        double **y = new double*[numberPDF()];
+        for (int i = 0; i < numberPDF(); i++)
+          {
+            initPDF(i+1);
+            y[i] = new double[N];
+            for (int j = 0; j < N; j++)
+              y[i][j] = GetFlvrPDF(x[j],Q,f);
+          }
+
+        for (int i = 0; i < N; i++)
+          {
+            if (Etype != ER_SYMEIG)
+              {
+                xPDFerr[i] = ComputeEigErr(numberPDF(),i,y);
+                if (Etype == ER_EIG90)
+                  xPDFerr[i] /= 1.64485;
+              }
+            else
+              xPDFerr[i] = ComputeSymEigErr(numberPDF(),i,xPDF[i],y);
+          }
+
+        for (int i = 0; i < numberPDF(); i++)
+          if (y[i]) delete[] y[i];
+        delete[] y;
+
+        break;
+      }
+    case ER_MC:
+      {
+        vector<vector<double> > yval;
+        double **y = new double*[numberPDF()];
+
+        for (int i = 0; i < numberPDF(); i++)
+          {
+            initPDF(i+1);
+            y[i] = new double[N];
+            for (int j = 0; j < N; j++)
+              y[i][j] = GetFlvrPDF(x[j],Q,f);
+          }
+
+        for (int i = 0; i < N; i++)
+          {
+            vector<double> w;
+            for (int j = 0; j < numberPDF(); j++)
+              w.push_back(y[j][i]);
+            yval.push_back(w);
+          }
+
+        int esc = numberPDF()*(1-0.68)/2;
+        for (int i = 0; i < N; i++) {
+          xPDF[i] = ComputeAVG(numberPDF(),i,y);
+          xPDFerr[i] = ComputeStdDev(numberPDF(),i,y);
+          sort(yval[i].begin(),yval[i].end());
+          upErr[i] = yval[i][numberPDF()-esc-1];
+          dnErr[i] = yval[i][esc];
+        }
+
+        for (int i = 0; i < numberPDF(); i++)
+          if (y[i]) delete[] y[i];
+        delete[] y;
+
+        yval.clear();
+
+        break;
+      }
+    }
+}
+
 double PDFDialog::GetFlvrPDFCV(double x, double Q, int f)
 {
   double avg = 0;
@@ -608,6 +701,7 @@ double PDFDialog::getLum(double i, double S, std::string lumi, double eps, doubl
       switch (Etype) {
         case ER_NONE:
           {
+            APFEL::SetReplica(ui->member->value());
             APFEL::EvolveAPFEL(fQi,i);
 
             if (lumi == "GG")
@@ -646,8 +740,7 @@ double PDFDialog::getLum(double i, double S, std::string lumi, double eps, doubl
         case ER_EIG:
         case ER_EIG90:
           {
-            initPDF(0);
-
+            APFEL::SetReplica(0);
             APFEL::EvolveAPFEL(fQi,i);
 
             if (lumi == "GG")
@@ -685,7 +778,7 @@ double PDFDialog::getLum(double i, double S, std::string lumi, double eps, doubl
             double *ggflux = new double[numberPDF()];
             for (int r = 0; r < numberPDF(); r++)
               {
-                initPDF(r+1);
+                APFEL::SetReplica(r+1);
                 APFEL::EvolveAPFEL(fQi,i);
 
                 if (lumi == "GG")
@@ -728,8 +821,7 @@ double PDFDialog::getLum(double i, double S, std::string lumi, double eps, doubl
           }
         case ER_SYMEIG:
           {
-            initPDF(0);
-
+            APFEL::SetReplica(0);
             APFEL::EvolveAPFEL(fQi,i);
 
             if (lumi == "GG")
@@ -767,7 +859,7 @@ double PDFDialog::getLum(double i, double S, std::string lumi, double eps, doubl
             double *ggflux = new double[numberPDF()];
             for (int r = 0; r < numberPDF(); r++)
               {
-                initPDF(r+1);
+                APFEL::SetReplica(r+1);
                 APFEL::EvolveAPFEL(fQi,i);
 
                 if (lumi == "GG")
@@ -812,7 +904,7 @@ double PDFDialog::getLum(double i, double S, std::string lumi, double eps, doubl
             double *ggflux = new double[numberPDF()];
             for (int r = 0; r < numberPDF(); r++)
               {
-                initPDF(r+1);
+                APFEL::SetReplica(r+1);
                 APFEL::EvolveAPFEL(fQi,i);
 
                 if (lumi == "GG")
