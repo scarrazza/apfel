@@ -210,8 +210,10 @@ void comparisonthread::run()
   double *x = new double[N];
   for (int i = 0; i < N; i++)
     {
-      if (fp->ui->logx->isChecked()) x[i] = exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
+      if (fp->ui->logx->isChecked()) x[i] = exp(log(xmin)+i*(log(xmax)-log(xmin))/N);
       else x[i] = xmin+i*(xmax-xmin)/N;
+
+      cout << x[i] << endl;
     }
 
   vector<int> indRef;
