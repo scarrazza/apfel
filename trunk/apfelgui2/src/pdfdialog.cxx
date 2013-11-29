@@ -268,7 +268,6 @@ double PDFDialog::GetFlvrPDFCV(double x, double Q, int f)
             break;
           }
         case ER_MC:
-        case ER_MC68:
           {
             double *y = new double[numberPDF()];
             for (int i = 0; i < numberPDF(); i++)
@@ -301,7 +300,6 @@ double PDFDialog::GetFlvrPDFCV(double x, double Q, int f)
             break;
           }
         case ER_MC:
-        case ER_MC68:
           {
             double *y = new double[numberPDF()];
             for (int i = 0; i < numberPDF(); i++)
@@ -335,7 +333,6 @@ double PDFDialog::GetFlvrError(double x, double Q, int f,double &uperr, double &
             break;
           }
         case ER_MC:
-        case ER_MC68:
           {
             double *y = new double[numberPDF()];
             vector<double> yval;
@@ -406,7 +403,6 @@ double PDFDialog::GetFlvrError(double x, double Q, int f,double &uperr, double &
             break;
           }
         case ER_MC:
-        case ER_MC68:
           {
             double *y = new double[numberPDF()];
             vector<double> yval;

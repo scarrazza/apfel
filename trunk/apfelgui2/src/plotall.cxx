@@ -41,6 +41,12 @@ PlotAll::PlotAll(QWidget *parent, PDFDialog *pdf) :
   ui->graphicsView->scale(1.2,1.2);
 
   if (fPDF->isLHAPDF()) ui->Qi->setEnabled(false);
+  if (fPDF->numberPDF() == 1)
+    {
+      ui->checkBox->setEnabled(false);
+      ui->stddev->setEnabled(false);
+      ui->stddev->setChecked(false);
+    }
 
   ui->xtitle->setText("x");
   ui->ytitle->setText("xf(x,Q)");
@@ -146,8 +152,11 @@ void plotthread::run()
   fC->SetTickx();
   fC->SetTicky();
 
-  if (fp->ui->log->isChecked())
+  if (fp->ui->logx->isChecked())
     fC->SetLogx();
+
+  if (fp->ui->logy->isChecked())
+    fC->SetLogy();
 
   // Initialize PDFs
 
@@ -157,6 +166,8 @@ void plotthread::run()
   double ymin = 0;
   double ymax = 1;;
   int legindex = 0;
+
+  if (fp->ui->logy->isChecked()) ymin = 1e-9;
 
   if (!fp->ui->automaticrange->isChecked())
     {
@@ -169,21 +180,9 @@ void plotthread::run()
   const double Qi = fp->ui->Qi->text().toDouble();
   const double Qf = fp->ui->Qf->text().toDouble();
   fp->fPDF->InitPDFset(Qi,Qf);
-  const int Nrep = fp->fPDF->numberPDF();
-
-  int memi = 1;
-  int memf = Nrep;
-  if (!fp->ui->checkBox->isChecked())
-    {
-      memf = 1;
-      if (fp->ui->setmember->value() > Nrep || fp->ui->setmember->value() < 0) {
-          finished();
-          return;
-        }
-    }
 
   TLegend *leg = NULL;
-  if (fp->ui->log->isChecked())
+  if (fp->ui->logx->isChecked())
     leg = new TLegend(0.130747,0.491525,0.300287,0.883475);
   else
     leg = new TLegend(0.716954,0.491525,0.886494,0.883475);
@@ -194,6 +193,13 @@ void plotthread::run()
   TMultiGraph *mg = new TMultiGraph();
 
   int nf = fp->ui->maxFlavors->value();
+  double *x = new double[N];
+  for (int i = 0; i < N; i++)
+    {
+      if (fp->ui->logx->isChecked()) x[i] = exp(log(xmin)+i*(log(xmax)-log(xmin)/N));
+      else x[i] = xmin+i*(xmax-xmin)/N;
+    }
+
   for (int fl = -nf; fl <= nf; fl++)
     {
       emit progress( (fl+nf)*100./(2*nf+1));
@@ -201,63 +207,33 @@ void plotthread::run()
       TGraphErrors *g = new TGraphErrors(N);
       g->SetLineWidth(2);
       g->SetLineColor(colors2[fl+6]);
-      g->SetFillColor(colors2[fl+6]);
+      g->SetFillColor(colors2[fl+6]);      
 
-      double **xPDF = new double*[memf];
-      for (int r = memi; r <= memf; r++)
-        {
-          xPDF[r-memi] = new double[N];
-          if (memf == 1)
-            fp->fPDF->initPDF(fp->ui->setmember->value());
-          else
-            fp->fPDF->initPDF(r);
-
-          for (int ix = 0; ix < N; ix++)
-            {
-              double x = 0;
-              if (fp->ui->log->isChecked())
-                x = exp(log(xmin)+ix*(log(xmax)-log(xmin)/N));
-              else
-                x = xmin+ix*(xmax-xmin)/N;
-
-              xPDF[r-memi][ix] = fp->fPDF->GetFlvrPDFCV(x,Qf,fl);
-              if (fl == 0)
-                xPDF[r-memi][ix] /= 10;
-            }
-        }
-
+      double up = 0,dn = 0;
       for (int ix = 0; ix < N; ix++)
         {
-          double x = 0;
-          if (fp->ui->log->isChecked())
-            x = exp(log(xmin)+ix*(log(xmax)-log(xmin)/N));
+          double xf = 0;
+          if (!fp->ui->checkBox->isChecked())
+            {
+              fp->fPDF->initPDF(fp->ui->setmember->value());
+              xf = fp->fPDF->GetFlvrPDF(x[ix],Qf,fl);
+            }
           else
-            x = xmin+ix*(xmax-xmin)/N;
+            xf = fp->fPDF->GetFlvrPDFCV(x[ix],Qf,fl);
 
-          double xf = xPDF[0][ix];
-
-          if (fp->ui->checkBox->isChecked())
-            xf = ComputeAVG(Nrep, ix, xPDF);
-          g->SetPoint(ix,x, xf);
+          g->SetPoint(ix,x[ix],xf);
 
           if (fp->ui->stddev->isChecked())
-            g->SetPointError(ix,0, ComputeStdDev(Nrep, ix, xPDF));
+            g->SetPointError(ix,0, fp->fPDF->GetFlvrError(x[ix],Qf,fl,up,dn));
           else
             g->SetPointError(ix,0, 0);
         }
 
-      if (fl != 0)
-        leg->AddEntry(g,name[fl+6].toStdString().c_str(),"l");
-      else
-        leg->AddEntry(g,"xg(x,Q)/10","l");
-      legindex++;
-
+      leg->AddEntry(g,name[fl+6].toStdString().c_str(),"l"); legindex++;
       mg->Add(g,"le3");
-
-      for (int i = 0; i < memf; i++)
-        if (xPDF[i]) delete[] xPDF[i];
-      delete[] xPDF;
     }
+
+  delete[] x;
 
   mg->SetTitle(fp->ui->title->text().toStdString().c_str());
   mg->Draw("AL");

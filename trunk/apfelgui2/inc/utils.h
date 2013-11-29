@@ -13,7 +13,6 @@ using namespace std;
 enum {
   ER_NONE,   //!< PDF set is not an error set
   ER_MC,     //!< 1sigma error for NNPDF
-  ER_MC68,   //!< 68cl error for NNPDF
   ER_EIG,    //!< 1sigma error for CTEQ & MSTW
   ER_EIG90,  //!< 90cl error for CTEQ & MSTW
   ER_SYMEIG  //!< 68cl sym.eigenstate ABM
