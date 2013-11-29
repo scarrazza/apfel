@@ -236,12 +236,13 @@ void memberthread::run()
   //////////////////////////////
   /// REPLICAS
   //////////////////////////////
-  for (int r = memi; r < memf; r++)
+  for (int r = memi; r <= memf; r++)
     {
       emit progress(r*100/memf);
 
-      int rep = r+1;
-      if (memf == 1) rep = fp->fPDF->GetReplica();
+      int rep = r;
+      if (fp->fPDF->GetErrorType() == ER_NONE) rep = fp->fPDF->GetReplica();
+      if (!fp->ui->checkBox->isChecked()) rep = fp->ui->setmember->value();
       fp->fPDF->initPDF(rep);
 
       TGraph *g = new TGraph(N);
