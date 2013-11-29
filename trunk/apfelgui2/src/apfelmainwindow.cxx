@@ -245,3 +245,7 @@ void APFELMainWindow::on_pushButton_7_clicked()
   else
     QMessageBox::information(this,"Information","Please add a PDF set before continue.");
 }
+
+void APFELMainWindow::on_pushButton_3_clicked()
+{
+}

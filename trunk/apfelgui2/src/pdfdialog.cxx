@@ -499,7 +499,7 @@ double PDFDialog::GetFlvrError(double x, double Q, int f,double &uperr, double &
 
 double PDFDialog::GetFlvrPDF(double x, double Q, int f)
 {
-  double res = 0;
+  double res = 0;  
 
   if (isLHAPDF())
     {
@@ -525,53 +525,337 @@ void PDFDialog::Evolve(int i,double Q0,double Q)
   APFEL::EvolveAPFEL(Q0,Q);
 }
 
-double PDFDialog::getLum(double i, double S, std::string lumi, double eps)
+double PDFDialog::getLum(double i, double S, std::string lumi, double eps, double& err)
 {
+  double res = 0;
+  err = 0;
+  int Etype = ui->comboPDFerror->currentIndex();
+
   if (isLHAPDF())
     {
-      LumiIntegral *l = new LumiIntegral(eps);
-      return l->getLum(i,S,lumi);
+      switch (Etype) {
+        case ER_NONE:
+          {
+            initPDF(ui->member->value());
+            LumiIntegral *l = new LumiIntegral(eps);
+            res = l->getLum(i,S,lumi);
+            delete l;
+            break;
+          }
+        case ER_EIG:
+        case ER_EIG90:
+          {
+            initPDF(0);
+            LumiIntegral *l = new LumiIntegral(eps);
+            res = l->getLum(i,S,lumi);
+            delete l;
 
-      delete l;
+            double *ggflux = new double[numberPDF()];
+            for (int r = 0; r < numberPDF(); r++)
+              {
+                initPDF(r+1);
+                LumiIntegral *w = new LumiIntegral(eps);
+                ggflux[r] = w->getLum(i,S,lumi);
+                delete w;
+              }
+
+            err = ComputeEigErr(numberPDF(),ggflux);
+            if (Etype == ER_EIG90) err /= 1.64485;
+
+            delete[] ggflux;
+            break;
+          }
+        case ER_SYMEIG:
+          {
+            initPDF(0);
+            LumiIntegral *l = new LumiIntegral(eps);
+            res = l->getLum(i,S,lumi);
+            delete l;
+
+            double *ggflux = new double[numberPDF()];
+            for (int r = 0; r < numberPDF(); r++)
+              {
+                initPDF(r+1);
+                LumiIntegral *w = new LumiIntegral(eps);
+                ggflux[r] = w->getLum(i,S,lumi);
+                delete w;
+              }
+
+            err = ComputeSymEigErr(numberPDF(),res,ggflux);
+
+            delete[] ggflux;
+            break;
+          }
+        case ER_MC:
+          {
+            double *ggflux = new double[numberPDF()];
+            for (int r = 0; r < numberPDF(); r++)
+              {
+                initPDF(r+1);
+                LumiIntegral *l = new LumiIntegral(eps);
+                ggflux[r] = l->getLum(i,S,lumi);
+                delete l;
+              }
+            res = ComputeAVG(numberPDF(),ggflux);
+            err = ComputeStdDev(numberPDF(),ggflux);
+            delete[] ggflux;
+            break;
+          }
+        }
     }
   else
     {
-      APFEL::EvolveAPFEL(fQi,i);
+      switch (Etype) {
+        case ER_NONE:
+          {
+            APFEL::EvolveAPFEL(fQi,i);
 
-      double res = 0;
-      if (lumi == "GG")
-        res = APFEL::LUMI(0,0,S);
-      else if (lumi == "PP")
-        res = APFEL::LUMI(7,7,S);
-      else if (lumi == "QG")
-        {
-          for (int j = 1; j <= 6; j++)
-            res += APFEL::LUMI(j,0,S) + APFEL::LUMI(-j,0,S);
-        }
-      else if (lumi == "QQ")
-        {
-          for (int j = 1; j <= 6; j++)
-            res += APFEL::LUMI(j,-j,S);
-        }
-      else if (lumi == "Q2")
-        {
-          for (int j = 1; j <= 6; j++)
-            for (int z = j; z <= 6; z++)
-               res += APFEL::LUMI(j,z,S);
-        }
-      else if (lumi == "BB")
-        res = APFEL::LUMI(5,-5,S);
-      else if (lumi == "CC")
-        res = APFEL::LUMI(4,-4,S);
-      else if (lumi == "BG")
-        res = APFEL::LUMI(5,0,S);
-      else if (lumi == "GC")
-        res = APFEL::LUMI(4,0,S);
-      else if (lumi == "PG")
-        res = APFEL::LUMI(7,0,S);
+            if (lumi == "GG")
+              res = APFEL::LUMI(0,0,S);
+            else if (lumi == "PP")
+              res = APFEL::LUMI(7,7,S);
+            else if (lumi == "QG")
+              {
+                for (int j = 1; j <= 6; j++)
+                  res += APFEL::LUMI(j,0,S) + APFEL::LUMI(-j,0,S);
+              }
+            else if (lumi == "QQ")
+              {
+                for (int j = 1; j <= 6; j++)
+                  res += APFEL::LUMI(j,-j,S);
+              }
+            else if (lumi == "Q2")
+              {
+                for (int j = 1; j <= 6; j++)
+                  for (int z = j; z <= 6; z++)
+                     res += APFEL::LUMI(j,z,S);
+              }
+            else if (lumi == "BB")
+              res = APFEL::LUMI(5,-5,S);
+            else if (lumi == "CC")
+              res = APFEL::LUMI(4,-4,S);
+            else if (lumi == "BG")
+              res = APFEL::LUMI(5,0,S);
+            else if (lumi == "GC")
+              res = APFEL::LUMI(4,0,S);
+            else if (lumi == "PG")
+              res = APFEL::LUMI(7,0,S);
 
-      return res;
+            break;
+          }
+        case ER_EIG:
+        case ER_EIG90:
+          {
+            initPDF(0);
+
+            APFEL::EvolveAPFEL(fQi,i);
+
+            if (lumi == "GG")
+              res = APFEL::LUMI(0,0,S);
+            else if (lumi == "PP")
+              res = APFEL::LUMI(7,7,S);
+            else if (lumi == "QG")
+              {
+                for (int j = 1; j <= 6; j++)
+                  res += APFEL::LUMI(j,0,S) + APFEL::LUMI(-j,0,S);
+              }
+            else if (lumi == "QQ")
+              {
+                for (int j = 1; j <= 6; j++)
+                  res += APFEL::LUMI(j,-j,S);
+              }
+            else if (lumi == "Q2")
+              {
+                for (int j = 1; j <= 6; j++)
+                  for (int z = j; z <= 6; z++)
+                     res += APFEL::LUMI(j,z,S);
+              }
+            else if (lumi == "BB")
+              res = APFEL::LUMI(5,-5,S);
+            else if (lumi == "CC")
+              res = APFEL::LUMI(4,-4,S);
+            else if (lumi == "BG")
+              res = APFEL::LUMI(5,0,S);
+            else if (lumi == "GC")
+              res = APFEL::LUMI(4,0,S);
+            else if (lumi == "PG")
+              res = APFEL::LUMI(7,0,S);
+
+
+            double *ggflux = new double[numberPDF()];
+            for (int r = 0; r < numberPDF(); r++)
+              {
+                initPDF(r+1);
+                APFEL::EvolveAPFEL(fQi,i);
+
+                if (lumi == "GG")
+                  ggflux[r] = APFEL::LUMI(0,0,S);
+                else if (lumi == "PP")
+                  ggflux[r] = APFEL::LUMI(7,7,S);
+                else if (lumi == "QG")
+                  {
+                    for (int j = 1; j <= 6; j++)
+                      ggflux[r] += APFEL::LUMI(j,0,S) + APFEL::LUMI(-j,0,S);
+                  }
+                else if (lumi == "QQ")
+                  {
+                    for (int j = 1; j <= 6; j++)
+                      ggflux[r] += APFEL::LUMI(j,-j,S);
+                  }
+                else if (lumi == "Q2")
+                  {
+                    for (int j = 1; j <= 6; j++)
+                      for (int z = j; z <= 6; z++)
+                         ggflux[r] += APFEL::LUMI(j,z,S);
+                  }
+                else if (lumi == "BB")
+                  ggflux[r] = APFEL::LUMI(5,-5,S);
+                else if (lumi == "CC")
+                  ggflux[r] = APFEL::LUMI(4,-4,S);
+                else if (lumi == "BG")
+                  ggflux[r] = APFEL::LUMI(5,0,S);
+                else if (lumi == "GC")
+                  ggflux[r] = APFEL::LUMI(4,0,S);
+                else if (lumi == "PG")
+                  ggflux[r] = APFEL::LUMI(7,0,S);
+              }
+
+            err = ComputeEigErr(numberPDF(),ggflux);
+            if (Etype == ER_EIG90) err /= 1.64485;
+
+            delete[] ggflux;
+            break;
+          }
+        case ER_SYMEIG:
+          {
+            initPDF(0);
+
+            APFEL::EvolveAPFEL(fQi,i);
+
+            if (lumi == "GG")
+              res = APFEL::LUMI(0,0,S);
+            else if (lumi == "PP")
+              res = APFEL::LUMI(7,7,S);
+            else if (lumi == "QG")
+              {
+                for (int j = 1; j <= 6; j++)
+                  res += APFEL::LUMI(j,0,S) + APFEL::LUMI(-j,0,S);
+              }
+            else if (lumi == "QQ")
+              {
+                for (int j = 1; j <= 6; j++)
+                  res += APFEL::LUMI(j,-j,S);
+              }
+            else if (lumi == "Q2")
+              {
+                for (int j = 1; j <= 6; j++)
+                  for (int z = j; z <= 6; z++)
+                     res += APFEL::LUMI(j,z,S);
+              }
+            else if (lumi == "BB")
+              res = APFEL::LUMI(5,-5,S);
+            else if (lumi == "CC")
+              res = APFEL::LUMI(4,-4,S);
+            else if (lumi == "BG")
+              res = APFEL::LUMI(5,0,S);
+            else if (lumi == "GC")
+              res = APFEL::LUMI(4,0,S);
+            else if (lumi == "PG")
+              res = APFEL::LUMI(7,0,S);
+
+
+            double *ggflux = new double[numberPDF()];
+            for (int r = 0; r < numberPDF(); r++)
+              {
+                initPDF(r+1);
+                APFEL::EvolveAPFEL(fQi,i);
+
+                if (lumi == "GG")
+                  ggflux[r] = APFEL::LUMI(0,0,S);
+                else if (lumi == "PP")
+                  ggflux[r] = APFEL::LUMI(7,7,S);
+                else if (lumi == "QG")
+                  {
+                    for (int j = 1; j <= 6; j++)
+                      ggflux[r] += APFEL::LUMI(j,0,S) + APFEL::LUMI(-j,0,S);
+                  }
+                else if (lumi == "QQ")
+                  {
+                    for (int j = 1; j <= 6; j++)
+                      ggflux[r] += APFEL::LUMI(j,-j,S);
+                  }
+                else if (lumi == "Q2")
+                  {
+                    for (int j = 1; j <= 6; j++)
+                      for (int z = j; z <= 6; z++)
+                         ggflux[r] += APFEL::LUMI(j,z,S);
+                  }
+                else if (lumi == "BB")
+                  ggflux[r] = APFEL::LUMI(5,-5,S);
+                else if (lumi == "CC")
+                  ggflux[r] = APFEL::LUMI(4,-4,S);
+                else if (lumi == "BG")
+                  ggflux[r] = APFEL::LUMI(5,0,S);
+                else if (lumi == "GC")
+                  ggflux[r] = APFEL::LUMI(4,0,S);
+                else if (lumi == "PG")
+                  ggflux[r] = APFEL::LUMI(7,0,S);
+              }
+
+            err = ComputeSymEigErr(numberPDF(),res,ggflux);
+
+            delete[] ggflux;
+            break;
+          }
+        case ER_MC:
+          {
+            double *ggflux = new double[numberPDF()];
+            for (int r = 0; r < numberPDF(); r++)
+              {
+                initPDF(r+1);
+                APFEL::EvolveAPFEL(fQi,i);
+
+                if (lumi == "GG")
+                  ggflux[r] = APFEL::LUMI(0,0,S);
+                else if (lumi == "PP")
+                  ggflux[r] = APFEL::LUMI(7,7,S);
+                else if (lumi == "QG")
+                  {
+                    for (int j = 1; j <= 6; j++)
+                      ggflux[r] += APFEL::LUMI(j,0,S) + APFEL::LUMI(-j,0,S);
+                  }
+                else if (lumi == "QQ")
+                  {
+                    for (int j = 1; j <= 6; j++)
+                      ggflux[r] += APFEL::LUMI(j,-j,S);
+                  }
+                else if (lumi == "Q2")
+                  {
+                    for (int j = 1; j <= 6; j++)
+                      for (int z = j; z <= 6; z++)
+                         ggflux[r] += APFEL::LUMI(j,z,S);
+                  }
+                else if (lumi == "BB")
+                  ggflux[r] = APFEL::LUMI(5,-5,S);
+                else if (lumi == "CC")
+                  ggflux[r] = APFEL::LUMI(4,-4,S);
+                else if (lumi == "BG")
+                  ggflux[r] = APFEL::LUMI(5,0,S);
+                else if (lumi == "GC")
+                  ggflux[r] = APFEL::LUMI(4,0,S);
+                else if (lumi == "PG")
+                  ggflux[r] = APFEL::LUMI(7,0,S);
+              }
+
+            res = ComputeAVG(numberPDF(),ggflux);
+            err = ComputeStdDev(numberPDF(),ggflux);
+            delete[] ggflux;
+            break;
+          }
+        }
     }
+
+  return res;
 }
 
 int PDFDialog::GetErrorType()
