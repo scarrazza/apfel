@@ -48,7 +48,7 @@ PlotLumi::PlotLumi(QWidget *parent,std::vector<PDFDialog*> pdf) :
     if (!fPDF[i]->isLHAPDF())
       ui->Qi->setEnabled(true);
 
-  ui->xtitle->setText("x");
+  ui->xtitle->setText("M_{X}");
   ui->ytitle->setText("Ratio");
   ui->title->setText("Gluon - Gluon Luminosity");
 
@@ -138,7 +138,7 @@ void PlotLumi::on_PDFflavor_currentIndexChanged(int index)
   "Quark - Quark Luminosity",
   "Photon - Photon Luminosity" };
 
-  ui->ytitle->setText(titleY[index]);
+  ui->title->setText(titleY[index]);
 }
 
 lumithread::lumithread(QObject *parent, QString filename):
