@@ -38,7 +38,7 @@ void PDFDialog::InitPDFset(double Q0, double Q)
 {
   if (isLHAPDF())
     {
-      LHAPDF::initPDFSetByName(PDFname().toStdString());
+      LHAPDF::initPDFSet(PDFname().toStdString());
     }
   else
     {
@@ -46,22 +46,23 @@ void PDFDialog::InitPDFset(double Q0, double Q)
       fQf = Q;
       // Initialize apfel
       APFEL::SetQLimits(0e0,1e4);
+      
       APFEL::SetNumberOfGrids(3);
-      APFEL::SetGridParameters(1,100,3,1e-9);
+      APFEL::SetGridParameters(1,100,3,1e-7);
       APFEL::SetGridParameters(2,50,5,0.1);
       APFEL::SetGridParameters(3,20,5,8e-1);
-
+      
       APFEL::SetPerturbativeOrder(ptord());
 
       if (scheme() == 0)
         APFEL::SetVFNS();
       else
         APFEL::SetFFNS(nf());
-
+      
       APFEL::SetTheory(theory().toStdString());
       APFEL::SetAlphaQCDRef(alphas(),Qalphas());
       APFEL::SetAlphaQEDRef(alpha(),Qalpha());
-
+      
       if (ui->comboBox_hqscheme->currentIndex() == 0)
         APFEL::SetPoleMasses(ui->lineEdit_mc->text().toDouble(),
                              ui->lineEdit_mb->text().toDouble(),
@@ -75,7 +76,7 @@ void PDFDialog::InitPDFset(double Q0, double Q)
       APFEL::SetMaxFlavourAlpha(ui->spinBox_maxa->value());
 
       APFEL::SetRenFacRatio(ui->doubleSpinBox_murmuf->value());
-
+      
       QString apset = "ToyLH";
       if (ui->comboPDFset->currentIndex() != 0)
         apset = PDFname();
@@ -83,7 +84,6 @@ void PDFDialog::InitPDFset(double Q0, double Q)
       APFEL::SetPDFSet(apset.toStdString());
 
       APFEL::InitializeAPFEL();
-      Evolve(0,Q0,Q);
     }
 }
 
@@ -941,6 +941,7 @@ double PDFDialog::getLum(double i, double S, std::string lumi, double eps, doubl
 
             res = ComputeAVG(numberPDF(),ggflux);
             err = ComputeStdDev(numberPDF(),ggflux);
+
             delete[] ggflux;
             break;
           }
