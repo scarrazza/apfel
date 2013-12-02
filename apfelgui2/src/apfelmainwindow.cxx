@@ -261,7 +261,7 @@ void APFELMainWindow::on_pushButton_3_clicked()
         QMessageBox::information(this,"Information","Please select only one PDF set before continue.");
       else
         {
-          PlotDIS *A = new PlotDIS(0);
+          PlotDIS *A = new PlotDIS(0,fPDFs[ind[0]]);
           A->show();
         }
     }

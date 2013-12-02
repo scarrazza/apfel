@@ -21,7 +21,7 @@ int main()
   int pto    = 2;
   string scheme = "FONLL";
   const int irep   = 0;
-  string pdfset = "toyLH_NNLO.LHgrid";
+  string pdfset = "APFEL";
   double F2[5],F3[5],FL[5],sigma[5];
 
   string proc = "EM";

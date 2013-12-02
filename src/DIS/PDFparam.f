@@ -32,18 +32,18 @@
       DOUBLE PRECISION PI
       PARAMETER(PI = 3.14159265358979D0)
 *
-      IF(PDFSET.EQ."APFEL")THEN
+      IF(PDFSET(1:5).EQ."APFEL")THEN
          PDF = "APF"
 *
 *     Initialize APFEL
 *
          call EnableWelcomeMessage(.false.)
-         call SetPerturbativeOrder(ipt)
-         IF(VFNS.EQ."FFNS".OR.VFNS.EQ."FFN0")THEN
-            call SetFFNS(3)
-         ELSEIF(VFNS.EQ."ZMVN".OR.VFNS.EQ."FONLL")THEN
-            call SetVFNS
-         ENDIF
+c         call SetPerturbativeOrder(ipt)
+c         IF(VFNS.EQ."FFNS".OR.VFNS.EQ."FFN0")THEN
+c            call SetFFNS(3)
+c         ELSEIF(VFNS.EQ."ZMVN".OR.VFNS.EQ."FONLL")THEN
+c            call SetVFNS
+c         ENDIF
 *
          call InitializeAPFEL
 *
