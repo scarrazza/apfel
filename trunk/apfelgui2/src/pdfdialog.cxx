@@ -87,6 +87,53 @@ void PDFDialog::InitPDFset(double Q0, double Q)
     }
 }
 
+void PDFDialog::InitPDFset2(double Q0, double Q)
+{
+  if (!isLHAPDF())
+    {
+      fQi = Q0;
+      fQf = Q;
+      // Initialize apfel
+      APFEL::SetQLimits(0e0,1e4);
+
+      APFEL::SetNumberOfGrids(3);
+      APFEL::SetGridParameters(1,100,3,1e-7);
+      APFEL::SetGridParameters(2,50,5,0.1);
+      APFEL::SetGridParameters(3,20,5,8e-1);
+
+      APFEL::SetPerturbativeOrder(ptord());
+
+      if (scheme() == 0)
+        APFEL::SetVFNS();
+      else
+        APFEL::SetFFNS(nf());
+
+      APFEL::SetTheory(theory().toStdString());
+      APFEL::SetAlphaQCDRef(alphas(),Qalphas());
+      APFEL::SetAlphaQEDRef(alpha(),Qalpha());
+
+      if (ui->comboBox_hqscheme->currentIndex() == 0)
+        APFEL::SetPoleMasses(ui->lineEdit_mc->text().toDouble(),
+                             ui->lineEdit_mb->text().toDouble(),
+                             ui->lineEdit_mt->text().toDouble());
+      else
+        APFEL::SetMSbarMasses(ui->lineEdit_mc->text().toDouble(),
+                              ui->lineEdit_mb->text().toDouble(),
+                              ui->lineEdit_mt->text().toDouble());
+
+      APFEL::SetMaxFlavourPDFs(ui->spinBox_maxpdf->value());
+      APFEL::SetMaxFlavourAlpha(ui->spinBox_maxa->value());
+
+      APFEL::SetRenFacRatio(ui->doubleSpinBox_murmuf->value());
+
+      QString apset = "ToyLH";
+      if (ui->comboPDFset->currentIndex() != 0)
+        apset = PDFname();
+
+      APFEL::SetPDFSet(apset.toStdString());
+    }
+}
+
 void PDFDialog::on_comboBox_theory_currentIndexChanged(int index)
 {
   if (index == 0)
@@ -974,4 +1021,146 @@ void PDFDialog::on_comboPDFerror_currentIndexChanged(int index)
 int PDFDialog::GetReplica()
 {
   return ui->member->value();
+}
+
+void PDFDialog::DIS(double x,double qi,double qf,double y,
+		    const std::string& proc,const std::string& scheme,
+		    int pto, const std::string& target, const std::string& proj,
+		    double *F2, double *F3, double *FL, double *sigma,
+		    double *F2err, double *F3err, double *FLerr, double *sigmaerr)
+{
+  int Etype = ui->comboPDFerror->currentIndex();
+
+  for (int i = 0; i < 5; i++){
+      F2[i] = F3[i] = FL[i] = sigma[i] = 0.0;
+      F2err[i] = F3err[i] = FLerr[i] = sigmaerr[i] = 0.0;
+    }
+
+  switch (Etype) {
+    case ER_NONE:
+      {
+        int irep = ui->member->value();
+
+        QString pdfset = "APFEL";
+        if (ui->comboPDFset->currentIndex() != 0)
+          pdfset = PDFname();
+
+        APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),irep,
+                        target,proj,F2,F3,FL,sigma);
+        break;
+      }
+    case ER_EIG:
+    case ER_EIG90:
+      {
+        QString pdfset = "APFEL";
+        if (ui->comboPDFset->currentIndex() != 0)
+          pdfset = PDFname();
+
+        APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),0,
+                        target,proj,F2,F3,FL,sigma);
+
+        double **F2a = new double*[numberPDF()];
+        double **F3a = new double*[numberPDF()];
+        double **FLa = new double*[numberPDF()];
+        double **sigmaa = new double*[numberPDF()];
+
+        for (int r = 0; r < numberPDF(); r++)
+          {
+            F2a[r] = new double[5];
+            F3a[r] = new double[5];
+            FLa[r] = new double[5];
+            sigmaa[r] = new double[5];
+            APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),r+1,
+                            target,proj,F2a[r],F3a[r],FLa[r],sigmaa[r]);
+          }
+
+        for (int i = 0; i < 5; i++)
+          {
+            F2err[i] = ComputeEigErr(numberPDF(),i,F2a);
+            F3err[i] = ComputeEigErr(numberPDF(),i,F3a);
+            FLerr[i] = ComputeEigErr(numberPDF(),i,FLa);
+            sigmaerr[i] = ComputeEigErr(numberPDF(),i,sigmaa);
+
+            if (Etype == ER_EIG90)
+              {
+                F2err[i] /= 1.64485;
+                F3err[i] /= 1.64485;
+                FLerr[i] /= 1.64485;
+                sigmaerr[i] /= 1.64485;
+              }
+          }
+        break;
+      }
+    case ER_SYMEIG:
+      {
+        QString pdfset = "APFEL";
+        if (ui->comboPDFset->currentIndex() != 0)
+          pdfset = PDFname();
+
+        APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),0,
+                        target,proj,F2,F3,FL,sigma);
+
+        double **F2a = new double*[numberPDF()];
+        double **F3a = new double*[numberPDF()];
+        double **FLa = new double*[numberPDF()];
+        double **sigmaa = new double*[numberPDF()];
+
+        for (int r = 0; r < numberPDF(); r++)
+          {
+            F2a[r] = new double[5];
+            F3a[r] = new double[5];
+            FLa[r] = new double[5];
+            sigmaa[r] = new double[5];
+            APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),r+1,
+                            target,proj,F2a[r],F3a[r],FLa[r],sigmaa[r]);
+          }
+
+        for (int i = 0; i < 5; i++)
+          {
+            F2err[i] = ComputeSymEigErr(numberPDF(),i,F2[i],F2a);
+            F3err[i] = ComputeSymEigErr(numberPDF(),i,F3[i],F3a);
+            FLerr[i] = ComputeSymEigErr(numberPDF(),i,FL[i],FLa);
+            sigmaerr[i] = ComputeSymEigErr(numberPDF(),i,sigma[i],sigmaa);
+          }
+
+        break;
+      }
+    case ER_MC:
+      {
+        QString pdfset = "APFEL";
+        if (ui->comboPDFset->currentIndex() != 0)
+          pdfset = PDFname();
+
+        double **F2a = new double*[numberPDF()];
+        double **F3a = new double*[numberPDF()];
+        double **FLa = new double*[numberPDF()];
+        double **sigmaa = new double*[numberPDF()];
+
+        for (int r = 0; r < numberPDF(); r++)
+          {
+            F2a[r] = new double[5];
+            F3a[r] = new double[5];
+            FLa[r] = new double[5];
+            sigmaa[r] = new double[5];
+            APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),r+1,
+                            target,proj,F2a[r],F3a[r],FLa[r],sigmaa[r]);
+          }
+
+        for (int i = 0; i < 5; i++)
+          {
+            F2[i] = ComputeAVG(numberPDF(),i,F2a);
+            F3[i] = ComputeAVG(numberPDF(),i,F3a);
+            FL[i] = ComputeAVG(numberPDF(),i,FLa);
+            sigma[i] = ComputeAVG(numberPDF(),i,sigmaa);
+
+            F2err[i] = ComputeStdDev(numberPDF(),i,F2a);
+            F3err[i] = ComputeStdDev(numberPDF(),i,F3a);
+            FLerr[i] = ComputeStdDev(numberPDF(),i,FLa);
+            sigmaerr[i] = ComputeStdDev(numberPDF(),i,sigmaa);
+          }
+
+        break;
+      }
+
+    }
 }

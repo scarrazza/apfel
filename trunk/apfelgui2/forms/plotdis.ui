@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>610</height>
+    <height>643</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -103,7 +103,7 @@ background-color: rgb(255, 255, 255);</string>
        <string>Physical setup</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="15" column="0" colspan="3">
+       <item row="16" column="0" colspan="3">
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0">
           <widget class="QLabel" name="label_5">
@@ -187,21 +187,21 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </layout>
        </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Scheme:</string>
          </property>
         </widget>
        </item>
-       <item row="5" column="0">
+       <item row="6" column="0">
         <widget class="QLabel" name="label_14">
          <property name="text">
           <string>Pt. order:</string>
          </property>
         </widget>
        </item>
-       <item row="11" column="0" colspan="3">
+       <item row="12" column="0" colspan="3">
         <widget class="Line" name="line_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -215,8 +215,8 @@ background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="2">
-        <widget class="QComboBox" name="PDFflavor">
+       <item row="7" column="2">
+        <widget class="QComboBox" name="process">
          <property name="currentIndex">
           <number>0</number>
          </property>
@@ -237,22 +237,15 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </widget>
        </item>
-       <item row="2" column="0" colspan="3">
+       <item row="3" column="0" colspan="3">
         <widget class="Line" name="line">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QLineEdit" name="Qi">
-         <property name="text">
-          <string>1.4142135623731</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QComboBox" name="referenceSet">
+       <item row="5" column="2">
+        <widget class="QComboBox" name="scheme">
          <property name="currentIndex">
           <number>3</number>
          </property>
@@ -278,7 +271,14 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="Qi">
+         <property name="text">
+          <string>1.4142135623731</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Process:</string>
@@ -292,25 +292,8 @@ background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="10" column="2">
-        <widget class="QCheckBox" name="stddev">
-         <property name="text">
-          <string>Std. deviation</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Final scale (GeV):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QComboBox" name="comboBox">
+       <item row="6" column="2">
+        <widget class="QComboBox" name="ptord">
          <property name="currentIndex">
           <number>2</number>
          </property>
@@ -331,22 +314,32 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </widget>
        </item>
-       <item row="8" column="0">
+       <item row="11" column="2">
+        <widget class="QCheckBox" name="stddev">
+         <property name="text">
+          <string>Std. deviation</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
         <widget class="QLabel" name="label_15">
          <property name="text">
           <string>Projectile:</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_13">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Target:</string>
+          <string>Final scale (GeV):</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="2">
-        <widget class="QComboBox" name="comboBox_3">
+       <item row="9" column="2">
+        <widget class="QComboBox" name="projectile">
          <item>
           <property name="text">
            <string>Electron</string>
@@ -359,8 +352,8 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </widget>
        </item>
-       <item row="7" column="2">
-        <widget class="QComboBox" name="comboBox_2">
+       <item row="8" column="2">
+        <widget class="QComboBox" name="target">
          <item>
           <property name="text">
            <string>Proton</string>
@@ -378,7 +371,14 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </widget>
        </item>
-       <item row="12" column="2">
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Target:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="13" column="2">
         <widget class="QSpinBox" name="xpoints">
          <property name="minimum">
           <number>10</number>
@@ -391,7 +391,7 @@ background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="14" column="0" colspan="3">
+       <item row="15" column="0" colspan="3">
         <widget class="QCheckBox" name="automaticrange">
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
@@ -404,7 +404,7 @@ background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="1" colspan="2">
+       <item row="14" column="1" colspan="2">
         <widget class="QCheckBox" name="logy">
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
@@ -414,7 +414,7 @@ background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="0">
+       <item row="14" column="0">
         <widget class="QCheckBox" name="logx">
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
@@ -427,15 +427,8 @@ background-color: rgb(255, 255, 255);</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="0" colspan="2">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Number x points:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QComboBox" name="comboBox_4">
+       <item row="4" column="2">
+        <widget class="QComboBox" name="output">
          <property name="currentIndex">
           <number>1</number>
          </property>
@@ -511,6 +504,11 @@ background-color: rgb(255, 255, 255);</string>
          </item>
          <item>
           <property name="text">
+           <string>F3 Proton</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
            <string>Sigma Light</string>
           </property>
          </item>
@@ -536,10 +534,31 @@ background-color: rgb(255, 255, 255);</string>
          </item>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="13" column="0" colspan="2">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Number x points:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
         <widget class="QLabel" name="label_16">
          <property name="text">
           <string>Output:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>Rapidity:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="y">
+         <property name="text">
+          <string>0.5</string>
          </property>
         </widget>
        </item>

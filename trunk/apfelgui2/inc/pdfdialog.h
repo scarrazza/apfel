@@ -19,6 +19,7 @@ public:
   explicit PDFDialog(QWidget *parent = 0);
   ~PDFDialog();
   void InitPDFset(double,double);
+  void InitPDFset2(double,double);
   void    initPDF(int);
   QString PDFname();  
   QString theory();
@@ -39,6 +40,11 @@ public:
   double  GetFlvrError(double x, double Q, int f,double& uperr, double& dnerr);
   int     GetErrorType();
   int     GetReplica();
+  void    DIS(double x,double qi,double qf,double y,
+              const std::string& proc,const std::string& scheme,
+              int pto, const std::string& target, const std::string& proj,
+              double *F2, double *F3, double *FL, double *sigma,
+              double *, double *, double *, double *);
 
 private slots:
   void on_comboBox_theory_currentIndexChanged(int index);
