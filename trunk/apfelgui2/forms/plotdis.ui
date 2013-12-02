@@ -247,7 +247,7 @@ background-color: rgb(255, 255, 255);</string>
        <item row="5" column="2">
         <widget class="QComboBox" name="scheme">
          <property name="currentIndex">
-          <number>3</number>
+          <number>0</number>
          </property>
          <item>
           <property name="text">
@@ -261,7 +261,7 @@ background-color: rgb(255, 255, 255);</string>
          </item>
          <item>
           <property name="text">
-           <string>ZM-VFNS</string>
+           <string>ZMVN</string>
           </property>
          </item>
          <item>

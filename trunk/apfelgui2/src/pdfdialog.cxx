@@ -1089,6 +1089,18 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
                 sigmaerr[i] /= 1.64485;
               }
           }
+
+        for (int i = 0; i < numberPDF(); i++){
+            if (F2a[i]) delete[] F2a[i];
+            if (F3a[i]) delete[] F3a[i];
+            if (FLa[i]) delete[] FLa[i];
+            if (sigmaa[i]) delete[] sigmaa[i];
+          }
+        delete[] F2a;
+        delete[] F3a;
+        delete[] FLa;
+        delete[] sigmaa;
+
         break;
       }
     case ER_SYMEIG:
@@ -1122,6 +1134,17 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
             FLerr[i] = ComputeSymEigErr(numberPDF(),i,FL[i],FLa);
             sigmaerr[i] = ComputeSymEigErr(numberPDF(),i,sigma[i],sigmaa);
           }
+
+        for (int i = 0; i < numberPDF(); i++){
+            if (F2a[i]) delete[] F2a[i];
+            if (F3a[i]) delete[] F3a[i];
+            if (FLa[i]) delete[] FLa[i];
+            if (sigmaa[i]) delete[] sigmaa[i];
+          }
+        delete[] F2a;
+        delete[] F3a;
+        delete[] FLa;
+        delete[] sigmaa;
 
         break;
       }
@@ -1158,6 +1181,17 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
             FLerr[i] = ComputeStdDev(numberPDF(),i,FLa);
             sigmaerr[i] = ComputeStdDev(numberPDF(),i,sigmaa);
           }
+
+        for (int i = 0; i < numberPDF(); i++){
+            if (F2a[i]) delete[] F2a[i];
+            if (F3a[i]) delete[] F3a[i];
+            if (FLa[i]) delete[] FLa[i];
+            if (sigmaa[i]) delete[] sigmaa[i];
+          }
+        delete[] F2a;
+        delete[] F3a;
+        delete[] FLa;
+        delete[] sigmaa;
 
         break;
       }

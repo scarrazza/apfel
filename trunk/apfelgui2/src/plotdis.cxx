@@ -258,9 +258,9 @@ void disthread::run()
   else if (fp->ui->projectile->currentIndex() == 1)
     project = "POSITRON";
   else if (fp->ui->projectile->currentIndex() == 2)
-    project = "Neutrino";
+    project = "NEUTRINO";
   else
-    project = "Antineutrino";
+    project = "ANTINEUTRINO";
 
   TLegend *leg =  new TLegend(0.603448,0.673729,0.981322,0.883475);
   leg->SetBorderSize(0);
@@ -392,7 +392,7 @@ void disthread::run()
           mg->Add(gdn,"l");
         }
 
-      leg->AddEntry(g,scheme.c_str(),"fl"); legindex++;
+      leg->AddEntry(g,TString(scheme.c_str()) + ", " + TString(fp->ui->ptord->currentText().toStdString()),"fl"); legindex++;
     }
 
   delete[] x;
@@ -416,9 +416,10 @@ void disthread::run()
     mg->GetYaxis()->SetRangeUser(ymin,ymax);
 
   leg->AddEntry("",TString("Q = " + QString::number(fp->ui->Qf->text().toDouble(),'g',3).toStdString() + " GeV"),"");
-
-  if (legindex < 4)
-    for (int i = legindex; i < 4; i++)
+  leg->AddEntry("",TString("Target: " + fp->ui->target->currentText().toStdString()),"");
+  leg->AddEntry("",TString("Projec: " + fp->ui->projectile->currentText().toStdString()),"");
+  if (legindex < 2)
+    for (int i = legindex; i < 2; i++)
       leg->AddEntry(""," ","");
 
   leg->Draw("same");
