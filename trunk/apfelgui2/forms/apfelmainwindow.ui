@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>321</width>
-    <height>561</height>
+    <height>612</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,6 +25,23 @@
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="9" column="0" colspan="2">
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="text">
+       <string>Quit</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../resources/resource.qrc">
+        <normaloff>:/images/exit-32x32.png</normaloff>:/images/exit-32x32.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+     </widget>
+    </item>
     <item row="5" column="1">
      <widget class="QPushButton" name="pushButton_5">
       <property name="enabled">
@@ -65,17 +82,41 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
-     <widget class="QPushButton" name="pushButton_7">
-      <property name="enabled">
-       <bool>true</bool>
+    <item row="8" column="0" colspan="2">
+     <widget class="Line" name="line">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(1) Enter the PDF sets which will be used:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="2">
+     <widget class="QListWidget" name="tablePDFs">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Checkbox for dis/enable PDF set.&lt;/p&gt;&lt;p&gt;Double click to edit entry.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QPushButton" name="buttonAddPDF">
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Creates a new PDF set.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
       <property name="text">
-       <string>Luminosity</string>
+       <string>Add PDF</string>
       </property>
       <property name="icon">
        <iconset resource="../resources/resource.qrc">
-        <normaloff>:/images/Actions-draw-brush-icon.png</normaloff>:/images/Actions-draw-brush-icon.png</iconset>
+        <normaloff>:/images/newfile.png</normaloff>:/images/newfile.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -115,13 +156,6 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="0" colspan="2">
-     <widget class="QListWidget" name="tablePDFs">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Checkbox for dis/enable PDF set.&lt;/p&gt;&lt;p&gt;Double click to edit entry.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
     <item row="5" column="0">
      <widget class="QPushButton" name="pushButton">
       <property name="text">
@@ -139,37 +173,7 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
-     <widget class="QPushButton" name="buttonAddPDF">
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Creates a new PDF set.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="text">
-       <string>Add PDF</string>
-      </property>
-      <property name="icon">
-       <iconset resource="../resources/resource.qrc">
-        <normaloff>:/images/newfile.png</normaloff>:/images/newfile.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;(1) Enter the PDF sets which will be used:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0" colspan="2">
+    <item row="0" column="0">
      <widget class="QLabel" name="label">
       <property name="minimumSize">
        <size>
@@ -185,14 +189,17 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="1">
-     <widget class="QPushButton" name="pushButton_2">
+    <item row="6" column="1">
+     <widget class="QPushButton" name="pushButton_7">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="text">
-       <string>Quit</string>
+       <string>Luminosity</string>
       </property>
       <property name="icon">
        <iconset resource="../resources/resource.qrc">
-        <normaloff>:/images/exit-32x32.png</normaloff>:/images/exit-32x32.png</iconset>
+        <normaloff>:/images/Actions-draw-brush-icon.png</normaloff>:/images/Actions-draw-brush-icon.png</iconset>
       </property>
       <property name="iconSize">
        <size>
