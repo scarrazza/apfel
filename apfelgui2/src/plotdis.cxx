@@ -325,49 +325,49 @@ void disthread::run()
           fp->fPDF->DIS(x[i],Qi,Qf,y,proc,scheme,pto,target,project,
                         F2,F3,FL,sigma,F2err,F3err,FLerr,sigmaerr);
 
-          if (fp->ui->output->currentIndex() == 0)
-            res = F2[0];
-          if (fp->ui->output->currentIndex() == 1)
-            res = F2[1];
-          if (fp->ui->output->currentIndex() == 2)
-            res = F2[2];
-          if (fp->ui->output->currentIndex() == 3)
-            res = F2[3];
-          if (fp->ui->output->currentIndex() == 4)
-            res = F2[4];
+          if (fp->ui->output->currentIndex() == 0) {
+              res = F2[0]; err = F2err[0]; }
+          if (fp->ui->output->currentIndex() == 1) {
+            res = F2[1]; err = F2err[1];}
+          if (fp->ui->output->currentIndex() == 2) {
+            res = F2[2]; err = F2err[2];}
+          if (fp->ui->output->currentIndex() == 3) {
+            res = F2[3]; err = F2err[3];}
+          if (fp->ui->output->currentIndex() == 4) {
+            res = F2[4]; err = F2err[4];}
 
-          if (fp->ui->output->currentIndex() == 5)
-            res = F3[0];
-          if (fp->ui->output->currentIndex() == 6)
-            res = F3[1];
-          if (fp->ui->output->currentIndex() == 7)
-            res = F3[2];
-          if (fp->ui->output->currentIndex() == 8)
-            res = F3[3];
-          if (fp->ui->output->currentIndex() == 9)
-            res = F3[4];
+          if (fp->ui->output->currentIndex() == 5) {
+              res = F3[0]; err = F3err[0];}
+          if (fp->ui->output->currentIndex() == 6) {
+            res = F3[1]; err = F3err[1];}
+          if (fp->ui->output->currentIndex() == 7) {
+            res = F3[2]; err = F3err[2];}
+          if (fp->ui->output->currentIndex() == 8) {
+            res = F3[3]; err = F3err[3];}
+          if (fp->ui->output->currentIndex() == 9) {
+            res = F3[4]; err = F3err[4];}
 
-          if (fp->ui->output->currentIndex() == 10)
-            res = FL[0];
-          if (fp->ui->output->currentIndex() == 11)
-            res = FL[1];
-          if (fp->ui->output->currentIndex() == 12)
-            res = FL[2];
-          if (fp->ui->output->currentIndex() == 13)
-            res = FL[3];
-          if (fp->ui->output->currentIndex() == 14)
-            res = FL[4];
+          if (fp->ui->output->currentIndex() == 10) {
+            res = FL[0]; err = FLerr[0];}
+          if (fp->ui->output->currentIndex() == 11) {
+            res = FL[1]; err = FLerr[1];}
+          if (fp->ui->output->currentIndex() == 12) {
+            res = FL[2]; err = FLerr[2];}
+          if (fp->ui->output->currentIndex() == 13) {
+            res = FL[3]; err = FLerr[3];}
+          if (fp->ui->output->currentIndex() == 14) {
+            res = FL[4]; err = FLerr[4];}
 
-          if (fp->ui->output->currentIndex() == 15)
-            res = sigma[0];
-          if (fp->ui->output->currentIndex() == 16)
-            res = sigma[1];
-          if (fp->ui->output->currentIndex() == 17)
-            res = sigma[2];
-          if (fp->ui->output->currentIndex() == 18)
-            res = sigma[3];
-          if (fp->ui->output->currentIndex() == 19)
-            res = sigma[4];
+          if (fp->ui->output->currentIndex() == 15) {
+            res = sigma[0]; err = sigmaerr[0];}
+          if (fp->ui->output->currentIndex() == 16) {
+            res = sigma[1]; err = sigmaerr[1];}
+          if (fp->ui->output->currentIndex() == 17) {
+            res = sigma[2]; err = sigmaerr[2];}
+          if (fp->ui->output->currentIndex() == 18) {
+            res = sigma[3]; err = sigmaerr[3];}
+          if (fp->ui->output->currentIndex() == 19) {
+            res = sigma[4]; err = sigmaerr[4];}
 
           g->SetPoint(i,x[i],res);
           gcv->SetPoint(i, x[i], res);
