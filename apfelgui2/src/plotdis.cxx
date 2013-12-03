@@ -315,12 +315,13 @@ void disthread::run()
       gdn->SetLineStyle(1);
       gdn->SetLineColor(fillcolor[set]+2);
 
-      double res = 0, err = 0;
-      double F2[5],F3[5],FL[5],sigma[5];
-      double F2err[5],F3err[5],FLerr[5],sigmaerr[5];
       for (int i=0; i < N; i++)
         {
           emit progress(i*100/N);
+
+          double res = 0, err = 0;
+          double F2[5],F3[5],FL[5],sigma[5];
+          double F2err[5],F3err[5],FLerr[5],sigmaerr[5];
 
           fp->fPDF->DIS(x[i],Qi,Qf,y,proc,scheme,pto,target,project,
                         F2,F3,FL,sigma,F2err,F3err,FLerr,sigmaerr);
