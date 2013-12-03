@@ -147,7 +147,7 @@ void PlotMembers::on_saveButton_clicked()
   QString selectedFilter;
   QString path = QFileDialog::getSaveFileName(this,
                                               tr("Save as"),"",
-                                              tr(".eps;;.ps;;.pdf;;.png;;.root"),&selectedFilter);
+                                              tr(".eps;;.ps;;.pdf;;.png;;.root;;.C"),&selectedFilter);
   if (path != 0) thread->SaveCanvas(path + selectedFilter);
 }
 
