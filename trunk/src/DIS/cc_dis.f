@@ -262,11 +262,20 @@
          CALL EXIT(-10)
       ENDIF
 *
-      VFNS  = SCHEME
-      WVFNS = VFNS
-      IF(VFNS(1:4).NE."ZMVN".AND.VFNS(1:4).NE."FFNS".AND.
-     1   VFNS(1:4).NE."FFN0".AND.VFNS(1:5).NE."FONLL")THEN
-         WRITE(6,*) "In cc_dis.f:"
+      IF(SCHEME(1:4).EQ."ZMVN") THEN
+         VFNS = "ZMVN"
+         WVFNS = VFNS
+      ELSEIF(SCHEME(1:4).EQ."FFNS") THEN
+         VFNS = "FFNS"
+         WVFNS = VFNS         
+      ELSEIF(SCHEME(1:4).EQ."FFN0") THEN
+         VFNS = "FFN0"
+         WVFNS = VFNS        
+      ELSEIF(SCHEME(1:5).EQ."FONLL") THEN
+         VFNS = "FONLL"
+         WVFNS = VFNS          
+      ELSE
+         WRITE(6,*) "In nc_dis.f:"
          WRITE(6,*) "Invalid evolution scheme: VFNS = ",VFNS
          CALL EXIT(-10)
       ENDIF
