@@ -48,7 +48,7 @@ PlotDISQ::PlotDISQ(QWidget *parent, PDFDialog *pdf) :
       ui->stddev->setChecked(false);
     }
 
-  ui->xtitle->setText("Q");
+  ui->xtitle->setText("Q (GeV)");
   ui->ytitle->setText("");
   ui->title->setText( "F_{2}^{c}(Q), " + fPDF->PDFname());
 
@@ -341,7 +341,7 @@ void disqthread::run()
       for (int i=0; i < N; i++)
         {
 
-          if(fIsTerminated){ fIsTerminated = false; return; }
+          if(fIsTerminated){ fIsTerminated = false; delete[] x; return; }
 
           emit progress(i*100/N);
 

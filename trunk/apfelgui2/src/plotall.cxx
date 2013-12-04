@@ -230,7 +230,7 @@ void plotthread::run()
 
   for (int fl = -nf; fl <= nf; fl++)
     {
-      if(fIsTerminated){ fIsTerminated = false; return; }
+      if(fIsTerminated){ fIsTerminated = false; delete[] x; return; }
 
       emit progress( (fl+nf)*100./(2*nf+1));
 

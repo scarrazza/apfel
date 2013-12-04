@@ -263,7 +263,7 @@ void memberthread::run()
   //////////////////////////////
   for (int r = memi; r <= memf; r++)
     {
-      if(fIsTerminated){ fIsTerminated = false; return; }
+      if(fIsTerminated){ fIsTerminated = false; delete[] x; return; }
 
       emit progress(r*100/memf);
 
@@ -296,7 +296,7 @@ void memberthread::run()
       double *dnErr = new double[N];
       fp->fPDF->GetFlvrPDFCVErr(N,x,Qf,f,xPDF,xPDFErr,upErr,dnErr);
 
-      if(fIsTerminated){ fIsTerminated = false; return; }
+      if(fIsTerminated){ fIsTerminated = false; delete[] x; return; }
 
       if (fp->ui->mean->isChecked())
         {
@@ -312,7 +312,7 @@ void memberthread::run()
           leg->AddEntry(gcv,"Central value","l"); legindex++;
         }
 
-      if(fIsTerminated){ fIsTerminated = false;  return; }
+      if(fIsTerminated){ fIsTerminated = false; delete[] x; return; }
 
       if (fp->ui->stddev->isChecked())
         {
@@ -335,7 +335,7 @@ void memberthread::run()
           leg->AddEntry(gstd,"Std. deviation","l"); legindex++;
         }
 
-      if(fIsTerminated){ fIsTerminated = false; return; }
+      if(fIsTerminated){ fIsTerminated = false; delete[] x; return; }
 
       if (fp->ui->cl->isChecked())
         {

@@ -340,7 +340,7 @@ void disthread::run()
       for (int i=0; i < N; i++)
         {
 
-          if(fIsTerminated){ fIsTerminated = false; return; }
+          if(fIsTerminated){ fIsTerminated = false; delete[] x; return; }
 
           emit progress(i*100/N);
 
