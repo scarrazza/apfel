@@ -8,6 +8,7 @@
         <file>splash.png</file>
         <file>Actions-draw-brush-icon.png</file>
         <file>exit-32x32.png</file>
+        <file>Stop1NormalRed.png</file>
     </qresource>
     <qresource prefix="/icons">
         <file>logo.png</file>

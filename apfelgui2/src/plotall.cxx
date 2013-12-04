@@ -20,7 +20,8 @@ PlotAll::PlotAll(QWidget *parent, PDFDialog *pdf) :
   QWidget(parent),
   ui(new Ui::PlotAll),
   fPDF(pdf),
-  fPlotName("allplot.svg")
+  fPlotName("allplot.svg"),
+  fIsRunning(false)
 {
   ui->setupUi(this);
 
@@ -61,14 +62,30 @@ PlotAll::PlotAll(QWidget *parent, PDFDialog *pdf) :
 PlotAll::~PlotAll()
 {
   delete ui;
-  delete thread;
+  if (thread)
+    {
+      thread->terminate();
+      delete thread;
+    }
 }
 
 void PlotAll::on_playButton_clicked()
 {
-  ui->playButton->setEnabled(false);
-  QApplication::processEvents();
-  thread->start();
+  if (!fIsRunning)
+    {
+      fIsRunning = true;
+      ui->playButton->setIcon(QIcon(":/images/Stop1NormalRed.png"));
+      ui->playButton->setText("Stop");
+      if (ui->graphicsView->scene()) ui->graphicsView->scene()->clear();
+      QApplication::processEvents();
+      thread->start();
+    }
+  else
+    {
+      fIsRunning = false;
+      thread->stop();
+      ui->playButton->setEnabled(false);
+    }
 }
 
 void PlotAll::on_checkBox_toggled(bool checked)
@@ -106,6 +123,10 @@ void PlotAll::on_automaticrange_toggled(bool checked)
 
 void PlotAll::ThreadFinished()
 {
+  ui->playButton->setIcon(QIcon(":/images/StepForwardNormalBlue.png"));
+  ui->playButton->setText("Compute");
+  fIsRunning = false;
+
   ui->playButton->setEnabled(true);
   ui->saveButton->setEnabled(true);
 
@@ -138,7 +159,9 @@ void PlotAll::on_saveButton_clicked()
 plotthread::plotthread(QObject *parent, QString filename):
   QThread(parent),
   fp((PlotAll*)parent),
-  fFileName(filename)
+  fFileName(filename),
+  fIsTerminated(false)
+
 {
 }
 
@@ -207,6 +230,8 @@ void plotthread::run()
 
   for (int fl = -nf; fl <= nf; fl++)
     {
+      if(fIsTerminated){ fIsTerminated = false; return; }
+
       emit progress( (fl+nf)*100./(2*nf+1));
 
       TGraphErrors *g = new TGraphErrors(N);
@@ -294,4 +319,9 @@ void plotthread::run()
 void plotthread::SaveCanvas(QString filename)
 {
   fC->SaveAs(filename.toStdString().c_str());
+}
+
+void plotthread::stop()
+{
+  fIsTerminated = true;
 }

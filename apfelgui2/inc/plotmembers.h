@@ -20,6 +20,7 @@ public:
   memberthread(QObject *parent,QString filename);
   ~memberthread();
   void run();      //start calculation
+  void stop();
   void SaveCanvas(QString filename);
   QString getFileName() { return fFileName; }
 
@@ -30,6 +31,7 @@ private:
   TCanvas *fC;
   PlotMembers *fp;
   QString fFileName;
+  bool fIsTerminated;
 };
 
 
@@ -55,6 +57,7 @@ private:
   memberthread *thread;
   PDFDialog *fPDF;
   QString fPlotName;
+  bool fIsRunning;
 
   friend class memberthread;
 };

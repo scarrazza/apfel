@@ -1,6 +1,5 @@
-#include <iostream>
-#include "plotdis.h"
-#include "ui_plotdis.h"
+#include "plotdisq.h"
+#include "ui_plotdisq.h"
 #include "pdfdialog.h"
 #include "common.h"
 #include <cmath>
@@ -18,12 +17,12 @@
 #include "LHAPDF/LHAPDF.h"
 using namespace std;
 
-PlotDIS::PlotDIS(QWidget *parent, PDFDialog *pdf) :
+PlotDISQ::PlotDISQ(QWidget *parent, PDFDialog *pdf) :
   QWidget(parent),
-  ui(new Ui::PlotDIS),
+  ui(new Ui::PlotDISQ),
   thread(NULL),
   fPDF(pdf),
-  fPlotName("displot.png"),
+  fPlotName("disqplot.png"),
   fIsRunning(false)
 {
   ui->setupUi(this);
@@ -36,8 +35,8 @@ PlotDIS::PlotDIS(QWidget *parent, PDFDialog *pdf) :
   QString str;
   str.append(QString("%1").arg(t));
 
-  fPlotName = "displot_" + str + ".png";
-  thread  = new disthread(this,fPlotName);
+  fPlotName = "disqplot_" + str + ".png";
+  thread  = new disqthread(this,fPlotName);
 
   connect(thread, SIGNAL(finished()), this, SLOT(ThreadFinished()));
   connect(thread, SIGNAL(progress(int)), this, SLOT(ThreadProgress(int)));
@@ -49,12 +48,13 @@ PlotDIS::PlotDIS(QWidget *parent, PDFDialog *pdf) :
       ui->stddev->setChecked(false);
     }
 
-  ui->xtitle->setText("x");
+  ui->xtitle->setText("Q");
   ui->ytitle->setText("");
-  ui->title->setText( "F_{2}^{c}(x), " + fPDF->PDFname());
+  ui->title->setText( "F_{2}^{c}(Q), " + fPDF->PDFname());
+
 }
 
-PlotDIS::~PlotDIS()
+PlotDISQ::~PlotDISQ()
 {
   delete ui;
   if (thread)
@@ -64,7 +64,8 @@ PlotDIS::~PlotDIS()
     }
 }
 
-void PlotDIS::on_process_currentIndexChanged(int index)
+
+void PlotDISQ::on_process_currentIndexChanged(int index)
 {
   if (index == 0)
     {
@@ -79,14 +80,14 @@ void PlotDIS::on_process_currentIndexChanged(int index)
       ui->target->removeItem(3);
     }
   else if (index == 2)
-    {      
+    {
       ui->projectile->addItem("Neutrino");
       ui->projectile->addItem("Antineutrino");
       ui->target->addItem("Iron");
     }
 }
 
-void PlotDIS::on_automaticrange_toggled(bool checked)
+void PlotDISQ::on_automaticrange_toggled(bool checked)
 {
   if (checked == true)
     {
@@ -104,7 +105,7 @@ void PlotDIS::on_automaticrange_toggled(bool checked)
     }
 }
 
-void PlotDIS::on_playButton_clicked()
+void PlotDISQ::on_playButton_clicked()
 {
   if (!fIsRunning)
     {
@@ -123,7 +124,7 @@ void PlotDIS::on_playButton_clicked()
     }
 }
 
-void PlotDIS::on_saveButton_clicked()
+void PlotDISQ::on_saveButton_clicked()
 {
   QString selectedFilter;
   QString path = QFileDialog::getSaveFileName(this,
@@ -133,7 +134,7 @@ void PlotDIS::on_saveButton_clicked()
 
 }
 
-void PlotDIS::ThreadFinished()
+void PlotDISQ::ThreadFinished()
 {
   ui->playButton->setIcon(QIcon(":/images/StepForwardNormalBlue.png"));
   ui->playButton->setText("Compute");
@@ -155,69 +156,69 @@ void PlotDIS::ThreadFinished()
   QFile::remove(fPlotName) ;
 }
 
-void PlotDIS::ThreadProgress(int i)
+void PlotDISQ::ThreadProgress(int i)
 {
   ui->progressBar->setValue(i);
 }
 
-void PlotDIS::on_output_currentIndexChanged(int index)
+void PlotDISQ::on_output_currentIndexChanged(int index)
 {
   if (index == 0)
-    ui->title->setText( "F_{2}^{l}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{2}^{l}(Q), " + fPDF->PDFname());
   else if (index == 1)
-    ui->title->setText( "F_{2}^{c}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{2}^{c}(Q), " + fPDF->PDFname());
   else if (index == 2)
-    ui->title->setText( "F_{2}^{b}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{2}^{b}(Q), " + fPDF->PDFname());
   else if (index == 3)
-    ui->title->setText( "F_{2}^{t}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{2}^{t}(Q), " + fPDF->PDFname());
   else if (index == 4)
-    ui->title->setText( "F_{2}^{p}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{2}^{p}(Q), " + fPDF->PDFname());
   else if (index == 5)
-    ui->title->setText( "F_{L}^{l}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{L}^{l}(Q), " + fPDF->PDFname());
   else if (index == 6)
-    ui->title->setText( "F_{L}^{c}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{L}^{c}(Q), " + fPDF->PDFname());
   else if (index == 7)
-    ui->title->setText( "F_{L}^{b}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{L}^{b}(Q), " + fPDF->PDFname());
   else if (index == 8)
-    ui->title->setText( "F_{L}^{t}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{L}^{t}(Q), " + fPDF->PDFname());
   else if (index == 9)
-    ui->title->setText( "F_{L}^{p}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{L}^{p}(Q), " + fPDF->PDFname());
   else if (index == 10)
-    ui->title->setText( "F_{3}^{l}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{3}^{l}(Q), " + fPDF->PDFname());
   else if (index == 11)
-    ui->title->setText( "F_{3}^{c}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{3}^{c}(Q), " + fPDF->PDFname());
   else if (index == 12)
-    ui->title->setText( "F_{3}^{b}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{3}^{b}(Q), " + fPDF->PDFname());
   else if (index == 13)
-    ui->title->setText( "F_{3}^{t}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{3}^{t}(Q), " + fPDF->PDFname());
   else if (index == 14)
-    ui->title->setText( "F_{3}^{p}(x), " + fPDF->PDFname());
+    ui->title->setText( "F_{3}^{p}(Q), " + fPDF->PDFname());
   else if (index == 15)
-    ui->title->setText( "#sigma^{l}(x), " + fPDF->PDFname());
+    ui->title->setText( "#sigma^{l}(Q), " + fPDF->PDFname());
   else if (index == 16)
-    ui->title->setText( "#sigma^{c}(x), " + fPDF->PDFname());
+    ui->title->setText( "#sigma^{c}(Q), " + fPDF->PDFname());
   else if (index == 17)
-    ui->title->setText( "#sigma^{b}(x), " + fPDF->PDFname());
+    ui->title->setText( "#sigma^{b}(Q), " + fPDF->PDFname());
   else if (index == 18)
-    ui->title->setText( "#sigma^{t}(x), " + fPDF->PDFname());
+    ui->title->setText( "#sigma^{t}(Q), " + fPDF->PDFname());
   else if (index == 19)
-    ui->title->setText( "#sigma^{p}(x), " + fPDF->PDFname());
+    ui->title->setText( "#sigma^{p}(Q), " + fPDF->PDFname());
 
 }
 
-disthread::disthread(QObject *parent, QString filename):
+disqthread::disqthread(QObject *parent, QString filename):
   QThread(parent),
-  fp((PlotDIS*)parent),
+  fp((PlotDISQ*)parent),
   fFileName(filename),
   fIsTerminated(false)
 {
 }
 
-disthread::~disthread()
+disqthread::~disqthread()
 {
 }
 
-void disthread::run()
+void disqthread::run()
 {
   fC = new TCanvas();
   fC->SetTickx();
@@ -232,8 +233,8 @@ void disthread::run()
   // Initialize PDFs
 
   const int N = fp->ui->xpoints->value();
-  double xmin = lharanges[6][0];
-  double xmax = lharanges[6][1];
+  double xmin = sqrt(2);
+  double xmax = 100;
   double ymin = 0, ymax = 0;
 
   if (fp->ui->logy->isChecked()) ymin = 1e-5;
@@ -284,7 +285,7 @@ void disthread::run()
   else
     project = "ANTINEUTRINO";
 
-  TLegend *leg =  new TLegend(0.603448,0.673729,0.981322,0.883475);
+  TLegend *leg =  new TLegend(0.125,0.669492,0.50431,0.879237);
   leg->SetBorderSize(0);
   leg->SetFillColor(0);
   leg->SetFillStyle(0);
@@ -295,8 +296,8 @@ void disthread::run()
   double *x = new double[N];
   for (int i = 0; i < N; i++)
     {
-      if (fp->ui->logx->isChecked()) x[i] = exp(log(xmin)+i*(log(xmax)-log(xmin))/N);
-      else x[i] = xmin+i*(xmax-xmin)/N;
+      if (fp->ui->logx->isChecked()) x[i] = exp(log(xmin)+i*(log(xmax)-log(xmin))/(N-1));
+      else x[i] = xmin+i*(xmax-xmin)/(N-1);
     }
 
   int nset = 1;
@@ -348,7 +349,7 @@ void disthread::run()
           double F2[5],F3[5],FL[5],sigma[5];
           double F2err[5],F3err[5],FLerr[5],sigmaerr[5];
 
-          fp->fPDF->DIS(x[i],Qi,Qf,y,proc,scheme,pto,target,project,
+          fp->fPDF->DIS(Qf,Qi,x[i],y,proc,scheme,pto,target,project,
                         F2,F3,FL,sigma,F2err,F3err,FLerr,sigmaerr);
 
           if (fp->ui->output->currentIndex() == 0) {
@@ -441,7 +442,7 @@ void disthread::run()
   if (!fp->ui->automaticrange->isChecked())
     mg->GetYaxis()->SetRangeUser(ymin,ymax);
 
-  leg->AddEntry("",TString("Q = " + QString::number(fp->ui->Qf->text().toDouble(),'g',3).toStdString() + " GeV"),"");
+  leg->AddEntry("",TString("x = " + QString::number(fp->ui->Qf->text().toDouble(),'g',3).toStdString()),"");
   leg->AddEntry("",TString("Target: " + fp->ui->target->currentText().toStdString()),"");
   leg->AddEntry("",TString("Projec: " + fp->ui->projectile->currentText().toStdString()),"");
   if (legindex < 2)
@@ -462,12 +463,12 @@ void disthread::run()
 
 }
 
-void disthread::SaveCanvas(QString filename)
+void disqthread::SaveCanvas(QString filename)
 {
   fC->SaveAs(filename.toStdString().c_str());
 }
 
-void disthread::stop()
+void disqthread::stop()
 {
   fIsTerminated = true;
 }

@@ -24,7 +24,8 @@ PlotComparison::PlotComparison(QWidget *parent,std::vector<PDFDialog*> pdf) :
   thread(NULL),
   fPDF(pdf),
   fPlotName("compareplot.png"),
-  fRef(0)
+  fRef(0),
+  fIsRunning(false)
 {
   ui->setupUi(this);
 
@@ -60,14 +61,30 @@ PlotComparison::PlotComparison(QWidget *parent,std::vector<PDFDialog*> pdf) :
 PlotComparison::~PlotComparison()
 {
   delete ui;
-  delete thread;
+  if (thread)
+    {
+      thread->terminate();
+      delete thread;
+    }
 }
 
 void PlotComparison::on_playButton_clicked()
 {
-  ui->playButton->setEnabled(false);
-  QApplication::processEvents();
-  thread->start();
+  if (!fIsRunning)
+    {
+      fIsRunning = true;
+      ui->playButton->setIcon(QIcon(":/images/Stop1NormalRed.png"));
+      ui->playButton->setText("Stop");
+      if (ui->graphicsView->scene()) ui->graphicsView->scene()->clear();
+      QApplication::processEvents();
+      thread->start();
+    }
+  else
+    {
+      fIsRunning = false;
+      thread->stop();
+      ui->playButton->setEnabled(false);
+    }
 }
 
 void PlotComparison::on_saveButton_clicked()
@@ -81,6 +98,10 @@ void PlotComparison::on_saveButton_clicked()
 
 void PlotComparison::ThreadFinished()
 {
+  ui->playButton->setIcon(QIcon(":/images/StepForwardNormalBlue.png"));
+  ui->playButton->setText("Compute");
+  fIsRunning = false;
+
   ui->playButton->setEnabled(true);
   ui->saveButton->setEnabled(true);
 
@@ -141,7 +162,8 @@ void PlotComparison::on_automaticrange_toggled(bool checked)
 comparisonthread::comparisonthread(QObject *parent, QString filename):
   QThread(parent),
   fp((PlotComparison*)parent),
-  fFileName(filename)
+  fFileName(filename),
+  fIsTerminated(false)
 {
 }
 
@@ -252,6 +274,8 @@ void comparisonthread::run()
 
       for (int ix = 0; ix < N; ix++)
         {
+          if(fIsTerminated){ fIsTerminated = false; return; }
+
           if (fp->ui->ratio->isChecked()) {
               if (set == 0) refx[ix] = xPDF[ix];
               xPDF[ix] /= refx[ix];
@@ -326,4 +350,9 @@ void comparisonthread::run()
 void comparisonthread::SaveCanvas(QString filename)
 {
   fC->SaveAs(filename.toStdString().c_str());
+}
+
+void comparisonthread::stop()
+{
+  fIsTerminated = true;
 }

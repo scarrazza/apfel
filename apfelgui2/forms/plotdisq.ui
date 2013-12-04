@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>PlotDIS</class>
- <widget class="QWidget" name="PlotDIS">
+ <class>PlotDISQ</class>
+ <widget class="QWidget" name="PlotDISQ">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1018</width>
+    <width>1016</width>
     <height>643</height>
    </rect>
   </property>
@@ -34,65 +34,6 @@ background-color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="playButton">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="text">
-      <string>Compute</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/resource.qrc">
-       <normaloff>:/images/StepForwardNormalBlue.png</normaloff>:/images/StepForwardNormalBlue.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="2">
-    <widget class="QPushButton" name="saveButton">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <property name="text">
-      <string>Save plot</string>
-     </property>
-     <property name="icon">
-      <iconset resource="../resources/resource.qrc">
-       <normaloff>:/images/save-32x32.png</normaloff>:/images/save-32x32.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>32</width>
-       <height>32</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1" colspan="2">
-    <widget class="QProgressBar" name="progressBar">
-     <property name="value">
-      <number>0</number>
-     </property>
-     <property name="textVisible">
-      <bool>true</bool>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="invertedAppearance">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1" colspan="2">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
@@ -108,7 +49,7 @@ background-color: rgb(255, 255, 255);</string>
          <item row="0" column="0">
           <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>x min.</string>
+            <string>Q min.</string>
            </property>
           </widget>
          </item>
@@ -118,7 +59,7 @@ background-color: rgb(255, 255, 255);</string>
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>1e-5</string>
+            <string>1.41</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -131,7 +72,7 @@ background-color: rgb(255, 255, 255);</string>
             <bool>false</bool>
            </property>
            <property name="text">
-            <string>1</string>
+            <string>100</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -141,7 +82,7 @@ background-color: rgb(255, 255, 255);</string>
          <item row="0" column="3">
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>x max</string>
+            <string>Q max</string>
            </property>
           </widget>
          </item>
@@ -288,7 +229,7 @@ background-color: rgb(255, 255, 255);</string>
        <item row="1" column="2">
         <widget class="QLineEdit" name="Qf">
          <property name="text">
-          <string>1.4142135623731</string>
+          <string>0.1</string>
          </property>
         </widget>
        </item>
@@ -334,7 +275,7 @@ background-color: rgb(255, 255, 255);</string>
        <item row="1" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Final scale (GeV):</string>
+          <string>x:</string>
          </property>
         </widget>
        </item>
@@ -420,7 +361,7 @@ background-color: rgb(255, 255, 255);</string>
           <enum>Qt::LeftToRight</enum>
          </property>
          <property name="text">
-          <string>Log. x scale</string>
+          <string>Log. Q scale</string>
          </property>
          <property name="checked">
           <bool>true</bool>
@@ -537,7 +478,7 @@ background-color: rgb(255, 255, 255);</string>
        <item row="13" column="0" colspan="2">
         <widget class="QLabel" name="label_9">
          <property name="text">
-          <string>Number x points:</string>
+          <string>Number Q points:</string>
          </property>
         </widget>
        </item>
@@ -621,6 +562,65 @@ background-color: rgb(255, 255, 255);</string>
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="playButton">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Compute</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/resource.qrc">
+       <normaloff>:/images/StepForwardNormalBlue.png</normaloff>:/images/StepForwardNormalBlue.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QPushButton" name="saveButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Save plot</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../resources/resource.qrc">
+       <normaloff>:/images/save-32x32.png</normaloff>:/images/save-32x32.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>32</width>
+       <height>32</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1" colspan="2">
+    <widget class="QProgressBar" name="progressBar">
+     <property name="value">
+      <number>0</number>
+     </property>
+     <property name="textVisible">
+      <bool>true</bool>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="invertedAppearance">
+      <bool>false</bool>
+     </property>
     </widget>
    </item>
   </layout>

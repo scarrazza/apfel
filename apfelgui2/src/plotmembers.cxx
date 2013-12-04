@@ -26,7 +26,8 @@ PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
   ui(new Ui::PlotMembers),
   thread(NULL),
   fPDF(pdf),
-  fPlotName("memberplot.svg")
+  fPlotName("memberplot.svg"),
+  fIsRunning(false)
 {
   ui->setupUi(this);
 
@@ -71,14 +72,31 @@ PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
 PlotMembers::~PlotMembers()
 {
   delete ui;
-  delete thread;
+  if (thread)
+    {
+      thread->terminate();
+      delete thread;
+    }
 }
 
 void PlotMembers::on_playButton_clicked()
 {
-  ui->playButton->setEnabled(false);
-  QApplication::processEvents();
-  thread->start();
+  if (!fIsRunning)
+    {
+      fIsRunning = true;
+      ui->playButton->setIcon(QIcon(":/images/Stop1NormalRed.png"));
+      ui->playButton->setText("Stop");
+      if (ui->graphicsView->scene()) ui->graphicsView->scene()->clear();
+      QApplication::processEvents();
+      thread->start();
+    }
+  else
+    {
+      fIsRunning = false;
+      thread->stop();
+      ui->playButton->setEnabled(false);
+    }
+
 }
 
 void PlotMembers::on_checkBox_toggled(bool checked)
@@ -122,6 +140,10 @@ void PlotMembers::on_automaticrange_toggled(bool checked)
 
 void PlotMembers::ThreadFinished()
 {
+  ui->playButton->setIcon(QIcon(":/images/StepForwardNormalBlue.png"));
+  ui->playButton->setText("Compute");
+  fIsRunning = false;
+
   ui->playButton->setEnabled(true);
   ui->saveButton->setEnabled(true);
 
@@ -159,7 +181,8 @@ void PlotMembers::on_PDFflavor_currentIndexChanged(int index)
 memberthread::memberthread(QObject *parent, QString filename):
   QThread(parent),
   fp((PlotMembers*)parent),
-  fFileName(filename)
+  fFileName(filename),
+  fIsTerminated(false)
 {
 }
 
@@ -240,6 +263,8 @@ void memberthread::run()
   //////////////////////////////
   for (int r = memi; r <= memf; r++)
     {
+      if(fIsTerminated){ fIsTerminated = false; return; }
+
       emit progress(r*100/memf);
 
       int rep = r;
@@ -263,11 +288,15 @@ void memberthread::run()
   //////////////////////////////
   if (fp->ui->mean->isChecked() || fp->ui->stddev->isChecked() || fp->ui->cl->isChecked())
     {
+      if(fIsTerminated){ return; }
+
       double *xPDF = new double[N];
       double *xPDFErr = new double[N];
       double *upErr = new double[N];
       double *dnErr = new double[N];
       fp->fPDF->GetFlvrPDFCVErr(N,x,Qf,f,xPDF,xPDFErr,upErr,dnErr);
+
+      if(fIsTerminated){ fIsTerminated = false; return; }
 
       if (fp->ui->mean->isChecked())
         {
@@ -282,6 +311,8 @@ void memberthread::run()
           mg->Add(gcv,"l");
           leg->AddEntry(gcv,"Central value","l"); legindex++;
         }
+
+      if(fIsTerminated){ fIsTerminated = false;  return; }
 
       if (fp->ui->stddev->isChecked())
         {
@@ -303,6 +334,8 @@ void memberthread::run()
           mg->Add(gstd2,"l");
           leg->AddEntry(gstd,"Std. deviation","l"); legindex++;
         }
+
+      if(fIsTerminated){ fIsTerminated = false; return; }
 
       if (fp->ui->cl->isChecked())
         {
@@ -368,4 +401,9 @@ void memberthread::run()
 void memberthread::SaveCanvas(QString filename)
 {
   fC->SaveAs(filename.toStdString().c_str());
+}
+
+void memberthread::stop()
+{
+  fIsTerminated = true;
 }
