@@ -196,7 +196,7 @@
     <item row="7" column="0">
      <widget class="QPushButton" name="pushButton_3">
       <property name="text">
-       <string>FONLL</string>
+       <string>DIS (x)</string>
       </property>
       <property name="icon">
        <iconset resource="../resources/resource.qrc">
@@ -223,6 +223,23 @@
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="1">
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="text">
+       <string>DIS (Q)</string>
+      </property>
+      <property name="icon">
+       <iconset resource="../resources/resource.qrc">
+        <normaloff>:/images/Actions-draw-brush-icon.png</normaloff>:/images/Actions-draw-brush-icon.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
       </property>
      </widget>
     </item>

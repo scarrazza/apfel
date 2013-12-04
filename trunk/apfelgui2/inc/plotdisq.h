@@ -1,24 +1,24 @@
-#ifndef PLOTLUMI_H
-#define PLOTLUMI_H
+#ifndef PLOTDISQ_H
+#define PLOTDISQ_H
 
 #include <QWidget>
 #include <QThread>
 
 class PDFDialog;
-class PlotLumi;
 class TCanvas;
+class PlotDISQ;
 
 namespace Ui {
-  class PlotLumi;
+  class PlotDISQ;
 }
 
-class lumithread: public QThread
+class disqthread: public QThread
 {
   Q_OBJECT
 
 public:
-  lumithread(QObject *parent,QString filename);
-  ~lumithread();
+  disqthread(QObject *parent,QString filename);
+  ~disqthread();
   void run();      //start calculation
   void stop();
   void SaveCanvas(QString filename);
@@ -29,39 +29,38 @@ signals:
 
 private:
   TCanvas *fC;
-  PlotLumi *fp;
+  PlotDISQ *fp;
   QString fFileName;
   bool fIsTerminated;
 
 };
 
-class PlotLumi : public QWidget
+class PlotDISQ : public QWidget
 {
   Q_OBJECT
   
 public:
-  explicit PlotLumi(QWidget *parent = 0,std::vector<PDFDialog*> pdf = std::vector<PDFDialog*>());
-  ~PlotLumi();
+  explicit PlotDISQ(QWidget *parent = 0, PDFDialog *pdf = NULL);
+  ~PlotDISQ();
   
 private slots:
-  void on_referenceSet_currentIndexChanged(int index);
+  void on_process_currentIndexChanged(int index);
+  void on_output_currentIndexChanged(int index);
   void on_automaticrange_toggled(bool checked);
   void on_playButton_clicked();
   void on_saveButton_clicked();
   void ThreadFinished();
   void ThreadProgress(int);
-  void on_PDFflavor_currentIndexChanged(int index);
 
 private:
-  Ui::PlotLumi *ui;
-  lumithread *thread;
-  std::vector<PDFDialog*> fPDF;
+  Ui::PlotDISQ *ui;
+  disqthread *thread;
+  PDFDialog *fPDF;
   QString fPlotName;
-  int fRef;
   bool fIsRunning;
 
-  friend class lumithread;
+  friend class disqthread;
 
 };
 
-#endif // PLOTLUMI_H
+#endif // PLOTDISQ_H

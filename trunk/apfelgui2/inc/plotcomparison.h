@@ -19,6 +19,7 @@ public:
   comparisonthread(QObject *parent,QString filename);
   ~comparisonthread();
   void run();      //start calculation
+  void stop();
   void SaveCanvas(QString filename);
   QString getFileName() { return fFileName; }
 
@@ -29,6 +30,8 @@ private:
   TCanvas *fC;
   PlotComparison *fp;
   QString fFileName;
+  bool fIsTerminated;
+
 };
 
 class PlotComparison : public QWidget
@@ -55,6 +58,7 @@ private:
   std::vector<PDFDialog*> fPDF;
   QString fPlotName;
   int fRef;
+  bool fIsRunning;
 
   friend class comparisonthread;
 };

@@ -23,7 +23,8 @@ PlotLumi::PlotLumi(QWidget *parent,std::vector<PDFDialog*> pdf) :
   thread(NULL),
   fPDF(pdf),
   fPlotName("lumiplot.png"),
-  fRef(0)
+  fRef(0),
+  fIsRunning(false)
 {
   ui->setupUi(this);
 
@@ -59,7 +60,11 @@ PlotLumi::PlotLumi(QWidget *parent,std::vector<PDFDialog*> pdf) :
 PlotLumi::~PlotLumi()
 {
   delete ui;
-  delete thread;
+  if (thread)
+    {
+      thread->terminate();
+      delete thread;
+    }
 }
 
 void PlotLumi::on_referenceSet_currentIndexChanged(int index)
@@ -87,9 +92,21 @@ void PlotLumi::on_automaticrange_toggled(bool checked)
 
 void PlotLumi::on_playButton_clicked()
 {
-  ui->playButton->setEnabled(false);
-  QApplication::processEvents();
-  thread->start();
+  if (!fIsRunning)
+    {
+      fIsRunning = true;
+      ui->playButton->setIcon(QIcon(":/images/Stop1NormalRed.png"));
+      ui->playButton->setText("Stop");
+      if (ui->graphicsView->scene()) ui->graphicsView->scene()->clear();
+      QApplication::processEvents();
+      thread->start();
+    }
+  else
+    {
+      fIsRunning = false;
+      thread->stop();
+      ui->playButton->setEnabled(false);
+    }
 }
 
 void PlotLumi::on_saveButton_clicked()
@@ -104,6 +121,10 @@ void PlotLumi::on_saveButton_clicked()
 
 void PlotLumi::ThreadFinished()
 {
+  ui->playButton->setIcon(QIcon(":/images/StepForwardNormalBlue.png"));
+  ui->playButton->setText("Compute");
+  fIsRunning = false;
+
   ui->playButton->setEnabled(true);
   ui->saveButton->setEnabled(true);
 
@@ -144,7 +165,8 @@ void PlotLumi::on_PDFflavor_currentIndexChanged(int index)
 lumithread::lumithread(QObject *parent, QString filename):
   QThread(parent),
   fp((PlotLumi*)parent),
-  fFileName(filename)
+  fFileName(filename),
+  fIsTerminated(false)
 {
 }
 
@@ -236,6 +258,8 @@ void lumithread::run()
       double *xmH = new double[N];
       for (int imH = 1; imH <= N; imH++)
         {
+          if(fIsTerminated){ fIsTerminated = false; return; }
+
           emit progress((imH-1)*100/N);
           double mH = xmin * pow(xmax/xmin, double(imH-1)/(N-1));
           xmH[imH-1] = mH;
@@ -311,4 +335,9 @@ void lumithread::run()
 void lumithread::SaveCanvas(QString filename)
 {
   fC->SaveAs(filename.toStdString().c_str());
+}
+
+void lumithread::stop()
+{
+  fIsTerminated = true;
 }

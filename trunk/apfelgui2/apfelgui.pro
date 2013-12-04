@@ -42,7 +42,8 @@ SOURCES += src/main.cxx\
            src/plotcomparison.cxx \
            src/plotlumi.cxx \
            src/utils.cxx \
-           src/plotdis.cxx
+           src/plotdis.cxx \
+           src/plotdisq.cxx
 
 HEADERS  += inc/apfelmainwindow.h \
             inc/pdfdialog.h \
@@ -52,7 +53,8 @@ HEADERS  += inc/apfelmainwindow.h \
             inc/plotcomparison.h \
             inc/plotlumi.h \
             inc/utils.h \
-            inc/plotdis.h
+            inc/plotdis.h \
+            inc/plotdisq.h
 
 FORMS    += forms/apfelmainwindow.ui \
             forms/pdfdialog.ui \
@@ -60,7 +62,8 @@ FORMS    += forms/apfelmainwindow.ui \
             forms/plotall.ui \
             forms/plotcomparison.ui \
             forms/plotlumi.ui \
-            forms/plotdis.ui
+            forms/plotdis.ui \
+            forms/plotdisq.ui
 
 RESOURCES += \
     resources/resource.qrc

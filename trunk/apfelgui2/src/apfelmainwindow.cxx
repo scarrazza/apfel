@@ -6,6 +6,7 @@
 #include "plotcomparison.h"
 #include "plotlumi.h"
 #include "plotdis.h"
+#include "plotdisq.h"
 
 #include <QInputDialog>
 #include <QDir>
@@ -262,6 +263,28 @@ void APFELMainWindow::on_pushButton_3_clicked()
       else
         {
           PlotDIS *A = new PlotDIS(0,fPDFs[ind[0]]);
+          A->show();
+        }
+    }
+  else
+    QMessageBox::information(this,"Information","Please add a PDF set before continue.");
+}
+
+void APFELMainWindow::on_pushButton_4_clicked()
+{
+  if (ui->tablePDFs->count() != 0)
+    {
+      std::vector<int> ind;
+      for (int i = 0; i < ui->tablePDFs->count(); i++)
+        {
+          if (ui->tablePDFs->item(i)->checkState()/2 == 1)
+            ind.push_back(i);
+        }
+      if ((int)ind.size() > 1)
+        QMessageBox::information(this,"Information","Please select only one PDF set before continue.");
+      else
+        {
+          PlotDISQ *A = new PlotDISQ(0,fPDFs[ind[0]]);
           A->show();
         }
     }
