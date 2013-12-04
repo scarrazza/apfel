@@ -274,7 +274,7 @@ void comparisonthread::run()
 
       for (int ix = 0; ix < N; ix++)
         {
-          if(fIsTerminated){ fIsTerminated = false; return; }
+          if(fIsTerminated){ fIsTerminated = false; delete[] x; delete[] refx; return; }
 
           if (fp->ui->ratio->isChecked()) {
               if (set == 0) refx[ix] = xPDF[ix];

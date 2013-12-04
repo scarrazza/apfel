@@ -258,7 +258,7 @@ void lumithread::run()
       double *xmH = new double[N];
       for (int imH = 1; imH <= N; imH++)
         {
-          if(fIsTerminated){ fIsTerminated = false; return; }
+          if(fIsTerminated){ fIsTerminated = false; delete[] refx; return; }
 
           emit progress((imH-1)*100/N);
           double mH = xmin * pow(xmax/xmin, double(imH-1)/(N-1));
