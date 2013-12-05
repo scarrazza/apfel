@@ -45,7 +45,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  QString version(APFEL::GetVersion());
+  QString version(APFEL::GetVersion().c_str());
   statusBar()->showMessage(QString("APFEL") + version + QString(": V. Bertone, S. Carrazza and J. Rojo (arXiv:1310.1394)"));
 
   //center mainwindow position on desktop
