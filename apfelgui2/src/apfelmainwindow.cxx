@@ -39,8 +39,10 @@ APFELMainWindow::APFELMainWindow(QWidget *parent) :
                            QString(APFEL::GetVersion().c_str()) +
                            QString(": V. Bertone, S. Carrazza and J. Rojo (arXiv:1310.1394)"));
 
-  QFile input("apfelconfig.ini");
-  if (!input.exists())
+  QSettings settings(QSettings::IniFormat, QSettings::UserScope,"apfel", "apfelgui");
+  settings.beginGroup("LHAPDF");
+
+  if (settings.value("LHGRIDPATH") == QVariant())
     {
       bool ok;
       fLHAPDFpath = QInputDialog::getText(this, tr("Welcome to APFEL GUI setup"),
@@ -49,7 +51,6 @@ APFELMainWindow::APFELMainWindow(QWidget *parent) :
       if (ok && !fLHAPDFpath.isEmpty() && QDir(fLHAPDFpath).exists() == true)
         {
           // write to config file
-          QSettings settings("apfelconfig.ini",QSettings::IniFormat);
           settings.beginGroup("LHAPDF");
           settings.setValue("LHGRIDPATH",fLHAPDFpath);
           settings.endGroup();
@@ -63,8 +64,6 @@ APFELMainWindow::APFELMainWindow(QWidget *parent) :
   else
     {
       // Read path from file
-      QSettings settings("apfelconfig.ini",QSettings::IniFormat);
-      settings.beginGroup("LHAPDF");
       fLHAPDFpath = settings.value("LHGRIDPATH").toString();
       settings.endGroup();
     }
@@ -106,7 +105,7 @@ void APFELMainWindow::on_actionPreferences_triggered()
       if (!fLHAPDFpath.isEmpty() && QDir(fLHAPDFpath).exists() == true)
         {
           // write to config file
-          QSettings settings("apfelconfig.ini",QSettings::IniFormat);
+          QSettings settings(QSettings::IniFormat, QSettings::UserScope,"apfel", "apfelgui");
           settings.beginGroup("LHAPDF");
           settings.setValue("LHGRIDPATH",fLHAPDFpath);
           settings.endGroup();
