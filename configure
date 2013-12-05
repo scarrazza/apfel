@@ -19769,11 +19769,9 @@ ac_config_files="$ac_config_files pywrap/Makefile pywrap/setup.py"
 
 ac_config_files="$ac_config_files doc/Makefile"
 
-ac_config_files="$ac_config_files bin/Makefile bin/apfel-config"
+ac_config_files="$ac_config_files bin/Makefile bin/apfel-config bin/apfel"
 
 ac_config_files="$ac_config_files apfelgui/Makefile"
-
-ac_config_files="$ac_config_files apfelgui2/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -21001,8 +20999,8 @@ do
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "bin/Makefile") CONFIG_FILES="$CONFIG_FILES bin/Makefile" ;;
     "bin/apfel-config") CONFIG_FILES="$CONFIG_FILES bin/apfel-config" ;;
+    "bin/apfel") CONFIG_FILES="$CONFIG_FILES bin/apfel" ;;
     "apfelgui/Makefile") CONFIG_FILES="$CONFIG_FILES apfelgui/Makefile" ;;
-    "apfelgui2/Makefile") CONFIG_FILES="$CONFIG_FILES apfelgui2/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac

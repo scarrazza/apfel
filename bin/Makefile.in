@@ -80,7 +80,7 @@ build_triplet = @build@
 host_triplet = @host@
 subdir = bin
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
-	$(srcdir)/apfel-config.in
+	$(srcdir)/apfel-config.in $(srcdir)/apfel.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/binreloc.m4 \
 	$(top_srcdir)/m4/compilerflags.m4 $(top_srcdir)/m4/libtool.m4 \
@@ -92,7 +92,7 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config/config.h \
 	$(top_builddir)/include/APFEL/FortranWrappers.h
-CONFIG_CLEAN_FILES = apfel-config
+CONFIG_CLEAN_FILES = apfel-config apfel
 CONFIG_CLEAN_VPATH_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -280,8 +280,8 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-EXTRA_DIST = apfel-config.in
-bin_SCRIPTS = apfel-config
+EXTRA_DIST = apfel-config.in apfel.in
+bin_SCRIPTS = apfel-config apfel
 all: all-am
 
 .SUFFIXES:
@@ -316,6 +316,8 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 apfel-config: $(top_builddir)/config.status $(srcdir)/apfel-config.in
+	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
+apfel: $(top_builddir)/config.status $(srcdir)/apfel.in
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@
 install-binSCRIPTS: $(bin_SCRIPTS)
 	@$(NORMAL_INSTALL)
