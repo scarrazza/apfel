@@ -1,6 +1,6 @@
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = src include ccwrap lib examples pywrap doc bin apfelgui apfelgui2
+SUBDIRS = src include ccwrap lib examples pywrap doc bin apfelgui
 dist_doc_DATA = README
 
 
