@@ -3,7 +3,7 @@
 import sys
 import os
 import inspect
-from lhapdf import *
+#from lhapdf import *
 import apfel
 
 try:
