@@ -39,7 +39,7 @@ APFELMainWindow::APFELMainWindow(QWidget *parent) :
                            QString(APFEL::GetVersion().c_str()) +
                            QString(": V. Bertone, S. Carrazza and J. Rojo (arXiv:1310.1394)"));
 
-  QSettings settings(QSettings::IniFormat, QSettings::UserScope,"apfel", "apfelgui");
+  QSettings settings("apfel", "apfelgui");
   settings.beginGroup("LHAPDF");
 
   if (settings.value("LHGRIDPATH") == QVariant())
@@ -51,7 +51,6 @@ APFELMainWindow::APFELMainWindow(QWidget *parent) :
       if (ok && !fLHAPDFpath.isEmpty() && QDir(fLHAPDFpath).exists() == true)
         {
           // write to config file
-          settings.beginGroup("LHAPDF");
           settings.setValue("LHGRIDPATH",fLHAPDFpath);
           settings.endGroup();
         }
@@ -105,7 +104,7 @@ void APFELMainWindow::on_actionPreferences_triggered()
       if (!fLHAPDFpath.isEmpty() && QDir(fLHAPDFpath).exists() == true)
         {
           // write to config file
-          QSettings settings(QSettings::IniFormat, QSettings::UserScope,"apfel", "apfelgui");
+          QSettings settings("apfel", "apfelgui");
           settings.beginGroup("LHAPDF");
           settings.setValue("LHGRIDPATH",fLHAPDFpath);
           settings.endGroup();
