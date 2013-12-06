@@ -1,0 +1,47 @@
+#!/usr/bin/python
+
+import sys
+import os
+import inspect
+#from lhapdf import *
+import apfel
+
+try:
+    import readline
+except ImportError:
+    print "Module readline not available."
+else:
+    import rlcompleter
+    readline.parse_and_bind("tab: complete")
+
+def apfelhelp():
+    print "Available apfel functions:"
+    print dir(apfel)
+
+from apfel import *
+
+#red color
+r = "\033[31m"
+
+#whie color
+w = "\033[0m"
+
+#clear the terminal
+os.system('clear')
+
+print "\nWelcome to "
+print "     _/_/_/    _/_/_/_/   _/_/_/_/   _/_/_/_/   _/"
+print "   _/    _/   _/    _/   _/         _/         _/"
+print "  _/_/_/_/   _/_/_/_/   _/_/_/     _/_/_/     _/"
+print " _/    _/   _/         _/         _/         _/"
+print "_/    _/   _/         _/         _/_/_/_/   _/_/_/_/"
+print "_____v", GetVersion(),"A PDF Evolution Library, arXiv:1310.1394"      
+print "     Authors: V. Bertone, S. Carrazza, J. Rojo"
+print "\n Type apfelhelp() for help\n"
+
+
+EnableWelcomeMessage(False)
+
+#custom prompt
+sys.ps1 = r + "[apfel]: " + w
+os.environ['PYTHONINSPECT'] = 'True'
