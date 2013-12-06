@@ -3,6 +3,7 @@
 #include "apfelmainwindow.h"
 #include "lumiintegral.h"
 
+#include <iostream>
 #include <QDir>
 #include <QProcess>
 #include <QDebug>
@@ -10,6 +11,7 @@
 
 #include "LHAPDF/LHAPDF.h"
 #include "APFEL/APFEL.h"
+using namespace std;
 
 PDFDialog::PDFDialog(QWidget *parent) :
   QDialog(parent),
@@ -1043,7 +1045,7 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
 
         QString pdfset = "APFEL";
         if (ui->comboPDFset->currentIndex() != 0)
-          pdfset = PDFname();
+          pdfset = PDFname();	
 
         APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),irep,
                         target,proj,F2,F3,FL,sigma);
@@ -1153,6 +1155,8 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
         QString pdfset = "APFEL";
         if (ui->comboPDFset->currentIndex() != 0)
           pdfset = PDFname();
+
+	InitPDFset(fQi,fQf);
 
         double **F2a = new double*[numberPDF()];
         double **F3a = new double*[numberPDF()];
