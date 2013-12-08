@@ -33,10 +33,34 @@
          do alpha=0,nin(igrid)
             call private(xg(igrid,alpha),f0)
             do ifl=-6,6
-               f0ph(ifl,alpha)  = f0(ifl)
+               f0ph(ifl,alpha) = f0(ifl)
             enddo
             f0bos(alpha) = 0d0
          enddo
+*
+*     "delta" PDFs for the PDFs independent evolution tables.
+*
+*     In this case the the index irep, which in the other cases
+*     is associated to the PDF replica, is instead associated
+*     to the second grid index.
+*
+      elseif(pdfset(1:5).eq."delta")then
+c         if(irep.lt.0.or.irep.gt.nin(igrid))then
+c            write(6,*) "Replica requested out of range:"
+c            write(6,*) "- irep=",irep
+c            write(6,*) "- Nrep=",nin(igrid)
+c            call exit(-10)
+c         endif
+         do alpha=0,nin(igrid)
+            do ifl=-6,6
+               f0ph(ifl,alpha) = 0d0
+            enddo
+            f0bos(alpha) = 0d0
+         enddo
+         do ifl=-6,6
+            f0ph(ifl,irep) = 1d0
+         enddo
+         f0bos(irep) = 1d0
 *
 *     LHA Toy PDFs
 *
@@ -44,7 +68,7 @@
          do alpha=0,nin(igrid)
             call toyLHPDFs(xg(igrid,alpha),f0)
             do ifl=-6,6
-               f0ph(ifl,alpha)  = f0(ifl)
+               f0ph(ifl,alpha) = f0(ifl)
             enddo
             f0bos(alpha) = 0d0
          enddo
@@ -56,7 +80,7 @@
             call InitPDFsetbyName(pdfset)
             call numberPDF(Nrep)
             if(irep.lt.0.or.irep.gt.Nrep)then
-               write(6,*) "Replica requested ot of range:"
+               write(6,*) "Replica requested out of range:"
                write(6,*) "- irep=",irep
                write(6,*) "- Nrep=",Nrep
                call exit(-10)
@@ -67,7 +91,7 @@
             do alpha=0,nin(igrid)
                call evolvePDFphoton(xg(igrid,alpha),dsqrt(Q20),f0,fp0)
                do ifl=-6,6
-                  f0ph(ifl,alpha)  = f0(ifl)
+                  f0ph(ifl,alpha) = f0(ifl)
                enddo
                f0bos(alpha) = fp0
             enddo
@@ -76,7 +100,7 @@
                call evolvePDF(xg(igrid,alpha),dsqrt(Q20),f0)
                fp0 = 0d0
                do ifl=-6,6
-                  f0ph(ifl,alpha)  = f0(ifl)
+                  f0ph(ifl,alpha) = f0(ifl)
                enddo
                f0bos(alpha) = fp0
             enddo
