@@ -38,12 +38,12 @@
 *     Initialize APFEL
 *
          call EnableWelcomeMessage(.false.)
-c         call SetPerturbativeOrder(ipt)
-c         IF(VFNS.EQ."FFNS".OR.VFNS.EQ."FFN0")THEN
-c            call SetFFNS(3)
-c         ELSEIF(VFNS.EQ."ZMVN".OR.VFNS.EQ."FONLL")THEN
-c            call SetVFNS
-c         ENDIF
+         call SetPerturbativeOrder(ipt)
+         IF(VFNS.EQ."FFNS".OR.VFNS.EQ."FFN0")THEN
+            call SetFFNS(3)
+         ELSEIF(VFNS.EQ."ZMVN".OR.VFNS.EQ."FONLL")THEN
+            call SetVFNS
+         ENDIF
 *
          call InitializeAPFEL
 *

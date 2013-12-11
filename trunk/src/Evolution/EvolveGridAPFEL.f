@@ -22,10 +22,11 @@
 **
 *     Internal Variables
 *
-      integer alpha,beta,i
+      integer alpha,beta,gamma,i,n
+      double precision x
       double precision Q20,Q2
       double precision t1,t2
-      double precision xPDF,xgamma
+      double precision w_int
       double precision xGridPDF(ngrid_max,-6:6,0:nint_max,0:nint_max)
       double precision xGridGamma(ngrid_max,0:nint_max,0:nint_max)
 *
@@ -64,6 +65,7 @@
 *
 *     Construction of the PDF-independent interpolation tables
 *
+         n = inter_degree(igrid)
          do beta=0,nin(igrid)
 *     Set as a PDF set the "delta" PDFs
             call SetPDFSet("delta")
@@ -74,12 +76,26 @@
 *     Convolute intial PDFs with the evolution operators
             call EvolvePDFs(igrid)
             do alpha=0,nin(igrid)
+               x = xg(igrid,alpha)
                do i=-6,6
-                  xGridPDF(igrid,i,alpha,beta) = xPDF(i,xg(igrid,alpha))
+                  xGridPDF(igrid,i,alpha,beta) = 0d0
+                  do gamma=0,nin(igrid)
+                     xGridPDF(igrid,i,alpha,beta) = 
+     1                    xGridPDF(igrid,i,alpha,beta) 
+     2                    + w_int(n,gamma,x) * fph(igrid,i,gamma)
+                  enddo
                enddo
-               xGridGamma(igrid,alpha,beta) = xgamma(xg(igrid,alpha))
+               xGridGamma(igrid,alpha,beta) = 0d0
+               do gamma=0,nin(igrid)
+                  xGridGamma(igrid,alpha,beta) = 
+     1                 xGridGamma(igrid,alpha,beta) 
+     2                 + w_int(n,gamma,x) * fgamma(igrid,gamma)
+               enddo
             enddo
          enddo
+      enddo
+*
+      do igrid=1,ngrid
 *     Set the PDF set
          call SetPDFSet(name)
 *     Initialize PDFs at the initial scale on the grid

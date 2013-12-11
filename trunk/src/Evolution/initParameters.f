@@ -47,6 +47,9 @@
          call SetGridParameters(1,80,3,1d-5)
          call SetGridParameters(2,50,5,1d-1)
          call SetGridParameters(3,40,5,8d-1)
+c         call SetGridParameters(1,80,3,1d-5)
+c         call SetGridParameters(2,40,5,2d-1)
+c         call SetGridParameters(3,20,5,8d-1)
       endif
 *
 *     Check the consistency of the input parameters
