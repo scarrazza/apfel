@@ -13,6 +13,7 @@
       include "../commons/grid.h"
       include "../commons/pdfset.h"
       include "../commons/f0ph.h"
+      include "../commons/fph.h"
       include "../commons/Replica.h"
 **
 *     Input Variables
@@ -61,6 +62,18 @@ c         endif
             f0ph(ifl,irep) = 1d0
          enddo
          f0bos(irep) = 1d0
+*
+*     In case one wants to use a set PDFs previously evolved by APFEL
+*
+      elseif(pdfset(1:7).eq."apfel")then
+         do alpha=0,nin(igrid)
+            do ifl=-6,6
+               f0ph(ifl,alpha) = fph(igrid,ifl,alpha)
+               if(dabs(f0ph(ifl,alpha)).lt.1d-14) f0ph(ifl,alpha) = 0d0
+            enddo
+            f0bos(alpha) = fgamma(igrid,alpha)
+            if(dabs(f0bos(alpha)).lt.1d-14) f0bos(alpha) = 0d0
+         enddo
 *
 *     LHA Toy PDFs
 *

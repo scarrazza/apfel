@@ -17,7 +17,7 @@
 *
       double precision x
 **
-*     Input Variables
+*     Internal Variables
 *
       integer n
       integer alpha
