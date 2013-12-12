@@ -16,7 +16,7 @@
       double precision Q02,Q2
       double precision xPDF,xgamma
       double precision eps
-      double precision delta,x
+      double precision delta
       double precision xlha(11)
 
       parameter(eps=1d-10)
