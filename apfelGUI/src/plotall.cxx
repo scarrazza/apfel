@@ -260,6 +260,7 @@ void plotthread::run()
           xPDF[i] /= scales[abs(fl)];
           g->SetPoint(i,x[i],xPDF[i]);
 
+	  xPDFErr[i] /= scales[abs(fl)];
           if (fp->ui->stddev->isChecked())
             g->SetPointError(i,0,xPDFErr[i]);
         }
