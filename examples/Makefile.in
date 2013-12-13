@@ -83,7 +83,8 @@ noinst_PROGRAMS = Tabulation$(EXEEXT) SumRules$(EXEEXT) \
 	DISObservables$(EXEEXT) TabulationStep$(EXEEXT) \
 	TabulationCxx$(EXEEXT) SumRulesCxx$(EXEEXT) \
 	LHgridProductionCxx$(EXEEXT) LuminosityCxx$(EXEEXT) \
-	Timing$(EXEEXT) DISObservablesCxx$(EXEEXT)
+	Timing$(EXEEXT) DISObservablesCxx$(EXEEXT) \
+	TabulationStepCxx$(EXEEXT)
 subdir = examples
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/config/depcomp
@@ -138,6 +139,9 @@ TabulationCxx_LDADD = $(LDADD)
 am_TabulationStep_OBJECTS = TabulationStep.$(OBJEXT)
 TabulationStep_OBJECTS = $(am_TabulationStep_OBJECTS)
 TabulationStep_LDADD = $(LDADD)
+am_TabulationStepCxx_OBJECTS = TabulationStepCxx.$(OBJEXT)
+TabulationStepCxx_OBJECTS = $(am_TabulationStepCxx_OBJECTS)
+TabulationStepCxx_LDADD = $(LDADD)
 am_Timing_OBJECTS = Timing.$(OBJEXT)
 Timing_OBJECTS = $(am_Timing_OBJECTS)
 Timing_LDADD = $(LDADD)
@@ -195,13 +199,15 @@ SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(Luminosity_SOURCES) $(LuminosityCxx_SOURCES) \
 	$(SumRules_SOURCES) $(SumRulesCxx_SOURCES) \
 	$(Tabulation_SOURCES) $(TabulationCxx_SOURCES) \
-	$(TabulationStep_SOURCES) $(Timing_SOURCES)
+	$(TabulationStep_SOURCES) $(TabulationStepCxx_SOURCES) \
+	$(Timing_SOURCES)
 DIST_SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(LHgridProduction_SOURCES) $(LHgridProductionCxx_SOURCES) \
 	$(Luminosity_SOURCES) $(LuminosityCxx_SOURCES) \
 	$(SumRules_SOURCES) $(SumRulesCxx_SOURCES) \
 	$(Tabulation_SOURCES) $(TabulationCxx_SOURCES) \
-	$(TabulationStep_SOURCES) $(Timing_SOURCES)
+	$(TabulationStep_SOURCES) $(TabulationStepCxx_SOURCES) \
+	$(Timing_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -377,6 +383,7 @@ LHgridProductionCxx_SOURCES = LHgridProductionCxx.cc
 Timing_SOURCES = Timing.cc
 LuminosityCxx_SOURCES = LuminosityCxx.cc
 DISObservablesCxx_SOURCES = DISObservablesCxx.cc
+TabulationStepCxx_SOURCES = TabulationStepCxx.cc
 EXTRA_DIST = TabulationPython SumRulesPython LHgridProductionPython LuminosityPython
 all: all-am
 
@@ -466,6 +473,10 @@ TabulationStep$(EXEEXT): $(TabulationStep_OBJECTS) $(TabulationStep_DEPENDENCIES
 	@rm -f TabulationStep$(EXEEXT)
 	$(AM_V_F77LD)$(F77LINK) $(TabulationStep_OBJECTS) $(TabulationStep_LDADD) $(LIBS)
 
+TabulationStepCxx$(EXEEXT): $(TabulationStepCxx_OBJECTS) $(TabulationStepCxx_DEPENDENCIES) $(EXTRA_TabulationStepCxx_DEPENDENCIES) 
+	@rm -f TabulationStepCxx$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(TabulationStepCxx_OBJECTS) $(TabulationStepCxx_LDADD) $(LIBS)
+
 Timing$(EXEEXT): $(Timing_OBJECTS) $(Timing_DEPENDENCIES) $(EXTRA_Timing_DEPENDENCIES) 
 	@rm -f Timing$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(Timing_OBJECTS) $(Timing_LDADD) $(LIBS)
@@ -481,6 +492,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LuminosityCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SumRulesCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TabulationCxx.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TabulationStepCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Timing.Po@am__quote@
 
 .cc.o:
