@@ -7,9 +7,9 @@
 
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
-#include <QGraphicsSvgItem>
+//#include <QGraphicsSvgItem>
 #include <QFile>
-#include <QtSvg/QSvgWidget>
+//#include <QtSvg/QSvgWidget>
 #include <QDebug>
 #include <QFileDialog>
 #include <QDesktopWidget>

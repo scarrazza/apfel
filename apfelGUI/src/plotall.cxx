@@ -7,9 +7,9 @@
 #include <QDesktopWidget>
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
-#include <QGraphicsSvgItem>
+//#include <QGraphicsSvgItem>
 #include <QFile>
-#include <QtSvg/QSvgWidget>
+//#include <QtSvg/QSvgWidget>
 #include <QDebug>
 #include <QFileDialog>
 
@@ -20,7 +20,7 @@ PlotAll::PlotAll(QWidget *parent, PDFDialog *pdf) :
   QWidget(parent),
   ui(new Ui::PlotAll),
   fPDF(pdf),
-  fPlotName("allplot.svg"),
+  fPlotName("allplot.png"),
   fIsRunning(false)
 {
   ui->setupUi(this);
@@ -33,13 +33,13 @@ PlotAll::PlotAll(QWidget *parent, PDFDialog *pdf) :
   QString str;
   str.append(QString("%1").arg(t));
 
-  fPlotName = "allplot_" + str + ".svg";
+  fPlotName = "allplot_" + str + ".png";
   thread  = new plotthread(this,fPlotName);
 
   connect(thread, SIGNAL(finished()), this, SLOT(ThreadFinished()));
   connect(thread, SIGNAL(progress(int)), this, SLOT(ThreadProgress(int)));
 
-  ui->graphicsView->scale(1.2,1.2);
+  //ui->graphicsView->scale(1.2,1.2);
 
   if (fPDF->isLHAPDF()) ui->Qi->setEnabled(false);
   if (fPDF->numberPDF() == 1)
@@ -132,7 +132,9 @@ void PlotAll::ThreadFinished()
 
   // plot to canvas
   QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
-  QGraphicsSvgItem * item = new QGraphicsSvgItem(fPlotName);
+  //QGraphicsSvgItem * item = new QGraphicsSvgItem(fPlotName);
+  QGraphicsPixmapItem *item = new QGraphicsPixmapItem(fPlotName);
+
   scene->addItem(item);
   ui->graphicsView->setScene(scene);
   ui->graphicsView->show();
