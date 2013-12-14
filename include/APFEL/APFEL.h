@@ -119,7 +119,7 @@ namespace APFEL {
   void SetVFNS(void);
 
   /// DIS observables
-  void DIS_xsec(double x,double qi,double qf,double y,
+  void DIS_xsec(double x,double qi,double qf,double y,double pol,
 		const std::string& proc,const std::string& scheme,
 		int pto,const std::string& pdfset, int irep,
 		const std::string& target, const std::string& proj,

@@ -5,8 +5,8 @@
 *     x-space computation of CC observables.
 *
 ************************************************************************
-      SUBROUTINE CC_DIS(X,QI,QF,RAP,SCHEME,PTO,PDFSET,IREP,TARGET,PROJ,
-     1                  F2,F3,FL,SIGMA)
+      SUBROUTINE CC_DIS(X,QI,QF,RAP,POL,SCHEME,PTO,PDFSET,IREP,TARGET,
+     1                  PROJ,F2,F3,FL,SIGMA)
 *
       IMPLICIT NONE
 *
@@ -24,7 +24,7 @@
 *     Input Varibles
 *
       INTEGER PTO,IREP
-      DOUBLE PRECISION X,QI,QF,RAP
+      DOUBLE PRECISION X,QI,QF,RAP,POL
       CHARACTER*5  SCHEME
       CHARACTER*53 PDFSET
       CHARACTER*9  TARGET
@@ -35,7 +35,7 @@
       INTEGER IPDF,IBENCH,IGM,I
       INTEGER HQMASS
       INTEGER F3SGN
-      DOUBLE PRECISION XI,Y,YPL,YMN
+      DOUBLE PRECISION XI,Y,YPL,YMN,POLFACT
       DOUBLE PRECISION Q2,LAMBDA,KA,DAMP(4:6)
       DOUBLE PRECISION YP,YM
       DOUBLE PRECISION ASQ2
@@ -1730,11 +1730,14 @@
       FL(6) = FLT
       FL(7) = FLP
 *
-      SIGMA(3) = SIGMAL
-      SIGMA(4) = SIGMAC
-      SIGMA(5) = SIGMAB
-      SIGMA(6) = SIGMAT
-      SIGMA(7) = SIGMAP
+*     ... include polarization
+*
+      POLFACT = ( 1D0 + NEUT * POL )
+      SIGMA(3) = POLFACT * SIGMAL
+      SIGMA(4) = POLFACT * SIGMAC
+      SIGMA(5) = POLFACT * SIGMAB
+      SIGMA(6) = POLFACT * SIGMAT
+      SIGMA(7) = POLFACT * SIGMAP
 *
       RETURN
       END

@@ -11,6 +11,7 @@ int main()
   double q20 = 2.0;
   double q2  = 10;
   double y   = 0.5;
+  double pol = 0.0;
   double xin = 1e-5;
   double xfi = 1e-1;
   int np  = 5;
@@ -36,8 +37,8 @@ int main()
   double x = xin;
   for (int ip=1; ip <=np ;ip++)
     {
-      APFEL::DIS_xsec(x,q0,q,y,proc,scheme,pto,pdfset,irep,target,proj,
-		      F2,F3,FL,sigma);
+      APFEL::DIS_xsec(x,q0,q,y,pol,proc,scheme,pto,pdfset,irep,target,
+                      proj,F2,F3,FL,sigma);
 
       cout << x << "\t" << q2 << "\t" << y << "\t" 
 	   << F2[0] << "\t" << F2[1] << endl;
@@ -59,8 +60,8 @@ cout << "\n   x   "
   x = xin;
   for (int ip=1; ip <=np ;ip++)
     {
-      APFEL::DIS_xsec(x,q0,q,y,proc,scheme,pto,pdfset,irep,target,proj,
-		      F2,F3,FL,sigma);
+      APFEL::DIS_xsec(x,q0,q,y,pol,proc,scheme,pto,pdfset,irep,target,
+                      proj,F2,F3,FL,sigma);
 
       cout << x << "\t" << q2 << "\t" << y << "\t" 
 	   << F2[1] << "\t" << FL[1] << "\t" << F3[1] << "\t" 
