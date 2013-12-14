@@ -22,8 +22,8 @@
       double precision Q20,Q2
       double precision t1,t2
 *
-      Q20 = Q0 * Q0
-      Q2  = Q * Q
+      Q20   = Q0 * Q0
+      Q2    = Q * Q
       Q2ini = Q20
       Q2fin = Q2
 *
