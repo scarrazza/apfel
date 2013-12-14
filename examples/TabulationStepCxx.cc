@@ -72,13 +72,27 @@ int main()
       print(xlha);
     }  
 
-  cout << "QavDP" << endl;
-  APFEL::SetTheory("QavDP");
-  APFEL::SetPDFSet("ToyLH");
-  APFEL::EvolveAPFEL(Q0,Q);
+  // QavD
+  for (int n = 1; n <= 100; n+=99)
+    {
+      cout << "QavDP with " << n << " steps" << endl;
+      cout << endl;
 
-  print(xlha);
+      APFEL::SetTheory("QavDP");
+      APFEL::SetPDFSet("ToyLH");
 
+      const double delta = log(Q/Q0)/ (double) n;
+      Qi = Q0;
+      for (int i = 1; i <= n; i++)
+	{
+	  Qf = Qi * exp(delta);
+	  APFEL::EvolveAPFEL(Qi,Qf);
+	  APFEL::SetPDFSet("apfel");
+	  Qi = Qf;
+	}
+
+      print(xlha);
+    }
   return 0;
 }
 

@@ -106,25 +106,36 @@
 *
 *     QavD
 *
-      write(6,*) "QavDP"
-      write(6,*) "  "
-      call SetTheory("QavDP")
-      call SetPDFSet("ToyLH")
-      call EvolveAPFEL(Q0,Q)
+      do n=1,100,99
+         write(6,*) "QavDP with",n," steps"
+         write(6,*) "  "
+*
+         call SetTheory("QavDP")
+         call SetPDFSet("ToyLH")
+*
+         delta = dlog(Q/Q0) / dble(n)     
+         Qi = Q0
+         do i=1,n
+            Qf = Qi * dexp(delta)
+            call EvolveAPFEL(Qi,Qf)
+            call SetPDFSet("apfel")
+            Qi = Qf
+         enddo
 *     
-      write(6,'(a5,2a12,a14,a10,2a12)') "x",
-     1     "u-ubar","d-dbar","2(ubr+dbr)","c+cbar","gluon","photon"
+         write(6,'(a5,2a12,a14,a10,2a12)') "x",
+     1        "u-ubar","d-dbar","2(ubr+dbr)","c+cbar","gluon","photon"
 *     
-      do ilha=3,11
-         write(6,'(es7.1,6es12.4)') 
-     1        xlha(ilha),
-     2        xPDF(2,xlha(ilha)) - xPDF(-2,xlha(ilha)),
-     3        xPDF(1,xlha(ilha)) - xPDF(-1,xlha(ilha)),
-     4        2d0 * ( xPDF(-1,xlha(ilha)) + xPDF(-2,xlha(ilha)) ),
-     5        xPDF(4,xlha(ilha)) + xPDF(-4,xlha(ilha)),
-     6        xPDF(0,xlha(ilha)),
-     7        xgamma(xlha(ilha))
+         do ilha=3,11
+            write(6,'(es7.1,6es12.4)') 
+     1           xlha(ilha),
+     2           xPDF(2,xlha(ilha)) - xPDF(-2,xlha(ilha)),
+     3           xPDF(1,xlha(ilha)) - xPDF(-1,xlha(ilha)),
+     4           2d0 * ( xPDF(-1,xlha(ilha)) + xPDF(-2,xlha(ilha)) ),
+     5           xPDF(4,xlha(ilha)) + xPDF(-4,xlha(ilha)),
+     6           xPDF(0,xlha(ilha)),
+     7           xgamma(xlha(ilha))
+         enddo
+         write(*,*) "  "
       enddo
-      write(*,*) "  "
 *
       end
