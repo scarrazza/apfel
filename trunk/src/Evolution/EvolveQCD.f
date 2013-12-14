@@ -3,8 +3,8 @@
 *     EvolveQCD.f:
 *
 *     This routine evolves the input PDF in QCD with nf active flavours 
-*     in the evolution basis and replaces the input array with the output
-*     one.
+*     in the QCD evolution basis and replaces the input array with the
+*     output one.
 *
 ************************************************************************
       subroutine EvolveQCD(nf,fevQCD)
@@ -27,6 +27,8 @@
 *     Input and Output Variables
 *
       double precision fevQCD(0:13,0:nint_max)
+*
+*     Apply matching conditions for the backward evolution
 *
       if(sgn.eq.-1)then
          if(nf.lt.nfi) call MatchPDFs(nf,fevQCD)
@@ -117,7 +119,7 @@
          enddo
       enddo
 *
-*     Apply matching conditions
+*     Apply matching conditions for the forward evolution
 *
       if(sgn.eq.1)then
          if(nf.lt.nff) call MatchPDFs(nf+1,fevQCDb)

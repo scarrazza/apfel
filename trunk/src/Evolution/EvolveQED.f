@@ -3,8 +3,8 @@
 *     EvolveQED.f:
 *
 *     This routine evolves the input PDF in QED with nf active flavours 
-*     in the evolution basis and replaces the input array with the output
-*     one.
+*     in the QED evolution basis and replaces the input array with the
+*     output one.
 *
 ************************************************************************
       subroutine EvolveQED(nf,fevQED)
