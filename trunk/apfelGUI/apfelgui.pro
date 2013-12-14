@@ -6,12 +6,15 @@
 
 QMAKE_MACOSX_DEPLOYMENT_TARGET=10.7
 
-QT       += core gui svg
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = apfelgui
 TEMPLATE = app
+
+target.path = /usr/local/bin
+INSTALLS += target
 
 INCLUDEPATH += $$system(root-config --incdir)
 INCLUDEPATH += $$system(apfel-config --incdir)

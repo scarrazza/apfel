@@ -1047,7 +1047,7 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
         if (ui->comboPDFset->currentIndex() != 0)
           pdfset = PDFname();	
 
-        APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),irep,
+        APFEL::DIS_xsec(x,qi,qf,y,0,proc,scheme,pto,pdfset.toStdString(),irep,
                         target,proj,F2,F3,FL,sigma);
         break;
       }
@@ -1058,7 +1058,7 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
         if (ui->comboPDFset->currentIndex() != 0)
           pdfset = PDFname();
 
-        APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),0,
+        APFEL::DIS_xsec(x,qi,qf,y,0,proc,scheme,pto,pdfset.toStdString(),0,
                         target,proj,F2,F3,FL,sigma);
 
         double **F2a = new double*[numberPDF()];
@@ -1072,7 +1072,7 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
             F3a[r] = new double[5];
             FLa[r] = new double[5];
             sigmaa[r] = new double[5];
-            APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),r+1,
+            APFEL::DIS_xsec(x,qi,qf,y,0,proc,scheme,pto,pdfset.toStdString(),r+1,
                             target,proj,F2a[r],F3a[r],FLa[r],sigmaa[r]);
           }
 
@@ -1111,7 +1111,7 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
         if (ui->comboPDFset->currentIndex() != 0)
           pdfset = PDFname();
 
-        APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),0,
+        APFEL::DIS_xsec(x,qi,qf,y,0,proc,scheme,pto,pdfset.toStdString(),0,
                         target,proj,F2,F3,FL,sigma);
 
         double **F2a = new double*[numberPDF()];
@@ -1125,7 +1125,7 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
             F3a[r] = new double[5];
             FLa[r] = new double[5];
             sigmaa[r] = new double[5];
-            APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),r+1,
+            APFEL::DIS_xsec(x,qi,qf,y,0,proc,scheme,pto,pdfset.toStdString(),r+1,
                             target,proj,F2a[r],F3a[r],FLa[r],sigmaa[r]);
           }
 
@@ -1169,7 +1169,7 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
             F3a[r] = new double[5];
             FLa[r] = new double[5];
             sigmaa[r] = new double[5];
-            APFEL::DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset.toStdString(),r+1,
+            APFEL::DIS_xsec(x,qi,qf,y,0,proc,scheme,pto,pdfset.toStdString(),r+1,
                             target,proj,F2a[r],F3a[r],FLa[r],sigmaa[r]);
           }
 

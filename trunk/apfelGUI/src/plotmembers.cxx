@@ -11,9 +11,9 @@ using namespace std;
 
 #include <QGraphicsScene>
 #include <QGraphicsItemGroup>
-#include <QGraphicsSvgItem>
+//#include <QGraphicsSvgItem>
+//#include <QtSvg/QSvgWidget>
 #include <QFile>
-#include <QtSvg/QSvgWidget>
 #include <QDebug>
 #include <QFileDialog>
 #include <QDesktopWidget>
@@ -26,7 +26,7 @@ PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
   ui(new Ui::PlotMembers),
   thread(NULL),
   fPDF(pdf),
-  fPlotName("memberplot.svg"),
+  fPlotName("memberplot.png"),
   fIsRunning(false)
 {
   ui->setupUi(this);
@@ -39,13 +39,13 @@ PlotMembers::PlotMembers(QWidget *parent, PDFDialog *pdf) :
   QString str;
   str.append(QString("%1").arg(t));
 
-  fPlotName = "memberplot_" + str + ".svg";
+  fPlotName = "memberplot_" + str + ".png";
   thread  = new memberthread(this,fPlotName);
 
   connect(thread, SIGNAL(finished()), this, SLOT(ThreadFinished()));
   connect(thread, SIGNAL(progress(int)), this, SLOT(ThreadProgress(int)));
 
-  ui->graphicsView->scale(1.2,1.2);
+  //ui->graphicsView->scale(1.2,1.2);
 
   if (fPDF->isLHAPDF()) ui->Qi->setEnabled(false);
   if (fPDF->numberPDF() == 1)
@@ -149,7 +149,9 @@ void PlotMembers::ThreadFinished()
 
   // plot to canvas
   QGraphicsScene *scene = new QGraphicsScene(ui->graphicsView);
-  QGraphicsSvgItem * item = new QGraphicsSvgItem(fPlotName);
+  //QGraphicsSvgItem * item = new QGraphicsSvgItem(fPlotName);
+  QGraphicsPixmapItem *item = new QGraphicsPixmapItem(fPlotName);
+
   scene->addItem(item);
   ui->graphicsView->setScene(scene);
   ui->graphicsView->show();
@@ -237,7 +239,6 @@ void memberthread::run()
     {
       memf = 1;
       if (fp->ui->setmember->value() > Nrep || fp->ui->setmember->value() < 0) {
-          finished();
           return;
         }
     }
