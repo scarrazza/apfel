@@ -5266,17 +5266,18 @@ SWIGINTERN PyObject *_wrap_DIS_xsec(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   double arg2 ;
   double arg3 ;
   double arg4 ;
-  std::string *arg5 = 0 ;
+  double arg5 ;
   std::string *arg6 = 0 ;
-  int arg7 ;
-  std::string *arg8 = 0 ;
-  int arg9 ;
-  std::string *arg10 = 0 ;
+  std::string *arg7 = 0 ;
+  int arg8 ;
+  std::string *arg9 = 0 ;
+  int arg10 ;
   std::string *arg11 = 0 ;
-  double *arg12 = (double *) 0 ;
+  std::string *arg12 = 0 ;
   double *arg13 = (double *) 0 ;
   double *arg14 = (double *) 0 ;
   double *arg15 = (double *) 0 ;
+  double *arg16 = (double *) 0 ;
   double val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -5285,23 +5286,25 @@ SWIGINTERN PyObject *_wrap_DIS_xsec(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   int ecode3 = 0 ;
   double val4 ;
   int ecode4 = 0 ;
-  int res5 = SWIG_OLDOBJ ;
+  double val5 ;
+  int ecode5 = 0 ;
   int res6 = SWIG_OLDOBJ ;
-  int val7 ;
-  int ecode7 = 0 ;
-  int res8 = SWIG_OLDOBJ ;
-  int val9 ;
-  int ecode9 = 0 ;
-  int res10 = SWIG_OLDOBJ ;
+  int res7 = SWIG_OLDOBJ ;
+  int val8 ;
+  int ecode8 = 0 ;
+  int res9 = SWIG_OLDOBJ ;
+  int val10 ;
+  int ecode10 = 0 ;
   int res11 = SWIG_OLDOBJ ;
-  void *argp12 = 0 ;
-  int res12 = 0 ;
+  int res12 = SWIG_OLDOBJ ;
   void *argp13 = 0 ;
   int res13 = 0 ;
   void *argp14 = 0 ;
   int res14 = 0 ;
   void *argp15 = 0 ;
   int res15 = 0 ;
+  void *argp16 = 0 ;
+  int res16 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
@@ -5317,8 +5320,9 @@ SWIGINTERN PyObject *_wrap_DIS_xsec(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   PyObject * obj12 = 0 ;
   PyObject * obj13 = 0 ;
   PyObject * obj14 = 0 ;
+  PyObject * obj15 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOOOOOO:DIS_xsec",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10,&obj11,&obj12,&obj13,&obj14)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOOOOOO:DIS_xsec",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10,&obj11,&obj12,&obj13,&obj14,&obj15)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DIS_xsec" "', argument " "1"" of type '" "double""'");
@@ -5339,17 +5343,11 @@ SWIGINTERN PyObject *_wrap_DIS_xsec(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "DIS_xsec" "', argument " "4"" of type '" "double""'");
   } 
   arg4 = static_cast< double >(val4);
-  {
-    std::string *ptr = (std::string *)0;
-    res5 = SWIG_AsPtr_std_string(obj4, &ptr);
-    if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "DIS_xsec" "', argument " "5"" of type '" "std::string const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DIS_xsec" "', argument " "5"" of type '" "std::string const &""'"); 
-    }
-    arg5 = ptr;
-  }
+  ecode5 = SWIG_AsVal_double(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "DIS_xsec" "', argument " "5"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
   {
     std::string *ptr = (std::string *)0;
     res6 = SWIG_AsPtr_std_string(obj5, &ptr);
@@ -5361,38 +5359,38 @@ SWIGINTERN PyObject *_wrap_DIS_xsec(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     }
     arg6 = ptr;
   }
-  ecode7 = SWIG_AsVal_int(obj6, &val7);
-  if (!SWIG_IsOK(ecode7)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode7), "in method '" "DIS_xsec" "', argument " "7"" of type '" "int""'");
-  } 
-  arg7 = static_cast< int >(val7);
   {
     std::string *ptr = (std::string *)0;
-    res8 = SWIG_AsPtr_std_string(obj7, &ptr);
-    if (!SWIG_IsOK(res8)) {
-      SWIG_exception_fail(SWIG_ArgError(res8), "in method '" "DIS_xsec" "', argument " "8"" of type '" "std::string const &""'"); 
+    res7 = SWIG_AsPtr_std_string(obj6, &ptr);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "DIS_xsec" "', argument " "7"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DIS_xsec" "', argument " "8"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DIS_xsec" "', argument " "7"" of type '" "std::string const &""'"); 
     }
-    arg8 = ptr;
+    arg7 = ptr;
   }
-  ecode9 = SWIG_AsVal_int(obj8, &val9);
-  if (!SWIG_IsOK(ecode9)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode9), "in method '" "DIS_xsec" "', argument " "9"" of type '" "int""'");
+  ecode8 = SWIG_AsVal_int(obj7, &val8);
+  if (!SWIG_IsOK(ecode8)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode8), "in method '" "DIS_xsec" "', argument " "8"" of type '" "int""'");
   } 
-  arg9 = static_cast< int >(val9);
+  arg8 = static_cast< int >(val8);
   {
     std::string *ptr = (std::string *)0;
-    res10 = SWIG_AsPtr_std_string(obj9, &ptr);
-    if (!SWIG_IsOK(res10)) {
-      SWIG_exception_fail(SWIG_ArgError(res10), "in method '" "DIS_xsec" "', argument " "10"" of type '" "std::string const &""'"); 
+    res9 = SWIG_AsPtr_std_string(obj8, &ptr);
+    if (!SWIG_IsOK(res9)) {
+      SWIG_exception_fail(SWIG_ArgError(res9), "in method '" "DIS_xsec" "', argument " "9"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DIS_xsec" "', argument " "10"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DIS_xsec" "', argument " "9"" of type '" "std::string const &""'"); 
     }
-    arg10 = ptr;
+    arg9 = ptr;
   }
+  ecode10 = SWIG_AsVal_int(obj9, &val10);
+  if (!SWIG_IsOK(ecode10)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode10), "in method '" "DIS_xsec" "', argument " "10"" of type '" "int""'");
+  } 
+  arg10 = static_cast< int >(val10);
   {
     std::string *ptr = (std::string *)0;
     res11 = SWIG_AsPtr_std_string(obj10, &ptr);
@@ -5404,11 +5402,17 @@ SWIGINTERN PyObject *_wrap_DIS_xsec(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     }
     arg11 = ptr;
   }
-  res12 = SWIG_ConvertPtr(obj11, &argp12,SWIGTYPE_p_double, 0 |  0 );
-  if (!SWIG_IsOK(res12)) {
-    SWIG_exception_fail(SWIG_ArgError(res12), "in method '" "DIS_xsec" "', argument " "12"" of type '" "double *""'"); 
+  {
+    std::string *ptr = (std::string *)0;
+    res12 = SWIG_AsPtr_std_string(obj12, &ptr);
+    if (!SWIG_IsOK(res12)) {
+      SWIG_exception_fail(SWIG_ArgError(res12), "in method '" "DIS_xsec" "', argument " "12"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "DIS_xsec" "', argument " "12"" of type '" "std::string const &""'"); 
+    }
+    arg12 = ptr;
   }
-  arg12 = reinterpret_cast< double * >(argp12);
   res13 = SWIG_ConvertPtr(obj12, &argp13,SWIGTYPE_p_double, 0 |  0 );
   if (!SWIG_IsOK(res13)) {
     SWIG_exception_fail(SWIG_ArgError(res13), "in method '" "DIS_xsec" "', argument " "13"" of type '" "double *""'"); 
@@ -5424,20 +5428,25 @@ SWIGINTERN PyObject *_wrap_DIS_xsec(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     SWIG_exception_fail(SWIG_ArgError(res15), "in method '" "DIS_xsec" "', argument " "15"" of type '" "double *""'"); 
   }
   arg15 = reinterpret_cast< double * >(argp15);
-  APFEL::DIS_xsec(arg1,arg2,arg3,arg4,(std::string const &)*arg5,(std::string const &)*arg6,arg7,(std::string const &)*arg8,arg9,(std::string const &)*arg10,(std::string const &)*arg11,arg12,arg13,arg14,arg15);
+  res16 = SWIG_ConvertPtr(obj15, &argp16,SWIGTYPE_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res16)) {
+    SWIG_exception_fail(SWIG_ArgError(res16), "in method '" "DIS_xsec" "', argument " "16"" of type '" "double *""'"); 
+  }
+  arg16 = reinterpret_cast< double * >(argp16);
+  APFEL::DIS_xsec(arg1,arg2,arg3,arg4,arg5,(std::string const &)*arg6,(std::string const &)*arg7,arg8,(std::string const &)*arg9,arg10,(std::string const &)*arg11,(std::string const &)*arg12,arg13,arg14,arg15,arg16);
   resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res5)) delete arg5;
   if (SWIG_IsNewObj(res6)) delete arg6;
-  if (SWIG_IsNewObj(res8)) delete arg8;
-  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res9)) delete arg9;
   if (SWIG_IsNewObj(res11)) delete arg11;
+  if (SWIG_IsNewObj(res12)) delete arg12;
   return resultobj;
 fail:
-  if (SWIG_IsNewObj(res5)) delete arg5;
   if (SWIG_IsNewObj(res6)) delete arg6;
-  if (SWIG_IsNewObj(res8)) delete arg8;
-  if (SWIG_IsNewObj(res10)) delete arg10;
+  if (SWIG_IsNewObj(res7)) delete arg7;
+  if (SWIG_IsNewObj(res9)) delete arg9;
   if (SWIG_IsNewObj(res11)) delete arg11;
+  if (SWIG_IsNewObj(res12)) delete arg12;
   return NULL;
 }
 

@@ -169,7 +169,7 @@ namespace APFEL {
     fsetvfns();
   }
   
-  void DIS_xsec(double x,double qi,double qf,double y,
+  void DIS_xsec(double x,double qi,double qf,double y,double pol,
 		const std::string& proc,const std::string& scheme,
 		int pto,const std::string& pdfset, int irep,
 		const std::string& target, const std::string& proj,
@@ -190,7 +190,7 @@ namespace APFEL {
     char cproj[SIZE+1];
     strncpy(cproj, proj.c_str(), SIZE);
 
-    fdisxsec(&x,&qi,&qf,&y,cproc,cscheme,&pto,cpdfset,&irep,ctarget, cproj,
+    fdisxsec(&x,&qi,&qf,&y,&pol,cproc,cscheme,&pto,cpdfset,&irep,ctarget, cproj,
 	     F2,F3,FL,sigma);
   }
 }

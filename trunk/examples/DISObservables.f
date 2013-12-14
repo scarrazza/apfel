@@ -13,7 +13,7 @@
 *
       integer pto
       integer ip,np,irep
-      double precision x,q2,q,q20,q0,y
+      double precision x,q2,q,q20,q0,y,pol
       double precision xin,xfi
       double precision F2(3:7),F3(3:7),FL(3:7),sigma(3:7)
       double precision t2,t1
@@ -30,6 +30,7 @@
       q20 = 2d0
       q2  = 10d0
       y   = 0.5d0
+      pol = 0d0
       xin = 1d-5
       xfi = 1d-1
       np  = 5
@@ -66,8 +67,8 @@ c      call SetPoleMasses(dsqrt(2d0),1d5,1d5)
 *
       x = xin
       do ip=1,np
-         call DIS_xsec(x,q0,q,y,proc,scheme,pto,pdfset,irep,target,proj,
-     1                 F2,F3,FL,sigma)
+         call DIS_xsec(x,q0,q,y,pol,proc,scheme,pto,pdfset,irep,target,
+     1                 proj,F2,F3,FL,sigma)
 *
          write(*,44) x,q2,y,F2(3),F2(4)
          x = x * dexp( 1d0 / ( np - 1d0 ) * dlog( xfi / xin ) )
@@ -89,8 +90,8 @@ c      call SetPoleMasses(dsqrt(2d0),1d5,1d5)
 *
       x = xin
       do ip=1,np
-         call DIS_xsec(x,q0,q,y,proc,scheme,pto,pdfset,irep,target,proj,
-     1                 F2,F3,FL,sigma)
+         call DIS_xsec(x,q0,q,y,pol,proc,scheme,pto,pdfset,irep,target,
+     1                 proj,F2,F3,FL,sigma)
 *
          write(*,45) x,q2,y,F2(4),FL(4),F3(4),sigma(4)
          x = x * dexp( 1d0 / ( np - 1d0 ) * dlog( xfi / xin ) )

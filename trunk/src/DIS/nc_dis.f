@@ -5,8 +5,8 @@
 *     x-space computation of NC observables.
 *
 ************************************************************************
-      SUBROUTINE NC_DIS(X,QI,QF,Y,PROC,SCHEME,PTO,PDFSET,IREP,TARGET,
-     1                 PROJ,F2,F3,FL,SIGMA)
+      SUBROUTINE NC_DIS(X,QI,QF,Y,POL,PROC,SCHEME,PTO,PDFSET,IREP,
+     1                  TARGET,PROJ,F2,F3,FL,SIGMA)
 *
       IMPLICIT NONE
 *
@@ -24,7 +24,7 @@
 *     Input Varibles
 *
       INTEGER PTO,IREP
-      DOUBLE PRECISION X,QF,QI,Y
+      DOUBLE PRECISION X,QF,QI,Y,POL
       CHARACTER*2  PROC
       CHARACTER*5  SCHEME
       CHARACTER*53 PDFSET
@@ -358,9 +358,9 @@
       ENDIF
 *
       IF(PROJ(1:8).EQ."ELECTRON")THEN
-         IE = 1
+         IE  = - 1
       ELSEIF(PROJ(1:8).EQ."POSITRON")THEN
-         IE = 0
+         IE  = 1
       ELSE
          WRITE(6,*) "In nc_dis.f:"
          WRITE(6,*) "Unknown value projectile = ",PROJ
@@ -377,11 +377,13 @@
          INC = 1
          PZ = Q2 / ( Q2 + MZ**2D0 ) / ( 4D0 * SW * ( 1D0 - SW ) )
          DO I=1,6
-            BQ(I) = EQ2(I) - 2D0 * EQ(I) * VQ(I) * VE * PZ
-     1            + ( VE**2D0 + AE**2D0 ) 
-     2            * ( VQ(I)**2D0 + AQ(I)**2D0 ) * PZ**2D0 
-            DQ(I) = - 2D0 * EQ(I) * AQ(I) * AE * PZ
-     1            + 4D0 * VQ(I) * AQ(I) * VE * AE * PZ**2D0
+            BQ(I) = EQ2(I) 
+     1            - 2D0 * EQ(I) * VQ(I) * ( VE + IE * POL * AE ) * PZ
+     2            + ( VE**2D0 + AE**2D0 ) * ( VQ(I)**2D0 + AQ(I)**2D0 
+     3            + IE * POL * 2D0 * VE * AE ) * PZ**2D0 
+            DQ(I) = - 2D0 * EQ(I) * AQ(I) * ( AE + IE * POL * VE ) * PZ
+     1            + 2D0 * VQ(I) * AQ(I) * ( 2D0 * VE * AE 
+     2            + IE * POL * ( VE**2D0 + AE**2D0 ) ) * PZ**2D0
          ENDDO
       ELSE
          WRITE(6,*) "In nc_dis.f:"
@@ -1027,12 +1029,12 @@
          F3T = F3TG(1) + DAMP(6) * ( F3TG(2) - F3TG(3) )
       ENDIF
 *
-      IF(IE.EQ.0)THEN       !Positron
+      IF(IE.EQ.1)THEN       !Positron
          SIGMAL = F2L - ( Y**2D0 / YP ) * FLL - ( YM / YP ) * F3L
          SIGMAC = F2C - ( Y**2D0 / YP ) * FLC - ( YM / YP ) * F3C
          SIGMAB = F2B - ( Y**2D0 / YP ) * FLB - ( YM / YP ) * F3B
          SIGMAT = F2T - ( Y**2D0 / YP ) * FLT - ( YM / YP ) * F3T
-      ELSEIF(IE.EQ.1)THEN   !Electron
+      ELSEIF(IE.EQ.-1)THEN   !Electron
          SIGMAL = F2L - ( Y**2D0 / YP ) * FLL + ( YM / YP ) * F3L
          SIGMAC = F2C - ( Y**2D0 / YP ) * FLC + ( YM / YP ) * F3C
          SIGMAB = F2B - ( Y**2D0 / YP ) * FLB + ( YM / YP ) * F3B

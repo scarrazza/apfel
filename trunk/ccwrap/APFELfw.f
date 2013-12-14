@@ -188,18 +188,18 @@ ccccccccccccc
       end subroutine fsetvfns
 
 ccccccccccccc
-      subroutine fdisxsec(x,qi,qf,y,proc,scheme,pto,pdfset,irep,target,
-     1     proj,F2,F3,FL,SIGMA)
-      double precision x,qi,qf,y
+      subroutine fdisxsec(x,qi,qf,y,pol,proc,scheme,pto,pdfset,irep,
+     1                    target,proj,F2,F3,FL,SIGMA)
+      double precision x,qi,qf,y,pol
       character  proc*(*)
       character  scheme*(*)
       character pdfset*(*)
       character  target*(*)
       character proj*(*)
-      integer pto, irep
+      integer pto,irep
       double precision F2(3:7),F3(3:7),FL(3:7),SIGMA(3:7)
       
-      call DIS_xsec(x,qi,qf,y,proc,scheme,pto,pdfset,irep,
-     1     target,proj,F2,F3,FL,SIGMA)
+      call DIS_xsec(x,qi,qf,y,pol,proc,scheme,pto,pdfset,irep,
+     1              target,proj,F2,F3,FL,SIGMA)
 
       end subroutine fdisxsec
