@@ -48,7 +48,7 @@
       DOUBLE PRECISION C3NM2C
       DOUBLE PRECISION INTEG2(3),INTEG3(3),INTEGL(3)
       DOUBLE PRECISION CONST
-      DOUBLE PRECISION DGAUSS,A,B,C,D,EPS
+      DOUBLE PRECISION DGAUSS,A,B,C,D,EPS,EPS2
       DOUBLE PRECISION PLUS_TERM2,PLUS_TERM3
       DOUBLE PRECISION LOCAL_TERM2,LOCAL_TERM3,LOCAL_TERML
       DOUBLE PRECISION ADSR,ADLERSR
@@ -264,9 +264,10 @@
       CHARACTER*5 WVFNS,VFNS_TMP
 
       PARAMETER(EPS = 1D-5)
+      PARAMETER(EPS2= 1D-10)
       PARAMETER(PI  = 3.14159265358979D0)
-      PARAMETER(SW  = 0.232D0)
-      PARAMETER(MZ  = 91.2D0)
+      PARAMETER(SW  = 0.2312D0)
+      PARAMETER(MZ  = 91.1876D0)
 **
 *     Output Variables
 *
@@ -337,7 +338,7 @@
 *
       Q  = QF
       Q2 = QF * QF
-      Q0 = QI - EPS
+      Q0 = QI - EPS2
       W2 = Q2 * ( 1D0 - X ) / X
       YM = 1D0 - ( 1D0 - Y )**2D0
       YP = 1D0 + ( 1D0 - Y )**2D0
@@ -483,7 +484,7 @@
 *        Contribution coming from the plus prescription in an integral between x and 1
 *
          CONST = - 8D0 / 3D0 * ( PI**2D0 / 3D0 + 9D0 / 2D0 )
-*        
+*
          PLUS_TERM2 = DGAUSS(C2Q_PLUS_NC_WRAP,C,D,EPS)
          PLUS_TERM3 = DGAUSS(C3Q_PLUS_NC_WRAP,C,D,EPS)
 *
@@ -503,7 +504,7 @@
 *
          INTEG3(1) = DQ(1) * ( DGAUSS(XDM_XC3Q_UNPLUS_NC,A,B,EPS)
      1             + DGAUSS(XDM_XC3Q_PLUS_NC,A,B,EPS) 
-     2             - PLUS_TERM3 * XDM(X,Q) )
+     2             + ( CONST - PLUS_TERM3 ) * XDM(X,Q) )
          INTEG3(2) = DQ(2) * ( DGAUSS(XUM_XC3Q_UNPLUS_NC,A,B,EPS)
      1             + DGAUSS(XUM_XC3Q_PLUS_NC,A,B,EPS) 
      2             + ( CONST - PLUS_TERM3 ) * XUM(X,Q) )
@@ -574,13 +575,13 @@
          LOCAL_TERM3 = C3NM2C(X,NF)
          INTEG3(1)   = DQ(1) * ( DGAUSS(XDM_XC3Q_UNPLUS_NC,A,B,EPS)
      1               + DGAUSS(XDM_XC3Q_PLUS_NC,A,B,EPS) 
-     2               - LOCAL_TERM3 * XDM(X,Q) )
+     2               + LOCAL_TERM3 * XDM(X,Q) )
          INTEG3(2)   = DQ(2) * ( DGAUSS(XUM_XC3Q_UNPLUS_NC,A,B,EPS)
      1               + DGAUSS(XUM_XC3Q_PLUS_NC,A,B,EPS) 
-     2               + ( CONST - LOCAL_TERM3 ) * XUM(X,Q) )
+     2               + LOCAL_TERM3 * XUM(X,Q) )
          INTEG3(3)   = DQ(3) * ( DGAUSS(XSM_XC3Q_UNPLUS_NC,A,B,EPS)
      1               + DGAUSS(XSM_XC3Q_PLUS_NC,A,B,EPS) 
-     2               + ( CONST - LOCAL_TERM3 ) * XSM(X,Q) )
+     2               + LOCAL_TERM3 * XSM(X,Q) )
 *
 *        FL
 *
@@ -922,14 +923,14 @@
 *
          IF(VFNS.EQ."ZMVN")THEN
             NNLOQ2C = BQ(4) * ( DGAUSS(XCP_XC2Q_UNPLUS_NC,A,B,EPS)
-     1               + DGAUSS(XCP_XC2Q_PLUS_NC,A,B,EPS) 
-     2               + LOCAL_TERM2 * XCP(X,Q) )
+     1              + DGAUSS(XCP_XC2Q_PLUS_NC,A,B,EPS) 
+     2              + LOCAL_TERM2 * XCP(X,Q) )
             NNLOQ2B = BQ(5) * ( DGAUSS(XBP_XC2Q_UNPLUS_NC,A,B,EPS)
-     1               + DGAUSS(XBP_XC2Q_PLUS_NC,A,B,EPS) 
-     2               + LOCAL_TERM2 * XBP(X,Q) )
+     1              + DGAUSS(XBP_XC2Q_PLUS_NC,A,B,EPS) 
+     2              + LOCAL_TERM2 * XBP(X,Q) )
             NNLOQ2T = BQ(6) * ( DGAUSS(XTP_XC2Q_UNPLUS_NC,A,B,EPS)
-     1               + DGAUSS(XTP_XC2Q_PLUS_NC,A,B,EPS) 
-     2               + LOCAL_TERM2 * XTP(X,Q) )
+     1              + DGAUSS(XTP_XC2Q_PLUS_NC,A,B,EPS) 
+     2              + LOCAL_TERM2 * XTP(X,Q) )
          ELSE
             NNLOQ2C = 0D0
             NNLOQ2B = 0D0
@@ -940,14 +941,14 @@
 *
          IF(VFNS.EQ."ZMVN")THEN
             NNLOQ3C = DQ(4) * ( DGAUSS(XCM_XC3Q_UNPLUS_NC,A,B,EPS)
-     1               + DGAUSS(XCM_XC3Q_PLUS_NC,A,B,EPS) 
-     2               - LOCAL_TERM3 * XCM(X,Q) )
+     1              + DGAUSS(XCM_XC3Q_PLUS_NC,A,B,EPS) 
+     2              + LOCAL_TERM3 * XCM(X,Q) )
             NNLOQ3B = DQ(5) * ( DGAUSS(XBM_XC3Q_UNPLUS_NC,A,B,EPS)
-     1               + DGAUSS(XBM_XC3Q_PLUS_NC,A,B,EPS) 
-     2               - LOCAL_TERM3 * XBM(X,Q) )
+     1              + DGAUSS(XBM_XC3Q_PLUS_NC,A,B,EPS) 
+     2              + LOCAL_TERM3 * XBM(X,Q) )
             NNLOQ3T = DQ(6) * ( DGAUSS(XTM_XC3Q_UNPLUS_NC,A,B,EPS)
-     1               + DGAUSS(XTM_XC3Q_PLUS_NC,A,B,EPS) 
-     2               - LOCAL_TERM3 * XTM(X,Q) )
+     1              + DGAUSS(XTM_XC3Q_PLUS_NC,A,B,EPS) 
+     2              + LOCAL_TERM3 * XTM(X,Q) )
          ELSE
             NNLOQ3C = 0D0
             NNLOQ3B = 0D0
