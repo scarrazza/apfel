@@ -310,7 +310,7 @@ C======================================================================
       DOUBLE PRECISION XC3Q_PLUS_NC
 *
       IF(IPT.EQ.1)THEN
-         XC3Q_PLUS_NC = 8D0 + ( 2D0 * DLOG( 1D0 - X ) / ( 1D0 - X )
+         XC3Q_PLUS_NC = 8D0 * ( 2D0 * DLOG( 1D0 - X ) / ( 1D0 - X )
      1                - 3D0 / 2D0 / ( 1D0 - X ) ) / 3D0
       ELSEIF(IPT.EQ.2)THEN
          XC3Q_PLUS_NC = C3NS2B(X,NF)
