@@ -99,8 +99,12 @@ C======================================================================
 *
       DOUBLE PRECISION C2NN2A!,C2NN2A_DNF
       DOUBLE PRECISION Q2
-      DOUBLE PRECISION CH_FFNS_NC_AB,C2QH
-      DOUBLE PRECISION C2Q2R
+      DOUBLE PRECISION C2QH!,CH_FFNS_NC_AB
+      DOUBLE PRECISION C2Q2R!,C2Q2S
+      DOUBLE PRECISION l22q
+
+      double precision qq2,mm2
+      common/scales/qq2,mm2
 **
 *     Output Variables
 *
@@ -109,15 +113,19 @@ C======================================================================
       IF(VFNS.EQ."ZMVN")THEN
          IF(IPT.EQ.1)THEN
             XC2Q_UNPLUS_NC = 8D0 * ( - ( 1D0 + X ) * DLOG( 1D0 - X )
-     1                       - ( 1D0 + X**2D0 ) * DLOG(X) / ( 1D0 -  X ) 
-     2                       + 3D0 + 2D0 * X ) / 3D0
+     1                     - ( 1D0 + X**2D0 ) * DLOG(X) / ( 1D0 -  X ) 
+     2                     + 3D0 + 2D0 * X ) / 3D0
          ELSEIF(IPT.EQ.2)THEN
             XC2Q_UNPLUS_NC = C2NN2A(X,NF)
          ENDIF
       ELSEIF(VFNS.EQ."FFNS")THEN
          IF(IPT.EQ.2)THEN
             Q2   = Q * Q
-            C2QH = CH_FFNS_NC_AB(7,X,Q2,Q2H)
+c            C2QH = CH_FFNS_NC_AB(7,X,Q2,Q2H)
+*     Exact expression
+            qq2 = Q2
+            mm2 = Q2H
+            C2QH = l22q(X)
 *
             XC2Q_UNPLUS_NC = C2QH !- C2NN2A_DNF(X)
          ELSE
@@ -409,8 +417,12 @@ C======================================================================
 *
       DOUBLE PRECISION CLNN2A
       DOUBLE PRECISION Q2
-      DOUBLE PRECISION CH_FFNS_NC_AB,CLQH
+      DOUBLE PRECISION CLQH!,CH_FFNS_NC_AB
       DOUBLE PRECISION CLQ2
+      DOUBLE PRECISION ll2q
+
+      double precision qq2,mm2
+      common/scales/qq2,mm2
 **
 *     Output Variables
 *
@@ -425,7 +437,11 @@ C======================================================================
       ELSEIF(VFNS.EQ."FFNS")THEN
          IF(IPT.EQ.2)THEN
             Q2   = Q * Q
-            CLQH = CH_FFNS_NC_AB(8,X,Q2,Q2H)
+C            CLQH = CH_FFNS_NC_AB(8,X,Q2,Q2H)
+*     Exact expression
+            qq2 = Q2
+            mm2 = Q2H
+            CLQH = ll2q(X)
 *
             XCLQ_UNPLUS_NC = CLQH
          ELSE

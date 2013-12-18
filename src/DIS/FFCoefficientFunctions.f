@@ -256,7 +256,7 @@ c      close(41)
          l2 = dlog( ( 1d0 + sq2 ) / ( 1d0 - sq2 ) )
          l3 = dlog( ( sq2 + sq1 ) / ( sq2 - sq1 ) )
 *
-         dil1 = ddilog( ( 1d0 - z ) * (1d0 + sq1 ) / ( 1d0 + sq2 ) )
+         dil1 = ddilog( ( 1d0 - z ) * ( 1d0 + sq1 ) / ( 1d0 + sq2 ) )
          dil2 = ddilog( ( 1d0 - sq2 ) / ( 1d0 + sq1 ) )
          dil3 = ddilog( ( 1d0 - sq1 ) / ( 1d0 + sq2 ) )
          dil4 = ddilog( ( 1d0 + sq1 ) / ( 1d0 + sq2 ) )
@@ -265,13 +265,63 @@ c      close(41)
      1     -16d0/(1d0-z)*(z/xi)**2d0*(1d0-9d0*z+9d0*z**2d0))
      2     *(dlog((1d0-z)/z**2d0)*l1+l1*l2+2d0*(-dil1+dil2+dil3-dil4))
      3     +(-8d0/3d0+4d0/(1d0-z)+(z/(1d0-z)/xi)**2d0*(128d0-432d0*z
-     4     +288*z**2d0-8d0/(1d0-z)))*l1+(88d0/9d0+136d0/9d0*z
+     4     +288d0*z**2d0-8d0/(1d0-z)))*l1+(88d0/9d0+136d0/9d0*z
      5     -152d0/9d0/(1d0-z)+(z/(1d0-z)/xi)*(464d0/9d0-512d0/3d0*z
      6     +2048d0/9d0*z**2d0)+(z/(1d0-z)/xi)**2d0*(-832d0/9d0
      7     +6208d0/9d0*z-11392d0/9d0*z**2d0+6016d0/9d0*z**3d0))*l3/sq2
      8     +(-272d0/27d0-1244d0/27d0*z+718d0/27d0/(1d0-z)+(z/(1d0-z)/xi)
      9     *(-3424d0/27d0+15608d0/27d0*z-4304d0/9d0*z**2d0
      1     +20d0/27d0/(1d0-z)))*sq1)
+      endif
+*
+      return
+      end
+*
+************************************************************************
+      function ll2q(z)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Internal Variables
+*
+      double precision xi,zmax
+      double precision sq1,sq2,l1,l2,l3,dil1,dil2,dil3,dil4
+      double precision ddilog
+
+      double precision qq2,mm2
+      common/scales/qq2,mm2
+**
+*     Output Variables
+*
+      double precision ll2q
+*
+      xi = qq2 / mm2
+      zmax = 1d0/(1d0+4d0/xi)
+      if(z.ge.zmax)then
+         ll2q = 0d0
+      else
+         sq1 = dsqrt( 1d0 - 4d0 * z / xi / ( 1d0 - z ) )
+         sq2 = dsqrt( 1d0 - 4d0 * z / xi )
+*
+         l1 = dlog( ( 1d0 + sq1 ) / ( 1d0 - sq1 ) )
+         l2 = dlog( ( 1d0 + sq2 ) / ( 1d0 - sq2 ) )
+         l3 = dlog( ( sq2 + sq1 ) / ( sq2 - sq1 ) )
+*
+         dil1 = ddilog( ( 1d0 - z ) * ( 1d0 + sq1 ) / ( 1d0 + sq2 ) )
+         dil2 = ddilog( ( 1d0 - sq2 ) / ( 1d0 + sq1 ) )
+         dil3 = ddilog( ( 1d0 - sq1 ) / ( 1d0 + sq2 ) )
+         dil4 = ddilog( ( 1d0 + sq1 ) / ( 1d0 + sq2 ) )
+*
+         ll2q =2d0/3d0*(96d0*z*(z/xi)**2d0*(dlog((1d0-z)/z**2d0)*l1
+     1        +l1*l2+2d0*(-dil1+dil2+dil3-dil4))+(z/xi/(1d0-z))**2d0
+     2        *(64d0-288d0*z+192d0*z**2d0)*l1+z*(16d0/3d0-416d0*z/3d0/xi
+     3        +1408d0*z**2d0/3d0/xi**2d0)*l3/sq2+(16d0/3d0-400d0*z/18d0
+     4        +z*(-160d0/3d0+3824d0*z/9d0-992d0*z**2d0/3d0)/(1d0-z)/xi)
+     5        *sq1)
       endif
 *
       return
