@@ -43,12 +43,12 @@
 *     Rotate initial PDFs from physical to QCD evolution basis
          call PDFphys2evQCD(f0ph,fevQCD)
 *     Evolve PDFs using the QCD evolution operators
-c         call JoinOperatorsQCD(fevQCD)
          do inf=nfi,nff,sgn
             call EvolveQCD(inf,fevQCD)
          enddo
 *     Rotate evolved PDFs from QCD evolution to physical basis
          call PDFevQCD2phys(fevQCD,fphQCD)
+c         call JoinOperatorsQCD(fphQCD)
 *     Put Evolved PDF into the common "fph"
          do alpha=0,nin(igrid)
             do i=-6,6

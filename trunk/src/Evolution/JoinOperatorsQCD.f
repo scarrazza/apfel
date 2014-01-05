@@ -1,24 +1,26 @@
 ************************************************************************
-*     
+*
 *     JoinOperatorsQCD.f:
-*     
+*
 *     This routine joins the QCD evolution operators.
-*     
+*
 *     QCD evolution basis:
 *     0   1   2   3   4   5   6   7   8   9  10  11  12  13
 *     gm  Sg   g   V  V3  V8 V15 V24 V35  T3  T8 T15 T24 T35
 *     
 ************************************************************************
-      subroutine JoinOperatorsQCD(fevQCD)
-*     
+      subroutine JoinOperatorsQCD(fphQCD)
+*
       implicit none
-*     
+*
       include "../commons/grid.h"
       include "../commons/m2th.h"
       include "../commons/EvolutionMatrices.h"
+      include "../commons/transQCD.h"
+      include "../commons/f0ph.h"
 **
 *     Internal Variables
-*     
+*
       integer i,j,k,l
       integer nf,nfm
       integer alpha,beta,gamma,delta
@@ -26,19 +28,19 @@
       double precision MatQCDns(0:nint_max,0:nint_max),Match(2)
       double precision MatQCDsg(2,2,0:nint_max,0:nint_max)
       double precision EvQCDb(0:13,0:13,0:nint_max,0:nint_max)
-      double precision fevQCDb(0:13,0:nint_max)
+      double precision EvQCD(0:13,0:13,0:nint_max,0:nint_max)
+      double precision PhQCD(-7:6,-7:6,0:nint_max,0:nint_max)
 **
 *     Input and Output Variables
 *     
-      double precision EvQCD(0:13,0:13,0:nint_max,0:nint_max)
-      double precision fevQCD(0:13,0:nint_max)
-*     
+      double precision fphQCD(-6:6,0:nint_max)
+*
       if(sgn.ne.1)then
          write(6,*) "In JoinOperatorsQCD.f:"
          write(6,*) "Backward evolution not allowed"
          call exit(-10)
       endif
-*     
+*
       do alpha=0,nin(igrid)
          do beta=0,nin(igrid)
 *     Set evolution operators to zero
@@ -272,11 +274,6 @@
                            enddo
                         enddo
                      enddo
-
-
-
-
-
 *     Bottom threshold
                   elseif(nfm.eq.5)then
                      do gamma=0,nin(igrid)
@@ -454,26 +451,40 @@
             enddo
          enddo
       endif
-*     
-*     Covolute input PDFs with the joint evolution operator
-*     
+*
+*     Tranform the evolution operators from the evolution to the physical basis
+*
       do alpha=0,nin(igrid)
-         do i=0,13
-            fevQCDb(i,alpha) = 0d0
-            do beta=0,nin(igrid)
+         do beta=0,nin(igrid)
+            do i=0,13
                do j=0,13
-                  fevQCDb(i,alpha) = fevQCDb(i,alpha)
-     1                 + EvQCD(i,j,alpha,beta) * fevQCD(j,beta)
+                  PhQCD(i-7,j-7,alpha,beta) = 0d0
+                  do k=0,13
+                     do l=0,13
+                        PhQCD(i-7,j-7,alpha,beta) = 
+     1                       PhQCD(i-7,j-7,alpha,beta)
+     2                       + Tev2phQCD(i,k) * EvQCD(k,l,alpha,beta) 
+     3                       * Tph2evQCD(l,j)
+                     enddo
+                  enddo
                enddo
             enddo
          enddo
       enddo
-*     
+*
+*     Evolve initial PDFs
+*
       do alpha=0,nin(igrid)
-         do i=0,13
-            fevQCD(i,alpha) = fevQCDb(i,alpha)
+         do i=-6,6
+            fphQCD(i,alpha) = 0d0
+            do beta=0,nin(igrid)
+               do j=-6,6
+                  fphQCD(i,alpha) = fphQCD(i,alpha)
+     1                 + PhQCD(i,j,alpha,beta) * f0ph(j,beta)
+               enddo
+            enddo
          enddo
       enddo
-*     
+*
       return
       end
