@@ -9,7 +9,7 @@
 using namespace std;
 
 #define SIZE 999
-#define VERSION "2.0.0"
+#define VERSION "2.0.1"
 
 namespace APFEL {
 

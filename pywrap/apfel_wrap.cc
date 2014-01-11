@@ -5322,7 +5322,7 @@ SWIGINTERN PyObject *_wrap_DIS_xsec(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   PyObject * obj14 = 0 ;
   PyObject * obj15 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOOOOOO:DIS_xsec",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10,&obj11,&obj12,&obj13,&obj14,&obj15)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOOOOOOOOOOOOOOO:DIS_xsec",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10,&obj11,&obj12,&obj13,&obj14,&obj15)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DIS_xsec" "', argument " "1"" of type '" "double""'");
@@ -5347,7 +5347,7 @@ SWIGINTERN PyObject *_wrap_DIS_xsec(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "DIS_xsec" "', argument " "5"" of type '" "double""'");
   } 
-  arg4 = static_cast< double >(val4);
+  arg5 = static_cast< double >(val5);
   {
     std::string *ptr = (std::string *)0;
     res6 = SWIG_AsPtr_std_string(obj5, &ptr);
@@ -5404,7 +5404,7 @@ SWIGINTERN PyObject *_wrap_DIS_xsec(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   }
   {
     std::string *ptr = (std::string *)0;
-    res12 = SWIG_AsPtr_std_string(obj12, &ptr);
+    res12 = SWIG_AsPtr_std_string(obj11, &ptr);
     if (!SWIG_IsOK(res12)) {
       SWIG_exception_fail(SWIG_ArgError(res12), "in method '" "DIS_xsec" "', argument " "12"" of type '" "std::string const &""'"); 
     }
