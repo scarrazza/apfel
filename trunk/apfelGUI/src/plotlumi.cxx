@@ -162,6 +162,14 @@ void PlotLumi::on_PDFflavor_currentIndexChanged(int index)
   ui->title->setText(titleY[index]);
 }
 
+void PlotLumi::on_customcm_toggled(bool checked)
+{
+  if (checked == true)
+    ui->cmenergyref->setEnabled(true);
+  else
+    ui->cmenergyref->setEnabled(false);
+}
+
 lumithread::lumithread(QObject *parent, QString filename):
   QThread(parent),
   fp((PlotLumi*)parent),
@@ -191,7 +199,10 @@ void lumithread::run()
   double ymin = 0.8;
   double ymax = 1.3;
   double eps = fp->ui->integration->text().toDouble();
-  double S = pow(fp->ui->cmenergy->text().toDouble(), 2.0);
+  double S = 0;
+  double Sset = pow(fp->ui->cmenergy->text().toDouble(), 2.0);
+  double Sref = pow(fp->ui->cmenergyref->text().toDouble(), 2.0);
+  if (!fp->ui->customcm->isChecked()) Sref = Sset;
 
   vector<string> lumis;
   lumis.push_back("GG");
@@ -232,6 +243,10 @@ void lumithread::run()
   for (int set = 0; set < (int) fp->fPDF.size(); set++)
     {
       fp->fPDF[indRef[set]]->InitPDFset(Qi,xmax);
+      if (set == 0)
+        S = Sref;
+      else
+        S = Sset;
 
       TGraphErrors *g = new TGraphErrors(N);
       g->SetLineWidth(2);
@@ -268,8 +283,11 @@ void lumithread::run()
 	  double cv = fp->fPDF[indRef[set]]->getLum(mH, S, lumis[fp->ui->PDFflavor->currentIndex()],eps,cverr);
 
 	  if (set == 0) refx[imH-1] = cv;
-	  cv /= refx[imH-1];
-	  cverr /= refx[imH-1];
+	  if (fp->ui->ratio->isChecked())
+	    {
+	      cv /= refx[imH-1];
+	      cverr /= refx[imH-1];
+	    }
 
 	  g->SetPoint(imH-1, xmH[imH-1], cv);
 	  gcv->SetPoint(imH-1,xmH[imH-1], cv);
