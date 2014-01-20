@@ -51,6 +51,7 @@ private slots:
   void ThreadFinished();
   void ThreadProgress(int);
   void on_PDFflavor_currentIndexChanged(int index);
+  void on_customcm_toggled(bool checked);
 
 private:
   Ui::PlotLumi *ui;
