@@ -8,6 +8,7 @@
 #include <QProcess>
 #include <QDebug>
 #include <cmath>
+#include <algorithm>
 
 #include "LHAPDF/LHAPDF.h"
 #include "APFEL/APFEL.h"
