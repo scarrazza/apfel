@@ -47,7 +47,7 @@ APFELMainWindow::APFELMainWindow(QWidget *parent) :
       bool ok;
       fLHAPDFpath = QInputDialog::getText(this, tr("Welcome to APFEL GUI setup"),
                                           tr("Please set the LHAPDF sets directory where the *.LHgrid files are stored:"),
-                                          QLineEdit::Normal,"/usr/local/lhapdf/share/lhapdf/PDFsets", &ok);
+                                          QLineEdit::Normal,"/usr/local/share/lhapdf/PDFsets", &ok);
       if (ok && !fLHAPDFpath.isEmpty() && QDir(fLHAPDFpath).exists() == true)
         {
           // write to config file
