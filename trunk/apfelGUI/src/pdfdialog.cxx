@@ -14,6 +14,8 @@
 #include "APFEL/APFEL.h"
 using namespace std;
 
+enum {TBAR,BBAR,CBAR,SBAR,UBAR,DBAR,GLUON,D,U,S,C,B,T,PHT,SIGMA,V,V3,V8,V15,V24,V35,T3,T8,T15,T24,T35,Ds,UP,UM,DP,DM,SP,SM,CP,CM,BP,BM,TP,TM};
+
 PDFDialog::PDFDialog(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::PDFDialog),
@@ -407,85 +409,33 @@ double PDFDialog::GetFlvrPDFCV(double x, double Q, int f)
   double avg = 0;
   int Etype = ui->comboPDFerror->currentIndex();
 
-  if (isLHAPDF())
-    {
-      switch (Etype) {
-        case ER_NONE:
+  switch (Etype) {
+    case ER_NONE:
+      {
+        initPDF(ui->member->value());
+        avg = GetFlvrPDF(x,Q,f);
+        break;
+      }
+    case ER_EIG:
+    case ER_EIG90:
+    case ER_SYMEIG:
+      {
+        initPDF(0);
+        avg = GetFlvrPDF(x,Q,f);
+        break;
+      }
+    case ER_MC:
+      {
+        double *y = new double[numberPDF()];
+        for (int i = 0; i < numberPDF(); i++)
           {
-            initPDF(ui->member->value());
-            if (LHAPDF::hasPhoton() == true)
-              avg = LHAPDF::xfxphoton(x,Q,f);
-            else
-              avg = LHAPDF::xfx(x,Q,f);
-            break;
+            initPDF(i+1);
+            y[i] = GetFlvrPDF(x,Q,f);
           }
-        case ER_EIG:
-        case ER_EIG90:
-        case ER_SYMEIG:
-          {
-            initPDF(0);
-            if (LHAPDF::hasPhoton() == true)
-              avg = LHAPDF::xfxphoton(x,Q,f);
-            else
-              avg = LHAPDF::xfx(x,Q,f);
-            break;
-          }
-        case ER_MC:
-          {
-            double *y = new double[numberPDF()];
-            for (int i = 0; i < numberPDF(); i++)
-              {
-                initPDF(i+1);
-                if (LHAPDF::hasPhoton() == true)
-                  y[i] = LHAPDF::xfxphoton(x,Q,f);
-                else
-                  y[i] = LHAPDF::xfx(x,Q,f);
-              }
-            avg = ComputeAVG(numberPDF(),y);
-            delete[] y;
-            break;
-          }
-        }
-    }
-  else
-    {
-      switch (Etype) {
-        case ER_NONE:
-          {
-            initPDF(ui->member->value());
-            if (f != 7)
-              avg = APFEL::xPDF(f,x);
-            else
-              avg = APFEL::xgamma(x);
-            break;
-          }
-        case ER_EIG:
-        case ER_EIG90:
-        case ER_SYMEIG:
-          {
-            initPDF(0);
-            if (f != 7)
-              avg = APFEL::xPDF(f,x);
-            else
-              avg = APFEL::xgamma(x);
-            break;
-          }
-        case ER_MC:
-          {
-            double *y = new double[numberPDF()];
-            for (int i = 0; i < numberPDF(); i++)
-              {
-                initPDF(i+1);
-                if (f != 7)
-                  y[i] = APFEL::xPDF(f,x);
-                else
-                  y[i] = APFEL::xgamma(x);
-              }
-            avg = ComputeAVG(numberPDF(),y);
-            delete[] y;
-            break;
-          }
-        }
+        avg = ComputeAVG(numberPDF(),y);
+        delete[] y;
+        break;
+      }
     }
 
   return avg;
@@ -496,145 +446,63 @@ double PDFDialog::GetFlvrError(double x, double Q, int f,double &uperr, double &
   double err = 0;
   int Etype = ui->comboPDFerror->currentIndex();
 
-  if (isLHAPDF())
-    {
-      switch (Etype) {
-        case ER_NONE:
+  switch (Etype) {
+    case ER_NONE:
+      {
+        break;
+      }
+    case ER_MC:
+      {
+        double *y = new double[numberPDF()];
+        vector<double> yval;
+        for (int i = 0; i < numberPDF(); i++)
           {
-            break;
+            initPDF(i+1);
+            y[i] = GetFlvrPDF(x,Q,f);
+            yval.push_back(y[i]);
           }
-        case ER_MC:
+        err = ComputeStdDev(numberPDF(),y);
+
+        delete[] y;
+
+        sort(yval.begin(), yval.end());
+        int esc = numberPDF()*(1-0.68)/2;
+
+        uperr = yval[numberPDF()-esc-1];
+        dnerr = yval[esc];
+
+        break;
+      }
+    case ER_EIG:
+    case ER_EIG90:
+      {
+        double *y = new double[numberPDF()];
+        for (int i = 0; i < numberPDF(); i++)
           {
-            double *y = new double[numberPDF()];
-            vector<double> yval;
-            for (int i = 0; i < numberPDF(); i++)
-              {
-                initPDF(i+1);
-                if (LHAPDF::hasPhoton() == true)
-                  y[i] = LHAPDF::xfxphoton(x,Q,f);
-                else
-                  y[i] = LHAPDF::xfx(x,Q,f);
-                yval.push_back(y[i]);
-              }
-            err = ComputeStdDev(numberPDF(),y);
-
-            delete[] y;
-
-            sort(yval.begin(), yval.end());
-            int esc = numberPDF()*(1-0.68)/2;
-
-            uperr = yval[numberPDF()-esc-1];
-            dnerr = yval[esc];
-
-            break;
+            initPDF(i+1);
+            y[i] = GetFlvrPDF(x,Q,f);
           }
-        case ER_EIG:
-        case ER_EIG90:
+        err = ComputeEigErr(numberPDF(),y);
+        if (Etype == ER_EIG90) err /= 1.64485;
+
+        delete[] y;
+
+        break;
+      }
+    case ER_SYMEIG:
+      {
+        double *y = new double[numberPDF()];
+        for (int i = 0; i < numberPDF(); i++)
           {
-            double *y = new double[numberPDF()];
-            for (int i = 0; i < numberPDF(); i++)
-              {
-                initPDF(i+1);
-                if (LHAPDF::hasPhoton() == true)
-                  y[i] = LHAPDF::xfxphoton(x,Q,f);
-                else
-                  y[i] = LHAPDF::xfx(x,Q,f);
-              }
-            err = ComputeEigErr(numberPDF(),y);
-            if (Etype == ER_EIG90) err /= 1.64485;
-
-            delete[] y;
-
-            break;
+            initPDF(i+1);
+            y[i] = GetFlvrPDF(x,Q,f);
           }
-        case ER_SYMEIG:
-          {
-            double *y = new double[numberPDF()];
-            for (int i = 0; i < numberPDF(); i++)
-              {
-                initPDF(i+1);
-                if (LHAPDF::hasPhoton() == true)
-                  y[i] = LHAPDF::xfxphoton(x,Q,f);
-                else
-                  y[i] = LHAPDF::xfx(x,Q,f);
-              }
 
-            err = ComputeSymEigErr(numberPDF(),GetFlvrPDFCV(x,Q,f),y);
+        err = ComputeSymEigErr(numberPDF(),GetFlvrPDFCV(x,Q,f),y);
 
-            delete[] y;
-            break;
-          }
-        }
-    }
-  else
-    {
-      switch (Etype) {
-        case ER_NONE:
-          {
-            break;
-          }
-        case ER_MC:
-          {
-            double *y = new double[numberPDF()];
-            vector<double> yval;
-            for (int i = 0; i < numberPDF(); i++)
-              {
-                initPDF(i+1);
-                if (f != 7)
-                  y[i] = APFEL::xPDF(f,x);
-                else
-                  y[i] = APFEL::xgamma(x);
-                yval.push_back(y[i]);
-              }
-            err = ComputeStdDev(numberPDF(),y);
-
-            delete[] y;
-
-            sort(yval.begin(), yval.end());
-            int esc = numberPDF()*(1-0.68)/2;
-
-            uperr = yval[numberPDF()-esc-1];
-            dnerr = yval[esc];
-
-            break;
-          }
-        case ER_EIG:
-        case ER_EIG90:
-          {
-            double *y = new double[numberPDF()];
-            for (int i = 0; i < numberPDF(); i++)
-              {
-                initPDF(i+1);
-                if (f != 7)
-                  y[i] = APFEL::xPDF(f,x);
-                else
-                  y[i] = APFEL::xgamma(x);
-              }
-            err = ComputeEigErr(numberPDF(),y);
-            if (Etype == ER_EIG90) err /= 1.64485;
-
-            delete[] y;
-
-            break;
-          }
-        case ER_SYMEIG:
-          {
-            double *y = new double[numberPDF()];
-            for (int i = 0; i < numberPDF(); i++)
-              {
-                initPDF(i+1);
-                if (f != 7)
-                  y[i] = APFEL::xPDF(f,x);
-                else
-                  y[i] = APFEL::xgamma(x);
-              }
-
-            err = ComputeSymEigErr(numberPDF(),GetFlvrPDFCV(x,Q,f),y);
-
-            delete[] y;
-            break;
-          }
-        }
+        delete[] y;
+        break;
+      }
     }
 
   return err;
@@ -644,20 +512,70 @@ double PDFDialog::GetFlvrPDF(double x, double Q, int f)
 {
   double res = 0;  
 
+  vector<double> pdf;
+
   if (isLHAPDF())
-    {
-      if (LHAPDF::hasPhoton() == true)
-        res = LHAPDF::xfxphoton(x,Q,f);
-      else
-        res = LHAPDF::xfx(x,Q,f);
-    }
+    pdf = ( LHAPDF::hasPhoton() == true ? LHAPDF::xfxphoton(x,Q) : LHAPDF::xfx(x,Q));
   else
-    {
-      if (f != 7)
-        res = APFEL::xPDF(f,x);
-      else
-        res = APFEL::xgamma(x);
-    }
+    for (int i = -6; i <= 7; i++)
+      pdf.push_back(i != 7 ? APFEL::xPDF(i,x) : APFEL::xgamma(x));
+
+  if (f+6 <= PHT)
+    res = pdf[f+6];
+  else if (f+6 == SIGMA)
+    for (int i = 0; i < 13; i++) res += pdf[i];
+  else if (f+6 == V)
+    res =   (pdf[U]-pdf[UBAR]) + (pdf[D]-pdf[DBAR]) + (pdf[S]-pdf[SBAR]) ;
+  else if (f+6 == V3)
+    res = (pdf[U] - pdf[UBAR]) - (pdf[D]-pdf[DBAR]);
+  else if (f+6 == V8)
+    res = (pdf[U] - pdf[UBAR]) + (pdf[D]-pdf[DBAR]) - 2*(pdf[S]-pdf[SBAR]);
+  else if (f+6 == V15)
+    res = (pdf[U] - pdf[UBAR]) + (pdf[D]-pdf[DBAR]) + (pdf[S]-pdf[SBAR]) - 3*(pdf[C]-pdf[CBAR]);
+  else if (f+6 == V24)
+    res = (pdf[U] - pdf[UBAR]) + (pdf[D]-pdf[DBAR]) + (pdf[S]-pdf[SBAR]) + (pdf[C]-pdf[CBAR]) - 4*(pdf[B]-pdf[BBAR]);
+  else if (f+6 == V35)
+    res = (pdf[U] - pdf[UBAR]) + (pdf[D]-pdf[DBAR]) + (pdf[S]-pdf[SBAR]) + (pdf[C]-pdf[CBAR]) + (pdf[B]-pdf[BBAR]) - 5*(pdf[T]-pdf[TBAR]);
+  else if (f+6 == T3)
+    res = (pdf[U]+pdf[UBAR]) - (pdf[D]+pdf[DBAR]);
+  else if (f+6 == T8)
+    res = (pdf[U] + pdf[UBAR]) + (pdf[D]+pdf[DBAR]) - 2*(pdf[S]+pdf[SBAR]);
+  else if (f+6 == T15)
+    res = (pdf[U] + pdf[UBAR]) + (pdf[D]+pdf[DBAR]) + (pdf[S]+pdf[SBAR]) - 3*(pdf[C]+pdf[CBAR]);
+  else if (f+6 == T24)
+    res = (pdf[U] + pdf[UBAR]) + (pdf[D]+pdf[DBAR]) + (pdf[S]+pdf[SBAR]) + (pdf[C]+pdf[CBAR]) - 4*(pdf[B]+pdf[BBAR]);
+  else if (f+6 == T35)
+    res = (pdf[U] + pdf[UBAR]) + (pdf[D]+pdf[DBAR]) + (pdf[S]+pdf[SBAR]) + (pdf[C]+pdf[CBAR]) + (pdf[B]+pdf[BBAR]) - 5*(pdf[T]+pdf[TBAR]);
+  else if (f+6 == Ds)
+    res = pdf[DBAR]-pdf[UBAR];
+  else if (f+6 == UP)
+    res = pdf[U] + pdf[UBAR];
+  else if (f+6 == UM)
+    res = pdf[U] - pdf[UBAR];
+  else if (f+6 == DP)
+    res = pdf[D] + pdf[DBAR];
+  else if (f+6 == DM)
+    res = pdf[D] - pdf[DBAR];
+  else if (f+6 == SP)
+    res = pdf[S] + pdf[SBAR];
+  else if (f+6 == SM)
+    res = pdf[S] - pdf[SBAR];
+  else if (f+6 == CP)
+    res = pdf[C] + pdf[CBAR];
+  else if (f+6 == CM)
+    res = pdf[C] - pdf[CBAR];
+  else if (f+6 == SP)
+    res = pdf[S] + pdf[SBAR];
+  else if (f+6 == SM)
+    res = pdf[S] - pdf[SBAR];
+  else if (f+6 == BP)
+    res = pdf[B] + pdf[BBAR];
+  else if (f+6 == BM)
+    res = pdf[B] - pdf[BBAR];
+  else if (f+6 == TP)
+    res = pdf[T] + pdf[TBAR];
+  else if (f+6 == TM)
+    res = pdf[T] - pdf[TBAR];
 
   return res;
 }
@@ -1200,6 +1118,5 @@ void PDFDialog::DIS(double x,double qi,double qf,double y,
 
         break;
       }
-
     }
 }
