@@ -20,6 +20,7 @@
       include "../commons/EvolutionMatrices.h"
       include "../commons/f0ph.h"
       include "../commons/fph.h"
+      include "../commons/EvolOp.h"
 **
 *     Input Variables
 *
@@ -48,7 +49,8 @@
          enddo
 *     Rotate evolved PDFs from QCD evolution to physical basis
          call PDFevQCD2phys(fevQCD,fphQCD)
-c         call JoinOperatorsQCD(fphQCD)
+*     Compute the total evolution operator in case required
+         if(EvolOp) call JoinOperatorsQCD(jgrid)
 *     Put Evolved PDF into the common "fph"
          do alpha=0,nin(igrid)
             do i=-6,6

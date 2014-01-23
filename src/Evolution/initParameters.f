@@ -11,6 +11,7 @@
       implicit none
 *
       include "../commons/Welcome.h"
+      include "../commons/EvolOp.h"
       include "../commons/scales.h"
       include "../commons/Evs.h"
       include "../commons/Nf_FF.h"
@@ -30,6 +31,7 @@
 *     Initialize default parameters (those that were not initialized before)
 *
       if(InWelcome.ne."done") call EnableWelcomeMessage(.true.)
+      if(InEvolOp.ne."done")  call EnableEvolutionOperator(.false.)
       if(InScales.ne."done")  call SetQLimits(0.5d0,400d0)
       if(InPt.ne."done")      call SetPerturbativeOrder(2)
       if(InEvs.ne."done")     call SetVFNS

@@ -149,6 +149,10 @@ def EnableWelcomeMessage(*args):
   return _apfel.EnableWelcomeMessage(*args)
 EnableWelcomeMessage = _apfel.EnableWelcomeMessage
 
+def EnableEvolutionOperator(*args):
+  return _apfel.EnableEvolutionOperator(*args)
+EnableEvolutionOperator = _apfel.EnableEvolutionOperator
+
 def HeavyQuarkMass(*args):
   return _apfel.HeavyQuarkMass(*args)
 HeavyQuarkMass = _apfel.HeavyQuarkMass

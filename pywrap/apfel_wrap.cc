@@ -4798,6 +4798,27 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_EnableEvolutionOperator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  bool arg1 ;
+  bool val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:EnableEvolutionOperator",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_bool(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "EnableEvolutionOperator" "', argument " "1"" of type '" "bool""'");
+  } 
+  arg1 = static_cast< bool >(val1);
+  APFEL::EnableEvolutionOperator(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_HeavyQuarkMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
@@ -5484,6 +5505,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"GetVersion", _wrap_GetVersion, METH_VARARGS, NULL},
 	 { (char *)"CleanUp", _wrap_CleanUp, METH_VARARGS, NULL},
 	 { (char *)"EnableWelcomeMessage", _wrap_EnableWelcomeMessage, METH_VARARGS, NULL},
+	 { (char *)"EnableEvolutionOperator", _wrap_EnableEvolutionOperator, METH_VARARGS, NULL},
 	 { (char *)"HeavyQuarkMass", _wrap_HeavyQuarkMass, METH_VARARGS, NULL},
 	 { (char *)"SetAlphaQCDRef", _wrap_SetAlphaQCDRef, METH_VARARGS, NULL},
 	 { (char *)"SetAlphaQEDRef", _wrap_SetAlphaQEDRef, METH_VARARGS, NULL},
