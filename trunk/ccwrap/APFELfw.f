@@ -84,6 +84,12 @@ ccccccccccccc
       end subroutine fenablewelcomemessage
 
 ccccccccccccc      
+      subroutine fenableevolutionoperator(eo)
+      logical eo
+      call EnableEvolutionOperator(eo)
+      end subroutine fenableevolutionoperator
+
+ccccccccccccc      
       function fheavyquarkmass(i,Q)
       integer i
       double precision Q,fheavyquarkmass

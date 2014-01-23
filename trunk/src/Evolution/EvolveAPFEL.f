@@ -59,6 +59,9 @@
 *     Convolute intial PDFs with the evolution operators
          call EvolvePDFs(igrid)
       enddo
+*     Join all the subgrids
+      call JoinGrids
+*
       call cpu_time(t2)
 *
 c      write(6,*) "Evolution done in",t2-t1," s"

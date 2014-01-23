@@ -80,6 +80,11 @@ namespace APFEL {
     fenablewelcomemessage(&wc);
   }
 
+  void EnableEvolutionOperator(bool eo)
+  {
+    fenableevolutionoperator(&eo);
+  }
+
   double HeavyQuarkMass(int i,double Q)
   {
     return fheavyquarkmass(&i,&Q);

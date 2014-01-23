@@ -8,12 +8,12 @@
       parameter(xmax=1d0)
 
       integer ngrid,igrid
-      integer nin(ngrid_max)
-      integer inter_degree(ngrid_max)
+      integer nin(0:ngrid_max)
+      integer inter_degree(0:ngrid_max)
       double precision xmin(ngrid_max)
       character*4 InGrid
 
-      double precision xg(ngrid_max,0:nint_max)
+      double precision xg(0:ngrid_max,0:nint_max)
       double precision step(ngrid_max)
 *
       common / GridPar / ngrid,igrid,nin,inter_degree,xmin,InGrid

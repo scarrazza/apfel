@@ -15,11 +15,13 @@
 *
       integer i,np,deg
       double precision x
+      double precision eps
+      parameter(eps=1d-14)
 *
       nin(i)          = np
       inter_degree(i) = deg
       xmin(i)         = x
-      if(i.eq.ngrid) xmin(i+1) = xmax
+      if(i.eq.ngrid) xmin(i+1) = xmax + eps
 *
       return
       end

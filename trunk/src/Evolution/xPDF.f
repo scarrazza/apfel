@@ -62,3 +62,65 @@
 *
       return
       end
+*
+************************************************************************
+*
+*     Interpolation on the joint x-space grid.
+*
+************************************************************************
+      function xPDFj(i,x)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/fph.h"
+**
+*     Input Variables
+*
+      integer i
+      double precision x
+**
+*     Internal Variables
+*
+      integer n
+      integer alpha,jgrid
+      double precision w_int_gen
+**
+*     Output Variables
+*
+      double precision xPDFj
+*
+*     Check consistency of the input variables
+*
+      if(i.lt.-6.or.i.gt.6)then
+         write(6,*) "In xPDF.f:"
+         write(6,*) "Invalid PDF index, i =",i
+         call exit(-10)
+      endif
+*
+      if(x.lt.xmin(1).or.x.gt.xmax)then
+         write(6,*) "In xPDF.f:"
+         write(6,*) "Invalid value of x =",x
+         call exit(-10)
+      endif
+*
+*     Select the interpolation degree
+*
+      do jgrid=1,ngrid
+         if(x.ge.xmin(jgrid).and.x.lt.xmin(jgrid+1))then
+            goto 101
+         endif
+      enddo
+ 101  n = inter_degree(jgrid)
+*
+*     Interpolation
+*
+      xPDFj = 0d0
+      do alpha=0,nin(0)
+         xPDFj = xPDFj + w_int_gen(n,alpha,x) * fph(0,i,alpha)
+      enddo
+      if(dabs(xPDFj).le.1d-14) xPDFj = 0d0
+*
+      return
+      end
+

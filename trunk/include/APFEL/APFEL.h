@@ -61,6 +61,9 @@ namespace APFEL {
   /// Enable welcome message
   void EnableWelcomeMessage(bool);
 
+  /// Enable evolution operator computation
+  void EnableEvolutionOperator(bool);
+
   /// Returns Heavy Quark Masses
   double HeavyQuarkMass(int,double);
   

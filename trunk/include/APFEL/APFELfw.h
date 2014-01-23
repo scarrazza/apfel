@@ -43,6 +43,9 @@ extern "C" {
 #define fenablewelcomemessage FC_FUNC(enablewelcomemessage,ENABLEWELCOMEMESSAGE)
   void fenablewelcomemessage(bool*);
 
+#define fenableevolutionoperator FC_FUNC(enableevolutionoperator,ENABLEEVOLUTIONOPERATOR)
+  void fenableevolutionoperator(bool*);
+
 #define fheavyquarkmass FC_FUNC(heavyquarkmass,HEAVYQUARKMASS)
   double fheavyquarkmass(int*,double*);
 
