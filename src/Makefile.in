@@ -114,8 +114,7 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/AlphaQED.lo Evolution/HeavyQuarkMass.lo \
 	Evolution/LHAPDFgrid.lo Evolution/CleanUp.lo \
 	Evolution/EnableWelcomeMessage.lo \
-	Evolution/EnableEvolutionOperator.lo \
-	Evolution/ExternalEvolutionOperator.lo
+	Evolution/EnableEvolutionOperator.lo
 am__objects_3 = Evolution/interpolants.lo
 am__objects_4 = Evolution/SplittingFunctions.lo
 am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
@@ -128,7 +127,7 @@ am__objects_6 = Evolution/EvolutionOperatorsQCD.lo \
 	Evolution/MatchingConditions.lo \
 	Evolution/integrandsMatching.lo Evolution/integralsMatching.lo \
 	Evolution/RSLintegralsMatching.lo Evolution/MatchPDFs.lo \
-	Evolution/JoinOperatorsQCD.lo	
+	Evolution/JoinOperatorsQCD.lo
 am__objects_7 = Evolution/EvolutionOperatorsQED.lo \
 	Evolution/IdentityOperatorsQED.lo \
 	Evolution/EqualOperatorsQEDnf.lo Evolution/integrandsQED.lo \
@@ -378,8 +377,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/SetMSbarMasses.f Evolution/SetNumberOfGrids.f Evolution/SetPDFSet.f Evolution/SetPoleMasses.f \
 	Evolution/SetRenFacRatio.f Evolution/SetTheory.f Evolution/SetVFNS.f Evolution/SetMaxFlavourPDFs.f \
 	Evolution/SetMaxFlavourAlpha.f Evolution/SetReplica.f Evolution/AlphaQCD.f Evolution/AlphaQED.f Evolution/HeavyQuarkMass.f \
-	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f \
-	Evolution/ExternalEvolutionOperator.f
+	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f
 
 INTER = Evolution/interpolants.f
 SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f
@@ -517,8 +515,6 @@ Evolution/CleanUp.lo: Evolution/$(am__dirstamp) \
 Evolution/EnableWelcomeMessage.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/EnableEvolutionOperator.lo: Evolution/$(am__dirstamp) \
-	Evolution/$(DEPDIR)/$(am__dirstamp)
-Evolution/ExternalEvolutionOperator.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
