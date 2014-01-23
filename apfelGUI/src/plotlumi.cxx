@@ -188,8 +188,11 @@ void lumithread::run()
   fC->SetTickx();
   fC->SetTicky();
 
-  if (fp->ui->log->isChecked())
+  if (fp->ui->logx->isChecked())
     fC->SetLogx();
+
+  if (fp->ui->logy->isChecked())
+    fC->SetLogy();
 
   // Initialize PDFs
 
@@ -222,7 +225,7 @@ void lumithread::run()
       xmax = fp->ui->xmax->text().toDouble();
       ymin = fp->ui->ymin->text().toDouble();
       ymax = fp->ui->ymax->text().toDouble();
-    }
+    }    
 
   const double Qi = fp->ui->Qi->text().toDouble();
 
@@ -333,7 +336,11 @@ void lumithread::run()
   mg->GetYaxis()->SetLabelSize(0.05);
 
   mg->GetXaxis()->SetLimits(xmin,xmax);
-  mg->GetYaxis()->SetRangeUser(ymin,ymax);
+
+  if (fp->ui->ratio->isChecked() == true)
+    mg->GetYaxis()->SetRangeUser(ymin,ymax);
+  else if (!fp->ui->automaticrange->isChecked())
+    mg->GetYaxis()->SetRangeUser(ymin,ymax);
 
   leg->AddEntry("",TString("#sqrt{S} = " + QString::number(fp->ui->cmenergy->text().toDouble(),'g',3).toStdString() + " GeV"),"");
   leg->Draw("same");
