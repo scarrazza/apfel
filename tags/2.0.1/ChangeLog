@@ -1,0 +1,9 @@
+2.0.0:
+	updated autoconfiguration procedure
+	DIS observales using FONLL/ZM-VFNS/FFNS schemes
+	new apfel GUI
+	new apfel interactive console
+
+1.0.1:
+	new apfel graphical user interface
+	new luminosity computation
