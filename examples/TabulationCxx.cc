@@ -50,10 +50,10 @@ int main()
 	 << setw(11) <<APFEL::xgamma(xlha[i]) << "  "
 	 << endl;
 
-  int n = 10;
-  double *xext[n+1];
-  double *M[14][14][n+1][n+1];
-  APFEL::ExternalEvolutionOpetator(Q0,Q,n,xext,M);
+  //int n = 10;
+  //double *xext[n+1];
+  //double ****M[14][14][n+1][n+1];
+  //APFEL::ExternalEvolutionOperator(Q0,Q,n,xext,M);
 
   return 0;
 }
