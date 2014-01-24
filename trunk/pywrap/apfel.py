@@ -109,9 +109,17 @@ def xPDF(*args):
   return _apfel.xPDF(*args)
 xPDF = _apfel.xPDF
 
+def xPDFj(*args):
+  return _apfel.xPDFj(*args)
+xPDFj = _apfel.xPDFj
+
 def xgamma(*args):
   return _apfel.xgamma(*args)
 xgamma = _apfel.xgamma
+
+def xgammaj(*args):
+  return _apfel.xgammaj(*args)
+xgammaj = _apfel.xgammaj
 
 def LHAPDFgrid(*args):
   return _apfel.LHAPDFgrid(*args)

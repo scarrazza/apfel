@@ -2954,11 +2954,10 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 
 #define SWIGTYPE_p_char swig_types[0]
 #define SWIGTYPE_p_double swig_types[1]
-#define SWIGTYPE_p_p_p_p_double swig_types[2]
-#define SWIGTYPE_p_std__invalid_argument swig_types[3]
-#define SWIGTYPE_p_swig__SwigPyIterator swig_types[4]
-static swig_type_info *swig_types[6];
-static swig_module_info swig_module = {swig_types, 5, 0, 0, 0, 0};
+#define SWIGTYPE_p_std__invalid_argument swig_types[2]
+#define SWIGTYPE_p_swig__SwigPyIterator swig_types[3]
+static swig_type_info *swig_types[5];
+static swig_module_info swig_module = {swig_types, 4, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -4548,6 +4547,37 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_xPDFj(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  double arg2 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:xPDFj",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "xPDFj" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "xPDFj" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (double)APFEL::xPDFj(arg1,arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_xgamma(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
@@ -4563,6 +4593,28 @@ SWIGINTERN PyObject *_wrap_xgamma(PyObject *SWIGUNUSEDPARM(self), PyObject *args
   } 
   arg1 = static_cast< double >(val1);
   result = (double)APFEL::xgamma(arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_xgammaj(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:xgammaj",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "xgammaj" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  result = (double)APFEL::xgammaj(arg1);
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
@@ -4622,7 +4674,7 @@ SWIGINTERN PyObject *_wrap_ExternalEvolutionOperator(PyObject *SWIGUNUSEDPARM(se
   double arg2 ;
   int arg3 ;
   double *arg4 = (double *) 0 ;
-  double ****arg5 = (double ****) 0 ;
+  double *arg5 = (double *) 0 ;
   double val1 ;
   int ecode1 = 0 ;
   double val2 ;
@@ -4660,11 +4712,11 @@ SWIGINTERN PyObject *_wrap_ExternalEvolutionOperator(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "ExternalEvolutionOperator" "', argument " "4"" of type '" "double *""'"); 
   }
   arg4 = reinterpret_cast< double * >(argp4);
-  res5 = SWIG_ConvertPtr(obj4, &argp5,SWIGTYPE_p_p_p_p_double, 0 |  0 );
+  res5 = SWIG_ConvertPtr(obj4, &argp5,SWIGTYPE_p_double, 0 |  0 );
   if (!SWIG_IsOK(res5)) {
-    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "ExternalEvolutionOperator" "', argument " "5"" of type '" "double ****""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "ExternalEvolutionOperator" "', argument " "5"" of type '" "double *""'"); 
   }
-  arg5 = reinterpret_cast< double **** >(argp5);
+  arg5 = reinterpret_cast< double * >(argp5);
   APFEL::ExternalEvolutionOperator(arg1,arg2,arg3,arg4,arg5);
   resultobj = SWIG_Py_Void();
   return resultobj;
@@ -5553,7 +5605,9 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"InitializeAPFEL", _wrap_InitializeAPFEL, METH_VARARGS, NULL},
 	 { (char *)"EvolveAPFEL", _wrap_EvolveAPFEL, METH_VARARGS, NULL},
 	 { (char *)"xPDF", _wrap_xPDF, METH_VARARGS, NULL},
+	 { (char *)"xPDFj", _wrap_xPDFj, METH_VARARGS, NULL},
 	 { (char *)"xgamma", _wrap_xgamma, METH_VARARGS, NULL},
+	 { (char *)"xgammaj", _wrap_xgammaj, METH_VARARGS, NULL},
 	 { (char *)"LHAPDFgrid", _wrap_LHAPDFgrid, METH_VARARGS, NULL},
 	 { (char *)"ExternalEvolutionOperator", _wrap_ExternalEvolutionOperator, METH_VARARGS, NULL},
 	 { (char *)"AlphaQCD", _wrap_AlphaQCD, METH_VARARGS, NULL},
@@ -5591,28 +5645,24 @@ static PyMethodDef SwigMethods[] = {
 
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_double = {"_p_double", "double *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_p_p_p_double = {"_p_p_p_p_double", "double ****", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_std__invalid_argument = {"_p_std__invalid_argument", "std::invalid_argument *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_swig__SwigPyIterator = {"_p_swig__SwigPyIterator", "swig::SwigPyIterator *", 0, 0, (void*)0, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_char,
   &_swigt__p_double,
-  &_swigt__p_p_p_p_double,
   &_swigt__p_std__invalid_argument,
   &_swigt__p_swig__SwigPyIterator,
 };
 
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_p_p_p_double[] = {  {&_swigt__p_p_p_p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_std__invalid_argument[] = {  {&_swigt__p_std__invalid_argument, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_swig__SwigPyIterator[] = {  {&_swigt__p_swig__SwigPyIterator, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_char,
   _swigc__p_double,
-  _swigc__p_p_p_p_double,
   _swigc__p_std__invalid_argument,
   _swigc__p_swig__SwigPyIterator,
 };

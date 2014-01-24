@@ -42,7 +42,7 @@ namespace APFEL {
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname);
 
   /// External Evolution Operator for APPLgrid
-  void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double ****m);
+  void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double *m);
 
   /// Returns the value of alpha_QCD at the given scale
   double AlphaQCD(double Q);
