@@ -51,9 +51,32 @@ int main()
 	 << endl;
 
   int n = 10;
-  double *xext;
-  double ****M;
+  double *xext = new double[n+1];
+  double ****M = new double***[14];
+
+  for (int i = 0; i < 14; i++) {
+    M[i] = new double**[14];
+    for (int j = 0; j < 14; j++) {
+      M[i][j] = new double*[n+1];
+      for (int k = 0; k < n+1; k++)
+	M[i][j][k] = new double[n+1];
+    }    
+  }
+  
   APFEL::ExternalEvolutionOperator(Q0,Q,n,xext,M);
 
+  for (int i = 0; i < 14; i++){
+    for (int j = 0; j < 14; j++){
+      for (int z = 0; z < n+1; z++){
+	if (!M[i][j][z]) delete[] M[i][j][z];
+      }
+      if (!M[i][j]) delete[] M[i][j];
+    }
+    if (!M[i]) delete[] M[i];
+  }
+
+  delete[] xext;  
+  delete[] M;
+    
   return 0;
 }
