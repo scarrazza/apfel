@@ -58,13 +58,13 @@
          write(6,*) " "
          call exit(-10)
       endif
-c*
-c      open(unit=19,file="JointGrid.dat",status="unknown")
-c      write(19,*) nin(0)!+inter_degree(0)
-c      do alpha=0,nin(0)!+inter_degree(0)
-c         write(19,*) xg(0,alpha)
-c      enddo
-c      close(19)
+*
+      open(unit=19,file="JointGrid.dat",status="unknown")
+      write(19,*) nin(0)!+inter_degree(0)
+      do alpha=0,nin(0)!+inter_degree(0)
+         write(19,*) xg(0,alpha)
+      enddo
+      close(19)
 *
       return
       end
