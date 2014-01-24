@@ -69,20 +69,9 @@ int main()
   ginp >> n;
 
   double *xext = new double[n+1];
-  double ****M = new double***[n+1];
+  double *M = new double[14*14*(n+1)*(n+1)];
 
-  for (int i = 0; i < 14; i++) {
-    M[i] = new double**[14];
-    for (int j = 0; j < 14; j++) {
-      M[i][j] = new double*[n+1];
-      for (int k = 0; k < n+1; k++)
-	M[i][j][k] = new double[n+1];
-    }    
-  }
-
-  for(int ig=0; ig<=n; ig++) {
-    ginp >> xext[ig];
-  }
+  for(int ig=0; ig<=n; ig++) ginp >> xext[ig];  
   ginp.close();
 
   APFEL::ExternalEvolutionOperator(Q0,Q,n,xext,M);
@@ -97,19 +86,6 @@ int main()
 	 << setw(11) <<APFEL::xgammaj(xlha[i]) << "  "
 	 << endl;
   cout << "      " << endl;
-
-  for (int i = 0; i < 14; i++){
-    for (int j = 0; j < 14; j++){
-      for (int z = 0; z < n+1; z++){
-	if (!M[i][j][z]) delete[] M[i][j][z];
-      }
-      if (!M[i][j]) delete[] M[i][j];
-    }
-    if (!M[i]) delete[] M[i];
-  }
-
-  delete[] xext;  
-  delete[] M;
-
+  
   return 0;
 }
