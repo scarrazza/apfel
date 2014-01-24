@@ -117,6 +117,10 @@ def LHAPDFgrid(*args):
   return _apfel.LHAPDFgrid(*args)
 LHAPDFgrid = _apfel.LHAPDFgrid
 
+def ExternalEvolutionOperator(*args):
+  return _apfel.ExternalEvolutionOperator(*args)
+ExternalEvolutionOperator = _apfel.ExternalEvolutionOperator
+
 def AlphaQCD(*args):
   return _apfel.AlphaQCD(*args)
 AlphaQCD = _apfel.AlphaQCD

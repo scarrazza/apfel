@@ -4615,6 +4615,63 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_ExternalEvolutionOperator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  int arg3 ;
+  double *arg4 = (double *) 0 ;
+  double *arg5 = (double *) 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  void *argp5 = 0 ;
+  int res5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:ExternalEvolutionOperator",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ExternalEvolutionOperator" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ExternalEvolutionOperator" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ExternalEvolutionOperator" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4,SWIGTYPE_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "ExternalEvolutionOperator" "', argument " "4"" of type '" "double *""'"); 
+  }
+  arg4 = reinterpret_cast< double * >(argp4);
+  res5 = SWIG_ConvertPtr(obj4, &argp5,SWIGTYPE_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res5)) {
+    SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "ExternalEvolutionOperator" "', argument " "5"" of type '" "double *""'"); 
+  }
+  arg5 = reinterpret_cast< double * >(argp5);
+  APFEL::ExternalEvolutionOperator(arg1,arg2,arg3,arg4,arg5);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_AlphaQCD(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
@@ -5497,6 +5554,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"xPDF", _wrap_xPDF, METH_VARARGS, NULL},
 	 { (char *)"xgamma", _wrap_xgamma, METH_VARARGS, NULL},
 	 { (char *)"LHAPDFgrid", _wrap_LHAPDFgrid, METH_VARARGS, NULL},
+	 { (char *)"ExternalEvolutionOperator", _wrap_ExternalEvolutionOperator, METH_VARARGS, NULL},
 	 { (char *)"AlphaQCD", _wrap_AlphaQCD, METH_VARARGS, NULL},
 	 { (char *)"AlphaQED", _wrap_AlphaQED, METH_VARARGS, NULL},
 	 { (char *)"NPDF", _wrap_NPDF, METH_VARARGS, NULL},
