@@ -7,7 +7,7 @@
 *     on the internal x-space grid of APFEL.
 *
 ************************************************************************
-      subroutine ExternalEvolutionOpetator(Q0,Q,n,xext,M)
+      subroutine ExternalEvolutionOperator(Q0,Q,n,xext,M)
 *
       implicit none
 *

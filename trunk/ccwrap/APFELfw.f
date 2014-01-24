@@ -40,7 +40,7 @@ ccccccccccccc
       double precision q0,q
       double precision xext(0:n)
       double precision m(-7:6,-7:6,0:n,0:n)
-      call ExternalEvolutionOpetator(q0,q,n,xext,m)
+      call ExternalEvolutionOperator(q0,q,n,xext,m)
       end subroutine fexternalevolutionoperator
 
 ccccccccccccc      
