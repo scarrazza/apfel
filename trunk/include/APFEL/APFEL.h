@@ -23,17 +23,20 @@ namespace APFEL {
   /// Initialize the library
   void InitializeAPFEL(void);
 
-  /// Compute evolution 
+  /// Computes evolution 
   void EvolveAPFEL(double Q0, double Q);
 
-  /// Return x*PDF
+  /// Returns x*PDF
   double xPDF(int i, double x);
 
-  /// Return x*gamma
+  /// Returns x*gamma
   double xgamma(double x);
 
-  /// Build the *.LHgrid output file
+  /// Builds the *.LHgrid output file
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname);
+
+  /// External Evolution Operator for APPLgrid
+  void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double *m);
 
   /// Returns the value of alpha_QCD at the given scale
   double AlphaQCD(double Q);
@@ -52,16 +55,16 @@ namespace APFEL {
   /// Returns the Luminosity 
   double LUMI(int i, int j, double S);
 
-  /// Get APFEL version
+  /// Gets APFEL version
   std::string GetVersion(void);
 
-  /// Cleanup parameters
+  /// Cleans up parameters
   void CleanUp(void);
 
-  /// Enable welcome message
+  /// Enables welcome message
   void EnableWelcomeMessage(bool);
 
-  /// Enable evolution operator computation
+  /// Enables evolution operator computation
   void EnableEvolutionOperator(bool);
 
   /// Returns Heavy Quark Masses
@@ -71,54 +74,54 @@ namespace APFEL {
    * Set Methods
    */
 
-  /// Set the reference values of $alpha_{s}$ at the reference scale
+  /// Sets the reference values of $alpha_{s}$ at the reference scale
   void SetAlphaQCDRef(double alpharef, double Qref);
 
-  /// Set the reference values of $alpha$ at the reference scale
+  /// Sets the reference values of $alpha$ at the reference scale
   void SetAlphaQEDRef(double alpharef, double Qref);
 
-  /// Set the minimimum and the maximum energy allowed for the evolution
+  /// Sets the minimimum and the maximum energy allowed for the evolution
   void SetQLimits(double Qmin, double Qmax);
 
-  /// Set the FFNS as a default
+  /// Sets the FFNS as a default
   void SetFFNS(int nfl);
 
-  /// Set the parameters of the i-th x-space grid
+  /// Sets the parameters of the i-th x-space grid
   void SetGridParameters(int i, int np, int deg, double x);
 
-  /// Set the maximum number of flavours that the evolution 
+  /// Sets the maximum number of flavours that the evolution 
   /// of alphaQCD and alphaQED can reach
   void SetMaxFlavourAlpha(int nf);
 
-  /// Set the maximum number of flavours that the evolution 
+  /// Sets the maximum number of flavours that the evolution 
   /// of PDFs can reach.
   void SetMaxFlavourPDFs(int nf);
 
-  /// Set as a default the heavy quark MSbar masses
+  /// Sets as a default the heavy quark MSbar masses
   void SetMSbarMasses(double mc, double mb, double mt);
   
-  /// Set the number of x-space grids that will be used in the computation
+  /// Sets the number of x-space grids that will be used in the computation
   void SetNumberOfGrids(int n);
 
-  /// Set the name of the PDF set to be used at the initial scale
+  /// Sets the name of the PDF set to be used at the initial scale
   void SetPDFSet(const std::string& name);
 
-  /// Set the perturbative order of the evolution
+  /// Sets the perturbative order of the evolution
   void SetPerturbativeOrder(int pto);
 
-  /// Set as a default the heavy quark pole masses
+  /// Sets as a default the heavy quark pole masses
   void SetPoleMasses(double mc, double mb, double mt);
 
-  /// Set the ratio between renormalization and factorization scales.
+  /// Sets the ratio between renormalization and factorization scales.
   void SetRenFacRatio(double ratio);
   
-  /// Set the replica to be used as initial PDFs (only with a LHAPDF grid)
+  /// Sets the replica to be used as initial PDFs (only with a LHAPDF grid)
   void SetReplica(int nr);
   
-  /// Set the FFNS as a default
+  /// Sets the FFNS as a default
   void SetTheory(const std::string& theory);
   
-  /// Set the VFNS as a default
+  /// Sets the VFNS as a default
   void SetVFNS(void);
 
   /// DIS observables
@@ -127,6 +130,7 @@ namespace APFEL {
 		int pto,const std::string& pdfset, int irep,
 		const std::string& target, const std::string& proj,
 		double *F2, double *F3, double *FL, double *sigma);
+
 }
 
 #endif

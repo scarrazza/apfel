@@ -22,6 +22,9 @@ extern "C" {
 #define flhapdfgrid FC_FUNC(lhapdfgrid, LHAPDFGRID)
   void flhapdfgrid(int*, double*, char*);
 
+#define fexternalevolutionoperator FC_FUNC(externalevolutionoperator, EXTERNALEVOLUTIONOPERATOR)
+  void fexternalevolutionoperator(double*,double*,int*,double*,double*);
+
 #define falphaqcd FC_FUNC(alphaqcd, ALPHAQCD)
   double falphaqcd(double*);
 

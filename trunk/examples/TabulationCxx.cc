@@ -10,9 +10,9 @@ int main()
 		1e-1, 3e-1, 5e-1, 7e-1, 9e-1};
   
   // Activate some options
-  APFEL::SetPerturbativeOrder(2);
-  APFEL::SetPDFSet("MRST2004qed.LHgrid");
-  
+  //APFEL::SetPerturbativeOrder(2);
+  //APFEL::SetPDFSet("MRST2004qed.LHgrid");
+  //APFEL::EnableEvolutionOperator(true);
   // Initializes integrals on the grids
   APFEL::InitializeAPFEL();
 
@@ -42,13 +42,18 @@ int main()
   cout << scientific;
   for (int i = 2; i < 11; i++)
     cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
-	 << setw(11) << APFEL::xPDF(2,xlha[i]) - APFEL::xPDF(-2,xlha[i]) << "  "
+	 << setw(11) <<APFEL::xPDF(2,xlha[i]) - APFEL::xPDF(-2,xlha[i]) << "  "
 	 << setw(11) <<APFEL::xPDF(1,xlha[i]) - APFEL::xPDF(-1,xlha[i]) << "  "
 	 << setw(11) <<2*(APFEL::xPDF(-1,xlha[i]) + APFEL::xPDF(-2,xlha[i])) << "  "
 	 << setw(11) <<APFEL::xPDF(4,xlha[i]) + APFEL::xPDF(-4,xlha[i]) << "  "
 	 << setw(11) <<APFEL::xPDF(0,xlha[i]) << "  "
 	 << setw(11) <<APFEL::xgamma(xlha[i]) << "  "
 	 << endl;
+
+  int n = 10;
+  double *xext[n+1];
+  double *M[14][14][n+1][n+1];
+  APFEL::ExternalEvolutionOpetator(Q0,Q,n,xext,M);
 
   return 0;
 }

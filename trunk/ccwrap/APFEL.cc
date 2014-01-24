@@ -40,6 +40,11 @@ namespace APFEL {
     flhapdfgrid(&Nrep,&Qin,cfname);
   }
 
+  void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double *m)
+  {
+    fexternalevolutionoperator(&q0,&q,&n,xext,m);
+  }
+
   double AlphaQCD(double Q)
   {
     return falphaqcd(&Q);
@@ -198,4 +203,5 @@ namespace APFEL {
     fdisxsec(&x,&qi,&qf,&y,&pol,cproc,cscheme,&pto,cpdfset,&irep,ctarget, cproj,
 	     F2,F3,FL,sigma);
   }
+
 }
