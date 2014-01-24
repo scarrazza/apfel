@@ -40,7 +40,7 @@ namespace APFEL {
     flhapdfgrid(&Nrep,&Qin,cfname);
   }
 
-  void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double *m)
+  void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double ****m)
   {
     fexternalevolutionoperator(&q0,&q,&n,xext,m);
   }
