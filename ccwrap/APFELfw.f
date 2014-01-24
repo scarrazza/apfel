@@ -34,6 +34,15 @@ ccccccccccccc
       call LHAPDFgrid(Nrep, Qin, fname)
       end subroutine flhapdfgrid
 
+ccccccccccccc
+      subroutine fexternalevolutionoperator(q0,q,n,xext,m)
+      integer n
+      double precision q0,q
+      double precision xext(0:n)
+      double precision m(-7:6,-7:6,0:n,0:n)
+      call ExternalEvolutionOpetator(q0,q,n,xext,m)
+      end subroutine fexternalevolutionoperator
+
 ccccccccccccc      
       function falphaqcd(Q)
       double precision Q, falphaqcd
@@ -204,8 +213,7 @@ ccccccccccccc
       character proj*(*)
       integer pto,irep
       double precision F2(3:7),F3(3:7),FL(3:7),SIGMA(3:7)
-      
       call DIS_xsec(x,qi,qf,y,pol,proc,scheme,pto,pdfset,irep,
      1              target,proj,F2,F3,FL,SIGMA)
-
       end subroutine fdisxsec
+
