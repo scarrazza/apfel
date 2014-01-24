@@ -30,8 +30,8 @@
       double precision intb(ngrid_max,0:n,0:nint_max)
       double precision eps
       parameter(eps=1d-14)
-c      include "../commons/fph.h"
-c      double precision f0(-6:6,0:200),xpd(-6:6)
+      include "../commons/fph.h"
+      double precision f0(-6:6,0:n),xpd(-6:6)
 **
 *     Output Variables
 *
@@ -71,7 +71,6 @@ c      double precision f0(-6:6,0:200),xpd(-6:6)
             enddo
          enddo
       enddo
-c      stop
 *
 *     Compute Evolution Operator
 *
@@ -138,25 +137,25 @@ c                  enddo
             enddo
          enddo
       enddo
-c*
-c      do alpha=0,n
-c         call toyLHPDFs(xext(alpha),xpd)
-c         do i=-6,6
-c            f0(i,alpha) = xpd(i)
-c         enddo
-c      enddo
-c*
-c      do alpha=0,n
-c         do i=-6,6
-c            fph(0,i,alpha) = 0d0
-c            do beta=0,n
-c               do j=-6,6
-c                  fph(0,i,alpha) = fph(0,i,alpha)
-c     1                 + M(i,j,alpha,beta) * f0(j,beta) 
-c               enddo
-c            enddo
-c         enddo
-c      enddo
+*
+      do alpha=0,n
+         call toyLHPDFs(xext(alpha),xpd)
+         do i=-6,6
+            f0(i,alpha) = xpd(i)
+         enddo
+      enddo
+*
+      do alpha=0,n
+         do i=-6,6
+            fph(0,i,alpha) = 0d0
+            do beta=0,n
+               do j=-6,6
+                  fph(0,i,alpha) = fph(0,i,alpha)
+     1                 + M(i,j,alpha,beta) * f0(j,beta) 
+               enddo
+            enddo
+         enddo
+      enddo
 *
       return
       end

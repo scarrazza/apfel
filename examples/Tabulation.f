@@ -14,21 +14,30 @@
       double precision Q02,Q2
       double precision AlphaQCD,AlphaQED
       double precision xPDF,xgamma
+      double precision xPDFj,xgammaj
       double precision eps
       double precision xlha(11)
-      character*1 answer
 
       parameter(eps=1d-10)
       data xlha / 1d-7, 1d-6, 1d-5, 1d-4, 1d-3, 1d-2,
-     1            1d-1, 3d-1, 5d-1, 7d-1, 9d-1 /            
+     1            1d-1, 3d-1, 5d-1, 7d-1, 9d-1 /
+
+      integer n,ig
+      double precision xext(0:200)
+      double precision M(-7:6,-7:6,0:200,0:200)
 *
 *     Some examples ...
 *
+c      call EnableEvolutionOperator(.true.)
 c      call SetFFNS(3)
 c      call SetTheory("QECDS")
-c      call SetPerturbativeOrder(2)
+      call SetPerturbativeOrder(0)
 c      call SetPDFSet("NNPDF23_nlo_as_0119_qed.LHgrid")
 c      call SetPDFSet("MRST2004qed.LHgrid")
+c      call SetNumberOfGrids(3)
+c      call SetGridParameters(1,30,3,1d-5)
+c      call SetGridParameters(2,30,3,2d-1)
+c      call SetGridParameters(3,30,3,8d-1)
 *
 *     Initializes integrals on the grids
 *
@@ -36,7 +45,7 @@ c      call SetPDFSet("MRST2004qed.LHgrid")
 *
 *     Evolve PDFs on the grids
 *
- 101  write(6,*) "Enter initial and final scale in GeV^2"
+      write(6,*) "Enter initial and final scale in GeV^2"
       read(5,*) Q02,Q2
 *
       Q0 = dsqrt(Q02) - eps
@@ -63,8 +72,37 @@ c      call SetPDFSet("MRST2004qed.LHgrid")
       enddo
       write(*,*) "  "
 *
-      write(6,*) "Do you want evolve PDFs again? [y/n]"
-      read(5,*) answer
-      if(answer.eq."y") goto 101
+      do ilha=3,11
+         write(6,'(es7.1,6es12.4)') 
+     1         xlha(ilha),
+     2         xPDFj(2,xlha(ilha)) - xPDFj(-2,xlha(ilha)),
+     3         xPDFj(1,xlha(ilha)) - xPDFj(-1,xlha(ilha)),
+     4         2d0 * ( xPDFj(-1,xlha(ilha)) + xPDFj(-2,xlha(ilha)) ),
+     5         xPDFj(4,xlha(ilha)) + xPDFj(-4,xlha(ilha)),
+     6         xPDFj(0,xlha(ilha)),
+     7         xgammaj(xlha(ilha))
+      enddo
+      write(*,*) "  "
+*
+      open(unit=29,file="JointGrid.dat",status="unknown")
+      read(29,*) n
+      do ig=0,n
+         read(29,*) xext(ig)
+      enddo
+      close(29)
+*
+      call ExternalEvolutionOperator(Q0,Q,n,xext,M)
+*
+      do ilha=3,11
+         write(6,'(es7.1,6es12.4)') 
+     1         xlha(ilha),
+     2         xPDFj(2,xlha(ilha)) - xPDFj(-2,xlha(ilha)),
+     3         xPDFj(1,xlha(ilha)) - xPDFj(-1,xlha(ilha)),
+     4         2d0 * ( xPDFj(-1,xlha(ilha)) + xPDFj(-2,xlha(ilha)) ),
+     5         xPDFj(4,xlha(ilha)) + xPDFj(-4,xlha(ilha)),
+     6         xPDFj(0,xlha(ilha)),
+     7         xgammaj(xlha(ilha))
+      enddo
+      write(*,*) "  "
 *
       end

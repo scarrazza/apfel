@@ -20,9 +20,24 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      function fxpdfj(i,x)
+      integer i
+      double precision x, fxpdfj
+      fxpdfj = xPDFj(i,x)
+      return
+      end
+
+ccccccccccccc      
       function fxgamma(x)
       double precision x, fxgamma
       fxgamma = xgamma(x)
+      return
+      end
+
+ccccccccccccc      
+      function fxgammaj(x)
+      double precision x, fxgammaj
+      fxgammaj = xgammaj(x)
       return
       end
 

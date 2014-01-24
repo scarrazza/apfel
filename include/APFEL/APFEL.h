@@ -29,8 +29,14 @@ namespace APFEL {
   /// Returns x*PDF
   double xPDF(int i, double x);
 
+  /// Returns x*PDF on the joint grid
+  double xPDFj(int i, double x);
+
   /// Returns x*gamma
   double xgamma(double x);
+
+  /// Returns x*gamma on the joint grid
+  double xgammaj(double x);
 
   /// Builds the *.LHgrid output file
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname);

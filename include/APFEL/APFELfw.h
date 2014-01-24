@@ -16,8 +16,14 @@ extern "C" {
 #define fxpdf FC_FUNC(xpdf, XPDF)
   double fxpdf(int*, double*);
 
+#define fxpdfj FC_FUNC(xpdfj, XPDFJ)
+  double fxpdfj(int*, double*);
+
 #define fxgamma FC_FUNC(xgamma, XGAMMA)
   double fxgamma(double*);
+
+#define fxgammaj FC_FUNC(xgammaj, XGAMMAJ)
+  double fxgammaj(double*);
 
 #define flhapdfgrid FC_FUNC(lhapdfgrid, LHAPDFGRID)
   void flhapdfgrid(int*, double*, char*);

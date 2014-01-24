@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <fstream>
 #include "APFEL/APFEL.h"
 using namespace std;
 
@@ -10,7 +11,7 @@ int main()
 		1e-1, 3e-1, 5e-1, 7e-1, 9e-1};
   
   // Activate some options
-  //APFEL::SetPerturbativeOrder(2);
+  APFEL::SetPerturbativeOrder(0);
   //APFEL::SetPDFSet("MRST2004qed.LHgrid");
   //APFEL::EnableEvolutionOperator(true);
   // Initializes integrals on the grids
@@ -49,10 +50,26 @@ int main()
 	 << setw(11) <<APFEL::xPDF(0,xlha[i]) << "  "
 	 << setw(11) <<APFEL::xgamma(xlha[i]) << "  "
 	 << endl;
+  cout << "      " << endl;
+  for (int i = 2; i < 11; i++)
+    cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
+	 << setw(11) <<APFEL::xPDFj(2,xlha[i]) - APFEL::xPDFj(-2,xlha[i]) << "  "
+	 << setw(11) <<APFEL::xPDFj(1,xlha[i]) - APFEL::xPDFj(-1,xlha[i]) << "  "
+	 << setw(11) <<2*(APFEL::xPDFj(-1,xlha[i]) + APFEL::xPDFj(-2,xlha[i])) << "  "
+	 << setw(11) <<APFEL::xPDFj(4,xlha[i]) + APFEL::xPDFj(-4,xlha[i]) << "  "
+	 << setw(11) <<APFEL::xPDFj(0,xlha[i]) << "  "
+	 << setw(11) <<APFEL::xgammaj(xlha[i]) << "  "
+	 << endl;
+  cout << "      " << endl;
 
-  int n = 10;
+
+  string filename("JointGrid.dat");
+  ifstream ginp(filename.c_str());
+  int n;
+  ginp >> n;
+
   double *xext = new double[n+1];
-  double ****M = new double***[14];
+  double ****M = new double***[n+1];
 
   for (int i = 0; i < 14; i++) {
     M[i] = new double**[14];
@@ -62,8 +79,24 @@ int main()
 	M[i][j][k] = new double[n+1];
     }    
   }
-  
+
+  for(int ig=0; ig<=n; ig++) {
+    ginp >> xext[ig];
+  }
+  ginp.close();
+
   APFEL::ExternalEvolutionOperator(Q0,Q,n,xext,M);
+
+  for (int i = 2; i < 11; i++)
+    cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
+	 << setw(11) <<APFEL::xPDFj(2,xlha[i]) - APFEL::xPDFj(-2,xlha[i]) << "  "
+	 << setw(11) <<APFEL::xPDFj(1,xlha[i]) - APFEL::xPDFj(-1,xlha[i]) << "  "
+	 << setw(11) <<2*(APFEL::xPDFj(-1,xlha[i]) + APFEL::xPDFj(-2,xlha[i])) << "  "
+	 << setw(11) <<APFEL::xPDFj(4,xlha[i]) + APFEL::xPDFj(-4,xlha[i]) << "  "
+	 << setw(11) <<APFEL::xPDFj(0,xlha[i]) << "  "
+	 << setw(11) <<APFEL::xgammaj(xlha[i]) << "  "
+	 << endl;
+  cout << "      " << endl;
 
   for (int i = 0; i < 14; i++){
     for (int j = 0; j < 14; j++){
@@ -77,6 +110,6 @@ int main()
 
   delete[] xext;  
   delete[] M;
-    
+
   return 0;
 }
