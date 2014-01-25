@@ -35,10 +35,10 @@ int main()
   cout << "   x   " 
        << setw(11) << "    u-ubar    " 
        << setw(11) << "   d-dbar    " 
-       << setw(11) << "  2(ubr+dbr) " 
-       << setw(11) << "  c+cbar " 
-       << setw(11) << "  gluon " 
-       << setw(11) << "    photon " << endl;
+       << setw(11) << " 2(ubr+dbr)  " 
+       << setw(11) << " c+cbar  " 
+       << setw(11) << "     gluon   " 
+       << setw(11) << "     photon  " << endl;
 
   cout << scientific;
   for (int i = 2; i < 11; i++)
@@ -48,9 +48,10 @@ int main()
 	 << setw(11) <<2*(APFEL::xPDF(-1,xlha[i]) + APFEL::xPDF(-2,xlha[i])) << "  "
 	 << setw(11) <<APFEL::xPDF(4,xlha[i]) + APFEL::xPDF(-4,xlha[i]) << "  "
 	 << setw(11) <<APFEL::xPDF(0,xlha[i]) << "  "
-	 << setw(11) <<APFEL::xgamma(xlha[i]) << "  "
+	 << setw(11) <<APFEL::xgamma(xlha[i])
 	 << endl;
   cout << "      " << endl;
+
   for (int i = 2; i < 11; i++)
     cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
 	 << setw(11) <<APFEL::xPDFj(2,xlha[i]) - APFEL::xPDFj(-2,xlha[i]) << "  "
@@ -58,13 +59,12 @@ int main()
 	 << setw(11) <<2*(APFEL::xPDFj(-1,xlha[i]) + APFEL::xPDFj(-2,xlha[i])) << "  "
 	 << setw(11) <<APFEL::xPDFj(4,xlha[i]) + APFEL::xPDFj(-4,xlha[i]) << "  "
 	 << setw(11) <<APFEL::xPDFj(0,xlha[i]) << "  "
-	 << setw(11) <<APFEL::xgammaj(xlha[i]) << "  "
+	 << setw(11) <<APFEL::xgammaj(xlha[i])
 	 << endl;
   cout << "      " << endl;
 
-
-  string filename("JointGrid.dat");
-  ifstream ginp(filename.c_str());
+  string ifilename("JointGrid.dat");
+  ifstream ginp(ifilename.c_str());
   int n;
   ginp >> n;
 
@@ -83,9 +83,33 @@ int main()
 	 << setw(11) <<2*(APFEL::xPDFj(-1,xlha[i]) + APFEL::xPDFj(-2,xlha[i])) << "  "
 	 << setw(11) <<APFEL::xPDFj(4,xlha[i]) + APFEL::xPDFj(-4,xlha[i]) << "  "
 	 << setw(11) <<APFEL::xPDFj(0,xlha[i]) << "  "
-	 << setw(11) <<APFEL::xgammaj(xlha[i]) << "  "
+	 << setw(11) <<APFEL::xgammaj(xlha[i])
 	 << endl;
   cout << "      " << endl;
-  
+
+  /*
+  string ofilename("output.dat");
+  ofstream gout(ofilename.c_str());
+  for(int ig=0; ig < 14*14*(n+1)*(n+1); ig++) gout << ig << "  " << M[ig] << endl;
+  gout.close();
+  */
+
+  /*
+  int k;
+  string ofilename("output.dat");
+  ofstream gout(ofilename.c_str());
+  for(int beta=0; beta <= n; beta++) {
+    for(int alpha=0; alpha <= n; alpha++) {
+      for(int j=0; j <= 13; j++) {
+	for(int i=0; i <= 13; i++) {
+	  k = i + 14 * ( j + 14 * ( alpha + ( n + 1 ) * beta ) );
+	  gout << k << "     " << beta << "  "  << alpha << "  " << j << "  " << i << "  " << M[k] << endl;
+	}
+      }
+    }
+  }
+  gout.close();
+  */
+
   return 0;
 }

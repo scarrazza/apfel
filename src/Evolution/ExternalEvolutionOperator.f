@@ -13,6 +13,7 @@
 *
       include "../commons/grid.h"
       include "../commons/EvolutionOperator.h"
+      include "../commons/EvolutionMatrices.h"
 **
 *     Input Variables
 *
@@ -35,7 +36,8 @@
 **
 *     Output Variables
 *
-      double precision M(-7:6,-7:6,0:n,0:n)
+c      double precision M(-7:6,-7:6,0:n,0:n)
+      double precision M(0:14*14*(n+1)*(n+1)-1)
 *
 *     Disable welcome message
 *
@@ -74,11 +76,75 @@
 *
 *     Compute Evolution Operator
 *
+c$$$      do alphap=0,n
+c$$$         do betap=0,n
+c$$$            do i=-7,6
+c$$$               do j=-7,6
+c$$$                  M(i,j,alphap,betap) = 0d0
+c$$$               enddo
+c$$$            enddo
+c$$$         enddo
+c$$$      enddo
+c$$$*
+c$$$      do alphap=0,n
+c$$$         do igrid=1,ngrid
+c$$$            if(xext(alphap).ge.xmin(igrid).and.
+c$$$     1         xext(alphap).lt.xmin(igrid+1))then
+c$$$               goto 101
+c$$$            endif
+c$$$         enddo
+c$$$ 101     do betap=alphap,n
+c$$$            do alpha=0,nin(igrid)
+c$$$               do beta=alpha,nin(igrid)
+c$$$c                  do i=-6,6
+c$$$c                     do j=-6,6
+c$$$c                        M(i,j,alphap,betap) = M(i,j,alphap,betap)
+c$$$c     1                       + inta(igrid,alpha,alphap) 
+c$$$c     2                       * PhQCD(igrid,i,j,alpha,beta) 
+c$$$c     3                       * intb(igrid,betap,beta)
+c$$$c                     enddo
+c$$$c                  enddo
+c$$$                  M(0,0,alphap,betap) = M(0,0,alphap,betap)
+c$$$     1                 + inta(igrid,alpha,alphap) 
+c$$$     2                 * PhQCD(igrid,0,0,alpha,beta) 
+c$$$     3                 * intb(igrid,betap,beta)
+c$$$                  do i=1,nff
+c$$$                     M(i,i,alphap,betap) = M(i,i,alphap,betap)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,i,i,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$                     M(i,0,alphap,betap) = M(i,0,alphap,betap)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,i,0,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$                     M(0,i,alphap,betap) = M(0,i,alphap,betap)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,0,i,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$
+c$$$                     M(-i,-i,alphap,betap) = M(-i,-i,alphap,betap)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,-i,-i,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$                     M(-i,0,alphap,betap) = M(-i,0,alphap,betap)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,-i,0,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$                     M(0,-i,alphap,betap) = M(0,-i,alphap,betap)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,0,-i,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$                  enddo
+c$$$               enddo
+c$$$            enddo
+c$$$         enddo
+c$$$      enddo
       do alphap=0,n
          do betap=0,n
-            do i=-6,6
-               do j=-6,6
-                  M(i,j,alphap,betap) = 0d0
+            do i=0,13
+               do j=0,13
+                  k = i + 14 * ( j + 14 * ( alphap + (n+1) * betap ) )
+                  M(k) = 0d0
                enddo
             enddo
          enddo
@@ -94,41 +160,46 @@
  101     do betap=alphap,n
             do alpha=0,nin(igrid)
                do beta=alpha,nin(igrid)
-c                  do i=-6,6
-c                     do j=-6,6
-c                        M(i,j,alphap,betap) = M(i,j,alphap,betap)
-c     1                       + inta(igrid,alpha,alphap) 
-c     2                       * PhQCD(igrid,i,j,alpha,beta) 
-c     3                       * intb(igrid,betap,beta)
-c                     enddo
-c                  enddo
-                  M(0,0,alphap,betap) = M(0,0,alphap,betap)
+                  k = 7 + 14 * ( 7 + 14 * ( alphap + (n+1) * betap ) )
+                  M(k) = M(k)
      1                 + inta(igrid,alpha,alphap) 
      2                 * PhQCD(igrid,0,0,alpha,beta) 
      3                 * intb(igrid,betap,beta)
-                  do i=1,6
-                     M(i,i,alphap,betap) = M(i,i,alphap,betap)
+                  do i=1,nff
+                     k = ( 7 + i ) + 14 * ( ( 7 + i ) 
+     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+                     M(k) = M(k)
      1                    + inta(igrid,alpha,alphap) 
      2                    * PhQCD(igrid,i,i,alpha,beta) 
      3                    * intb(igrid,betap,beta)
-                     M(i,0,alphap,betap) = M(i,0,alphap,betap)
+                     k = ( 7 + i ) + 14 * ( 7 
+     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+                     M(k) = M(k)
      1                    + inta(igrid,alpha,alphap) 
      2                    * PhQCD(igrid,i,0,alpha,beta) 
      3                    * intb(igrid,betap,beta)
-                     M(0,i,alphap,betap) = M(0,i,alphap,betap)
+                     k = 7 + 14 * ( ( 7 + i ) 
+     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+                     M(k) = M(k)
      1                    + inta(igrid,alpha,alphap) 
      2                    * PhQCD(igrid,0,i,alpha,beta) 
      3                    * intb(igrid,betap,beta)
-
-                     M(-i,-i,alphap,betap) = M(-i,-i,alphap,betap)
+*
+                     k = ( 7 - i ) + 14 * ( ( 7 - i ) 
+     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+                     M(k) = M(k)
      1                    + inta(igrid,alpha,alphap) 
      2                    * PhQCD(igrid,-i,-i,alpha,beta) 
      3                    * intb(igrid,betap,beta)
-                     M(-i,0,alphap,betap) = M(-i,0,alphap,betap)
+                     k = ( 7 - i ) + 14 * ( 7 
+     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+                     M(k) = M(k)
      1                    + inta(igrid,alpha,alphap) 
      2                    * PhQCD(igrid,-i,0,alpha,beta) 
      3                    * intb(igrid,betap,beta)
-                     M(0,-i,alphap,betap) = M(0,-i,alphap,betap)
+                     k = 7 + 14 * ( ( 7 - i ) 
+     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+                     M(k) = M(k)
      1                    + inta(igrid,alpha,alphap) 
      2                    * PhQCD(igrid,0,-i,alpha,beta) 
      3                    * intb(igrid,betap,beta)
@@ -138,20 +209,21 @@ c                  enddo
          enddo
       enddo
 *
-      do alpha=0,n
-         call toyLHPDFs(xext(alpha),xpd)
+      do alphap=0,n
+         call toyLHPDFs(xext(alphap),xpd)
          do i=-6,6
-            f0(i,alpha) = xpd(i)
+            f0(i,alphap) = xpd(i)
          enddo
       enddo
 *
-      do alpha=0,n
+      do alphap=0,n
          do i=-6,6
-            fph(0,i,alpha) = 0d0
-            do beta=0,n
+            fph(0,i,alphap) = 0d0
+            do betap=0,n
                do j=-6,6
-                  fph(0,i,alpha) = fph(0,i,alpha)
-     1                 + M(i,j,alpha,beta) * f0(j,beta) 
+                  k = ( 7 + i ) + 14 * ( ( 7 + j ) 
+     1              + 14 * ( alphap + (n+1) * betap ) )
+                  fph(0,i,alphap) = fph(0,i,alphap) + M(k) * f0(j,betap) 
                enddo
             enddo
          enddo
