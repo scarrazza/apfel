@@ -488,7 +488,7 @@ c      enddo
      1                 PhQCD(jgrid,0,0,alpha,beta)
      2                 + Tev2phQCD(7,k) * EvQCD(k,l,alpha,beta) 
      3                 * Tph2evQCD(l,7)
-                  do i=1,6
+                  do i=1,nff
                      PhQCD(jgrid,i,i,alpha,beta) = 
      1                    PhQCD(jgrid,i,i,alpha,beta)
      2                    + Tev2phQCD(i+7,k) * EvQCD(k,l,alpha,beta) 

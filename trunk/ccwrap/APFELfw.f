@@ -54,7 +54,7 @@ ccccccccccccc
       integer n
       double precision q0,q
       double precision xext(0:n)
-      double precision m(-7:6,-7:6,0:n,0:n)
+      double precision m(0:14*14*(n+1)*(n+1)-1)
       call ExternalEvolutionOperator(q0,q,n,xext,m)
       end subroutine fexternalevolutionoperator
 
