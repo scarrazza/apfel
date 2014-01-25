@@ -68,8 +68,8 @@ int main()
   int n;
   ginp >> n;
 
-  double xext[151];
-  double M[14*14*151*151];
+  double *xext = new double[n+1];
+  double *M = new double[14*14*(n+1)*(n+1)];
 
   for(int ig=0; ig<=n; ig++) ginp >> xext[ig];  
   ginp.close();
@@ -110,6 +110,9 @@ int main()
   }
   gout.close();
   */
+
+  delete[] xext;
+  delete[] M;
 
   return 0;
 }
