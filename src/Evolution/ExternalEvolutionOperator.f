@@ -26,6 +26,7 @@
       integer k
       integer i,j
       integer alpha,beta,alphap,betap
+      double precision xexte(0:n+10)
       double precision w_int,w_int_ext
       double precision inta(ngrid_max,0:nint_max,0:n)
       double precision intb(ngrid_max,0:n,0:nint_max)
@@ -36,7 +37,6 @@
 **
 *     Output Variables
 *
-c      double precision M(-7:6,-7:6,0:n,0:n)
       double precision M(0:14*14*(n+1)*(n+1)-1)
 *
 *     Disable welcome message
@@ -50,7 +50,7 @@ c      double precision M(-7:6,-7:6,0:n,0:n)
 *     Here I should put some ad hoc setting of the APFEL grid
 *     based on the kinematical coverage of "xext" to make the 
 *     computation more optimal.
-*     
+*
 
 *     
 *     Initializes integrals on the grids
@@ -61,6 +61,13 @@ c      double precision M(-7:6,-7:6,0:n,0:n)
 *
       call EvolveAPFEL(Q0,Q)
 *
+*     Construct extended external grid to pass to "w_int_ext"
+*     to match the definition in there.
+*
+      do alphap=0,n
+         xexte(alphap) = xext(alphap)
+      enddo
+*
 *     Interpolation functions
 *
       do alphap=0,n
@@ -69,76 +76,13 @@ c      double precision M(-7:6,-7:6,0:n,0:n)
             do alpha=0,nin(igrid)
                inta(igrid,alpha,alphap) = w_int(k,alpha,xext(alphap))
                intb(igrid,alphap,alpha) = 
-     1              w_int_ext(n,xext,k,alphap,xg(igrid,alpha))
+     1              w_int_ext(n,xexte,k,alphap,xg(igrid,alpha))
             enddo
          enddo
       enddo
 *
 *     Compute Evolution Operator
 *
-c$$$      do alphap=0,n
-c$$$         do betap=0,n
-c$$$            do i=-7,6
-c$$$               do j=-7,6
-c$$$                  M(i,j,alphap,betap) = 0d0
-c$$$               enddo
-c$$$            enddo
-c$$$         enddo
-c$$$      enddo
-c$$$*
-c$$$      do alphap=0,n
-c$$$         do igrid=1,ngrid
-c$$$            if(xext(alphap).ge.xmin(igrid).and.
-c$$$     1         xext(alphap).lt.xmin(igrid+1))then
-c$$$               goto 101
-c$$$            endif
-c$$$         enddo
-c$$$ 101     do betap=alphap,n
-c$$$            do alpha=0,nin(igrid)
-c$$$               do beta=alpha,nin(igrid)
-c$$$c                  do i=-6,6
-c$$$c                     do j=-6,6
-c$$$c                        M(i,j,alphap,betap) = M(i,j,alphap,betap)
-c$$$c     1                       + inta(igrid,alpha,alphap) 
-c$$$c     2                       * PhQCD(igrid,i,j,alpha,beta) 
-c$$$c     3                       * intb(igrid,betap,beta)
-c$$$c                     enddo
-c$$$c                  enddo
-c$$$                  M(0,0,alphap,betap) = M(0,0,alphap,betap)
-c$$$     1                 + inta(igrid,alpha,alphap) 
-c$$$     2                 * PhQCD(igrid,0,0,alpha,beta) 
-c$$$     3                 * intb(igrid,betap,beta)
-c$$$                  do i=1,nff
-c$$$                     M(i,i,alphap,betap) = M(i,i,alphap,betap)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,i,i,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$                     M(i,0,alphap,betap) = M(i,0,alphap,betap)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,i,0,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$                     M(0,i,alphap,betap) = M(0,i,alphap,betap)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,0,i,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$
-c$$$                     M(-i,-i,alphap,betap) = M(-i,-i,alphap,betap)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,-i,-i,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$                     M(-i,0,alphap,betap) = M(-i,0,alphap,betap)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,-i,0,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$                     M(0,-i,alphap,betap) = M(0,-i,alphap,betap)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,0,-i,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$                  enddo
-c$$$               enddo
-c$$$            enddo
-c$$$         enddo
-c$$$      enddo
       do alphap=0,n
          do betap=0,n
             do i=0,13
