@@ -28,7 +28,7 @@ extern "C" {
 #define flhapdfgrid FC_FUNC(lhapdfgrid,LHAPDFGRID)
   void flhapdfgrid(int*, double*, char*);
 
-#define fexternalevolutionoperator FC_FUNC(fexternalevolutionoperator,FEXTERNALEVOLUTIONOPERATOR)
+#define fexternalevolutionoperator FC_FUNC(externalevolutionoperator,EXTERNALEVOLUTIONOPERATOR)
   void fexternalevolutionoperator(double*,double*,int*,double*,double*);
 
 #define falphaqcd FC_FUNC(alphaqcd,ALPHAQCD)
@@ -91,25 +91,25 @@ extern "C" {
 #define fsetperturbativeorder FC_FUNC(setperturbativeorder,SETPERTURBATIVEORDER)
   void fsetperturbativeorder(int*);
 
-#define fsetpolemasses FC_FUNC(setpolemasses, SETPOLEMASSES)
+#define fsetpolemasses FC_FUNC(setpolemasses,SETPOLEMASSES)
   void fsetpolemasses(double*,double*,double*);
 
-#define fsetrenfacratio FC_FUNC(setrenfacratio, SETRENFACRATIO)
+#define fsetrenfacratio FC_FUNC(setrenfacratio,SETRENFACRATIO)
   void fsetrenfacratio(double*);
 
-#define fsetreplica FC_FUNC(setreplica, SETREPLICA)
+#define fsetreplica FC_FUNC(setreplica,SETREPLICA)
   void fsetreplica(int*);
 
 #define fsettheory FC_FUNC(settheory, SETTHEORY)
   void fsettheory(char*);
 
-#define fsetvfns FC_FUNC(setvfns, SETVFNS)
+#define fsetvfns FC_FUNC(setvfns,SETVFNS)
   void fsetvfns();
 
-#define fgetapfelversion FC_FUNC(getapfelversion, GETAPFELVERSION)
+#define fgetapfelversion FC_FUNC(getapfelversion,GETAPFELVERSION)
   void fgetapfelversion(char*,int len);
 
-#define fdisxsec FC_FUNC(fdisxsec, FDISXSEC)
+#define fdisxsec FC_FUNC(fdisxsec,FDISXSEC)
   void fdisxsec(double*,double*,double*,double*,double*,char*,char*,int*,
                 char*,int*,char*,char*,double*,double*,double*,double*);
 }

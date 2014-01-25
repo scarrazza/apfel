@@ -52,6 +52,7 @@ namespace APFEL {
 
   void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double *m)
   {
+    if (!m) m = new double[14*14*(n+1)*(n+1)];
     fexternalevolutionoperator(&q0,&q,&n,xext,m);
   }
 
