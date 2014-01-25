@@ -41,7 +41,7 @@
       endif
 *
       do alpha=0,nin(igrid)
-         do beta=0,nin(igrid)
+         do beta=alpha,nin(igrid)
 *     Set evolution operators to zero
             do i=0,13
                do j=0,13
@@ -133,7 +133,7 @@
 *     Set temporary evolution operators to zero
 *     
             do alpha=0,nin(igrid)
-               do beta=0,nin(igrid)
+               do beta=alpha,nin(igrid)
                   do i=0,13
                      do j=0,13
                         EvQCDb(i,j,alpha,beta) = 0d0
@@ -165,7 +165,7 @@
 *     flavours.
 *     
             do alpha=0,nin(igrid)
-               do beta=0,nin(igrid)
+               do beta=alpha,nin(igrid)
 *     Singlet and Gluon
                   do i=1,2
                      do j=1,2
@@ -440,7 +440,7 @@
 *     Copy the backup evolution operators into the main ones
 *     
             do alpha=0,nin(igrid)
-               do beta=0,nin(igrid)
+               do beta=alpha,nin(igrid)
                   do i=0,13
                      do j=0,13
                         EvQCD(i,j,alpha,beta) = EvQCDb(i,j,alpha,beta)
@@ -471,7 +471,7 @@ c            enddo
 c         enddo
 c      enddo
       do alpha=0,nin(igrid)
-         do beta=0,nin(igrid)
+         do beta=alpha,nin(igrid)
             do i=-7,6
                do j=-7,6
                   PhQCD(jgrid,i,j,alpha,beta) = 0d0
@@ -481,7 +481,7 @@ c      enddo
       enddo
 *
       do alpha=0,nin(igrid)
-         do beta=0,nin(igrid)
+         do beta=alpha,nin(igrid)
             do k=1,13
                do l=1,13
                   PhQCD(jgrid,0,0,alpha,beta) = 
