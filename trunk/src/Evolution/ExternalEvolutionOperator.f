@@ -3,8 +3,11 @@
 *     ExternalEvolutionOperator.f:
 *
 *     This subroutine computes the "external" evolution operator on a
-*     user-given grid starting from the "internal" evolution operators
-*     on the internal x-space grid of APFEL.
+*     user-given external grid starting from the "internal" evolution
+*     operators on the internal x-space grid of APFEL.
+*
+*     The evolution operator "M" on the external grid "xext" is given
+*     as one-dimensional array in order to be passed to the c++ wrapper.
 *
 ************************************************************************
       subroutine ExternalEvolutionOperator(Q0,Q,n,xext,M)
@@ -104,50 +107,60 @@
  101     do betap=alphap,n
             do alpha=0,nin(igrid)
                do beta=alpha,nin(igrid)
-                  k = 7 + 14 * ( 7 + 14 * ( alphap + (n+1) * betap ) )
-                  M(k) = M(k)
-     1                 + inta(igrid,alpha,alphap) 
-     2                 * PhQCD(igrid,0,0,alpha,beta) 
-     3                 * intb(igrid,betap,beta)
-                  do i=1,nff
-                     k = ( 7 + i ) + 14 * ( ( 7 + i ) 
-     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-                     M(k) = M(k)
-     1                    + inta(igrid,alpha,alphap) 
-     2                    * PhQCD(igrid,i,i,alpha,beta) 
-     3                    * intb(igrid,betap,beta)
-                     k = ( 7 + i ) + 14 * ( 7 
-     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-                     M(k) = M(k)
-     1                    + inta(igrid,alpha,alphap) 
-     2                    * PhQCD(igrid,i,0,alpha,beta) 
-     3                    * intb(igrid,betap,beta)
-                     k = 7 + 14 * ( ( 7 + i ) 
-     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-                     M(k) = M(k)
-     1                    + inta(igrid,alpha,alphap) 
-     2                    * PhQCD(igrid,0,i,alpha,beta) 
-     3                    * intb(igrid,betap,beta)
-*
-                     k = ( 7 - i ) + 14 * ( ( 7 - i ) 
-     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-                     M(k) = M(k)
-     1                    + inta(igrid,alpha,alphap) 
-     2                    * PhQCD(igrid,-i,-i,alpha,beta) 
-     3                    * intb(igrid,betap,beta)
-                     k = ( 7 - i ) + 14 * ( 7 
-     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-                     M(k) = M(k)
-     1                    + inta(igrid,alpha,alphap) 
-     2                    * PhQCD(igrid,-i,0,alpha,beta) 
-     3                    * intb(igrid,betap,beta)
-                     k = 7 + 14 * ( ( 7 - i ) 
-     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-                     M(k) = M(k)
-     1                    + inta(igrid,alpha,alphap) 
-     2                    * PhQCD(igrid,0,-i,alpha,beta) 
-     3                    * intb(igrid,betap,beta)
+                  do i=-nff,nff
+                     do j=-nfi,nfi
+                        k = ( 7 + i ) + 14 * ( ( 7 + j ) 
+     1                       + 14 * ( alphap + ( n + 1 ) * betap ) )
+                        M(k) = M(k)
+     1                       + inta(igrid,alpha,alphap) 
+     2                       * PhQCD(igrid,i,j,alpha,beta) 
+     3                       * intb(igrid,betap,beta)
+                     enddo
                   enddo
+c$$$                  k = 7 + 14 * ( 7 + 14 * ( alphap + (n+1) * betap ) )
+c$$$                  M(k) = M(k)
+c$$$     1                 + inta(igrid,alpha,alphap) 
+c$$$     2                 * PhQCD(igrid,0,0,alpha,beta) 
+c$$$     3                 * intb(igrid,betap,beta)
+c$$$                  do i=1,nff
+c$$$                     k = ( 7 + i ) + 14 * ( ( 7 + i ) 
+c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+c$$$                     M(k) = M(k)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,i,i,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$                     k = ( 7 + i ) + 14 * ( 7 
+c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+c$$$                     M(k) = M(k)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,i,0,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$                     k = 7 + 14 * ( ( 7 + i ) 
+c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+c$$$                     M(k) = M(k)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,0,i,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$*
+c$$$                     k = ( 7 - i ) + 14 * ( ( 7 - i ) 
+c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+c$$$                     M(k) = M(k)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,-i,-i,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$                     k = ( 7 - i ) + 14 * ( 7 
+c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+c$$$                     M(k) = M(k)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,-i,0,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$                     k = 7 + 14 * ( ( 7 - i ) 
+c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
+c$$$                     M(k) = M(k)
+c$$$     1                    + inta(igrid,alpha,alphap) 
+c$$$     2                    * PhQCD(igrid,0,-i,alpha,beta) 
+c$$$     3                    * intb(igrid,betap,beta)
+c$$$                  enddo
                enddo
             enddo
          enddo
@@ -167,7 +180,7 @@
                do j=-6,6
                   k = ( 7 + i ) + 14 * ( ( 7 + j ) 
      1              + 14 * ( alphap + (n+1) * betap ) )
-                  fph(0,i,alphap) = fph(0,i,alphap) + M(k) * f0(j,betap) 
+                  fph(0,i,alphap) = fph(0,i,alphap) + M(k) * f0(j,betap)
                enddo
             enddo
          enddo
