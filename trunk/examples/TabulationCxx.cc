@@ -69,7 +69,7 @@ int main()
   ginp >> n;
 
   double *xext = new double[n+10];
-  double *M = NULL;
+  double *M = new double[14*14*(n+1)*(n+1)];
 
   for(int ig=0; ig<=n; ig++) ginp >> xext[ig];  
   ginp.close();
