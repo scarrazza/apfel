@@ -86,7 +86,7 @@ int main(int argc, char* argv[]) {
 	double Q = sqrt(igrid->fQ2(igrid->gettau(itau)));
 	cout << "Q = " << Q << " GeV" << endl;
 
-	double delta,deltap;
+	double delta = 0,deltap = 0;
 	double a,ap;
 	double eps = 1e-8;
 
@@ -145,6 +145,7 @@ int main(int argc, char* argv[]) {
 	int n1b = xext1v.size()-1;
 
 	// Call APFEL and compute the evolution operator M1
+	M1 = new double[14*14*(xext1v.size()+1)*xext1v.size()+1];
 	APFEL::ExternalEvolutionOperator(Q0,Q,n1b,&xext1v[0],M1);
 
 	// Grid 2, if the x-space grids are not equal for the PDFs
@@ -204,6 +205,7 @@ int main(int argc, char* argv[]) {
 	  int n2b = xext2v.size()-1;
 
 	  // Call APFEL and compute the evolution operator M2
+	  M2 = new double[14*14*(xext2v.size()+1)*xext2v.size()+1];
 	  APFEL::ExternalEvolutionOperator(Q0,Q,n2b,&xext2v[0],M2);
 	}
 
