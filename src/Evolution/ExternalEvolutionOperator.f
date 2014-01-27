@@ -34,7 +34,7 @@
       double precision inta(ngrid_max,0:nint_max,0:n)
       double precision intb(ngrid_max,0:n,0:nint_max)
       double precision eps
-      parameter(eps=1d-14)
+      parameter(eps=1d-10)
       include "../commons/fph.h"
       double precision f0(-6:6,0:n),xpd(-6:6)
 **
@@ -50,12 +50,41 @@
 *
       call EnableEvolutionOperator(.true.)
 *
-*     Here I should put some ad hoc setting of the APFEL grid
-*     based on the kinematical coverage of "xext" to make the 
-*     computation more optimal.
+*     Checks
 *
-
-*     
+      if(dabs(xext(n)-1d0).gt.eps)then
+         write(6,*) "In src/Evolution/ExternalEvolutionOperator.f:"
+         write(6,*) "The upper limit of the external grid must be"
+         write(6,*) "equal to 1, while n, xext(n) =",n,xext(n)
+         call exit(-10)
+      endif
+*
+      if(xext(0).lt.1d-7)then
+         write(6,*) "In src/Evolution/ExternalEvolutionOperator.f:"
+         write(6,*) "Lower limit of the external grid must be"
+         write(6,*) "bigger than 10^-7, while xext(0) =",xext(0)
+         call exit(-10)
+      endif
+*
+*     Tuning of the internal grid
+*
+      if(xext(0).le.1d-5)then
+         call SetNumberOfGrids(3)
+         call SetGridParameters(1,80,3,xext(0))
+         call SetGridParameters(2,50,5,1d-1)
+         call SetGridParameters(3,40,5,8d-1)
+      elseif(xext(0).le.1d-1)then
+         call SetNumberOfGrids(3)
+         call SetGridParameters(1,50,3,xext(0))
+         call SetGridParameters(2,40,5,2d-1)
+         call SetGridParameters(3,30,5,9d-1)
+      else
+         call SetNumberOfGrids(2)
+         call SetGridParameters(1,50,5,xext(0))
+         call SetGridParameters(2,30,5,85d-1)
+      endif
+      call SetQLimits(0.5d0,Q+eps)
+*
 *     Initializes integrals on the grids
 *
       call InitializeAPFEL

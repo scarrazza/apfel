@@ -143,17 +143,9 @@ int main(int argc, char* argv[]) {
 	}
 
 	int n1b = xext1v.size()-1;
-	double *xext1 = new double[n1b+1];
-
-	// equal "xext1" to "xext1v"
-	for(int ix1=0; ix1<=n1b; ix1++) {
-	  xext1[ix1] = xext1v[ix1];
-	  //cout << ix1 << "  " << xext1[ix1] << endl;
-	}
 
 	// Call APFEL and compute the evolution operator M1
-	APFEL::ExternalEvolutionOperator(Q0,Q,n1b,xext1,M1);
-	delete[] xext1;
+	APFEL::ExternalEvolutionOperator(Q0,Q,n1b,&xext1v[0],M1);
 
 	// Grid 2, if the x-space grids are not equal for the PDFs
 	// INFO: Usually APPLgrid says that they are not equal while they are.
@@ -210,51 +202,76 @@ int main(int argc, char* argv[]) {
 	  }
 
 	  int n2b = xext2v.size()-1;
-	  double *xext2 = new double[n2b+1];
-
-	  // equal "xext1" to "xext1v"
-	  for(int ix2=0; ix2<=n2b; ix2++) {
-	    xext2[ix2] = xext2v[ix2];
-	    //cout << ix2 << "  " << xext2[ix2] << endl;
-	  }
 
 	  // Call APFEL and compute the evolution operator M2
-	  APFEL::ExternalEvolutionOperator(Q0,Q,n2b,xext2,M2);
-	  delete[] xext2;
-
+	  APFEL::ExternalEvolutionOperator(Q0,Q,n2b,&xext2v[0],M2);
 	}
 
-
+	/*
 	// Combine APPLgrid weights with the evolution operators M1 and M2
 	cout << "APPLgridEvolutionFilter() Info: Extracting APPLgrid weights ..." << endl;
 	double *W = new double[nsubproc];
-	for (int itau=0; itau<ntau; itau++) {
-	  for (int ix1=0; ix1<=nx2; ix1++) {
-	    for (int ix2=0; ix2<=nx2; ix2++) {
-	      // "evaluate" takes "fA"("fB") that is the vector of PDFs from the first(second) hadron (from 0 to 12),
-	      // and returns "H" that is the vector of parton luninosities (form 0 to nsubproc-1) for particular
-	      // process labeled by "pdflbl".
-	      //genpdf->evaluate(fA,fB,H);
+	double *H = new double[nsubproc];
+	double f1[13];
+	double f2[13];
 
-	      for (int ip=0; ip<nsubproc; ip++) {
-		W[ip] = (*(const SparseMatrix3d*) igrid->weightgrid(ip))(itau,ix1,ix2);
+	for (int alpha=0; alpha<=nx1; alpha++) {
+	  for (int beta=0; beta<=nx2; beta++) {
+	    for(int i=1; i<=13; i++) {
+	      for(int j=1; j<=13; j++) {
+
+
+
+		for (int rho=0; rho<=nx1; rho++) {
+		  for (int sigma=0; sigma<=nx2; sigma++) {
+
+
+		    for(int k=1; k<=13; k++) {
+		      int m1 = k + 14 * ( i + 14 * ( rho + ( nx1 + 1 ) * alpha ) );
+		      cout << "entro qui!!! " << M1[m1] << endl;
+		      f1[k-1] = M1[m1];
+		    }
+		    for(int l=1; l<=13; l++) {
+		      int m2 = l + 14 * ( j + 14 * ( sigma + ( nx1 + 1 ) * beta ) );
+		      f2[l-1] = M2[m2];
+		    }
+
+		    // "evaluate" takes "fA"("fB") that is the vector of PDFs from the first(second) hadron (from 0 to 12),
+		    // and returns "H" that is the vector of parton luninosities (form 0 to nsubproc-1) for particular
+		    // process labeled by "pdflbl".
+		    genpdf->evaluate(f1,f2,H);
+
+		    for (int ip=0; ip<nsubproc; ip++) {
+		      W[ip] = (*(const SparseMatrix3d*) igrid->weightgrid(ip))(itau,rho,sigma);
+		      //		      cout << W[ip] << "   " << H[ip] << endl;
+		    }
+
+
+
+		  }
+		}
+
+
+
+
 	      }
 	    }
 	  }
 	}
+	delete[] W;
+	delete[] H;
+	*/
 
 	delete[] M1;
 	delete[] M2;
-	delete[] W;
 
 	cout << "  " << endl;
-
       }
     }
   }
   delete g;
 
-  cout << "APPLgridEvolutionFilter(): Evolution included" << endl;
+  cout << "APPLgridEvolutionFilter(): Evolution included in " << argv[1] << endl;
   cout << "  " << endl;
   return 0;
 }
