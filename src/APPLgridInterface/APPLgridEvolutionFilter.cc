@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
+#include <vector>
 
 // APFEL
 #include "APFEL/APFEL.h"
@@ -26,6 +27,9 @@ int main(int argc, char* argv[]) {
     cout << "Syntax: ./appl_kinvar <APPLgrid file>" << endl;
     exit(1);
   }
+
+  // Initial scale
+  double Q0 = sqrt(2);
   
   // Init applgrid (forget about FastNLO for the moment)
   const igrid* igrid;
@@ -39,6 +43,9 @@ int main(int argc, char* argv[]) {
   int no        = g->nloops();
   bool sym      = g->isSymmetric();
 
+  // Call PDF subprocess generator
+  appl_pdf *genpdf = appl_pdf::getpdf(pdflbl);
+
   cout << "  " << endl;
   cout << "APPLgridEvolutionFilter() Info:" << endl;
   //cout << "   Transform: " << g->getTransform() << endl;
@@ -49,17 +56,6 @@ int main(int argc, char* argv[]) {
   if(sym) cout << "   The process is symmetric" << endl;
   else                 cout << "   The process is NOT symmetric" << endl;
   cout << "  " << endl;
-
-  // Fetch PDF subprocess generator
-  appl_pdf *genpdf = appl_pdf::getpdf(pdflbl);
-
-  // Where "fA"("fB") is the vector of PDFs from the first(second) hadron (from 0 to 12),
-  // and "H" is the vector of parton luninosities (form 0 to nsubproc-1) for particular
-  // process labeled by "pdflbl".
-  //genpdf->evaluate(fA,fB,H);
-
-  // x and Q2 grid
-  double Q0 = sqrt(2); // Initial scale
 
   for (int ibin=0; ibin<nbin; ibin++) {
     cout << "APPLgridEvolutionFilter() Info:" << endl;
@@ -87,7 +83,6 @@ int main(int argc, char* argv[]) {
       cout << "  " << endl;
 
       for (int itau=0; itau<ntau; itau++) {
-
 	double Q = sqrt(igrid->fQ2(igrid->gettau(itau)));
 	cout << "Q = " << Q << " GeV" << endl;
 
@@ -96,27 +91,25 @@ int main(int argc, char* argv[]) {
 	double eps = 1e-8;
 
 	// Grid 1
-	int    n1 = nx1 - 1;
-	double *xext1 = new double[nx1];
 	double *M1 = NULL;
-	int ix1 = nx1;
+	int iy1 = nx1;
+	vector<double> xext1v;
 
-	for (int iy1=0; iy1<nx1; iy1++) {
-
-	  ix1--; // inverse order
-	  xext1[ix1] = igrid->fx(igrid->gety1(iy1));
-	  //cout << ix1 << "  " << xext1[ix1] << endl;
+	for (int ix1=0; ix1<nx1; ix1++) {
+	  iy1--; // inverse order
+	  xext1v.push_back (igrid->fx(igrid->gety1(iy1)));
+	  //cout << ix1 << "  " << xext1v[ix1] << endl;
 
 	  // Parameter of the grid (see eq. (1) of arXiv:0911.2985)
-	  if(iy1 > 0) {
+	  if(ix1 > 0) {
 	    deltap = delta;
 	    ap     = a;
 
-	    delta = igrid->gety1(iy1) - igrid->gety1(iy1-1);
-	    a     = ( delta - log( xext1[ix1+1] / xext1[ix1] ) ) / ( xext1[ix1+1] - xext1[ix1] );
+	    delta = igrid->gety1(iy1) - igrid->gety1(iy1+1);
+	    a     = ( delta - log( xext1v[ix1-1] / xext1v[ix1] ) ) / ( xext1v[ix1-1] - xext1v[ix1] );
 
 	    // Check that "delta" and "a" are constant all over the grid
-	    if(iy1 > 1) {
+	    if(ix1 > 1) {
 	      if( abs(delta - deltap) > eps ) {
 		cout << "APPLgridEvolutionFilter() Error: The step is not constant " << endl;
 		exit(-10);
@@ -126,61 +119,66 @@ int main(int argc, char* argv[]) {
 		cout << "APPLgridEvolutionFilter() Error: The parameter 'a' is not constant " << endl;
 		exit(-10);
 	      }
-
 	    }
 	  }
+	}
+
+	if((xext1v.size()-nx1) != 0) {
+	  cout << "APPLgridEvolutionFilter() Error: Mismatch in size for xext1v, expected "<< nx1 << ", found " << xext1v.size() << endl;
+	  exit(-10);
 	}
 
 	// If the Upper limit of the grid if different from 1, 
 	// compute all the grid points up to one using "delta"
 	// and "a" coomputed in the loop above.
-	int n1b = n1;
-	if( abs(xext1[n1]-1) > eps ) {
+	if( abs(xext1v[nx1-1]-1) > eps ) {
 	  double yp = igrid->gety1(0);
 	  cout << "APPLgridEvolutionFilter() Warning: Extending grid 1 ..." << endl;
-	  for(ix1=n1; xext1[n1b]<1; ix1++) {
-	    yp -= delta;
-	    n1b++;
-	    xext1[n1b] = igrid->fx(yp);
+	  for(int ix1=0; xext1v[xext1v.size()-1]<1; ix1++) {
+	    yp += delta;
+	    xext1v.push_back (igrid->fx(yp));
 	  }
 	  // Force the last point to be equal to one
-	  xext1[n1b] = 1;
+	  xext1v[xext1v.size()-1] = 1;
 	}
 
-	//for(ix1=0; ix1<=n1b; ix1++) cout << ix1 << "  " << xext1[ix1] << endl;
+	int n1b = xext1v.size()-1;
+	double *xext1 = new double[n1b+1];
+
+	// equal "xext1" to "xext1v"
+	for(int ix1=0; ix1<=n1b; ix1++) {
+	  xext1[ix1] = xext1v[ix1];
+	  //cout << ix1 << "  " << xext1[ix1] << endl;
+	}
 
 	// Call APFEL and compute the evolution operator M1
 	APFEL::ExternalEvolutionOperator(Q0,Q,n1b,xext1,M1);
-
 	delete[] xext1;
-	delete[] M1;
 
 	// Grid 2, if the x-space grids are not equal for the PDFs
 	// INFO: Usually APPLgrid says that they are not equal while they are.
+	double *M2 = NULL;
 	if(!sym) {
-	  int    n2 = nx2 - 1;
-	  double *xext2 = new double[nx2];
-	  double *M2 = NULL;
-	  int ix2 = nx2;
+	  int iy2 = nx2;
+	  vector<double> xext2v;
 
-	  for (int iy2=0; iy2<nx2; iy2++) {
-
-	    ix2--; // inverse order
-	    xext2[ix2] = igrid->fx(igrid->gety2(iy2));
-	    //cout << ix2 << "  " << xext2[ix2] << endl;
+	  for (int ix2=0; ix2<nx2; ix2++) {
+	    iy2--; // inverse order
+	    xext2v.push_back (igrid->fx(igrid->gety2(iy2)));
+	    //cout << ix2 << "  " << xext2v[ix2] << endl;
 
 	    // Parameter of the grid (see eq. (1) of arXiv:0911.2985)
-	    if(iy2 > 0) {
+	    if(ix2 > 0) {
 	      deltap = delta;
 	      ap     = a;
 
-	      delta = igrid->gety2(iy2) - igrid->gety2(iy2-1);
-	      a     = ( delta - log( xext2[ix2+1] / xext2[ix2] ) ) / ( xext2[ix2+1] - xext2[ix2] );
+	      delta = igrid->gety2(iy2) - igrid->gety2(iy2+1);
+	      a     = ( delta - log( xext2v[ix2-1] / xext2v[ix2] ) ) / ( xext2v[ix2-1] - xext2v[ix2] );
 
 	      // Check that "delta" and "a" are constant all over the grid
-	      if(iy2 > 1) {
+	      if(ix2 > 1) {
 		if( abs(delta - deltap) > eps ) {
-		  cout << "APPLgridEvolutionFilter() Error: The step is not constant " << delta << "  " << deltap << endl;
+		  cout << "APPLgridEvolutionFilter() Error: The step is not constant " << endl;
 		  exit(-10);
 		}
 
@@ -188,51 +186,67 @@ int main(int argc, char* argv[]) {
 		  cout << "APPLgridEvolutionFilter() Error: The parameter 'a' is not constant " << endl;
 		  exit(-10);
 		}
-
 	      }
 	    }
+	  }
+
+	  if((xext2v.size()-nx2) != 0) {
+	    cout << "APPLgridEvolutionFilter() Error: Mismatch in size for xext2v, expected "<< nx2 << ", found " << xext2v.size() << endl;
+	    exit(-10);
 	  }
 
 	  // If the Upper limit of the grid if different from 1, 
 	  // compute all the grid points up to one using "delta"
 	  // and "a" coomputed in the loop above.
-	  int n2b = n2;
-	  if( abs(xext2[n2]-1) > eps ) {
+	  if( abs(xext2v[nx2-1]-1) > eps ) {
 	    double yp = igrid->gety2(0);
 	    cout << "APPLgridEvolutionFilter() Warning: Extending grid 2 ..." << endl;
-	    for(ix2=n2; xext2[n2b]<1; ix2++) {
-	      yp -= delta;
-	      n2b++;
-	      xext2[n2b] = igrid->fx(yp);
+	    for(int ix2=0; xext2v[xext2v.size()-1]<1; ix2++) {
+	      yp += delta;
+	      xext2v.push_back (igrid->fx(yp));
 	    }
 	    // Force the last point to be equal to one
-	    xext2[n2b] = 1;
+	    xext2v[xext2v.size()-1] = 1;
 	  }
 
-	  //for(ix2=0; ix2<=n2b; ix2++) cout << ix2 << "  " << xext2[ix2] << endl;
+	  int n2b = xext2v.size()-1;
+	  double *xext2 = new double[n2b+1];
+
+	  // equal "xext1" to "xext1v"
+	  for(int ix2=0; ix2<=n2b; ix2++) {
+	    xext2[ix2] = xext2v[ix2];
+	    //cout << ix2 << "  " << xext2[ix2] << endl;
+	  }
 
 	  // Call APFEL and compute the evolution operator M2
 	  APFEL::ExternalEvolutionOperator(Q0,Q,n2b,xext2,M2);
-
 	  delete[] xext2;
-	  delete[] M2;
+
+	}
 
 
-	  // Combine APPLgrid weights with the evolution operators M1 and M2
-	  cout << "APPLgridEvolutionFilter() Info: Extracting APPLgrid weights ..." << endl;
-	  double *W = new double[nsubproc];
-	  for (int itau=0; itau<ntau; itau++) {
-	    for (int ix1=0; ix1<=nx2; ix1++) {
-	      for (int ix2=0; ix2<=nx2; ix2++) {
-		for (int ip=0; ip<nsubproc; ip++) {
-		  W[ip] = (*(const SparseMatrix3d*) igrid->weightgrid(ip))(itau,ix1,ix2);
-		}
+	// Combine APPLgrid weights with the evolution operators M1 and M2
+	cout << "APPLgridEvolutionFilter() Info: Extracting APPLgrid weights ..." << endl;
+	double *W = new double[nsubproc];
+	for (int itau=0; itau<ntau; itau++) {
+	  for (int ix1=0; ix1<=nx2; ix1++) {
+	    for (int ix2=0; ix2<=nx2; ix2++) {
+	      // "evaluate" takes "fA"("fB") that is the vector of PDFs from the first(second) hadron (from 0 to 12),
+	      // and returns "H" that is the vector of parton luninosities (form 0 to nsubproc-1) for particular
+	      // process labeled by "pdflbl".
+	      //genpdf->evaluate(fA,fB,H);
+
+	      for (int ip=0; ip<nsubproc; ip++) {
+		W[ip] = (*(const SparseMatrix3d*) igrid->weightgrid(ip))(itau,ix1,ix2);
 	      }
 	    }
 	  }
-	  delete[] W;
-
 	}
+
+	delete[] M1;
+	delete[] M2;
+	delete[] W;
+
 	cout << "  " << endl;
 
       }
