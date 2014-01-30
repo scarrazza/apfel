@@ -112,7 +112,7 @@
       integer j
       integer alpha,delta,bound
       double precision step
-      double precision xg(-10:n+10)
+      double precision xg(0:n+10)
 **
 *     Output Variables
 *

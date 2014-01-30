@@ -29,12 +29,12 @@
       integer k
       integer i,j
       integer alpha,beta,alphap,betap
-      double precision xexte(0:n+10)
       double precision w_int,w_int_ext
       double precision inta(ngrid_max,0:nint_max,0:n)
       double precision intb(ngrid_max,0:n,0:nint_max)
       double precision eps
       parameter(eps=1d-12)
+
       include "../commons/fph.h"
       double precision f0(-6:6,0:n),xpd(-6:6)
 **
@@ -93,13 +93,6 @@
 *
       call EvolveAPFEL(Q0,Q)
 *
-*     Construct extended external grid to pass to "w_int_ext"
-*     to match the definition in there.
-*
-      do alphap=0,n
-         xexte(alphap) = xext(alphap)
-      enddo
-*
 *     Interpolation functions
 *
       do alphap=0,n
@@ -108,7 +101,7 @@
             do alpha=0,nin(igrid)
                inta(igrid,alpha,alphap) = w_int(k,alpha,xext(alphap))
                intb(igrid,alphap,alpha) = 
-     1              w_int_ext(n,xexte,k,alphap,xg(igrid,alpha))
+     1              w_int_ext(n,xext,k,alphap,xg(igrid,alpha))
             enddo
          enddo
       enddo
