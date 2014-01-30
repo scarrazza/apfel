@@ -110,7 +110,7 @@
 *     Internal Variables
 *
       integer j
-      integer alpha,delta
+      integer alpha,delta,bound
       double precision step
       double precision xg(-10:n+10)
 **
@@ -125,23 +125,19 @@
       enddo
 *
 *     Create grid points beyond the upper
-*     bound of the input grid and below the lower bound.
+*     bound of the input grid.
 *
       step = dlog(xg(n)/xg(n-1))
       do alpha=n+1,n+k
          xg(alpha) = xg(alpha-1) * dexp(step)
       enddo
 *
-      step = dlog(xg(0)/xg(1))
-      do alpha=-1,-k,-1
-         xg(alpha) = xg(alpha+1) * dexp(step)
-      enddo
-*
       w_int_ext = 0d0
-*     
-      if(x.lt.xg(beta-k).or.x.ge.xg(beta+1)) return
-*     
-      do j=0,k
+      bound = beta - k
+      if(k.gt.beta) bound = 0
+      if(x.lt.xg(bound).or.x.ge.xg(beta+1)) return
+*
+      do j=0,beta-bound
          if(x.ge.xg(beta-j).and.x.lt.xg(beta-j+1))then
             w_int_ext = 1d0
             do delta=0,k
