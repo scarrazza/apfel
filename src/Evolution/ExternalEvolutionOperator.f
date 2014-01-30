@@ -34,7 +34,7 @@
       double precision inta(ngrid_max,0:nint_max,0:n)
       double precision intb(ngrid_max,0:n,0:nint_max)
       double precision eps
-      parameter(eps=1d-10)
+      parameter(eps=1d-12)
       include "../commons/fph.h"
       double precision f0(-6:6,0:n),xpd(-6:6)
 **
@@ -73,7 +73,7 @@
          call SetGridParameters(1,80,3,xext(0))
          call SetGridParameters(2,50,5,1d-1)
          call SetGridParameters(3,40,5,8d-1)
-      elseif(xext(0).le.1d-1)then
+      elseif(xext(0).le.1d-3)then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,50,3,xext(0))
          call SetGridParameters(2,40,5,2d-1)
@@ -144,52 +144,9 @@
      1                       + inta(igrid,alpha,alphap) 
      2                       * PhQCD(igrid,i,j,alpha,beta) 
      3                       * intb(igrid,betap,beta)
+                        if(M(k).lt.eps) M(k) = 0d0
                      enddo
                   enddo
-c$$$                  k = 7 + 14 * ( 7 + 14 * ( alphap + (n+1) * betap ) )
-c$$$                  M(k) = M(k)
-c$$$     1                 + inta(igrid,alpha,alphap) 
-c$$$     2                 * PhQCD(igrid,0,0,alpha,beta) 
-c$$$     3                 * intb(igrid,betap,beta)
-c$$$                  do i=1,nff
-c$$$                     k = ( 7 + i ) + 14 * ( ( 7 + i ) 
-c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-c$$$                     M(k) = M(k)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,i,i,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$                     k = ( 7 + i ) + 14 * ( 7 
-c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-c$$$                     M(k) = M(k)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,i,0,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$                     k = 7 + 14 * ( ( 7 + i ) 
-c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-c$$$                     M(k) = M(k)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,0,i,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$*
-c$$$                     k = ( 7 - i ) + 14 * ( ( 7 - i ) 
-c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-c$$$                     M(k) = M(k)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,-i,-i,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$                     k = ( 7 - i ) + 14 * ( 7 
-c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-c$$$                     M(k) = M(k)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,-i,0,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$                     k = 7 + 14 * ( ( 7 - i ) 
-c$$$     1                 + 14 * ( alphap + ( n + 1 ) * betap ) )
-c$$$                     M(k) = M(k)
-c$$$     1                    + inta(igrid,alpha,alphap) 
-c$$$     2                    * PhQCD(igrid,0,-i,alpha,beta) 
-c$$$     3                    * intb(igrid,betap,beta)
-c$$$                  enddo
                enddo
             enddo
          enddo

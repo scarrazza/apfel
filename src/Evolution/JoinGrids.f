@@ -52,7 +52,7 @@
 *
       if(nin(0)+inter_degree(0).gt.nint_max)then
          write(6,*) "In JoinGrids.f:"
-         write(6,*) "Number of points of the joint gridd too large:"
+         write(6,*) "Number of points of the joint grid too large:"
          write(6,*) "Maximum value allowed =",nint_max
          write(6,*) "You should reduce it"
          write(6,*) " "
