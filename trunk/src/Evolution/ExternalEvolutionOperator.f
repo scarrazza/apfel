@@ -17,6 +17,8 @@
       include "../commons/grid.h"
       include "../commons/EvolutionOperator.h"
       include "../commons/EvolutionMatrices.h"
+
+      include "../commons/transQCD.h"
 **
 *     Input Variables
 *
@@ -127,19 +129,19 @@
             endif
          enddo
  101     do betap=alphap,n
-            do alpha=0,nin(igrid)
-               do beta=alpha,nin(igrid)
-                  do i=-nff,nff
-                     do j=-nfi,nfi
-                        k = ( 7 + i ) + 14 * ( ( 7 + j ) 
-     1                       + 14 * ( alphap + ( n + 1 ) * betap ) )
+            do i=-nff,nff
+               do j=-nfi,nfi
+                  k = ( 7 + i ) + 14 * ( ( 7 + j ) 
+     1              + 14 * ( alphap + ( n + 1 ) * betap ) )
+                  do alpha=0,nin(igrid)
+                     do beta=alpha,nin(igrid)
                         M(k) = M(k)
      1                       + inta(igrid,alpha,alphap) 
      2                       * PhQCD(igrid,i,j,alpha,beta) 
      3                       * intb(igrid,betap,beta)
-                        if(M(k).lt.eps) M(k) = 0d0
                      enddo
                   enddo
+                  if(dabs(M(k)).lt.eps) M(k) = 0d0
                enddo
             enddo
          enddo
@@ -158,7 +160,7 @@
             do betap=0,n
                do j=-6,6
                   k = ( 7 + i ) + 14 * ( ( 7 + j ) 
-     1              + 14 * ( alphap + (n+1) * betap ) )
+     1              + 14 * ( alphap + ( n + 1 ) * betap ) )
                   fph(0,i,alphap) = fph(0,i,alphap) + M(k) * f0(j,betap)
                enddo
             enddo

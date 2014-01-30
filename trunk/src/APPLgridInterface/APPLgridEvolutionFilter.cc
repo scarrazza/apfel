@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 
   // Flavour map
   bool FlavMap[13][13]={{0},{0}};
-  string flavours[13]={"tb","bb","ch","sb","ub","db","gl","dw","up","st","ch","bt","tp"};
+  string flavours[13]={"t~","b~","c~","s~","u~","d~","g ","d ","u ","s ","c ","b ","t "};
 
   // Input applgrid (forget about FastNLO for the moment)
   const igrid* igrid;
@@ -61,13 +61,13 @@ int main(int argc, char* argv[]) {
   else                 cout << "   The process is NOT symmetric" << endl;
   cout << "  " << endl;
 
-  for (int ibin=0; ibin<nbin; ibin++) {
-  //for (int ibin=0; ibin<1; ibin++) {
+  //for (int ibin=0; ibin<nbin; ibin++) {
+  for (int ibin=0; ibin<1; ibin++) {
     cout << "APPLgridEvolutionFilter() Info: bin " << ibin+1 << " of " << nbin << endl;
     cout << "  " << endl;
 
-    for (int o=0; o<=no; o++) {
-    //for (int o=0; o<=0; o++) {
+    //for (int o=0; o<=no; o++) {
+    for (int o=0; o<=0; o++) {
       if(o == 0) cout << "APPLgridEvolutionFilter() Info: Perturbative order: LO " << endl;
       if(o == 1) cout << "APPLgridEvolutionFilter() Info: Perturbative order: NLO " << endl;
       if(o == 2) cout << "APPLgridEvolutionFilter() Info: Perturbative order: NNLO " << endl;
@@ -87,8 +87,8 @@ int main(int argc, char* argv[]) {
       //cout << "   Number of x2 grid points = " << nx2 << endl;
       //cout << "  " << endl;
 
-      for (int itau=0; itau<ntau; itau++) {
-      //for (int itau=1; itau<2; itau++) {
+      //for (int itau=0; itau<ntau; itau++) {
+      for (int itau=1; itau<2; itau++) {
 	cout << "APPLgridEvolutionFilter() Info: Q2 grid point " << itau+1 << " of " << ntau << endl;
 	cout << "  " << endl;
 
@@ -158,6 +158,10 @@ int main(int argc, char* argv[]) {
 	// Call APFEL and compute the evolution operator M1
 	cout << "APPLgridEvolutionFilter() Info: Computing evolution operator on grid 1 ..." << endl;
 	M1 = new double[14*14*(n1b+1)*(n1b+1)];
+
+	APFEL::SetPerturbativeOrder(0);
+	APFEL::SetFFNS(3);
+
 	APFEL::ExternalEvolutionOperator(Q0,Q,n1b,&xext1v[0],M1);
 
 	// Grid 2
@@ -322,7 +326,7 @@ int main(int argc, char* argv[]) {
 	delete[] M1a;
 	delete[] M2a;
 
-	cout << "Flavour map:" << endl;
+	cout << "Temporary flavour map:" << endl;
 	cout << "  " << endl;
 	cout << "   ";
 	for(int i=0; i<13; i++) {
@@ -341,11 +345,23 @@ int main(int argc, char* argv[]) {
       }
     }
   }
-
-
   delete g;
 
-
+  cout << "Final flavour map:" << endl;
+  cout << "  " << endl;
+  cout << "   ";
+  for(int i=0; i<13; i++) {
+    cout << flavours[i] << " ";
+  }
+  cout << endl;
+  for(int i=0; i<13; i++) {
+    cout << flavours[i] << " ";
+    for(int j=0; j<13; j++) {
+      cout << FlavMap[i][j] << "  ";
+    }
+    cout << endl;
+  }
+  cout << "  " << endl;
 
   /*
   // Output grid

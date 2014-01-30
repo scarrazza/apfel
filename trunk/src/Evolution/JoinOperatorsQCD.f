@@ -462,62 +462,106 @@
                      do l=0,13
                         PhQCD(jgrid,i-7,j-7,alpha,beta) = 
      1                       PhQCD(jgrid,i-7,j-7,alpha,beta)
-     2                       + Tev2phQCD(i,k) * EvQCD(k,l,alpha,beta) 
-     3                       * Tph2evQCD(l,j)
+     2                       + Tev2phQCD(nff,i,k)
+     3                       * EvQCD(k,l,alpha,beta)
+     4                       * Tph2evQCD(nfi,l,j)
                      enddo
                   enddo
                enddo
             enddo
          enddo
       enddo
-c$$$      do alpha=0,nin(igrid)
-c$$$         do beta=alpha,nin(igrid)
-c$$$            do i=-7,6
-c$$$               do j=-7,6
-c$$$                  PhQCD(jgrid,i,j,alpha,beta) = 0d0
-c$$$               enddo
-c$$$            enddo
-c$$$         enddo
-c$$$      enddo
+c      do i=1,13
+c         write(56,"(13(2x,f6.3))") (Tph2evQCD(nfi,i,j),j=1,13)
+c      enddo
+c      write(56,*) "   "
+c      do i=1,13
+c         write(57,"(13(2x,f6.3))") (Tev2phQCD(nff,i,j),j=1,13)
+c      enddo
+c      write(57,*) "   "
 c$$$*
-c$$$      do alpha=0,nin(igrid)
-c$$$         do beta=alpha,nin(igrid)
-c$$$            do k=1,13
-c$$$               do l=1,13
-c$$$                  PhQCD(jgrid,0,0,alpha,beta) = 
-c$$$     1                 PhQCD(jgrid,0,0,alpha,beta)
-c$$$     2                 + Tev2phQCD(7,k) * EvQCD(k,l,alpha,beta) 
-c$$$     3                 * Tph2evQCD(l,7)
-c$$$                  do i=1,nff
-c$$$                     PhQCD(jgrid,i,i,alpha,beta) = 
-c$$$     1                    PhQCD(jgrid,i,i,alpha,beta)
-c$$$     2                    + Tev2phQCD(i+7,k) * EvQCD(k,l,alpha,beta) 
-c$$$     3                    * Tph2evQCD(l,i+7)
-c$$$                     PhQCD(jgrid,i,0,alpha,beta) = 
-c$$$     1                    PhQCD(jgrid,i,0,alpha,beta)
-c$$$     2                    + Tev2phQCD(i+7,k) * EvQCD(k,l,alpha,beta) 
-c$$$     3                    * Tph2evQCD(l,7)
-c$$$                     PhQCD(jgrid,0,i,alpha,beta) = 
-c$$$     1                    PhQCD(jgrid,0,i,alpha,beta)
-c$$$     2                    + Tev2phQCD(7,k) * EvQCD(k,l,alpha,beta) 
-c$$$     3                    * Tph2evQCD(l,i+7)
-c$$$                     PhQCD(jgrid,-i,-i,alpha,beta) = 
-c$$$     1                    PhQCD(jgrid,-i,-i,alpha,beta)
-c$$$     2                    + Tev2phQCD(-i+7,k) * EvQCD(k,l,alpha,beta) 
-c$$$     3                    * Tph2evQCD(l,-i+7)
-c$$$                     PhQCD(jgrid,-i,0,alpha,beta) = 
-c$$$     1                    PhQCD(jgrid,-i,0,alpha,beta)
-c$$$     2                    + Tev2phQCD(i+7,k) * EvQCD(k,l,alpha,beta) 
-c$$$     3                    * Tph2evQCD(l,7)
-c$$$                     PhQCD(jgrid,0,-i,alpha,beta) = 
-c$$$     1                    PhQCD(jgrid,0,-i,alpha,beta)
-c$$$     2                    + Tev2phQCD(7,k) * EvQCD(k,l,alpha,beta) 
-c$$$     3                    * Tph2evQCD(l,-i+7)
-c$$$                  enddo
-c$$$               enddo
-c$$$            enddo
+c$$$*     Rotation matrix factory
+c$$$*
+c$$$      do j=0,13
+c$$$         do i=0,13
+c$$$            Tev2phQCD(5,i,j) = Tev2phQCD(6,i,j)
 c$$$         enddo
 c$$$      enddo
+c$$$      do j=0,13
+c$$$         Tev2phQCD(5,j,1)  = Tev2phQCD(6,j,1) + Tev2phQCD(6,j,13)
+c$$$         Tev2phQCD(5,j,13) = 0d0
+c$$$         Tev2phQCD(5,j,3) = Tev2phQCD(6,j,3) + Tev2phQCD(6,j,8)
+c$$$         Tev2phQCD(5,j,8) = 0d0
+c$$$      enddo
+c$$$      do j=0,13
+c$$$         do i=0,13
+c$$$            Tev2phQCD(4,i,j) = Tev2phQCD(5,i,j)
+c$$$         enddo
+c$$$      enddo
+c$$$      do j=0,13
+c$$$         Tev2phQCD(4,j,1)  = Tev2phQCD(5,j,1) + Tev2phQCD(5,j,12)
+c$$$         Tev2phQCD(4,j,12) = 0d0
+c$$$
+c$$$         Tev2phQCD(4,j,3) = Tev2phQCD(5,j,3) + Tev2phQCD(5,j,7)
+c$$$         Tev2phQCD(4,j,7) = 0d0
+c$$$      enddo
+c$$$      do j=0,13
+c$$$         do i=0,13
+c$$$            Tev2phQCD(3,i,j) = Tev2phQCD(4,i,j)
+c$$$         enddo
+c$$$      enddo
+c$$$      do j=0,13
+c$$$         Tev2phQCD(3,j,1)  = Tev2phQCD(4,j,1) + Tev2phQCD(4,j,11)
+c$$$         Tev2phQCD(3,j,11) = 0d0
+c$$$         Tev2phQCD(3,j,3) = Tev2phQCD(4,j,3) + Tev2phQCD(4,j,6)
+c$$$         Tev2phQCD(3,j,6) = 0d0
+c$$$      enddo
+c$$$      do k=3,5
+c$$$         do j=0,13
+c$$$            do i=0,13
+c$$$               Tph2evQCD(k,i,j) = 0d0
+c$$$            enddo
+c$$$         enddo
+c$$$         Tph2evQCD(k,0,0) = 1d0
+c$$$      enddo
+c$$$      do j=2,12
+c$$$         do i=0,13
+c$$$            Tph2evQCD(5,i,j) = Tph2evQCD(6,i,j)
+c$$$         enddo
+c$$$      enddo
+c$$$      do j=3,11
+c$$$         do i=0,13
+c$$$            Tph2evQCD(4,i,j) = Tph2evQCD(5,i,j)
+c$$$         enddo
+c$$$      enddo
+c$$$      do j=4,10
+c$$$         do i=0,13
+c$$$            Tph2evQCD(3,i,j) = Tph2evQCD(4,i,j)
+c$$$         enddo
+c$$$      enddo
+c$$$      do k=3,6
+c$$$         do i=0,13
+c$$$            do j=0,13
+c$$$               if(dabs(Tev2phQCD(k,i,j)).lt.1d-8) Tev2phQCD(k,i,j) = 0d0 
+c$$$               write(56,"(a,i1,a,i2,a,i2,a,f18.14,a)")
+c$$$     2              "      data Tev2phQCD(",k,",",i,",",j,
+c$$$     1              ")   /",Tev2phQCD(k,i,j),"d0 /"
+c$$$            enddo
+c$$$         enddo
+c$$$         write(56,*) "  "
+c$$$      enddo
+c$$$      do k=3,6
+c$$$         do i=0,13
+c$$$            do j=0,13
+c$$$               if(dabs(Tph2evQCD(k,i,j)).lt.1d-8) Tph2evQCD(k,i,j) = 0d0 
+c$$$               write(56,"(a,i1,a,i2,a,i2,a,f18.14,a)")
+c$$$     2              "      data Tph2evQCD(",k,",",i,",",j,
+c$$$     1              ")   /",Tph2evQCD(k,i,j),"d0 /"
+c$$$            enddo
+c$$$         enddo
+c$$$         write(56,*) "  "
+c$$$      enddo
+c$$$      stop
 *
       return
       end
