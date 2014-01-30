@@ -98,41 +98,50 @@
       end
 *
 ************************************************************************
-      function w_int_ext(n,xg,k,beta,x)
+      function w_int_ext(n,xgi,k,beta,x)
 *
       implicit none
 **
 *     Input Variables
 *
       integer n,k,beta
-      double precision xg(0:n+10),x
+      double precision xgi(0:n),x
 **
 *     Internal Variables
 *
       integer j
-      integer delta,bound
+      integer alpha,delta
       double precision step
+      double precision xg(-10:n+10)
 **
 *     Output Variables
 *
       double precision w_int_ext
 *
+*     Copy "xgi" into "xg"
+*
+      do alpha=0,n
+         xg(alpha) = xgi(alpha)
+      enddo
+*
+*     Create grid points beyond the upper
+*     bound of the input grid and below the lower bound.
+*
+      step = dlog(xg(n)/xg(n-1))
+      do alpha=n+1,n+k
+         xg(alpha) = xg(alpha-1) * dexp(step)
+      enddo
+*
+      step = dlog(xg(0)/xg(1))
+      do alpha=-1,-k,-1
+         xg(alpha) = xg(alpha+1) * dexp(step)
+      enddo
+*
       w_int_ext = 0d0
-      bound = beta - k
-      if(k.gt.beta) bound = 0
-      if(x.lt.xg(bound).or.x.ge.xg(beta+1)) return
-*
-*     If needed create grid points beyond the upper
-*     bound of the input grid.
-*
-      if(beta.gt.(n-k))then
-         step = dlog(xg(n)/xg(n-1))
-         do j=1,beta-n+k
-            xg(n+j) = xg(n+j-1) * dexp(step)
-         enddo
-      endif
-*
-      do j=0,beta-bound
+*     
+      if(x.lt.xg(beta-k).or.x.ge.xg(beta+1)) return
+*     
+      do j=0,k
          if(x.ge.xg(beta-j).and.x.lt.xg(beta-j+1))then
             w_int_ext = 1d0
             do delta=0,k
@@ -142,6 +151,6 @@
             enddo
          endif
       enddo
-*
+*     
       return
       end
