@@ -465,6 +465,7 @@
      2                       + Tev2phQCD(nff,i,k)
      3                       * EvQCD(k,l,alpha,beta)
      4                       * Tph2evQCD(nfi,l,j)
+                        
                      enddo
                   enddo
                enddo
@@ -472,11 +473,13 @@
          enddo
       enddo
 c      do i=1,13
-c         write(56,"(13(2x,f6.3))") (Tph2evQCD(nfi,i,j),j=1,13)
+c         write(56,"(a,13(2x,i3),a)")
+c     1        "{",(int(Tph2evQCD(6,i,j)),j=1,13)," }"
 c      enddo
 c      write(56,*) "   "
 c      do i=1,13
-c         write(57,"(13(2x,f6.3))") (Tev2phQCD(nff,i,j),j=1,13)
+c         write(57,"(a,13(2x,i4),a)") 
+c     1        "{",(int(120d0*Tev2phQCD(6,i,j)),j=1,13)," }"
 c      enddo
 c      write(57,*) "   "
 c$$$*
