@@ -17,8 +17,6 @@
       include "../commons/grid.h"
       include "../commons/EvolutionOperator.h"
       include "../commons/EvolutionMatrices.h"
-
-      include "../commons/transQCD.h"
 **
 *     Input Variables
 *
@@ -31,7 +29,8 @@
       integer k
       integer i,j
       integer alpha,beta,alphap,betap
-      double precision w_int,w_int_ext
+c      double precision w_int,w_int_ext
+      double precision w_int_herm,xint(0:200)
       double precision inta(ngrid_max,0:nint_max,0:n)
       double precision intb(ngrid_max,0:n,0:nint_max)
       double precision eps
@@ -70,6 +69,8 @@
 *
 *     Tuning of the internal grid
 *
+      call SetQLimits(0.5d0,Q+eps)
+*
       if(xext(0).le.1d-5)then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,80,3,xext(0))
@@ -77,15 +78,14 @@
          call SetGridParameters(3,40,5,8d-1)
       elseif(xext(0).le.1d-3)then
          call SetNumberOfGrids(3)
-         call SetGridParameters(1,50,3,xext(0))
-         call SetGridParameters(2,40,5,2d-1)
-         call SetGridParameters(3,30,5,9d-1)
+         call SetGridParameters(1,100,3,xext(0))
+         call SetGridParameters(2,60,5,2d-1)
+         call SetGridParameters(3,40,5,9d-1)
       else
          call SetNumberOfGrids(2)
          call SetGridParameters(1,50,5,xext(0))
          call SetGridParameters(2,30,5,85d-1)
       endif
-      call SetQLimits(0.5d0,Q+eps)
 *
 *     Initializes integrals on the grids
 *
@@ -97,13 +97,20 @@
 *
 *     Interpolation functions
 *
-      do alphap=0,n
-         do igrid=1,ngrid
-            k = inter_degree(igrid)
+      do igrid=1,ngrid
+         k = inter_degree(igrid)
+         do alpha=0,nin(igrid)
+            xint(alpha) = xg(igrid,alpha)
+         enddo
+         do alphap=0,n
             do alpha=0,nin(igrid)
-               inta(igrid,alpha,alphap) = w_int(k,alpha,xext(alphap))
+c               inta(igrid,alpha,alphap) = w_int(k,alpha,xext(alphap))
+c               intb(igrid,alphap,alpha) = 
+c     1              w_int_ext(n,xext,k,alphap,xg(igrid,alpha))
+               inta(igrid,alpha,alphap) = 
+     1              w_int_herm(nin(igrid),xint,alpha,xext(alphap))
                intb(igrid,alphap,alpha) = 
-     1              w_int_ext(n,xext,k,alphap,xg(igrid,alpha))
+     1              w_int_herm(n,xext,alphap,xint(alpha))
             enddo
          enddo
       enddo
@@ -166,6 +173,17 @@
             enddo
          enddo
       enddo
+c*
+c      do alphap=0,n
+c         do betap=0,n
+c            write(58,*) alphap,betap
+c            do i=1,13
+c               write(58,"(13(2x,f8.5))")
+c     1              (M( i + 14 * ( j 
+c     2              + 14 * ( alphap + ( n + 1 ) * betap ) )),j=1,13)
+c            enddo
+c         enddo
+c      enddo
 *
       return
       end

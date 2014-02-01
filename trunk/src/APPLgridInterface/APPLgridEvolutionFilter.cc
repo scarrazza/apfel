@@ -275,7 +275,7 @@ int main(int argc, char* argv[]) {
 		M2a[beta][sigma][j][l] = M2[m2];
 	      }
 	    }
-	    /*
+
 	    cout << "beta = " << beta << " sigma = " << sigma << endl;
 	    for(int j=0; j<13; j++) {
 	      for(int l=0; l<13; l++) {
@@ -284,7 +284,7 @@ int main(int argc, char* argv[]) {
 	      cout << endl;
 	    }
 	    cout << "****************************************" << endl;
-	    */
+
 	  }
 	}
 	delete[] M2;

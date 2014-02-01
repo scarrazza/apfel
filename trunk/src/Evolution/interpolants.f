@@ -16,6 +16,8 @@
 *     "w_int_ext" same as "w_int_gen" but for a user-given grid different
 *     from the internal grid of APFEL.
 *
+*     "w_int_herm" implements the Hermite cubic interpolation.
+*
 ************************************************************************
       function w_int(k,beta,x)
 *
@@ -148,5 +150,180 @@
          endif
       enddo
 *     
+      return
+      end
+*
+************************************************************************
+      function w_int_herm(n,xg,alpha,x)
+*
+      implicit none
+**
+*     Input Variables
+*
+      integer n,alpha
+      double precision xg(0:200),x
+**
+*     Internal Variables
+*
+      integer k
+      integer ubound,dbound
+      double precision z,zg(-2:2),h(-2:1),t(-2:1)
+      double precision h00,h10,h01,h11
+      double precision Hp(-1:2)
+**
+*     Output Variables
+*
+      double precision w_int_herm
+*
+*     Return zero if out range
+*
+      w_int_herm = 0d0
+      dbound = alpha - 2
+      ubound = alpha + 2
+      if(dbound.lt.0) dbound = 0
+      if(ubound.gt.n) ubound = n
+      if(x.lt.xg(dbound).or.x.gt.xg(ubound)) return
+*
+*     Logarithmic interpolation
+*
+      z      = dlog(x)
+      zg(-2) = dlog(xg(alpha-2))
+      zg(-1) = dlog(xg(alpha-1))
+      zg(0)  = dlog(xg(alpha))
+      zg(1)  = dlog(xg(alpha+1))
+      zg(2)  = dlog(xg(alpha+2))
+c*
+c*     Linear interpolation
+c*
+c      z      = x
+c      zg(-1) = xg(alpha-1)
+c      zg(0)  = xg(alpha)
+c      zg(1)  = xg(alpha+1)
+c      zg(2)  = xg(alpha+2)
+*
+      h(-2) =  zg(-1) - zg(-2)
+      h(-1) =  zg(0)  - zg(-1)
+      h(0)  =  zg(1)  - zg(0)
+      h(1)  =  zg(2)  - zg(1)
+*
+      t(-2) = ( z - zg(-2) ) / h(-2)
+      t(-1) = ( z - zg(-1) ) / h(-1)
+      t(0)  = ( z - zg(0) )  / h(0)
+      t(1)  = ( z - zg(1) )  / h(1)
+*
+      if(alpha.ge.0.and.alpha.le.(n-2))then
+         Hp(-1) = - h10(t(1)) * h(1) / h(0) / 2d0
+      else
+         Hp(-1) = 0d0
+      endif
+      if(alpha.eq.0)then
+         Hp(0)  = h00(t(0)) - h10(t(0)) - h11(t(0)) / 2d0
+      elseif(alpha.ge.1.and.alpha.le.(n-2))then
+         Hp(0)  = h00(t(0)) - h10(t(0)) * ( 1d0 - h(0) / h(-1) ) / 2d0
+     1          - h11(t(0)) / 2d0
+      elseif(alpha.eq.(n-1))then
+         Hp(0)  = h00(t(0)) - h10(t(0)) * ( 1d0 - h(0) / h(-1) ) / 2d0
+     1          - h11(t(0))
+      elseif(alpha.eq.n)then
+         Hp(0)  =   1
+      endif
+      if(alpha.eq.0)then
+         Hp(1)  = 0d0
+      elseif(alpha.eq.1)then
+         Hp(1)  = h01(t(-1)) + h11(t(-1)) * ( 1d0 - h(-1) / h(0) ) / 2d0
+     1          + h10(t(-1))
+      elseif(alpha.ge.2.and.alpha.le.(n-1))then
+         Hp(1)  = h01(t(-1)) + h11(t(-1)) * ( 1d0 - h(-1) / h(0) ) / 2d0 
+     1          + h10(t(-1)) / 2d0
+      elseif(alpha.eq.n)then
+         Hp(1)  = h01(t(-1)) + h11(t(-1)) + h10(t(-1)) / 2d0
+      endif
+      if(alpha.ge.0.and.alpha.le.1)then
+         Hp(2)  = 0d0
+      else
+         Hp(2)  = h11(t(-2)) * h(-2) / h(-1) / 2d0
+      endif
+*
+      do k=-1,2
+         if(x.ge.xg(alpha-k).and.x.lt.xg(alpha-k+1)) 
+     1        w_int_herm = w_int_herm + Hp(k)
+      enddo
+*     
+      return
+      end
+*
+************************************************************************
+*
+*     Hermite's polynomials
+*
+************************************************************************
+      function h00(t)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision t
+**
+*     Input Variables
+*
+      double precision h00
+*
+      h00 = 2d0 * t**3d0 - 3d0 * t**2d0 + 1d0
+*
+      return
+      end
+*
+************************************************************************
+      function h10(t)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision t
+**
+*     Input Variables
+*
+      double precision h10
+*
+      h10 = t**3d0 - 2d0 * t**2d0 + t
+*
+      return
+      end
+*
+************************************************************************
+      function h01(t)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision t
+**
+*     Input Variables
+*
+      double precision h01
+*
+      h01 = - 2d0 * t**3d0 + 3d0 * t**2d0
+*
+      return
+      end
+*
+************************************************************************
+      function h11(t)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision t
+**
+*     Input Variables
+*
+      double precision h11
+*
+      h11 = t**3d0 - t**2d0
+*
       return
       end
