@@ -34,7 +34,8 @@ int main(int argc, char* argv[]) {
 
   // Flavour map
   bool FlavMap[13][13]={{0},{0}};
-  string flavours[13]={"t~","b~","c~","s~","u~","d~","g ","d ","u ","s ","c ","b ","t "};
+  double Channels[13][13]={{0},{0}};
+  string flavour[13]={"t~","b~","c~","s~","u~","d~","g ","d ","u ","s ","c ","b ","t "};
 
   // Input applgrid (forget about FastNLO for the moment)
   const igrid* igrid;
@@ -67,7 +68,7 @@ int main(int argc, char* argv[]) {
     cout << "  " << endl;
 
     //for (int o=0; o<=no; o++) {
-    for (int o=0; o<=0; o++) {
+    for (int o=1; o<=1; o++) {
       if(o == 0) cout << "APPLgridEvolutionFilter() Info: Perturbative order: LO " << endl;
       if(o == 1) cout << "APPLgridEvolutionFilter() Info: Perturbative order: NLO " << endl;
       if(o == 2) cout << "APPLgridEvolutionFilter() Info: Perturbative order: NNLO " << endl;
@@ -93,7 +94,7 @@ int main(int argc, char* argv[]) {
 	cout << "  " << endl;
 
 	double Q = sqrt(igrid->fQ2(igrid->gettau(itau)));
-	//Q0 = Q;
+	Q0 = Q;
 	cout << "APPLgridEvolutionFilter() Info: Evolution between " << Q0 << " GeV and " << Q << " GeV" << endl;
 
 	double delta = 0,deltap = 0;
@@ -158,8 +159,8 @@ int main(int argc, char* argv[]) {
 	// Call APFEL and compute the evolution operator M1
 	cout << "APPLgridEvolutionFilter() Info: Computing evolution operator on grid 1 ..." << endl;
 	M1 = new double[14*14*(n1b+1)*(n1b+1)];
-	//APFEL::SetPerturbativeOrder(1);
-	//APFEL::SetFFNS(3);
+	APFEL::SetPerturbativeOrder(0);
+	//APFEL::SetFFNS(6);
 	APFEL::ExternalEvolutionOperator(Q0,Q,n1b,&xext1v[0],M1);
 
 	// Grid 2
@@ -274,7 +275,7 @@ int main(int argc, char* argv[]) {
 	      }
 	    }
 	    /*
-	    //if(beta == sigma) {
+	    if(beta == sigma) {
 	      cout << "beta = " << beta << " sigma = " << sigma << endl;
 	      for(int j=0; j<13; j++) {
 		for(int l=0; l<13; l++) {
@@ -283,7 +284,7 @@ int main(int argc, char* argv[]) {
 		cout << endl;
 	      }
 	      cout << "****************************************" << endl;
-	    //}
+	    }
 	    */
 	  }
 	}
@@ -313,7 +314,10 @@ int main(int argc, char* argv[]) {
 		    for (int ip=0; ip<nsubproc; ip++) {
 		      Wt[alpha][beta][i][j] += W[rho][sigma][ip] * H[ip];
 		    }
-		    if(Wt[alpha][beta][i][j] != 0) FlavMap[i][j] = true;
+		    if(Wt[alpha][beta][i][j] != 0) {
+		      FlavMap[i][j] = true;
+		      Channels[i][j] += Wt[alpha][beta][i][j];
+		    }
 		  }
 		}
 	      }
@@ -325,42 +329,71 @@ int main(int argc, char* argv[]) {
 	delete[] H;
 	delete[] M1a;
 	delete[] M2a;
-
-	cout << "Temporary flavour map:" << endl;
-	cout << "  " << endl;
-	cout << "   ";
-	for(int i=0; i<13; i++) {
-	  cout << flavours[i] << " ";
-	}
-	cout << endl;
-	for(int i=0; i<13; i++) {
-	  cout << flavours[i] << " ";
-	  for(int j=0; j<13; j++) {
-	    cout << FlavMap[i][j] << "  ";
-	  }
-	  cout << endl;
-	}
-	cout << "  " << endl;
-
       }
     }
   }
   delete g;
 
+  /*
+  // Write Flavour Map
   cout << "Final flavour map:" << endl;
   cout << "  " << endl;
   cout << "   ";
   for(int i=0; i<13; i++) {
-    cout << flavours[i] << " ";
+    cout << flavour[i] << " ";
   }
   cout << endl;
   for(int i=0; i<13; i++) {
-    cout << flavours[i] << " ";
+    cout << flavour[i] << " ";
     for(int j=0; j<13; j++) {
       cout << FlavMap[i][j] << "  ";
     }
     cout << endl;
   }
+  cout << "  " << endl;
+  */
+
+  // Evaluate and write Flavour map.
+  // First count how many non-zero elements are there.
+  // This sets the maximum number of channels.
+  int MaxChannels = 0;
+  for(int i=0; i<13; i++) {
+    for(int j=0; j<13; j++) {
+      if(Channels[i][j] != 0) MaxChannels++;
+    }
+  }
+
+  vector<string> PartChann;
+  string proc;
+  for(int i=0; i<13; i++) {
+    for(int j=0; j<13; j++) {
+      if(FlavMap[i][j]) {
+	FlavMap[i][j] = false;
+	proc = flavour[i] + flavour[j];
+	for(int k=0; k<13; k++) {
+	  for(int l=0; l<13; l++) {
+	    if(!(k == i && l == j)) {
+	      double eps = 1e-8;
+	      double ratio = abs( 1 - Channels[k][l] / Channels[i][j] );
+	      if(ratio < eps) {
+		proc += " + " + flavour[k] + flavour[l];
+		FlavMap[k][l] = false;
+	      }
+	    }
+	  }
+	}
+	PartChann.push_back (proc);
+      }
+    }
+  }
+
+  int Nchannels = PartChann.size();
+  cout << "APPLgridEvolutionFilter() Info: Number of independent channels: " << Nchannels << endl;
+  if(Nchannels > MaxChannels) {
+    cout << "APPLgridEvolutionFilter() Error: The number of independent channels exceeds the maximum allowed" << endl;
+    exit(-10);
+  }
+  for(int ip=0; ip<Nchannels; ip++) cout << PartChann[ip] << endl;
   cout << "  " << endl;
 
   /*
