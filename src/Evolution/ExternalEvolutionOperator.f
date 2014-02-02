@@ -73,18 +73,18 @@ c      double precision w_int,w_int_ext
 *
       if(xext(0).le.1d-5)then
          call SetNumberOfGrids(3)
-         call SetGridParameters(1,80,3,xext(0))
-         call SetGridParameters(2,50,5,1d-1)
-         call SetGridParameters(3,40,5,8d-1)
+         call SetGridParameters(1,120,3,xext(0))
+         call SetGridParameters(2,80,5,1d-1)
+         call SetGridParameters(3,50,5,8d-1)
       elseif(xext(0).le.1d-3)then
          call SetNumberOfGrids(3)
-         call SetGridParameters(1,100,3,xext(0))
-         call SetGridParameters(2,60,5,2d-1)
+         call SetGridParameters(1,110,3,xext(0))
+         call SetGridParameters(2,70,5,2d-1)
          call SetGridParameters(3,40,5,9d-1)
       else
          call SetNumberOfGrids(2)
-         call SetGridParameters(1,50,5,xext(0))
-         call SetGridParameters(2,30,5,85d-1)
+         call SetGridParameters(1,120,5,xext(0))
+         call SetGridParameters(2,45,5,85d-1)
       endif
 *
 *     Initializes integrals on the grids
