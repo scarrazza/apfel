@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
 	cout << "  " << endl;
 
 	double Q = sqrt(igrid->fQ2(igrid->gettau(itau)));
-	Q0 = Q;
+	//Q0 = Q;
 	cout << "APPLgridEvolutionFilter() Info: Evolution between " << Q0 << " GeV and " << Q << " GeV" << endl;
 
 	double delta = 0,deltap = 0;
@@ -158,10 +158,8 @@ int main(int argc, char* argv[]) {
 	// Call APFEL and compute the evolution operator M1
 	cout << "APPLgridEvolutionFilter() Info: Computing evolution operator on grid 1 ..." << endl;
 	M1 = new double[14*14*(n1b+1)*(n1b+1)];
-
-	APFEL::SetPerturbativeOrder(0);
-	APFEL::SetFFNS(3);
-
+	//APFEL::SetPerturbativeOrder(1);
+	//APFEL::SetFFNS(3);
 	APFEL::ExternalEvolutionOperator(Q0,Q,n1b,&xext1v[0],M1);
 
 	// Grid 2
@@ -275,16 +273,18 @@ int main(int argc, char* argv[]) {
 		M2a[beta][sigma][j][l] = M2[m2];
 	      }
 	    }
-
-	    cout << "beta = " << beta << " sigma = " << sigma << endl;
-	    for(int j=0; j<13; j++) {
-	      for(int l=0; l<13; l++) {
-		cout << M2a[beta][sigma][j][l] << "  ";
+	    /*
+	    //if(beta == sigma) {
+	      cout << "beta = " << beta << " sigma = " << sigma << endl;
+	      for(int j=0; j<13; j++) {
+		for(int l=0; l<13; l++) {
+		  cout << M2a[beta][sigma][j][l] << "  ";
+		}
+		cout << endl;
 	      }
-	      cout << endl;
-	    }
-	    cout << "****************************************" << endl;
-
+	      cout << "****************************************" << endl;
+	    //}
+	    */
 	  }
 	}
 	delete[] M2;
