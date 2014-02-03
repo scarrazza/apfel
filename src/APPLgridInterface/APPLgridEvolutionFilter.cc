@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 
 // APFEL
 #include "APFEL/APFEL.h"
@@ -426,7 +427,7 @@ int main(int argc, char* argv[]) {
   // redefined below.
   igrid = g->weightgrid(0,0);
 
-  const appl::grid *og = NULL;
+  appl::grid *og = NULL;
   og = new appl::grid(1, Q20, Q20, 0,
 		      igrid->getNx1(), igrid->getx1min(), 1e0, igrid->yorder(),    // Temporary parameters to be redefined below
 		      g->Nobs(), g->obsmin(), g->obsmax(), 
