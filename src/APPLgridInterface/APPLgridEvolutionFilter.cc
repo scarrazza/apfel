@@ -31,6 +31,7 @@ int main(int argc, char* argv[]) {
 
   // Initial scale
   double Q0 = sqrt(2);
+  double Q20 = Q0 * Q0;
 
   // Flavour map
   bool FlavMap[13][13]={{0},{0}};
@@ -62,11 +63,14 @@ int main(int argc, char* argv[]) {
   else                 cout << "   The process is NOT symmetric" << endl;
   cout << "  " << endl;
 
+  // Declare the 6-dim array of weights
+  double ******Wt = new double*****[nbin];
   //for (int ibin=0; ibin<nbin; ibin++) {
   for (int ibin=0; ibin<1; ibin++) {
     cout << "APPLgridEvolutionFilter() Info: bin " << ibin+1 << " of " << nbin << endl;
     cout << "  " << endl;
 
+    Wt[ibin] = new double****[no];
     //for (int o=0; o<=no; o++) {
     for (int o=1; o<=1; o++) {
       if(o == 0) cout << "APPLgridEvolutionFilter() Info: Perturbative order: LO " << endl;
@@ -95,6 +99,7 @@ int main(int argc, char* argv[]) {
 
 	double Q = sqrt(igrid->fQ2(igrid->gettau(itau)));
 	Q0 = Q;
+	Q20 = Q * Q;
 	cout << "APPLgridEvolutionFilter() Info: Evolution between " << Q0 << " GeV and " << Q << " GeV" << endl;
 
 	double delta = 0,deltap = 0;
@@ -110,7 +115,7 @@ int main(int argc, char* argv[]) {
 
 	for (int ix1=0; ix1<nx1; ix1++) {
 	  iy1--; // inverse order
-	  xext1v.push_back (igrid->fx(igrid->gety1(iy1)));
+	  xext1v.push_back(igrid->fx(igrid->gety1(iy1)));
 	  //cout << ix1 << "  " << xext1v[ix1] << endl;
 
 	  // Parameter of the grid (see eq. (1) of arXiv:0911.2985)
@@ -149,7 +154,7 @@ int main(int argc, char* argv[]) {
 	  cout << "APPLgridEvolutionFilter() Info: Extending grid 1 ..." << endl;
 	  for(int ix1=0; xext1v[xext1v.size()-1]<1; ix1++) {
 	    yp += delta;
-	    xext1v.push_back (igrid->fx(yp));
+	    xext1v.push_back(igrid->fx(yp));
 	  }
 	  // Force the last point to be equal to one
 	  xext1v[xext1v.size()-1] = 1;
@@ -174,7 +179,7 @@ int main(int argc, char* argv[]) {
 
 	  for (int ix2=0; ix2<nx2; ix2++) {
 	    iy2--; // inverse order
-	    xext2v.push_back (igrid->fx(igrid->gety2(iy2)));
+	    xext2v.push_back(igrid->fx(igrid->gety2(iy2)));
 	    //cout << ix2 << "  " << xext2v[ix2] << endl;
 
 	    // Parameter of the grid (see eq. (1) of arXiv:0911.2985)
@@ -213,7 +218,7 @@ int main(int argc, char* argv[]) {
 	    cout << "APPLgridEvolutionFilter() Info: Extending grid 2 ..." << endl;
 	    for(int ix2=0; xext2v[xext2v.size()-1]<1; ix2++) {
 	      yp += delta;
-	      xext2v.push_back (igrid->fx(yp));
+	      xext2v.push_back(igrid->fx(yp));
 	    }
 	    // Force the last point to be equal to one
 	    xext2v[xext2v.size()-1] = 1;
@@ -292,18 +297,18 @@ int main(int argc, char* argv[]) {
 
 	// Combine APPLgrid weights "W" with the evolution operators "M1a" and "M2a" and produce "Wt"
 	double *H = new double[nsubproc];
-	double ****Wt = new double***[n1b+1];
+	Wt[ibin][pto] = new double***[n1b+1];
 	for(int alpha=0; alpha<n1b+1; alpha++) {
 	  double perc = (double) 100 * alpha / n1b;
 	  cout << "APPLgridEvolutionFilter() Info: Combining APPLgrid weights with evolution operators: " << setprecision(3) << setw(4) << perc << " % done" << endl;
 	  if(alpha != n1b) cout << "\x1b[A";
-	  Wt[alpha] = new double**[n2b+1];
+	  Wt[ibin][pto][alpha] = new double**[n2b+1];
 	  for(int beta=0; beta<n2b+1; beta++) {
-	    Wt[alpha][beta] = new double*[13];
+	    Wt[ibin][pto][alpha][beta] = new double*[13];
 	    for(int i=0; i<13; i++) {
-	      Wt[alpha][beta][i] = new double[13];
+	      Wt[ibin][pto][alpha][beta][i] = new double[13];
 	      for(int j=0; j<13; j++) {
-		Wt[alpha][beta][i][j] = 0;
+		Wt[ibin][pto][alpha][beta][i][j] = 0;
 		for(int rho=0; rho<nx1; rho++) {
 		  for(int sigma=0; sigma<nx2; sigma++) {
 		    double *f1 = M1a[alpha][rho][i];
@@ -312,11 +317,11 @@ int main(int argc, char* argv[]) {
 		    genpdf->evaluate(f1,f2,H);
 		    // Combine luminosities with weights
 		    for (int ip=0; ip<nsubproc; ip++) {
-		      Wt[alpha][beta][i][j] += W[rho][sigma][ip] * H[ip];
+		      Wt[ibin][pto][alpha][beta][i][j] += W[rho][sigma][ip] * H[ip];
 		    }
-		    if(Wt[alpha][beta][i][j] != 0) {
+		    if(Wt[ibin][pto][alpha][beta][i][j] != 0) {
 		      FlavMap[i][j] = true;
-		      Channels[i][j] += Wt[alpha][beta][i][j];
+		      Channels[i][j] += Wt[ibin][pto][alpha][beta][i][j];
 		    }
 		  }
 		}
@@ -332,7 +337,7 @@ int main(int argc, char* argv[]) {
       }
     }
   }
-  delete g;
+
   /*
   // Write Flavour Map
   cout << "Final flavour map:" << endl;
@@ -379,7 +384,7 @@ int main(int argc, char* argv[]) {
 	    }
 	  }
 	}
-	PartChann.push_back (proc);
+	PartChann.push_back(proc);
       }
     }
   }
@@ -392,13 +397,6 @@ int main(int argc, char* argv[]) {
   }
   //for(int ip=0; ip<Nchannels; ip++) cout << PartChann[ip] << endl;
   cout << "  " << endl;
-
-
-
-
-
-
-
 
   // Output grid
   // Fill vector of luminosities
@@ -424,14 +422,32 @@ int main(int argc, char* argv[]) {
   string pdffile = "apfel.config";
   new lumi_pdf(pdffile,luminosities);
 
-  /*
-  const appl::grid *ogrid = NULL;
-  ogrid = new appl::grid(3, 1e0, 10000e0,  3,  // Dummy  
-			 30, 1e-7,    1e0,  3,  // Dummy
-			 g->Nobs(), g->obsmin(), g->obsmax(), 
-			 pdffile, 
-			 g->leadingOrder(), g->nloops());
+  // Open the output grid with some temporay parameters that will be
+  // redefined below.
+  igrid = g->weightgrid(0,0);
 
+  const appl::grid *og = NULL;
+  og = new appl::grid(1, Q20, Q20, 0,
+		      igrid->getNx1(), igrid->getx1min(), 1e0, igrid->yorder(),    // Temporary parameters to be redefined below
+		      g->Nobs(), g->obsmin(), g->obsmax(), 
+		      pdffile, 
+		      g->leadingOrder(), g->nloops());
+
+  for (int ibin=0; ibin<nbin; ibin++) {
+    for (int o=0; o<=no; o++) {
+      int pto = o;
+
+      // redefine the limits by hand
+      igrid = g->weightgrid(pto,ibin);
+      cout << ibin << "  " << pto << "  " << igrid->getNQ2() << "  " << igrid->getQ2min() << "  " << igrid->getQ2max() << "  " << igrid->tauorder() << "  " << igrid->getNx1() << "  " << igrid->yorder() << "  " << igrid->getx1min() << "  " << igrid->getx2min() << endl;
+
+      og->redefine(ibin, pto, 1, Q20, Q20, 60, 1e-5, 1e0);
+      //og->redefine(ibin, pto, 1, Q20, Q20, igrid->getNx1(), igrid->getx2max(), 1e0);
+    }
+  }
+
+
+  /*
       NQ2      = igrid->getNQ2();
       Nx1      = igrid->getNx1();
       Nx2      = igrid->getNx2();
@@ -452,6 +468,9 @@ int main(int argc, char* argv[]) {
 			 "pollo",
 			 g->leadingOrder(), g->nloops());
   */
+  delete g;
+
+
   cout << "APPLgridEvolutionFilter() Info: Evolution included in " << argv[1] << endl;
   cout << "  " << endl;
   return 0;
