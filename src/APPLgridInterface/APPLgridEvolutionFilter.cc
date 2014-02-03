@@ -160,7 +160,7 @@ int main(int argc, char* argv[]) {
 	cout << "APPLgridEvolutionFilter() Info: Computing evolution operator on grid 1 ..." << endl;
 	M1 = new double[14*14*(n1b+1)*(n1b+1)];
 	APFEL::SetPerturbativeOrder(0);
-	//APFEL::SetFFNS(6);
+	//APFEL::SetFFNS(3);
 	APFEL::ExternalEvolutionOperator(Q0,Q,n1b,&xext1v[0],M1);
 
 	// Grid 2
@@ -275,16 +275,16 @@ int main(int argc, char* argv[]) {
 	      }
 	    }
 	    /*
-	    if(beta == sigma) {
+	    //if(beta == sigma) {
 	      cout << "beta = " << beta << " sigma = " << sigma << endl;
 	      for(int j=0; j<13; j++) {
 		for(int l=0; l<13; l++) {
-		  cout << M2a[beta][sigma][j][l] << "  ";
+		  cout << M2a[beta][sigma][l][j] << "  ";
 		}
 		cout << endl;
 	      }
 	      cout << "****************************************" << endl;
-	    }
+	    //}
 	    */
 	  }
 	}
@@ -333,7 +333,6 @@ int main(int argc, char* argv[]) {
     }
   }
   delete g;
-
   /*
   // Write Flavour Map
   cout << "Final flavour map:" << endl;
@@ -352,8 +351,7 @@ int main(int argc, char* argv[]) {
   }
   cout << "  " << endl;
   */
-
-  // Evaluate and write Flavour map.
+  // Evaluate Flavour map.
   // First count how many non-zero elements are there.
   // This sets the maximum number of channels.
   int MaxChannels = 0;
@@ -362,7 +360,6 @@ int main(int argc, char* argv[]) {
       if(Channels[i][j] != 0) MaxChannels++;
     }
   }
-
   vector<string> PartChann;
   string proc;
   for(int i=0; i<13; i++) {
@@ -373,7 +370,7 @@ int main(int argc, char* argv[]) {
 	for(int k=0; k<13; k++) {
 	  for(int l=0; l<13; l++) {
 	    if(!(k == i && l == j)) {
-	      double eps = 1e-8;
+	      double eps = 1e-6;
 	      double ratio = abs( 1 - Channels[k][l] / Channels[i][j] );
 	      if(ratio < eps) {
 		proc += " + " + flavour[k] + flavour[l];
@@ -388,33 +385,52 @@ int main(int argc, char* argv[]) {
   }
 
   int Nchannels = PartChann.size();
-  cout << "APPLgridEvolutionFilter() Info: Number of independent channels: " << Nchannels << endl;
+  cout << "APPLgridEvolutionFilter() Info: Number of independent channels after evolution: " << Nchannels << endl;
   if(Nchannels > MaxChannels) {
     cout << "APPLgridEvolutionFilter() Error: The number of independent channels exceeds the maximum allowed" << endl;
     exit(-10);
   }
-  for(int ip=0; ip<Nchannels; ip++) cout << PartChann[ip] << endl;
+  //for(int ip=0; ip<Nchannels; ip++) cout << PartChann[ip] << endl;
   cout << "  " << endl;
 
-  /*
+
+
+
+
+
+
+
   // Output grid
-  // Initialize output grid with dummy parameters that will be
-  // tuned below.
+  // Fill vector of luminosities
   std::vector<int> luminosities;
+  luminosities.push_back(Nchannels);
+
+  for(int ip=0 ; ip<Nchannels; ip++) {
+
+    luminosities.push_back(ip);
+    int nproc = count(PartChann[ip].begin(),PartChann[ip].end(),'+') + 1;
+    luminosities.push_back(nproc);
+
+    /// loop over different parton-parton combinations within each luminosity
+    for (int iproc=0; iproc<nproc; iproc++) {
+      int part1 = FlavourCode(PartChann[ip].substr(7*iproc,2));
+      int part2 = FlavourCode(PartChann[ip].substr(7*iproc+2,2));
+
+      luminosities.push_back(part1);
+      luminosities.push_back(part2);
+    }
+  }
+
   string pdffile = "apfel.config";
+  new lumi_pdf(pdffile,luminosities);
 
-  new lumi_pdf(pdffile,luminosities); 
-
+  /*
   const appl::grid *ogrid = NULL;
-  ogrid = new appl::grid(10, 1e0, 10000e0,  3,  // Dummy  
-			 10, 1e-7,    1e0,  3,  // Dummy
+  ogrid = new appl::grid(3, 1e0, 10000e0,  3,  // Dummy  
+			 30, 1e-7,    1e0,  3,  // Dummy
 			 g->Nobs(), g->obsmin(), g->obsmax(), 
 			 pdffile, 
 			 g->leadingOrder(), g->nloops());
-
-
-
-
 
       NQ2      = igrid->getNQ2();
       Nx1      = igrid->getNx1();
@@ -436,7 +452,32 @@ int main(int argc, char* argv[]) {
 			 "pollo",
 			 g->leadingOrder(), g->nloops());
   */
-  cout << "APPLgridEvolutionFilter(): Evolution included in " << argv[1] << endl;
+  cout << "APPLgridEvolutionFilter() Info: Evolution included in " << argv[1] << endl;
   cout << "  " << endl;
   return 0;
+}
+
+// Function that returns the flavour code
+int FlavourCode(string Flavour)
+{
+  int code;
+
+  if(Flavour == "t~")      code = -6;
+  else if(Flavour == "b~") code = -5;
+  else if(Flavour == "c~") code = -4;
+  else if(Flavour == "s~") code = -3;
+  else if(Flavour == "u~") code = -2;
+  else if(Flavour == "d~") code = -1;
+  else if(Flavour == "g ") code =  0;
+  else if(Flavour == "d ") code =  1;
+  else if(Flavour == "u ") code =  2;
+  else if(Flavour == "s ") code =  3;
+  else if(Flavour == "c ") code =  4;
+  else if(Flavour == "b ") code =  5;
+  else if(Flavour == "t ") code =  6;
+  else {
+    cout << "APPLgridEvolutionFilter() Error: Unknown flavour" << endl;
+    exit(-10);
+  }
+  return code;
 }
