@@ -21,3 +21,5 @@
 #include "appl_grid/vrapz_pdf.h"
 
 using namespace appl;
+
+int FlavourCode(string Flavour);
