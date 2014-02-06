@@ -100,6 +100,11 @@ namespace APFEL {
     fenableevolutionoperator(&eo);
   }
 
+  void LockGrids(bool lg)
+  {
+    flockgrids(&lg);
+  }
+
   double HeavyQuarkMass(int i,double Q)
   {
     return fheavyquarkmass(&i,&Q);

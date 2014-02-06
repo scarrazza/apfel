@@ -115,7 +115,8 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/LHAPDFgrid.lo Evolution/CleanUp.lo \
 	Evolution/EnableWelcomeMessage.lo \
 	Evolution/EnableEvolutionOperator.lo \
-	Evolution/ExternalEvolutionOperator.lo
+	Evolution/ExternalEvolutionOperator.lo \
+	Evolution/LockGrids.lo
 am__objects_3 = Evolution/interpolants.lo
 am__objects_4 = Evolution/SplittingFunctions.lo
 am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
@@ -379,7 +380,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/SetRenFacRatio.f Evolution/SetTheory.f Evolution/SetVFNS.f Evolution/SetMaxFlavourPDFs.f \
 	Evolution/SetMaxFlavourAlpha.f Evolution/SetReplica.f Evolution/AlphaQCD.f Evolution/AlphaQED.f Evolution/HeavyQuarkMass.f \
 	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f \
-	Evolution/ExternalEvolutionOperator.f
+	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f
 
 INTER = Evolution/interpolants.f
 SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f
@@ -519,6 +520,8 @@ Evolution/EnableWelcomeMessage.lo: Evolution/$(am__dirstamp) \
 Evolution/EnableEvolutionOperator.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/ExternalEvolutionOperator.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/LockGrids.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)

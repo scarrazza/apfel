@@ -2,7 +2,7 @@
 *
 *     EnableWelcomeMessage.f:
 *
-*     This subroutine enable or disable the priting of the Welcome
+*     This subroutine enables or disables the priting of the Welcome
 *     message.
 *
 ************************************************************************
