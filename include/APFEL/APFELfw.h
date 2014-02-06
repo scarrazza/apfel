@@ -55,6 +55,9 @@ extern "C" {
 #define fenableevolutionoperator FC_FUNC(enableevolutionoperator,ENABLEEVOLUTIONOPERATOR)
   void fenableevolutionoperator(bool*);
 
+#define flockgrids FC_FUNC(lockgrids,LOCKGRIDS)
+  void flockgrids(bool*);
+
 #define fheavyquarkmass FC_FUNC(heavyquarkmass,HEAVYQUARKMASS)
   double fheavyquarkmass(int*,double*);
 

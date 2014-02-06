@@ -114,6 +114,12 @@ ccccccccccccc
       end subroutine fenableevolutionoperator
 
 ccccccccccccc      
+      subroutine flockgrids(lg)
+      logical lg
+      call LockGrids(lg)
+      end subroutine flockgrids
+
+ccccccccccccc      
       function fheavyquarkmass(i,Q)
       integer i
       double precision Q,fheavyquarkmass

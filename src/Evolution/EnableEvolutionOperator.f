@@ -2,7 +2,7 @@
 *
 *     EnableEvolutionOperator.f:
 *
-*     This subroutine enable or disable the computation of the global
+*     This subroutine enables or disables the computation of the global
 *     evolution operator that can be used a posteriori to evolve any
 *     PDF set.
 *

@@ -27,6 +27,7 @@
       include "../commons/grid.h"
       include "../commons/pdfset.h"
       include "../commons/Replica.h"
+      include "../commons/lock.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -44,6 +45,7 @@
       if(InMFA.ne."done")     call SetMaxFlavourAlpha(6)
       if(InPDFs.ne."done")    call SetPDFset("ToyLH")
       if(InRep.ne."done")     call SetReplica(0)
+      if(InLock.ne."done")    call LockGrids(.false.)
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,80,3,1d-5)

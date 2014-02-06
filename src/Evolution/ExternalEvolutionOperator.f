@@ -6,11 +6,11 @@
 *     user-given external grid starting from the "internal" evolution
 *     operators on the internal x-space grid of APFEL.
 *
-*     The evolution operator "M" on the external grid "xext" is given
+*     The evolution operator "M" on the external grid "xint" is given
 *     as one-dimensional array in order to be passed to the c++ wrapper.
 *
 ************************************************************************
-      subroutine ExternalEvolutionOperator(Q0,Q,n,xext,M)
+      subroutine ExternalEvolutionOperator(Q0,Q,n,xint,M)
 *
       implicit none
 *
@@ -20,19 +20,13 @@
 **
 *     Input Variables
 *
-      integer n
       double precision Q0,Q
-      double precision xext(0:n)
 **
 *     Internal Variables
 *
       integer k
       integer i,j
-      integer alpha,beta,alphap,betap
-c      double precision w_int,w_int_ext
-      double precision w_int_herm,xint(0:200)
-      double precision inta(ngrid_max,0:nint_max,0:n)
-      double precision intb(ngrid_max,0:n,0:nint_max)
+      integer alpha,beta
       double precision eps
       parameter(eps=1d-12)
 
@@ -41,22 +35,9 @@ c      double precision w_int,w_int_ext
 **
 *     Output Variables
 *
-      double precision M(0:14*14*(n+1)*(n+1)-1)
-*
-*     Initialize evolution operator
-*
-      do alphap=0,n
-         do betap=0,n
-            do i=0,13
-               do j=0,13
-                  k = i + 14 * ( j + 14 * ( alphap + (n+1) * betap ) )
-                  M(k) = 0d0
-                  if(Q0.eq.Q.and.betap.eq.alphap.and.j.eq.i) M(k) = 1d0
-               enddo
-            enddo
-         enddo
-      enddo
-      if(Q0.eq.Q) return
+      integer n
+      double precision xint(0:200)
+      double precision M(0:14*14*(200+1)*(200+1)-1)
 *
 *     Disable welcome message
 *
@@ -66,42 +47,6 @@ c      double precision w_int,w_int_ext
 *
       call EnableEvolutionOperator(.true.)
 *
-*     Checks
-*
-      if(dabs(xext(n)-1d0).gt.eps)then
-         write(6,*) "In src/Evolution/ExternalEvolutionOperator.f:"
-         write(6,*) "The upper limit of the external grid must be"
-         write(6,*) "equal to 1, while n, xext(n) =",n,xext(n)
-         call exit(-10)
-      endif
-*
-      if(xext(0).lt.1d-7)then
-         write(6,*) "In src/Evolution/ExternalEvolutionOperator.f:"
-         write(6,*) "Lower limit of the external grid must be"
-         write(6,*) "bigger than 10^-7, while xext(0) =",xext(0)
-         call exit(-10)
-      endif
-*
-*     Tuning of the internal grid
-*
-      call SetQLimits(0.5d0,Q+eps)
-*
-      if(xext(0).le.1d-5)then
-         call SetNumberOfGrids(3)
-         call SetGridParameters(1,120,3,xext(0))
-         call SetGridParameters(2,80,5,1d-1)
-         call SetGridParameters(3,50,5,8d-1)
-      elseif(xext(0).le.1d-3)then
-         call SetNumberOfGrids(3)
-         call SetGridParameters(1,110,3,xext(0))
-         call SetGridParameters(2,70,5,2d-1)
-         call SetGridParameters(3,40,5,9d-1)
-      else
-         call SetNumberOfGrids(2)
-         call SetGridParameters(1,120,5,xext(0))
-         call SetGridParameters(2,45,5,85d-1)
-      endif
-*
 *     Initializes integrals on the grids
 *
       call InitializeAPFEL
@@ -110,81 +55,73 @@ c      double precision w_int,w_int_ext
 *
       call EvolveAPFEL(Q0,Q)
 *
-*     Interpolation functions
+*     Set grid
 *
-      do igrid=1,ngrid
-         k = inter_degree(igrid)
-         do alpha=0,nin(igrid)
-            xint(alpha) = xg(igrid,alpha)
-         enddo
-         do alphap=0,n
-            do alpha=0,nin(igrid)
-c               inta(igrid,alpha,alphap) = w_int(k,alpha,xext(alphap))
-c               intb(igrid,alphap,alpha) = 
-c     1              w_int_ext(n,xext,k,alphap,xg(igrid,alpha))
-               inta(igrid,alpha,alphap) = 
-     1              w_int_herm(nin(igrid),xint,alpha,xext(alphap))
-               intb(igrid,alphap,alpha) = 
-     1              w_int_herm(n,xext,alphap,xint(alpha))
-            enddo
-         enddo
+      n = nin(0)
+      do alpha=0,n
+         xint(alpha) = xg(0,alpha)
       enddo
 *
 *     Compute Evolution Operator
 *
-      do alphap=0,n
+      do alpha=0,n
+        do beta=0,n
+            do i=-6,6
+               do j=-6,6
+                  k = ( 7 + i ) + 14 * ( ( 7 + j ) 
+     1                 + 14 * ( alpha + ( n + 1 ) * beta ) )
+                  M(k) = 0d0
+               enddo
+            enddo
+         enddo
+      enddo
+*
+      do alpha=0,n
          do igrid=1,ngrid
-            if(xext(alphap).ge.xmin(igrid).and.
-     1         xext(alphap).lt.xmin(igrid+1))then
+            if(xint(alpha).ge.xmin(igrid).and.
+     1         xint(alpha).lt.xmin(igrid+1))then
                goto 101
             endif
          enddo
- 101     do betap=alphap,n
+ 101     do beta=alpha,n
             do i=-nff,nff
                do j=-nfi,nfi
                   k = ( 7 + i ) + 14 * ( ( 7 + j ) 
-     1              + 14 * ( alphap + ( n + 1 ) * betap ) )
-                  do alpha=0,nin(igrid)
-                     do beta=alpha,nin(igrid)
-                        M(k) = M(k)
-     1                       + inta(igrid,alpha,alphap) 
-     2                       * PhQCD(igrid,i,j,alpha,beta) 
-     3                       * intb(igrid,betap,beta)
-                     enddo
-                  enddo
+     1                 + 14 * ( alpha + ( n + 1 ) * beta ) )
+                  M(k) = PhQCD(igrid,i,j,alpha,beta) 
                   if(dabs(M(k)).lt.eps) M(k) = 0d0
                enddo
             enddo
          enddo
       enddo
 *
-      do alphap=0,n
-         call toyLHPDFs(xext(alphap),xpd)
+      do alpha=0,n
+         call toyLHPDFs(xint(alpha),xpd)
          do i=-6,6
-            f0(i,alphap) = xpd(i)
+            f0(i,alpha) = xpd(i)
          enddo
       enddo
 *
-      do alphap=0,n
+      do alpha=0,n
          do i=-6,6
-            fph(0,i,alphap) = 0d0
-            do betap=0,n
+            fph(0,i,alpha) = 0d0
+            do beta=0,n
                do j=-6,6
                   k = ( 7 + i ) + 14 * ( ( 7 + j ) 
-     1              + 14 * ( alphap + ( n + 1 ) * betap ) )
-                  fph(0,i,alphap) = fph(0,i,alphap) + M(k) * f0(j,betap)
+     1              + 14 * ( alpha + ( n + 1 ) * beta ) )
+                  fph(0,i,alpha) = fph(0,i,alpha) + M(k) * f0(j,beta)
                enddo
             enddo
          enddo
       enddo
 c*
-c      do alphap=0,n
-c         do betap=0,n
-c            write(58,*) alphap,betap
+c      do alpha=0,n
+c         do beta=0,n
+c            write(58,*) alpha,beta
 c            do i=1,13
 c               write(58,"(13(2x,f8.5))")
 c     1              (M( i + 14 * ( j 
-c     2              + 14 * ( alphap + ( n + 1 ) * betap ) )),j=1,13)
+c     2              + 14 * ( alpha + ( n + 1 ) * beta ) )),j=1,13)
 c            enddo
 c         enddo
 c      enddo

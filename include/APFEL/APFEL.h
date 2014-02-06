@@ -73,6 +73,9 @@ namespace APFEL {
   /// Enables evolution operator computation
   void EnableEvolutionOperator(bool);
 
+  /// Lock internal subgrids
+  void LockGrids(bool);
+
   /// Returns Heavy Quark Masses
   double HeavyQuarkMass(int,double);
   
