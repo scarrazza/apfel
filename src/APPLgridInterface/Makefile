@@ -20,7 +20,7 @@ GCC = g++
 
 # main programs and required modules 
 
-MAIN = APPLgridEvolutionFilter
+MAIN = APPLgridEvolutionFilter TestConvolution
 
 MODULES =
 
