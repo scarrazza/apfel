@@ -43,6 +43,21 @@ c      double precision w_int,w_int_ext
 *
       double precision M(0:14*14*(n+1)*(n+1)-1)
 *
+*     Initialize evolution operator
+*
+      do alphap=0,n
+         do betap=0,n
+            do i=0,13
+               do j=0,13
+                  k = i + 14 * ( j + 14 * ( alphap + (n+1) * betap ) )
+                  M(k) = 0d0
+                  if(Q0.eq.Q.and.betap.eq.alphap.and.j.eq.i) M(k) = 1d0
+               enddo
+            enddo
+         enddo
+      enddo
+      if(Q0.eq.Q) return
+*
 *     Disable welcome message
 *
       call EnableWelcomeMessage(.false.)
@@ -116,17 +131,6 @@ c     1              w_int_ext(n,xext,k,alphap,xg(igrid,alpha))
       enddo
 *
 *     Compute Evolution Operator
-*
-      do alphap=0,n
-         do betap=0,n
-            do i=0,13
-               do j=0,13
-                  k = i + 14 * ( j + 14 * ( alphap + (n+1) * betap ) )
-                  M(k) = 0d0
-               enddo
-            enddo
-         enddo
-      enddo
 *
       do alphap=0,n
          do igrid=1,ngrid
