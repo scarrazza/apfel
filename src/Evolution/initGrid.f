@@ -75,10 +75,6 @@
       do ix=1,nin(igrid)+inter_degree(igrid)
          xg(igrid,ix) = xg(igrid,ix-1) * exp( step(igrid) )
       enddo
-      do ix=0,nin(igrid)!+inter_degree(igrid)
-         write(59,*)igrid,ix,xg(igrid,ix)
-      enddo
-      write(59,*) "  "
 *
       return
       end
