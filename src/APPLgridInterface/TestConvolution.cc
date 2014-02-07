@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     exit(1);
   }
 
-  const string pdfname = "toyLH_LO.LHgrid";  
+  const string pdfname = "toyLH_FFN_LO.LHgrid";
   int iset = 0; // Central set
   LHAPDF::initPDFSet(pdfname,iset);
   LHAPDF::initPDF(iset);
@@ -68,27 +68,18 @@ int main(int argc, char* argv[]) {
       cout << obs1 << "  " << obs2 << "  " << reldiff << endl;
     }
     cout << " " << endl;
-
     /*
     cout << "*************************************" << endl;
     for(int iproc=0; iproc<12; iproc++) {
-      vector<double> dist1 = g1->vconvolute_subproc(iproc, evolvepdf_, alphaspdf_, -nloop);
+      int map[12] = {11, 3, 9, 2, 7, 5, 6, 4, 1,10, 0, 8};
+      vector<double> dist1 = g1->vconvolute_subproc(map[iproc], evolvepdf_, alphaspdf_, -nloop);
       vector<double> dist2 = g2->vconvolute_subproc(iproc, evolvepdf_, alphaspdf_,  nloop);
 
-      cout << " " << endl;
       for (unsigned int i=0; i<dist1.size(); i++) {
 	double obs1 = dist1.at(i);
-	cout << "obs1 = " << obs1 << endl;
-	//double ref1 = g1->getReference()->GetBinContent(i+1);
-	//cout << "obs1 = " << obs1 << ", ref1 = " << ref1 << endl;
-      }
-
-      cout << " " << endl;
-      for (unsigned int i=0; i<dist2.size(); i++) {
 	double obs2 = dist2.at(i);
-	cout << "obs2 = " << obs2 << endl;
-	//double ref2 = g2->getReference()->GetBinContent(i+1);
-	//cout << "obs2 = " << obs2 << ", ref2 = " << ref2 << endl;
+	double reldiff = 100 * ( obs1 - obs2 ) / obs1;
+	cout << obs1 << "  " << obs2 << "  " << reldiff << endl;
       }
     }
     */

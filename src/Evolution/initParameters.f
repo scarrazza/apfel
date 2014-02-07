@@ -32,7 +32,6 @@
 *     Initialize default parameters (those that were not initialized before)
 *
       if(InWelcome.ne."done") call EnableWelcomeMessage(.true.)
-      if(InEvolOp.ne."done")  call EnableEvolutionOperator(.false.)
       if(InScales.ne."done")  call SetQLimits(0.5d0,400d0)
       if(InPt.ne."done")      call SetPerturbativeOrder(2)
       if(InEvs.ne."done")     call SetVFNS
@@ -45,6 +44,7 @@
       if(InMFA.ne."done")     call SetMaxFlavourAlpha(6)
       if(InPDFs.ne."done")    call SetPDFset("ToyLH")
       if(InRep.ne."done")     call SetReplica(0)
+      if(InEvolOp.ne."done")  call EnableEvolutionOperator(.false.)
       if(InLock.ne."done")    call LockGrids(.false.)
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
