@@ -41,6 +41,10 @@
          xg(igrid,ix) = 0d0
       enddo
 *
+*     Set density factor to one by default
+*
+      DensityFactor(igrid) = 1
+*
 *     In case the grids have been locked ...
 *     (Needed to export the evolution operator)
 *
@@ -59,12 +63,12 @@
             xmin(igrid) = xg(igrid-1,ix)
          endif
 *
-*     Find the closest multiple of "nin(igrid-1) - ix + 1" to "nin(igrid)"
-*     and replace "nin(igrid)".
+*     Find the closest multiple of "nin(igrid-1) - ix + 1" to "nin(igrid)",
+*     i.e. "DensityFactor(igrid)", and replace "nin(igrid)"
 *
-         nin(igrid) = nint( dble( nin(igrid) + 1 ) 
-     1              / dble( nin(igrid-1) - ix + 1 ) ) 
-     2              * ( nin(igrid-1) - ix + 1 )
+         DensityFactor(igrid) = nint( dble( nin(igrid) ) 
+     1                        / dble( nin(igrid-1) - ix ) )
+         nin(igrid) = DensityFactor(igrid) * ( nin(igrid-1) - ix )
       endif
 *     
 *     Now contruct the grid

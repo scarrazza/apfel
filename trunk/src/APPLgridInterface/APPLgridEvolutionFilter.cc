@@ -21,6 +21,9 @@
 #include "appl_grid/lumi_pdf.h"
 #include "appl_grid/SparseMatrix3d.h"
 
+// LHAPDF
+#include "LHAPDF/LHAPDF.h"
+
 using namespace std;
 
 int main(int argc, char* argv[]) {
@@ -94,8 +97,8 @@ int main(int argc, char* argv[]) {
     ntau[ibin] = new int[no];
 
     // Loop over the perturbative orders
-    for(int pto=0; pto<=no; pto++) {
-    //for(int pto=1; pto<2; pto++) {
+    //for(int pto=0; pto<=no; pto++) {
+    for(int pto=1; pto<2; pto++) {
       if(pto == 0) cout << "APPLgridEvolutionFilter() Info: Perturbative order: LO " << endl;
       if(pto == 1) cout << "APPLgridEvolutionFilter() Info: Perturbative order: NLO " << endl;
       if(pto == 2) cout << "APPLgridEvolutionFilter() Info: Perturbative order: NNLO " << endl;
@@ -144,8 +147,8 @@ int main(int argc, char* argv[]) {
 	  if(ix1 > 0) {
 	    deltap = delta;
 	    ap     = a;
-	    delta = igrid->gety1(iy1) - igrid->gety1(iy1+1);
-	    a     = ( delta - log( xext1v[ix1-1] / xext1v[ix1] ) ) / ( xext1v[ix1-1] - xext1v[ix1] );
+	    delta  = igrid->gety1(iy1) - igrid->gety1(iy1+1);
+	    a      = ( delta - log( xext1v[ix1-1] / xext1v[ix1] ) ) / ( xext1v[ix1-1] - xext1v[ix1] );
 
 	    // Check that "delta" and "a" are constant all over the grid
 	    if(ix1 > 1) {
@@ -196,8 +199,8 @@ int main(int argc, char* argv[]) {
 	    if(ix2 > 0) {
 	      deltap = delta;
 	      ap     = a;
-	      delta = igrid->gety2(iy2) - igrid->gety2(iy2+1);
-	      a     = ( delta - log( xext2v[ix2-1] / xext2v[ix2] ) ) / ( xext2v[ix2-1] - xext2v[ix2] );
+	      delta  = igrid->gety2(iy2) - igrid->gety2(iy2+1);
+	      a      = ( delta - log( xext2v[ix2-1] / xext2v[ix2] ) ) / ( xext2v[ix2-1] - xext2v[ix2] );
 
 	      // Check that "delta" and "a" are constant all over the grid
 	      if(ix2 > 1) {
@@ -243,13 +246,13 @@ int main(int argc, char* argv[]) {
 	cout << "APPLgridEvolutionFilter() Info: Extracting original weights ..." << endl;
 	bool NonZeroWeights = false;
 	W[ibin][pto][itau] = new double**[nx1];
-	for(int rho=0; rho<nx1; rho++) {
-	  W[ibin][pto][itau][rho] = new double*[nx2];
-	  for(int sigma=0; sigma<nx2; sigma++) {
-	    W[ibin][pto][itau][rho][sigma] = new double[nsubproc];
+	for(int alpha=0; alpha<nx1; alpha++) {
+	  W[ibin][pto][itau][alpha] = new double*[nx2];
+	  for(int beta=0; beta<nx2; beta++) {
+	    W[ibin][pto][itau][alpha][beta] = new double[nsubproc];
 	    for(int ip=0; ip<nsubproc; ip++) {
-	      W[ibin][pto][itau][rho][sigma][ip] = (*(const SparseMatrix3d*) igrid->weightgrid(ip))(itau,nx1-1-rho,nx2-1-sigma);
-	      if(W[ibin][pto][itau][rho][sigma][ip] != 0) NonZeroWeights = true;
+	      W[ibin][pto][itau][alpha][beta][ip] = (*(const SparseMatrix3d*) igrid->weightgrid(ip))(itau,nx1-1-alpha,nx2-1-beta);
+	      if(W[ibin][pto][itau][alpha][beta][ip] != 0) NonZeroWeights = true;
 	    }
 	  }
 	}
@@ -257,7 +260,9 @@ int main(int argc, char* argv[]) {
 	if(NonZeroWeights) {
 	  // Call APFEL and compute the evolution operators
 	  APFEL::SetPerturbativeOrder(0);
-	  //APFEL::SetFFNS(3);
+	  //APFEL::SetMaxFlavourPDFs(4);
+	  //APFEL::SetMaxFlavourAlpha(4);
+	  APFEL::SetFFNS(3);
 	  double *M1 = NULL;
 	  M1 = new double[14*14*(n1b[ibin][pto]+1)*(n1b[ibin][pto]+1)];
 	  double *M2 = NULL;
@@ -270,14 +275,14 @@ int main(int argc, char* argv[]) {
 	    xmin[ibin][pto] = min(xext1v[0],xext2v[0]);
 	  }
 	  else {
-	    copy(M1, M1+14*14*(n1b[ibin][pto]+1)*(n1b[ibin][pto]+1), M2);
+	    copy(M1,M1+14*14*(n1b[ibin][pto]+1)*(n1b[ibin][pto]+1),M2);
 	    xmin[ibin][pto] = xext1v[0];
 	  }
 
 	  x1v[ibin][pto] = new double[n1b[ibin][pto]+1];
 	  x2v[ibin][pto] = new double[n2b[ibin][pto]+1];
-	  copy(xext1v.begin(), xext1v.end(), x1v[ibin][pto]);
-	  copy(xext2v.begin(), xext2v.end(), x2v[ibin][pto]);
+	  copy(xext1v.begin(),xext1v.end(),x1v[ibin][pto]);
+	  copy(xext2v.begin(),xext2v.end(),x2v[ibin][pto]);
 
 	  // Put the first evolution operator in a suitable matrix form
 	  double ****M1a = new double***[n1b[ibin][pto]+1];
@@ -285,11 +290,11 @@ int main(int argc, char* argv[]) {
 	    M1a[alpha] = new double**[n1b[ibin][pto]+1];
 	    for(int rho=0; rho<n1b[ibin][pto]+1; rho++) {
 	      M1a[alpha][rho] = new double*[13];
-	      for(int i=0; i<13; i++) {
-		M1a[alpha][rho][i] = new double[13];
-		for(int k=0; k<13; k++) {
-		  int m1 = ( k + 1 ) + 14 * ( ( i + 1 ) + 14 * ( rho   + ( n1b[ibin][pto] + 1 ) * alpha ) );
-		  M1a[alpha][rho][i][k] = M1[m1];
+	      for(int k=0; k<13; k++) {
+		M1a[alpha][rho][k] = new double[13];
+		for(int i=0; i<13; i++) {
+		  int m1 = ( i + 1 ) + 14 * ( ( k + 1 ) + 14 * ( alpha + ( n1b[ibin][pto] + 1 ) * rho ) );
+		  M1a[alpha][rho][k][i] = M1[m1];
 		}
 	      }
 	    }
@@ -302,46 +307,86 @@ int main(int argc, char* argv[]) {
 	    M2a[beta] = new double**[n2b[ibin][pto]+1];
 	    for(int sigma=0; sigma<n2b[ibin][pto]+1; sigma++) {
 	      M2a[beta][sigma] = new double*[13];
-	      for(int j=0; j<13; j++) {
-		M2a[beta][sigma][j] = new double[13];
-		for(int l=0; l<13; l++) {
-		  int m2 = ( l + 1 ) + 14 * ( ( j + 1 ) + 14 * ( sigma   + ( n2b[ibin][pto] + 1 ) * beta ) );
-		  M2a[beta][sigma][j][l] = M2[m2];
+	      for(int l=0; l<13; l++) {
+		M2a[beta][sigma][l] = new double[13];
+		for(int j=0; j<13; j++) {
+		  int m2 = ( j + 1 ) + 14 * ( ( l + 1 ) + 14 * ( beta + ( n2b[ibin][pto] + 1 ) * sigma ) );
+		  M2a[beta][sigma][l][j] = M2[m2];
 		}
 	      }
 	    }
 	  }
 	  delete[] M2;
+	  /*
+	  // Test Evolution operators
+	  APFEL::EnableWelcomeMessage(true);
+	  APFEL::EnableEvolutionOperator(false);
+	  APFEL::SetPDFSet("toyLH_FFN_LO.LHgrid");
+	  APFEL::InitializeAPFEL();
+	  APFEL::EvolveAPFEL(Q0,Q);
+
+	  LHAPDF::initPDFSet("toyLH_FFN_LO.LHgrid");
+	  LHAPDF::initPDF(0);
+
+	  double fOP[n1b[ibin][pto]+1][13];
+	  for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
+	    for(int i=3; i<10; i++) {
+	      fOP[alpha][i] = 0;
+	      for(int rho=0; rho<n1b[ibin][pto]+1; rho++) {
+		for(int k=0; k<13; k++) {
+                  fOP[alpha][i] += M1a[alpha][rho][k][i] * LHAPDF::xfx(x1v[ibin][pto][rho],Q0,k-6);
+		}
+	      }
+	      //cout << i-6 << "  " << x1v[ibin][pto][alpha] << "  " << LHAPDF::xfx(x1v[ibin][pto][alpha],Q,i-6) << "   " << APFEL::xPDF(i-6,x1v[ibin][pto][alpha]) << "  " << fOP[alpha][i] << endl;
+	      double reldiff = 100 * ( LHAPDF::xfx(x1v[ibin][pto][alpha],Q,i-6) - fOP[alpha][i] ) / LHAPDF::xfx(x1v[ibin][pto][alpha],Q,i-6);
+	      if(abs(reldiff) > 1) cout << i-6 << "  " << x1v[ibin][pto][alpha] << "  " << reldiff << endl;
+	    }
+	  }
+	  cout << "   " << endl;
+	  for(int beta=0; beta<n2b[ibin][pto]+1; beta++) {
+	    for(int j=3; j<10; j++) {
+	      fOP[beta][j] = 0;
+	      for(int sigma=0; sigma<n2b[ibin][pto]+1; sigma++) {
+		for(int l=0; l<13; l++) {
+                  fOP[beta][j] += M1a[beta][sigma][l][j] * LHAPDF::xfx(x1v[ibin][pto][sigma],Q0,l-6);
+		}
+	      }
+	      //cout << i-6 << "  " << x1v[ibin][pto][beta] << "  " << LHAPDF::xfx(x1v[ibin][pto][beta],Q,j-6) << "   " << APFEL::xPDF(j-6,x1v[ibin][pto][beta]) << "  " << fOP[beta][j] << endl;
+	      double reldiff = 100 * ( LHAPDF::xfx(x1v[ibin][pto][beta],Q,j-6) - fOP[beta][j] ) / LHAPDF::xfx(x1v[ibin][pto][beta],Q,j-6);
+	      if(abs(reldiff) > 1) cout << j-6 << "  " << x1v[ibin][pto][beta] << "  " << reldiff << endl;
+	    }
+	  }
+	  */
 
 	  // Combine APPLgrid weights "W" with the evolution operators "M1a" and "M2a" and produce "Wt"
 	  double *H = new double[nsubproc];
 	  Wt[ibin][pto][itau] = new double***[n1b[ibin][pto]+1];
-	  for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
-	    double perc = (double) 100 * alpha / n1b[ibin][pto];
+	  for(int rho=0; rho<n1b[ibin][pto]+1; rho++) {
+	    double perc = (double) 100 * rho / n1b[ibin][pto];
 	    cout << "APPLgridEvolutionFilter() Info: Combining APPLgrid weights with evolution operators: " << setprecision(3) << setw(4) << perc << " % done" << endl;
-	    if(alpha != n1b[ibin][pto]) cout << "\x1b[A";
-	    Wt[ibin][pto][itau][alpha] = new double**[n2b[ibin][pto]+1];
-	    for(int beta=0; beta<n2b[ibin][pto]+1; beta++) {
-	      Wt[ibin][pto][itau][alpha][beta] = new double*[13];
-	      for(int i=0; i<13; i++) {
-		Wt[ibin][pto][itau][alpha][beta][i] = new double[13];
-		for(int j=0; j<13; j++) {
-		  Wt[ibin][pto][itau][alpha][beta][i][j] = 0;
-		  for(int rho=0; rho<nx1; rho++) {
-		    for(int sigma=0; sigma<nx2; sigma++) {
-		      double *f1 = M1a[alpha][rho][i];
-		      double *f2 = M2a[beta][sigma][j];
+	    if(rho != n1b[ibin][pto]) cout << "\x1b[A";
+	    Wt[ibin][pto][itau][rho] = new double**[n2b[ibin][pto]+1];
+	    for(int sigma=0; sigma<n2b[ibin][pto]+1; sigma++) {
+	      Wt[ibin][pto][itau][rho][sigma] = new double*[13];
+	      for(int k=0; k<13; k++) {
+		Wt[ibin][pto][itau][rho][sigma][k] = new double[13];
+		for(int l=0; l<13; l++) {
+		  Wt[ibin][pto][itau][rho][sigma][k][l] = 0;
+		  for(int alpha=0; alpha<nx1; alpha++) {
+		    for(int beta=0; beta<nx2; beta++) {
+		      double *f1 = M1a[alpha][rho][k];
+		      double *f2 = M2a[beta][sigma][l];
 		      // Evaluate luminosities
 		      genpdf->evaluate(f1,f2,H);
 		      // Combine luminosities with weights
 		      for(int ip=0; ip<nsubproc; ip++) {
-			Wt[ibin][pto][itau][alpha][beta][i][j] += W[ibin][pto][itau][rho][sigma][ip] * H[ip];
-		      }
-		      if(Wt[ibin][pto][itau][alpha][beta][i][j] != 0) {
-			FlavMap[i][j] = true;
-			Channels[i][j] += Wt[ibin][pto][itau][alpha][beta][i][j];
+			Wt[ibin][pto][itau][rho][sigma][k][l] += W[ibin][pto][itau][alpha][beta][ip] * H[ip];
 		      }
 		    }
+		  }
+		  if(Wt[ibin][pto][itau][rho][sigma][k][l] != 0) {
+		    FlavMap[k][l] = true;
+		    Channels[k][l] += Wt[ibin][pto][itau][rho][sigma][k][l];
 		  }
 		}
 	      }
@@ -354,14 +399,14 @@ int main(int argc, char* argv[]) {
 	else {
 	  cout << "APPLgridEvolutionFilter() Info: All the weights are null: Evolution not needed" << endl;
 	  Wt[ibin][pto][itau] = new double***[n1b[ibin][pto]+1];
-	  for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
-	    Wt[ibin][pto][itau][alpha] = new double**[n2b[ibin][pto]+1];
-	    for(int beta=0; beta<n2b[ibin][pto]+1; beta++) {
-	      Wt[ibin][pto][itau][alpha][beta] = new double*[13];
-	      for(int i=0; i<13; i++) {
-		Wt[ibin][pto][itau][alpha][beta][i] = new double[13];
-		for(int j=0; j<13; j++) {
-		  Wt[ibin][pto][itau][alpha][beta][i][j] = 0;
+	  for(int rho=0; rho<n1b[ibin][pto]+1; rho++) {
+	    Wt[ibin][pto][itau][rho] = new double**[n2b[ibin][pto]+1];
+	    for(int sigma=0; sigma<n2b[ibin][pto]+1; sigma++) {
+	      Wt[ibin][pto][itau][rho][sigma] = new double*[13];
+	      for(int k=0; k<13; k++) {
+		Wt[ibin][pto][itau][rho][sigma][k] = new double[13];
+		for(int l=0; l<13; l++) {
+		  Wt[ibin][pto][itau][rho][sigma][k][l] = 0;
 		}
 	      }
 	    }
@@ -470,8 +515,8 @@ int main(int argc, char* argv[]) {
 
   //for(int ibin=0; ibin<nbin; ibin++) {
   for(int ibin=0; ibin<1; ibin++) {
-    for(int pto=0; pto<=no; pto++) {
-    //for(int pto=1; pto<2; pto++) {
+    //for(int pto=0; pto<=no; pto++) {
+    for(int pto=1; pto<2; pto++) {
 
       // Redefine parameters
       og->redefine(ibin, pto, 1, Q20, Q20, 30, xmin[ibin][pto], 1);
@@ -479,21 +524,20 @@ int main(int argc, char* argv[]) {
       // Access internal grid
       oigrid = og->weightgrid(pto,ibin);
 
-      for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
-         for(int beta=0; beta<n2b[ibin][pto]+1; beta++) {
+      for(int rho=0; rho<n1b[ibin][pto]+1; rho++) {
+         for(int sigma=0; sigma<n2b[ibin][pto]+1; sigma++) {
 	  double *weight = new double[Nchannels];
 	  for(int ip=0; ip<Nchannels; ip++) {
-	    int i = FlavourCode(PartChann[ip].substr(0,2)) + 6;
-	    int j = FlavourCode(PartChann[ip].substr(2,2)) + 6;
+	    int k = FlavourCode(PartChann[ip].substr(0,2)) + 6;
+	    int l = FlavourCode(PartChann[ip].substr(2,2)) + 6;
 	    weight[ip] = 0;
 	    for(int itau=0; itau<ntau[ibin][pto]; itau++) {
 	    //for(int itau=1; itau<2; itau++) {
-	      weight[ip] += Wt[ibin][pto][itau][n1b[ibin][pto]-alpha][n2b[ibin][pto]-beta][i][j];
+	      weight[ip] += Wt[ibin][pto][itau][rho][sigma][k][l];
 	    }
 	  }
 	  // Fill output grid with weights
-	  //og->fill_index(alpha, beta, 0, ibin, weight, pto);
-	  og->fill(x1v[ibin][pto][n1b[ibin][pto]-alpha], x2v[ibin][pto][n2b[ibin][pto]-beta], Q20, og->obs(ibin), weight, pto);
+	  og->fill(x1v[ibin][pto][rho], x2v[ibin][pto][sigma], Q20, og->obs(ibin), weight, pto);
 	}
       }
     }
