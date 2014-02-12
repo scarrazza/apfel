@@ -46,14 +46,15 @@ int main(int argc, char* argv[]) {
 
     vector<double> dist1 = g1->vconvolute(evolvepdf_, alphaspdf_, -nloop);
     vector<double> dist2 = g2->vconvolute(evolvepdf_, alphaspdf_, -nloop);
-    /*
+    //cout << g1->subProcesses() << "   " << g2->subProcesses() << endl;
+
     if(dist1.size() != dist2.size()) {
       cout << "Error: Mismatch in size" << endl;
       cout << "size 1 = " << dist1.size() << endl;
       cout << "size 2 = " << dist2.size() << endl;
       //      exit(-10);
     }
-    */
+
     cout << "Original    Evolved     RelDiff[%]" << endl;
     for (unsigned int i=0; i<dist1.size(); i++) {
       ig1 = g1->weightgrid(nloop,i);
@@ -70,21 +71,30 @@ int main(int argc, char* argv[]) {
     cout << " " << endl;
     /*
     cout << "*************************************" << endl;
-    for(int iproc=0; iproc<12; iproc++) {
-      int map[12] = {11, 3, 9, 2, 7, 5, 6, 4, 1,10, 0, 8};
-      vector<double> dist1 = g1->vconvolute_subproc(map[iproc], evolvepdf_, alphaspdf_, -nloop);
-      vector<double> dist2 = g2->vconvolute_subproc(iproc, evolvepdf_, alphaspdf_,  nloop);
+    double sum1 = 0; 
+    for(int iproc=0; iproc<g1->subProcesses(); iproc++) {
+      vector<double> dist1 = g1->vconvolute_subproc(iproc, evolvepdf_, alphaspdf_,  -nloop);
 
-      for (unsigned int i=0; i<dist1.size(); i++) {
+      for (unsigned int i=0; i<1; i++) {
 	double obs1 = dist1.at(i);
-	double obs2 = dist2.at(i);
-	double reldiff = 100 * ( obs1 - obs2 ) / obs1;
-	cout << obs1 << "  " << obs2 << "  " << reldiff << endl;
+	sum1 += obs1;
+	cout << iproc << "  " << obs1 << endl;
       }
     }
+    cout << "sum1 = " << sum1 << endl;
+    double sum2 = 0;
+    for(int iproc=0; iproc<g2->subProcesses(); iproc++) {
+      vector<double> dist2 = g2->vconvolute_subproc(iproc, evolvepdf_, alphaspdf_, -nloop);
+
+      for (unsigned int i=0; i<1; i++) {
+	double obs2 = dist2.at(i);
+	sum2 += obs2;
+	cout << iproc << "  " << obs2 << endl;
+      }
+    }
+    cout << "sum2 = " << sum2 << endl;
     */
   }
-
   return 0;
 }
 

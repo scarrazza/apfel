@@ -72,22 +72,26 @@ int main(int argc, char* argv[]) {
   cout << "  " << endl;
 
   // Declare the arrays of weights and other stuff
-  double *******Wt = new double******[nbin];
-  double ******W   = new double*****[nbin];
-  double ***x1v   = new double**[nbin];
-  double ***x2v   = new double**[nbin];
-  double **xmin    = new double*[nbin];
-  int **n1b        = new int*[nbin];
-  int **n2b        = new int*[nbin];
-  int **ntau       = new int*[nbin];
+  double *******Wt  = new double******[nbin];
+  double *******M1a = new double******[nbin];
+  double *******M2a = new double******[nbin];
+  double ******W    = new double*****[nbin];
+  double ***x1v     = new double**[nbin];
+  double ***x2v     = new double**[nbin];
+  double **xmin     = new double*[nbin];
+  int **n1b         = new int*[nbin];
+  int **n2b         = new int*[nbin];
+  int **ntau        = new int*[nbin];
 
   // Loop over the bins
-  //for(int ibin=0; ibin<nbin; ibin++) {
-  for(int ibin=0; ibin<1; ibin++) {
+  for(int ibin=0; ibin<nbin; ibin++) {
+  //for(int ibin=0; ibin<1; ibin++) {
     cout << "APPLgridEvolutionFilter() Info: bin " << ibin+1 << " of " << nbin << endl;
     cout << "  " << endl;
 
     Wt[ibin]   = new double*****[no];
+    M1a[ibin]  = new double*****[no];
+    M2a[ibin]  = new double*****[no];
     W[ibin]    = new double****[no];
     x1v[ibin]  = new double*[no];
     x2v[ibin]  = new double*[no];
@@ -118,11 +122,12 @@ int main(int argc, char* argv[]) {
       //cout << "  " << endl;
 
       Wt[ibin][pto]  = new double****[ntau[ibin][pto]];
+      M1a[ibin][pto] = new double****[ntau[ibin][pto]];
+      M2a[ibin][pto] = new double****[ntau[ibin][pto]];
       W[ibin][pto]   = new double***[ntau[ibin][pto]];
 
       // Loop over the grid in Q2
       for(int itau=0; itau<ntau[ibin][pto]; itau++) {
-      //for(int itau=1; itau<2; itau++) {
 	cout << "APPLgridEvolutionFilter() Info: Q2 grid point " << itau+1 << " of " << ntau[ibin][pto] << endl;
 	cout << "  " << endl;
 
@@ -285,16 +290,16 @@ int main(int argc, char* argv[]) {
 	  copy(xext2v.begin(),xext2v.end(),x2v[ibin][pto]);
 
 	  // Put the first evolution operator in a suitable matrix form
-	  double ****M1a = new double***[n1b[ibin][pto]+1];
+	  M1a[ibin][pto][itau] = new double***[n1b[ibin][pto]+1];
 	  for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
-	    M1a[alpha] = new double**[n1b[ibin][pto]+1];
+	    M1a[ibin][pto][itau][alpha] = new double**[n1b[ibin][pto]+1];
 	    for(int rho=0; rho<n1b[ibin][pto]+1; rho++) {
-	      M1a[alpha][rho] = new double*[13];
+	      M1a[ibin][pto][itau][alpha][rho] = new double*[13];
 	      for(int k=0; k<13; k++) {
-		M1a[alpha][rho][k] = new double[13];
+		M1a[ibin][pto][itau][alpha][rho][k] = new double[13];
 		for(int i=0; i<13; i++) {
 		  int m1 = ( i + 1 ) + 14 * ( ( k + 1 ) + 14 * ( alpha + ( n1b[ibin][pto] + 1 ) * rho ) );
-		  M1a[alpha][rho][k][i] = M1[m1];
+		  M1a[ibin][pto][itau][alpha][rho][k][i] = M1[m1];
 		}
 	      }
 	    }
@@ -302,61 +307,21 @@ int main(int argc, char* argv[]) {
 	  delete[] M1;
 
 	  // Put the second evolution operator in a suitable matrix form
-	  double ****M2a = new double***[n2b[ibin][pto]+1];
+	  M2a[ibin][pto][itau] = new double***[n2b[ibin][pto]+1];
 	  for(int beta=0; beta<n2b[ibin][pto]+1; beta++) {
-	    M2a[beta] = new double**[n2b[ibin][pto]+1];
+	    M2a[ibin][pto][itau][beta] = new double**[n2b[ibin][pto]+1];
 	    for(int sigma=0; sigma<n2b[ibin][pto]+1; sigma++) {
-	      M2a[beta][sigma] = new double*[13];
+	      M2a[ibin][pto][itau][beta][sigma] = new double*[13];
 	      for(int l=0; l<13; l++) {
-		M2a[beta][sigma][l] = new double[13];
+		M2a[ibin][pto][itau][beta][sigma][l] = new double[13];
 		for(int j=0; j<13; j++) {
 		  int m2 = ( j + 1 ) + 14 * ( ( l + 1 ) + 14 * ( beta + ( n2b[ibin][pto] + 1 ) * sigma ) );
-		  M2a[beta][sigma][l][j] = M2[m2];
+		  M2a[ibin][pto][itau][beta][sigma][l][j] = M2[m2];
 		}
 	      }
 	    }
 	  }
 	  delete[] M2;
-	  /*
-	  // Test Evolution operators
-	  APFEL::EnableWelcomeMessage(true);
-	  APFEL::EnableEvolutionOperator(false);
-	  APFEL::SetPDFSet("toyLH_FFN_LO.LHgrid");
-	  APFEL::InitializeAPFEL();
-	  APFEL::EvolveAPFEL(Q0,Q);
-
-	  LHAPDF::initPDFSet("toyLH_FFN_LO.LHgrid");
-	  LHAPDF::initPDF(0);
-
-	  double fOP[n1b[ibin][pto]+1][13];
-	  for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
-	    for(int i=3; i<10; i++) {
-	      fOP[alpha][i] = 0;
-	      for(int rho=0; rho<n1b[ibin][pto]+1; rho++) {
-		for(int k=0; k<13; k++) {
-                  fOP[alpha][i] += M1a[alpha][rho][k][i] * LHAPDF::xfx(x1v[ibin][pto][rho],Q0,k-6);
-		}
-	      }
-	      //cout << i-6 << "  " << x1v[ibin][pto][alpha] << "  " << LHAPDF::xfx(x1v[ibin][pto][alpha],Q,i-6) << "   " << APFEL::xPDF(i-6,x1v[ibin][pto][alpha]) << "  " << fOP[alpha][i] << endl;
-	      double reldiff = 100 * ( LHAPDF::xfx(x1v[ibin][pto][alpha],Q,i-6) - fOP[alpha][i] ) / LHAPDF::xfx(x1v[ibin][pto][alpha],Q,i-6);
-	      if(abs(reldiff) > 1) cout << i-6 << "  " << x1v[ibin][pto][alpha] << "  " << reldiff << endl;
-	    }
-	  }
-	  cout << "   " << endl;
-	  for(int beta=0; beta<n2b[ibin][pto]+1; beta++) {
-	    for(int j=3; j<10; j++) {
-	      fOP[beta][j] = 0;
-	      for(int sigma=0; sigma<n2b[ibin][pto]+1; sigma++) {
-		for(int l=0; l<13; l++) {
-                  fOP[beta][j] += M1a[beta][sigma][l][j] * LHAPDF::xfx(x1v[ibin][pto][sigma],Q0,l-6);
-		}
-	      }
-	      //cout << i-6 << "  " << x1v[ibin][pto][beta] << "  " << LHAPDF::xfx(x1v[ibin][pto][beta],Q,j-6) << "   " << APFEL::xPDF(j-6,x1v[ibin][pto][beta]) << "  " << fOP[beta][j] << endl;
-	      double reldiff = 100 * ( LHAPDF::xfx(x1v[ibin][pto][beta],Q,j-6) - fOP[beta][j] ) / LHAPDF::xfx(x1v[ibin][pto][beta],Q,j-6);
-	      if(abs(reldiff) > 1) cout << j-6 << "  " << x1v[ibin][pto][beta] << "  " << reldiff << endl;
-	    }
-	  }
-	  */
 
 	  // Combine APPLgrid weights "W" with the evolution operators "M1a" and "M2a" and produce "Wt"
 	  double *H = new double[nsubproc];
@@ -374,8 +339,8 @@ int main(int argc, char* argv[]) {
 		  Wt[ibin][pto][itau][rho][sigma][k][l] = 0;
 		  for(int alpha=0; alpha<nx1; alpha++) {
 		    for(int beta=0; beta<nx2; beta++) {
-		      double *f1 = M1a[alpha][rho][k];
-		      double *f2 = M2a[beta][sigma][l];
+		      double *f1 = M1a[ibin][pto][itau][alpha][rho][k];
+		      double *f2 = M2a[ibin][pto][itau][beta][sigma][l];
 		      // Evaluate luminosities
 		      genpdf->evaluate(f1,f2,H);
 		      // Combine luminosities with weights
@@ -393,8 +358,6 @@ int main(int argc, char* argv[]) {
 	    }
 	  }
 	  delete[] H;
-	  delete[] M1a;
-	  delete[] M2a;
 	}
 	else {
 	  cout << "APPLgridEvolutionFilter() Info: All the weights are null: Evolution not needed" << endl;
@@ -407,6 +370,32 @@ int main(int argc, char* argv[]) {
 		Wt[ibin][pto][itau][rho][sigma][k] = new double[13];
 		for(int l=0; l<13; l++) {
 		  Wt[ibin][pto][itau][rho][sigma][k][l] = 0;
+		}
+	      }
+	    }
+	  }
+	  M1a[ibin][pto][itau] = new double***[n1b[ibin][pto]+1];
+	  for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
+	    M1a[ibin][pto][itau][alpha] = new double**[n1b[ibin][pto]+1];
+	    for(int rho=0; rho<n1b[ibin][pto]+1; rho++) {
+	      M1a[ibin][pto][itau][alpha][rho] = new double*[13];
+	      for(int k=0; k<13; k++) {
+		M1a[ibin][pto][itau][alpha][rho][k] = new double[13];
+		for(int i=0; i<13; i++) {
+		  M1a[ibin][pto][itau][alpha][rho][k][i] = 0;
+		}
+	      }
+	    }
+	  }
+	  M2a[ibin][pto][itau] = new double***[n2b[ibin][pto]+1];
+	  for(int beta=0; beta<n2b[ibin][pto]+1; beta++) {
+	    M2a[ibin][pto][itau][beta] = new double**[n2b[ibin][pto]+1];
+	    for(int sigma=0; sigma<n2b[ibin][pto]+1; sigma++) {
+	      M2a[ibin][pto][itau][beta][sigma] = new double*[13];
+	      for(int l=0; l<13; l++) {
+		M2a[ibin][pto][itau][beta][sigma][l] = new double[13];
+		for(int j=0; j<13; j++) {
+		  M2a[ibin][pto][itau][beta][sigma][l][j] = 0;
 		}
 	      }
 	    }
@@ -503,20 +492,121 @@ int main(int argc, char* argv[]) {
   string pdffile = "apfel.config";
   new lumi_pdf(pdffile,luminosities);
 
-  // Open the output grid with some temporay parameters that will be
-  // redefined below.
+  // Put bins into an array
+  double *obsbins  = new double[nbin+1];
+  for(int ibin=0; ibin<nbin; ibin++) obsbins[ibin] = g->obslow(ibin);
+  obsbins[nbin] = g->obsmax();
+
+  // Open the output grid with some temporay parameters that will be redefined below
   const appl::igrid* oigrid;
   appl::grid *og = NULL;
+  og = new appl::grid(g->Nobs(), obsbins,
+		      1,  Q20, Q20, 0,
+  		      30, 1e-5,   1, 5,    // Temporary parameters to be adjusted below
+  		      pdffile,
+  		      g->leadingOrder(), g->nloops());
+  /*
   og = new appl::grid( 1,  Q20, Q20, 0,
   		      30, 1e-5,   1, 5,    // Temporary parameters to be adjusted below
   		      g->Nobs()+1, g->obsmin(), g->obsmax(), 
   		      pdffile,
   		      g->leadingOrder(), g->nloops());
+  */
 
-  //for(int ibin=0; ibin<nbin; ibin++) {
-  for(int ibin=0; ibin<1; ibin++) {
+  for(int ibin=0; ibin<nbin; ibin++) {
+  //for(int ibin=0; ibin<1; ibin++) {
     //for(int pto=0; pto<=no; pto++) {
     for(int pto=1; pto<2; pto++) {
+
+      // Test of the computation
+      igrid = g->weightgrid(pto,ibin);
+      for(int itau=0; itau<ntau[ibin][pto]; itau++) {
+
+	// Initial scale PDFs on the grid
+	LHAPDF::initPDFSet("toyLH_FFN_LO.LHgrid");
+	LHAPDF::initPDF(0);
+	double f10[n1b[ibin][pto]+1][13];
+	for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
+	  for(int i=0; i<13; i++) {
+	    f10[alpha][i] = LHAPDF::xfx(x1v[ibin][pto][alpha],Q0,i-6);
+	  }
+	}
+	double f20[n2b[ibin][pto]+1][13];
+	for(int alpha=0; alpha<n2b[ibin][pto]+1; alpha++) {
+	  for(int i=0; i<13; i++) {
+	    f20[alpha][i] = LHAPDF::xfx(x2v[ibin][pto][alpha],Q0,i-6);
+	  }
+	}
+	// Evolve PDFs on the grid with M1a and M2a
+	double f1[n1b[ibin][pto]+1][13];
+	for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
+	  for(int i=0; i<13; i++) {
+	    f1[alpha][i] = 0;
+	    for(int beta=0; beta<n1b[ibin][pto]+1; beta++) {
+	      for(int j=0; j<13; j++) {
+		f1[alpha][i] += M1a[ibin][pto][itau][alpha][beta][j][i] * f10[beta][j];
+	      }
+	    }
+	  }
+	}
+	double f2[n2b[ibin][pto]+1][13];
+	for(int alpha=0; alpha<n2b[ibin][pto]+1; alpha++) {
+	  for(int i=0; i<13; i++) {
+	    f2[alpha][i] = 0;
+	    for(int beta=0; beta<n2b[ibin][pto]+1; beta++) {
+	      for(int j=0; j<13; j++) {
+		f2[alpha][i] += M2a[ibin][pto][itau][alpha][beta][j][i] * f20[beta][j];
+	      }
+	    }
+	  }
+	}
+
+	// Compute predictions
+	double pred1 = 0;
+	for(int alpha=0; alpha<igrid->Ny1(); alpha++) {
+	  for(int beta=0; beta<igrid->Ny2(); beta++) {
+	    double *He = new double[nsubproc];
+	    double *fe1 = f1[alpha];
+	    double *fe2 = f2[beta];
+	    genpdf->evaluate(fe1,fe2,He);
+	    for(int ip=0; ip<nsubproc; ip++) {
+	      pred1 += W[ibin][pto][itau][alpha][beta][ip] * He[ip];
+	    }
+	  }
+	}
+	double pred2 = 0;
+	for(int rho=0; rho<n1b[ibin][pto]+1; rho++) {
+	  for(int sigma=0; sigma<n2b[ibin][pto]+1; sigma++) {
+	    int count = 0;
+	    int nc    = luminosities[count];
+	    for(int ip=0; ip<nc; ip++) {
+	      count += 2;
+	      double H0 = 0;
+	      int nproc = luminosities[count];
+	      for(int iproc=0; iproc<nproc; iproc++) {
+		count++;
+		int part1 = luminosities[count] + 6;
+		count++;
+		int part2 = luminosities[count] + 6;
+		H0 += f10[rho][part1] * f20[sigma][part2];
+	      }
+	      int k = FlavourCode(PartChann[ip].substr(0,2)) + 6;
+	      int l = FlavourCode(PartChann[ip].substr(2,2)) + 6;
+	      pred2 += Wt[ibin][pto][itau][rho][sigma][k][l] * H0;
+	    }
+	    /*
+	    for(int k=0; k<13; k++) {
+	      for(int l=0; l<13; l++) {
+		pred2 += Wt[ibin][pto][itau][rho][sigma][k][l] * f10[rho][k] * f20[sigma][l];
+	      }
+	    }
+	    */
+	  }
+	}
+	cout << setprecision(15);
+	cout << "pred1 = " << pred1 << ", pred2 = " << pred2 << endl;
+      }
+      cout << "   " << endl;
 
       // Redefine parameters
       og->redefine(ibin, pto, 1, Q20, Q20, 30, xmin[ibin][pto], 1);
@@ -532,7 +622,6 @@ int main(int argc, char* argv[]) {
 	    int l = FlavourCode(PartChann[ip].substr(2,2)) + 6;
 	    weight[ip] = 0;
 	    for(int itau=0; itau<ntau[ibin][pto]; itau++) {
-	    //for(int itau=1; itau<2; itau++) {
 	      weight[ip] += Wt[ibin][pto][itau][rho][sigma][k][l];
 	    }
 	  }
@@ -546,8 +635,10 @@ int main(int argc, char* argv[]) {
   // Finally dump to file 
   og->Write(string(argv[1]).substr(0,string(argv[1]).size()-5) + "-Evolved.root");
 
-  delete W;
   delete Wt;
+  delete M1a;
+  delete M2a;
+  delete W;
   delete g;
   delete genpdf;
   delete og;
