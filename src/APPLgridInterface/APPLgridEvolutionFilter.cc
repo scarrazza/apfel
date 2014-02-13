@@ -53,6 +53,7 @@ int main(int argc, char* argv[]) {
   string pdflbl = g->getGenpdf();
   int nsubproc  = g->subProcesses();
   int nbin      = g->Nobs();
+  int lo        = g->leadingOrder();
   int no        = g->nloops();
   bool sym      = g->isSymmetric();
 
@@ -68,7 +69,7 @@ int main(int argc, char* argv[]) {
   cout << "   Nbins:     " << nbin << endl;
   cout << "   Nloops:    " << no << endl;
   if(sym) cout << "   The process is symmetric" << endl;
-  else                 cout << "   The process is NOT symmetric" << endl;
+  else    cout << "   The process is NOT symmetric" << endl;
   cout << "  " << endl;
 
   // Declare the arrays of weights and other stuff
@@ -76,6 +77,7 @@ int main(int argc, char* argv[]) {
   double *******M1a = new double******[nbin];
   double *******M2a = new double******[nbin];
   double ******W    = new double*****[nbin];
+  double ***AsFact  = new double**[nbin];
   double ***x1v     = new double**[nbin];
   double ***x2v     = new double**[nbin];
   double **xmin     = new double*[nbin];
@@ -89,20 +91,21 @@ int main(int argc, char* argv[]) {
     cout << "APPLgridEvolutionFilter() Info: bin " << ibin+1 << " of " << nbin << endl;
     cout << "  " << endl;
 
-    Wt[ibin]   = new double*****[no];
-    M1a[ibin]  = new double*****[no];
-    M2a[ibin]  = new double*****[no];
-    W[ibin]    = new double****[no];
-    x1v[ibin]  = new double*[no];
-    x2v[ibin]  = new double*[no];
-    xmin[ibin] = new double[no];
-    n1b[ibin]  = new int[no];
-    n2b[ibin]  = new int[no];
-    ntau[ibin] = new int[no];
+    Wt[ibin]     = new double*****[no];
+    M1a[ibin]    = new double*****[no];
+    M2a[ibin]    = new double*****[no];
+    W[ibin]      = new double****[no];
+    AsFact[ibin] = new double*[no];
+    x1v[ibin]    = new double*[no];
+    x2v[ibin]    = new double*[no];
+    xmin[ibin]   = new double[no];
+    n1b[ibin]    = new int[no];
+    n2b[ibin]    = new int[no];
+    ntau[ibin]   = new int[no];
 
     // Loop over the perturbative orders
-    //for(int pto=0; pto<=no; pto++) {
-    for(int pto=1; pto<2; pto++) {
+    for(int pto=0; pto<=no; pto++) {
+    //for(int pto=1; pto<2; pto++) {
       if(pto == 0) cout << "APPLgridEvolutionFilter() Info: Perturbative order: LO " << endl;
       if(pto == 1) cout << "APPLgridEvolutionFilter() Info: Perturbative order: NLO " << endl;
       if(pto == 2) cout << "APPLgridEvolutionFilter() Info: Perturbative order: NNLO " << endl;
@@ -121,10 +124,11 @@ int main(int argc, char* argv[]) {
       //cout << "   Number of x2 grid points = " << nx2 << endl;
       //cout << "  " << endl;
 
-      Wt[ibin][pto]  = new double****[ntau[ibin][pto]];
-      M1a[ibin][pto] = new double****[ntau[ibin][pto]];
-      M2a[ibin][pto] = new double****[ntau[ibin][pto]];
-      W[ibin][pto]   = new double***[ntau[ibin][pto]];
+      Wt[ibin][pto]     = new double****[ntau[ibin][pto]];
+      M1a[ibin][pto]    = new double****[ntau[ibin][pto]];
+      M2a[ibin][pto]    = new double****[ntau[ibin][pto]];
+      W[ibin][pto]      = new double***[ntau[ibin][pto]];
+      AsFact[ibin][pto] = new double[ntau[ibin][pto]];
 
       // Loop over the grid in Q2
       for(int itau=0; itau<ntau[ibin][pto]; itau++) {
@@ -132,7 +136,7 @@ int main(int argc, char* argv[]) {
 	cout << "  " << endl;
 
 	double Q = sqrt(igrid->fQ2(igrid->gettau(itau)));
-	//Q0  = sqrt(igrid->fQ2(igrid->gettau(1)));;
+	//Q0  = sqrt(igrid->fQ2(igrid->gettau(1)));
 	//Q20 = Q0 * Q0;
 	cout << "APPLgridEvolutionFilter() Info: Evolution between " << Q0 << " GeV and " << Q << " GeV" << endl;
 
@@ -263,11 +267,12 @@ int main(int argc, char* argv[]) {
 	}
 
 	if(NonZeroWeights) {
-	  // Call APFEL and compute the evolution operators
+	  // Call APFEL and compute the evolution operators and the alpha_s factor
 	  APFEL::SetPerturbativeOrder(0);
 	  //APFEL::SetMaxFlavourPDFs(4);
 	  //APFEL::SetMaxFlavourAlpha(4);
 	  APFEL::SetFFNS(3);
+	  // Evolution operators
 	  double *M1 = NULL;
 	  M1 = new double[14*14*(n1b[ibin][pto]+1)*(n1b[ibin][pto]+1)];
 	  double *M2 = NULL;
@@ -283,6 +288,8 @@ int main(int argc, char* argv[]) {
 	    copy(M1,M1+14*14*(n1b[ibin][pto]+1)*(n1b[ibin][pto]+1),M2);
 	    xmin[ibin][pto] = xext1v[0];
 	  }
+	  // Alphas factor
+	  AsFact[ibin][pto][itau] = pow(APFEL::AlphaQCD(Q)/APFEL::AlphaQCD(Q0),lo+pto);
 
 	  x1v[ibin][pto] = new double[n1b[ibin][pto]+1];
 	  x2v[ibin][pto] = new double[n2b[ibin][pto]+1];
@@ -299,7 +306,7 @@ int main(int argc, char* argv[]) {
 		M1a[ibin][pto][itau][alpha][rho][k] = new double[13];
 		for(int i=0; i<13; i++) {
 		  int m1 = ( i + 1 ) + 14 * ( ( k + 1 ) + 14 * ( alpha + ( n1b[ibin][pto] + 1 ) * rho ) );
-		  M1a[ibin][pto][itau][alpha][rho][k][i] = M1[m1];
+		  M1a[ibin][pto][itau][alpha][rho][k][i] = M1[m1] * x1v[ibin][pto][rho] / x1v[ibin][pto][alpha];
 		}
 	      }
 	    }
@@ -316,7 +323,7 @@ int main(int argc, char* argv[]) {
 		M2a[ibin][pto][itau][beta][sigma][l] = new double[13];
 		for(int j=0; j<13; j++) {
 		  int m2 = ( j + 1 ) + 14 * ( ( l + 1 ) + 14 * ( beta + ( n2b[ibin][pto] + 1 ) * sigma ) );
-		  M2a[ibin][pto][itau][beta][sigma][l][j] = M2[m2];
+		  M2a[ibin][pto][itau][beta][sigma][l][j] = M2[m2] * x2v[ibin][pto][sigma] / x2v[ibin][pto][beta];
 		}
 	      }
 	    }
@@ -505,18 +512,11 @@ int main(int argc, char* argv[]) {
   		      30, 1e-5,   1, 5,    // Temporary parameters to be adjusted below
   		      pdffile,
   		      g->leadingOrder(), g->nloops());
-  /*
-  og = new appl::grid( 1,  Q20, Q20, 0,
-  		      30, 1e-5,   1, 5,    // Temporary parameters to be adjusted below
-  		      g->Nobs()+1, g->obsmin(), g->obsmax(), 
-  		      pdffile,
-  		      g->leadingOrder(), g->nloops());
-  */
 
   for(int ibin=0; ibin<nbin; ibin++) {
   //for(int ibin=0; ibin<1; ibin++) {
-    //for(int pto=0; pto<=no; pto++) {
-    for(int pto=1; pto<2; pto++) {
+    for(int pto=0; pto<=no; pto++) {
+    //for(int pto=1; pto<2; pto++) {
 
       // Test of the computation
       igrid = g->weightgrid(pto,ibin);
@@ -528,13 +528,13 @@ int main(int argc, char* argv[]) {
 	double f10[n1b[ibin][pto]+1][13];
 	for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
 	  for(int i=0; i<13; i++) {
-	    f10[alpha][i] = LHAPDF::xfx(x1v[ibin][pto][alpha],Q0,i-6);
+	    f10[alpha][i] = LHAPDF::xfx(x1v[ibin][pto][alpha],Q0,i-6) / x1v[ibin][pto][alpha];
 	  }
 	}
 	double f20[n2b[ibin][pto]+1][13];
 	for(int alpha=0; alpha<n2b[ibin][pto]+1; alpha++) {
 	  for(int i=0; i<13; i++) {
-	    f20[alpha][i] = LHAPDF::xfx(x2v[ibin][pto][alpha],Q0,i-6);
+	    f20[alpha][i] = LHAPDF::xfx(x2v[ibin][pto][alpha],Q0,i-6) / x2v[ibin][pto][alpha];
 	  }
 	}
 	// Evolve PDFs on the grid with M1a and M2a
@@ -622,7 +622,7 @@ int main(int argc, char* argv[]) {
 	    int l = FlavourCode(PartChann[ip].substr(2,2)) + 6;
 	    weight[ip] = 0;
 	    for(int itau=0; itau<ntau[ibin][pto]; itau++) {
-	      weight[ip] += Wt[ibin][pto][itau][rho][sigma][k][l];
+	      weight[ip] += AsFact[ibin][pto][itau] * Wt[ibin][pto][itau][rho][sigma][k][l];
 	    }
 	  }
 	  // Fill output grid with weights

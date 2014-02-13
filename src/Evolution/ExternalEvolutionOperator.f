@@ -39,22 +39,6 @@
 *
       double precision M(0:14*14*(n+1)*(n+1)-1)
 *
-*     Set Evolution Operator to zero
-*
-      do alphap=0,n
-         do betap=0,n
-            do i=-6,6
-               do j=-6,6
-                  k = ( 7 + i ) + 14 * ( ( 7 + j ) 
-     1              + 14 * ( alphap + ( n + 1 ) * betap ) )
-                  M(k) = 0d0
-                  if(Q.eq.Q0.and.betap.eq.alphap.and.j.eq.i) M(k) = 1d0
-               enddo
-            enddo
-         enddo
-      enddo
-      if(Q.eq.Q0) return
-*
 *     Disable welcome message
 *
       call EnableWelcomeMessage(.false.)
@@ -78,6 +62,22 @@
 *     Compute APFEL evolution operators
 *
       call EvolveAPFEL(Q0,Q)
+*
+*     Set Evolution Operator to zero
+*
+      do alphap=0,n
+         do betap=0,n
+            do i=-6,6
+               do j=-6,6
+                  k = ( 7 + i ) + 14 * ( ( 7 + j ) 
+     1              + 14 * ( alphap + ( n + 1 ) * betap ) )
+                  M(k) = 0d0
+                  if(Q.eq.Q0.and.betap.eq.alphap.and.j.eq.i) M(k) = 1d0
+               enddo
+            enddo
+         enddo
+      enddo
+      if(Q.eq.Q0) return
 *
 *     Interpolation functions on the joint grid
 *
