@@ -268,10 +268,9 @@ int main(int argc, char* argv[]) {
 
 	if(NonZeroWeights) {
 	  // Call APFEL and compute the evolution operators and the alpha_s factor
-	  APFEL::SetPerturbativeOrder(0);
-	  //APFEL::SetMaxFlavourPDFs(4);
-	  //APFEL::SetMaxFlavourAlpha(4);
-	  APFEL::SetFFNS(3);
+	  APFEL::SetPerturbativeOrder(1);
+	  APFEL::SetAlphaQCDRef(0.12018,91.1876);
+	  APFEL::SetPoleMasses(1.4,4.75,1e10);
 	  // Evolution operators
 	  double *M1 = NULL;
 	  M1 = new double[14*14*(n1b[ibin][pto]+1)*(n1b[ibin][pto]+1)];
@@ -513,33 +512,39 @@ int main(int argc, char* argv[]) {
   		      pdffile,
   		      g->leadingOrder(), g->nloops());
 
+  // Set CKM matrix if needed
+  //if(luminosities[luminosities.size()-1] != 0) og->setckm(g->getckm());
+
   for(int ibin=0; ibin<nbin; ibin++) {
   //for(int ibin=0; ibin<1; ibin++) {
     for(int pto=0; pto<=no; pto++) {
     //for(int pto=1; pto<2; pto++) {
-
+      /*
       // Test of the computation
       igrid = g->weightgrid(pto,ibin);
       for(int itau=0; itau<ntau[ibin][pto]; itau++) {
 
 	// Initial scale PDFs on the grid
-	LHAPDF::initPDFSet("toyLH_FFN_LO.LHgrid");
+	LHAPDF::initPDFSet("MSTW2008nlo68cl.LHgrid");
 	LHAPDF::initPDF(0);
-	double f10[n1b[ibin][pto]+1][13];
+	double **f10 = new double*[n1b[ibin][pto]+1];
 	for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
+	  f10[alpha] = new double[13];
 	  for(int i=0; i<13; i++) {
 	    f10[alpha][i] = LHAPDF::xfx(x1v[ibin][pto][alpha],Q0,i-6) / x1v[ibin][pto][alpha];
 	  }
 	}
-	double f20[n2b[ibin][pto]+1][13];
+	double **f20 = new double*[n2b[ibin][pto]+1];
 	for(int alpha=0; alpha<n2b[ibin][pto]+1; alpha++) {
+	  f20[alpha] = new double[13];
 	  for(int i=0; i<13; i++) {
 	    f20[alpha][i] = LHAPDF::xfx(x2v[ibin][pto][alpha],Q0,i-6) / x2v[ibin][pto][alpha];
 	  }
 	}
 	// Evolve PDFs on the grid with M1a and M2a
-	double f1[n1b[ibin][pto]+1][13];
+	double **f1 = new double*[n1b[ibin][pto]+1];
 	for(int alpha=0; alpha<n1b[ibin][pto]+1; alpha++) {
+	  f1[alpha] = new double[13];
 	  for(int i=0; i<13; i++) {
 	    f1[alpha][i] = 0;
 	    for(int beta=0; beta<n1b[ibin][pto]+1; beta++) {
@@ -549,8 +554,9 @@ int main(int argc, char* argv[]) {
 	    }
 	  }
 	}
-	double f2[n2b[ibin][pto]+1][13];
+	double **f2 = new double*[n2b[ibin][pto]+1];
 	for(int alpha=0; alpha<n2b[ibin][pto]+1; alpha++) {
+	  f2[alpha] = new double[13];
 	  for(int i=0; i<13; i++) {
 	    f2[alpha][i] = 0;
 	    for(int beta=0; beta<n2b[ibin][pto]+1; beta++) {
@@ -594,20 +600,19 @@ int main(int argc, char* argv[]) {
 	      int l = FlavourCode(PartChann[ip].substr(2,2)) + 6;
 	      pred2 += Wt[ibin][pto][itau][rho][sigma][k][l] * H0;
 	    }
-	    /*
-	    for(int k=0; k<13; k++) {
-	      for(int l=0; l<13; l++) {
-		pred2 += Wt[ibin][pto][itau][rho][sigma][k][l] * f10[rho][k] * f20[sigma][l];
-	      }
-	    }
-	    */
+	    //for(int k=0; k<13; k++) {
+	    //  for(int l=0; l<13; l++) {
+	    //  pred2 += Wt[ibin][pto][itau][rho][sigma][k][l] * f10[rho][k] * f20[sigma][l];
+	    //  }
+	    //}
+
 	  }
 	}
 	cout << setprecision(15);
 	cout << "pred1 = " << pred1 << ", pred2 = " << pred2 << endl;
       }
+      */
       cout << "   " << endl;
-
       // Redefine parameters
       og->redefine(ibin, pto, 1, Q20, Q20, 30, xmin[ibin][pto], 1);
 

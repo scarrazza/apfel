@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     exit(1);
   }
 
-  const string pdfname = "toyLH_FFN_LO.LHgrid";
+  const string pdfname = "MSTW2008nlo68cl.LHgrid";
   int iset = 0; // Central set
   LHAPDF::initPDFSet(pdfname,iset);
   LHAPDF::initPDF(iset);
@@ -63,7 +63,7 @@ int main(int argc, char* argv[]) {
 
       double obs1 = dist1.at(i);
       double obs2 = dist2.at(i);
-      double reldiff = 100 * ( obs1 - obs2 ) / obs1;
+      double reldiff = 100 * ( obs2 - obs1 ) / obs1;
       //double ref1 = g1->getReference()->GetBinContent(i+1);
       //double ref2 = g2->getReference()->GetBinContent(i+1);
       cout << obs1 << "  " << obs2 << "  " << reldiff << endl;
