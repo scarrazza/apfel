@@ -43,6 +43,8 @@
       InMFA     = "xxxx"
       InPDFs    = "xxxx"
       InRep     = "xxxx"   
+      InEvolOp  = "xxxx"
+      InLock    = "xxxx"
       InGrid    = "xxxx"
 *
 c      write(6,*) "Parameters unset!"
