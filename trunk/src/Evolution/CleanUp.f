@@ -26,6 +26,8 @@
       include "../commons/grid.h"
       include "../commons/pdfset.h"
       include "../commons/Replica.h"
+      include "../commons/lock.h"
+      include "../commons/EvolOp.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
