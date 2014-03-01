@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>624</width>
-    <height>369</height>
+    <height>387</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -534,7 +534,7 @@
    <item row="1" column="0">
     <widget class="QLabel" name="label_4">
      <property name="text">
-      <string>PDF Error:</string>
+      <string>PDF grid error:</string>
      </property>
     </widget>
    </item>
