@@ -105,6 +105,11 @@ namespace APFEL {
     flockgrids(&lg);
   }
 
+  void SetTimeLikeEvolution(bool tl)
+  {
+    fsettimelikeevolution(&tl);
+  }
+
   double HeavyQuarkMass(int i,double Q)
   {
     return fheavyquarkmass(&i,&Q);
@@ -118,6 +123,18 @@ namespace APFEL {
   void SetAlphaQEDRef(double alpharef, double Qref)
   {
     fsetalphaqedref(&alpharef,&Qref);
+  }
+
+  void SetAlphaEvolution(const std::string& evol)
+  {
+    char cevol[SIZE+1];
+    strncpy(cevol, evol.c_str(), SIZE);
+    fsetalphaevolution(cevol);
+  }
+
+  void SetLambdaQCDRef(double lambdaref, int nref)
+  {
+    fsetlambdaqcdref(&lambdaref,&nref);
   }
 
   void SetQLimits(double Qmin, double Qmax)

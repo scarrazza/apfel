@@ -116,7 +116,12 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/EnableWelcomeMessage.lo \
 	Evolution/EnableEvolutionOperator.lo \
 	Evolution/ExternalEvolutionOperator.lo \
-	Evolution/LockGrids.lo
+	Evolution/LockGrids.lo \
+	Evolution/SetTimeLikeEvolution.lo \
+	Evolution/SetAlphaEvolution.lo \
+	Evolution/SetLambdaQCDRef.lo \
+	Evolution/hknsff07.lo \
+	Evolution/fDSS.lo
 am__objects_3 = Evolution/interpolants.lo
 am__objects_4 = Evolution/SplittingFunctions.lo
 am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
@@ -380,7 +385,8 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/SetRenFacRatio.f Evolution/SetTheory.f Evolution/SetVFNS.f Evolution/SetMaxFlavourPDFs.f \
 	Evolution/SetMaxFlavourAlpha.f Evolution/SetReplica.f Evolution/AlphaQCD.f Evolution/AlphaQED.f Evolution/HeavyQuarkMass.f \
 	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f \
-	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f
+	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f Evolution/SetTimeLikeEvolution.f Evolution/SetAlphaEvolution.f \
+	Evolution/SetLambdaQCDRef.f Evolution/hknsff07.f Evolution/fDSS.f
 
 INTER = Evolution/interpolants.f
 SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f
@@ -522,6 +528,16 @@ Evolution/EnableEvolutionOperator.lo: Evolution/$(am__dirstamp) \
 Evolution/ExternalEvolutionOperator.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/LockGrids.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetTimeLikeEvolution.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetAlphaEvolution.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetLambdaQCDRef.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/hknsff07.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/fDSS.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)

@@ -17,7 +17,7 @@
 *              +   -   V   qq  qg  gq  gg
 *
 *     that are contained in the common block wrap.h
-* 
+*
 ************************************************************************
       function integrandsQCD(y)
 *
@@ -148,4 +148,138 @@ c      integrandsQCD = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
 *
       return
       end
-      
+*
+************************************************************************
+*
+*     Integrands for the time-like evolution.
+*
+************************************************************************
+      function integrandsQCDT(y)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/wrap.h"
+**
+*     Input Variables
+*
+      double precision y
+**
+*     Internal Variables
+*
+      double precision z,w_int,fR,fS,fL
+      double precision PR(7,0:2),PS(7,0:2)
+      double precision X0NSA,X0NSB,X0QGA,X0GQA,X0GGA,X0GGB
+      double precision X1NSPTA,X1NSTB,X1NSMTA,X1PSTA,X1QGTA,X1GQTA
+      double precision X1GGTA,X1GGTB,P2NSPTA,P2NSTB,P2NSMTA,P2NSSTA
+      double precision P2GGTA,P2GGTB,P2PSTA,P2QGTA,P2GQTA
+**
+*     Output Variables
+*
+      double precision integrandsQCDT
+*
+*     Interpolant functions
+*
+      z = xg(igrid,wbeta) / y
+*
+      fL = 0d0
+      if(walpha.eq.wbeta) fL = 1d0
+*
+      fR = w_int(inter_degree(igrid),walpha,z)
+      fS = fR - fL
+*
+*     Contructing integrands order by order
+*
+*     LO
+*
+*     Plus, Minus, Valence, Quark-Quark
+      if(k.eq.1.or.k.eq.2.or.k.eq.3.or.k.eq.4)then
+         PR(k,0) = X0NSA(y)
+         PS(k,0) = X0NSB(y)
+*     Quark-Gluon
+      elseif(k.eq.5)then
+         PR(k,0) = X0QGA(y,wnf)
+         PS(k,0) = 0d0
+*     Gluon-Quark
+      elseif(k.eq.6)then
+         PR(k,0) = X0GQA(y)
+         PS(k,0) = 0d0
+*     Gluon-Gluon
+      elseif(k.eq.7)then
+         PR(k,0) = X0GGA(y)
+         PS(k,0) = X0GGB(y)
+      endif
+*
+*     NLO
+*
+*     Plus
+      if(wipt.ge.1)then
+         if(k.eq.1)then
+            PR(k,1) = X1NSPTA(y,wnf)
+            PS(k,1) = X1NSTB(y)
+*     Minus
+         elseif(k.eq.2)then
+            PR(k,1) = X1NSMTA(y,wnf)
+            PS(k,1) = X1NSTB(y)
+*     Valence
+         elseif(k.eq.3)then
+            PR(k,1) = X1NSMTA(y,wnf)
+            PS(k,1) = X1NSTB(y)
+*     Quark-Quark
+         elseif(k.eq.4)then
+            PR(k,1) = X1NSPTA(y,wnf) + X1PSTA(y,wnf)
+            PS(k,1) = X1NSTB(y)
+*     Quark-Gluon
+         elseif(k.eq.5)then
+            PR(k,1) = X1QGTA(y,wnf)
+            PS(k,1) = 0d0
+*     Gluon-Quark
+         elseif(k.eq.6)then
+            PR(k,1) = X1GQTA(y,wnf)
+            PS(k,1) = 0d0
+*     Gluon-Gluon
+         elseif(k.eq.7)then
+            PR(k,1) = X1GGTA(y,wnf)
+            PS(k,1) = X1GGTB(y)
+         endif
+      endif
+*
+*     NNLO
+*
+*     Plus
+      if(wipt.ge.2)then
+         if(k.eq.1)then
+            PR(k,2) = P2NSPTA(y,wnf)
+            PS(k,2) = P2NSTB(y,wnf)
+*     Minus
+         elseif(k.eq.2)then
+            PR(k,2) = P2NSMTA(y,wnf)
+            PS(k,2) = P2NSTB(y,wnf)
+*     Valence
+         elseif(k.eq.3)then
+            PR(k,2) = P2NSMTA(y,wnf) + P2NSSTA(y,wnf)
+            PS(k,2) = P2NSTB(y,wnf)
+*     Quark-Quark
+         elseif(k.eq.4)then
+            PR(k,2) = P2NSPTA(y,wnf) + P2PSTA(y,wnf)
+            PS(k,2) = P2NSTB(y,wnf)
+*     Quark-Gluon
+         elseif(k.eq.5)then
+            PR(k,2) = P2QGTA(y,wnf)
+            PS(k,2) = 0d0
+*     Gluon-Quark
+         elseif(k.eq.6)then
+            PR(k,2) = P2GQTA(y,wnf)
+            PS(k,2) = 0d0
+*     Gluon-Gluon
+         elseif(k.eq.7)then
+            PR(k,2) = P2GGTA(y,wnf)
+            PS(k,2) = P2GGTB(y,wnf)
+         endif
+      endif
+*
+      integrandsQCDT = PR(k,wipt) * fR + PS(k,wipt) * fS
+c      integrandsQCDT = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
+*
+      return
+      end
