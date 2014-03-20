@@ -11,7 +11,7 @@ int main()
 		1e-1, 3e-1, 5e-1, 7e-1, 9e-1};
   
   // Activate some options
-  APFEL::SetPerturbativeOrder(0);
+  //APFEL::SetPerturbativeOrder(0);
   //APFEL::SetPDFSet("MRST2004qed.LHgrid");
   //APFEL::EnableEvolutionOperator(true);
   // Initializes integrals on the grids
@@ -51,68 +51,6 @@ int main()
 	 << setw(11) <<APFEL::xgamma(xlha[i])
 	 << endl;
   cout << "      " << endl;
-
-  for (int i = 2; i < 11; i++)
-    cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
-	 << setw(11) <<APFEL::xPDFj(2,xlha[i]) - APFEL::xPDFj(-2,xlha[i]) << "  "
-	 << setw(11) <<APFEL::xPDFj(1,xlha[i]) - APFEL::xPDFj(-1,xlha[i]) << "  "
-	 << setw(11) <<2*(APFEL::xPDFj(-1,xlha[i]) + APFEL::xPDFj(-2,xlha[i])) << "  "
-	 << setw(11) <<APFEL::xPDFj(4,xlha[i]) + APFEL::xPDFj(-4,xlha[i]) << "  "
-	 << setw(11) <<APFEL::xPDFj(0,xlha[i]) << "  "
-	 << setw(11) <<APFEL::xgammaj(xlha[i])
-	 << endl;
-  cout << "      " << endl;
-
-  string ifilename("JointGrid.dat");
-  ifstream ginp(ifilename.c_str());
-  int n;
-  ginp >> n;
-
-  double *xext = new double[n+1];
-  double *M = new double[14*14*(n+1)*(n+1)];
-
-  for(int ig=0; ig<=n; ig++) ginp >> xext[ig];  
-  ginp.close();
-
-  APFEL::ExternalEvolutionOperator(Q0,Q,n,xext,M);
-
-  for (int i = 2; i < 11; i++)
-    cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
-	 << setw(11) <<APFEL::xPDFj(2,xlha[i]) - APFEL::xPDFj(-2,xlha[i]) << "  "
-	 << setw(11) <<APFEL::xPDFj(1,xlha[i]) - APFEL::xPDFj(-1,xlha[i]) << "  "
-	 << setw(11) <<2*(APFEL::xPDFj(-1,xlha[i]) + APFEL::xPDFj(-2,xlha[i])) << "  "
-	 << setw(11) <<APFEL::xPDFj(4,xlha[i]) + APFEL::xPDFj(-4,xlha[i]) << "  "
-	 << setw(11) <<APFEL::xPDFj(0,xlha[i]) << "  "
-	 << setw(11) <<APFEL::xgammaj(xlha[i])
-	 << endl;
-  cout << "      " << endl;
-
-  /*
-  string ofilename("output.dat");
-  ofstream gout(ofilename.c_str());
-  for(int ig=0; ig < 14*14*(n+1)*(n+1); ig++) gout << ig << "  " << M[ig] << endl;
-  gout.close();
-  */
-
-  /*
-  int k;
-  string ofilename("output.dat");
-  ofstream gout(ofilename.c_str());
-  for(int beta=0; beta <= n; beta++) {
-    for(int alpha=0; alpha <= n; alpha++) {
-      for(int j=0; j <= 13; j++) {
-	for(int i=0; i <= 13; i++) {
-	  k = i + 14 * ( j + 14 * ( alpha + ( n + 1 ) * beta ) );
-	  gout << k << "     " << beta << "  "  << alpha << "  " << j << "  " << i << "  " << M[k] << endl;
-	}
-      }
-    }
-  }
-  gout.close();
-  */
-
-  delete[] xext;
-  delete[] M;
 
   return 0;
 }
