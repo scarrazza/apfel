@@ -12,6 +12,7 @@
       implicit none
 *
       include "../commons/grid.h"
+      include "../commons/TimeLike.h"
 **
 *     Input Variables
 *
@@ -21,9 +22,15 @@
 *
       integer alpha
 *
-      do alpha=0,nin(igrid)-1
-         call RSLintegralsQCD(nf,0,alpha)
-      enddo
+      if(TimeLike)then
+         do alpha=0,nin(igrid)-1
+            call RSLintegralsQCDT(nf,0,alpha)
+         enddo
+      else
+         do alpha=0,nin(igrid)-1
+            call RSLintegralsQCD(nf,0,alpha)
+         enddo
+      endif
 *
       return
       end

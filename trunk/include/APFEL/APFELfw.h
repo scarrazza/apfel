@@ -58,6 +58,9 @@ extern "C" {
 #define flockgrids FC_FUNC(lockgrids,LOCKGRIDS)
   void flockgrids(bool*);
 
+#define fsettimelikeevolution FC_FUNC(settimelikeevolution,SETTIMELIKEEVOLUTION)
+  void fsettimelikeevolution(bool*);
+
 #define fheavyquarkmass FC_FUNC(heavyquarkmass,HEAVYQUARKMASS)
   double fheavyquarkmass(int*,double*);
 
@@ -66,6 +69,12 @@ extern "C" {
 
 #define fsetalphaqedref FC_FUNC(setalphaqedref,SETALPHAQEDREF)
   void fsetalphaqedref(double*,double*);
+
+#define fsetalphaevolution FC_FUNC(setalphaevolution,SETALPHAEVOLUTION)
+  void fsetalphaevolution(char*);
+
+#define fsetlambdaqcdref FC_FUNC(setlambdaqcdref,SETLAMBDAQCDREF)
+  void fsetlambdaqcdref(double*,int*);
 
 #define fsetqlimits FC_FUNC(setqlimits,SETQLIMITS)
   void fsetqlimits(double*,double*);

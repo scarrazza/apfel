@@ -50,6 +50,9 @@ namespace APFEL {
   /// Returns the value of alpha_QED at the given scale
   double AlphaQED(double Q);
 
+  /// Returns Heavy Quark Masses
+  double HeavyQuarkMass(int,double);
+
   /// Returns the N-th Mellin moment of the i-th PDF 
   /// in the physical basis at the final scale
   double NPDF(int i, int N);
@@ -64,6 +67,10 @@ namespace APFEL {
   /// Gets APFEL version
   std::string GetVersion(void);
 
+  /*
+   * Set Methods
+   */
+
   /// Cleans up parameters
   void CleanUp(void);
 
@@ -76,18 +83,20 @@ namespace APFEL {
   /// Lock internal subgrids
   void LockGrids(bool);
 
-  /// Returns Heavy Quark Masses
-  double HeavyQuarkMass(int,double);
+  /// Switch to the time-like evolution
+  void SetTimeLikeEvolution(bool);
   
-  /*
-   * Set Methods
-   */
-
   /// Sets the reference values of $alpha_{s}$ at the reference scale
   void SetAlphaQCDRef(double alpharef, double Qref);
 
   /// Sets the reference values of $alpha$ at the reference scale
   void SetAlphaQEDRef(double alpharef, double Qref);
+
+  /// Sets the solution of the beta function
+  void SetAlphaEvolution(const std::string& evol);
+
+  /// Sets the value of LambdaQCD for "nref" flavours
+  void SetLambdaQCDRef(double lambdaref, int nref);
 
   /// Sets the minimimum and the maximum energy allowed for the evolution
   void SetQLimits(double Qmin, double Qmax);
@@ -132,6 +141,10 @@ namespace APFEL {
   
   /// Sets the VFNS as a default
   void SetVFNS(void);
+
+  /*
+   *DIS module
+   */
 
   /// DIS observables
   void DIS_xsec(double x,double qi,double qf,double y,double pol,

@@ -2,7 +2,7 @@
 *
 *     SetAlphaQEDRef.f:
 *
-*     This subroutine sets the reference vales of alpha_s at the
+*     This subroutine sets the reference value of alpha at the
 *     reference scale.
 *
 ************************************************************************

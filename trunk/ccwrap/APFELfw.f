@@ -90,7 +90,7 @@ ccccccccccccc
 
 ccccccccccccc      
       function flumi(i,j,S)
-      integer i,j      
+      integer i,j
       double precision S,flumi
       flumi = LUMI(i,j,S)
       return
@@ -120,6 +120,12 @@ ccccccccccccc
       end subroutine flockgrids
 
 ccccccccccccc      
+      subroutine flsettimelikeevolution(tl)
+      logical tl
+      call SetTimeLikeEvolution(tl)
+      end subroutine flsettimelikeevolution
+
+ccccccccccccc      
       function fheavyquarkmass(i,Q)
       integer i
       double precision Q,fheavyquarkmass
@@ -138,6 +144,19 @@ ccccccccccccc
       double precision alpharef,Qref      
       call SetAlphaQEDRef(alpharef,Qref)
       end subroutine fsetalphaqedref
+
+ccccccccccccc      
+      subroutine fsetalphaevolution(evol)
+      character evol*(*)
+      call SetAlphaEvolution(evol)
+      end subroutine fsetalphaevolution
+
+ccccccccccccc      
+      subroutine fsetlambdaqcdref(lambdaref,nref)
+      integer nref
+      double precision lambdaref
+      call SetLambdaQCDRef(lambdaref,nref)
+      end subroutine fsetlambdaqcdref
 
 ccccccccccccc      
       subroutine fsetqlimits(Qmin,Qmax)

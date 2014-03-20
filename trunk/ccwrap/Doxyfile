@@ -45,7 +45,8 @@ PROJECT_BRIEF          =
 # exceed 55 pixels and the maximum width should not exceed 200 pixels. 
 # Doxygen will copy the logo to the output directory.
 
-PROJECT_LOGO           = /home/carrazza/svn/libqced/trunk/resources/logoapfel.png
+#PROJECT_LOGO           = /Users/bertone/apfel/trunk/resources/logoapfel.png
+PROJECT_LOGO           = ../resources/logoapfel.png
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 

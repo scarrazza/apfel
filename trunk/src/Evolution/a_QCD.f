@@ -15,6 +15,8 @@
 *
       include "../commons/consts.h"
       include "../commons/alpha_ref_QCD.h"
+      include "../commons/lambda_ref_QCD.h"
+      include "../commons/AlphaEvolution.h"
       include "../commons/kren.h"
       include "../commons/m2th.h"
       include "../commons/mass_scheme.h"
@@ -111,9 +113,12 @@ c      kappa = 1d0          ! mu_R / mu_F
       endif
 *
  10   if(nff.eq.nfi) then
-         a_QCD = as_exact(nfi,mur20,asr0,mur2,ipt)
-c         a_QCD = as_expanded(nfi,mur20,asr0,mur2,ipt)
-c         a_QCD = as_lambda(nfi,lambda2(nfi),mur2,ipt)
+         if(AlphaEvol(1:5).eq."exact")
+     1        a_QCD = as_exact(nfi,mur20,asr0,mur2,ipt)
+         if(AlphaEvol(1:8).eq."expanded")
+     1        a_QCD = as_expanded(nfi,mur20,asr0,mur2,ipt)
+         if(AlphaEvol(1:6).eq."lambda")
+     1        a_QCD = as_lambda(nfi,lambda2(nfi),mur2,ipt)
          return
       else
          if(nff.gt.nfi)then
@@ -124,9 +129,12 @@ c         a_QCD = as_lambda(nfi,lambda2(nfi),mur2,ipt)
             snf = 0
          endif
 *
-         asi = as_exact(nfi,mur20,asr0,mur2th(nfi+snf),ipt)
-c         asi = as_expanded(nfi,mur20,asr0,mur2th(nfi+snf),ipt)
-c         asi = as_lambda(nfi,lambda2(nfi),mur2th(nfi+snf),ipt)
+         if(AlphaEvol(1:5).eq."exact")
+     1        asi = as_exact(nfi,mur20,asr0,mur2th(nfi+snf),ipt)
+         if(AlphaEvol(1:8).eq."expanded")
+     1        asi = as_expanded(nfi,mur20,asr0,mur2th(nfi+snf),ipt)
+         if(AlphaEvol(1:6).eq."lambda")
+     1        asi = as_lambda(nfi,lambda2(nfi),mur2th(nfi+snf),ipt)
 *
 *     NLO and NNLO threshold matchings
 *
@@ -273,12 +281,6 @@ c         asi = as_lambda(nfi,lambda2(nfi),mur2th(nfi+snf),ipt)
       END
 *
 ************************************************************************
-*
-*     The following function computes alphas / 4*pi given the number of
-*     active favours nf, the value of LambdaQCD^2, the final scale and
-*     the perturbative order.
-*
-************************************************************************
       function as_lambda(nf,lambda2,mu2,ipt)
 *
       implicit none
@@ -315,6 +317,10 @@ c         asi = as_lambda(nfi,lambda2(nfi),mur2th(nfi+snf),ipt)
 *
       return
       end
+*
+****************************************************************************
+*
+*     QCD beta function.
 *
 ****************************************************************************
       function fbeta(a,nf,ipt)
@@ -397,3 +403,255 @@ c         asi = as_lambda(nfi,lambda2(nfi),mur2th(nfi+snf),ipt)
 *
       return
       end
+*
+****************************************************************************
+*
+*     The following routine computes the value of LambdaQCD for all the 
+*     numbers of flavours and for the given perturbative order using the
+*     reference value of LambdaQCD at the reference number of flavours.
+*
+****************************************************************************
+      subroutine LambdaQCDnf
+*
+      implicit none
+*
+      include "../commons/lambda_ref_QCD.h"
+      include "../commons/AlphaEvolution.h"
+      include "../commons/Evs.h"
+      include "../commons/Nf_FF.h"
+**
+*     Variables
+*
+      integer i
+      double precision LambdaMatchUp,LambdaMatchDown,zriddr
+      double precision acc,window
+      external LambdaMatchUp,LambdaMatchDown
+      parameter(acc=1d-12)
+      parameter(window=0.3d0)
+*
+      if(n_ref_QCD.lt.3.or.n_ref_QCD.gt.6)then
+         write(6,*) "Invalid reference number of flavours for LambdaQCD"
+         write(6,*) "n_ref_QCD =",n_ref_QCD
+         write(6,*) "  "
+         call exit(-10)
+      endif
+*
+      if(Evs.eq."FF")then
+         if(n_ref_QCD.ne.Nf_FF)then
+            write(6,*) "If the 'lambda' solution of the coupling ",
+     1                 "equations is chosen"
+            write(6,*) "in conjuction with the FFNS, the reference ",
+     1                 "number of flavours"
+            write(6,*) "for LambdaQCD must be equal to the number of ",
+     1                 "flavours of the"
+            write(6,*) "evolution scheme."
+            write(6,*) "nf_Lambda =",n_ref_QCD
+            write(6,*) "nf_FFNS =",Nf_FF
+            write(6,*) "  "
+            call exit(-10)
+         else
+            return
+         endif
+      endif
+*
+      if(n_ref_QCD.eq.3)then
+         LambdaQCD(3) = lambda_ref_QCD
+         do i=4,6
+            LambdaQCD(i) = zriddr(LambdaMatchUp,i,LambdaQCD(i-1)*window,
+     1                            LambdaQCD(i-1),acc)
+         enddo
+      elseif(n_ref_QCD.eq.6)then
+         LambdaQCD(6) = lambda_ref_QCD
+         do i=5,3,-1
+            LambdaQCD(i) = zriddr(LambdaMatchDown,i,LambdaQCD(i+1),
+     1                            LambdaQCD(i+1)/window,acc)
+         enddo
+      else
+         LambdaQCD(n_ref_QCD) = lambda_ref_QCD
+         do i=n_ref_QCD+1,6
+            LambdaQCD(i) = zriddr(LambdaMatchUp,i,LambdaQCD(i-1)*window,
+     1                            LambdaQCD(i-1),acc)
+         enddo
+         do i=n_ref_QCD-1,3,-1
+            LambdaQCD(i) = zriddr(LambdaMatchDown,i,LambdaQCD(i+1),
+     1                            LambdaQCD(i+1)/window,acc)
+         enddo
+
+      endif
+*
+      return
+      end
+*
+****************************************************************************
+*
+*     Functions of which it is needed to finf the root to find LambdaQCD.
+*
+****************************************************************************
+      function LambdaMatchUp(i,lambda)
+*
+      implicit none
+*
+      include "../commons/lambda_ref_QCD.h"
+      include "../commons/m2th.h"
+      include "../commons/kren.h"
+      include "../commons/ipt.h"
+      include "../commons/mass_scheme.h"
+**
+*     Input variables
+*
+      integer i
+      double precision lambda
+**
+*     Internal variables
+*
+      double precision thr,au,ad,lambda2u,lambda2d
+      double precision as_lambda
+      double precision ln,c1,c2
+**
+*     Output variables
+*
+      double precision LambdaMatchUp
+*
+*     Matching condition
+*
+      ln = dlog(kren)
+*     Pole Mass
+      if(mass_scheme.eq."Pole")then
+         c1 = 2d0 / 3d0 * ln
+         c2 = 4d0 / 9d0 * ln**2d0 + 38d0 / 3d0 * ln + 14d0 / 3d0
+*     MSbar mass
+      elseif(mass_scheme.eq."MSbar")then
+         c1 = 2d0 / 3d0 * ln
+         c2 = 4d0 / 9d0 * ln**2d0 + 22d0 / 3d0 * ln - 22d0 / 9d0
+      endif
+*
+      thr = kren * m2th(i)
+      lambda2u = lambda**2d0
+      lambda2d = LambdaQCD(i-1)**2d0
+      au = as_lambda(i,lambda2u,thr,ipt)
+      ad = as_lambda(i-1,lambda2d,thr,ipt)
+*
+      if(ipt.eq.1)then
+         ad = ad * ( 1d0 + c1 * ad )
+      elseif(ipt.eq.2)then
+         ad = ad * ( 1d0 + c1 * ad + c2 * ad**2d0 )
+      endif
+*
+      LambdaMatchUp = au - ad
+*
+      return
+      end
+*
+****************************************************************************
+      function LambdaMatchDown(i,lambda)
+*
+      implicit none
+*
+      include "../commons/lambda_ref_QCD.h"
+      include "../commons/m2th.h"
+      include "../commons/kren.h"
+      include "../commons/ipt.h"
+      include "../commons/mass_scheme.h"
+**
+*     Input variables
+*
+      integer i
+      double precision lambda
+**
+*     Internal variables
+*
+      double precision thr,au,ad,lambda2u,lambda2d
+      double precision as_lambda
+      double precision ln,c1,c2
+**
+*     Output variables
+*
+      double precision LambdaMatchDown
+*
+      ln = dlog(kren)
+*     Pole Mass
+      if(mass_scheme.eq."Pole")then
+         c1 = - 2d0 / 3d0 * ln
+         c2 = 4d0 / 9d0 * ln**2d0 - 38d0 / 3d0 * ln - 14d0 / 3d0
+*     MSbar mass
+      elseif(mass_scheme.eq."MSbar")then
+         c1 = - 2d0 / 3d0 * ln
+         c2 = 4d0 / 9d0 * ln**2d0 - 22d0 / 3d0 * ln + 22d0 / 9d0
+      endif
+*
+      thr = kren * m2th(i+1)
+      lambda2u = LambdaQCD(i+1)**2d0
+      lambda2d = lambda**2d0
+      au = as_lambda(i+1,lambda2u,thr,ipt)
+      ad = as_lambda(i,lambda2d,thr,ipt)
+*
+      if(ipt.eq.1)then
+         au = au * ( 1d0 + c1 * au )
+      elseif(ipt.eq.2)then
+         au = au * ( 1d0 + c1 * au + c2 * au**2d0 )
+      endif
+*
+      LambdaMatchDown = au - ad
+*
+      return
+      end
+*
+****************************************************************************
+*
+*     Root finder (Numerical Recipes) slightly modified to fit the particular
+*     task of finding LambdaQCD for the i-th flavour.
+*
+****************************************************************************
+      FUNCTION zriddr(func,i,x1,x2,xacc)
+      INTEGER MAXIT,i
+      DOUBLE PRECISION zriddr,x1,x2,xacc,func,UNUSED
+      PARAMETER (MAXIT=60,UNUSED=-1.11E30)
+      EXTERNAL func
+      INTEGER j
+      DOUBLE PRECISION fh,fl,fm,fnew,s,xh,xl,xm,xnew
+      fl=func(i,x1)
+      fh=func(i,x2)
+      if((fl.gt.0..and.fh.lt.0.).or.(fl.lt.0..and.fh.gt.0.))then
+         xl=x1
+         xh=x2
+         zriddr=UNUSED
+         do 11 j=1,MAXIT
+            xm=0.5*(xl+xh)
+            fm=func(i,xm)
+            s=sqrt(fm**2-fl*fh)
+            if(s.eq.0.)return
+            xnew=xm+(xm-xl)*(sign(1d0,fl-fh)*fm/s)
+            if (abs(xnew-zriddr).le.xacc) return
+            zriddr=xnew
+            fnew=func(i,zriddr)
+            if (fnew.eq.0.) return
+            if(sign(fm,fnew).ne.fm) then
+               xl=xm
+               fl=fm
+               xh=zriddr
+               fh=fnew
+            else if(sign(fl,fnew).ne.fl) then
+               xh=zriddr
+               fh=fnew
+            else if(sign(fh,fnew).ne.fh) then
+               xl=zriddr
+               fl=fnew
+            else
+               write(6,*) "never get here in zriddr"
+               call exit(-10)
+            endif
+            if(abs(xh-xl).le.xacc) return
+ 11      continue
+         write(6,*) "zriddr exceed maximum iterations"
+         call exit(-10)
+      else if (fl.eq.0.) then
+         zriddr=x1
+      else if (fh.eq.0.) then
+         zriddr=x2
+      else
+         write(6,*) "root must be bracketed in zriddr"
+         call exit(-10);
+      endif
+      return
+      END
+

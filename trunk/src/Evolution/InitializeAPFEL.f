@@ -62,7 +62,7 @@
             else
                nfi = 3
             endif
-*     Initialize matching conditions in can the VFNS is chosen
+*     Initialize matching conditions in case the theory is nor "QED"
             if(Th.ne."QED") call initIntegralsMatching
          endif
 *
