@@ -44,7 +44,6 @@ int main()
   //
   // HKNS
   //
-  /*
   APFEL::SetPDFSet("hknsff07_p_lo");
   APFEL::SetPerturbativeOrder(0);
   APFEL::SetMaxFlavourPDFs(5);
@@ -56,7 +55,7 @@ int main()
   APFEL::SetNumberOfGrids(2);
   APFEL::SetGridParameters(1,50,3,1e-2);
   APFEL::SetGridParameters(2,40,3,7e-1);
-  */
+  /*
   //
   // DSS
   //
@@ -71,7 +70,7 @@ int main()
   APFEL::SetNumberOfGrids(2);
   APFEL::SetGridParameters(1,50,3,5e-2);
   APFEL::SetGridParameters(2,40,3,7e-1);
-
+  */
   // Initializes integrals on the grids
   APFEL::InitializeAPFEL();
 

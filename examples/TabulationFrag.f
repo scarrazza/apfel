@@ -47,31 +47,31 @@
 *
 *     HKNS
 *
-c      call SetPDFSet("hknsff07_p_lo")
-c      call SetPerturbativeOrder(0)
-c      call SetMaxFlavourPDFs(5)
-c      call SetMaxFlavourAlpha(5)
-c      call SetPoleMasses(1.43d0,4.3d0,175d0)
-c      call SetAlphaEvolution("lambda")
-c      call SetLambdaQCDRef(0.220d0,4)
-cc      call SetLambdaQCDRef(0.323d0,4)
-c      call SetNumberOfGrids(2)
-c      call SetGridParameters(1,50,3,1d-2)
-c      call SetGridParameters(2,40,3,7d-1)
-*
-*     DSS
-*
-      call SetPDFSet("dss_p_lo")
+      call SetPDFSet("hknsff07_p_lo")
       call SetPerturbativeOrder(0)
       call SetMaxFlavourPDFs(5)
       call SetMaxFlavourAlpha(5)
       call SetPoleMasses(1.43d0,4.3d0,175d0)
       call SetAlphaEvolution("lambda")
       call SetLambdaQCDRef(0.220d0,4)
-c      call SetLambdaQCDRef(0.334d0,4)
+c      call SetLambdaQCDRef(0.323d0,4)
       call SetNumberOfGrids(2)
-      call SetGridParameters(1,50,3,5d-2)
+      call SetGridParameters(1,50,3,1d-2)
       call SetGridParameters(2,40,3,7d-1)
+*
+*     DSS
+*
+c      call SetPDFSet("dss_p_lo")
+c      call SetPerturbativeOrder(0)
+c      call SetMaxFlavourPDFs(5)
+c      call SetMaxFlavourAlpha(5)
+c      call SetPoleMasses(1.43d0,4.3d0,175d0)
+c      call SetAlphaEvolution("lambda")
+c      call SetLambdaQCDRef(0.220d0,4)
+cc      call SetLambdaQCDRef(0.334d0,4)
+c      call SetNumberOfGrids(2)
+c      call SetGridParameters(1,50,3,5d-2)
+c      call SetGridParameters(2,40,3,7d-1)
 *
 *     Initializes integrals on the grids
 *
