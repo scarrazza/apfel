@@ -98,12 +98,22 @@ C ---------------------------------------------------------------------
       DATA EPS/1.D-12/
 
       INCLUDE '../FragFunc/HKNS/EM.inc'
-      INCLUDE '../FragFunc/HKNS/hkns_pilo.inc'
-      INCLUDE '../FragFunc/HKNS/hkns_pinlo.inc'
-      INCLUDE '../FragFunc/HKNS/hkns_klo.inc'
-      INCLUDE '../FragFunc/HKNS/hkns_knlo.inc'
-      INCLUDE '../FragFunc/HKNS/hkns_plo.inc'
-      INCLUDE '../FragFunc/HKNS/hkns_pnlo.inc'
+*     Include files with gradient
+*     (slow compilation)
+c      INCLUDE '../FragFunc/HKNS/hkns_pilo.inc'
+c      INCLUDE '../FragFunc/HKNS/hkns_pinlo.inc'
+c      INCLUDE '../FragFunc/HKNS/hkns_klo.inc'
+c      INCLUDE '../FragFunc/HKNS/hkns_knlo.inc'
+c      INCLUDE '../FragFunc/HKNS/hkns_plo.inc'
+c      INCLUDE '../FragFunc/HKNS/hkns_pnlo.inc'
+*     Include files without gradient
+*     (to speed up the compilation)
+      INCLUDE '../FragFunc/HKNS/hkns_pilo_no_err.inc'
+      INCLUDE '../FragFunc/HKNS/hkns_pinlo_no_err.inc'
+      INCLUDE '../FragFunc/HKNS/hkns_klo_no_err.inc'
+      INCLUDE '../FragFunc/HKNS/hkns_knlo_no_err.inc'
+      INCLUDE '../FragFunc/HKNS/hkns_plo_no_err.inc'
+      INCLUDE '../FragFunc/HKNS/hkns_pnlo_no_err.inc'
 
 C Q2 AND X GRID.
       DATA QG /

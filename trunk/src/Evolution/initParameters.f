@@ -145,11 +145,21 @@ c         call SetGridParameters(3,20,5,8d-1)
             write(6,"(a,i1,a,f10.6,a)")" - LambdaQCD(",n_ref_qcd,
      1                                 ") = ",lambda_ref_qcd," GeV"
          else
-            write(6,*) "Coupling reference values:"
-            write(6,"(a,f8.4,a,f9.6)")" - AlphaQCD(",dsqrt(q2_ref_qcd),
-     1                                 " GeV) = ",alpha_ref_qcd
-            write(6,"(a,f8.4,a,f9.6)")" - AlphaQED(",dsqrt(q2_ref_qed),
-     1                                 " GeV) = ",alpha_ref_qed
+            if(Th.eq."QCD")then
+               write(6,*) "Coupling reference value:"
+               write(6,"(a,f8.4,a,f9.6)")" - AlphaQCD(",
+     1              dsqrt(q2_ref_qcd)," GeV) = ",alpha_ref_qcd
+            elseif(Th.eq."QED")then
+               write(6,*) "Coupling reference value:"
+               write(6,"(a,f8.4,a,f9.6)")" - AlphaQED(",
+     1              dsqrt(q2_ref_qed)," GeV) = ",alpha_ref_qed
+            else
+               write(6,*) "Coupling reference values:"
+               write(6,"(a,f8.4,a,f9.6)")" - AlphaQCD(",
+     1              dsqrt(q2_ref_qcd)," GeV) = ",alpha_ref_qcd
+               write(6,"(a,f8.4,a,f9.6)")" - AlphaQED(",
+     1              dsqrt(q2_ref_qed)," GeV) = ",alpha_ref_qed
+            endif
          endif
 *
          write(6,"(a,a,a)") " ",mass_scheme," heavy quark thresholds:"
