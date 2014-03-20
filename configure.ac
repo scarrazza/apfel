@@ -25,7 +25,7 @@ AC_CONFIG_HEADERS([config/config.h include/APFEL/FortranWrappers.h])
 
 ## Set Fortran compiler behaviour
 if test "x$FCFLAGS" == "x"; then
-  FCFLAGS="-O3 -Wunused"
+  FCFLAGS="-O3"
 fi
 # Try to respect users' Fortran compiler variables
 if test "x$FC" == "x"; then

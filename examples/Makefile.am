@@ -18,6 +18,6 @@ Timing_SOURCES = Timing.cc
 LuminosityCxx_SOURCES = LuminosityCxx.cc
 DISObservablesCxx_SOURCES = DISObservablesCxx.cc
 TabulationStepCxx_SOURCES = TabulationStepCxx.cc
-TabulationStepCxx_SOURCES = TabulationFragCxx.cc
+TabulationFragCxx_SOURCES = TabulationFragCxx.cc
 
 EXTRA_DIST = TabulationPython SumRulesPython LHgridProductionPython LuminosityPython
