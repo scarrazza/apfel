@@ -14,7 +14,7 @@
 *     gm  g   Sig Dsg Tu1 Tu2 Td1 Td2 V   DV  Vu1 Vu2 Vd1 Vd2
 *
 ************************************************************************
-      subroutine PDFphys2evQCD(gammain,pdfin,pdfout)
+      subroutine PDFphys2evUni(gammain,pdfin,pdfout)
 *
       implicit none
 *
