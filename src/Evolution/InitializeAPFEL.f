@@ -78,7 +78,8 @@
             enddo
          elseif(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
      1          Th.eq."QECDP".or.Th.eq."QECDS".or.
-     2          Th.eq."QavDP".or.Th.eq."QavDS")then
+     2          Th.eq."QavDP".or.Th.eq."QavDS".or.
+     3          Th.eq."QUniD")then
             do inf=nfi,nff
                call initIntegralsQCD(inf)
                call initIntegralsQED(inf)

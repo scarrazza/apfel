@@ -37,6 +37,9 @@
       double precision fphQED(-6:6,0:nint_max),fphQEDb(-6:6,0:nint_max)
       double precision fgm(0:nint_max),fgmb(0:nint_max)
       double precision fgl(0:nint_max),fglb(0:nint_max)
+      double precision fevUni(0:13,0:nint_max)
+      double precision fphUni(-7:6,0:nint_max)
+*
 ************************************************************************
 *     QCD evolution
 ************************************************************************
@@ -58,6 +61,7 @@
             enddo
             fgamma(jgrid,alpha) = f0bos(alpha)
          enddo
+*
 ************************************************************************
 *     QED evolution
 ************************************************************************
@@ -81,6 +85,7 @@
             fph(jgrid,0,alpha)  = f0bos(alpha)
             fgamma(jgrid,alpha) = fphQED(0,alpha)
          enddo
+*
 ************************************************************************
 *     QCD x QED evolution (QCD first and QED second) in parallel
 ************************************************************************
@@ -123,6 +128,7 @@
             enddo
             fgamma(jgrid,alpha) = fgm(alpha)
          enddo
+*
 ************************************************************************
 *     QCD x QED evolution (QCD first and QED second) in series
 ************************************************************************
@@ -157,6 +163,7 @@
             fph(jgrid,0,alpha)  = fgl(alpha)
             fgamma(jgrid,alpha) = fphQED(0,alpha)
          enddo
+*
 ************************************************************************
 *     QED x QCD evolution (QED first and QCD second) in parallel
 ************************************************************************
@@ -203,6 +210,7 @@
             fph(jgrid,0,alpha)  = fgl(alpha)
             fgamma(jgrid,alpha) = fphQED(0,alpha)
          enddo
+*
 ************************************************************************
 *     QED x QCD evolution (QED first and QCD second) in series
 ************************************************************************
@@ -237,6 +245,7 @@
             enddo
             fgamma(jgrid,alpha) = fgm(alpha)
          enddo
+*
 ************************************************************************
 *     ( QCD x QED + QED x QCD ) / 2 evolution in parallel
 ************************************************************************
@@ -307,6 +316,7 @@
             enddo
             fgamma(jgrid,alpha) = fgm(alpha)
          enddo
+*
 ************************************************************************
 *     ( QCD x QED + QED x QCD ) / 2 evolution in series
 ************************************************************************
@@ -367,6 +377,26 @@
             enddo
             fph(jgrid,0,alpha)  = ( fgl(alpha) + fphQCD(0,alpha) ) / 2d0
             fgamma(jgrid,alpha) = ( fgm(alpha) + fphQED(0,alpha) ) / 2d0
+         enddo
+*
+************************************************************************
+*     Unified QCD x QED Evolution
+************************************************************************
+      elseif(Th.eq."QUniD")then
+*     Rotate initial PDFs from physical to Unified evolution basis
+         call PDFphys2evUni(f0bos,f0ph,fevUni)
+*     Evolve PDFs using the QCD evolution operators
+         do inf=nfi,nff,sgn
+            call EvolveUni(inf,fevUni)
+         enddo
+*     Rotate evolved PDFs from Unified evolution to physical basis
+         call PDFevUni2phys(fevUni,fphUni)
+*     Put Evolved PDF into the common "fph"
+         do alpha=0,nin(igrid)
+            do i=-6,6
+               fph(jgrid,i,alpha) = fphUni(i,alpha)
+            enddo
+            fgamma(jgrid,alpha) = fphUni(-7,alpha)
          enddo
       endif
 *

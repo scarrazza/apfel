@@ -4,6 +4,7 @@
 *
 *     This routine joins the subgrids used in the calculation in one
 *     single grid.
+*     (For the moment it works only for QCD subgrids)
 *
 ************************************************************************
       subroutine JoinGrids

@@ -28,13 +28,13 @@
       Q2fin = Q2
 *
       if(Q20.lt.Q2min.or.Q20.gt.Q2max)then
-         write(6,*) "Initial Energy out of range:"
+         write(6,*) "Initial energy out of range:"
          write(6,*) "- Q0   =",Q0
          write(6,*) "- Qmin =",dsqrt(Q2min)
          write(6,*) "- Qmax =",dsqrt(Q2max)
          call exit(-10)
       elseif(Q2.lt.Q2min.or.Q2.gt.Q2max)then
-         write(6,*) "Final Energy out of range:"
+         write(6,*) "Final energy out of range:"
          write(6,*) "- Q    =",Q
          write(6,*) "- Qmin =",dsqrt(Q2min)
          write(6,*) "- Qmax =",dsqrt(Q2max)
@@ -53,6 +53,8 @@
      2          Th.eq."QavDP".or.Th.eq."QavDS")then
             call EvolutionOperatorsQCD(Q20,Q2)
             call EvolutionOperatorsQED(Q20,Q2)
+         elseif(Th.eq."QUniD")then
+            call EvolutionOperatorsUnified(Q20,Q2)
          endif
 *     Initialize PDFs at the initial scale on the grid
          call initPDFs(Q20)
@@ -60,6 +62,7 @@
          call EvolvePDFs(igrid)
       enddo
 *     Join all the subgrids
+*     (For the moment available only for QCD)
       call JoinGrids
 *
       call cpu_time(t2)

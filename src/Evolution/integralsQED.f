@@ -36,7 +36,7 @@
 *
 *     Integrals
 *
-         integralsQED = coup * SQ(igrid,wnf,kk,alpha,beta)
+      integralsQED = coup * SQ(igrid,wnf,kk,alpha,beta)
 *
       return
       end

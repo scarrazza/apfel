@@ -2,8 +2,8 @@
 *
 *     EvolutionOperatorsQED.f:
 *
-*     This routine returns the single and the non-singlet evolution
-*     operators on the x-spage grid between the scales m20 and mu2 for
+*     This routine returns the singlet and the non-singlet evolution
+*     operators on the x-space grid between the scales m20 and mu2 for
 *     nf active flavours given the initial evolution operators in QED.
 *
 ************************************************************************
