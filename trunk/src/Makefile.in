@@ -86,7 +86,12 @@ am__objects_6 = Evolution/EvolutionOperatorsQCD.lo \
 	Evolution/MatchingConditions.lo \
 	Evolution/integrandsMatching.lo Evolution/integralsMatching.lo \
 	Evolution/RSLintegralsMatching.lo Evolution/MatchPDFs.lo \
-	Evolution/JoinOperatorsQCD.lo
+	Evolution/JoinOperatorsQCD.lo \
+	Evolution/EvolutionOperatorsUnified.lo \
+	Evolution/odeintnsUnified.lo \
+	Evolution/IdentityOperatorsUnified.lo \
+	Evolution/EqualOperatorsUnifiednf.lo Evolution/EvolveUni.lo \
+	Evolution/odeintsgUnified.lo
 am__objects_7 = Evolution/EvolutionOperatorsQED.lo \
 	Evolution/IdentityOperatorsQED.lo \
 	Evolution/EqualOperatorsQEDnf.lo Evolution/integrandsQED.lo \
@@ -98,7 +103,9 @@ am__objects_8 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
 	Evolution/EvolveQCD.lo Evolution/EvolveQED.lo \
 	Evolution/toyLHPDFs.lo Evolution/xPDF.lo Evolution/xgamma.lo \
 	Evolution/NPDF.lo Evolution/Ngamma.lo Evolution/LUMI.lo \
-	Evolution/JoinGrids.lo
+	Evolution/JoinGrids.lo Evolution/PDFevUni2evQCD.lo \
+	Evolution/PDFevQCD2evUni.lo Evolution/PDFevUni2phys.lo \
+	Evolution/PDFphys2evUni.lo
 am__objects_9 = core/dgauss.lo core/wgplg.lo core/ddilog.lo
 am__objects_10 = DIS/cc_dis.lo DIS/FF0CoefficientFunctions.lo \
 	DIS/integrands_cc.lo DIS/nc_dis.lo DIS/xcoeffunc_cc.lo \
@@ -313,7 +320,9 @@ COUPLINGS = Evolution/a_QCD.f Evolution/a_QED.f Evolution/MSbarmass.f Evolution/
 EVOLUTIONQCD = Evolution/EvolutionOperatorsQCD.f Evolution/IdentityOperatorsQCD.f \
 	Evolution/EqualOperatorsQCDnf.f Evolution/integrandsQCD.f Evolution/integralsQCD.f Evolution/RSLintegralsQCD.f \
 	Evolution/odeintnsQCD.f Evolution/odeintsgQCD.f Evolution/MatchingConditions.f Evolution/integrandsMatching.f \
-	Evolution/integralsMatching.f Evolution/RSLintegralsMatching.f Evolution/MatchPDFs.f Evolution/JoinOperatorsQCD.f
+	Evolution/integralsMatching.f Evolution/RSLintegralsMatching.f Evolution/MatchPDFs.f Evolution/JoinOperatorsQCD.f \
+	Evolution/EvolutionOperatorsUnified.f Evolution/odeintnsUnified.f Evolution/IdentityOperatorsUnified.f \
+	Evolution/EqualOperatorsUnifiednf.f Evolution/EvolveUni.f Evolution/odeintsgUnified.f
 
 EVOLUTIONQED = Evolution/EvolutionOperatorsQED.f Evolution/IdentityOperatorsQED.f \
 	Evolution/EqualOperatorsQEDnf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f \
@@ -321,7 +330,8 @@ EVOLUTIONQED = Evolution/EvolutionOperatorsQED.f Evolution/IdentityOperatorsQED.
 
 PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQED.f Evolution/PDFevQED2phys.f \
 	Evolution/EvolvePDFs.f Evolution/switchGluonPhoton.f Evolution/EvolveQCD.f Evolution/EvolveQED.f Evolution/toyLHPDFs.f \
-	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f Evolution/JoinGrids.f
+	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f Evolution/JoinGrids.f \
+	Evolution/PDFevUni2evQCD.f Evolution/PDFevQCD2evUni.f Evolution/PDFevUni2phys.f Evolution/PDFphys2evUni.f
 
 UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f
 DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
@@ -496,6 +506,18 @@ Evolution/MatchPDFs.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/JoinOperatorsQCD.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EvolutionOperatorsUnified.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/odeintnsUnified.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/IdentityOperatorsUnified.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EqualOperatorsUnifiednf.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EvolveUni.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/odeintsgUnified.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/EvolutionOperatorsQED.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/IdentityOperatorsQED.lo: Evolution/$(am__dirstamp) \
@@ -541,6 +563,14 @@ Evolution/Ngamma.lo: Evolution/$(am__dirstamp) \
 Evolution/LUMI.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/JoinGrids.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/PDFevUni2evQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/PDFevQCD2evUni.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/PDFevUni2phys.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/PDFphys2evUni.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 core/$(am__dirstamp):
 	@$(MKDIR_P) core
@@ -617,10 +647,14 @@ mostlyclean-compile:
 	-rm -f Evolution/EqualOperatorsQCDnf.lo
 	-rm -f Evolution/EqualOperatorsQEDnf.$(OBJEXT)
 	-rm -f Evolution/EqualOperatorsQEDnf.lo
+	-rm -f Evolution/EqualOperatorsUnifiednf.$(OBJEXT)
+	-rm -f Evolution/EqualOperatorsUnifiednf.lo
 	-rm -f Evolution/EvolutionOperatorsQCD.$(OBJEXT)
 	-rm -f Evolution/EvolutionOperatorsQCD.lo
 	-rm -f Evolution/EvolutionOperatorsQED.$(OBJEXT)
 	-rm -f Evolution/EvolutionOperatorsQED.lo
+	-rm -f Evolution/EvolutionOperatorsUnified.$(OBJEXT)
+	-rm -f Evolution/EvolutionOperatorsUnified.lo
 	-rm -f Evolution/EvolveAPFEL.$(OBJEXT)
 	-rm -f Evolution/EvolveAPFEL.lo
 	-rm -f Evolution/EvolvePDFs.$(OBJEXT)
@@ -629,6 +663,8 @@ mostlyclean-compile:
 	-rm -f Evolution/EvolveQCD.lo
 	-rm -f Evolution/EvolveQED.$(OBJEXT)
 	-rm -f Evolution/EvolveQED.lo
+	-rm -f Evolution/EvolveUni.$(OBJEXT)
+	-rm -f Evolution/EvolveUni.lo
 	-rm -f Evolution/ExternalEvolutionOperator.$(OBJEXT)
 	-rm -f Evolution/ExternalEvolutionOperator.lo
 	-rm -f Evolution/HeavyQuarkMass.$(OBJEXT)
@@ -637,6 +673,8 @@ mostlyclean-compile:
 	-rm -f Evolution/IdentityOperatorsQCD.lo
 	-rm -f Evolution/IdentityOperatorsQED.$(OBJEXT)
 	-rm -f Evolution/IdentityOperatorsQED.lo
+	-rm -f Evolution/IdentityOperatorsUnified.$(OBJEXT)
+	-rm -f Evolution/IdentityOperatorsUnified.lo
 	-rm -f Evolution/InitializeAPFEL.$(OBJEXT)
 	-rm -f Evolution/InitializeAPFEL.lo
 	-rm -f Evolution/JoinGrids.$(OBJEXT)
@@ -659,14 +697,22 @@ mostlyclean-compile:
 	-rm -f Evolution/NPDF.lo
 	-rm -f Evolution/Ngamma.$(OBJEXT)
 	-rm -f Evolution/Ngamma.lo
+	-rm -f Evolution/PDFevQCD2evUni.$(OBJEXT)
+	-rm -f Evolution/PDFevQCD2evUni.lo
 	-rm -f Evolution/PDFevQCD2phys.$(OBJEXT)
 	-rm -f Evolution/PDFevQCD2phys.lo
 	-rm -f Evolution/PDFevQED2phys.$(OBJEXT)
 	-rm -f Evolution/PDFevQED2phys.lo
+	-rm -f Evolution/PDFevUni2evQCD.$(OBJEXT)
+	-rm -f Evolution/PDFevUni2evQCD.lo
+	-rm -f Evolution/PDFevUni2phys.$(OBJEXT)
+	-rm -f Evolution/PDFevUni2phys.lo
 	-rm -f Evolution/PDFphys2evQCD.$(OBJEXT)
 	-rm -f Evolution/PDFphys2evQCD.lo
 	-rm -f Evolution/PDFphys2evQED.$(OBJEXT)
 	-rm -f Evolution/PDFphys2evQED.lo
+	-rm -f Evolution/PDFphys2evUni.$(OBJEXT)
+	-rm -f Evolution/PDFphys2evUni.lo
 	-rm -f Evolution/RSLintegralsMatching.$(OBJEXT)
 	-rm -f Evolution/RSLintegralsMatching.lo
 	-rm -f Evolution/RSLintegralsQCD.$(OBJEXT)
@@ -757,10 +803,14 @@ mostlyclean-compile:
 	-rm -f Evolution/odeintnsQCD.lo
 	-rm -f Evolution/odeintnsQED.$(OBJEXT)
 	-rm -f Evolution/odeintnsQED.lo
+	-rm -f Evolution/odeintnsUnified.$(OBJEXT)
+	-rm -f Evolution/odeintnsUnified.lo
 	-rm -f Evolution/odeintsgQCD.$(OBJEXT)
 	-rm -f Evolution/odeintsgQCD.lo
 	-rm -f Evolution/odeintsgQED.$(OBJEXT)
 	-rm -f Evolution/odeintsgQED.lo
+	-rm -f Evolution/odeintsgUnified.$(OBJEXT)
+	-rm -f Evolution/odeintsgUnified.lo
 	-rm -f Evolution/switchGluonPhoton.$(OBJEXT)
 	-rm -f Evolution/switchGluonPhoton.lo
 	-rm -f Evolution/toyLHPDFs.$(OBJEXT)

@@ -2,11 +2,9 @@
 *
 *     EqualOperatorsQCDnf.f
 *
-*     This routine equals the fisrt and the second entries with the
-*     third and the forth respectively where the latter have a further
-*     index which is the number of active flavours. 
-*     The first and the third entries are supposed to be QCD non-singlets 
-*     while the secons and the forth QCD singlets.
+*     This routine equals the first four entries with the second four 
+*     where the latter have a further index which is the number of active
+*     flavours nf.
 *
 ************************************************************************
       subroutine EqualOperatorsQCDnf(nf,M0sg,M0nsp,M0nsm,M0nsv,

@@ -2,11 +2,9 @@
 *
 *     EqualOperatorsQEDnf.f
 *
-*     This routine equals the fisrt and the second entries with the
-*     third and the forth respectively where the latter have a further
-*     index which is the number of active flavours. 
-*     The first and the third entries are supposed to be QED non-singlets 
-*     while the secons and the forth QED singlets.
+*     This routine equals the first three entries with the second three 
+*     where the latter have a further index which is the number of active
+*     flavours nf.
 *
 ************************************************************************
       subroutine EqualOperatorsQEDnf(nf,M0sg,M0nsp,M0nsm,Msg,Mnsp,Mnsm)

@@ -43,7 +43,7 @@
       if(InAlpQCD.ne."done")    call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
       if(InAlpQED.ne."done")    call SetAlphaQEDRef(7.496252d-3,1.777d0)
       if(InAlphaEvol.ne."done") call SetAlphaEvolution("exact")
-      if(InAlpQED.ne."done")    call SetLambdaQCDRef(0.220d0,5)
+      if(InLambdaQCD.ne."done") call SetLambdaQCDRef(0.220d0,5)
       if(InKren.ne."done")      call SetRenFacRatio(1d0)
       if(InMasses.ne."done")    call SetPoleMasses(dsqrt(2d0),4.5d0,
      1                                             175d0)
@@ -68,7 +68,8 @@ c         call SetGridParameters(3,20,5,8d-1)
       if(Th.ne."QCD".and.Th.ne."QED".and.
      1   Th.ne."QCEDP".and.Th.ne."QCEDS".and.
      2   Th.ne."QECDP".and.Th.ne."QECDS".and.
-     3   Th.ne."QavDP".and.Th.ne."QavDS")then
+     3   Th.ne."QavDP".and.Th.ne."QavDS".and.
+     4   Th.ne."QUniD")then
          write(6,*) "Theory unknown:"
          write(6,*) "Theory = ",Th
          write(6,*) "  "
