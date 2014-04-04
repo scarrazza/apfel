@@ -112,7 +112,7 @@
          if(nfi.gt.nfMaxPDFs) nfi = nfMaxPDFs
 *     If initial and final energies are equal return immediately the intial conditions
          if(muF2.eq.muF20)then
-            call EqualOperatorsUnifiednf(Nf_FF,
+            call EqualOperatorsUnifiednf(nfi,
      1           M0sg1,M0sg2,M0nspu,M0nspd,M0nsmu,M0nsmd,
      2           MUnisg1,Munisg2,MUninspu,MUninspd,MUninsmu,MUninsmd)
             sgn = 1
@@ -155,6 +155,10 @@
             call odeintnsUnified(3,mu2i(inf),mu2f(inf),M0nsmu,Mnsmu)
 *     Non-Singlet minus-down
             call odeintnsUnified(4,mu2i(inf),mu2f(inf),M0nsmd,Mnsmd)
+*     Match operators
+            call EqualOperatorsUnifiednf(inf,
+     1           Msg1,Msg2,Mnspu,Mnspd,Mnsmu,Mnsmd,
+     2           MUnisg1,Munisg2,MUninspu,MUninspd,MUninsmu,MUninsmd)
          enddo
       endif
 *
