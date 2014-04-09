@@ -35,14 +35,14 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 noinst_PROGRAMS = Tabulation$(EXEEXT) SumRules$(EXEEXT) \
-	LHgridProduction$(EXEEXT) Luminosity$(EXEEXT) \
-	DISObservables$(EXEEXT) TabulationStep$(EXEEXT) \
-	TabulationFrag$(EXEEXT) LHgridDerivativeProduction$(EXEEXT) \
-	TabulationCxx$(EXEEXT) \
-	SumRulesCxx$(EXEEXT) LHgridProductionCxx$(EXEEXT) \
-	LuminosityCxx$(EXEEXT) Timing$(EXEEXT) \
-	DISObservablesCxx$(EXEEXT) TabulationStepCxx$(EXEEXT) \
-	TabulationFragCxx$(EXEEXT) LHgridDerivativeProductionCxx$(EXEEXT)
+	LHgridProduction$(EXEEXT) LHgridDerivativeProduction$(EXEEXT) \
+	Luminosity$(EXEEXT) DISObservables$(EXEEXT) \
+	TabulationStep$(EXEEXT) TabulationFrag$(EXEEXT) \
+	TabulationCxx$(EXEEXT) SumRulesCxx$(EXEEXT) \
+	LHgridProductionCxx$(EXEEXT) \
+	LHgridDerivativeProductionCxx$(EXEEXT) LuminosityCxx$(EXEEXT) \
+	Timing$(EXEEXT) DISObservablesCxx$(EXEEXT) \
+	TabulationStepCxx$(EXEEXT) TabulationFragCxx$(EXEEXT)
 subdir = examples
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -68,18 +68,22 @@ am__v_lt_0 = --silent
 am_DISObservablesCxx_OBJECTS = DISObservablesCxx.$(OBJEXT)
 DISObservablesCxx_OBJECTS = $(am_DISObservablesCxx_OBJECTS)
 DISObservablesCxx_LDADD = $(LDADD)
+am_LHgridDerivativeProduction_OBJECTS =  \
+	LHgridDerivativeProduction.$(OBJEXT)
+LHgridDerivativeProduction_OBJECTS =  \
+	$(am_LHgridDerivativeProduction_OBJECTS)
+LHgridDerivativeProduction_LDADD = $(LDADD)
+am_LHgridDerivativeProductionCxx_OBJECTS =  \
+	LHgridDerivativeProductionCxx.$(OBJEXT)
+LHgridDerivativeProductionCxx_OBJECTS =  \
+	$(am_LHgridDerivativeProductionCxx_OBJECTS)
+LHgridDerivativeProductionCxx_LDADD = $(LDADD)
 am_LHgridProduction_OBJECTS = LHgridProduction.$(OBJEXT)
 LHgridProduction_OBJECTS = $(am_LHgridProduction_OBJECTS)
 LHgridProduction_LDADD = $(LDADD)
 am_LHgridProductionCxx_OBJECTS = LHgridProductionCxx.$(OBJEXT)
 LHgridProductionCxx_OBJECTS = $(am_LHgridProductionCxx_OBJECTS)
 LHgridProductionCxx_LDADD = $(LDADD)
-am_LHgridDerivativeProduction_OBJECTS = LHgridDerivativeProduction.$(OBJEXT)
-LHgridDerivativeProduction_OBJECTS = $(am_LHgridDerivativeProduction_OBJECTS)
-LHgridDerivativeProduction_LDADD = $(LDADD)
-am_LHgridDerivativeProductionCxx_OBJECTS = LHgridDerivativeProductionCxx.$(OBJEXT)
-LHgridDerivativeProductionCxx_OBJECTS = $(am_LHgridDerivativeProductionCxx_OBJECTS)
-LHgridDerivativeProductionCxx_LDADD = $(LDADD)
 am_Luminosity_OBJECTS = Luminosity.$(OBJEXT)
 Luminosity_OBJECTS = $(am_Luminosity_OBJECTS)
 Luminosity_LDADD = $(LDADD)
@@ -153,8 +157,9 @@ AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
 SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
+	$(LHgridDerivativeProduction_SOURCES) \
+	$(LHgridDerivativeProductionCxx_SOURCES) \
 	$(LHgridProduction_SOURCES) $(LHgridProductionCxx_SOURCES) \
-	$(LHgridDerivativeProduction_SOURCES) $(LHgridDerivativeProductionCxx_SOURCES) \
 	$(Luminosity_SOURCES) $(LuminosityCxx_SOURCES) \
 	$(SumRules_SOURCES) $(SumRulesCxx_SOURCES) \
 	$(Tabulation_SOURCES) $(TabulationCxx_SOURCES) \
@@ -162,8 +167,9 @@ SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(TabulationStep_SOURCES) $(TabulationStepCxx_SOURCES) \
 	$(Timing_SOURCES)
 DIST_SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
+	$(LHgridDerivativeProduction_SOURCES) \
+	$(LHgridDerivativeProductionCxx_SOURCES) \
 	$(LHgridProduction_SOURCES) $(LHgridProductionCxx_SOURCES) \
-	$(LHgridDerivativeProduction_SOURCES) $(LHgridDerivativeProductionCxx_SOURCES) \
 	$(Luminosity_SOURCES) $(LuminosityCxx_SOURCES) \
 	$(SumRules_SOURCES) $(SumRulesCxx_SOURCES) \
 	$(Tabulation_SOURCES) $(TabulationCxx_SOURCES) \
@@ -378,18 +384,18 @@ DISObservables$(EXEEXT): $(DISObservables_OBJECTS) $(DISObservables_DEPENDENCIES
 DISObservablesCxx$(EXEEXT): $(DISObservablesCxx_OBJECTS) $(DISObservablesCxx_DEPENDENCIES) $(EXTRA_DISObservablesCxx_DEPENDENCIES) 
 	@rm -f DISObservablesCxx$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(DISObservablesCxx_OBJECTS) $(DISObservablesCxx_LDADD) $(LIBS)
+LHgridDerivativeProduction$(EXEEXT): $(LHgridDerivativeProduction_OBJECTS) $(LHgridDerivativeProduction_DEPENDENCIES) $(EXTRA_LHgridDerivativeProduction_DEPENDENCIES) 
+	@rm -f LHgridDerivativeProduction$(EXEEXT)
+	$(AM_V_F77LD)$(F77LINK) $(LHgridDerivativeProduction_OBJECTS) $(LHgridDerivativeProduction_LDADD) $(LIBS)
+LHgridDerivativeProductionCxx$(EXEEXT): $(LHgridDerivativeProductionCxx_OBJECTS) $(LHgridDerivativeProductionCxx_DEPENDENCIES) $(EXTRA_LHgridDerivativeProductionCxx_DEPENDENCIES) 
+	@rm -f LHgridDerivativeProductionCxx$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(LHgridDerivativeProductionCxx_OBJECTS) $(LHgridDerivativeProductionCxx_LDADD) $(LIBS)
 LHgridProduction$(EXEEXT): $(LHgridProduction_OBJECTS) $(LHgridProduction_DEPENDENCIES) $(EXTRA_LHgridProduction_DEPENDENCIES) 
 	@rm -f LHgridProduction$(EXEEXT)
 	$(AM_V_F77LD)$(F77LINK) $(LHgridProduction_OBJECTS) $(LHgridProduction_LDADD) $(LIBS)
 LHgridProductionCxx$(EXEEXT): $(LHgridProductionCxx_OBJECTS) $(LHgridProductionCxx_DEPENDENCIES) $(EXTRA_LHgridProductionCxx_DEPENDENCIES) 
 	@rm -f LHgridProductionCxx$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(LHgridProductionCxx_OBJECTS) $(LHgridProductionCxx_LDADD) $(LIBS)
-LHgridDerivativeProduction$(EXEEXT): $(LHgridDerivativeProduction_OBJECTS) $(LHgridDerivativeProduction_DEPENDENCIES) $(EXTRA_LHgridDerivativeProduction_DEPENDENCIES) 
-	@rm -f LHgridDerivativeProduction$(EXEEXT)
-	$(AM_V_F77LD)$(F77LINK) $(LHgridDerivativeProduction_OBJECTS) $(LHgridDerivativeProduction_LDADD) $(LIBS)
-LHgridDerivativeProductionCxx$(EXEEXT): $(LHgridDerivativeProductionCxx_OBJECTS) $(LHgridDerivativeProductionCxx_DEPENDENCIES) $(EXTRA_LHgridDerivativeProductionCxx_DEPENDENCIES)
-	@rm -f LHgridDerivativeProductionCxx$(EXEEXT)
-	$(AM_V_CXXLD)$(CXXLINK) $(LHgridDerivativeProductionCxx_OBJECTS) $(LHgridDerivativeProductionCxx_LDADD) $(LIBS)
 Luminosity$(EXEEXT): $(Luminosity_OBJECTS) $(Luminosity_DEPENDENCIES) $(EXTRA_Luminosity_DEPENDENCIES) 
 	@rm -f Luminosity$(EXEEXT)
 	$(AM_V_F77LD)$(F77LINK) $(Luminosity_OBJECTS) $(Luminosity_LDADD) $(LIBS)
@@ -431,8 +437,8 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DISObservablesCxx.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LHgridProductionCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LHgridDerivativeProductionCxx.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LHgridProductionCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LuminosityCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SumRulesCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TabulationCxx.Po@am__quote@
