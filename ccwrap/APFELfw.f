@@ -28,6 +28,14 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      function fdxpdf(i,x)
+      integer i
+      double precision x, fdxpdf
+      fdxpdf = dxPDF(i,x)
+      return
+      end
+
+ccccccccccccc      
       function fxgamma(x)
       double precision x, fxgamma
       fxgamma = xgamma(x)
@@ -42,12 +50,26 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      function fdxgamma(x)
+      double precision x, fdxgamma
+      fdxgamma = dxgamma(x)
+      return
+      end
+
+ccccccccccccc      
       subroutine flhapdfgrid(Nrep,Qin,fname)
       integer Nrep
       double precision Qin
       character fname*(*)
       call LHAPDFgrid(Nrep, Qin, fname)
       end subroutine flhapdfgrid
+
+ccccccccccccc      
+      subroutine flhapdfgridderivative(Nrep,fname)
+      integer Nrep
+      character fname*(*)
+      call LHAPDFgridDerivative(Nrep, fname)
+      end subroutine flhapdfgridderivative
 
 ccccccccccccc
       subroutine fexternalevolutionoperator(q0,q,n,xext,m)

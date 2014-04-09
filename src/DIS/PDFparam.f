@@ -73,7 +73,7 @@
 *
 *     Get alphas from LHAPDF
 *
-         ASQ  = alphasPDF(Q) / 4D0 / PI
+         ASQ = alphasPDF(Q) / 4D0 / PI
 *
 *     Get heavy quark thresholds from LHAPDF
 *

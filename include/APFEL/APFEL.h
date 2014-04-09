@@ -29,6 +29,9 @@ namespace APFEL {
   /// Returns x*PDF
   double xPDF(int i, double x);
 
+  /// Returns the derivative of x*PDF
+  double dxPDF(int i, double x);
+
   /// Returns x*PDF on the joint grid
   double xPDFj(int i, double x);
 
@@ -38,8 +41,14 @@ namespace APFEL {
   /// Returns x*gamma on the joint grid
   double xgammaj(double x);
 
+  /// Returns the derivative of x*gamma
+  double dxgamma(double x);
+
   /// Builds the *.LHgrid output file
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname);
+
+  /// Builds the *.LHgrid output file with the derivative of the input set
+  void LHAPDFgridDerivative(int Nrep, const std::string& fname);
 
   /// External Evolution Operator for APPLgrid
   void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double *m);
