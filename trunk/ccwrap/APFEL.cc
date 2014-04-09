@@ -28,6 +28,11 @@ namespace APFEL {
     return fxpdf(&i, &x);
   }
 
+  double dxPDF(int i, double x)
+  {
+    return fdxpdf(&i, &x);
+  }
+
   double xPDFj(int i, double x)
   {
     return fxpdfj(&i, &x);
@@ -43,11 +48,23 @@ namespace APFEL {
     return fxgammaj(&x);
   }
 
+  double dxgamma(double x)
+  {
+    return fdxgamma(&x);
+  }
+
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname)
   {
     char cfname[SIZE+1];
     strncpy(cfname, fname.c_str(), SIZE);
     flhapdfgrid(&Nrep,&Qin,cfname);
+  }
+
+  void LHAPDFgridDerivative(int Nrep, const std::string& fname)
+  {
+    char cfname[SIZE+1];
+    strncpy(cfname, fname.c_str(), SIZE);
+    flhapdfgridderivative(&Nrep,cfname);
   }
 
   void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double *m)

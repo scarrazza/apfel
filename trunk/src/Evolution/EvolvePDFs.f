@@ -6,6 +6,7 @@
 *
 *     - EvolutionOperatorsQCD
 *     - EvolutionOperatorsQED
+*     - EvolutionOperatorsUnified
 *
 *     with the initial PDFs producing the final PDFs on the interpolation
 *     grid.

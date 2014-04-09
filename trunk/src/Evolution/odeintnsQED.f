@@ -289,3 +289,48 @@
 *
       return
       end
+*
+************************************************************************
+*
+*     The following routine computes the derivative of the non-singlet
+*     evolution operators in QED.
+*
+************************************************************************
+      subroutine DeriveNsQED(i,coup,dMdt)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+**
+*     Input Variables
+*
+      integer i
+      double precision coup
+**
+*     Internal Variables
+*
+      integer alpha,beta
+      double precision integralsQED
+      double precision integ(0:nint_max)
+**
+*     Output Variables
+*
+      double precision dMdt(0:nint_max,0:nint_max)
+*
+      do alpha=0,nin(igrid)
+         integ(alpha) = integralsQED(0,alpha,coup,i)
+      enddo
+*
+*     Initialization
+*
+      do alpha=0,nin(igrid)
+         do beta=0,alpha-1
+            dMdt(alpha,beta) = 0d0
+         enddo
+         do beta=alpha,nin(igrid)
+            dMdt(alpha,beta) = integ(beta-alpha)
+         enddo
+      enddo
+*
+      return
+      end

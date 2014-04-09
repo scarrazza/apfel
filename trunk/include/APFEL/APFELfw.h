@@ -19,14 +19,23 @@ extern "C" {
 #define fxpdfj FC_FUNC(xpdfj,XPDFJ)
   double fxpdfj(int*, double*);
 
+#define fdxpdf FC_FUNC(dxpdf,DXPDF)
+  double fdxpdf(int*, double*);
+
 #define fxgamma FC_FUNC(xgamma,XGAMMA)
   double fxgamma(double*);
 
 #define fxgammaj FC_FUNC(xgammaj,XGAMMAJ)
   double fxgammaj(double*);
 
+#define fdxgamma FC_FUNC(dxgamma,DXGAMMA)
+  double fdxgamma(double*);
+
 #define flhapdfgrid FC_FUNC(lhapdfgrid,LHAPDFGRID)
   void flhapdfgrid(int*, double*, char*);
+
+#define flhapdfgridderivative FC_FUNC(lhapdfgridderivative,LHAPDFGRIDDERIVATIVE)
+  void flhapdfgridderivative(int*, char*);
 
 #define fexternalevolutionoperator FC_FUNC(externalevolutionoperator,EXTERNALEVOLUTIONOPERATOR)
   void fexternalevolutionoperator(double*,double*,int*,double*,double*);

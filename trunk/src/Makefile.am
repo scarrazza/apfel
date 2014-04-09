@@ -2,7 +2,7 @@ noinst_LTLIBRARIES = libAPFELCore.la
 
 INIT = 	Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParameters.f Evolution/initGrid.f Evolution/initIntegralsQCD.f \
 	Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f Evolution/initPDFs.f \
-	Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f
+	Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f
 
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
 	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f \
@@ -11,7 +11,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/SetMaxFlavourAlpha.f Evolution/SetReplica.f Evolution/AlphaQCD.f Evolution/AlphaQED.f Evolution/HeavyQuarkMass.f \
 	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f \
 	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f Evolution/SetTimeLikeEvolution.f Evolution/SetAlphaEvolution.f \
-	Evolution/SetLambdaQCDRef.f Evolution/hknsff07.f Evolution/fDSS.f
+	Evolution/SetLambdaQCDRef.f Evolution/hknsff07.f Evolution/fDSS.f Evolution/LHAPDFgridDerivative.f
 
 INTER = Evolution/interpolants.f
 
@@ -24,16 +24,18 @@ EVOLUTIONQCD = Evolution/EvolutionOperatorsQCD.f Evolution/IdentityOperatorsQCD.
 	Evolution/odeintnsQCD.f Evolution/odeintsgQCD.f Evolution/MatchingConditions.f Evolution/integrandsMatching.f \
 	Evolution/integralsMatching.f Evolution/RSLintegralsMatching.f Evolution/MatchPDFs.f Evolution/JoinOperatorsQCD.f \
 	Evolution/EvolutionOperatorsUnified.f Evolution/odeintnsUnified.f Evolution/IdentityOperatorsUnified.f \
-	Evolution/EqualOperatorsUnifiednf.f Evolution/EvolveUni.f Evolution/odeintsgUnified.f
+	Evolution/EqualOperatorsUnifiednf.f Evolution/EvolveUni.f Evolution/odeintsgUnified.f \
+	Evolution/DerivativeOperatorsQCD.f
 
 EVOLUTIONQED = Evolution/EvolutionOperatorsQED.f Evolution/IdentityOperatorsQED.f \
 	Evolution/EqualOperatorsQEDnf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f \
-	Evolution/odeintnsQED.f Evolution/odeintsgQED.f
+	Evolution/odeintnsQED.f Evolution/odeintsgQED.f Evolution/EvolutionOperatorsQED.f
 
 PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQED.f Evolution/PDFevQED2phys.f \
 	Evolution/EvolvePDFs.f Evolution/switchGluonPhoton.f Evolution/EvolveQCD.f Evolution/EvolveQED.f Evolution/toyLHPDFs.f \
 	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f Evolution/JoinGrids.f \
-	Evolution/PDFevUni2evQCD.f Evolution/PDFevQCD2evUni.f Evolution/PDFevUni2phys.f Evolution/PDFphys2evUni.f
+	Evolution/PDFevUni2evQCD.f Evolution/PDFevQCD2evUni.f Evolution/PDFevUni2phys.f Evolution/PDFphys2evUni.f \
+	Evolution/dxPDF.f Evolution/dxgamma.f Evolution/DeriveQCD.f Evolution/DeriveQED.f Evolution/DerivePDFs.f
 
 UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f
 

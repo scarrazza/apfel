@@ -349,4 +349,63 @@
 *
       return
       end
-
+*
+************************************************************************
+*
+*     The following routine computes the derivative of the singlet
+*     evolution operator in QCD.
+*
+************************************************************************
+      subroutine DeriveSgQCD(coup,dMdt)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+**
+*     Input Variables
+*
+      double precision coup
+**
+*     Internal Variables
+*
+      integer i,j,mapp(2,2)
+      integer alpha,beta
+      double precision integralsQCD
+      double precision integ(0:nint_max,2,2)
+**
+*     Output Variables
+*
+      double precision dMdt(2,2,0:nint_max,0:nint_max)
+*
+*     Map used for the muliplication
+*
+      mapp(1,1) = 4
+      mapp(1,2) = 5
+      mapp(2,1) = 6
+      mapp(2,2) = 7
+*
+      do alpha=0,nin(igrid)
+         do i=1,2
+            do j=1,2
+               integ(alpha,i,j) = integralsQCD(0,alpha,coup,mapp(i,j))
+            enddo
+         enddo
+      enddo
+*
+*     Initialization
+*
+      do i=1,2
+         do j=1,2
+            do alpha=0,nin(igrid)
+               do beta=0,alpha-1
+                  dMdt(i,j,alpha,beta) = 0d0
+               enddo
+               do beta=alpha,nin(igrid)
+                  dMdt(i,j,alpha,beta) = integ(beta-alpha,i,j)
+               enddo
+            enddo
+         enddo
+      enddo
+*
+      return
+      end

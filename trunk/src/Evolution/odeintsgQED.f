@@ -354,4 +354,68 @@
 *
       return
       end
-
+*
+************************************************************************
+*
+*     The following routine computes the derivative of the singlet
+*     evolution operator in QED.
+*
+************************************************************************
+      subroutine DeriveSgQED(coup,dMdt)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+**
+*     Input Variables
+*
+      double precision coup
+**
+*     Internal Variables
+*
+      integer i,j,mapp(3,3)
+      integer alpha,beta
+      double precision integralsQED
+      double precision integ(0:nint_max,3,3)
+**
+*     Output Variables
+*
+      double precision dMdt(3,3,0:nint_max,0:nint_max)
+*
+*     Map used for the muliplication
+*
+      mapp(1,1) = 3
+      mapp(1,2) = 4
+      mapp(1,3) = 5
+      mapp(2,1) = 6
+      mapp(2,2) = 7
+      mapp(2,3) = 8
+      mapp(3,1) = 9
+      mapp(3,2) = 10
+      mapp(3,3) = 11
+*
+      do alpha=0,nin(igrid)
+         do i=1,3
+            do j=1,3
+               integ(alpha,i,j) = integralsQED(0,alpha,coup,mapp(i,j))
+            enddo
+         enddo
+      enddo
+*
+*     Initialization
+*
+      do i=1,3
+         do j=1,3
+            do alpha=0,nin(igrid)
+               do beta=0,alpha-1
+                  dMdt(i,j,alpha,beta) = 0d0
+               enddo
+               do beta=alpha,nin(igrid)
+                  dMdt(i,j,alpha,beta) = integ(beta-alpha,i,j)
+               enddo
+            enddo
+         enddo
+      enddo
+*
+      return
+      end

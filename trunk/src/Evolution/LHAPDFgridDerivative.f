@@ -1,12 +1,12 @@
 ************************************************************************
 *
-*     LHAPDFgrid.f:
+*     LHAPDFgridDerivative.f:
 *
 *     This subrotine produces the file *.LHgrid that can be used with 
-*     LHAPDF v5.9.
+*     LHAPDF v5.9 containing the derivative of the input PDFs.
 *
 ************************************************************************
-      subroutine LHAPDFgrid(Nrep,Qin,fname)
+      subroutine LHAPDFgridDerivative(Nrep,fname)
 *
       implicit none
 *
@@ -20,7 +20,6 @@
 *     Input Variables
 *
       integer Nrep
-      double precision Qin
       character*30 fname
 **
 *     Intenal Variables
@@ -30,9 +29,9 @@
       double precision qref,mth(4:6)
       double precision lref,lambda3,lambda4,lambda5,lambdaNF
       double precision xbLHA(nxLHA),q2LHA(nq2LHA)
-      double precision xpdfLHA(-6:6,nxLHA,nq2LHA)
-      double precision xgammaLHA(nxLHA,nq2LHA)
-      double precision xPDF,xgamma
+      double precision dxpdfLHA(-6:6,nxLHA,nq2LHA)
+      double precision dxgammaLHA(nxLHA,nq2LHA)
+      double precision dxPDF,dxgamma
       parameter(lref=0.239d0)
 *
 *     Specify initialization for the LHgrid
@@ -67,9 +66,9 @@ c      call lambda(3,lref,lambda3)
       write(13,*) "'Reference: arXiv:1310.1394'"
       write(13,*) "'APFEL: A PDF Evolution Library'"
       write(13,*) "'V. Bertone, S. Carrazza, J. Rojo'"
-      write(13,*)"' '"
-      write(13,*)"' '"
-      write(13,*)"' '"
+      write(13,*)"' ************************'"
+      write(13,*)"' *** PDF DERIVARTIVES ***'"
+      write(13,*)"' ************************'"
       write(13,*)"'This set has ",Nrep+1," member PDF'"
       write(13,*)"'mem=0 --> average on replicas. '"
       write(13,*)"'Evolution: pol. interpolation on the LH grid.'"
@@ -150,26 +149,26 @@ c      call lambda(3,lref,lambda3)
          write(6,*) "Evaluating replica",krep," ..."
          call SetReplica(krep)
          do iq2=1,nq2LHA
-            call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
+            call DeriveAPFEL(dsqrt(q2LHA(iq2)))
             do ix=1,nxLHA
                do ipdf=-6,6
-                  xpdfLHA(ipdf,ix,iq2) = xPDF(ipdf,xbLHA(ix))
+                  dxpdfLHA(ipdf,ix,iq2) = dxPDF(ipdf,xbLHA(ix))
                enddo
-               xgammaLHA(ix,iq2) = xgamma(xbLHA(ix))
+               dxgammaLHA(ix,iq2) = dxgamma(xbLHA(ix))
             enddo
          enddo
 *
          if(Th.eq."QCD")then
             do ix=1,nxLHA
                do iq2=1,nq2LHA
-                  write(13,44) (xpdfLHA(ipdf,ix,iq2),ipdf=-6,6)
+                  write(13,44) (dxpdfLHA(ipdf,ix,iq2),ipdf=-6,6)
                enddo
             enddo
          else
             do ix=1,nxLHA
                do iq2=1,nq2LHA
-                  write(13,45) (xpdfLHA(ipdf,ix,iq2),ipdf=-6,6),
-     1                          xgammaLHA(ix,iq2)
+                  write(13,45) (dxpdfLHA(ipdf,ix,iq2),ipdf=-6,6),
+     1                          dxgammaLHA(ix,iq2)
                enddo
             enddo
          endif
