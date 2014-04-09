@@ -26,7 +26,7 @@
 *
       integer ln
       integer i,ix,iq2,ipdf,krep
-      double precision qref,mth(4:6)
+      double precision qref,mth(4:6),alphasPDF
       double precision lref,lambda3,lambda4,lambda5,lambdaNF
       double precision xbLHA(nxLHA),q2LHA(nq2LHA)
       double precision dxpdfLHA(-6:6,nxLHA,nq2LHA)
@@ -41,8 +41,10 @@
       call SetGridParameters(1,100,3,xminLHA)
       call SetGridParameters(2,50,5,xmLHA)
       call SetGridParameters(3,20,5,8d-1)
-*
+*     Initialize
       call initializeAPFEL
+*     Call needed to initialize the PDF set
+      call DeriveAPFEL(dsqrt(q2minLHA))
 *
 *     Compute the values of lambdaQCD
 *
@@ -66,9 +68,9 @@ c      call lambda(3,lref,lambda3)
       write(13,*) "'Reference: arXiv:1310.1394'"
       write(13,*) "'APFEL: A PDF Evolution Library'"
       write(13,*) "'V. Bertone, S. Carrazza, J. Rojo'"
-      write(13,*)"' ************************'"
-      write(13,*)"' *** PDF DERIVARTIVES ***'"
-      write(13,*)"' ************************'"
+      write(13,*)"' ***********************'"
+      write(13,*)"' *** PDF DERIVATIVES ***'"
+      write(13,*)"' ***********************'"
       write(13,*)"'This set has ",Nrep+1," member PDF'"
       write(13,*)"'mem=0 --> average on replicas. '"
       write(13,*)"'Evolution: pol. interpolation on the LH grid.'"
@@ -82,9 +84,10 @@ c      call lambda(3,lref,lambda3)
          write(13,*) "'Variable',","'nnlo',","'EvolCode'"
       endif
 *
-      qref = dsqrt(q2_ref_qcd)
+c      qref = dsqrt(q2_ref_qcd)
+      qref = 91.2d0 ! Z mass
       do i=4,6
-         mth(i) = dsqrt(m2th(i))
+         call GetQmass(i,mth(i))
       enddo
 *
       write(13,*) 1,",",qref,",",mth(4),",",mth(5),",",mth(6)
@@ -101,7 +104,8 @@ c      call lambda(3,lref,lambda3)
       write(13,*) "'list',",Nrep,",",1
 *
       do i=0,Nrep
-         write(13,*) alpha_ref_qcd
+c         write(13,*) alpha_ref_qcd
+         write(13,*) alphasPDF(qref)
       enddo
 *
       write(13,* ) "'Evolution:'"
