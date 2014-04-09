@@ -466,7 +466,9 @@ These routines are:
 \item {\tt "QECDP"} for QED$\otimes$QCD in parallel,
 \item {\tt "QECDS"} for QED$\otimes$QCD in series,
 \item {\tt "QavDP"} for the averaged solution in parallel,
-\item {\tt "QavDS"} for the averaged solution in series.
+\item {\tt "QavDS"} for the averaged solution in series,
+\item {\tt "QUniD"} for the QCD$\otimes$QED unified evolution (here
+  the order of QCD and QED evolution does not matter).
 \end{itemize}
 Let us recall that all the options for the solution of the combined
 QCD$\otimes$QED evolution equations are equivalent up to subleading $\mathcal{O}\lp \alpha \alpha_s\rp$
@@ -602,7 +604,7 @@ the latter has been defined in
 \item{\tt GetVersion}: this function returns the version of {\tt
     APFEL} in use.
 
-\item{\tt LHAPDFgrid}: this routine...
+\item{\tt LHAPDFgrid(Nrep,Qin,name)}: this routine...
 
 \item{\tt ExternalEvolutionOperator(Q0,Q,n,extgrid,M)}: this routine...
 
@@ -617,6 +619,18 @@ the latter has been defined in
 \item{\tt SetAlphaEvolution(evol)}: this routine...
 
 \item{\tt SetLambdaQCDRef(Q,n)}: this routine...
+
+\item{\tt SetLambdaQCDRef(Q,n)}: this routine...
+
+\item{\tt dxPDF(i,x)}: this function...
+
+\item{\tt dxgamma(x)}: this function...
+
+\item{\tt xPDFj(i,x)}: this function...
+
+\item{\tt xgammaj(x)}: this function...
+
+\item{\tt LHAPDFgridDerivative(Nrep,name)}: this routine...
 
 \end{itemize}
 
