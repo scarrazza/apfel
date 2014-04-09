@@ -161,8 +161,6 @@
          do alpha=0,nin(igrid)
             dfgl(alpha) = f0bos(alpha)
          enddo
-
-
 *        QCD x QED
          call DeriveQCD(dfevQCD)
          call PDFevQCD2phys(dfevQCD,dfphQCD)
@@ -170,7 +168,7 @@
             dfglb(alpha)     = dfphQCD(0,alpha)
             dfphQCD(0,alpha) = dfgm(alpha)
          enddo
-         call PDDfphys2evQED(dfphQCD,dfevQEDb)
+         call PDFphys2evQED(dfphQCD,dfevQEDb)
          call DeriveQED(dfevQEDb)
          call PDFevQED2phys(dfevQEDb,dfphQEDb)
          do alpha=0,nin(igrid)
@@ -184,7 +182,7 @@
             dfgmb(alpha)     = dfphQED(0,alpha)
             dfphQED(0,alpha) = dfgl(alpha)
          enddo
-         call PDDfphys2evQCD(dfphQED,dfevQCDb)
+         call PDFphys2evQCD(dfphQED,dfevQCDb)
          call DeriveQCD(dfevQCDb)
          call PDFevQCD2phys(dfevQCDb,dfphQCDb)
          do alpha=0,nin(igrid)

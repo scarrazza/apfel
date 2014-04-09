@@ -99,7 +99,8 @@ am__objects_7 = Evolution/EvolutionOperatorsQED.lo \
 	Evolution/IdentityOperatorsQED.lo \
 	Evolution/EqualOperatorsQEDnf.lo Evolution/integrandsQED.lo \
 	Evolution/integralsQED.lo Evolution/RSLintegralsQED.lo \
-	Evolution/odeintnsQED.lo Evolution/odeintsgQED.lo
+	Evolution/odeintnsQED.lo Evolution/odeintsgQED.lo \
+	Evolution/DerivativeOperatorsQED.lo
 am__objects_8 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
 	Evolution/PDFphys2evQED.lo Evolution/PDFevQED2phys.lo \
 	Evolution/EvolvePDFs.lo Evolution/switchGluonPhoton.lo \
@@ -332,7 +333,7 @@ EVOLUTIONQCD = Evolution/EvolutionOperatorsQCD.f Evolution/IdentityOperatorsQCD.
 
 EVOLUTIONQED = Evolution/EvolutionOperatorsQED.f Evolution/IdentityOperatorsQED.f \
 	Evolution/EqualOperatorsQEDnf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f \
-	Evolution/odeintnsQED.f Evolution/odeintsgQED.f
+	Evolution/odeintnsQED.f Evolution/odeintsgQED.f Evolution/DerivativeOperatorsQED.f
 
 PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQED.f Evolution/PDFevQED2phys.f \
 	Evolution/EvolvePDFs.f Evolution/switchGluonPhoton.f Evolution/EvolveQCD.f Evolution/EvolveQED.f Evolution/toyLHPDFs.f \
@@ -546,6 +547,8 @@ Evolution/RSLintegralsQED.lo: Evolution/$(am__dirstamp) \
 Evolution/odeintnsQED.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/odeintsgQED.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/DerivativeOperatorsQED.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/PDFphys2evQCD.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -848,6 +851,8 @@ mostlyclean-compile:
 	-rm -f Evolution/odeintsgQCD.lo
 	-rm -f Evolution/odeintsgQED.$(OBJEXT)
 	-rm -f Evolution/odeintsgQED.lo
+	-rm -f Evolution/DerivativeOperatorsQED.$(OBJEXT)
+	-rm -f Evolution/DerivativeOperatorsQED.lo
 	-rm -f Evolution/odeintsgUnified.$(OBJEXT)
 	-rm -f Evolution/odeintsgUnified.lo
 	-rm -f Evolution/switchGluonPhoton.$(OBJEXT)
