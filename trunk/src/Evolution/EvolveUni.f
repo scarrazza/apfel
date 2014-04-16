@@ -52,14 +52,14 @@
             do i=1,4
                do j=1,4
                   fevUnib(i-1,alpha) = fevUnib(i-1,alpha) 
-     1            +  MUnisg1(nf,i,j,alpha,beta) * fevUni(j-1,beta)
+     1            + MUnisg1(nf,i,j,alpha,beta) * fevUni(j-1,beta)
                enddo
             enddo
 *      Singlet 2
             do i=1,2
                do j=1,2
                   fevUnib(i+7,alpha) = fevUnib(i+7,alpha) 
-     1            +  MUnisg2(nf,i,j,alpha,beta) * fevUni(j+7,beta)
+     1            + MUnisg2(nf,i,j,alpha,beta) * fevUni(j+7,beta)
                enddo
             enddo
 *     Tu1
@@ -69,9 +69,9 @@
             else
                do i=1,4
                   fevUnib(4,alpha) = fevUnib(4,alpha)
-     1                              + ( MUnisg1(nf,3,i,alpha,beta)
-     2                              + MUnisg1(nf,4,i,alpha,beta) )
-     3                              * fevUnib(i-1,alpha) / 2d0
+     1                             + ( MUnisg1(nf,3,i,alpha,beta)
+     2                             + MUnisg1(nf,4,i,alpha,beta) )
+     3                             * fevUni(i-1,beta) / 2d0
                enddo
             endif
 *     Tu2
@@ -81,9 +81,9 @@
             else
                do i=1,4
                   fevUnib(5,alpha) = fevUnib(5,alpha)
-     1                              + ( MUnisg1(nf,3,i,alpha,beta)
-     2                              + MUnisg1(nf,4,i,alpha,beta) )
-     3                              * fevUnib(i-1,alpha) / 2d0
+     1                             + ( MUnisg1(nf,3,i,alpha,beta)
+     2                             + MUnisg1(nf,4,i,alpha,beta) )
+     3                             * fevUni(i-1,beta) / 2d0
                enddo
             endif
 *     Td1
@@ -96,9 +96,9 @@
             else
                do i=1,4
                   fevUnib(7,alpha) = fevUnib(7,alpha)
-     1                              + ( MUnisg1(nf,3,i,alpha,beta)
-     2                              - MUnisg1(nf,4,i,alpha,beta) )
-     3                              * fevUnib(i-1,alpha) / 2d0
+     1                             + ( MUnisg1(nf,3,i,alpha,beta)
+     2                             - MUnisg1(nf,4,i,alpha,beta) )
+     3                             * fevUni(i-1,beta) / 2d0
                enddo
             endif
 *     Vu1
@@ -110,7 +110,7 @@
                   fevUnib(10,alpha) = fevUnib(10,alpha)
      1                              + ( MUnisg2(nf,1,i,alpha,beta)
      2                              + MUnisg2(nf,2,i,alpha,beta) )
-     3                              * fevUnib(i+7,alpha) / 2d0
+     3                              * fevUni(i+7,beta) / 2d0
                enddo
             endif
 *     Vu2
@@ -122,7 +122,7 @@
                   fevUnib(11,alpha) = fevUnib(11,alpha)
      1                              + ( MUnisg2(nf,1,i,alpha,beta)
      2                              + MUnisg2(nf,2,i,alpha,beta) )
-     3                              * fevUnib(i+7,alpha) / 2d0
+     3                              * fevUni(i+7,beta) / 2d0
                enddo
             endif
 *     Vd1
@@ -137,7 +137,7 @@
                   fevUnib(13,alpha) = fevUnib(13,alpha)
      1                              + ( MUnisg2(nf,1,i,alpha,beta)
      2                              - MUnisg2(nf,2,i,alpha,beta) )
-     3                              * fevUnib(i+7,alpha) / 2d0
+     3                              * fevUni(i+7,beta) / 2d0
                enddo
             endif
          enddo
@@ -152,9 +152,17 @@
 *     Apply matching conditions
             call MatchPDFs(nf+1,fevQCD)
 *     Rotate back to the unified evolution basis
-            call PDFevQCD2evUni(fevQCD,fevUni)
+            call PDFevQCD2evUni(fevQCD,fevUnib)
          endif
       endif
+*
+*     Copy backup PDFs into main PDFs
+*
+      do alpha=0,nin(igrid)
+         do i=0,13
+            fevUni(i,alpha) = fevUnib(i,alpha)
+         enddo
+      enddo
 *
       return
       end

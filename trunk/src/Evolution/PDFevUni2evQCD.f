@@ -7,7 +7,7 @@
 *
 *     Unified evolution basis:
 *     0   1   2   3   4   5   6   7   8   9   10  11  12  13
-*     gm  g   Sig Dsg Tu1 Tu2 Td1 Td2 V   DV  Vu1 Vu2 Vd1 Vd2
+*     g   gm  Sig Dsg Tu1 Tu2 Td1 Td2 V   DV  Vu1 Vu2 Vd1 Vd2
 *
 *     QCD Evolution basis:
 *     0   1   2   3   4   5   6   7   8   9  10  11  12  13
@@ -38,6 +38,7 @@
 *
       do a=0,nin(igrid)
          do i=0,13
+            pdfout(i,a) = 0d0
             do j=0,13
                pdfout(i,a) = pdfout(i,a)
      1                     + TevUni2evQCD(i,j) * pdfin(j,a)

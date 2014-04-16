@@ -43,6 +43,8 @@
       double precision Mnsmd(0:nint_max,0:nint_max)
       double precision tiny
       parameter(tiny=1d-10)
+
+      integer alpha,beta,i,j
 *
 *     Initial Conditions (Unity matrices)
 *
@@ -80,8 +82,8 @@
          call odeintnsUnified(4,muF20,muF2,M0nsmd,Mnsmd)
 *
          call EqualOperatorsUnifiednf(Nf_FF,
-     1        Msg1,M0sg2,Mnspu,Mnspd,Mnsmu,Mnsmd,
-     2        MUnisg1,Munisg2,MUninspu,MUninspd,MUninsmu,MUninsmd)
+     1        Msg1,Msg2,Mnspu,Mnspd,Mnsmu,Mnsmd,
+     2        MUnisg1,MUnisg2,MUninspu,MUninspd,MUninsmu,MUninsmd)
 *
 *     Variable Flavour Number Scheme
 *

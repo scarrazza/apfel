@@ -53,11 +53,13 @@
 *
       do alpha=0,nin(igrid)
 *     Initialize backup PDF
-         do i=1,13
+         do i=0,13
             fevQCDb(i,alpha) = 0d0
          enddo
          do beta=0,nin(igrid)-alpha
-*      Singlet and Gluon
+*     Photon
+            fevQCDb(0,alpha) = fevQCD(0,alpha)
+*     Singlet and Gluon
             do i=1,2
                do j=1,2
                   fevQCDb(i,alpha) = fevQCDb(i,alpha) 
@@ -129,7 +131,7 @@
 *     Copy backup PDFs into main PDFs
 *
       do alpha=0,nin(igrid)
-         do i=1,13
+         do i=0,13
             fevQCD(i,alpha) = fevQCDb(i,alpha)
          enddo
       enddo
