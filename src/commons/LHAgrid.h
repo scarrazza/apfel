@@ -9,7 +9,7 @@
       parameter(nxLHA    = 100)
       parameter(nxmLHA   = 50)
       parameter(nq2LHA   = 50)
-      parameter(q2minLHA = 1d0)
+      parameter(q2minLHA = 2d0)
       parameter(q2maxLHA = 1d8)
       parameter(xminLHA  = 1d-7)
       parameter(xmLHA    = 1d-1)

@@ -42,6 +42,8 @@
 *
       double precision a_QED
 *
+c      a_QED = 0d0
+c      return
       aqedr0 = alpha_ref_QED / 4d0 / pi
 *     Uncomment to switch off the alpha running
 c      a_QED  = aqedr0

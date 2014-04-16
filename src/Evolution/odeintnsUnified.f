@@ -270,7 +270,7 @@
 *
       double precision dMdt(0:nint_max,0:nint_max)
 *
-      mu2  = dexp(t)
+      mu2     = dexp(t)
       coupQCD = a_QCD(mu2)
       coupQED = a_QED(mu2)
 *

@@ -726,10 +726,9 @@
          integ(alpha,1,1) = integralsQCD(0,alpha,coupQCD,3)
          integ(alpha,1,2) = 0d0
 *
-         integ(alpha,2,1) = 0d0
+         integ(alpha,2,1) = Deltaud * ( integralsQCD(0,alpha,coupQCD,3)
+     1                    - integralsQCD(0,alpha,coupQCD,2) )
          integ(alpha,2,2) = integralsQCD(0,alpha,coupQCD,2)
-     1                    + Deltaud * ( integralsQCD(0,alpha,coupQCD,3)
-     2                    - integralsQCD(0,alpha,coupQCD,2) )
 *     QED
          integ(alpha,1,1) = integ(alpha,1,1)
      1                    + integralsQED(0,alpha,coupQED,7)

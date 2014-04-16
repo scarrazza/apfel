@@ -11,7 +11,7 @@
 *
 *     Evolution basis:
 *     0   1   2   3   4   5   6   7   8   9   10  11  12  13
-*     gm  g   Sig Dsg Tu1 Tu2 Td1 Td2 V   DV  Vu1 Vu2 Vd1 Vd2
+*     g   gm   Sig Dsg Tu1 Tu2 Td1 Td2 V   DV  Vu1 Vu2 Vd1 Vd2
 *
 ************************************************************************
       subroutine PDFphys2evUni(gammain,pdfin,pdfout)
@@ -30,6 +30,7 @@
 *
       integer a
       integer i,j
+      double precision pdfi(-7:6)
 **
 *     Output Variables
 *
@@ -38,11 +39,14 @@
 *     Rotate PDFs
 *
       do a=0,nin(igrid)
-         pdfout(0,a) = gammain(a)
-         do i=1,13
+         pdfi(-7) = gammain(a)
+         do i=-6,6
+            pdfi(i) = pdfin(i,a)
+         enddo
+         do i=0,13
             pdfout(i,a) = 0d0
-            do j=1,13
-               pdfout(i,a) = pdfout(i,a) + Tph2evUni(i,j) * pdfin(j-7,a)
+            do j=0,13
+               pdfout(i,a) = pdfout(i,a) + Tph2evUni(i,j) * pdfi(j-7)
             enddo
          enddo
       enddo

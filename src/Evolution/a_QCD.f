@@ -45,6 +45,8 @@
 *
       double precision a_QCD
 *
+c      a_QCD = 0d0
+c      return
       asr0 = alpha_ref_QCD / 4d0 / pi
 *
       mur20 = q2_ref_QCD

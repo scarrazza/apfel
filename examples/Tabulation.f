@@ -26,6 +26,7 @@
 c      call LockGrids(.true.)
 c      call EnableEvolutionOperator(.true.)
 c      call SetFFNS(3)
+c      call SetTheory("QavDS")
 c      call SetTheory("QUniD")
 c      call SetPerturbativeOrder(0)
 c      call SetPDFSet("NNPDF23_nlo_as_0119_qed.LHgrid")
