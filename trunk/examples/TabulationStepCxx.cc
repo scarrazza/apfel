@@ -93,12 +93,34 @@ int main()
 
       print(xlha);
     }
+
+  // QUniD
+  for (int n = 1; n <= 100; n+=99)
+    {
+      cout << "QUniD with " << n << " steps" << endl;
+      cout << endl;
+
+      APFEL::SetTheory("QUniD");
+      APFEL::SetPDFSet("ToyLH");
+
+      const double delta = log(Q/Q0)/ (double) n;
+      Qi = Q0;
+      for (int i = 1; i <= n; i++)
+	{
+	  Qf = Qi * exp(delta);
+	  APFEL::EvolveAPFEL(Qi,Qf);
+	  APFEL::SetPDFSet("apfel");
+	  Qi = Qf;
+	}
+
+      print(xlha);
+    }
   return 0;
 }
 
 void print(double *xlha)
 {
-  cout << scientific << setprecision(5) << endl;
+  cout << scientific << setprecision(5);
   cout << "   x   " 
        << setw(11) << "    u-ubar    " 
        << setw(11) << "   d-dbar    " 
@@ -117,5 +139,6 @@ void print(double *xlha)
 	 << setw(11) <<APFEL::xPDF(0,xlha[i]) << "  "
 	 << setw(11) <<APFEL::xgamma(xlha[i]) << "  "
 	 << endl;
+  cout << endl;
 
 }
