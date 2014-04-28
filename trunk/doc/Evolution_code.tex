@@ -146,7 +146,7 @@ Calling:
 \end{array}
 \end{equation}
 we have that:
-\begin{equation}
+\begin{equation}\label{splittingexp}
 \Pi_{ij,\beta\alpha}(t) = \sum_{n=0}^{k} a_s^{n+1}(t) \Pi_{ij,\beta\alpha}^{(n)}\,,
 \end{equation}
 and the integrals $\Pi_{ij,\beta\alpha}^{(n)}$ do not depend on the energy therefore, once the grid (and the number of active flavours) has been fixed, they can be evaluate once and for all at the beginning and used for the evolution to any scale.
@@ -233,11 +233,101 @@ The singlet sector is totally analogous to the non-singlet one, the only differe
 \end{array}\right.\quad\mbox{with }i,j,k=q,g\,.
 \end{equation}
 
-\section{Large-$x$ Grid and Density Factor}
+\section{Alternative Solutions of the DGLAP Equation}
 
-As is well known, the DGLAP evolution at large $x$ requires a denser grid while a looser grid is enough at small $x$. However, the approach that we have described above is based on the fact that the $x$ grid is logarithmically distributed all over the place in order to ensure a symmetry that allows to drastically reduce the number of integrals to be computed. As a consequence, this approach seems to be incompatible with a denser large-$x$ grid.
+In this section we show how it is possible to solve the DGLAP equation
+in an alternative way with respect to that shown in the previous
+sections exploiting the RGE of the running coupling $\alpha_s$. This
+will lead to a different equation that admits two preturbatively
+equivalent solutions: the first, that we will refer to as "exact"
+solution and that reproduces the solution seen above, and the second, the
+so-called "expanded" solution, that reproduces the solution usually
+adopted in the N-space code (like NNPDF). 
 
+The starting point is the RGE:
+\begin{equation}\label{RGEalpha}
+\mu^2\frac{\partial a_s}{\partial \mu^2} = \frac{\partial
+  a_s}{\partial t} = \beta(a_s)\,,
+\end{equation}
+where:
+\begin{equation}
+a_s \equiv \frac{\alpha_s}{4\pi}
+\end{equation}
+and:
+\begin{equation}
+\beta(a_s) = -a_s^2 \sum_{n=0}^{N} a_s^n \beta_n \,.
+\end{equation}
+where $N$ represents the desired preturbative order.
+Using eq. (\ref{RGEalpha}) and eq. (\ref{splittingexp}), we can
+rewrite eq. (\ref{tosolve}) as:
+\begin{equation}\label{tosolvealpha}
+\left\{\begin{array}{l}
+\displaystyle \frac{\partial  M_{ij,\alpha\beta}(t,t_0)}{\partial
+  a_s}= -\frac{1}{a_s}\sum_{\gamma,k} \left[\frac{\displaystyle \sum_{n=0}^N a_s^n
+    \Pi_{ik,\alpha\gamma}^{(n)}}{ \displaystyle \sum_{n=0}^{N} a_s^n \beta_n}\right]M_{kj,\gamma\beta}(t,t_0)\\
+\\
+\displaystyle M_{ij,\alpha\beta}(t_0,t_0)=\delta_{ij}\delta_{\alpha\beta}
+\end{array}\right.
+\end{equation}
 
+Now there are two possibile way to solve eq. (\ref{tosolvealpha}):
+either we solve directly it numerically as it is or we first expand
+the term in the square brackets as a series of $a_s$ keeping only the
+terms up to order $a_s^N$ and then we solve the equation. It is
+obvious that the first way to solve eq. (\ref{tosolvealpha}) must be
+numerical equal to the solution of
+eq. (\ref{tosolve}). The second way instead is not numerically equal
+but is perturbatively equivalent. This second solution is referred to
+as N-space solution as it is usually used in the N-space approach
+because it permits to solve analytically the DGLAP equation.
+
+To expand the term in the square brackets, we notice that up to NNLO ($N=2$)
+we have that:
+\begin{equation}
+\frac{1}{\displaystyle \sum_{n=0}^{2} a_s^n \beta_n} =
+\frac1{\beta_0}\left[ 1 - \frac{\beta_1}{\beta_0} a_s + \left(\frac{\beta_1^2}{\beta_0^2}- \frac{\beta_2}{\beta_0}\right)a_s^2\right] + \mathcal{O}(a_s^{3})\,,
+\end{equation}
+so that:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle\frac{\displaystyle \sum_{n=0}^2 a_s^n
+    \Pi_{ik,\alpha\gamma}^{(n)}}{ \displaystyle \sum_{n=0}^{2} a_s^n
+    \beta_n} &=&\displaystyle \frac{1}{\beta_0}\left\{\Pi_{ik,\alpha\gamma}^{(0)} +
+a_s\left[\Pi_{ik,\alpha\gamma}^{(1)} - b_1 \Pi_{ik,\alpha\gamma}^{(0)}\right]\right.\\
+\\
+&+& \displaystyle
+\left. a_s^2\left[\Pi_{ik,\alpha\gamma}^{(2)} - b_1
+\Pi_{ik,\alpha\gamma}^{(1)} +\left(b_1^2-b_2\right)
+\Pi_{ik,\alpha\gamma}^{(0)} \right]\right\}  + \mathcal{O}(a_s^{3})
+\end{array}
+\end{equation}
+where we have defined:
+\begin{equation}
+b_n \equiv \frac{\beta_n}{\beta_0}\,.
+\end{equation}
+Finally, defining:
+\begin{equation}
+\begin{array}{l}
+\displaystyle\widetilde{\Pi}_{ik,\alpha\gamma}^{(0)} \equiv
+\Pi_{ik,\alpha\gamma}^{(0)} \,,\\
+\displaystyle\widetilde{\Pi}_{ik,\alpha\gamma}^{(1)} \equiv
+\Pi_{ik,\alpha\gamma}^{(1)} - b_1 \Pi_{ik,\alpha\gamma}^{(0)} \,,\\
+\displaystyle\widetilde{\Pi}_{ik,\alpha\gamma}^{(2)} \equiv \Pi_{ik,\alpha\gamma}^{(2)} - b_1
+\Pi_{ik,\alpha\gamma}^{(1)} +\left(b_1^2-b_2\right)
+\Pi_{ik,\alpha\gamma}^{(0)}\,,
+\end{array}
+\end{equation}
+we can write eq. (\ref{tosolvealpha}) up to NNLO as:
+\begin{equation}\label{tosolvealphatrn}
+\left\{\begin{array}{l}
+\displaystyle \frac{\partial  M_{ij,\alpha\beta}(t,t_0)}{\partial
+  a_s}= -\frac{1}{a_s\beta_0}\sum_{\gamma,k} \left[\displaystyle \sum_{n=0}^2 a_s^n
+    \widetilde{\Pi}_{ik,\alpha\gamma}^{(n)}\right]M_{kj,\gamma\beta}(t,t_0)\\
+\\
+\displaystyle M_{ij,\alpha\beta}(t_0,t_0)=\delta_{ij}\delta_{\alpha\beta}
+\end{array}\right.\,.
+\end{equation}
+Solving eq. (\ref{tosolvealphatrn}) provides the so-called "expanded" solution.
 
 
 \end{document}

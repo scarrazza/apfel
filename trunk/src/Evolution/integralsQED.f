@@ -16,6 +16,7 @@
       implicit none
 *
       include "../commons/grid.h"
+      include "../commons/PDFEvolution.h"
       include "../commons/integrals.h"
       include "../commons/wrap.h"
 **
@@ -23,6 +24,7 @@
 *
       integer alpha,beta,kk
       double precision coup
+      double precision beta0qed
 **
 *     Output Variables
 *
@@ -36,9 +38,12 @@
 *
 *     Integrals
 *
-      integralsQED = coup * SQ(igrid,wnf,kk,alpha,beta)
+      if(PDFEvol.eq."exactmu")then
+         integralsQED = coup * SQ(igrid,wnf,kk,alpha,beta)
+      else
+         integralsQED = SQ(igrid,wnf,kk,alpha,beta) 
+     1                / beta0qed(wnf) / coup
+      endif
 *
       return
       end
-
-C LocalWords:  integralsQED

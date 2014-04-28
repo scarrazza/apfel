@@ -85,6 +85,9 @@ extern "C" {
 #define fsetlambdaqcdref FC_FUNC(setlambdaqcdref,SETLAMBDAQCDREF)
   void fsetlambdaqcdref(double*,int*);
 
+#define fsetpdfevolution FC_FUNC(setpdfevolution,SETPDFEVOLUTION)
+  void fsetpdfevolution(char*);
+
 #define fsetqlimits FC_FUNC(setqlimits,SETQLIMITS)
   void fsetqlimits(double*,double*);
 

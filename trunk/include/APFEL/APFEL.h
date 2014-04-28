@@ -107,6 +107,9 @@ namespace APFEL {
   /// Sets the value of LambdaQCD for "nref" flavours
   void SetLambdaQCDRef(double lambdaref, int nref);
 
+  /// Sets the solution of the DGLAP equation
+  void SetPDFEvolution(const std::string& evolp);
+
   /// Sets the minimimum and the maximum energy allowed for the evolution
   void SetQLimits(double Qmin, double Qmax);
 

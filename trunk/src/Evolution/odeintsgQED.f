@@ -10,6 +10,7 @@
 *
       implicit none
 *
+      include "../commons/PDFEvolution.h"
       include "../commons/grid.h"
 **
 *     Input Variables
@@ -23,6 +24,7 @@
       integer alpha,beta
       integer maxstp
       double precision x1,x2
+      double precision a_QED
       double precision h1,eps
       double precision h,hdid,hnext,x
       double precision dydx(3,3,0:nint_max,0:nint_max)
@@ -38,8 +40,13 @@
 *
       double precision y(3,3,0:nint_max,0:nint_max)
 *
-      x1 = dlog(mu21)
-      x2 = dlog(mu22)
+      if(PDFEvol.eq."exactmu")then
+         x1 = dlog(mu21)
+         x2 = dlog(mu22)
+      else
+         x1 = a_QED(mu21)
+         x2 = a_QED(mu22)
+      endif
 *
       x = x1
       h = sign(h1,x2-x1)
@@ -291,6 +298,7 @@
 *
       implicit none
 *
+      include "../commons/PDFEvolution.h"
       include "../commons/grid.h"
 **
 *     Input Variables
@@ -311,8 +319,12 @@
 *
       double precision dMdt(3,3,0:nint_max,0:nint_max)
 *
-      mu2  = dexp(t)
-      coup = a_QED(mu2)
+      if(PDFEvol.eq."exactmu")then
+         mu2  = dexp(t)
+         coup = a_QED(mu2)
+      else
+         coup = t
+      endif
 *
 *     Map used for the muliplication
 *
