@@ -154,6 +154,13 @@ namespace APFEL {
     fsetlambdaqcdref(&lambdaref,&nref);
   }
 
+  void SetPDFEvolution(const std::string& evolp)
+  {
+    char cevolp[SIZE+1];
+    strncpy(cevolp, evolp.c_str(), SIZE);
+    fsetpdfevolution(cevolp);
+  }
+
   void SetQLimits(double Qmin, double Qmax)
   {
     fsetqlimits(&Qmin, &Qmax);

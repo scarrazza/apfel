@@ -181,6 +181,12 @@ ccccccccccccc
       end subroutine fsetlambdaqcdref
 
 ccccccccccccc      
+      subroutine fsetpdfevolution(evolp)
+      character evolp*(*)
+      call SetPDFEvolution(evolp)
+      end subroutine fsetpdfevolution
+
+ccccccccccccc      
       subroutine fsetqlimits(Qmin,Qmax)
       double precision Qmin,Qmax 
       call SetQLimits(Qmin,Qmax)

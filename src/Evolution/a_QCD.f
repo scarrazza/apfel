@@ -342,7 +342,9 @@ c      kappa = 1d0          ! mu_R / mu_F
 *
       double precision fbeta
 *
-      if(ipt.eq.1)then
+      if(ipt.eq.0)then
+         fbeta = - a**2d0 * beta0(nf)
+      elseif(ipt.eq.1)then
          fbeta = - a**2d0 * ( beta0(nf) + a * beta1(nf) )
       elseif(ipt.eq.2)then
          fbeta = - a**2d0 * ( beta0(nf) 

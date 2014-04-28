@@ -30,6 +30,7 @@
       include "../commons/EvolOp.h"
       include "../commons/lambda_ref_QCD.h"
       include "../commons/AlphaEvolution.h"
+      include "../commons/PDFEvolution.h"
       include "../commons/TimeLike.h"
 *
 *     Set all the initialization flags to "xxxx" so that
@@ -54,6 +55,7 @@
       InTimeLike  = "xxxx"
       InAlphaEvol = "xxxx"
       InLambdaQCD = "xxxx"
+      InPDFEvol   = "xxxx"
 *
       return
       end

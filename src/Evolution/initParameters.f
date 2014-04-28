@@ -21,6 +21,7 @@
       include "../commons/alpha_ref_QED.h"
       include "../commons/lambda_ref_QCD.h"
       include "../commons/AlphaEvolution.h"
+      include "../commons/PDFEvolution.h"
       include "../commons/kren.h"
       include "../commons/mass_scheme.h"
       include "../commons/m2th.h"
@@ -35,7 +36,7 @@
 *     Initialize default parameters (those that were not initialized before)
 *
       if(InWelcome.ne."done")   call EnableWelcomeMessage(.true.)
-      if(InScales.ne."done")    call SetQLimits(0.5d0,400d0)
+      if(InScales.ne."done")    call SetQLimits(0.5d0,1000d0)
       if(InPt.ne."done")        call SetPerturbativeOrder(2)
       if(InEvs.ne."done")       call SetVFNS
       if(InTheory.ne."done")    call SetTheory("QCD")
@@ -43,6 +44,7 @@
       if(InAlpQCD.ne."done")    call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
       if(InAlpQED.ne."done")    call SetAlphaQEDRef(7.496252d-3,1.777d0)
       if(InAlphaEvol.ne."done") call SetAlphaEvolution("exact")
+      if(InPDFEvol.ne."done")   call SetPDFEvolution("exactmu")
       if(InLambdaQCD.ne."done") call SetLambdaQCDRef(0.220d0,5)
       if(InKren.ne."done")      call SetRenFacRatio(1d0)
       if(InMasses.ne."done")    call SetPoleMasses(dsqrt(2d0),4.5d0,
@@ -73,6 +75,17 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "Theory unknown:"
          write(6,*) "Theory = ",Th
          write(6,*) "  "
+         write(6,*) "The options are:"
+         write(6,*) "- QCD"
+         write(6,*) "- QED"
+         write(6,*) "- QCEDP"
+         write(6,*) "- QCEDS"
+         write(6,*) "- QECDP"
+         write(6,*) "- QECDS"
+         write(6,*) "- QavDP"
+         write(6,*) "- QavDS"
+         write(6,*) "- QUniD"
+         write(6,*) "  "
          call exit(-10)
       endif
 *
@@ -80,11 +93,17 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "Evolution scheme unknown:"
          write(6,*) "Evolution scheme = ",Evs
          write(6,*) "  "
+         write(6,*) "The options are:"
+         write(6,*) "- FF"
+         write(6,*) "- VF"
+         write(6,*) "  "
          call exit(-10)
       elseif(Evs.eq."FF")then
          if(Nf_FF.lt.3.or.Nf_FF.gt.6)then
             write(6,*) "Number of active flavours not allowed:"
             write(6,*) "Number of active =",Nf_FF
+            write(6,*) "  "
+            write(6,*) "The allowed range is [3:6]"
             write(6,*) "  "
             call exit(-10)
          endif
@@ -94,13 +113,18 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "Perturbative order not allowed:"
          write(6,*) "Perturbative order =",ipt
          write(6,*) "  "
+         write(6,*) "The allowed range is [0:2]"
+         write(6,*) "  "
          call exit(-10)
       endif
 *
       if(mass_scheme.ne."Pole".and.mass_scheme.ne."MSbar")then
          write(6,*) "Mass scheme unknown:"
          write(6,*) "Mass scheme = ",mass_scheme
-         write(6,*) "Check it in input.dat."
+         write(6,*) "  "
+         write(6,*) "The options are:"
+         write(6,*) "- Pole"
+         write(6,*) "- MSbar"
          write(6,*) "  "
          call exit(-10)
       endif
@@ -111,6 +135,11 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "Alpha evolution unknown:"
          write(6,*) "Alpha evolution = ",AlphaEvol
          write(6,*) "  "
+         write(6,*) "The options are:"
+         write(6,*) "- exact"
+         write(6,*) "- expanded"
+         write(6,*) "- lambda"
+         write(6,*) "  "
          call exit(-10)
       endif
 *
@@ -118,6 +147,26 @@ c         call SetGridParameters(3,20,5,8d-1)
 *     for all the number of flavours.     
 *
       if(AlphaEvol(1:6).eq."lambda") call LambdaQCDnf
+*
+      if(PDFEvol(1:7).ne."exactmu".and.
+     1   PDFEvol(1:10).ne."exactalpha".and.
+     2   PDFEvol(1:11).ne."expandalpha")then
+         write(6,*) "PDF evolution unknown:"
+         write(6,*) "PDF evolution = ",PDFEvol
+         write(6,*) "  "
+         write(6,*) "The options are:"
+         write(6,*) "- exactmu"
+         write(6,*) "- exactalpha"
+         write(6,*) "- expandalpha"
+         write(6,*) "  "
+         call exit(-10)
+      elseif((PDFEvol(1:10).eq."exactalpha".or.
+     2        PDFEvol(1:11).eq."expandalpha").and.Th.eq."QUniD")then
+         write(6,*) "The unified solution cannot be used with the"
+         write(6,*) "'alpha' solution of the DGLAP equation."
+         write(6,*) "  "
+         call exit(-10)
+      endif
 *
 *     Print welcome message and report of the parameters (if enabled)
 *
@@ -134,10 +183,11 @@ c         call SetGridParameters(3,20,5,8d-1)
          else
             write(6,*) "Space-like evolution (PDFs)"
          endif
+         write(6,*) "Solution of the DGLAP equation: ",PDFEvol
          write(6,"(a,a,a,i1,a)") " Evolution scheme = ",Evs,
      1                           "NS at N",ipt,"LO"
 *
-         write(6,"(a,f7.2,a,f7.2,a)") " Evolution range [",
+         write(6,"(a,f7.2,a,f8.2,a)") " Evolution range [",
      1               dsqrt(Q2min)," :",dsqrt(Q2max)," ] GeV"
 *
          write(6,*) "Solution of the coupling equations: ",AlphaEvol
