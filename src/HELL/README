@@ -1,0 +1,27 @@
+_  _ ____ _    _    
+|__| |___ |    |    
+|  | |___ |___ |___ 
+                    
+HELL: High-Energy Large Logarithms
+
+Author: Marco Bonvini
+
+
+
+Provides high-energy resummed anomalous dimensions and splitting functions.
+The fixed order counterparts are to be provided separately.
+This code gives just the resummed part, minus the double counting with any fixed-order up to NNLO.
+
+
+
+
+
+Installation
+----------------
+
+Dependencies:  nothing special
+
+To make the library and the examples, just type
+
+> make
+
