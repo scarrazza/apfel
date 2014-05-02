@@ -53,11 +53,11 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
 libAPFELCore_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
 am__objects_1 = Evolution/apfelversion.lo Evolution/WelcomeMessage.lo \
-	Evolution/initParameters.lo Evolution/initGrid.lo \
-	Evolution/initIntegralsQCD.lo Evolution/initIntegralsQED.lo \
-	Evolution/initIntegralsMatching.lo Evolution/initPDFs.lo \
-	Evolution/InitializeAPFEL.lo Evolution/EvolveAPFEL.lo \
-	Evolution/DeriveAPFEL.lo
+	Evolution/initParameters.lo Evolution/initGrid.lo Evolution/initGridAlpha.lo \
+	Evolution/initIntegralsQCD.lo Evolution/initIntegralsQCDRes.lo \
+	Evolution/initIntegralsQED.lo Evolution/initIntegralsMatching.lo \
+	Evolution/initPDFs.lo Evolution/InitializeAPFEL.lo Evolution/EvolveAPFEL.lo \
+	Evolution/DeriveAPFEL.lo Evolution/initHELL.lo
 am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetAlphaQEDRef.lo Evolution/SetQLimits.lo \
 	Evolution/SetPerturbativeOrder.lo Evolution/SetFFNS.lo \
@@ -75,7 +75,8 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetTimeLikeEvolution.lo \
 	Evolution/SetAlphaEvolution.lo Evolution/SetLambdaQCDRef.lo \
 	Evolution/SetPDFEvolution.lo Evolution/hknsff07.lo \
-	Evolution/fDSS.lo Evolution/LHAPDFgridDerivative.lo
+	Evolution/fDSS.lo Evolution/LHAPDFgridDerivative.lo \
+	Evolution/SetSmallxResummation.lo
 am__objects_3 = Evolution/interpolants.lo
 am__objects_4 = Evolution/SplittingFunctions.lo
 am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
@@ -307,9 +308,11 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 noinst_LTLIBRARIES = libAPFELCore.la
-INIT = Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParameters.f Evolution/initGrid.f Evolution/initIntegralsQCD.f \
-	Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f Evolution/initPDFs.f \
-	Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f
+INIT = Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
+	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
+	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
+	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
+	Evolution/initHELL.f
 
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
 	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f \
@@ -318,7 +321,8 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/SetMaxFlavourAlpha.f Evolution/SetReplica.f Evolution/AlphaQCD.f Evolution/AlphaQED.f Evolution/HeavyQuarkMass.f \
 	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f \
 	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f Evolution/SetTimeLikeEvolution.f Evolution/SetAlphaEvolution.f \
-	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/hknsff07.f Evolution/fDSS.f Evolution/LHAPDFgridDerivative.f
+	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/hknsff07.f Evolution/fDSS.f Evolution/LHAPDFgridDerivative.f \
+	Evolution/SetSmallxResummation.f
 
 INTER = Evolution/interpolants.f
 SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f
@@ -402,7 +406,11 @@ Evolution/initParameters.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/initGrid.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/initGridAlpha.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/initIntegralsQCD.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/initIntegralsQCDRes.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/initIntegralsQED.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -415,6 +423,8 @@ Evolution/InitializeAPFEL.lo: Evolution/$(am__dirstamp) \
 Evolution/EvolveAPFEL.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/DeriveAPFEL.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/initHELL.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetAlphaQCDRef.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -467,6 +477,8 @@ Evolution/ExternalEvolutionOperator.lo: Evolution/$(am__dirstamp) \
 Evolution/LockGrids.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetTimeLikeEvolution.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetSmallxResummation.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetAlphaEvolution.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -797,6 +809,8 @@ mostlyclean-compile:
 	-rm -f Evolution/SetTheory.lo
 	-rm -f Evolution/SetTimeLikeEvolution.$(OBJEXT)
 	-rm -f Evolution/SetTimeLikeEvolution.lo
+	-rm -f Evolution/SetSmallxResummation.$(OBJEXT)
+	-rm -f Evolution/SetSmallxResummation.lo
 	-rm -f Evolution/SetVFNS.$(OBJEXT)
 	-rm -f Evolution/SetVFNS.lo
 	-rm -f Evolution/SplittingFunctions.$(OBJEXT)
@@ -819,10 +833,16 @@ mostlyclean-compile:
 	-rm -f Evolution/hknsff07.lo
 	-rm -f Evolution/initGrid.$(OBJEXT)
 	-rm -f Evolution/initGrid.lo
+	-rm -f Evolution/initGridAlpha.$(OBJEXT)
+	-rm -f Evolution/initGridAlpha.lo
+	-rm -f Evolution/initHELL.$(OBJEXT)
+	-rm -f Evolution/initHELL.lo
 	-rm -f Evolution/initIntegralsMatching.$(OBJEXT)
 	-rm -f Evolution/initIntegralsMatching.lo
 	-rm -f Evolution/initIntegralsQCD.$(OBJEXT)
 	-rm -f Evolution/initIntegralsQCD.lo
+	-rm -f Evolution/initIntegralsQCDRes.$(OBJEXT)
+	-rm -f Evolution/initIntegralsQCDRes.lo
 	-rm -f Evolution/initIntegralsQED.$(OBJEXT)
 	-rm -f Evolution/initIntegralsQED.lo
 	-rm -f Evolution/initPDFs.$(OBJEXT)

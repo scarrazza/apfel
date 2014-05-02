@@ -17,6 +17,7 @@
       include "../commons/Evs.h"
       include "../commons/Nf_FF.h"
       include "../commons/scales.h"
+      include "../commons/Smallx.h"
 *
 *     Variables
 *
@@ -29,9 +30,13 @@
 *
       call initParameters
 *
+*     Initialize alphas grid if needed
+*
+      if(Smallx) call initGridAlpha
+*
       do igrid=1,ngrid
 *
-*     Initialize grid
+*     Initialize x-space grid
 *
          call initGrid
 *
@@ -72,6 +77,7 @@
             do inf=nfi,nff
                call initIntegralsQCD(inf)
             enddo
+            if(Smallx) call initIntegralsQCDRes
          elseif(Th.eq."QED")then
             do inf=nfi,nff
                call initIntegralsQED(inf)
@@ -84,6 +90,7 @@
                call initIntegralsQCD(inf)
                call initIntegralsQED(inf)
             enddo
+            if(Smallx) call initIntegralsQCDRes
          endif
       enddo
       call cpu_time(t2)

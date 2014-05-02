@@ -479,3 +479,67 @@ c      fns = 1d0
 *
       return
       end
+*
+************************************************************************
+*
+*     Integrals of the small-x resummed splitting functions.
+*
+************************************************************************
+      subroutine RSLintegralsQCDRes(beta,alpha,tau)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/gridAlpha.h"
+      include "../commons/wrapRes.h"
+      include "../commons/integralsRes.h"
+**
+*     Input Variables
+*
+      integer beta,alpha,tau
+**
+*     Internal Variables
+*
+      integer bound
+      double precision dgauss,a,b,eps,fsg
+      double precision integrandsQCDRes
+      external integrandsQCDRes
+      parameter(eps=1d-9)
+*
+*     Initialize Integrals
+*
+      do k=4,7
+         SPRes(igrid,k,beta,alpha,tau) = 0d0
+      enddo
+*
+*     Adjustment od the bounds of the integrals
+*
+      if(alpha.lt.beta)then
+         return
+      else
+         bound = alpha-inter_degree(igrid)
+         if(alpha.lt.inter_degree(igrid)) bound = 0
+         a = max(xg(igrid,beta),xg(igrid,beta)/xg(igrid,alpha+1))
+         b = min(1d0,xg(igrid,beta)/xg(igrid,bound))
+      endif
+*
+*     Variables needed for wrapping the integrand functions
+*
+      walpha = alpha
+      wbeta  = beta
+      wtau   = tau
+*
+*     Precompute integrals
+*
+      fsg = ( dlog(1d-5) / dlog(xg(igrid,alpha)) )**2d0
+c      fsg = 1d0
+*
+*     Integrals
+*
+      do k=4,7
+         SPRes(igrid,k,beta,alpha,tau) = 
+     1        dgauss(integrandsQCDRes,a,b,fsg*eps)
+      enddo
+*
+      return
+      end

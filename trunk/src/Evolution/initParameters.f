@@ -32,15 +32,17 @@
       include "../commons/Replica.h"
       include "../commons/lock.h"
       include "../commons/TimeLike.h"
+      include "../commons/Smallx.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
       if(InWelcome.ne."done")   call EnableWelcomeMessage(.true.)
-      if(InScales.ne."done")    call SetQLimits(0.5d0,1000d0)
+      if(InScales.ne."done")    call SetQLimits(1d0,400d0)
       if(InPt.ne."done")        call SetPerturbativeOrder(2)
       if(InEvs.ne."done")       call SetVFNS
       if(InTheory.ne."done")    call SetTheory("QCD")
       if(InTimeLike.ne."done")  call SetTimeLikeEvolution(.false.)
+      if(InSmallx.ne."done")    call SetSmallxResummation(.false.,"NLL")
       if(InAlpQCD.ne."done")    call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
       if(InAlpQED.ne."done")    call SetAlphaQEDRef(7.496252d-3,1.777d0)
       if(InAlphaEvol.ne."done") call SetAlphaEvolution("exact")
@@ -76,15 +78,15 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "Theory = ",Th
          write(6,*) "  "
          write(6,*) "The options are:"
-         write(6,*) "- QCD"
-         write(6,*) "- QED"
-         write(6,*) "- QCEDP"
-         write(6,*) "- QCEDS"
-         write(6,*) "- QECDP"
-         write(6,*) "- QECDS"
-         write(6,*) "- QavDP"
-         write(6,*) "- QavDS"
-         write(6,*) "- QUniD"
+         write(6,*) "- 'QCD'"
+         write(6,*) "- 'QED'"
+         write(6,*) "- 'QCEDP'"
+         write(6,*) "- 'QCEDS'"
+         write(6,*) "- 'QECDP'"
+         write(6,*) "- 'QECDS'"
+         write(6,*) "- 'QavDP'"
+         write(6,*) "- 'QavDS'"
+         write(6,*) "- 'QUniD'"
          write(6,*) "  "
          call exit(-10)
       endif
@@ -94,8 +96,8 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "Evolution scheme = ",Evs
          write(6,*) "  "
          write(6,*) "The options are:"
-         write(6,*) "- FF"
-         write(6,*) "- VF"
+         write(6,*) "- 'FF'"
+         write(6,*) "- 'VF'"
          write(6,*) "  "
          call exit(-10)
       elseif(Evs.eq."FF")then
@@ -123,8 +125,8 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "Mass scheme = ",mass_scheme
          write(6,*) "  "
          write(6,*) "The options are:"
-         write(6,*) "- Pole"
-         write(6,*) "- MSbar"
+         write(6,*) "- 'Pole'"
+         write(6,*) "- 'MSbar'"
          write(6,*) "  "
          call exit(-10)
       endif
@@ -136,9 +138,9 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "Alpha evolution = ",AlphaEvol
          write(6,*) "  "
          write(6,*) "The options are:"
-         write(6,*) "- exact"
-         write(6,*) "- expanded"
-         write(6,*) "- lambda"
+         write(6,*) "- 'exact'"
+         write(6,*) "- 'expanded'"
+         write(6,*) "- 'lambda'"
          write(6,*) "  "
          call exit(-10)
       endif
@@ -155,9 +157,9 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "PDF evolution = ",PDFEvol
          write(6,*) "  "
          write(6,*) "The options are:"
-         write(6,*) "- exactmu"
-         write(6,*) "- exactalpha"
-         write(6,*) "- expandalpha"
+         write(6,*) "- 'exactmu'"
+         write(6,*) "- 'exactalpha'"
+         write(6,*) "- 'expandalpha'"
          write(6,*) "  "
          call exit(-10)
       elseif((PDFEvol(1:10).eq."exactalpha".or.
@@ -166,6 +168,38 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "'alpha' solution of the DGLAP equation."
          write(6,*) "  "
          call exit(-10)
+      endif
+*
+      if(Smallx)then
+         if(TimeLike)then
+            write(6,*) "Timelike evolution and Small-x resummation"
+            write(6,*) "cannot be combined, switch off one of them."
+            write(6,*) "  "
+            call exit(-10)
+         endif
+         if(kren.ne.1d0)then
+            write(6,*) "Renormalization scale variation not allowed"
+            write(6,*) "if the small-x resummation is enabled."
+            write(6,*) "  "
+            call exit(-10)
+         endif
+         if(PDFEvol.eq."expandalpha")then
+            write(6,*) "The 'expandalpha' solution of the DGLAP"
+            write(6,*) "equation cannot be used if the small-x "
+            write(6,*) "resummation is enabled."
+            write(6,*) "  "
+            call exit(-10)
+         endif
+         if(LogAcc.ne.0.and.LogAcc.ne.1)then
+            write(6,*) "Logarithmic accuracy not allowed:"
+            write(6,*) "LogAcc =",LogAcc
+            write(6,*) " "
+         write(6,*) "The options are:"
+         write(6,*) "- 'LL'"
+         write(6,*) "- 'NLL'"
+         write(6,*) "  "
+         call exit(-10)
+         endif
       endif
 *
 *     Print welcome message and report of the parameters (if enabled)
@@ -178,6 +212,7 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "  "
 *
          write(6,"(a,a,a)") " ",Th," evolution"
+*
          if(TimeLike)then
             write(6,*) "Time-like evolution (fragmentation functions)"
          else
@@ -189,6 +224,13 @@ c         call SetGridParameters(3,20,5,8d-1)
 *
          write(6,"(a,f7.2,a,f8.2,a)") " Evolution range [",
      1               dsqrt(Q2min)," :",dsqrt(Q2max)," ] GeV"
+*
+         if(Smallx)then
+            if(LogAcc.eq.0) 
+     1           write(6,*) "Small-x resummation at LL enabled"
+            if(LogAcc.eq.1) 
+     1           write(6,*) "Small-x resummation at NLL enabled"
+         endif
 *
          write(6,*) "Solution of the coupling equations: ",AlphaEvol
          if(AlphaEvol(1:6).eq."lambda")then

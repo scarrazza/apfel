@@ -283,3 +283,57 @@ c      integrandsQCDT = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
 *
       return
       end
+*
+************************************************************************
+*
+*     Integrands for the small-x resummed evolution.
+*     The following routine calls the functions "Hellx" that is the
+*     Fortran wrapper of the c++ function provided by the Bonvini's
+*     code HELL.
+*     The input variables of the function Hellx are:
+*
+*        Hellx(k,ipt,as,y)
+*
+*     where:
+*     - k   = 4: qq, 5: qg, 6: gq, 7: gg (splittinf function),
+*     - ipt = perturbative order to be matched to
+*     - as  = value of alphas / ( 4 * pi ),
+*     - y   = Bjorken's variable.
+*
+************************************************************************
+      function integrandsQCDRes(y)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/ipt.h"
+      include "../commons/gridAlpha.h"
+      include "../commons/wrapRes.h"
+**
+*     Input Variables
+*
+      double precision y
+**
+*     Internal Variables
+*
+      double precision z,w_int,fR
+      double precision Hellx
+      external Hellx
+**
+*     Output Variables
+*
+      double precision integrandsQCDRes
+*
+*     Interpolant functions
+*
+      z = xg(igrid,wbeta) / y
+*
+      fR = w_int(inter_degree(igrid),walpha,z)
+*
+*     Contructing integrands
+*
+c      integrandsQCDRes = Hellx(k,ipt,ag(wtau),y) * fR
+      integrandsQCDRes = 0d0
+*
+      return
+      end

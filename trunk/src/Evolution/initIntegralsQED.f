@@ -3,8 +3,8 @@
 *     initIntegralsQED.f:
 *
 *     This routine initializes the integrals of splitting functions and
-*     and interpolation functions for a given number of active flavours 
-*     nf in QCD.
+*     interpolation functions for a given number of active flavours nf 
+*     in QCD.
 *
 ************************************************************************
       subroutine initIntegralsQED(nf)
