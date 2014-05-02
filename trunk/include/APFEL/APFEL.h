@@ -94,7 +94,10 @@ namespace APFEL {
 
   /// Switch to the time-like evolution
   void SetTimeLikeEvolution(bool);
-  
+
+  /// Switch on the small-x resummation
+  void SetSmallxResummation(bool, const std::string& la);  
+
   /// Sets the reference values of $alpha_{s}$ at the reference scale
   void SetAlphaQCDRef(double alpharef, double Qref);
 

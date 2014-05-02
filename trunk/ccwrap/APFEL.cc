@@ -127,6 +127,13 @@ namespace APFEL {
     fsettimelikeevolution(&tl);
   }
 
+  void SetSmallxResummation(bool sx, const std::string& la)
+  {
+    char cla[SIZE+1];
+    strncpy(cla, la.c_str(), SIZE);
+    fsetsmallxresummation(&sx,cla);
+  }
+
   double HeavyQuarkMass(int i,double Q)
   {
     return fheavyquarkmass(&i,&Q);
