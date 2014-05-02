@@ -332,8 +332,7 @@ c      integrandsQCDT = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
 *
 *     Contructing integrands
 *
-c      integrandsQCDRes = Hellx(k,ipt,ag(wtau),y) * fR
-      integrandsQCDRes = 0d0
+      integrandsQCDRes = Hellx(k,ipt,ag(wtau),y) * fR
 *
       return
       end

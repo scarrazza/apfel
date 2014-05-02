@@ -78,7 +78,7 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/fDSS.lo Evolution/LHAPDFgridDerivative.lo \
 	Evolution/SetSmallxResummation.lo
 am__objects_3 = Evolution/interpolants.lo
-am__objects_4 = Evolution/SplittingFunctions.lo
+am__objects_4 = Evolution/SplittingFunctions.lo Evolution/Hellx.lo
 am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
 	Evolution/MSbarmass.lo Evolution/lambda.lo
 am__objects_6 = Evolution/EvolutionOperatorsQCD.lo \
@@ -325,7 +325,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/SetSmallxResummation.f
 
 INTER = Evolution/interpolants.f
-SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f
+SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f Evolution/Hellx.f
 COUPLINGS = Evolution/a_QCD.f Evolution/a_QED.f Evolution/MSbarmass.f Evolution/lambda.f
 EVOLUTIONQCD = Evolution/EvolutionOperatorsQCD.f Evolution/IdentityOperatorsQCD.f \
 	Evolution/EqualOperatorsQCDnf.f Evolution/integrandsQCD.f Evolution/integralsQCD.f Evolution/RSLintegralsQCD.f \
@@ -495,6 +495,8 @@ Evolution/LHAPDFgridDerivative.lo: Evolution/$(am__dirstamp) \
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SplittingFunctions.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/Hellx.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/a_QCD.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -815,6 +817,8 @@ mostlyclean-compile:
 	-rm -f Evolution/SetVFNS.lo
 	-rm -f Evolution/SplittingFunctions.$(OBJEXT)
 	-rm -f Evolution/SplittingFunctions.lo
+	-rm -f Evolution/Hellx.$(OBJEXT)
+	-rm -f Evolution/Hellx.lo
 	-rm -f Evolution/WelcomeMessage.$(OBJEXT)
 	-rm -f Evolution/WelcomeMessage.lo
 	-rm -f Evolution/a_QCD.$(OBJEXT)
