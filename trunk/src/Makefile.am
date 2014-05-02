@@ -18,7 +18,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 
 INTER = Evolution/interpolants.f
 
-SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f
+SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f Evolution/Hellx.f
 
 COUPLINGS = Evolution/a_QCD.f Evolution/a_QED.f Evolution/MSbarmass.f Evolution/lambda.f
 
