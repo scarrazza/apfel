@@ -70,6 +70,9 @@ extern "C" {
 #define fsettimelikeevolution FC_FUNC(settimelikeevolution,SETTIMELIKEEVOLUTION)
   void fsettimelikeevolution(bool*);
 
+#define fsetsmallxresummation FC_FUNC(setsmallxresummation,SETSMALLXRESUMMATION)
+  void fsetsmallxresummation(bool*,char*);
+
 #define fheavyquarkmass FC_FUNC(heavyquarkmass,HEAVYQUARKMASS)
   double fheavyquarkmass(int*,double*);
 

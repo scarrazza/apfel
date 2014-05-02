@@ -142,10 +142,17 @@ ccccccccccccc
       end subroutine flockgrids
 
 ccccccccccccc      
-      subroutine flsettimelikeevolution(tl)
+      subroutine fsettimelikeevolution(tl)
       logical tl
       call SetTimeLikeEvolution(tl)
-      end subroutine flsettimelikeevolution
+      end subroutine fsettimelikeevolution
+
+ccccccccccccc      
+      subroutine fsetsmallxresummation(sx,la)
+      logical sx
+      character la*(*)
+      call SetSmallxResummation(sx,la)
+      end subroutine fsetsmallxresummation
 
 ccccccccccccc      
       function fheavyquarkmass(i,Q)
