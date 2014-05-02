@@ -84,12 +84,16 @@ libAPFEL_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(top_builddir)/ccwrap/libAPFELCCWrap.la
 am_libAPFEL_la_OBJECTS =
 libAPFEL_la_OBJECTS = $(am_libAPFEL_la_OBJECTS)
-DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/config -I$(top_builddir)/include/APFEL
-COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+libHELL_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(top_builddir)/src/libHELL.la
+am_libHELL_la_OBJECTS =
+libHELL_la_OBJECTS = $(am_libHELL_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
+DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/config -I$(top_builddir)/include/APFEL
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) \
 	$(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) \
@@ -110,8 +114,8 @@ am__v_CCLD_0 = @echo "  CCLD  " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(libAPFEL_la_SOURCES)
-DIST_SOURCES = $(libAPFEL_la_SOURCES)
+SOURCES = $(libAPFEL_la_SOURCES) $(libHELL_la_SOURCES)
+DIST_SOURCES = $(libAPFEL_la_SOURCES) $(libHELL_la_SOURCES)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -249,7 +253,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-lib_LTLIBRARIES = libAPFEL.la
+lib_LTLIBRARIES = libAPFEL.la libHELL.la
 libAPFEL_la_SOURCES = 
 libAPFEL_la_LDFLAGS = $(VERSIONFLAGS)
 libAPFEL_la_LIBADD = $(FCLIBS) $(top_builddir)/src/libAPFELCore.la \
@@ -258,6 +262,8 @@ libAPFEL_la_LIBADD = $(FCLIBS) $(top_builddir)/src/libAPFELCore.la \
 libAPFEL_la_LINK = $(LIBTOOL) --tag=CXX --mode=link $(CXX) $(AM_CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
 
+libHELL_la_SOURCES = 
+libHELL_la_LIBADD = $(FCLIBS) $(top_builddir)/src/libHELL.la
 all: all-am
 
 .SUFFIXES:
@@ -324,6 +330,8 @@ clean-libLTLIBRARIES:
 	done
 libAPFEL.la: $(libAPFEL_la_OBJECTS) $(libAPFEL_la_DEPENDENCIES) $(EXTRA_libAPFEL_la_DEPENDENCIES) 
 	$(AM_V_GEN)$(libAPFEL_la_LINK) -rpath $(libdir) $(libAPFEL_la_OBJECTS) $(libAPFEL_la_LIBADD) $(LIBS)
+libHELL.la: $(libHELL_la_OBJECTS) $(libHELL_la_DEPENDENCIES) $(EXTRA_libHELL_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(LINK) -rpath $(libdir) $(libHELL_la_OBJECTS) $(libHELL_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

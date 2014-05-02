@@ -4519,6 +4519,37 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_dxPDF(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  double arg2 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:dxPDF",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "dxPDF" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "dxPDF" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (double)APFEL::dxPDF(arg1,arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_xPDFj(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
@@ -4594,6 +4625,28 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_dxgamma(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:dxgamma",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "dxgamma" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  result = (double)APFEL::dxgamma(arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_LHAPDFgrid(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
@@ -4636,6 +4689,43 @@ SWIGINTERN PyObject *_wrap_LHAPDFgrid(PyObject *SWIGUNUSEDPARM(self), PyObject *
   return resultobj;
 fail:
   if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_LHAPDFgridDerivative(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  std::string *arg2 = 0 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:LHAPDFgridDerivative",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "LHAPDFgridDerivative" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "LHAPDFgridDerivative" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LHAPDFgridDerivative" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  APFEL::LHAPDFgridDerivative(arg1,(std::string const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
@@ -4974,6 +5064,43 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_SetSmallxResummation(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  bool arg1 ;
+  std::string *arg2 = 0 ;
+  bool val1 ;
+  int ecode1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:SetSmallxResummation",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_bool(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetSmallxResummation" "', argument " "1"" of type '" "bool""'");
+  } 
+  arg1 = static_cast< bool >(val1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SetSmallxResummation" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetSmallxResummation" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  APFEL::SetSmallxResummation(arg1,(std::string const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_SetAlphaQCDRef(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
@@ -5088,6 +5215,34 @@ SWIGINTERN PyObject *_wrap_SetLambdaQCDRef(PyObject *SWIGUNUSEDPARM(self), PyObj
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SetPDFEvolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SetPDFEvolution",&obj0)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SetPDFEvolution" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SetPDFEvolution" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  APFEL::SetPDFEvolution((std::string const &)*arg1);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return NULL;
 }
 
@@ -5677,10 +5832,13 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"InitializeAPFEL", _wrap_InitializeAPFEL, METH_VARARGS, NULL},
 	 { (char *)"EvolveAPFEL", _wrap_EvolveAPFEL, METH_VARARGS, NULL},
 	 { (char *)"xPDF", _wrap_xPDF, METH_VARARGS, NULL},
+	 { (char *)"dxPDF", _wrap_dxPDF, METH_VARARGS, NULL},
 	 { (char *)"xPDFj", _wrap_xPDFj, METH_VARARGS, NULL},
 	 { (char *)"xgamma", _wrap_xgamma, METH_VARARGS, NULL},
 	 { (char *)"xgammaj", _wrap_xgammaj, METH_VARARGS, NULL},
+	 { (char *)"dxgamma", _wrap_dxgamma, METH_VARARGS, NULL},
 	 { (char *)"LHAPDFgrid", _wrap_LHAPDFgrid, METH_VARARGS, NULL},
+	 { (char *)"LHAPDFgridDerivative", _wrap_LHAPDFgridDerivative, METH_VARARGS, NULL},
 	 { (char *)"ExternalEvolutionOperator", _wrap_ExternalEvolutionOperator, METH_VARARGS, NULL},
 	 { (char *)"AlphaQCD", _wrap_AlphaQCD, METH_VARARGS, NULL},
 	 { (char *)"AlphaQED", _wrap_AlphaQED, METH_VARARGS, NULL},
@@ -5694,10 +5852,12 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"EnableEvolutionOperator", _wrap_EnableEvolutionOperator, METH_VARARGS, NULL},
 	 { (char *)"LockGrids", _wrap_LockGrids, METH_VARARGS, NULL},
 	 { (char *)"SetTimeLikeEvolution", _wrap_SetTimeLikeEvolution, METH_VARARGS, NULL},
+	 { (char *)"SetSmallxResummation", _wrap_SetSmallxResummation, METH_VARARGS, NULL},
 	 { (char *)"SetAlphaQCDRef", _wrap_SetAlphaQCDRef, METH_VARARGS, NULL},
 	 { (char *)"SetAlphaQEDRef", _wrap_SetAlphaQEDRef, METH_VARARGS, NULL},
 	 { (char *)"SetAlphaEvolution", _wrap_SetAlphaEvolution, METH_VARARGS, NULL},
 	 { (char *)"SetLambdaQCDRef", _wrap_SetLambdaQCDRef, METH_VARARGS, NULL},
+	 { (char *)"SetPDFEvolution", _wrap_SetPDFEvolution, METH_VARARGS, NULL},
 	 { (char *)"SetQLimits", _wrap_SetQLimits, METH_VARARGS, NULL},
 	 { (char *)"SetFFNS", _wrap_SetFFNS, METH_VARARGS, NULL},
 	 { (char *)"SetGridParameters", _wrap_SetGridParameters, METH_VARARGS, NULL},

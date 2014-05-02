@@ -53,10 +53,11 @@ LTLIBRARIES = $(noinst_LTLIBRARIES)
 libAPFELCore_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
 am__objects_1 = Evolution/apfelversion.lo Evolution/WelcomeMessage.lo \
-	Evolution/initParameters.lo Evolution/initGrid.lo Evolution/initGridAlpha.lo \
-	Evolution/initIntegralsQCD.lo Evolution/initIntegralsQCDRes.lo \
-	Evolution/initIntegralsQED.lo Evolution/initIntegralsMatching.lo \
-	Evolution/initPDFs.lo Evolution/InitializeAPFEL.lo Evolution/EvolveAPFEL.lo \
+	Evolution/initParameters.lo Evolution/initGrid.lo \
+	Evolution/initGridAlpha.lo Evolution/initIntegralsQCD.lo \
+	Evolution/initIntegralsQCDRes.lo Evolution/initIntegralsQED.lo \
+	Evolution/initIntegralsMatching.lo Evolution/initPDFs.lo \
+	Evolution/InitializeAPFEL.lo Evolution/EvolveAPFEL.lo \
 	Evolution/DeriveAPFEL.lo Evolution/initHELL.lo
 am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetAlphaQEDRef.lo Evolution/SetQLimits.lo \
@@ -127,6 +128,10 @@ libAPFELCore_la_OBJECTS = $(am_libAPFELCore_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
+libHELL_la_LIBADD =
+am__objects_11 = HELL/src/hell.lo HELL/src/DGLAPevol.lo
+am_libHELL_la_OBJECTS = $(am__objects_11)
+libHELL_la_OBJECTS = $(am_libHELL_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/config -I$(top_builddir)/include/APFEL
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
@@ -166,8 +171,8 @@ am__v_F77LD_0 = @echo "  F77LD " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(libAPFELCore_la_SOURCES)
-DIST_SOURCES = $(libAPFELCore_la_SOURCES)
+SOURCES = $(libAPFELCore_la_SOURCES) $(libHELL_la_SOURCES)
+DIST_SOURCES = $(libAPFELCore_la_SOURCES) $(libHELL_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -307,7 +312,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_LTLIBRARIES = libAPFELCore.la
+noinst_LTLIBRARIES = libAPFELCore.la libHELL.la
 INIT = Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
 	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
@@ -349,6 +354,8 @@ UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f
 DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
 EXTRA_DIST = commons
 libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS)
+HELL = HELL/src/hell.cc HELL/src/DGLAPevol.cc
+libHELL_la_SOURCES = $(HELL)
 all: all-am
 
 .SUFFIXES:
@@ -478,8 +485,6 @@ Evolution/LockGrids.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetTimeLikeEvolution.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
-Evolution/SetSmallxResummation.lo: Evolution/$(am__dirstamp) \
-	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetAlphaEvolution.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetLambdaQCDRef.lo: Evolution/$(am__dirstamp) \
@@ -491,6 +496,8 @@ Evolution/hknsff07.lo: Evolution/$(am__dirstamp) \
 Evolution/fDSS.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/LHAPDFgridDerivative.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetSmallxResummation.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -648,6 +655,18 @@ DIS/ZMCoefficientFunctions.lo: DIS/$(am__dirstamp) \
 	DIS/$(DEPDIR)/$(am__dirstamp)
 libAPFELCore.la: $(libAPFELCore_la_OBJECTS) $(libAPFELCore_la_DEPENDENCIES) $(EXTRA_libAPFELCore_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(CXXLINK)  $(libAPFELCore_la_OBJECTS) $(libAPFELCore_la_LIBADD) $(LIBS)
+HELL/src/$(am__dirstamp):
+	@$(MKDIR_P) HELL/src
+	@: > HELL/src/$(am__dirstamp)
+HELL/src/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) HELL/src/$(DEPDIR)
+	@: > HELL/src/$(DEPDIR)/$(am__dirstamp)
+HELL/src/hell.lo: HELL/src/$(am__dirstamp) \
+	HELL/src/$(DEPDIR)/$(am__dirstamp)
+HELL/src/DGLAPevol.lo: HELL/src/$(am__dirstamp) \
+	HELL/src/$(DEPDIR)/$(am__dirstamp)
+libHELL.la: $(libHELL_la_OBJECTS) $(libHELL_la_DEPENDENCIES) $(EXTRA_libHELL_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(CXXLINK)  $(libHELL_la_OBJECTS) $(libHELL_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -683,6 +702,8 @@ mostlyclean-compile:
 	-rm -f Evolution/CleanUp.lo
 	-rm -f Evolution/DerivativeOperatorsQCD.$(OBJEXT)
 	-rm -f Evolution/DerivativeOperatorsQCD.lo
+	-rm -f Evolution/DerivativeOperatorsQED.$(OBJEXT)
+	-rm -f Evolution/DerivativeOperatorsQED.lo
 	-rm -f Evolution/DeriveAPFEL.$(OBJEXT)
 	-rm -f Evolution/DeriveAPFEL.lo
 	-rm -f Evolution/DerivePDFs.$(OBJEXT)
@@ -721,6 +742,8 @@ mostlyclean-compile:
 	-rm -f Evolution/ExternalEvolutionOperator.lo
 	-rm -f Evolution/HeavyQuarkMass.$(OBJEXT)
 	-rm -f Evolution/HeavyQuarkMass.lo
+	-rm -f Evolution/Hellx.$(OBJEXT)
+	-rm -f Evolution/Hellx.lo
 	-rm -f Evolution/IdentityOperatorsQCD.$(OBJEXT)
 	-rm -f Evolution/IdentityOperatorsQCD.lo
 	-rm -f Evolution/IdentityOperatorsQED.$(OBJEXT)
@@ -775,8 +798,6 @@ mostlyclean-compile:
 	-rm -f Evolution/RSLintegralsQED.lo
 	-rm -f Evolution/SetAlphaEvolution.$(OBJEXT)
 	-rm -f Evolution/SetAlphaEvolution.lo
-	-rm -f Evolution/SetPDFEvolution.$(OBJEXT)
-	-rm -f Evolution/SetPDFEvolution.lo
 	-rm -f Evolution/SetAlphaQCDRef.$(OBJEXT)
 	-rm -f Evolution/SetAlphaQCDRef.lo
 	-rm -f Evolution/SetAlphaQEDRef.$(OBJEXT)
@@ -795,6 +816,8 @@ mostlyclean-compile:
 	-rm -f Evolution/SetMaxFlavourPDFs.lo
 	-rm -f Evolution/SetNumberOfGrids.$(OBJEXT)
 	-rm -f Evolution/SetNumberOfGrids.lo
+	-rm -f Evolution/SetPDFEvolution.$(OBJEXT)
+	-rm -f Evolution/SetPDFEvolution.lo
 	-rm -f Evolution/SetPDFSet.$(OBJEXT)
 	-rm -f Evolution/SetPDFSet.lo
 	-rm -f Evolution/SetPerturbativeOrder.$(OBJEXT)
@@ -807,18 +830,16 @@ mostlyclean-compile:
 	-rm -f Evolution/SetRenFacRatio.lo
 	-rm -f Evolution/SetReplica.$(OBJEXT)
 	-rm -f Evolution/SetReplica.lo
+	-rm -f Evolution/SetSmallxResummation.$(OBJEXT)
+	-rm -f Evolution/SetSmallxResummation.lo
 	-rm -f Evolution/SetTheory.$(OBJEXT)
 	-rm -f Evolution/SetTheory.lo
 	-rm -f Evolution/SetTimeLikeEvolution.$(OBJEXT)
 	-rm -f Evolution/SetTimeLikeEvolution.lo
-	-rm -f Evolution/SetSmallxResummation.$(OBJEXT)
-	-rm -f Evolution/SetSmallxResummation.lo
 	-rm -f Evolution/SetVFNS.$(OBJEXT)
 	-rm -f Evolution/SetVFNS.lo
 	-rm -f Evolution/SplittingFunctions.$(OBJEXT)
 	-rm -f Evolution/SplittingFunctions.lo
-	-rm -f Evolution/Hellx.$(OBJEXT)
-	-rm -f Evolution/Hellx.lo
 	-rm -f Evolution/WelcomeMessage.$(OBJEXT)
 	-rm -f Evolution/WelcomeMessage.lo
 	-rm -f Evolution/a_QCD.$(OBJEXT)
@@ -879,8 +900,6 @@ mostlyclean-compile:
 	-rm -f Evolution/odeintsgQCD.lo
 	-rm -f Evolution/odeintsgQED.$(OBJEXT)
 	-rm -f Evolution/odeintsgQED.lo
-	-rm -f Evolution/DerivativeOperatorsQED.$(OBJEXT)
-	-rm -f Evolution/DerivativeOperatorsQED.lo
 	-rm -f Evolution/odeintsgUnified.$(OBJEXT)
 	-rm -f Evolution/odeintsgUnified.lo
 	-rm -f Evolution/switchGluonPhoton.$(OBJEXT)
@@ -891,6 +910,10 @@ mostlyclean-compile:
 	-rm -f Evolution/xPDF.lo
 	-rm -f Evolution/xgamma.$(OBJEXT)
 	-rm -f Evolution/xgamma.lo
+	-rm -f HELL/src/DGLAPevol.$(OBJEXT)
+	-rm -f HELL/src/DGLAPevol.lo
+	-rm -f HELL/src/hell.$(OBJEXT)
+	-rm -f HELL/src/hell.lo
 	-rm -f core/ddilog.$(OBJEXT)
 	-rm -f core/ddilog.lo
 	-rm -f core/dgauss.$(OBJEXT)
@@ -902,6 +925,8 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@Evolution/$(DEPDIR)/apfelversion.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/DGLAPevol.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -943,6 +968,7 @@ clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf DIS/.libs DIS/_libs
 	-rm -rf Evolution/.libs Evolution/_libs
+	-rm -rf HELL/src/.libs HELL/src/_libs
 	-rm -rf core/.libs core/_libs
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
@@ -1061,6 +1087,8 @@ distclean-generic:
 	-rm -f DIS/$(am__dirstamp)
 	-rm -f Evolution/$(DEPDIR)/$(am__dirstamp)
 	-rm -f Evolution/$(am__dirstamp)
+	-rm -f HELL/src/$(DEPDIR)/$(am__dirstamp)
+	-rm -f HELL/src/$(am__dirstamp)
 	-rm -f core/$(DEPDIR)/$(am__dirstamp)
 	-rm -f core/$(am__dirstamp)
 
@@ -1073,7 +1101,7 @@ clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf Evolution/$(DEPDIR)
+	-rm -rf Evolution/$(DEPDIR) HELL/src/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1119,7 +1147,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf Evolution/$(DEPDIR)
+	-rm -rf Evolution/$(DEPDIR) HELL/src/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

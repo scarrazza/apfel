@@ -21,7 +21,7 @@
 #include <cmath>
 #include <cstdlib>
 
-#include "include/hell.hh"
+#include "HELL/include/hell.hh"
 
 
 using namespace std;
