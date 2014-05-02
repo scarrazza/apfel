@@ -109,6 +109,10 @@ def xPDF(*args):
   return _apfel.xPDF(*args)
 xPDF = _apfel.xPDF
 
+def dxPDF(*args):
+  return _apfel.dxPDF(*args)
+dxPDF = _apfel.dxPDF
+
 def xPDFj(*args):
   return _apfel.xPDFj(*args)
 xPDFj = _apfel.xPDFj
@@ -121,9 +125,17 @@ def xgammaj(*args):
   return _apfel.xgammaj(*args)
 xgammaj = _apfel.xgammaj
 
+def dxgamma(*args):
+  return _apfel.dxgamma(*args)
+dxgamma = _apfel.dxgamma
+
 def LHAPDFgrid(*args):
   return _apfel.LHAPDFgrid(*args)
 LHAPDFgrid = _apfel.LHAPDFgrid
+
+def LHAPDFgridDerivative(*args):
+  return _apfel.LHAPDFgridDerivative(*args)
+LHAPDFgridDerivative = _apfel.LHAPDFgridDerivative
 
 def ExternalEvolutionOperator(*args):
   return _apfel.ExternalEvolutionOperator(*args)
@@ -177,6 +189,10 @@ def SetTimeLikeEvolution(*args):
   return _apfel.SetTimeLikeEvolution(*args)
 SetTimeLikeEvolution = _apfel.SetTimeLikeEvolution
 
+def SetSmallxResummation(*args):
+  return _apfel.SetSmallxResummation(*args)
+SetSmallxResummation = _apfel.SetSmallxResummation
+
 def SetAlphaQCDRef(*args):
   return _apfel.SetAlphaQCDRef(*args)
 SetAlphaQCDRef = _apfel.SetAlphaQCDRef
@@ -192,6 +208,10 @@ SetAlphaEvolution = _apfel.SetAlphaEvolution
 def SetLambdaQCDRef(*args):
   return _apfel.SetLambdaQCDRef(*args)
 SetLambdaQCDRef = _apfel.SetLambdaQCDRef
+
+def SetPDFEvolution(*args):
+  return _apfel.SetPDFEvolution(*args)
+SetPDFEvolution = _apfel.SetPDFEvolution
 
 def SetQLimits(*args):
   return _apfel.SetQLimits(*args)
