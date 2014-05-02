@@ -129,7 +129,8 @@ AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 libHELL_la_LIBADD =
-am__objects_11 = HELL/src/hell.lo HELL/src/DGLAPevol.lo
+am__objects_11 = HELL/src/hell.lo HELL/src/DGLAPevol.lo \
+	HELL/src/hell_wrapper.lo
 am_libHELL_la_OBJECTS = $(am__objects_11)
 libHELL_la_OBJECTS = $(am_libHELL_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/config -I$(top_builddir)/include/APFEL
@@ -354,7 +355,7 @@ UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f
 DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
 EXTRA_DIST = commons
 libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS)
-HELL = HELL/src/hell.cc HELL/src/DGLAPevol.cc
+HELL = HELL/src/hell.cc HELL/src/DGLAPevol.cc HELL/src/hell_wrapper.cc
 libHELL_la_SOURCES = $(HELL)
 all: all-am
 
@@ -665,6 +666,8 @@ HELL/src/hell.lo: HELL/src/$(am__dirstamp) \
 	HELL/src/$(DEPDIR)/$(am__dirstamp)
 HELL/src/DGLAPevol.lo: HELL/src/$(am__dirstamp) \
 	HELL/src/$(DEPDIR)/$(am__dirstamp)
+HELL/src/hell_wrapper.lo: HELL/src/$(am__dirstamp) \
+	HELL/src/$(DEPDIR)/$(am__dirstamp)
 libHELL.la: $(libHELL_la_OBJECTS) $(libHELL_la_DEPENDENCIES) $(EXTRA_libHELL_la_DEPENDENCIES) 
 	$(AM_V_CXXLD)$(CXXLINK)  $(libHELL_la_OBJECTS) $(libHELL_la_LIBADD) $(LIBS)
 
@@ -914,6 +917,8 @@ mostlyclean-compile:
 	-rm -f HELL/src/DGLAPevol.lo
 	-rm -f HELL/src/hell.$(OBJEXT)
 	-rm -f HELL/src/hell.lo
+	-rm -f HELL/src/hell_wrapper.$(OBJEXT)
+	-rm -f HELL/src/hell_wrapper.lo
 	-rm -f core/ddilog.$(OBJEXT)
 	-rm -f core/ddilog.lo
 	-rm -f core/dgauss.$(OBJEXT)
@@ -927,6 +932,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@Evolution/$(DEPDIR)/apfelversion.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/DGLAPevol.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell_wrapper.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
