@@ -36,7 +36,7 @@ tmp=$( echo "$*" | egrep -- '--\<libdir\>')
 test -n "$tmp" && OUT="$OUT @libdir@"
 
 tmp=$( echo "$*" | egrep -- '--\<ldflags\>')
-test -n "$tmp" && OUT="$OUT -L@libdir@ -lAPFEL"
+test -n "$tmp" && OUT="$OUT -L@libdir@ -lAPFEL -lHELL"
 
 ## Version
 tmp=$( echo "$*" | egrep -- '--\<version\>')
