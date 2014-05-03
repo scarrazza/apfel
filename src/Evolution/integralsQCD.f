@@ -56,7 +56,8 @@
          if(Smallx.and.kk.ge.4)then
 *     find "tau" such that ag(tau) <= coup < ag(tau+1)
             do tau=0,na-1
-               if(ag(tau).ge.coup.and.ag(tau+1).lt.coup) goto 102
+               if(nfg(tau).eq.wnf.and.
+     1            ag(tau).ge.coup.and.ag(tau+1).lt.coup) goto 102
             enddo
 *     interpolation coefficient
  102        c1 = ( ag(tau+1) - coup ) / ( ag(tau+1) - ag(tau) )
@@ -74,7 +75,8 @@
          if(Smallx.and.kk.ge.4)then
 *     find "tau" such that ag(tau) <= coup < ag(tau+1)
             do tau=0,na-1
-               if(ag(tau).ge.coup.and.ag(tau+1).lt.coup) goto 103
+               if(nfg(tau).eq.wnf.and.
+     1            ag(tau).ge.coup.and.ag(tau+1).lt.coup) goto 103
             enddo
 *     interpolation coefficient
  103        c1 = ( ag(tau+1) - coup ) / ( ag(tau+1) - ag(tau) )

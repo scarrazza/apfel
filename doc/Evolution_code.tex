@@ -6,8 +6,7 @@
 \usepackage{color}
 
 \begin{document}
-
-\newpage
+\tableofcontents{}
 
 \section{QCD Evolution Implementation}
 
@@ -328,6 +327,105 @@ we can write eq. (\ref{tosolvealpha}) up to NNLO as:
 \end{array}\right.\,.
 \end{equation}
 Solving eq. (\ref{tosolvealphatrn}) provides the so-called "expanded" solution.
+
+\section{Small-$x$ Resummation using {\tt Hell}}
+
+The implemenatation of the small-$x$ resummation in {\tt APFEL} is
+done by interfacing it to the code {\tt Hell} by Marco Bonvini. {\tt Hell}
+provides, amongst other things, the small-$x$ resummed singlet splitting
+functions (times $x$) up to NLL to be matched to the unresummed LO, NLO and NNLO
+splitting functions. In practice, the user can specify the logarithmic
+accuracy (LL or NLL) and, for each logarithmic accuracy, the
+perturbative accuracy to which the rusummed splitting functions are to
+be matched.
+
+With the inclusion of the small-$x$ resummation, the splitting
+functions ${P}_{ij}$ in eq. (\ref{dglap}) should be interpreted
+as:
+\begin{equation}
+{P}_{ij}(x,\alpha_s) = \underbrace{{P}_{ij}^{\rm
+    FO}(x,\alpha_s)}_{\mbox{\tiny Already present in {\tt APFEL}}} +
+\underbrace{{P}_{ij}^{\rm Res-FO}(x,\alpha_s)}_{\mbox{\tiny Provided
+    by {\tt Hell}}}
+\end{equation}
+where "FO" stands for Fixed Order and "Res" for Resummed.
+The essential difference between ${P}_{ij}^{\rm FO}$ and
+${P}_{ij}^{\rm Res-FO}$ stems from the fact that the former admits the
+usual pertubative expansion:
+\begin{equation}
+{P}_{ij}^{\rm FO}(x,\alpha_s) = \sum_{n=0}^N a_s^{n+1} P_{ij}^{(n)}(x)\,,
+\end{equation}
+while the latter, by definition, does not. This feature of
+${P}_{ij}^{\rm Res-FO}$ forbids to precompute the perturbative
+coefficients in the r.h.s. of the DGLAP equation before solving it. In principle then,
+one should recompute the integrals of the splitting functions on the $x$-space
+interpolation grid at every step of the algorithm that numerically
+solves the discretized DGLAP equation. This is clearly very
+unefficient and would enormously inflate the computation time. In
+order to keep the computation time under control, we use
+an interpolation grid also in $\alpha_s$. In practice, we precompute
+the integrals of the resummed splitting function over the $x$-space
+interpolation grid for several values of $\alpha_s$ (logarithmically?)
+distributed over a reasonable range, so that the values of the same
+integrals for any value of $\alpha_s$ needed during the numerical
+solution of the DGLAP equation  would be obtained by interpolation.
+
+Using the notation of eq. (\ref{pertExp}), we have that the integral of
+the resummed splitting functions on the $x$-space grid would take the form:
+\begin{equation}
+\Pi_{ij,\beta\alpha}^{\rm Res}(\alpha_s) = \int^{d}_{c}dy{P}_{ij}^{\rm Res-FO}(y,\alpha_s)w_{\alpha}\left(\frac{x_\beta}{y}\right)\,,
+\end{equation}
+so that eq. (\ref{tosolve}) would become:
+\begin{equation}\label{tosolveRes}
+\left\{\begin{array}{l}
+\displaystyle \frac{\partial  M_{ij,\alpha\beta}(t,t_0)}{\partial t}=\sum_{\gamma,k} \left[\Pi_{ik,\alpha\gamma}(t)+\Pi_{ij,\beta\alpha}^{\rm Res}(\alpha_s(t))\right]M_{kj,\gamma\beta}(t,t_0)\\
+\\
+\displaystyle M_{ij,\alpha\beta}(t_0,t_0)=\delta_{ij}\delta_{\alpha\beta}
+\end{array}\right.\,.
+\end{equation}
+
+As we mentioned above, $\Pi_{ij,\beta\alpha}^{\rm Res}$ cannot be
+expandend as a truncated series of $\alpha_s$ and thus we cannot
+precompute the perturbative coefficients making the numerical solution
+of the DGLAP equation efficient. 
+A possible way out is to precompute
+$\Pi_{ij,\beta\alpha}^{\rm Res}$ over a grid in $\alpha_s$, say
+$\alpha_s^{(\tau)}$ with $\tau = 0,\dots,m$, so that, after the
+initialization step, we have the set of integrals:
+\begin{equation}
+\Pi_{ij,\beta\alpha,\tau}^{\rm Res} = \int^{d}_{c}dy{P}_{ij}^{\rm
+  Res-FO}(y,\alpha_s^{(\tau)})w_{\alpha}\left(\frac{x_\beta}{y}\right)\quad
+\tau = 0,\dots,m\,,
+\end{equation}
+and for obtaining the value of $\Pi_{ij,\beta\alpha}^{\rm Res}$ for a
+generic value of $\alpha_s$ we use the linear interpolation. Supposing
+that $\alpha_s^{(\tau)}\leq\alpha_s<\alpha_s^{(\tau+1)}$, we have that:
+\begin{equation}
+\Pi_{ij,\beta\alpha}^{\rm Res}(\alpha_s) =
+\left(\frac{\alpha_s^{(\tau+1)}-\alpha_s}{\alpha_s^{(\tau+1)}-\alpha_s^{(\tau)}}\right)\Pi_{ij,\beta\alpha,\tau}^{\rm Res} +\left(\frac{\alpha_s-\alpha_s^{(\tau)}}{\alpha_s^{(\tau+1)}-\alpha_s^{(\tau)}}\right)\Pi_{ij,\beta\alpha,\tau+1}^{\rm Res}
+\end{equation}
+
+There is a further complication that we need to deal with that is the
+number of active flavours. In fact, any integral must be computed with
+the correct number $n_f$ of active flavours. Assuming to be working
+in the VFNS (the FFNS is instead trivial), what we need then is a grid in $\alpha_s$ that has a node
+for each crossing point, that is there must be one value of the index
+$\tau$ such that $\alpha_s^{(\tau)}=\alpha_s(m_h)$ where $m_h$ is the
+mass of any heavy flavour and such that for $\alpha_s<\alpha_s^{(\tau)}$
+there are, say, $n_f$ active flavours, while for
+$\alpha_s\geq\alpha_s^{(\tau)}$ there are $n_f+1$ active flavours. This in practice means that the grid in
+$\alpha_s$ has as many fixed points as potentially active
+flavours. Unfortunately this is not enough because, when considering
+the NNLO evolution in the VFNS, the evolution of $\alpha_s$, as well as
+that of PDFs, has a discontinuity in correspondence of the heavy quark
+thresholds(\footnote{A discontinuity appears also at NLO if
+  factorization and renormalization scales are not equal.}). To
+overcome this problem we may assign to the point of the grid
+corresponding to the heavy threshold $m_h$ two value, $i.e.$ the
+values $\alpha_s^{(\tau)}=\alpha_s(m_h-\varepsilon)$ and
+$\alpha_s^{(\tau+1)}=\alpha_s(m_h)$. This trick, in conjuction with
+the linear interpolation, does to job without any further assumption.
+
 
 
 \end{document}

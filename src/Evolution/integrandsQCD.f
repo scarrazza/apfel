@@ -317,7 +317,7 @@ c      integrandsQCDT = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
 *     Internal Variables
 *
       double precision z,w_int,fR
-      double precision Hellx,alphas
+      double precision xDeltaP,alphas!,Hellx
       external Hellx
 **
 *     Output Variables
@@ -333,7 +333,8 @@ c      integrandsQCDT = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
 *     Contructing integrands
 *
       alphas = 4d0 * pi * ag(wtau)
-      integrandsQCDRes = Hellx(k,alphas,y) * fR
+c      integrandsQCDRes = Hellx(k,alphas,y) * fR
+      integrandsQCDRes = xDeltaP(k,alphas,y) * fR
 *
       return
       end

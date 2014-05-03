@@ -9,6 +9,8 @@
       subroutine initHELL(LogAcc,ipt,asmc,asmb,asmt)
 *
       implicit none
+*
+      include "../commons/consts.h"
 **
 *     Input Variables
 *
@@ -17,9 +19,15 @@
 **
 *     Internal Variables
 *
+      double precision alphasmc,alphasmb,alphasmt
+*
+      alphasmc = 4d0 * pi * asmc
+      alphasmb = 4d0 * pi * asmb
+      alphasmt = 4d0 * pi * asmt
+*
       call HELLLogOrder(LogAcc)
       call HELLOrder(ipt)
-      call HELL(asmc,asmb,asmt)
+      call HELL(alphasmc,alphasmb,alphasmt)
 *
       return
       end
