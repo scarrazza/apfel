@@ -1,5 +1,5 @@
 AC_PREREQ(2.61)
-AC_INIT([APFEL],[2.0.2],[stefano.carrazza@mi.infn.it],[apfel])
+AC_INIT([APFEL],[3.0.0],[stefano.carrazza@mi.infn.it],[apfel])
 if test "$prefix" = "$PWD"; then
   AC_MSG_ERROR([Installation into the build directory is not supported:\
  use a different --prefix argument])
@@ -12,7 +12,7 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 
 ## Library version flags (at least update the version comment with each new release version)
-VERSIONFLAGS="-version-info 2.0.2" ## for 2.0.2
+VERSIONFLAGS="-version-info 3.0.0" ## for 3.0.0
 AC_SUBST(VERSIONFLAGS)
 AC_DEFINE_UNQUOTED(APFEL_VERSION, "$PACKAGE_VERSION", "APFEL version string")
 
@@ -148,8 +148,9 @@ fi
 
 ## Set final FCFLAGS, CXXFLAGS and CPPFLAGS
 AM_CPPFLAGS="$AM_CPPFLAGS -I\$(top_srcdir)/include -I\$(top_builddir)/include"
-AM_CPPFLAGS=["$AM_CPPFLAGS -DDEFAULTPREFIXPATH=\\\"$prefix\\\" -DDEFAULTLHAPATH=\\\"$datadir\\\" "]
+AM_CPPFLAGS=["$AM_CPPFLAGS -DDATA_PATH="$datadir" -DAPFEL_VERSION="$PACKAGE_VERSION" "]
 AC_SUBST(AM_CPPFLAGS)
+
 #
 #AC_CEDAR_CHECKCXXFLAG([-pedantic], [AM_CXXFLAGS="$AM_CXXFLAGS -pedantic "])
 #AC_CEDAR_CHECKCXXFLAG([-ansi], [AM_CXXFLAGS="$AM_CXXFLAGS -ansi "])

@@ -10,12 +10,22 @@
 #include <string>
 using namespace std;
 
+#define STR_EXPAND(top) #top
+#define STR(tok) STR_EXPAND(tok)
 
 // Global allocation
 HELL::LogOrder order;
 HELL::HELL *sxD = NULL;
 HELL::Order fixed_order_to_be_matched_to;
 sqmatrix<double> xdPNLL;
+
+string dataPath()
+{
+  string dataDir(STR(DATA_PATH));
+  stringstream s;
+  s << dataDir << "/apfel";
+  return s.str();
+}
 
 extern "C" {
 
@@ -30,7 +40,7 @@ extern "C" {
   void hell_(double *asmc, double *asmb, double *asmt)
   {
     if (sxD) delete sxD;
-    sxD = new HELL::HELL(order, "./data/");
+    sxD = new HELL::HELL(order, dataPath());
     sxD->init_as_thresholds(*asmc,*asmb,*asmt);
   }
 
