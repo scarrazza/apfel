@@ -120,19 +120,16 @@ am__objects_10 = DIS/cc_dis.lo DIS/FF0CoefficientFunctions.lo \
 	DIS/xpdfs.lo DIS/dis_xsec.lo DIS/FFCoefficientFunctions.lo \
 	DIS/integrands_nc.lo DIS/PDFparam.lo DIS/xcoeffunc_nc.lo \
 	DIS/ZMCoefficientFunctions.lo
+am__objects_11 = HELL/src/hell.lo HELL/src/DGLAPevol.lo \
+	HELL/src/hell_wrapper.lo
 am_libAPFELCore_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
 	$(am__objects_6) $(am__objects_7) $(am__objects_8) \
-	$(am__objects_9) $(am__objects_10)
+	$(am__objects_9) $(am__objects_10) $(am__objects_11)
 libAPFELCore_la_OBJECTS = $(am_libAPFELCore_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
-libHELL_la_LIBADD =
-am__objects_11 = HELL/src/hell.lo HELL/src/DGLAPevol.lo \
-	HELL/src/hell_wrapper.lo
-am_libHELL_la_OBJECTS = $(am__objects_11)
-libHELL_la_OBJECTS = $(am_libHELL_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/config -I$(top_builddir)/include/APFEL
 depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__depfiles_maybe = depfiles
@@ -172,8 +169,8 @@ am__v_F77LD_0 = @echo "  F77LD " $@;
 AM_V_GEN = $(am__v_GEN_@AM_V@)
 am__v_GEN_ = $(am__v_GEN_@AM_DEFAULT_V@)
 am__v_GEN_0 = @echo "  GEN   " $@;
-SOURCES = $(libAPFELCore_la_SOURCES) $(libHELL_la_SOURCES)
-DIST_SOURCES = $(libAPFELCore_la_SOURCES) $(libHELL_la_SOURCES)
+SOURCES = $(libAPFELCore_la_SOURCES)
+DIST_SOURCES = $(libAPFELCore_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -313,7 +310,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-noinst_LTLIBRARIES = libAPFELCore.la libHELL.la
+noinst_LTLIBRARIES = libAPFELCore.la
 INIT = Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
 	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
@@ -354,9 +351,8 @@ PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQE
 UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f
 DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
 EXTRA_DIST = commons
-libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS)
 HELL = HELL/src/hell.cc HELL/src/DGLAPevol.cc HELL/src/hell_wrapper.cc
-libHELL_la_SOURCES = $(HELL)
+libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS) $(HELL)
 all: all-am
 
 .SUFFIXES:
@@ -654,8 +650,6 @@ DIS/PDFparam.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/xcoeffunc_nc.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/ZMCoefficientFunctions.lo: DIS/$(am__dirstamp) \
 	DIS/$(DEPDIR)/$(am__dirstamp)
-libAPFELCore.la: $(libAPFELCore_la_OBJECTS) $(libAPFELCore_la_DEPENDENCIES) $(EXTRA_libAPFELCore_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(CXXLINK)  $(libAPFELCore_la_OBJECTS) $(libAPFELCore_la_LIBADD) $(LIBS)
 HELL/src/$(am__dirstamp):
 	@$(MKDIR_P) HELL/src
 	@: > HELL/src/$(am__dirstamp)
@@ -668,8 +662,8 @@ HELL/src/DGLAPevol.lo: HELL/src/$(am__dirstamp) \
 	HELL/src/$(DEPDIR)/$(am__dirstamp)
 HELL/src/hell_wrapper.lo: HELL/src/$(am__dirstamp) \
 	HELL/src/$(DEPDIR)/$(am__dirstamp)
-libHELL.la: $(libHELL_la_OBJECTS) $(libHELL_la_DEPENDENCIES) $(EXTRA_libHELL_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(CXXLINK)  $(libHELL_la_OBJECTS) $(libHELL_la_LIBADD) $(LIBS)
+libAPFELCore.la: $(libAPFELCore_la_OBJECTS) $(libAPFELCore_la_DEPENDENCIES) $(EXTRA_libAPFELCore_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(CXXLINK)  $(libAPFELCore_la_OBJECTS) $(libAPFELCore_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

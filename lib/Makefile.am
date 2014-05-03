@@ -1,4 +1,4 @@
-lib_LTLIBRARIES = libAPFEL.la libHELL.la
+lib_LTLIBRARIES = libAPFEL.la
 
 libAPFEL_la_SOURCES = 
 
@@ -10,7 +10,3 @@ libAPFEL_la_LIBADD = $(FCLIBS) $(top_builddir)/src/libAPFELCore.la \
 ## Hack to get linking done by CXX
 libAPFEL_la_LINK = $(LIBTOOL) --tag=CXX --mode=link $(CXX) $(AM_CXXFLAGS) \
 	$(AM_LDFLAGS) $(LDFLAGS) -o $@
-
-libHELL_la_SOURCES =
-
-libHELL_la_LIBADD = $(FCLIBS) $(top_builddir)/src/libHELL.la
