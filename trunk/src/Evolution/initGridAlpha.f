@@ -24,7 +24,7 @@
 *
       integer tau,inf,ig
       integer nfi,nff
-      integer nsubgrids,nas(4),ncount
+      integer nsubgrids,nas(4),ncount,nmax
       double precision a_QCD,amax,amin,step
       double precision lbound(4),ubound(4)
       double precision asmh(4:6)
@@ -46,10 +46,12 @@
 *
       if(Evs.eq."FF")then
 *     Linear distribution
-         ag(0) = amin
-         step = ( amax - amin ) / dble(na)
+         nfg(0) = Nf_FF
+         ag(0)  = amin
+         step   = ( amax - amin ) / dble(na)
          do tau=1,na
-            ag(tau) = ag(tau-1) + step
+            nfg(tau) = Nf_FF
+            ag(tau)  = ag(tau-1) + step
          enddo
 *     Value of the strong coupling at the heavy quark threshold
          if(Nf_FF.eq.3)then
@@ -97,10 +99,12 @@
          if(nfi.gt.nfMaxAlpha) nfi = nfMaxAlpha
 *     If the final and the initial number of flavours are equal...
          if(nfi.eq.nff)then
-            ag(0) = amin
-            step = ( amax - amin ) / dble(na)
+            nfg(0) = nfi
+            ag(0)  = amin
+            step   = ( amax - amin ) / dble(na)
             do tau=1,na
-               ag(tau) = ag(tau-1) + step
+               nfg(tau) = nfi
+               ag(tau)  = ag(tau-1) + step
             enddo
 *     Value of the strong coupling at the heavy quark threshold
             if(nfi.eq.3)then
@@ -172,36 +176,34 @@
 *     Evaluate the number of nodes of the subgrids according
 *     to the coverage of alphas.
             ncount = 0
-            do ig=1,nsubgrids
-               nas(ig) = max(floor( ( na + 1 )
-     1                 * ( ubound(ig) - lbound(ig) )
-     2                 / ( amax - amin )) - 1,1)
+            nmax   = 0
+            do ig=1,nsubgrids-1
+               nas(ig) = max(int( na * ( ubound(ig) - lbound(ig) )
+     1                 / ( amax - amin ) ),2) - 1
                ncount = ncount + nas(ig) + 1
+               nmax   = max(nmax,nas(ig))
             enddo
-*     Check that the sum of the number of nodes of the subgrids is
-*     equal to "na+1", if not adjust.
-            if(ncount.ne.(na+1))then
-               if(ncount-na-1.eq.1)then
-                  nas(1) = nas(1) - 1
-               elseif(ncount-na-1.eq.-1)then
-                  nas(nsubgrids) = nas(nsubgrids) + 1
-               else
-                  write(6,*) "In initGridAlpha.f:"
-                  write(6,*) "The number of nodes of the subgrids does",
-     1                       " not match:",ncount,na+1
-                  call exit(-10)
-               endif
+            nas(nsubgrids) = na - ncount
+*     Adjust grid if needed
+            if(nas(nsubgrids).le.0)then
+               nas(nsubgrids) = 1
+               do ig=1,nsubgrids-1
+                  if(nas(ig).eq.nmax) nas(ig) = nas(ig) 
+     1                                        + nas(nsubgrids) - 1
+               enddo
             endif
-*     Compute the subgrids 
+*     Compute the subgrid nodes
             ncount = 0
             do ig=1,nsubgrids
-               ag(ncount) = lbound(ig)
-c               write(45,*) ncount,ag(ncount)
+               ag(ncount)  = lbound(ig)
+               nfg(ncount) = nfi + ig - 1
+c               write(45,*) ig,ncount,ag(ncount),nfg(ncount)
                step = ( ubound(ig) - lbound(ig) ) / dble(nas(ig))
                do tau=1,nas(ig)
                   ncount = ncount + 1
                   ag(ncount)  = ag(ncount-1) + step
-c                  write(45,*) ncount,ag(ncount)
+                  nfg(ncount) = nfi + ig - 1
+c                  write(45,*) ig,ncount,ag(ncount),nfg(ncount)
                enddo
                ncount = ncount + 1
             enddo

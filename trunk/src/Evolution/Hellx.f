@@ -23,11 +23,12 @@
 *     Internal Variables
 *
       double precision Hellx
+      double precision xDeltaP
 **
 *     Input Variables
 *
-      call xDeltaP(alphas,y)
-      Hellx = 0d0
+      Hellx = xDeltaP(k,alphas,y)
+c      write(45,*) k,alphas,y,Hellx
 *
       return
       end

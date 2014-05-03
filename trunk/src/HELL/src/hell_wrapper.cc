@@ -56,13 +56,21 @@ extern "C" {
       fixed_order_to_be_matched_to = HELL::NNLO;	
   }
 
-  void xdeltap_(double *as, double *x)
+  double xdeltap_(int *k, double *as, double *x)
   {
     xdPNLL = sxD->xDeltaP(*as, *x, fixed_order_to_be_matched_to);
+    double xdp = 0;
+    if(*k == 4)      xdp = xdPNLL.qq();
+    else if(*k == 5) xdp = xdPNLL.qg();
+    else if(*k == 6) xdp = xdPNLL.gq();
+    else if(*k == 7) xdp = xdPNLL.gg();
+    return xdp;
+    /*
     cout << endl << "Printing x*DeltaP_ij(x=" << *x << ", as=" << *as << ")"  << endl;
     cout << "gg: " << xdPNLL.gg() << endl
 	 << "gq: " << xdPNLL.gq() << endl
 	 << "qg: " << xdPNLL.qg() << endl
 	 << "qq: " << xdPNLL.qq() << endl;
+    */
   }
 }

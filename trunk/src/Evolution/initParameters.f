@@ -37,7 +37,7 @@
 *     Initialize default parameters (those that were not initialized before)
 *
       if(InWelcome.ne."done")   call EnableWelcomeMessage(.true.)
-      if(InScales.ne."done")    call SetQLimits(1d0,400d0)
+      if(InScales.ne."done")    call SetQLimits(0.5d0,1000d0)
       if(InPt.ne."done")        call SetPerturbativeOrder(2)
       if(InEvs.ne."done")       call SetVFNS
       if(InTheory.ne."done")    call SetTheory("QCD")
