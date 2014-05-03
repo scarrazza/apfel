@@ -8,8 +8,10 @@
 #include <iostream>
 using namespace std;
 
+#define STR_EXPAND(top) #top
+#define STR(tok) STR_EXPAND(tok)
+
 #define SIZE 999
-#define VERSION "2.0.2"
 
 namespace APFEL {
 
@@ -99,7 +101,7 @@ namespace APFEL {
 
   std::string GetVersion(void) 
   { 
-    return VERSION; 
+    return STR(APFEL_VERSION); 
   }
 
   void CleanUp(void)
