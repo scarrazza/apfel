@@ -18,6 +18,7 @@
       include "../commons/Nf_FF.h"
       include "../commons/MaxFlavourAlpha.h"
       include "../commons/Smallx.h"
+      include "../commons/ipt.h"
 *
 *     Variables
 *
@@ -209,7 +210,7 @@ c                  write(45,*) ncount,ag(ncount)
 *
 *     Initialize HELL
 *
-      call initHELL(LogAcc,asmh(4),asmh(5),asmh(6))
+      call initHELL(LogAcc,ipt,asmh(4),asmh(5),asmh(6))
 *
       return
       end
