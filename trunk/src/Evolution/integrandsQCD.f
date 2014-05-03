@@ -305,8 +305,8 @@ c      integrandsQCDT = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
 *
       implicit none
 *
+      include "../commons/consts.h"
       include "../commons/grid.h"
-      include "../commons/ipt.h"
       include "../commons/gridAlpha.h"
       include "../commons/wrapRes.h"
 **
@@ -317,7 +317,7 @@ c      integrandsQCDT = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
 *     Internal Variables
 *
       double precision z,w_int,fR
-      double precision Hellx
+      double precision Hellx,alphas
       external Hellx
 **
 *     Output Variables
@@ -332,7 +332,8 @@ c      integrandsQCDT = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
 *
 *     Contructing integrands
 *
-      integrandsQCDRes = Hellx(k,ipt,ag(wtau),y) * fR
+      alphas = 4d0 * pi * ag(wtau)
+      integrandsQCDRes = Hellx(k,alphas,y) * fR
 *
       return
       end
