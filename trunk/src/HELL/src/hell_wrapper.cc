@@ -3,6 +3,7 @@
  * stefano.carrazza@mi.infn.it
  */
 
+#include "HELL/include/hell.hh"
 #include "HELL/include/hell_wrapper.hh"
 
 #include <iostream>
@@ -18,7 +19,7 @@ sqmatrix<double> xdPNLL;
 
 extern "C" {
 
-  void HELLLogOrder_(int *ord)
+  void helllogorder_(int *ord)
   {    
     if (*ord == 0)
       order = HELL::LL;
@@ -26,14 +27,14 @@ extern "C" {
       order = HELL::NLL;
   }
 
-  void HELL_(double *asmc, double *asmb, double *asmt)
+  void hell_(double *asmc, double *asmb, double *asmt)
   {
     if (sxD) delete sxD;
     sxD = new HELL::HELL(order, "./data/");
     sxD->init_as_thresholds(*asmc,*asmb,*asmt);
   }
 
-  void HELLOrder_(int *ord)
+  void hellorder_(int *ord)
   {
     if (*ord == -1)
       fixed_order_to_be_matched_to = HELL::none;
@@ -45,7 +46,7 @@ extern "C" {
       fixed_order_to_be_matched_to = HELL::NNLO;	
   }
 
-  void xDeltaP_(double *as, double *x)
+  void xdeltap_(double *as, double *x)
   {
     xdPNLL = sxD->xDeltaP(*as, *x, fixed_order_to_be_matched_to);
     cout << endl << "Printing x*DeltaP_ij(x=" << *x << ", as=" << *as << ")"  << endl;

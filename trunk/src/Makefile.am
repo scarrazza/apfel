@@ -1,4 +1,4 @@
-noinst_LTLIBRARIES = libAPFELCore.la libHELL.la
+noinst_LTLIBRARIES = libAPFELCore.la
 
 INIT = 	Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
 	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
@@ -46,8 +46,6 @@ DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.
 
 EXTRA_DIST = commons
 
-libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS)
-
 HELL = HELL/src/hell.cc HELL/src/DGLAPevol.cc HELL/src/hell_wrapper.cc
 
-libHELL_la_SOURCES = $(HELL)
+libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS) $(HELL)
