@@ -452,7 +452,7 @@ namespace HELL {
   }
   int HELL::nf_of_as(double as) {
     int res = 0;
-    if(as<as_t) res=6;
+    if(as<=as_t) res=6;
     else if(as>as_t && as<=as_b) res=5;
     else if(as>as_b && as<=as_c) res=4;
     else res=3;
