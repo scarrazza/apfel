@@ -29,7 +29,7 @@
       double precision lbound(4),ubound(4)
       double precision asmh(4:6)
       double precision eps
-      parameter(eps=1d-10)
+      parameter(eps=1d-12)
 *
 *     Initialize grid
 *
@@ -197,13 +197,13 @@
             do ig=1,nsubgrids
                ag(ncount)  = lbound(ig)
                nfg(ncount) = nfi + ig - 1
-c               write(45,*) ig,ncount,ag(ncount),nfg(ncount)
+               write(45,*) ig,ncount,ag(ncount),nfg(ncount)
                step = ( ubound(ig) - lbound(ig) ) / dble(nas(ig))
                do tau=1,nas(ig)
                   ncount = ncount + 1
                   ag(ncount)  = ag(ncount-1) + step
                   nfg(ncount) = nfi + ig - 1
-c                  write(45,*) ig,ncount,ag(ncount),nfg(ncount)
+                  write(45,*) ig,ncount,ag(ncount),nfg(ncount)
                enddo
                ncount = ncount + 1
             enddo
