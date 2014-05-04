@@ -32,6 +32,7 @@
       include "../commons/AlphaEvolution.h"
       include "../commons/PDFEvolution.h"
       include "../commons/TimeLike.h"
+      include "../commons/Smallx.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -53,6 +54,7 @@
       InLock      = "xxxx"
       InGrid      = "xxxx"
       InTimeLike  = "xxxx"
+      InSmallx    = "xxxx"
       InAlphaEvol = "xxxx"
       InLambdaQCD = "xxxx"
       InPDFEvol   = "xxxx"
