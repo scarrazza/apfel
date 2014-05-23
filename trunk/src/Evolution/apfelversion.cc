@@ -1,9 +1,12 @@
 #include "APFEL/FortranWrappers.h"
+#include "LHAPDF/LHAPDF.h"
 #include <string>
 #include <cstring>
 #include <cassert>
 
 #include <iostream>
+#include <cstdlib>
+#include <sys/stat.h>
 
 using namespace std;
 
@@ -19,6 +22,20 @@ extern "C" {
     for (size_t i = strlen(fversion); i < (unsigned) version.length()+1; ++i) {
       fversion[i] = ' ';
     }
+  }
+
+  bool islhapdf6_()
+  {
+#if defined LHAPDF_MAJOR_VERSION && LHAPDF_MAJOR_VERSION == 6
+    return true;
+#else
+    return false;
+#endif
+  }
+
+  void mkdir_(char* name, int length)
+  {
+    mkdir(name, 0777);
   }
 
 }

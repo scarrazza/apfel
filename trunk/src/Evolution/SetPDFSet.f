@@ -16,6 +16,7 @@
 *
       integer ln
       character*100 name
+      logical islhapdf6
 *
 c      ln = index(name,char(0)) - 1
 *
@@ -102,6 +103,7 @@ c      ln = index(name,char(0)) - 1
             write(6,*) "  "
             call exit(-10)
          endif
+         if (islhapdf6().eqv..true.) ln = ln - 7         
       endif
       pdfset = name(1:ln)
       InPDFs = "done"
