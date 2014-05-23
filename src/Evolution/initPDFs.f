@@ -237,7 +237,7 @@
 *
       else
          if(igrid.eq.1)then
-            call InitPDFsetbyName(pdfset)
+            call InitPDFsetbyname(pdfset)
             call numberPDF(Nrep)
             if(irep.lt.0.or.irep.gt.Nrep)then
                write(6,*) "Replica requested out of range:"
