@@ -27,7 +27,7 @@
       integer Nrep
       double precision f0(-6:6),fp0
       logical has_photon
-
+*     Fragmentation functions variables
       integer iset,icharge
       integer ih,ic,io
       double precision ff(-5:5),grad(-5:5,17)
@@ -73,7 +73,6 @@
 *     HKNS07 fragmentation functions
 *
       elseif(pdfset(1:8).eq."hknsff07")then
-
 *     pi^+ LO
          if(pdfset(10:15).eq."pip_lo")then
             iset    = 1
