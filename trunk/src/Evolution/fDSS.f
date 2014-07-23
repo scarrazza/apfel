@@ -92,7 +92,7 @@ C       OPEN(IIREAD,FILE='PILO.GRID')
        DO 25 M = 1, NX-1 
        DO 25 N = 1, NQ
        DO 25 I = 1, 9 
-         PARTON(I,N,M) = PARTON_PILO(I,N,M)
+          PARTON(I,N,M) = PARTON_PILO(I,N,M)
  25    CONTINUE
       ELSEIF ((IH.EQ.2).and.(IO.EQ.1)) THEN
 C       IIREAD=11       
@@ -156,7 +156,6 @@ C     2                 PARTON(7,N,M), PARTON(8,N,M), PARTON(9,N,M)
 C  90   FORMAT (9(1PE10.3))
 C  15   CONTINUE
 C       CLOSE(IIREAD)
-
 c$$$      OPEN(UNIT=12,FILE="dss_hlo.inc",STATUS="UNKNOWN")
 c$$$      WRITE(12,*) "     DIMENSION PARTON_HLO(NPART,NQ,NX-1)"
 c$$$      WRITE(12,*) "      "

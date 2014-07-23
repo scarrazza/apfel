@@ -15,6 +15,7 @@
       implicit none
 *
       include "../commons/grid.h"
+      include "../commons/odeint1.h"
 **
 *     Input Variables
 *
@@ -25,18 +26,10 @@
 *
       integer i,j,nstp
       integer alpha,beta
-      integer maxstp
       double precision x1,x2
-      double precision h1,eps
       double precision h,hdid,hnext,x
       double precision dydx(4,4,0:nint_max,0:nint_max)
       double precision yscal(4,4,0:nint_max,0:nint_max)
-      double precision tiny
-
-      parameter(maxstp=1000)
-      parameter(tiny=1d1)
-      parameter(h1=dlog(5d-1))
-      parameter(eps=1d-5)
 **
 *     Output Variables
 *
@@ -95,12 +88,12 @@
       implicit none
 *
       include "../commons/grid.h"
+      include "../commons/odeint2.h"
 **
 *     Variables
 *
       integer i,j
       integer alpha,beta
-      double precision safety,pgrow,pshrnk,errcon
       double precision eps,hdid,hnext,htry,x
       double precision dydx(4,4,0:nint_max,0:nint_max)
       double precision y(4,4,0:nint_max,0:nint_max)
@@ -108,8 +101,6 @@
       double precision errmax,h,htemp,xnew
       double precision yerr(4,4,0:nint_max,0:nint_max)
       double precision ytemp(4,4,0:nint_max,0:nint_max)
-
-      parameter(safety=0.9d0,pgrow=-0.2d0,pshrnk=-0.25d0,errcon=1.89d-4)
 *
       h = htry
 *
@@ -167,6 +158,7 @@
       implicit none
 *
       include "../commons/grid.h"
+      include "../commons/odeint2.h"
 **
 *     Variables
 *
@@ -183,17 +175,6 @@
       double precision ak4(4,4,0:nint_max,0:nint_max)
       double precision ak5(4,4,0:nint_max,0:nint_max)
       double precision ak6(4,4,0:nint_max,0:nint_max)
-*
-      double precision A2,A3,A4,A5,A6,B21,B31,B32,B41,B42,B43,
-     1B51,B52,B53,B54,B61,B62,B63,B64,B65,C1,C3,C4,C6,DC1,DC3,DC4,DC5,
-     2DC6
-      parameter(A2=.2,A3=.3,A4=.6,A5=1.,A6=.875,B21=.2,B31=3./40.,
-     1B32=9./40.,B41=.3,B42=-.9,B43=1.2,B51=-11./54.,B52=2.5,
-     2B53=-70./27.,B54=35./27.,B61=1631./55296.,B62=175./512.,
-     3B63=575./13824.,B64=44275./110592.,B65=253./4096.,C1=37./378.,
-     4C3=250./621.,C4=125./594.,C6=512./1771.,DC1=C1-2825./27648.,
-     5DC3=C3-18575./48384.,DC4=C4-13525./55296.,DC5=-277./14336.,
-     6DC6=C6-.25)
 *
       do i=1,4
          do j=1,4
@@ -406,6 +387,7 @@
       implicit none
 *
       include "../commons/grid.h"
+      include "../commons/odeint1.h"
 **
 *     Input Variables
 *
@@ -416,18 +398,10 @@
 *
       integer i,j,nstp
       integer alpha,beta
-      integer maxstp
       double precision x1,x2
-      double precision h1,eps
       double precision h,hdid,hnext,x
       double precision dydx(2,2,0:nint_max,0:nint_max)
       double precision yscal(2,2,0:nint_max,0:nint_max)
-      double precision tiny
-
-      parameter(maxstp=1000)
-      parameter(tiny=1d1)
-      parameter(h1=dlog(5d-1))
-      parameter(eps=1d-5)
 **
 *     Output Variables
 *
@@ -486,12 +460,12 @@
       implicit none
 *
       include "../commons/grid.h"
+      include "../commons/odeint2.h"
 **
 *     Variables
 *
       integer i,j
       integer alpha,beta
-      double precision safety,pgrow,pshrnk,errcon
       double precision eps,hdid,hnext,htry,x
       double precision dydx(2,2,0:nint_max,0:nint_max)
       double precision y(2,2,0:nint_max,0:nint_max)
@@ -499,8 +473,6 @@
       double precision errmax,h,htemp,xnew
       double precision yerr(2,2,0:nint_max,0:nint_max)
       double precision ytemp(2,2,0:nint_max,0:nint_max)
-
-      parameter(safety=0.9d0,pgrow=-0.2d0,pshrnk=-0.25d0,errcon=1.89d-4)
 *
       h = htry
 *
@@ -558,6 +530,7 @@
       implicit none
 *
       include "../commons/grid.h"
+      include "../commons/odeint2.h"
 **
 *     Variables
 *
@@ -574,17 +547,6 @@
       double precision ak4(2,2,0:nint_max,0:nint_max)
       double precision ak5(2,2,0:nint_max,0:nint_max)
       double precision ak6(2,2,0:nint_max,0:nint_max)
-*
-      double precision A2,A3,A4,A5,A6,B21,B31,B32,B41,B42,B43,
-     1B51,B52,B53,B54,B61,B62,B63,B64,B65,C1,C3,C4,C6,DC1,DC3,DC4,DC5,
-     2DC6
-      parameter(A2=.2,A3=.3,A4=.6,A5=1.,A6=.875,B21=.2,B31=3./40.,
-     1B32=9./40.,B41=.3,B42=-.9,B43=1.2,B51=-11./54.,B52=2.5,
-     2B53=-70./27.,B54=35./27.,B61=1631./55296.,B62=175./512.,
-     3B63=575./13824.,B64=44275./110592.,B65=253./4096.,C1=37./378.,
-     4C3=250./621.,C4=125./594.,C6=512./1771.,DC1=C1-2825./27648.,
-     5DC3=C3-18575./48384.,DC4=C4-13525./55296.,DC5=-277./14336.,
-     6DC6=C6-.25)
 *
       do i=1,2
          do j=1,2

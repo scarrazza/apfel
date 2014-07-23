@@ -480,7 +480,6 @@ c      kappa = 1d0          ! mu_R / mu_F
             LambdaQCD(i) = zriddr(LambdaMatchDown,i,LambdaQCD(i+1),
      1                            LambdaQCD(i+1)/window,acc)
          enddo
-
       endif
 *
       return

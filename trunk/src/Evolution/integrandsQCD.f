@@ -335,6 +335,8 @@ c      integrandsQCDT = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
       alphas = 4d0 * pi * ag(wtau)
 c      integrandsQCDRes = Hellx(k,alphas,y) * fR
       integrandsQCDRes = xDeltaP(k,alphas,y) * fR
+*     Include a the damping factor (1-y)
+c      integrandsQCDRes = ( 1d0 - y ) * xDeltaP(k,alphas,y) * fR
 *
       return
       end
