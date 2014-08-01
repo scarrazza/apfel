@@ -2,8 +2,13 @@
 *
 *     MatchingConditions.f:
 *
-*     This is a collection of funtions that are used to match PDFs at
-*     the heavy quark theresholds.
+*     This is a collection of funtions that are used to match PDFs or FF
+*     at the heavy quark theresholds with the assumption MH = mu 
+*     (no log terms).
+*
+************************************************************************
+*
+*     Space-like matching conditions (PDFs)
 *
 *     Reference: Appendix B of hep-ph/9612398 
 *
@@ -469,6 +474,40 @@ c      S11mz  = wgplg(1,1,-z)
 *
          AS2ggH_L = AS2ggH_L - 2d0 * h1 * AS1ggH_L()
       endif
+*
+      return
+      end
+*
+************************************************************************
+*
+*     Time-like matching conditions (FFs)
+*
+*     Reference: hep-ph/0504192
+*
+************************************************************************
+*     Eq. (15)
+************************************************************************
+      function AS1HgT(z)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Internal Variables
+*
+      double precision CF
+      double precision B0
+      parameter(CF=4d0/3d0)
+**
+*     Output Variables
+*
+      double precision AS1HgT
+*
+      B0 = ( 1d0 + ( 1d0 - z )**2d0 ) * ( - 1d0 - 2d0 * dlog(z) ) / z
+*
+      AS1HgT = 2d0 * CF * B0
 *
       return
       end

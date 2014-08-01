@@ -97,3 +97,73 @@
 *
       return
       end
+*
+************************************************************************
+*
+*     Integrals for the time-like evolution.
+*
+************************************************************************
+      subroutine RSLintegralsMatchingT(beta,alpha)
+*
+      implicit none
+*
+      include "../commons/ipt.h"
+      include "../commons/wrap.h"
+      include "../commons/grid.h"
+      include "../commons/integrals.h"
+**
+*     Input Variables
+*
+      integer beta,alpha
+**
+*     Internal Variables
+*
+      integer bound
+      double precision ML(5,0:2)
+      double precision ANS2qqH_L,AS2ggH_L
+      double precision dgauss,a,b,eps
+      double precision integrandsMatchingT
+      external integrandsMatchingT
+      parameter(eps=1d-4)
+*
+*     Initialize Integrals
+*
+      do k=1,5
+         do wipt=0,ipt
+            SM(igrid,k,wipt,beta,alpha) = 0d0
+         enddo
+      enddo
+      if(alpha.eq.beta)then
+         SM(igrid,1,0,beta,alpha) = 1d0
+         SM(igrid,2,0,beta,alpha) = 1d0
+         SM(igrid,5,0,beta,alpha) = 1d0
+      endif
+      if(ipt.lt.1) return
+*
+*     Adjustment od the bounds of the integrals
+*
+      if(alpha.lt.beta)then
+         return
+      else
+         bound = alpha-inter_degree(igrid)
+         if(alpha.lt.inter_degree(igrid)) bound = 0
+         a = max(xg(igrid,beta),xg(igrid,beta)/xg(igrid,alpha+1))
+         b = min(1d0,xg(igrid,beta)/xg(igrid,bound))
+      endif
+*
+*     Variables needed for wrapping the integrand functions
+*
+      walpha = alpha
+      wbeta  = beta
+      wipt   = 1
+*
+*     Integrals
+*
+c      do k=1,5
+      do k=3,3
+         SM(igrid,k,wipt,beta,alpha) =
+     1        dgauss(integrandsMatchingT,a,b,eps) 
+      enddo
+*
+      return
+      end
