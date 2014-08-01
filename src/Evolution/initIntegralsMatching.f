@@ -11,14 +11,21 @@
       implicit none
 *
       include "../commons/grid.h"
+      include "../commons/TimeLike.h"
 **
 *     Internal Variables
 *
       integer alpha
 *
-      do alpha=0,nin(igrid)-1
-         call RSLintegralsMatching(0,alpha)
-      enddo
+      if(TimeLike)then
+         do alpha=0,nin(igrid)-1
+            call RSLintegralsMatchingT(0,alpha)
+         enddo
+      else
+         do alpha=0,nin(igrid)-1
+            call RSLintegralsMatching(0,alpha)
+         enddo
+      endif
 *
       return
       end

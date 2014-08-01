@@ -17,10 +17,12 @@
       include "../commons/ipt.h"
       include "../commons/grid.h"
       include "../commons/integrals.h"
+      include "../commons/TimeLike.h"
 **
 *     Input Variables
 *
       integer alpha,beta,kk
+      integer ptstep
       double precision coup
 **
 *     Internal Variables
@@ -39,7 +41,12 @@
 *
 *     Integrals
 *
-      do pt=0,ipt,2
+*     For the space-like evolution one can skip the order alphas because it is
+*     always equal to zero but this can't be done for the time-like evolution 
+*
+      ptstep = 2
+      if(TimeLike) ptstep = 1
+      do pt=0,ipt,ptstep
          integralsMatching = integralsMatching 
      1                     + coup**pt * SM(igrid,kk,pt,alpha,beta)
       enddo

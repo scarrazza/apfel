@@ -96,7 +96,7 @@
       call cpu_time(t2)
 *
       if(Welcome)then
-         write(6,*) "Initialization done in",t2-t1," s"
+         write(6,*) "Initialization completed in",t2-t1," s"
          write(6,*) " "
       endif
 *
