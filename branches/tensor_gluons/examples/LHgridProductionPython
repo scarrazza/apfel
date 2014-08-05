@@ -1,0 +1,8 @@
+#!/usr/bin/python
+
+import apfel
+
+apfel.SetPoleMasses(2**0.5,1e5,1e5)
+Qin = 2.0**0.5
+
+apfel.LHAPDFgrid(0,Qin,"ApfelPDFs")
