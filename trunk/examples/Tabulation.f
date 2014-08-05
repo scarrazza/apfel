@@ -37,6 +37,13 @@ c      call SetNumberOfGrids(1)
 c      call SetGridParameters(1,30,3,1d-5)
 c      call SetGridParameters(2,30,3,2d-1)
 c      call SetGridParameters(3,30,3,8d-1)
+c      call SetPDFSet("NNPDF30_nnlo_as_0118.LHgrid")
+c      call SetAlphaQCDRef(0.118d0,91.2d0)
+c      call SetAlphaEvolution("expanded")
+c      call SetPDFEvolution("expandalpha")
+c      call SetPoleMasses(1.275d0,4.18d0,173.03d0)
+c      call SetMaxFlavourPDFs(5)
+c      call SetMaxFlavourAlpha(5)
 *
 *     Initializes integrals on the grids
 *
