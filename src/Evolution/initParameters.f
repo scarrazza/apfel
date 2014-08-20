@@ -76,7 +76,7 @@ c         call SetGridParameters(3,20,5,8d-1)
 *
       if(Th.ne."QCEDP".and.Th.ne."QCEDS".and.
      1   Th.ne."QECDP".and.Th.ne."QECDS".and.
-     2   Th.ne."QavDP".and.Th.ne."QavDS".and.)then
+     2   Th.ne."QavDP".and.Th.ne."QavDS")then
          call SetFastEvolution(.false.)
       endif
 *
