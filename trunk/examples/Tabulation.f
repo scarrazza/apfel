@@ -23,12 +23,12 @@
 *
 *     Some examples ...
 *
+c      call SetFastEvolution(.true.)
 c      call LockGrids(.true.)
 c      call EnableEvolutionOperator(.true.)
-c      call SetFFNS(3)
-c      call SetTheory("QED")
+c      call SetFFNS(4)
 c      call SetTheory("QavDS")
-c      call SetTheory("QUniD")
+      call SetTheory("QUniD")
 c      call SetPerturbativeOrder(0)
 c      call SetPDFEvolution("exactalpha")
 c      call SetPDFSet("NNPDF23_nlo_as_0119_qed.LHgrid")

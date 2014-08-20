@@ -94,8 +94,8 @@
 *     Singlet 2
          call odeintsgUnifiedfS2(muF20,muF2,Sg20,Sg2)
 *     Non-Singlet
-         call odeintnsUnifiedf(2,muF20,muF2,Td1,Td10)
-         call odeintnsUnifiedf(4,muF20,muF2,Vd1,Vd10)
+         call odeintnsUnifiedf(2,muF20,muF2,Td10,Td1)
+         call odeintnsUnifiedf(4,muF20,muF2,Vd10,Vd1)
          if(Nf_FF.eq.3)then
             do alpha=0,nin(igrid)
                Tu1(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
@@ -107,8 +107,8 @@
             enddo
          endif
          if(Nf_FF.eq.4)then
-            call odeintnsUnifiedf(1,muF20,muF2,Tu1,Tu10)
-            call odeintnsUnifiedf(3,muF20,muF2,Vu1,Vu10)
+            call odeintnsUnifiedf(1,muF20,muF2,Tu10,Tu1)
+            call odeintnsUnifiedf(3,muF20,muF2,Vu10,Vu1)
             do alpha=0,nin(igrid)
                Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
                Td2(alpha) = ( Sg1(3,alpha) - Sg1(4,alpha) ) / 2d0
@@ -117,22 +117,22 @@
             enddo
          endif
          if(Nf_FF.eq.5)then
-            call odeintnsUnifiedf(1,muF20,muF2,Tu1,Tu10)
-            call odeintnsUnifiedf(2,muF20,muF2,Td2,Td20)
-            call odeintnsUnifiedf(3,muF20,muF2,Vu1,Vu10)
-            call odeintnsUnifiedf(4,muF20,muF2,Vd2,Vd20)
+            call odeintnsUnifiedf(1,muF20,muF2,Tu10,Tu1)
+            call odeintnsUnifiedf(2,muF20,muF2,Td20,Td2)
+            call odeintnsUnifiedf(3,muF20,muF2,Vu10,Vu1)
+            call odeintnsUnifiedf(4,muF20,muF2,Vd20,Vd2)
             do alpha=0,nin(igrid)
                Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
                Vu2(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
             enddo
          endif
          if(Nf_FF.eq.6)then
-            call odeintnsUnifiedf(1,muF20,muF2,Tu1,Tu10)
-            call odeintnsUnifiedf(1,muF20,muF2,Tu2,Tu20)
-            call odeintnsUnifiedf(2,muF20,muF2,Td2,Td20)
-            call odeintnsUnifiedf(3,muF20,muF2,Vu1,Vu10)
-            call odeintnsUnifiedf(3,muF20,muF2,Vu2,Vu20)
-            call odeintnsUnifiedf(4,muF20,muF2,Vd2,Vd20)
+            call odeintnsUnifiedf(1,muF20,muF2,Tu10,Tu1)
+            call odeintnsUnifiedf(1,muF20,muF2,Tu20,Tu2)
+            call odeintnsUnifiedf(2,muF20,muF2,Td20,Td2)
+            call odeintnsUnifiedf(3,muF20,muF2,Vu10,Vu1)
+            call odeintnsUnifiedf(3,muF20,muF2,Vu20,Vu2)
+            call odeintnsUnifiedf(4,muF20,muF2,Vd20,Vd2)
          endif
 *
 *     Variable Flavour Number Scheme
@@ -231,8 +231,8 @@
 *     Singlet 2
             call odeintsgUnifiedfS2(mu2i(inf),mu2f(inf),Sg20,Sg2)
 *     Non-Singlet
-            call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td1,Td10)
-            call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd1,Vd10)
+            call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td10,Td1)
+            call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd10,Vd1)
             if(inf.eq.3)then
                do alpha=0,nin(igrid)
                   Tu1(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
@@ -244,8 +244,8 @@
                enddo
             endif
             if(inf.eq.4)then
-               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu1,Tu10)
-               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu1,Vu10)
+               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
+               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
                do alpha=0,nin(igrid)
                   Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
                   Td2(alpha) = ( Sg1(3,alpha) - Sg1(4,alpha) ) / 2d0
@@ -254,22 +254,22 @@
                enddo
             endif
             if(inf.eq.5)then
-               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu1,Tu10)
-               call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td2,Td20)
-               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu1,Vu10)
-               call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd2,Vd20)
+               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
+               call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td20,Td2)
+               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
+               call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd20,Vd2)
                do alpha=0,nin(igrid)
                   Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
                   Vu2(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
                enddo
             endif
             if(inf.eq.6)then
-               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu1,Tu10)
-               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu2,Tu20)
-               call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td2,Td20)
-               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu1,Vu10)
-               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu2,Vu20)
-               call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd2,Vd20)
+               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
+               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu20,Tu2)
+               call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td20,Td2)
+               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
+               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu20,Vu2)
+               call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd20,Vd2)
             endif
 *
 *     Update initial coditions for the next step
