@@ -14,7 +14,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f \
 	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f Evolution/SetTimeLikeEvolution.f Evolution/SetAlphaEvolution.f \
 	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/hknsff07.f Evolution/fDSS.f Evolution/LHAPDFgridDerivative.f \
-	Evolution/SetSmallxResummation.f
+	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f
 
 INTER = Evolution/interpolants.f
 
@@ -22,17 +22,19 @@ SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f Evolution/Hellx.f
 
 COUPLINGS = Evolution/a_QCD.f Evolution/a_QED.f Evolution/MSbarmass.f Evolution/lambda.f
 
-EVOLUTIONQCD = Evolution/EvolutionOperatorsQCD.f Evolution/IdentityOperatorsQCD.f \
+EVOLUTIONQCD = Evolution/EvolutionQCD.f Evolution/EvolutionOperatorsQCD.f Evolution/IdentityOperatorsQCD.f \
 	Evolution/EqualOperatorsQCDnf.f Evolution/integrandsQCD.f Evolution/integralsQCD.f Evolution/RSLintegralsQCD.f \
 	Evolution/odeintnsQCD.f Evolution/odeintsgQCD.f Evolution/MatchingConditions.f Evolution/integrandsMatching.f \
 	Evolution/integralsMatching.f Evolution/RSLintegralsMatching.f Evolution/MatchPDFs.f Evolution/JoinOperatorsQCD.f \
-	Evolution/EvolutionOperatorsUnified.f Evolution/odeintnsUnified.f Evolution/IdentityOperatorsUnified.f \
-	Evolution/EqualOperatorsUnifiednf.f Evolution/EvolveUni.f Evolution/odeintsgUnified.f \
-	Evolution/DerivativeOperatorsQCD.f
+	Evolution/EvolutionUnified.f Evolution/EvolutionOperatorsUnified.f Evolution/IdentityOperatorsUnified.f \
+	Evolution/EqualOperatorsUnifiednf.f Evolution/EvolveUni.f Evolution/odeintnsUnified.f Evolution/odeintsgUnified.f \
+	Evolution/DerivativeOperatorsQCD.f Evolution/odeintnsQCDf.f Evolution/odeintsgQCDf.f \
+	Evolution/odeintnsUnifiedf.f Evolution/odeintsgUnifiedf.f
 
-EVOLUTIONQED = Evolution/EvolutionOperatorsQED.f Evolution/IdentityOperatorsQED.f \
+EVOLUTIONQED = Evolution/EvolutionQED.f Evolution/EvolutionOperatorsQED.f Evolution/IdentityOperatorsQED.f \
 	Evolution/EqualOperatorsQEDnf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f \
-	Evolution/odeintnsQED.f Evolution/odeintsgQED.f Evolution/DerivativeOperatorsQED.f
+	Evolution/odeintnsQED.f Evolution/odeintsgQED.f Evolution/DerivativeOperatorsQED.f \
+	Evolution/odeintnsQEDf.f Evolution/odeintsgQEDf.f
 
 PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQED.f Evolution/PDFevQED2phys.f \
 	Evolution/EvolvePDFs.f Evolution/switchGluonPhoton.f Evolution/EvolveQCD.f Evolution/EvolveQED.f Evolution/toyLHPDFs.f \

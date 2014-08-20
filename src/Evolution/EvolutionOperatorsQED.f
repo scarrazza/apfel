@@ -122,7 +122,7 @@
          endif
          mu2f(nff) = muF2
 *
-         do inf=nfi,nff
+         do inf=nfi,nff,sgn
             wnf = inf
 *     Singlet
             call odeintsgQED(mu2i(inf),mu2f(inf),M0sg,Msg)

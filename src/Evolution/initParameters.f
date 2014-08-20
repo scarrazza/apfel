@@ -33,6 +33,7 @@
       include "../commons/lock.h"
       include "../commons/TimeLike.h"
       include "../commons/Smallx.h"
+      include "../commons/FastEvol.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -41,6 +42,7 @@
       if(InPt.ne."done")        call SetPerturbativeOrder(2)
       if(InEvs.ne."done")       call SetVFNS
       if(InTheory.ne."done")    call SetTheory("QCD")
+      if(InFastEvol.ne."done")  call SetFastEvolution(.false.)
       if(InTimeLike.ne."done")  call SetTimeLikeEvolution(.false.)
       if(InSmallx.ne."done")    call SetSmallxResummation(.false.,"NLL")
       if(InAlpQCD.ne."done")    call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
@@ -66,6 +68,18 @@ c         call SetGridParameters(1,80,3,1d-5)
 c         call SetGridParameters(2,40,5,2d-1)
 c         call SetGridParameters(3,20,5,8d-1)
       endif
+*
+*     Security switchs
+*
+*     If the fast evolution is enabled, disable automatically
+*     the computation of the evolution operator
+*
+      if(FastEvol) EvolOp = .false.
+*
+*     When the computation of the Evolution Operator is enabled
+*     lock the grids by default.
+*
+      if(EvolOp) call LockGrids(.true.)
 *
 *     Check the consistency of the input parameters
 *
@@ -212,6 +226,10 @@ c         call SetGridParameters(3,20,5,8d-1)
          write(6,*) "  "
 *
          write(6,"(a,a,a)") " ",Th," evolution"
+*
+         if(FastEvol)then
+            write(6,*) "Fast evolution enabled"
+         endif
 *
          if(TimeLike)then
             write(6,*) "Time-like evolution (fragmentation functions)"
