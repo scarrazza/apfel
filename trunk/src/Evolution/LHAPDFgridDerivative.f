@@ -34,6 +34,10 @@
       double precision dxPDF,dxgamma
       parameter(lref=0.239d0)
 *
+*     For the moment only if the fast evolution is disabled
+*
+      call SetFastEvolution(.false.)
+*
 *     Specify initialization for the LHgrid
 *
       call SetQLimits(dsqrt(q2minLHA),dsqrt(q2maxLHA))

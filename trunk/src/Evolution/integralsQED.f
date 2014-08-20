@@ -7,8 +7,8 @@
 *     nf and for the the pair of grid indices (alpha,beta) for singlet
 *     and non-singlet in QED according to:
 *
-*     kk  =  1   2   3   4   5   6   7
-*            +   -   V   qq  qg  gq  gg
+*     kk  =  1   2   3   4   5   6   7   8   9  10  11
+*           nsp nsm gg  gq  gD  qg  qq  qD  Dg  Dq  DD
 * 
 ************************************************************************
       function integralsQED(alpha,beta,coup,kk)

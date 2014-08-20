@@ -14,7 +14,7 @@
 *
       logical lg
 *
-      lock = lg
+      lock   = lg
       InLock = "done"
 *
       return
