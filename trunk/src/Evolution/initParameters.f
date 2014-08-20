@@ -74,9 +74,9 @@ c         call SetGridParameters(3,20,5,8d-1)
 *     If one of the combined solutions QCD x QED is chose
 *     switch of the fast evolution.
 *
-      if(Th.ne."QCEDP".and.Th.ne."QCEDS".and.
-     1   Th.ne."QECDP".and.Th.ne."QECDS".and.
-     2   Th.ne."QavDP".and.Th.ne."QavDS")then
+      if(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
+     1   Th.eq."QECDP".or.Th.eq."QECDS".or.
+     2   Th.eq."QavDP".or.Th.eq."QavDS")then
          call SetFastEvolution(.false.)
       endif
 *
