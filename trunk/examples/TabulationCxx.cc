@@ -11,6 +11,7 @@ int main()
 		1e-1, 3e-1, 5e-1, 7e-1, 9e-1};
   
   // Activate some options
+  //APFEL::SetFastEvolution(true);
   //APFEL::SetPerturbativeOrder(0);
   //APFEL::SetPDFSet("MRST2004qed.LHgrid");
   //APFEL::EnableEvolutionOperator(true);

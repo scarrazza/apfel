@@ -70,6 +70,9 @@ extern "C" {
 #define fsettimelikeevolution FC_FUNC(settimelikeevolution,SETTIMELIKEEVOLUTION)
   void fsettimelikeevolution(bool*);
 
+#define fsetfastevolution FC_FUNC(setfastevolution,SETFASTEVOLUTION)
+  void fsetfastevolution(bool*);
+
 #define fsetsmallxresummation FC_FUNC(setsmallxresummation,SETSMALLXRESUMMATION)
   void fsetsmallxresummation(bool*,char*);
 
