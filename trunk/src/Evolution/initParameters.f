@@ -71,6 +71,15 @@ c         call SetGridParameters(3,20,5,8d-1)
 *
 *     Security switchs
 *
+*     If one of the combined solutions QCD x QED is chose
+*     switch of the fast evolution.
+*
+      if(Th.ne."QCEDP".and.Th.ne."QCEDS".and.
+     1   Th.ne."QECDP".and.Th.ne."QECDS".and.
+     2   Th.ne."QavDP".and.Th.ne."QavDS".and.)then
+         call SetFastEvolution(.false.)
+      endif
+*
 *     If the fast evolution is enabled, disable automatically
 *     the computation of the evolution operator
 *
