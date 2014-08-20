@@ -129,6 +129,11 @@ namespace APFEL {
     fsettimelikeevolution(&tl);
   }
 
+  void SetFastEvolution(bool fe)
+  {
+    fsetfastevolution(&fe);
+  }
+
   void SetSmallxResummation(bool sx, const std::string& la)
   {
     char cla[SIZE+1];

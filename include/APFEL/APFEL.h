@@ -95,6 +95,9 @@ namespace APFEL {
   /// Switch to the time-like evolution
   void SetTimeLikeEvolution(bool);
 
+  /// Switch to the fast evolution
+  void SetFastEvolution(bool);
+
   /// Switch on the small-x resummation
   void SetSmallxResummation(bool, const std::string& la);  
 

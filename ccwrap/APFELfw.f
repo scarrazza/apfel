@@ -148,6 +148,12 @@ ccccccccccccc
       end subroutine fsettimelikeevolution
 
 ccccccccccccc      
+      subroutine fsetfastevolution(fe)
+      logical fe
+      call SetFastEvolution(fe)
+      end subroutine fsetfastevolution
+
+ccccccccccccc      
       subroutine fsetsmallxresummation(sx,la)
       logical sx
       character la*(*)
