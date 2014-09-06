@@ -34,31 +34,36 @@
       include "../commons/TimeLike.h"
       include "../commons/Smallx.h"
       include "../commons/FastEvol.h"
+      include "../commons/TensorGluons.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
-      if(InWelcome.ne."done")   call EnableWelcomeMessage(.true.)
-      if(InScales.ne."done")    call SetQLimits(0.5d0,1000d0)
-      if(InPt.ne."done")        call SetPerturbativeOrder(2)
-      if(InEvs.ne."done")       call SetVFNS
-      if(InTheory.ne."done")    call SetTheory("QCD")
-      if(InFastEvol.ne."done")  call SetFastEvolution(.false.)
-      if(InTimeLike.ne."done")  call SetTimeLikeEvolution(.false.)
-      if(InSmallx.ne."done")    call SetSmallxResummation(.false.,"NLL")
-      if(InAlpQCD.ne."done")    call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
-      if(InAlpQED.ne."done")    call SetAlphaQEDRef(7.496252d-3,1.777d0)
-      if(InAlphaEvol.ne."done") call SetAlphaEvolution("exact")
-      if(InPDFEvol.ne."done")   call SetPDFEvolution("exactmu")
-      if(InLambdaQCD.ne."done") call SetLambdaQCDRef(0.220d0,5)
-      if(InKren.ne."done")      call SetRenFacRatio(1d0)
-      if(InMasses.ne."done")    call SetPoleMasses(dsqrt(2d0),4.5d0,
-     1                                             175d0)
-      if(InMFP.ne."done")       call SetMaxFlavourPDFs(6)
-      if(InMFA.ne."done")       call SetMaxFlavourAlpha(6)
-      if(InPDFs.ne."done")      call SetPDFset("ToyLH")
-      if(InRep.ne."done")       call SetReplica(0)
-      if(InEvolOp.ne."done")    call EnableEvolutionOperator(.false.)
-      if(InLock.ne."done")      call LockGrids(.false.)
+      if(InWelcome.ne."done")      call EnableWelcomeMessage(.true.)
+      if(InScales.ne."done")       call SetQLimits(0.5d0,1000d0)
+      if(InPt.ne."done")           call SetPerturbativeOrder(2)
+      if(InEvs.ne."done")          call SetVFNS
+      if(InTheory.ne."done")       call SetTheory("QCD")
+      if(InFastEvol.ne."done")     call SetFastEvolution(.false.)
+      if(InTimeLike.ne."done")     call SetTimeLikeEvolution(.false.)
+      if(InSmallx.ne."done")       call SetSmallxResummation(.false.,
+     1                                                       "NLL")
+      if(InTensorGluons.ne."done") call SetTensorGluons(0)
+      if(InAlpQCD.ne."done")       call SetAlphaQCDRef(0.35d0,
+     1                                                 dsqrt(2d0))
+      if(InAlpQED.ne."done")       call SetAlphaQEDRef(7.496252d-3,
+     1                                                 1.777d0)
+      if(InAlphaEvol.ne."done")    call SetAlphaEvolution("exact")
+      if(InPDFEvol.ne."done")      call SetPDFEvolution("exactmu")
+      if(InLambdaQCD.ne."done")    call SetLambdaQCDRef(0.220d0,5)
+      if(InKren.ne."done")         call SetRenFacRatio(1d0)
+      if(InMasses.ne."done")       call SetPoleMasses(dsqrt(2d0),4.5d0,
+     1                                                175d0)
+      if(InMFP.ne."done")          call SetMaxFlavourPDFs(6)
+      if(InMFA.ne."done")          call SetMaxFlavourAlpha(6)
+      if(InPDFs.ne."done")         call SetPDFset("ToyLH")
+      if(InRep.ne."done")          call SetReplica(0)
+      if(InEvolOp.ne."done")       call EnableEvolutionOperator(.false.)
+      if(InLock.ne."done")         call LockGrids(.false.)
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,80,3,1d-5)
@@ -70,6 +75,16 @@ c         call SetGridParameters(3,20,5,8d-1)
       endif
 *
 *     Security switchs
+*
+*     If there are tensor gluons apply some restictions
+*
+      if(nTG.gt.0)then
+         call SetTheory("QCD")
+         call SetPerturbativeOrder(0)
+         call SetFastEvolution(.true.)
+         call SetTimeLikeEvolution(.false.)
+         call SetSmallxResummation(.false.,"NLL")
+      endif
 *
 *     If one of the combined solutions QCD x QED is chose
 *     switch of the fast evolution.
@@ -83,12 +98,21 @@ c         call SetGridParameters(3,20,5,8d-1)
 *     If the fast evolution is enabled, disable automatically
 *     the computation of the evolution operator
 *
-      if(FastEvol) EvolOp = .false.
+      if(FastEvol) call EnableEvolutionOperator(.false.)
 *
 *     When the computation of the Evolution Operator is enabled
 *     lock the grids by default.
 *
       if(EvolOp) call LockGrids(.true.)
+*
+*     Check that the number of tensor gluons is not negative
+*
+      if(nTG.lt.0)then
+         write(6,*) "Negative number of tensor gluons:"
+         write(6,*) "nTG =",nTG
+         write(6,*) "  "
+         call exit(-10)
+      endif
 *
 *     Check the consistency of the input parameters
 *
@@ -233,6 +257,13 @@ c         call SetGridParameters(3,20,5,8d-1)
 *
          write(6,*) "Report of the evolution parameters:"
          write(6,*) "  "
+*
+         if(nTG.gt.0)then
+            write(6,"(a,i1,a)") " The evolution includes ",nTG,
+     1                          " tensor gluon(s)"
+            write(6,*) "[Note that some restrictions to the evolution",
+     1                 " have been automatically applied]"
+         endif
 *
          write(6,"(a,a,a)") " ",Th," evolution"
 *
