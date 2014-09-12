@@ -149,20 +149,37 @@
 *     Get alphas value at the heavy quark threshold (with nfm active flavours)
             coup = a_QCD(m2th(nfm))
 *     Contruct matching conditions at this threshod
-            do alpha=0,nin(igrid)
-               do beta=alpha,nin(igrid)
-                  MatQCDns(alpha,beta)     =
-     1                 integralsMatching(0,beta-alpha,coup,1)
-                  MatQCDsg(1,1,alpha,beta) =
-     1                 integralsMatching(0,beta-alpha,coup,2)
-                  MatQCDsg(1,2,alpha,beta) =
-     1                 integralsMatching(0,beta-alpha,coup,3)
-                  MatQCDsg(2,1,alpha,beta) =
-     1                 integralsMatching(0,beta-alpha,coup,4)
-                  MatQCDsg(2,2,alpha,beta) =
-     1                 integralsMatching(0,beta-alpha,coup,5)
+            if(IsExt(igrid))then
+               do alpha=0,nin(igrid)
+                  do beta=alpha,nin(igrid)
+                     MatQCDns(alpha,beta)     =
+     1                    integralsMatching(alpha,beta,coup,1)
+                     MatQCDsg(1,1,alpha,beta) =
+     1                    integralsMatching(alpha,beta,coup,2)
+                     MatQCDsg(1,2,alpha,beta) =
+     1                    integralsMatching(alpha,beta,coup,3)
+                     MatQCDsg(2,1,alpha,beta) =
+     1                    integralsMatching(alpha,beta,coup,4)
+                     MatQCDsg(2,2,alpha,beta) =
+     1                    integralsMatching(alpha,beta,coup,5)
+                  enddo
                enddo
-            enddo
+            else
+               do alpha=0,nin(igrid)
+                  do beta=alpha,nin(igrid)
+                     MatQCDns(alpha,beta)     =
+     1                    integralsMatching(0,beta-alpha,coup,1)
+                     MatQCDsg(1,1,alpha,beta) =
+     1                    integralsMatching(0,beta-alpha,coup,2)
+                     MatQCDsg(1,2,alpha,beta) =
+     1                    integralsMatching(0,beta-alpha,coup,3)
+                     MatQCDsg(2,1,alpha,beta) =
+     1                    integralsMatching(0,beta-alpha,coup,4)
+                     MatQCDsg(2,2,alpha,beta) =
+     1                    integralsMatching(0,beta-alpha,coup,5)
+                  enddo
+               enddo
+            endif
 *     
 *     Now combine evolution tables for different numbers of active
 *     flavours.
