@@ -45,6 +45,7 @@
       call cpu_time(t1)
 *
       if(FastEvol)then
+*     Evolve directly PDFs on the grid
          do igrid=1,ngrid
             if(Th.eq."QCD")then
                call EvolutionQCD(Q20,Q2)
@@ -54,7 +55,7 @@
                call EvolutionUnified(Q20,Q2)
             else
                write(6,*) "The fast evolution is currently available"
-               write(6,*) "only for the 'QCD','QED','QUniD' evolution."
+               write(6,*) "only for the 'QCD','QED','QUniD' evolutions."
                write(6,*) "  "
                call exit(-10)
             endif
@@ -87,8 +88,8 @@
 *
       call cpu_time(t2)
 *
-c      write(6,*) "Evolution done in",t2-t1," s"
-c      write(6,*) " "
+      write(6,*) "Evolution done in",t2-t1," s"
+      write(6,*) " "
 *
       return
       end

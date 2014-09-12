@@ -56,6 +56,15 @@ ccccccccccccc
       return
       end
 
+ccccccccccccc
+      function fexternalevolutionoperator(i,j,alpha,beta)
+      integer i,j,alpha,beta
+      double precision fexternalevolutionoperator
+      fexternalevolutionoperator = 
+     1     ExternalEvolutionOperator(i,j,alpha,beta)
+      return
+      end
+
 ccccccccccccc      
       subroutine flhapdfgrid(Nrep,Qin,fname)
       integer Nrep
@@ -70,15 +79,6 @@ ccccccccccccc
       character fname*(*)
       call LHAPDFgridDerivative(Nrep, fname)
       end subroutine flhapdfgridderivative
-
-ccccccccccccc
-      subroutine fexternalevolutionoperator(q0,q,n,xext,m)
-      integer n
-      double precision q0,q
-      double precision xext(0:n)
-      double precision m(0:14*14*(n+1)*(n+1)-1)
-      call ExternalEvolutionOperator(q0,q,n,xext,m)
-      end subroutine fexternalevolutionoperator
 
 ccccccccccccc      
       function falphaqcd(Q)
@@ -211,12 +211,19 @@ ccccccccccccc
       call SetFFNS(nfl)
       end subroutine fsetffns
 
-ccccccccccccc      
+ccccccccccccc
       subroutine fsetgridparameters(i,np,deg,x)
       integer i, np, deg
       double precision x
       call SetGridParameters(i,np,deg,x)
       end subroutine fsetgridparameters
+
+ccccccccccccc
+      subroutine fsetexternalgrid(i,np,deg,x)
+      integer i, np, deg
+      double precision x(0:np)
+      call SetExternalGrid(i,np,deg,x)
+      end subroutine fsetexternalgrid
 
 ccccccccccccc      
       subroutine fsetmaxflavouralpha(nf)

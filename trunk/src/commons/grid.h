@@ -13,10 +13,16 @@
       integer DensityFactor(ngrid_max),TransitionPoint(ngrid_max+1)
       double precision xmin(ngrid_max)
       character*4 InGrid
+      logical IsExt(ngrid_max)
+      logical ThereAreExtGrids
 
       double precision xg(0:ngrid_max,0:nint_max)
       double precision step(ngrid_max)
+
+      double precision xgext(0:ngrid_max,0:nint_max)
 *
       common / GridPar / xmin,ngrid,igrid,nin,inter_degree,
-     1                   DensityFactor,TransitionPoint,InGrid
-      common / grid / xg,step
+     1                   DensityFactor,TransitionPoint,InGrid,IsExt,
+     2                   ThereAreExtGrids
+      common / Grid / xg,step
+      common / ExtGrid / xgext

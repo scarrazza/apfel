@@ -45,16 +45,29 @@
       if(k.gt.beta) bound = 0
       if(x.lt.xg(igrid,bound).or.x.ge.xg(igrid,beta+1)) return
 *
-      fact = dlog( x / xg(igrid,beta) ) / step(igrid)
-      do j=0,beta-bound
-         if(x.ge.xg(igrid,beta-j).and.x.lt.xg(igrid,beta-j+1))then
-            w_int = 1d0
-            do delta=0,k
-               if(delta.ne.j) w_int = w_int * ( fact / ( j - delta ) 
-     1                              + 1d0 )
-            enddo
-         endif
-      enddo
+      if(IsExt(igrid))then
+         do j=0,beta-bound
+            if(x.ge.xg(igrid,beta-j).and.x.lt.xg(igrid,beta-j+1))then
+               w_int = 1d0
+               do delta=0,k
+                  if(delta.ne.j) w_int = w_int 
+     1                 * dlog(x/xg(igrid,beta-j+delta)) 
+     2                 / dlog(xg(igrid,beta)/xg(igrid,beta-j+delta))
+               enddo
+            endif
+         enddo
+      else
+         fact = dlog( x / xg(igrid,beta) ) / step(igrid)
+         do j=0,beta-bound
+            if(x.ge.xg(igrid,beta-j).and.x.lt.xg(igrid,beta-j+1))then
+               w_int = 1d0
+               do delta=0,k
+                  if(delta.ne.j) w_int = w_int * ( fact / ( j - delta ) 
+     1                                 + 1d0 )
+               enddo
+            endif
+         enddo
+      endif
 *
       return
       end

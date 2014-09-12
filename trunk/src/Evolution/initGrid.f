@@ -17,6 +17,8 @@
 *     Variables
 *     
       integer ix
+      double precision eps
+      parameter(eps=1d-12)
 *
 *     Checks
 *
@@ -49,15 +51,15 @@
 *     (Needed to export the evolution operator)
 *
       if(lock.and.igrid.gt.1)then
-*     
+*
 *     Find the closest point of the "(igrid-1)"-th subgris to "xmin(igrid)"
 *     and replace "xmin(igrid)".
-*     
+*
          do ix=0,nin(igrid-1)
             if((xmin(igrid)-xg(igrid-1,ix)).le.0d0) goto 102
          enddo
  102     if(dabs(xmin(igrid)-xg(igrid-1,ix)).gt.
-     1        dabs(xmin(igrid)-xg(igrid-1,ix+1)))then
+     1      dabs(xmin(igrid)-xg(igrid-1,ix+1)))then
             xmin(igrid) = xg(igrid-1,ix+1)
          else
             xmin(igrid) = xg(igrid-1,ix)
@@ -70,15 +72,41 @@
      1                        / dble( nin(igrid-1) - ix ) )
          nin(igrid) = DensityFactor(igrid) * ( nin(igrid-1) - ix )
       endif
-*     
+*
 *     Now contruct the grid
-*     
-      step(igrid) = ( log(xmax) - log(xmin(igrid)) ) / dble(nin(igrid))
-*     
-      xg(igrid,0) = xmin(igrid)
-      do ix=1,nin(igrid)+inter_degree(igrid)
-         xg(igrid,ix) = xg(igrid,ix-1) * exp( step(igrid) )
-      enddo
+*
+      if(IsExt(igrid))then
+         do ix=0,nin(igrid)
+            xg(igrid,ix) = xgext(igrid,ix)
+         enddo
+*
+*     Check that the last point of the user give grid is is euqal to one
+*
+         if(dabs(xg(igrid,nin(igrid))-1d0).gt.eps)then
+            write(6,*) "In initGrid.f:"
+            write(6,*) "The upper bound of the ",igrid,"-th grid",
+     1                 " does not coincide with one: xmax =",
+     2                 xg(igrid,nin(igrid))
+            write(6,*) "Check the input grid"
+            call exit(-10)
+         endif
+*
+*     Extend the grid for x > 1 for interpolation reasons using the same
+*     width of the last bin in log scale
+*
+         step(igrid) = dlog(xg(igrid,nin(igrid))/xg(igrid,nin(igrid)-1))
+         do ix=nin(igrid)+1,nin(igrid)+inter_degree(igrid)
+            xg(igrid,ix) = xg(igrid,ix-1) * exp( step(igrid) )
+         enddo
+      else
+         step(igrid) = ( dlog(xmax) - dlog(xmin(igrid)) )
+     1               / dble(nin(igrid))
+*
+         xg(igrid,0) = xmin(igrid)
+         do ix=1,nin(igrid)+inter_degree(igrid)
+            xg(igrid,ix) = xg(igrid,ix-1) * exp( step(igrid) )
+         enddo
+      endif
 *
       return
       end

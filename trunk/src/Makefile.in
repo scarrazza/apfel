@@ -62,7 +62,7 @@ am__objects_1 = Evolution/apfelversion.lo Evolution/WelcomeMessage.lo \
 am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetAlphaQEDRef.lo Evolution/SetQLimits.lo \
 	Evolution/SetPerturbativeOrder.lo Evolution/SetFFNS.lo \
-	Evolution/SetGridParameters.lo Evolution/SetMSbarMasses.lo \
+	Evolution/SetGridParameters.lo Evolution/SetExternalGrid.lo Evolution/SetMSbarMasses.lo \
 	Evolution/SetNumberOfGrids.lo Evolution/SetPDFSet.lo \
 	Evolution/SetPoleMasses.lo Evolution/SetRenFacRatio.lo \
 	Evolution/SetTheory.lo Evolution/SetVFNS.lo \
@@ -324,7 +324,7 @@ INIT = Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParame
 	Evolution/initHELL.f
 
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
-	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f \
+	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f Evolution/SetExternalGrid.f \
 	Evolution/SetMSbarMasses.f Evolution/SetNumberOfGrids.f Evolution/SetPDFSet.f Evolution/SetPoleMasses.f \
 	Evolution/SetRenFacRatio.f Evolution/SetTheory.f Evolution/SetVFNS.f Evolution/SetMaxFlavourPDFs.f \
 	Evolution/SetMaxFlavourAlpha.f Evolution/SetReplica.f Evolution/AlphaQCD.f Evolution/AlphaQED.f Evolution/HeavyQuarkMass.f \
@@ -449,6 +449,8 @@ Evolution/SetPerturbativeOrder.lo: Evolution/$(am__dirstamp) \
 Evolution/SetFFNS.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetGridParameters.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetExternalGrid.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetMSbarMasses.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -837,6 +839,8 @@ mostlyclean-compile:
 	-rm -f Evolution/SetFFNS.lo
 	-rm -f Evolution/SetGridParameters.$(OBJEXT)
 	-rm -f Evolution/SetGridParameters.lo
+	-rm -f Evolution/SetExternalGrid.$(OBJEXT)
+	-rm -f Evolution/SetExternalGrid.lo
 	-rm -f Evolution/SetLambdaQCDRef.$(OBJEXT)
 	-rm -f Evolution/SetLambdaQCDRef.lo
 	-rm -f Evolution/SetMSbarMasses.$(OBJEXT)

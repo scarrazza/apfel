@@ -31,14 +31,14 @@ extern "C" {
 #define fdxgamma FC_FUNC(dxgamma,DXGAMMA)
   double fdxgamma(double*);
 
+#define fexternalevolutionoperator FC_FUNC(externalevolutionoperator,EXTERNALEVOLUTIONOPERATOR)
+  double fexternalevolutionoperator(int*,int*,int*,int*);
+
 #define flhapdfgrid FC_FUNC(lhapdfgrid,LHAPDFGRID)
   void flhapdfgrid(int*, double*, char*);
 
 #define flhapdfgridderivative FC_FUNC(lhapdfgridderivative,LHAPDFGRIDDERIVATIVE)
   void flhapdfgridderivative(int*, char*);
-
-#define fexternalevolutionoperator FC_FUNC(externalevolutionoperator,EXTERNALEVOLUTIONOPERATOR)
-  void fexternalevolutionoperator(double*,double*,int*,double*,double*);
 
 #define falphaqcd FC_FUNC(alphaqcd,ALPHAQCD)
   double falphaqcd(double*);
@@ -102,6 +102,9 @@ extern "C" {
 
 #define fsetgridparameters FC_FUNC(setgridparameters,SETGRIDPARAMETERS)
   void fsetgridparameters(int*,int*,int*,double*);
+
+#define fsetexternalgrid FC_FUNC(setexternalgrid,SETEXTERNALGRID)
+  void fsetexternalgrid(int*,int*,int*,double*);
 
 #define fsetmaxflavouralpha FC_FUNC(setmaxflavouralpha,SETMAXFLAVOURALPHA)
   void fsetmaxflavouralpha(int*);

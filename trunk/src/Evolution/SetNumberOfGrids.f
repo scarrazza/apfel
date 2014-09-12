@@ -16,6 +16,8 @@
 *
       integer n
 *
+      ThereAreExtGrids = .false.
+*
       ngrid  = n
       InGrid = "done"
 *

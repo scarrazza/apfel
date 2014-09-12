@@ -55,6 +55,11 @@ namespace APFEL {
     return fdxgamma(&x);
   }
 
+  double ExternalEvolutionOperator(int i, int j, int alpha, int beta)
+  {
+    return fexternalevolutionoperator(&i,&j,&alpha,&beta);
+  }
+
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname)
   {
     char cfname[SIZE+1];
@@ -67,11 +72,6 @@ namespace APFEL {
     char cfname[SIZE+1];
     strncpy(cfname, fname.c_str(), SIZE);
     flhapdfgridderivative(&Nrep,cfname);
-  }
-
-  void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double *m)
-  {
-    fexternalevolutionoperator(&q0,&q,&n,xext,m);
   }
 
   double AlphaQCD(double Q)
@@ -188,6 +188,11 @@ namespace APFEL {
   void SetGridParameters(int i, int np, int deg, double x)
   {
     fsetgridparameters(&i,&np,&deg,&x);
+  }
+
+  void SetExternalGrid(int i, int np, int deg, double *x)
+  {
+    fsetexternalgrid(&i,&np,&deg,x);
   }
 
   void SetMaxFlavourAlpha(int nf)
