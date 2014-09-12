@@ -49,7 +49,7 @@
 *     Contruct matching conditions at this threshod
 *
          do alpha=0,nin(igrid)
-            do beta=0,nin(igrid)
+            do beta=alpha,nin(igrid)
                do i=1,5
                   integ2(i,alpha,beta) =
      1                 integralsMatching(alpha,beta,coup,i)
@@ -62,7 +62,7 @@
             do i=0,13
                fevQCDb(i,alpha) = 0d0
             enddo
-            do beta=0,nin(igrid)
+            do beta=alpha,nin(igrid)
 *     Photon
                fevQCDb(0,alpha) = fevQCD(0,alpha)
 *     Singlet and Gluon
