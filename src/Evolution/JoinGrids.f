@@ -11,7 +11,6 @@
 *
       implicit none
 *
-      include "../commons/lock.h"
       include "../commons/EvolOp.h"
       include "../commons/grid.h"
       include "../commons/fph.h"
@@ -124,7 +123,7 @@
             enddo
          enddo
       endif
-c*
+*
 c      open(unit=19,file="JointGrid.dat",status="unknown")
 c      write(19,*) nin(0)!+inter_degree(0)
 c      do alpha=0,nin(0)!+inter_degree(0)

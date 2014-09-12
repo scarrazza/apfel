@@ -251,7 +251,8 @@
       double precision mu2
       double precision integralsQCD
       double precision coup,a_QCD
-      double precision integ(0:nint_max)
+      double precision integ1(0:nint_max)
+      double precision integ2(0:nint_max,0:nint_max)
 **
 *     Output Variables
 *
@@ -264,21 +265,47 @@
          coup = t
       endif
 *
-      do alpha=0,nin(igrid)
-         integ(alpha) = integralsQCD(0,alpha,coup,i)
-      enddo
+*     Perform the convolution between the splitting matrix and the 
+*     evolution operator.
+*     If the computation evolution operator has been enabled, perform
+*     the convolution in a more general way (no possibility to use the
+*     shift symmetry of the splitting matrix).
+*
+      if(IsExt(igrid))then
+         do alpha=0,nin(igrid)
+            do beta=alpha,nin(igrid)
+               integ2(alpha,beta) = integralsQCD(alpha,beta,coup,i)
+            enddo
+         enddo
 *
 *     Initialization
 *
-      do alpha=0,nin(igrid)
-         do beta=alpha,nin(igrid)
-            dMdt(alpha,beta) = 0d0
-            do delta=0,nin(igrid)-alpha
-               dMdt(alpha,beta) = dMdt(alpha,beta)
-     1                          + integ(delta) * M(alpha+delta,beta)
+         do alpha=0,nin(igrid)
+            do beta=alpha,nin(igrid)
+               dMdt(alpha,beta) = 0d0
+               do delta=0,nin(igrid)
+                  dMdt(alpha,beta) = dMdt(alpha,beta)
+     1                             + integ2(alpha,delta) * M(delta,beta)
+               enddo
             enddo
          enddo
-      enddo
+      else
+         do alpha=0,nin(igrid)
+            integ1(alpha) = integralsQCD(0,alpha,coup,i)
+         enddo
+*
+*     Initialization
+*
+         do alpha=0,nin(igrid)
+            do beta=alpha,nin(igrid)
+               dMdt(alpha,beta) = 0d0
+               do delta=0,nin(igrid)-alpha
+                  dMdt(alpha,beta) = dMdt(alpha,beta)
+     1                             + integ1(delta) * M(alpha+delta,beta)
+               enddo
+            enddo
+         enddo
+      endif
 *
       return
       end

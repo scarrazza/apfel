@@ -51,8 +51,7 @@
       if(InPDFEvol.ne."done")   call SetPDFEvolution("exactmu")
       if(InLambdaQCD.ne."done") call SetLambdaQCDRef(0.220d0,5)
       if(InKren.ne."done")      call SetRenFacRatio(1d0)
-      if(InMasses.ne."done")    call SetPoleMasses(dsqrt(2d0),4.5d0,
-     1                                             175d0)
+      if(InMasses.ne."done")  call SetPoleMasses(dsqrt(2d0),4.5d0,175d0)
       if(InMFP.ne."done")       call SetMaxFlavourPDFs(6)
       if(InMFA.ne."done")       call SetMaxFlavourAlpha(6)
       if(InPDFs.ne."done")      call SetPDFset("ToyLH")
@@ -64,9 +63,6 @@
          call SetGridParameters(1,80,3,1d-5)
          call SetGridParameters(2,50,5,1d-1)
          call SetGridParameters(3,40,5,8d-1)
-c         call SetGridParameters(1,80,3,1d-5)
-c         call SetGridParameters(2,40,5,2d-1)
-c         call SetGridParameters(3,20,5,8d-1)
       endif
 *
 *     Security switchs
@@ -83,12 +79,22 @@ c         call SetGridParameters(3,20,5,8d-1)
 *     If the fast evolution is enabled, disable automatically
 *     the computation of the evolution operator
 *
-      if(FastEvol) EvolOp = .false.
+      if(FastEvol) call EnableEvolutionOperator(.false.)
+*
+*     If there is more than one subgrid and one of them is an external grid
+*     the external evolution operator cannot be computed
+*
+      if(ngrid.gt.1.and.ThereAreExtGrids) 
+     1     call EnableEvolutionOperator(.false.)
 *
 *     When the computation of the Evolution Operator is enabled
 *     lock the grids by default.
 *
       if(EvolOp) call LockGrids(.true.)
+*
+*     If there are external grids the grids cannot be locked
+*
+      if(ThereAreExtGrids) call LockGrids(.false.)
 *
 *     Check the consistency of the input parameters
 *

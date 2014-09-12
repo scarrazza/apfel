@@ -16,10 +16,11 @@
       integer i,np,deg
       double precision x
       double precision eps
-      parameter(eps=1d-14)
+      parameter(eps=1d-12)
 *
       nin(i)          = np
       inter_degree(i) = deg
+      IsExt(i)        = .false.
       xmin(i)         = x
       if(i.eq.ngrid) xmin(i+1) = xmax + eps
 *

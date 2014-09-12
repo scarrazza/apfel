@@ -2,7 +2,8 @@
 *
 *     JoinOperatorsQCD.f:
 *
-*     This routine joins the QCD evolution operators.
+*     This routine joins the QCD evolution operators computed with 
+*     different numbers of active flavours.
 *
 *     QCD evolution basis:
 *     0   1   2   3   4   5   6   7   8   9  10  11  12  13
@@ -36,7 +37,7 @@
 *
       if(sgn.ne.1)then
          write(6,*) "In JoinOperatorsQCD.f:"
-         write(6,*) "Backward evolution not allowed"
+         write(6,*) "Backward evolution not allowed yet."
          call exit(-10)
       endif
 *
@@ -126,12 +127,14 @@
             endif
          enddo
       enddo
-*     
+*
+*     If the initial and the final numbers of flavours are different ...
+*
       if(nfi.ne.nff)then
          do nf=nfi,nff-1
-*     
+*
 *     Set temporary evolution operators to zero
-*     
+*
             do alpha=0,nin(igrid)
                do beta=alpha,nin(igrid)
                   do i=0,13

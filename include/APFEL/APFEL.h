@@ -44,14 +44,14 @@ namespace APFEL {
   /// Returns the derivative of x*gamma
   double dxgamma(double x);
 
+  /// External Evolution Operator
+  double ExternalEvolutionOperator(int i, int j, int alpha, int beta);
+
   /// Builds the *.LHgrid output file
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname);
 
   /// Builds the *.LHgrid output file with the derivative of the input set
   void LHAPDFgridDerivative(int Nrep, const std::string& fname);
-
-  /// External Evolution Operator for APPLgrid
-  void ExternalEvolutionOperator(double q0, double q, int n, double *xext, double *m);
 
   /// Returns the value of alpha_QCD at the given scale
   double AlphaQCD(double Q);
@@ -124,6 +124,9 @@ namespace APFEL {
 
   /// Sets the parameters of the i-th x-space grid
   void SetGridParameters(int i, int np, int deg, double x);
+
+  /// Sets the user given i-th x-space grid
+  void SetExternalGrid(int i, int np, int deg, double *x);
 
   /// Sets the maximum number of flavours that the evolution 
   /// of alphaQCD and alphaQED can reach

@@ -294,7 +294,8 @@
       double precision mu2
       double precision integralsQCD
       double precision coup,a_QCD
-      double precision integ(0:nint_max,2,2)
+      double precision integ1(0:nint_max,2,2)
+      double precision integ2(0:nint_max,0:nint_max,2,2)
 **
 *     Output Variables
 *
@@ -314,31 +315,69 @@
       mapp(2,1) = 6
       mapp(2,2) = 7
 *
-      do alpha=0,nin(igrid)
-         do i=1,2
-            do j=1,2
-               integ(alpha,i,j) = integralsQCD(0,alpha,coup,mapp(i,j))
+*     Perform the convolution between the splitting matrix and the 
+*     evolution operator.
+*     If the computation evolution operator has been enabled, perform
+*     the convolution in a more general way (no possibility to use the
+*     shift symmetry of the splitting matrix).
+*
+      if(IsExt(igrid))then
+         do alpha=0,nin(igrid)
+            do beta=alpha,nin(igrid)
+               do i=1,2
+                  do j=1,2
+                     integ2(alpha,beta,i,j) = 
+     1               integralsQCD(alpha,beta,coup,mapp(i,j))
+                  enddo
+               enddo
             enddo
          enddo
-      enddo
 *
 *     Initialization
 *
-      do i=1,2
-         do j=1,2
-            do alpha=0,nin(igrid)
-               do beta=alpha,nin(igrid)
-                  dMdt(i,j,alpha,beta) = 0d0
-                  do k=1,2
-                     do delta=0,nin(igrid)-alpha
-                        dMdt(i,j,alpha,beta) = dMdt(i,j,alpha,beta)
-     1                  + integ(delta,i,k) * M(k,j,alpha+delta,beta)
+         do i=1,2
+            do j=1,2
+               do alpha=0,nin(igrid)
+                  do beta=alpha,nin(igrid)
+                     dMdt(i,j,alpha,beta) = 0d0
+                     do k=1,2
+                        do delta=0,nin(igrid)
+                           dMdt(i,j,alpha,beta) = dMdt(i,j,alpha,beta)
+     1                     + integ2(alpha,delta,i,k) * M(k,j,delta,beta)
+                        enddo
                      enddo
                   enddo
                enddo
             enddo
          enddo
-      enddo
+      else
+         do alpha=0,nin(igrid)
+            do i=1,2
+               do j=1,2
+                  integ1(alpha,i,j) = 
+     1            integralsQCD(0,alpha,coup,mapp(i,j))
+               enddo
+            enddo
+         enddo
+*
+*     Initialization
+*
+         do i=1,2
+            do j=1,2
+               do alpha=0,nin(igrid)
+                  do beta=alpha,nin(igrid)
+                     dMdt(i,j,alpha,beta) = 0d0
+                     do k=1,2
+                        do delta=0,nin(igrid)-alpha
+                           dMdt(i,j,alpha,beta) = dMdt(i,j,alpha,beta)
+     1                     + integ1(delta,i,k) * M(k,j,alpha+delta,beta)
+                        enddo
+                     enddo
+                  enddo
+               enddo
+            enddo
+         enddo
+      endif
 *
       return
       end
