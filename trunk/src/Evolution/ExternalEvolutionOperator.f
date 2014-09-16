@@ -7,7 +7,7 @@
 *     used of if one single external grid is provided.
 *
 ************************************************************************
-      function ExternalEvolutionOperator(i,j,alpha,x)
+      function ExternalEvolutionOperator(i,j,x,beta)
 *
       implicit none
 *
@@ -18,13 +18,13 @@
 *     Input Variables
 *
       integer i,j
-      integer alpha
+      integer beta
       double precision x
 **
 *     Internal Variables
 *
       integer n
-      integer beta
+      integer alpha
       double precision w_int_gen
 **
 *     Output Variables
@@ -52,14 +52,14 @@
          write(6,*) "Invalid index, j =",j
          call exit(-10)
       endif
-      if(alpha.lt.0.or.alpha.gt.nin(0))then
-         write(6,*) "In ExternalEvolutionOperator.f:"
-         write(6,*) "Invalid index, alpha =",alpha
-         call exit(-10)
-      endif
       if(x.lt.xmin(1).or.x.gt.xmax)then
          write(6,*) "In ExternalEvolutionOperator.f:"
          write(6,*) "Invalid value of x =",x
+         call exit(-10)
+      endif
+      if(beta.lt.0.or.beta.gt.nin(0))then
+         write(6,*) "In ExternalEvolutionOperator.f:"
+         write(6,*) "Invalid index, beta =",beta
          call exit(-10)
       endif
 *
@@ -67,9 +67,9 @@
 *
       n = inter_degree(0)
       ExternalEvolutionOperator = 0d0
-      do beta=0,nin(0)
+      do alpha=0,nin(0)
          ExternalEvolutionOperator = ExternalEvolutionOperator 
-     1                             + w_int_gen(n,beta,x)
+     1                             + w_int_gen(n,alpha,x)
      2                             * PhQCD(0,i,j,alpha,beta)
       enddo
 *
