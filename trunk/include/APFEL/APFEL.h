@@ -45,7 +45,7 @@ namespace APFEL {
   double dxgamma(double x);
 
   /// External Evolution Operator
-  double ExternalEvolutionOperator(int i, int j, int alpha, int beta);
+  double ExternalEvolutionOperator(int i, int j, int alpha, double x);
 
   /// Builds the *.LHgrid output file
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname);

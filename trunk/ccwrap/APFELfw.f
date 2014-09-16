@@ -57,11 +57,11 @@ ccccccccccccc
       end
 
 ccccccccccccc
-      function fexternalevolutionoperator(i,j,alpha,beta)
-      integer i,j,alpha,beta
-      double precision fexternalevolutionoperator
+      function fexternalevolutionoperator(i,j,alpha,x)
+      integer i,j,alpha
+      double precision x,fexternalevolutionoperator
       fexternalevolutionoperator = 
-     1     ExternalEvolutionOperator(i,j,alpha,beta)
+     1     ExternalEvolutionOperator(i,j,alpha,x)
       return
       end
 
