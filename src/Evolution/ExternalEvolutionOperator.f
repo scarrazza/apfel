@@ -7,7 +7,7 @@
 *     used of if one single external grid is provided.
 *
 ************************************************************************
-      function ExternalEvolutionOperator(i,j,alpha,beta)
+      function ExternalEvolutionOperator(i,j,alpha,x)
 *
       implicit none
 *
@@ -18,11 +18,20 @@
 *     Input Variables
 *
       integer i,j
-      integer alpha,beta      
+      integer alpha
+      double precision x
+**
+*     Internal Variables
+*
+      integer n
+      integer beta
+      double precision w_int_gen
 **
 *     Output Variables
 *
       double precision ExternalEvolutionOperator
+*
+*     Check whether the evolution operator has been actually computed
 *
       if(.not.EvolOp)then
          write(6,*) "The evolution operator computation is disabled."
@@ -31,7 +40,38 @@
          call exit(-10)
       endif
 *
-      ExternalEvolutionOperator = PhQCD(0,i,j,alpha,beta)
+*     Check consistency of the input variables
+*
+      if(i.lt.-7.or.i.gt.6)then
+         write(6,*) "In ExternalEvolutionOperator.f:"
+         write(6,*) "Invalid index, i =",i
+         call exit(-10)
+      endif
+      if(j.lt.-7.or.j.gt.6)then
+         write(6,*) "In ExternalEvolutionOperator.f:"
+         write(6,*) "Invalid index, j =",j
+         call exit(-10)
+      endif
+      if(alpha.lt.0.or.alpha.gt.nin(0))then
+         write(6,*) "In ExternalEvolutionOperator.f:"
+         write(6,*) "Invalid index, alpha =",alpha
+         call exit(-10)
+      endif
+      if(x.lt.xmin(1).or.x.gt.xmax)then
+         write(6,*) "In ExternalEvolutionOperator.f:"
+         write(6,*) "Invalid value of x =",x
+         call exit(-10)
+      endif
+*
+*     interpolate
+*
+      n = inter_degree(0)
+      ExternalEvolutionOperator = 0d0
+      do beta=0,nin(0)
+         ExternalEvolutionOperator = ExternalEvolutionOperator 
+     1                             + w_int_gen(n,beta,x)
+     2                             * PhQCD(0,i,j,alpha,beta)
+      enddo
 *
       return
       end
