@@ -99,6 +99,16 @@ namespace APFEL {
     return flumi(&i,&j,&S);
   }
 
+  double xGrid(int alpha)
+  {
+    return fxgrid(&alpha);
+  }
+
+  int nIntervals()
+  {
+    return fnintervals();
+  }
+
   std::string GetVersion(void) 
   { 
     return STR(APFEL_VERSION); 

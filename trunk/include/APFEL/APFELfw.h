@@ -55,6 +55,12 @@ extern "C" {
 #define flumi FC_FUNC(lumi,LUMI)
   double flumi(int*,int*,double*);
 
+#define fxgrid FC_FUNC(xgrid,XGRID)
+  double fxgrid(int*);
+
+#define fnintervals FC_FUNC(nintervals,NINTERVALS)
+  int fnintervals();
+
 #define fcleanup FC_FUNC(cleanup,CLEANUP)
   void fcleanup(void);
 

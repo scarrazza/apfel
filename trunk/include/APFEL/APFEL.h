@@ -73,6 +73,12 @@ namespace APFEL {
   /// Returns the Luminosity 
   double LUMI(int i, int j, double S);
 
+  /// Returns the joint x-space grid 
+  double xGrid(int alpha);
+
+  /// Returns the number of intervals of the joint x-space grid
+  int nIntervals();
+
   /// Gets APFEL version
   std::string GetVersion(void);
 
