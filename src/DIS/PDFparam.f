@@ -21,16 +21,17 @@
 *     Input Varibles
 *
       INTEGER IREP
-      CHARACTER*53 PDFSET
+      CHARACTER*100 PDFSET
 **
 *     Internal Variables
 *
-      INTEGER I,NREP
+      INTEGER I,NREP,LN
       DOUBLE PRECISION alphasPDF,AlphaQCD
       DOUBLE PRECISION HeavyQuarkMass
       DOUBLE PRECISION QTH(4:6)
       DOUBLE PRECISION PI
       PARAMETER(PI = 3.14159265358979D0)
+      LOGICAL islhapdf6
 *
       IF(PDFSET(1:5).EQ."APFEL")THEN
          PDF = "APF"
@@ -67,7 +68,16 @@
 *
 *     Initialize PDF set with LHAPDF
 *
-         CALL InitPDFsetbyName(PDFSET)
+         ln = index(PDFSET,"LHgrid") + 5
+         if(ln.eq.5)then
+            write(6,*) "Unknown input set:"
+            write(6,*) "set = ",PDFSET(1:10)
+            write(6,*) "  "
+            call exit(-10)
+         endif
+         if (islhapdf6()) ln = ln - 7         
+         
+         CALL InitPDFsetbyName(PDFSET(1:ln))
          CALL numberPDF(NREP)
          CALL InitPDF(IREP)
 *
