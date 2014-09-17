@@ -119,6 +119,21 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      function fxgrid(alpha)
+      integer alpha
+      double precision fxgrid
+      fxgrid = xGrid(alpha)
+      return
+      end
+
+ccccccccccccc      
+      function fnintervals()
+      integer nintervals
+      fnintervals = nIntervals()
+      return
+      end
+
+ccccccccccccc      
       subroutine fcleanup
       call CleanUp
       end subroutine fcleanup

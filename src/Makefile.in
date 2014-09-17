@@ -119,7 +119,8 @@ am__objects_8 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
 	Evolution/PDFevQCD2evUni.lo Evolution/PDFevUni2phys.lo \
 	Evolution/PDFphys2evUni.lo Evolution/dxPDF.lo \
 	Evolution/dxgamma.lo Evolution/DeriveQCD.lo \
-	Evolution/DeriveQED.lo Evolution/DerivePDFs.lo
+	Evolution/DeriveQED.lo Evolution/DerivePDFs.lo \
+	Evolution/xGrid.lo Evolution/nIntervals.lo
 am__objects_9 = core/dgauss.lo core/wgplg.lo core/ddilog.lo
 am__objects_10 = DIS/cc_dis.lo DIS/FF0CoefficientFunctions.lo \
 	DIS/integrands_cc.lo DIS/nc_dis.lo DIS/xcoeffunc_cc.lo \
@@ -354,7 +355,8 @@ PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQE
 	Evolution/EvolvePDFs.f Evolution/switchGluonPhoton.f Evolution/EvolveQCD.f Evolution/EvolveQED.f Evolution/toyLHPDFs.f \
 	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f Evolution/JoinGrids.f \
 	Evolution/PDFevUni2evQCD.f Evolution/PDFevQCD2evUni.f Evolution/PDFevUni2phys.f Evolution/PDFphys2evUni.f \
-	Evolution/dxPDF.f Evolution/dxgamma.f Evolution/DeriveQCD.f Evolution/DeriveQED.f Evolution/DerivePDFs.f
+	Evolution/dxPDF.f Evolution/dxgamma.f Evolution/DeriveQCD.f Evolution/DeriveQED.f Evolution/DerivePDFs.f \
+	Evolution/xGrid.f Evolution/nIntervals.f
 
 UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f
 DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
@@ -648,6 +650,10 @@ Evolution/DeriveQED.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/DerivePDFs.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/xGrid.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/nIntervals.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
 core/$(am__dirstamp):
 	@$(MKDIR_P) core
 	@: > core/$(am__dirstamp)
@@ -735,6 +741,10 @@ mostlyclean-compile:
 	-rm -f Evolution/DeriveAPFEL.lo
 	-rm -f Evolution/DerivePDFs.$(OBJEXT)
 	-rm -f Evolution/DerivePDFs.lo
+	-rm -f Evolution/xGrid.$(OBJEXT)
+	-rm -f Evolution/xGrid.lo
+	-rm -f Evolution/nIntervals.$(OBJEXT)
+	-rm -f Evolution/nIntervals.lo
 	-rm -f Evolution/DeriveQCD.$(OBJEXT)
 	-rm -f Evolution/DeriveQCD.lo
 	-rm -f Evolution/DeriveQED.$(OBJEXT)
