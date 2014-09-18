@@ -1,14 +1,59 @@
-\documentclass[10pt,a4paper]{article}
-\usepackage{amsmath,amssymb,bm,graphicx,pictex,makeidx,subfigure}
-\usepackage[italian,english]{babel}
-\usepackage{fancyhdr}
+%% LyX 2.0.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[twoside,english]{paper}
+\usepackage{lmodern}
+\renewcommand{\ttdefault}{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
 \usepackage{color}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
+\usepackage{breakurl}
 
-\definecolor{blu}{rgb}{0,0,1}
-\definecolor{verde}{rgb}{0,1,0}
-\definecolor{rosso}{rgb}{1,0,0}
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{babel}
+
+\@ifundefined{showcaptionsetup}{}{%
+ \PassOptionsToPackage{caption=false}{subfig}}
+\usepackage{subfig}
+\makeatother
 
 \begin{document}
+
+\title{Tensor Gluons in {APFEL}}
+
+\author{Valerio Bertone$^{a}$}
+
+\institution{$^{a}$PH Department, TH Unit, CERN, CH-1211 Geneva 23, Switzerland}
+\maketitle
+
+\begin{abstract}
+In this document I will present the strategy to implement the DGLAP
+evolution in {APFEL} in the presence of tensor gluons.
+\end{abstract}
+\tableofcontents{}
 
 \section{Tensor Gluon Splitting Functions}
 
@@ -300,9 +345,9 @@ where $\delta x$ is a constant. Under this assumption, we have that:
 \end{equation}
 
 
-\section{Implementation in {\tt APFEL}}
+\section{Implementation in {APFEL}}
 
-In {\tt APFEL} we express PDFs by means of a moving interpolation over
+In {APFEL} we express PDFs by means of a moving interpolation over
 an $x$-space grid, according to the formula:
 \begin{equation}
 {q}(x,\mu^2)=\sum^{N_{x}}_{\alpha=0}w_{\alpha}^{(k)}(x){q}(x_{\alpha},\mu^2)\,,
@@ -310,11 +355,11 @@ an $x$-space grid, according to the formula:
 where $w_{\alpha}^{(k)}$ are the "moving" Lagrange interpolation
 functions of degree $k$ which take the following form:
 \begin{equation}\label{LagrangeFormula}
-w_{\alpha}^{(k)}(x) = \sum_{j=0,j \leq \alpha}^{k}\theta(x-x_{\alpha-j})\theta(x_{\alpha-j+1}-x)\prod^{k}_{\delta=0,\delta\ne j}\left[\frac{x-x_{\alpha-j+\delta}}{x_{\alpha}-x_{\alpha-j+\delta}}\right]\,.
+w_{\alpha}^{(k)}(x) = \sum_{j=0,j \leq \alpha}^{k}\theta(x-x_{\alpha-j})\theta(x_{\alpha-j+1}-x)\prod^{k}_{\delta=0,\delta\ne j}\frac{x-x_{\alpha-j+\delta}}{x_{\alpha}-x_{\alpha-j+\delta}}\,.
 \end{equation}
 
 
-% To implement the tensor gluon evolution in {\tt APFEL} we will need to
+% To implement the tensor gluon evolution in {APFEL} we will need to
 % perform integrals of the following kind:
 % \begin{equation}
 % \begin{array}{rl}
