@@ -52,7 +52,6 @@
          do pt=1,ipt+1
             integralsQCD = integralsQCD 
      1                   + coup**pt * SP(igrid,wnf,kk,pt-1,alpha,beta)
-     2                   * EpsTrunc**(pt-1)
          enddo
 *
          if(Smallx.and.kk.ge.4)then
@@ -96,6 +95,7 @@
             integralsQCD = integralsQCD 
      1                   + coup * ( SP(igrid,wnf,kk,1,alpha,beta) 
      2                   - b1 * SP(igrid,wnf,kk,0,alpha,beta) )
+     3                   * EpsTrunc
          endif
          if(ipt.ge.2)then
             b2 = beta2(wnf) / beta0(wnf)
@@ -103,6 +103,7 @@
      1           + coup**2d0 * ( SP(igrid,wnf,kk,2,alpha,beta) 
      2           - b1 * SP(igrid,wnf,kk,1,alpha,beta)
      3           + ( b1**2d0 - b2 ) * SP(igrid,wnf,kk,0,alpha,beta) )
+     4           * EpsTrunc**2d0
          endif
          integralsQCD = - integralsQCD / beta0(wnf) / coup
       endif

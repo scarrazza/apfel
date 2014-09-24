@@ -41,7 +41,7 @@
 *
       Q0 = dsqrt(2d0) - eps
       Q  = dsqrt(10000d0)
-      epstrunc = 1d-7
+      epstrunc = 1d-9
 *
       n = 100
       xmin = 1d-5
@@ -54,8 +54,8 @@
       call SetAlphaQCDRef(0.118d0,91.2d0)
       call SetPoleMasses(dsqrt(2d0),4.75d0,175d0)
       call SetPDFset("NNPDF23_nlo_as_0118.LHgrid")
-c      call SetAlphaEvolution("expanded")
-c      call SetPDFEvolution("expandalpha")
+      call SetAlphaEvolution("expanded")
+      call SetPDFEvolution("expandalpha")
       call InitializeAPFEL
       call EvolveAPFEL(Q0,Q)
       x = xmin
@@ -87,8 +87,8 @@ c      call SetPDFEvolution("expandalpha")
       call SetAlphaQCDRef(0.118d0,91.2d0)
       call SetPoleMasses(dsqrt(2d0),4.75d0,175d0)
       call SetPDFset("NNPDF23_nlo_as_0118.LHgrid")
-c      call SetAlphaEvolution("expanded")
-c      call SetPDFEvolution("expandalpha")
+      call SetAlphaEvolution("expanded")
+      call SetPDFEvolution("expandalpha")
       call InitializeAPFEL
       call EvolveAPFEL(Q0,Q)
       x = xmin
@@ -120,8 +120,8 @@ c      call SetPDFEvolution("expandalpha")
       call SetAlphaQCDRef(0.118d0,91.2d0)
       call SetPoleMasses(dsqrt(2d0),4.75d0,175d0)
       call SetPDFset("NNPDF23_nlo_as_0118.LHgrid")
-c      call SetAlphaEvolution("expanded")
-c      call SetPDFEvolution("expandalpha")
+      call SetAlphaEvolution("expanded")
+      call SetPDFEvolution("expandalpha")
       call InitializeAPFEL
       call EvolveAPFEL(Q0,Q)
       x = xmin
@@ -147,6 +147,7 @@ c      call SetPDFEvolution("expandalpha")
       enddo
       call CleanUp
 *
+c      call SetEpsTrunc(0d0)
       call SetFastEvolution(.true.)
       call SetPerturbativeOrder(1)
       call SetAlphaQCDRef(0.118d0,91.2d0)
@@ -239,9 +240,14 @@ c      call SetPDFEvolution("expandalpha")
          V3APtrun = V3APz(i) + ( V3APp(i) - V3APm(i) ) /2d0/epstrunc
          gAPtrun = gAPz(i) + ( gAPp(i) - gAPm(i) ) /2d0/epstrunc
 
-c         write(6,*) x,SigAPtrun/SigNN,ValAPtrun/ValNN,T3APtrun/T3NN,
-c     1                V3APtrun/V3NN,gAPtrun/gNN
-         write(6,*) x,gAPexact(i)/gNN,gAPexpand(i)/gNN,gAPtrun/gNN
+c         write(6,*) x,SigAPtrun/SigNN,gAPtrun/gNN,T3APtrun/T3NN,
+c     1        ValAPtrun/ValNN,V3APtrun/V3NN
+         write(6,*) x,SigAPexpand(i)/SigNN,gAPexpand(i)/gNN,
+     1        T3APexpand(i)/T3NN,
+     1        ValAPexpand(i)/ValNN,V3APexpand(i)/V3NN
+c         write(6,*) x,gAPexact(i)/gNN,gAPexpand(i)/gNN,gAPtrun/gNN
+c         write(6,*) x,gAPexact(i)/gAPtrun,SigAPexact(i)/SigAPtrun,
+c     1        ValAPexact(i)/ValAPtrun
 c         write(6,*) x,SigAPexact(i)/SigNN,SigAPexpand(i)/SigNN,
 c     1                SigAPtrun/SigNN
          x = x * step
