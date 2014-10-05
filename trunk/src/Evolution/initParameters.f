@@ -42,7 +42,7 @@
       if(InPt.ne."done")        call SetPerturbativeOrder(2)
       if(InEvs.ne."done")       call SetVFNS
       if(InTheory.ne."done")    call SetTheory("QCD")
-      if(InFastEvol.ne."done")  call SetFastEvolution(.false.)
+      if(InFastEvol.ne."done")  call SetFastEvolution(.true.)
       if(InTimeLike.ne."done")  call SetTimeLikeEvolution(.false.)
       if(InSmallx.ne."done")    call SetSmallxResummation(.false.,"NLL")
       if(InAlpQCD.ne."done")    call SetAlphaQCDRef(0.35d0,dsqrt(2d0))

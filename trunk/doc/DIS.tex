@@ -91,4 +91,130 @@ $F_2^p$) while in the C++ version they are numerated from 0 to 4 ($e.g.$ {\tt F2
 $F_2^c$, {\tt F2(2)} = $F_2^b$, {\tt F2(3)} = $F_2^t$, {\tt F2(4)} =
 $F_2^p$)
 
+
+\section{Computing DIS Structure Functions on a Grid}
+
+In order to speed up and optimize the compution of the DIS structure
+functions in {\tt APFEL} we decided to use the same technology used
+for the PDF evolution. In fact, up to version 2.0.0, the computation
+of such observables in {\tt APFEL} was perfomed by directly
+convoluting PDFs with the coefficient functions by mean of a
+numerical integration.
+
+Now the aim is that of precomputing on a grid the convolution of the
+coefficient functions with a set of interpolating polynomials. This
+way, the time consuming task of precomputing the coefficient functions
+of the grid needs to be done only once and the numerical convolution
+with any PDF set is instead very fast. In addition, as we will see
+below, this approach provides a very natural framework to combine
+precomputed coefficient functions and evolution operators, so that any
+prediction of structure functions at any scale $Q$ can be obtained
+very quickly by convolution with PDFs at some initial scale $Q_0$. 
+Ultimately, this is particularly suitable for PDF fits.
+
+A structure function in the Zero-Mass (ZM) scheme is given by the
+following convolution:
+\begin{equation}
+F(x,Q) = \sum_{i=g,q}x\int_x^1\frac{dy}y C_i\left(\frac{x}{y},\alpha_s(Q)\right)q_i(y,Q)\,,
+\end{equation}
+Now, defining $t = \ln (Q^2)$, $\widetilde{C}_i^{(n)}(y,t) = yC_i^{(n)}(y,\alpha_s(Q))$
+and $\widetilde{q}_i(y,t) = y q_i(y,Q)$, the integral above can be
+written as:
+\begin{equation}\label{exact}
+F(x,t) = \sum_{i=g,q}\int_x^1\frac{dy}y \widetilde{C}_i\left(\frac{x}{y},t\right)\widetilde{q}_i(y,t)\,.
+\end{equation}
+But, using a suitable interpolation basis, we can write:
+\begin{equation}
+\tilde{q}_i(y,t)=\sum^{N_{x}}_{\alpha=0}w_{\alpha}^{(k)}(y)\tilde{q}_i(x_{\alpha},t)\,,
+\end{equation}
+so that eq. (\ref{exact}) becomes:
+\begin{equation}
+F(x,t) = \sum_{i=g,q}\sum^{N_{x}}_{\alpha=0}\left[\int_x^1\frac{dy}y \widetilde{C}_i\left(\frac{x}{y},t\right) w_{\alpha}^{(k)}(y)\right]\tilde{q}_i(x_{\alpha},t)\,.
+\end{equation}
+Now let's assume that $x$ is on the grid, so that $x = x_\beta$. This
+way we have:
+\begin{equation}
+F(x_\beta,t) = \sum_{i=g,q}\sum^{N_{x}}_{\alpha=0}\underbrace{\left[\int_{x_\beta}^1\frac{dy}y \widetilde{C}_i\left(\frac{x_\beta}{y},t\right) w_{\alpha}^{(k)}(y)\right]}_{\Gamma_{i,\beta\alpha}(t)}\tilde{q}(x_{\alpha},t)\,.
+\end{equation}
+
+Using the same arguments presented in the evolution code notes, we
+have that:
+\begin{equation}
+\Gamma_{i,\beta\alpha}(t) \neq 0 \quad\mbox{for}\quad\beta\leq\alpha\,,
+\end{equation}
+and:
+\begin{equation}
+\Gamma_{i,\beta\alpha}(t) = \int_{c}^d\frac{dy}y \widetilde{C}_i\left(y,t\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)
+\end{equation}
+with:
+\begin{equation}\label{bounds2}
+c =  \mbox{max}(x_\beta,x_\beta/x_{\alpha+1}) \quad\mbox{and}\quad d = \mbox{min}(1,x_\beta/x_{\alpha-k}) \,.
+\end{equation}
+The same symmetries holding for the splitting function case hold also here.
+
+\section{Coefficient Functions Treatment}
+
+The struncture of the DIS coefficient functions is very similar to
+that of splitting functions with only one small complication, that is
+the presence of a more divergent singular term. In practice the
+structure of the DIS coefficient functions is the following:
+\begin{equation}
+\widetilde{C}_{i}(x,t) = xC_{i}^{R}(x,t) +
+xC_{i}^{S1}(t)\left[\frac{1}{1-x}\right]_+ +
+xC_{i}^{S2}(t)\left[\frac{\ln(1-x)}{1-x}\right]_+ + xC_{i}^{L}(t)\delta(1-x)\,.
+\end{equation}
+The term proportional to $C_{i}^{S2}$ can be treated, considering that:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \int_c^ddy\left[\frac{\ln(1-y)}{1-y}\right]_+f(y)
+&=&\displaystyle \int_c^ddy\frac{\ln(1-y)}{1-y}\left[f(y)-f(1)\theta(d-1)\right]\\
+\\
+&+&\displaystyle \frac12 f(1) \ln^2(1-c)\theta(d-1)
+\end{array}
+\end{equation}
+On the same line of splitting functions, we know that the coefficient
+functions ha the following perturbative expansion:
+\begin{equation}
+C_{i}^{J}(x,t) = \sum_{n=0}^{N}a_s^{n}(t)C_{i}^{J,(n)}(x)\qquad\mbox{with}\qquad J=R,S1,S2,L
+\end{equation}
+
+Therefore one has that:
+\begin{equation}
+\begin{array}{c}
+\displaystyle \Gamma_{j,\beta\alpha}(t) = \\
+\\
+\displaystyle \sum_{n=0}^{N} a_s^{n}(t) \bigg\{\int^{d}_{c}dy\left[{C}_{i}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{C}_{i}^{S1,(n)}+{C}_{i}^{S2,(n)}\ln(1-y)}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\theta(d-1)\right)\right]\\
+\\
+\displaystyle +\left[{C}_{i}^{S1,(n)}\ln(1-c)\theta(d-1)+\frac12{C}_{i}^{S2,(n)}\ln^2(1-c)\theta(d-1)+{C}_{i}^{L,(n)}\right]\delta_{\beta\alpha}\bigg\}\,.
+\end{array}
+\end{equation}
+
+Calling:
+\begin{equation}
+\begin{array}{c}
+\displaystyle \Gamma_{i,\beta\alpha}^{(n)}(t) = \\
+\\
+\displaystyle \int^{d}_{c}dy\left[{C}_{i}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{C}_{i}^{S1,(n)}+{C}_{i}^{S2,(n)}\ln(1-y)}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\theta(d-1)\right)\right]\\
+\\
+\displaystyle +\left[{C}_{i}^{S1,(n)}\ln(1-c)\theta(d-1)+\frac12{C}_{i}^{S2,(n)}\ln^2(1-c)\theta(d-1)+{C}_{i}^{L,(n)}\right]\delta_{\beta\alpha}\,,
+\end{array}
+\end{equation}
+we have that:
+\begin{equation}\label{splittingexp}
+\Gamma_{i,\beta\alpha}(t) = \sum_{n=0}^{N} a_s^{n}(t) \Gamma_{i,\beta\alpha}^{(n)}\,,
+\end{equation}
+and the integrals $\Gamma_{i,\beta\alpha}^{(n)}$ do not depend on the energy therefore, once the grid (and the number of active flavours) has been fixed, they can be evaluate once and for all at the beginning and used for the convolution at any scale.
+
+Now, assuming to have computed the evolution operator
+$M_{ij,\alpha\beta}(t,t_0)$ between the
+scales $t=\ln(Q^2)$ and $t_0=\ln(Q_0^2)$ on the same grid where we
+have computed the operator $\Gamma_{i,\beta\alpha}(t)$, one can esily
+combine the two obtaining the prediction for the structure function
+$F$ on the grid in terms of PDFs at the initial scale $Q_0$ just by performing the
+following convolution:
+\begin{equation}
+F(x_\alpha,t) = \Gamma_{i,\alpha\beta}(t) M_{ij,\beta\gamma}(t,t_0) \tilde{q}_j(x_{\gamma},t_0)
+\end{equation}
+where a sum of the repeated indeces is understood.
+
 \end{document}
