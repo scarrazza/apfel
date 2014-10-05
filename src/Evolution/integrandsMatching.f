@@ -109,8 +109,8 @@ c      integrandsMatching = MR(k,wipt) * fR
 **
 *     Internal Variables
 *
-      double precision z,w_int,fR,fS,fL
-      double precision MR(7,0:2),MS(7,0:2)
+      double precision z,w_int,fR!,fS,fL
+      double precision MR(7,0:2)!,MS(7,0:2)
       double precision AS1HgT
 **
 *     Output Variables
@@ -120,12 +120,12 @@ c      integrandsMatching = MR(k,wipt) * fR
 *     Interpolant functions
 *
       z = xg(igrid,wbeta) / y
-*
-      fL = 0d0
-      if(walpha.eq.wbeta) fL = 1d0
+c*
+c      fL = 0d0
+c      if(walpha.eq.wbeta) fL = 1d0
 *
       fR = w_int(inter_degree(igrid),walpha,z)
-      fS = fR - fL
+c      fS = fR - fL
 *
 *     Contructing integrands order by order
 *
@@ -138,7 +138,7 @@ c      integrandsMatching = MR(k,wipt) * fR
          else
             MR(k,1) = 0d0
          endif
-         MS(k,1) = 0d0
+c         MS(k,1) = 0d0
       endif
 *
 c      integrandsMatchingT = MR(k,wipt) * fR + MS(k,wipt) * fS

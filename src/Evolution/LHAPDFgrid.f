@@ -2,8 +2,9 @@
 *
 *     LHAPDFgrid.f:
 *
-*     This subrotine produces the file *.LHgrid that can be used with 
-*     LHAPDF v5.9.
+*     If LHAPDF5 is found, this subrotine produces the *.LHgrid file 
+*     that can be used with LHAPDF v5.9. If instead LHAPDF6 is found
+*     a folder contained the PDF set in a suitable format is produced.
 *
 ************************************************************************
       subroutine LHAPDFgrid(Nrep,Qin,fname)
@@ -54,7 +55,9 @@ c      call lambda(3,lref,lambda3)
       lambda5 = lambdaNF(5,alpha_ref_qcd,q2_ref_qcd)
       lambda4 = lambdaNF(4,alpha_ref_qcd,q2_ref_qcd)
       lambda3 = lambdaNF(3,alpha_ref_qcd,q2_ref_qcd)
-
+*
+*     LHAPDF5 output
+*
       if (islhapdf6().eqv..false.) then
 *     
 *     Open the output file
@@ -73,7 +76,7 @@ c      call lambda(3,lref,lambda3)
          write(13,*)"' '"
          write(13,*)"' '"
          write(13,*)"' '"
-         write(13,*)"'This set has ",Nrep+1," member PDF'"
+         write(13,*)"'This set has ",Nrep," member PDF'"
          write(13,*)"'mem=0 --> average on replicas. '"
          write(13,*)"'Evolution: pol. interpolation on the LH grid.'"
 *     
@@ -129,7 +132,7 @@ c      call lambda(3,lref,lambda3)
          do ix=1,nxLHA
             if(ix.le.nxmLHA)then
                xbLHA(ix) = xminLHA * ( xmLHA / xminLHA )
-     1              **( 2d0 * dble( ix-1 ) / dble( nxLHA - 1 ) )
+     1              **( 2d0 * dble( ix - 1 ) / dble( nxLHA - 1 ) )
             else
                xbLHA(ix) = xmLHA + ( xmaxLHA - xmLHA )
      1              * ( dble( ix - nxmLHA - 1 )
@@ -183,9 +186,10 @@ c      call lambda(3,lref,lambda3)
 *     
          write(6,*) "File ",fname(1:ln),".LHgrid produced!"
          write(6,*) "  "
-*     
       else
+*
 *     LHAPDF6 output
+*
          ln = index(fname,char(0)) - 1
 *     creating main folder
          call mkdir(fname(1:ln))
@@ -284,13 +288,13 @@ c      call lambda(3,lref,lambda3)
             write(13,*) "---"
             write(13,*) (xbLHA(ix), ix=1,nxLHA)
             write(13,*) (dsqrt(q2LHA(iq2)), iq2=1,nq2LHA)
-            
+*
             if(Th.eq."QCD") then
                write(13,"(a)") "-6 -5 -4 -3 -1 -2 21 2 1 3 4 5 6"
             else
                write(13,"(a)") "-6 -5 -4 -3 -1 -2 21 2 1 3 4 5 6 22"
             endif
-            
+*
             call SetReplica(krep)
             do iq2=1,nq2LHA
                call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
@@ -321,11 +325,11 @@ c      call lambda(3,lref,lambda3)
          enddo
 *     
          write(6,*) "File ",fname(1:ln)," grid produced!"
-         write(6,*) "  "
-*     
+         write(6,*) "  "     
       endif
- 44   format(13((es14.7)))
- 45   format(14((es14.7)))
+*
+ 44   format(13(1x,es14.7))
+ 45   format(14(1x,es14.7))
 *     
       return
       end
