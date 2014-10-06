@@ -311,11 +311,11 @@ c      data eps / 1d-9, 1d-7, 1d-5 /
 *
 *     Precompute integrals
 *
-      fsg = ( dlog(1d-5) / dlog(xg(igrid,alpha)) )**2d0
-      fns = 1d0 / ( 1d0 - ( ( xg(igrid,alpha) - 2d-1 ) 
-     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
-c      fsg = 1d0
-c      fns = 1d0
+c      fsg = ( dlog(1d-5) / dlog(xg(igrid,alpha)) )**2d0
+c      fns = 1d0 / ( 1d0 - ( ( xg(igrid,alpha) - 2d-1 ) 
+c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
+      fsg = 1d0
+      fns = 1d0
 *
       wipt = 0
       ns0L = X0NSC(a)

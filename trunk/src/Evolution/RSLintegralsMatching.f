@@ -124,7 +124,7 @@
       double precision dgauss,a,b,eps
       double precision integrandsMatchingT
       external integrandsMatchingT
-      parameter(eps=1d-4)
+      parameter(eps=1d-5)
 *
 *     Initialize Integrals
 *
