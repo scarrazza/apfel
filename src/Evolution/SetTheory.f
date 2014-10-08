@@ -2,7 +2,7 @@
 *
 *     SetTheory.f:
 *
-*     This subroutine sets the FFNS as a default.
+*     This subroutine sets the evolution theory to be used.
 *
 ************************************************************************
       subroutine SetTheory(theory)
