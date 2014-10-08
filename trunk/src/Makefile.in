@@ -121,7 +121,7 @@ am__objects_8 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
 	Evolution/dxgamma.lo Evolution/DeriveQCD.lo \
 	Evolution/DeriveQED.lo Evolution/DerivePDFs.lo \
 	Evolution/xGrid.lo Evolution/nIntervals.lo
-am__objects_9 = core/dgauss.lo core/wgplg.lo core/ddilog.lo
+am__objects_9 = core/dgauss.lo core/wgplg.lo core/ddilog.lo core/gamma.lo core/beta.lo
 am__objects_10 = DIS/cc_dis.lo DIS/FF0CoefficientFunctions.lo \
 	DIS/integrands_cc.lo DIS/nc_dis.lo DIS/xcoeffunc_cc.lo \
 	DIS/xpdfs.lo DIS/dis_xsec.lo DIS/FFCoefficientFunctions.lo \
@@ -358,7 +358,7 @@ PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQE
 	Evolution/dxPDF.f Evolution/dxgamma.f Evolution/DeriveQCD.f Evolution/DeriveQED.f Evolution/DerivePDFs.f \
 	Evolution/xGrid.f Evolution/nIntervals.f
 
-UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f
+UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f core/gamma.f core/beta.f
 DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
 EXTRA_DIST = commons
 HELL = HELL/src/hell.cc HELL/src/DGLAPevol.cc HELL/src/hell_wrapper.cc
@@ -663,6 +663,8 @@ core/$(DEPDIR)/$(am__dirstamp):
 core/dgauss.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
 core/wgplg.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
 core/ddilog.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
+core/gamma.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
+core/beta.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
 DIS/$(am__dirstamp):
 	@$(MKDIR_P) DIS
 	@: > DIS/$(am__dirstamp)
@@ -977,6 +979,10 @@ mostlyclean-compile:
 	-rm -f HELL/src/hell_wrapper.lo
 	-rm -f core/ddilog.$(OBJEXT)
 	-rm -f core/ddilog.lo
+	-rm -f core/gamma.$(OBJEXT)
+	-rm -f core/gamma.lo
+	-rm -f core/beta.$(OBJEXT)
+	-rm -f core/beta.lo
 	-rm -f core/dgauss.$(OBJEXT)
 	-rm -f core/dgauss.lo
 	-rm -f core/wgplg.$(OBJEXT)

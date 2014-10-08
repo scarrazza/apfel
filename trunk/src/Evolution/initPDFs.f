@@ -232,6 +232,18 @@
             f0bos(alpha)   = 0d0
          enddo
 *
+*     Kretzer's parametrization at Q2 = 0.4 GeV^2 of the light partons
+*     for pi+ taken at NLO from hep-ph/0003177 (used for the benchmark).
+*
+      elseif(pdfset(1:7).eq."kretzer")then
+         do alpha=0,nin(igrid)
+            call KretzerFFs(xg(igrid,alpha),f0)
+            do ifl=-6,6
+               f0ph(ifl,alpha) = f0(ifl)
+            enddo
+            f0bos(alpha) = 0d0
+         enddo
+*
 *     LHAPDF set
 *
       else

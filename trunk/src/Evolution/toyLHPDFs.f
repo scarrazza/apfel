@@ -136,3 +136,62 @@
 *
       return
       end
+*
+************************************************************************
+*
+*     Kretzer's parametrization at Q2 = 0.4 GeV^2 of the light partons
+*     for pi+ taken at NLO from hep-ph/0003177.
+*
+************************************************************************
+      subroutine KretzerFFs(x,xff)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision x
+**
+*     Internal Variables
+*
+      integer iff
+      double precision ag,bg,N_g
+      double precision as,bs,N_s
+      double precision al,bl,N_l
+      double precision beta
+**
+*     Output Variables
+*
+      double precision xff(-6:6)
+*
+*     Security cutoff
+*
+      if(x.gt.1d0) x = 1d0
+*
+*     Parameters of the User defined PDFs
+*
+      al  = -0.829d0
+      bl  = 0.949d0
+      N_l = 0.264d0 / beta(al+2d0,bl+1d0)
+      as  = al
+      bs  = bl + 1d0
+      N_s = 0.165d0 / beta(as+2d0,bs+1d0)
+      ag  = 4.374d0
+      bg  = 9.778d0
+      N_g = 0.215d0 / beta(ag+2d0,bg+1d0)
+*
+*     Initialize PDFs to zero
+*
+      do iff=-6,6
+         xff(iff) = 0d0
+      enddo
+*
+      xff(3)  = x * N_s * x**as * ( 1d0 - x )**bs
+      xff(2)  = x * N_l * x**al * ( 1d0 - x )**bl
+      xff(1)  = xff(3)
+      xff(0)  = x * N_g * x**ag * ( 1d0 - x )**bg
+      xff(-1) = xff(2)
+      xff(-2) = xff(1)
+      xff(-3) = xff(3)
+*
+      return
+      end
