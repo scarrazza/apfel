@@ -167,6 +167,14 @@ def LUMI(*args):
   return _apfel.LUMI(*args)
 LUMI = _apfel.LUMI
 
+def xGrid(*args):
+  return _apfel.xGrid(*args)
+xGrid = _apfel.xGrid
+
+def nIntervals():
+  return _apfel.nIntervals()
+nIntervals = _apfel.nIntervals
+
 def GetVersion():
   return _apfel.GetVersion()
 GetVersion = _apfel.GetVersion
