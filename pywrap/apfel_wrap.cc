@@ -3574,6 +3574,13 @@ SWIG_AsPtr_std_string (PyObject * obj, std::string **val)
 }
 
 
+SWIGINTERNINLINE PyObject*
+  SWIG_From_int  (int value)
+{
+  return PyInt_FromLong((long) value);
+}
+
+
 SWIGINTERNINLINE PyObject *
 SWIG_FromCharPtrAndSize(const char* carray, size_t size)
 {
@@ -4664,13 +4671,13 @@ SWIGINTERN PyObject *_wrap_ExternalEvolutionOperator(PyObject *SWIGUNUSEDPARM(se
   PyObject *resultobj = 0;
   int arg1 ;
   int arg2 ;
-  int arg3 ;
+  double arg3 ;
   int arg4 ;
   int val1 ;
   int ecode1 = 0 ;
   int val2 ;
   int ecode2 = 0 ;
-  int val3 ;
+  double val3 ;
   int ecode3 = 0 ;
   int val4 ;
   int ecode4 = 0 ;
@@ -4691,11 +4698,11 @@ SWIGINTERN PyObject *_wrap_ExternalEvolutionOperator(PyObject *SWIGUNUSEDPARM(se
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ExternalEvolutionOperator" "', argument " "2"" of type '" "int""'");
   } 
   arg2 = static_cast< int >(val2);
-  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ExternalEvolutionOperator" "', argument " "3"" of type '" "int""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ExternalEvolutionOperator" "', argument " "3"" of type '" "double""'");
   } 
-  arg3 = static_cast< int >(val3);
+  arg3 = static_cast< double >(val3);
   ecode4 = SWIG_AsVal_int(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
     SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ExternalEvolutionOperator" "', argument " "4"" of type '" "int""'");
@@ -4954,6 +4961,41 @@ SWIGINTERN PyObject *_wrap_LUMI(PyObject *SWIGUNUSEDPARM(self), PyObject *args) 
   arg3 = static_cast< double >(val3);
   result = (double)APFEL::LUMI(arg1,arg2,arg3);
   resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_xGrid(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:xGrid",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "xGrid" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  result = (double)APFEL::xGrid(arg1);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_nIntervals(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":nIntervals")) SWIG_fail;
+  result = (int)APFEL::nIntervals();
+  resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
 fail:
   return NULL;
@@ -5920,6 +5962,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"NPDF", _wrap_NPDF, METH_VARARGS, NULL},
 	 { (char *)"Ngamma", _wrap_Ngamma, METH_VARARGS, NULL},
 	 { (char *)"LUMI", _wrap_LUMI, METH_VARARGS, NULL},
+	 { (char *)"xGrid", _wrap_xGrid, METH_VARARGS, NULL},
+	 { (char *)"nIntervals", _wrap_nIntervals, METH_VARARGS, NULL},
 	 { (char *)"GetVersion", _wrap_GetVersion, METH_VARARGS, NULL},
 	 { (char *)"CleanUp", _wrap_CleanUp, METH_VARARGS, NULL},
 	 { (char *)"EnableWelcomeMessage", _wrap_EnableWelcomeMessage, METH_VARARGS, NULL},
