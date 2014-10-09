@@ -3,4 +3,4 @@
       integer irep
       character*4 InRep
 *
-      common / iReplica / irep,InRep
+      common / iReplicaAPFEL / irep,InRep

@@ -5,4 +5,4 @@
       logical TimeLike
       character*4 InTimeLike
 *
-      common / TimeLikeEvolutionSwitch / TimeLike,InTimeLike
+      common / TimeLikeEvolutionSwitchAPFEL / TimeLike,InTimeLike

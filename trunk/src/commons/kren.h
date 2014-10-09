@@ -3,4 +3,4 @@
       double precision kren
       character*4 InKren
 *
-      common / FactRenRatio / kren,InKren
+      common / FactRenRatioAPFEL / kren,InKren

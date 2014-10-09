@@ -21,8 +21,8 @@
 
       double precision xgext(0:ngrid_max,0:nint_max)
 *
-      common / GridPar / xmin,ngrid,igrid,nin,inter_degree,
-     1                   DensityFactor,TransitionPoint,InGrid,IsExt,
-     2                   ThereAreExtGrids
-      common / Grid / xg,step
-      common / ExtGrid / xgext
+      common / GridParAPFEL / xmin,ngrid,igrid,nin,inter_degree,
+     1                        DensityFactor,TransitionPoint,InGrid,
+     2                        IsExt,ThereAreExtGrids
+      common / GridAPFEL / xg,step
+      common / ExtGridAPFEL / xgext

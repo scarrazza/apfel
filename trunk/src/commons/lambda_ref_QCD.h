@@ -5,5 +5,5 @@
       double precision LambdaQCD(3:6)
       character*4 InLambdaQCD
 *
-      common / LambdaQCD / lambda_ref_qcd,LambdaQCD,n_ref_qcd,
-     1                     InLambdaQCD
+      common / LambdaQCDAPFEL / lambda_ref_qcd,LambdaQCD,n_ref_qcd,
+     1                          InLambdaQCD

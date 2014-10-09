@@ -6,4 +6,4 @@
       logical Smallx
       character*4 InSmallx
 *
-      common / SmallxResummationSwitch / LogAcc,Smallx,InSmallx
+      common / SmallxResummationSwitchAPFEL / LogAcc,Smallx,InSmallx
