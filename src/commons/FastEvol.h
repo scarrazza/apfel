@@ -5,4 +5,4 @@
       logical FastEvol
       character*4 InFastEvol
 *
-      common / FastEvolutionSwitch / FastEvol,InFastEvol
+      common / FastEvolutionSwitchAPFEL / FastEvol,InFastEvol

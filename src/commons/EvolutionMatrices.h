@@ -29,10 +29,10 @@
       double precision MUninsmu(3:6,0:nint_max,0:nint_max)
       double precision MUninsmd(3:6,0:nint_max,0:nint_max)
 *
-      common / ActiveFlav / nfi,nff,sgn
-      common / EvolMatQCD / MQCDsg,MQCDnsp,MQCDnsm,MQCDnsv,
-     1                      dMQCDsg,dMQCDnsp,dMQCDnsm,dMQCDnsv
-      common / EvolMatQED / MQEDsg,MQEDnsp,MQEDnsm,
-     1                      dMQEDsg,dMQEDnsp,dMQEDnsm
-      common / EvolMatUni / MUnisg1,MUnisg2,MUninspu,MUninspd,
-     1                                      MUninsmu,MUninsmd
+      common / ActiveFlavAPFEL / nfi,nff,sgn
+      common / EvolMatQCDAPFEL / MQCDsg,MQCDnsp,MQCDnsm,MQCDnsv,
+     1                           dMQCDsg,dMQCDnsp,dMQCDnsm,dMQCDnsv
+      common / EvolMatQEDAPFEL / MQEDsg,MQEDnsp,MQEDnsm,
+     1                           dMQEDsg,dMQEDnsp,dMQEDnsm
+      common / EvolMatUniAPFEL / MUnisg1,MUnisg2,MUninspu,MUninspd,
+     1                           MUninsmu,MUninsmd

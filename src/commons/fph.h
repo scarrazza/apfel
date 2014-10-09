@@ -8,5 +8,5 @@
       double precision dfph(0:ngrid_max,-6:6,0:nint_max)
       double precision dfgamma(0:ngrid_max,0:nint_max)
 *
-      common / pdff / fph,fgamma
-      common / dpdff / dfph,dfgamma
+      common / pdffAPFEL / fph,fgamma
+      common / dpdffAPFEL / dfph,dfgamma

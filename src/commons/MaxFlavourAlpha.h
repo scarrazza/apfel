@@ -3,4 +3,4 @@
       integer nfMaxAlpha
       character*4 InMFA
 *
-      common / MaxFlAlpha / nfMaxAlpha,InMFA
+      common / MaxFlAlphaAPFEL / nfMaxAlpha,InMFA

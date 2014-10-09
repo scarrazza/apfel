@@ -5,4 +5,4 @@
       double precision f0ph(-6:6,0:nint_max)
       double precision f0bos(0:nint_max)
 *
-      common / pdf0 / f0ph,f0bos
+      common / pdf0APFEL / f0ph,f0bos
