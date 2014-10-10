@@ -8,4 +8,5 @@ mostlyclean-local:
 	rm -rf a.out
 	rm -rf autom4te.cache
 	rm -rf src/DIS/.deps src/core/.deps
+	rm -rf src/DIS_new/.deps
 
