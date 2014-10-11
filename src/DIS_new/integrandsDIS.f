@@ -44,6 +44,9 @@
       double precision C2G1A,C2NS1A,C2NS1B
       double precision CLG1A,CLNS1A
       double precision C3NS1A,C3NS1B
+      double precision C2G2A,C2PS2A,C2NSP2A,C2NS2B
+      double precision CLG2A,CLPS2A,CLNSP2A
+      double precision C3NSP2A,C3NS2B
 **
 *     Output Variables
 *
@@ -111,40 +114,57 @@
             endif
          endif
       endif
-c$$$*
-c$$$*     NNLO
-c$$$*
-c$$$*     Plus
-c$$$      if(wipt.ge.2)then
-c$$$         if(k.eq.1)then
-c$$$            PR(k,2) = P2NSPA(y,wnf)
-c$$$            PS(k,2) = P2NSB(y,wnf)
-c$$$*     Minus
-c$$$         elseif(k.eq.2)then
-c$$$            PR(k,2) = P2NSMA(y,wnf)
-c$$$            PS(k,2) = P2NSB(y,wnf)
-c$$$*     Valence
-c$$$         elseif(k.eq.3)then
-c$$$            PR(k,2) = P2NSMA(y,wnf) + P2NSSA(y,wnf)
-c$$$            PS(k,2) = P2NSB(y,wnf)
-c$$$*     Quark-Quark
-c$$$         elseif(k.eq.4)then
-c$$$            PR(k,2) = P2NSPA(y,wnf) + P2PSA(y,wnf)
-c$$$            PS(k,2) = P2NSB(y,wnf)
-c$$$*     Quark-Gluon
-c$$$         elseif(k.eq.5)then
-c$$$            PR(k,2) = P2QGA(y,wnf)
-c$$$            PS(k,2) = 0d0
-c$$$*     Gluon-Quark
-c$$$         elseif(k.eq.6)then
-c$$$            PR(k,2) = P2GQA(y,wnf)
-c$$$            PS(k,2) = 0d0
-c$$$*     Gluon-Gluon
-c$$$         elseif(k.eq.7)then
-c$$$            PR(k,2) = P2GGA(y,wnf)
-c$$$            PS(k,2) = P2GGB(y,wnf)
-c$$$         endif
-c$$$      endif
+*
+*     NNLO
+*
+      if(wipt.ge.2)then
+*     C2
+         if(sf.eq.1)then
+*     Gluon
+            if(k.eq.1)then
+               C2R(k,2) = C2G2A(y,1)
+               C2S(k,2) = 0d0
+*     Pure-singlet
+            elseif(k.eq.2)then
+               C2R(k,2) = C2PS2A(y,1)
+               C2S(k,2) = 0d0
+*     Non-singlet
+            elseif(k.eq.3)then
+               C2R(k,2) = C2NSP2A(y,wnf)
+               C2S(k,2) = C2NS2B(y,wnf)
+            endif
+*     CL
+         elseif(sf.eq.2)then
+*     Gluon
+            if(k.eq.1)then
+               CLR(k,2) = CLG2A(y,1)
+               CLS(k,2) = 0d0
+*     Pure-singlet
+            elseif(k.eq.2)then
+               CLR(k,2) = CLPS2A(y,1)
+               CLS(k,2) = 0d0
+*     Non-singlet
+            elseif(k.eq.3)then
+               CLR(k,2) = CLNSP2A(y,wnf)
+               CLS(k,2) = 0d0
+            endif
+*     C3
+         elseif(sf.eq.3)then
+*     Gluon
+            if(k.eq.1)then
+               C3R(k,2) = 0d0
+               C3S(k,2) = 0d0
+*     Pure-singlet
+            elseif(k.eq.2)then
+               C3R(k,2) = 0d0
+               C3S(k,2) = 0d0
+*     Non-singlet
+            elseif(k.eq.3)then
+               C3R(k,2) = C3NSP2A(y,wnf)
+               C3S(k,2) = C3NS2B(y,wnf)
+            endif
+         endif
+      endif
 *
       if(sf.eq.1)then
          integrandsDIS = C2R(k,wipt) * fR + C2S(k,wipt) * fS

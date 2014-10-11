@@ -39,10 +39,13 @@
       double precision integrandsDIS
       double precision integC2(0:2),integCL(0:2),integC3(0:2)
       double precision C2ns1RS,C2ns1L,C2g1R,CLns1RS,CLg1R,C3ns1RS,C3ns1L
+      double precision C2g2R,C2g2L,C2ps2R,C2ns2RS,C2ns2L,CLg2R,CLns2RS
+      double precision CLps2R,CLns2L,C3ps2R,C3ns2RS,C3ns2L
       double precision C2NS1C,C3NS1C
+      double precision C2G2C,C2NSP2C,CLNSP2C,C3NSP2C
       external integrandsDIS
 c      data eps / 5d-8, 1d-3 /
-      data eps / 5d-8, 1d-4 /
+      data eps / 5d-8, 1d-5 /
 c      data eps / 1d-7, 1d-5 /
 *
 *     Initialize Integrals
@@ -79,45 +82,55 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     Precompute integrals
 *
-      if(ipt.ge.1)then
-         wipt = 1
-         sf = 1
-         k = 1
-         C2g1R = dgauss(integrandsDIS,a,b,eps(wipt))
-         k = 3
-         C2ns1RS = dgauss(integrandsDIS,a,b,eps(wipt))
-         C2ns1L  = C2NS1C(a)
-         sf = 2
-         k = 1
-         CLg1R = dgauss(integrandsDIS,a,b,eps(wipt))
-         k = 3
-         CLns1RS = dgauss(integrandsDIS,a,b,eps(wipt))
-         sf = 3
-         k = 3
-         C3ns1RS = dgauss(integrandsDIS,a,b,eps(wipt))
-         C3ns1L  = C3NS1C(a)
-      endif
-c$$$      if(ipt.ge.2)then
-c$$$         wipt = 2
-c$$$         ns2Lp = P2NSPC(a,nf)
-c$$$         ns2Lm = P2NSMC(a,nf)
-c$$$         gg2L  = P2GGC(a,nf)
-c$$$         k = 1
-c$$$         ns2RSp = dgauss(integrandsQCD,a,b,eps(wipt))
-c$$$         k = 2
-c$$$         ns2RSm = dgauss(integrandsQCD,a,b,eps(wipt))
-c$$$         k = 3
-c$$$         ns2RSv = dgauss(integrandsQCD,a,b,eps(wipt))
-c$$$         k = 4
-c$$$         qq2RS  = dgauss(integrandsQCD,a,b,eps(wipt))
-c$$$         k = 5
-c$$$         qg2RS  = dgauss(integrandsQCD,a,b,eps(wipt))
-c$$$         k = 6
-c$$$         gq2RS  = dgauss(integrandsQCD,a,b,eps(wipt))
-c$$$         k = 7
-c$$$         gg2RS  = dgauss(integrandsQCD,a,b,eps(wipt))
-c$$$      endif
-c$$$*
+         if(ipt.ge.1)then
+            wipt = 1
+            sf = 1
+            k = 1
+            C2g1R = dgauss(integrandsDIS,a,b,eps(wipt))
+            k = 3
+            C2ns1RS = dgauss(integrandsDIS,a,b,eps(wipt))
+            C2ns1L  = C2NS1C(a)
+            sf = 2
+*
+            k = 1
+            CLg1R = dgauss(integrandsDIS,a,b,eps(wipt))
+            k = 3
+            CLns1RS = dgauss(integrandsDIS,a,b,eps(wipt))
+            sf = 3
+*
+            k = 3
+            C3ns1RS = dgauss(integrandsDIS,a,b,eps(wipt))
+            C3ns1L  = C3NS1C(a)
+         endif
+         if(ipt.ge.2)then
+            wipt = 2
+            sf = 1
+            k = 1
+            C2g2R   = dgauss(integrandsDIS,a,b,eps(wipt))
+            C2g2L   = C2G2C(a,1)
+            k = 2
+            C2ps2R  = dgauss(integrandsDIS,a,b,eps(wipt))
+            k = 3
+            C2ns2RS = dgauss(integrandsDIS,a,b,eps(wipt))
+            C2ns2L  = C2NSP2C(a,inf)
+*
+            sf = 2
+            k = 1
+            CLg2R   = dgauss(integrandsDIS,a,b,eps(wipt))
+            k = 2
+            CLps2R  = dgauss(integrandsDIS,a,b,eps(wipt))
+            k = 3
+            CLns2RS = dgauss(integrandsDIS,a,b,eps(wipt))
+            CLns2L  = CLNSP2C(a)
+*
+            sf = 3
+            k = 2
+            C3ps2R  = dgauss(integrandsDIS,a,b,eps(wipt))
+            k = 3
+            C3ns2RS = dgauss(integrandsDIS,a,b,eps(wipt))
+            C3ns2L  = C3NSP2C(a,inf)
+         endif
+*
          do k=1,3
 *
 *     LO
@@ -139,6 +152,7 @@ c$$$*
          if(ipt.ge.1)then
 *     Gluon
             if(k.eq.1)then
+*     C2
                C2L(k,1)   = 0d0
                integC2(1) = C2g1R
 *     CL
@@ -149,6 +163,7 @@ c$$$*
                integC3(1) = 0d0
 *     Pure-Singlet
             elseif(k.eq.2)then
+*     C2
                C2L(k,1)   = 0d0
                integC2(1) = 0d0
 *     CL
@@ -159,6 +174,7 @@ c$$$*
                integC3(1) = 0d0
 *     Non-singlet
             elseif(k.eq.3)then
+*     C2
                C2L(k,1)   = C2ns1L
                integC2(1) = C2ns1RS
 *     CL
@@ -169,6 +185,48 @@ c$$$*
                integC3(1) = C3ns1RS
             endif
          endif
+*
+*     NNLO
+*
+         if(ipt.ge.2)then
+*     Gluon
+            if(k.eq.1)then
+*     C2
+               C2L(k,2)   = C2g2L
+               integC2(2) = C2g2R
+*     CL
+               CLL(k,2)   = 0d0
+               integCL(2) = CLg2R
+*     C3
+               C3L(k,2)   = 0d0
+               integC3(2) = 0d0
+*     Pure-Singlet
+            elseif(k.eq.2)then
+*     C2
+               C2L(k,2)   = 0d0
+               integC2(2) = C2ps2R
+*     CL
+               CLL(k,2)   = 0d0
+               integCL(2) = CLps2R
+*     C3
+               C3L(k,2)   = 0d0
+               integC3(2) = C2ps2R
+*     Non-singlet
+            elseif(k.eq.3)then
+*     C2
+               C2L(k,2)   = C2ns2L
+               integC2(2) = C2ns2RS
+*     CL
+               CLL(k,2)   = CLns2L
+               integCL(2) = CLns2RS
+*     C3
+               C3L(k,2)   = C3ns2L
+               integC3(2) = C3ns2RS
+            endif
+         endif
+
+
+
 c$$$*
 c$$$*     NNLO
 c$$$*
