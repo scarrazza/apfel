@@ -16,6 +16,7 @@
       include "../commons/integralsDIS.h"
       include "../commons/m2th.h"
       include "../commons/StructureFunctions.h"
+      include "../commons/TargetDIS.h"
 **
 *     Internal Variables
 *
@@ -33,6 +34,7 @@
       double precision F2t,FLt,F3t
       double precision as,a_QCD
       double precision bq(6),dq(6)
+      double precision fup,fub,fdw,fdb
 *
       Q2 = Q * Q
 *
@@ -57,6 +59,38 @@
 *
       do jgrid=1,ngrid
          do alpha=0,nin(jgrid)
+*
+*     Rearrange PDFs in case the target is not a proton.
+*     (This assumes isospin symmetry)
+*
+            if(TargetDIS(1:7).eq."neutron")then
+*     Exchage up and down
+               do beta=0,nin(jgrid)
+                  fdw = fph(jgrid,1,beta)
+                  fdb = fph(jgrid,-1,beta)
+                  fup = fph(jgrid,2,beta)
+                  fub = fph(jgrid,-2,beta)
+*
+                  fph(jgrid,1,beta)  = fup
+                  fph(jgrid,-1,beta) = fub
+                  fph(jgrid,2,beta)  = fdw
+                  fph(jgrid,-2,beta) = fdb
+               enddo
+            elseif(TargetDIS.eq."isoscalar")then
+*     Average up and down
+               do beta=0,nin(jgrid)
+                  fdw = fph(jgrid,1,beta)
+                  fdb = fph(jgrid,-1,beta)
+                  fup = fph(jgrid,2,beta)
+                  fub = fph(jgrid,-2,beta)
+*
+                  fph(jgrid,1,beta)  = ( fup + fdw ) / 2d0
+                  fph(jgrid,-1,beta) = ( fub + fdb ) / 2d0
+                  fph(jgrid,2,beta)  = fph(jgrid,1,beta)
+                  fph(jgrid,-2,beta) = fph(jgrid,-1,beta)
+               enddo
+            endif
+*
             do i=1,7
                F2(i,jgrid,alpha) = 0d0
             enddo
@@ -88,13 +122,9 @@
             do i=1,nf
                F2(7,jgrid,alpha) = F2(7,jgrid,alpha) + F2(i,jgrid,alpha)
             enddo
-         enddo
-      enddo
 *
 *     FL
 *
-      do jgrid=1,ngrid
-         do alpha=0,nin(jgrid)
             do i=1,7
                FL(i,jgrid,alpha) = 0d0
             enddo
@@ -126,13 +156,9 @@
             do i=1,nf
                FL(7,jgrid,alpha) = FL(7,jgrid,alpha) + FL(i,jgrid,alpha)
             enddo
-         enddo
-      enddo
 *
 *     F3
 *
-      do jgrid=1,ngrid
-         do alpha=0,nin(jgrid)
             do i=1,7
                F3(i,jgrid,alpha) = 0d0
             enddo

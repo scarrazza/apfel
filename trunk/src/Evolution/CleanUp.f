@@ -37,6 +37,8 @@
       include "../commons/MassScheme.h"
       include "../commons/ProcessDIS.h"
       include "../commons/PolarizationDIS.h"
+      include "../commons/ProjectileDIS.h"
+      include "../commons/TargetDIS.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -66,6 +68,8 @@
       InMassScheme      = "xxxx"
       inProcessDIS      = "xxxx"
       inPolarizationDIS = "xxxx"
+      inProjectileDIS   = "xxxx"
+      inTargetDIS       = "xxxx"
 *
       return
       end

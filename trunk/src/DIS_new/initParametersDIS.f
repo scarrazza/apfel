@@ -14,12 +14,16 @@
       include "../commons/MassScheme.h"
       include "../commons/ProcessDIS.h"
       include "../commons/PolarizationDIS.h"
+      include "../commons/ProjectileDIS.h"
+      include "../commons/TargetDIS.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
-      if(InMassScheme.ne."done")      call SetMassScheme("ZM-VFNS")   ! "ZM-VFNS", "FFNS", "FONLL-A", "FONLL-B" or "FONLL-C"
-      if(InProcessDIS.ne."done")      call SetProcessDIS("EM")        ! "EM", "NC" or "CC"
+      if(InMassScheme.ne."done")      call SetMassScheme("ZM-VFNS")     ! "ZM-VFNS", "FFNS", "FONLL-A", "FONLL-B" or "FONLL-C"
+      if(InProcessDIS.ne."done")      call SetProcessDIS("EM")          ! "EM", "NC" or "CC"
       if(InPolarizationDIS.ne."done") call SetPolarizationDIS(0d0)
+      if(InProjectileDIS.ne."done")   call SetProjectileDIS("electron") ! "electron", "positron", "neutrino" or "antineutrino"
+      if(InTargetDIS.ne."done")       call SetTargetDIS("proton")       ! "proton", "neutron" or "isoscalar"
 *
 *     Check the consistency of the input parameters
 *
@@ -64,6 +68,36 @@
          call exit(-10)
       endif
 *
+      if(ProjectileDIS(1:8).ne."electron".and.
+     1   ProjectileDIS(1:8).ne."positron".and.
+     2   ProjectileDIS(1:8).ne."neutrino".and.
+     3   ProjectileDIS.ne."antineutrino")then
+         write(6,*) "Projectile unknown:"
+         write(6,*) "ProjectileDIS = ",ProjectileDIS
+         write(6,*) "  "
+         write(6,*) "The options are:"
+         write(6,*) "- 'electron'"
+         write(6,*) "- 'positron'"
+         write(6,*) "- 'neutrino'"
+         write(6,*) "- 'antineutrino'"
+         write(6,*) "  "
+         call exit(-10)
+      endif
+*
+      if(TargetDIS(1:6).ne."proton".and.
+     1   TargetDIS(1:7).ne."neutron".and.
+     2   TargetDIS.ne."isoscalar")then
+         write(6,*) "Target unknown:"
+         write(6,*) "TargetDIS = ",TargetDIS
+         write(6,*) "  "
+         write(6,*) "The options are:"
+         write(6,*) "- 'proton'"
+         write(6,*) "- 'neutron'"
+         write(6,*) "- 'isoscalar'"
+         write(6,*) "  "
+         call exit(-10)
+      endif
+*
 *     Print welcome message and report of the parameters (if enabled)
 *
       if(Welcome)then
@@ -79,6 +113,18 @@
             write(6,"(a,a,a)") " Neutral current process"
          elseif(ProcessDIS.eq."CC")then
             write(6,"(a,a,a)") " Charged current process"
+         endif
+*
+         if(ProjectileDIS(1:8).eq."electron".or.
+     1      ProjectileDIS(1:8).eq."positron".or.
+     2      ProjectileDIS(1:8).eq."neutrino")then
+            write(6,"(a,a,a,a)") " Scattering ",
+     1                           ProjectileDIS(1:8),
+     2                           " - ",TargetDIS
+         else
+            write(6,"(a,a,a,a)") " Scattering ",
+     1                           ProjectileDIS,
+     3                           " - ",TargetDIS
          endif
 *
          write(6,"(a,f7.3)") " Polarization fraction =",PolarizationDIS
