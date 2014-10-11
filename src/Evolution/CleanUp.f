@@ -35,6 +35,7 @@
       include "../commons/Smallx.h"
       include "../commons/FastEvol.h"
       include "../commons/MassScheme.h"
+      include "../commons/ProcessDIS.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -62,6 +63,7 @@
       InPDFEvol    = "xxxx"
       InFastEvol   = "xxxx"
       InMassScheme = "xxxx"
+      inProcessDIS = "xxxx"
 *
       return
       end

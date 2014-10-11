@@ -2,7 +2,7 @@
 *
 *     SetMassScheme.f:
 *
-*     This subroutine sets the mass sche to be used for the computation
+*     This subroutine sets the mass scheme to be used for the computation
 *     of the DIS observables.
 *
 ************************************************************************
