@@ -14,7 +14,6 @@
       include "../commons/grid.h"
       include "../commons/fph.h"
       include "../commons/integralsDIS.h"
-      include "../commons/Charges.h"
       include "../commons/m2th.h"
       include "../commons/StructureFunctions.h"
 **
@@ -33,6 +32,7 @@
       double precision singlet
       double precision F2t,FLt,F3t
       double precision as,a_QCD
+      double precision bq(6),dq(6)
 *
       Q2 = Q * Q
 *
@@ -48,7 +48,10 @@
          nf = 3
       endif
 *
+*     Compute needed couplings
+*
       as = a_QCD(Q2)
+      call ComputeChargesDIS(Q2,bq,dq)
 *
 *     F2
 *
@@ -67,7 +70,7 @@
 *     F2 flavour by flavour
                do i=1,nf
                   do pt=0,ipt
-                     F2t = eq2(i) 
+                     F2t = bq(i) 
      1                   * ( SC2(jgrid,nf,1,pt,0,beta) ! Gluon
      2                   * fph(jgrid,0,alpha+beta)
      3                   + SC2(jgrid,nf,2,pt,0,beta)   ! Singlet
@@ -105,7 +108,7 @@
 *     FL flavour by flavour
                do i=1,nf
                   do pt=0,ipt
-                     FLt = eq2(i) 
+                     FLt = bq(i) 
      1                   * ( SCL(jgrid,nf,1,pt,0,beta) ! Gluon
      2                   * fph(jgrid,0,alpha+beta)
      3                   + SCL(jgrid,nf,2,pt,0,beta)   ! Singlet
@@ -137,8 +140,8 @@
 *     F3 flavour by flavour
                do i=1,nf
                   do pt=0,ipt
-                     F3t = eq2(i) 
-     1                   * SCL(jgrid,nf,3,pt,0,beta)   ! Non-singlet
+                     F3t = dq(i) 
+     1                   * SC3(jgrid,nf,3,pt,0,beta)   ! Non-singlet
      2                   * ( fph(jgrid,i,alpha+beta) 
      3                   - fph(jgrid,-i,alpha+beta) )
 *
