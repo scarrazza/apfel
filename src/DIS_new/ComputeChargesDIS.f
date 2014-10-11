@@ -10,6 +10,7 @@
       implicit none
 *
       include "../commons/ProcessDIS.h"
+      include "../commons/PolarizationDIS.h"
       include "../commons/SinThetaW.h"
       include "../commons/ZedMass.h"
 **
@@ -31,9 +32,12 @@
 *
       double precision bq(6),dq(6)
 *
+*     Polarization fraction
+*
+      pol = PolarizationDIS
+*
 *     temporary definitions
 *
-      pol = 0d0   ! no polarization
       ie  = - 1   ! Electron
 *
 *     Initialize charges and couplings
