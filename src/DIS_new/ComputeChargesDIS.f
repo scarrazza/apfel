@@ -11,6 +11,7 @@
 *
       include "../commons/ProcessDIS.h"
       include "../commons/PolarizationDIS.h"
+      include "../commons/ProjectileDIS.h"
       include "../commons/SinThetaW.h"
       include "../commons/ZedMass.h"
 **
@@ -36,9 +37,17 @@
 *
       pol = PolarizationDIS
 *
-*     temporary definitions
+*     Projectile
 *
-      ie  = - 1   ! Electron
+      if(ProjectileDIS(1:8).eq."electron")then
+         ie  = - 1
+      elseif(ProjectileDIS(1:8).eq."positron")then
+         ie  = 1
+      elseif(ProjectileDIS(1:8).eq."neutrino")then
+         ie  = 1
+      elseif(ProjectileDIS.eq."antineutrino")then
+         ie  = - 1
+      endif
 *
 *     Initialize charges and couplings
 *
@@ -82,6 +91,20 @@
 *
       ve = - 0.5d0 + 2d0 * sw
       ae = - 0.5d0
+*
+*     Set the electric charges to zero id the projectile is a
+*     neutrino or an antineutrino and correct the vector and axial
+*     couplings.
+*
+      if(ProjectileDIS(1:8).eq."neutrino".or.
+     1   ProjectileDIS.eq."antineutrino")then
+         do i=1,6
+            eq(i)  = 0d0
+            eq2(i) = 0d0
+         enddo
+         ve = 0.5d0 + 2d0 * sw
+         ae = 0.5d0
+      endif
 *
       if(ProcessDIS.eq."EM")then
          do i=1,6
