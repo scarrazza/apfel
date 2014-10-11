@@ -13,11 +13,13 @@
       include "../commons/Welcome.h"
       include "../commons/MassScheme.h"
       include "../commons/ProcessDIS.h"
+      include "../commons/PolarizationDIS.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
-      if(InMassScheme.ne."done") call SetMassScheme("ZM-VFNS")   ! "ZM-VFNS", "FFNS", "FONLL-A", "FONLL-B" or "FONLL-C"
-      if(InProcessDIS.ne."done") call SetProcessDIS("EM")        ! "EM", "NC" or "CC"
+      if(InMassScheme.ne."done")      call SetMassScheme("ZM-VFNS")   ! "ZM-VFNS", "FFNS", "FONLL-A", "FONLL-B" or "FONLL-C"
+      if(InProcessDIS.ne."done")      call SetProcessDIS("EM")        ! "EM", "NC" or "CC"
+      if(InPolarizationDIS.ne."done") call SetPolarizationDIS(0d0)
 *
 *     Check the consistency of the input parameters
 *
@@ -53,6 +55,15 @@
          call exit(-10)
       endif
 *
+      if(dabs(PolarizationDIS).gt.1d0)then
+         write(6,*) "Polarization fraction not allowed:"
+         write(6,*) "PolarizationDIS = ",PolarizationDIS
+         write(6,*) "  "
+         write(6,*) "PolarizationDIS must be between 1 and -1"
+         write(6,*) "  "
+         call exit(-10)
+      endif
+*
 *     Print welcome message and report of the parameters (if enabled)
 *
       if(Welcome)then
@@ -69,6 +80,8 @@
          elseif(ProcessDIS.eq."CC")then
             write(6,"(a,a,a)") " Charged current process"
          endif
+*
+         write(6,"(a,f7.3)") " Polarization fraction =",PolarizationDIS
 *
          write(6,*) " "
       endif
