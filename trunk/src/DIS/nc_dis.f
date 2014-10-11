@@ -913,8 +913,8 @@
 *
          IF(VFNS.EQ."ZMVN")THEN
             NNLOG2C = NNLOG2C + BQ(4) * C2G2C(X,1) * XGL(X,Q)
-            NNLOG2B = NNLOG2C + BQ(5) * C2G2C(X,1) * XGL(X,Q)
-            NNLOG2T = NNLOG2C + BQ(6) * C2G2C(X,1) * XGL(X,Q)
+            NNLOG2B = NNLOG2B + BQ(5) * C2G2C(X,1) * XGL(X,Q)
+            NNLOG2T = NNLOG2T + BQ(6) * C2G2C(X,1) * XGL(X,Q)
          ENDIF
 *
 *        Quark (non-singlet)

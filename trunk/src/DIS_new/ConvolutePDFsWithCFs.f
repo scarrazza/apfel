@@ -68,7 +68,7 @@
                do i=1,nf
                   do pt=0,ipt
                      F2t = eq2(i) 
-     1                   * ( 2d0 * SC2(jgrid,nf,1,pt,0,beta) ! Gluon
+     1                   * ( SC2(jgrid,nf,1,pt,0,beta) ! Gluon
      2                   * fph(jgrid,0,alpha+beta)
      3                   + SC2(jgrid,nf,2,pt,0,beta)   ! Singlet
      4                   * singlet
@@ -106,7 +106,7 @@
                do i=1,nf
                   do pt=0,ipt
                      FLt = eq2(i) 
-     1                   * ( 2d0 * SCL(jgrid,nf,1,pt,0,beta) ! Gluon
+     1                   * ( SCL(jgrid,nf,1,pt,0,beta) ! Gluon
      2                   * fph(jgrid,0,alpha+beta)
      3                   + SCL(jgrid,nf,2,pt,0,beta)   ! Singlet
      4                   * singlet
