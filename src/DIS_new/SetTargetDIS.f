@@ -21,6 +21,8 @@
          TargetDIS = tar(1:7)
       elseif(tar.eq."isoscalar")then
          TargetDIS = tar
+      elseif(tar(1:4).eq."iron")then
+         TargetDIS = tar(1:4)
       endif
       InTargetDIS = "done"
 *

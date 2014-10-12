@@ -86,7 +86,8 @@
 *
       if(TargetDIS(1:6).ne."proton".and.
      1   TargetDIS(1:7).ne."neutron".and.
-     2   TargetDIS.ne."isoscalar")then
+     2   TargetDIS.ne."isoscalar".and.
+     3   TargetDIS(1:4).ne."iron")then
          write(6,*) "Target unknown:"
          write(6,*) "TargetDIS = ",TargetDIS
          write(6,*) "  "
@@ -94,6 +95,7 @@
          write(6,*) "- 'proton'"
          write(6,*) "- 'neutron'"
          write(6,*) "- 'isoscalar'"
+         write(6,*) "- 'iron'"
          write(6,*) "  "
          call exit(-10)
       endif
