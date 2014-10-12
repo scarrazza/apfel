@@ -21,7 +21,7 @@
          ProjectileDIS = lept(1:8)
       elseif(lept(1:8).eq."neutrino")then
          ProjectileDIS = lept(1:8)
-      elseif(lept(1:8).eq."antineutrino")then
+      elseif(lept.eq."antineutrino")then
          ProjectileDIS = lept
       endif
       InProjectileDIS = "done"
