@@ -256,14 +256,20 @@
                   F2(i,jgrid,alpha) = 0d0
                enddo
                do beta=0,nin(jgrid)-alpha
+                  singlet = 0d0
+                  do i=1,nf
+                     singlet = singlet 
+     1                       + fph(jgrid,i,alpha+beta)
+     2                       + fph(jgrid,-i,alpha+beta)
+                  enddo
 *     F2light (all in the component 3 of F2)
                   do pt=0,ipt
                      F2t = 2d0
-     1                   * ( SC2(jgrid,nf,1,pt,0,beta) ! Gluon
-     2                   * ( V_ud2 + V_us2 )
+     1                   * ( ( V_ud2 + V_us2 ) ! Gluon
+     2                   * ( SC2(jgrid,nf,1,pt,0,beta)
      3                   * fph(jgrid,0,alpha+beta)
-c     4                   + SC2(jgrid,nf,2,pt,0,beta)   ! Singlet
-c     5                   * singlet
+     4                   + SC2(jgrid,nf,2,pt,0,beta)   ! Singlet
+     5                   * singlet )
      6                   + SC2(jgrid,nf,3,pt,0,beta)   ! Non-singlet
      7                   * ( V_ud2 * fph(jgrid,1*ipr,alpha+beta) 
      8                   + ( V_ud2 + V_us2 )
@@ -275,11 +281,11 @@ c     5                   * singlet
 *     F2charm
                      if(nf.ge.4)then
                         F2t = 2d0
-     1                      * ( SC2(jgrid,nf,1,pt,0,beta) ! Gluon
-     2                      * ( V_cd2 + V_cs2 )
+     1                      * ( ( V_cd2 + V_cs2 ) ! Gluon
+     2                      * ( SC2(jgrid,nf,1,pt,0,beta)
      3                      * fph(jgrid,0,alpha+beta)
-c     4                      + SC2(jgrid,nf,2,pt,0,beta)   ! Singlet
-c     5                      * singlet
+     4                      + SC2(jgrid,nf,2,pt,0,beta)   ! Singlet
+     5                      * singlet )
      6                      + SC2(jgrid,nf,3,pt,0,beta)   ! Non-singlet
      7                      * ( V_cd2
      8                      * ( fph(jgrid,1*ipr,alpha+beta) 
@@ -294,11 +300,11 @@ c     5                      * singlet
 *     F2bottom
                      if(nf.ge.5)then
                         F2t = 2d0
-     1                      * ( SC2(jgrid,nf,1,pt,0,beta) ! Gluon
-     2                      * ( V_ub2 + V_cb2 )
+     1                      * ( ( V_ub2 + V_cb2 ) ! Gluon
+     2                      * ( SC2(jgrid,nf,1,pt,0,beta)
      3                      * fph(jgrid,0,alpha+beta)
-c     4                      + SC2(jgrid,nf,2,pt,0,beta)   ! Singlet
-c     5                      * singlet
+     4                      + SC2(jgrid,nf,2,pt,0,beta)   ! Singlet
+     5                      * singlet )
      6                      + SC2(jgrid,nf,3,pt,0,beta)   ! Non-singlet
      7                      * ( V_ub2
      8                      * ( fph(jgrid,-2*ipr,alpha+beta) 
@@ -313,11 +319,11 @@ c     5                      * singlet
 *     F2top
                      if(nf.ge.6)then
                         F2t = 2d0 
-     1                      * ( SC2(jgrid,nf,1,pt,0,beta) ! Gluon
-     2                      * ( V_td2 + V_ts2 + V_tb2 )
+     1                      * ( ( V_td2 + V_ts2 + V_tb2 ) ! Gluon
+     2                      * ( SC2(jgrid,nf,1,pt,0,beta)
      3                      * fph(jgrid,0,alpha+beta)
-c     4                      + SC2(jgrid,nf,2,pt,0,beta)   ! Singlet
-c     5                      * singlet
+     4                      + SC2(jgrid,nf,2,pt,0,beta)   ! Singlet
+     5                      * singlet )
      6                      + SC2(jgrid,nf,3,pt,0,beta)   ! Non-singlet
      7                      * ( V_td2
      8                      * ( fph(jgrid,1*ipr,alpha+beta) 
@@ -346,14 +352,20 @@ c     5                      * singlet
                   FL(i,jgrid,alpha) = 0d0
                enddo
                do beta=0,nin(jgrid)-alpha
+                  singlet = 0d0
+                  do i=1,nf
+                     singlet = singlet 
+     1                       + fph(jgrid,i,alpha+beta)
+     2                       + fph(jgrid,-i,alpha+beta)
+                  enddo
 *     FLlight (all in the component 3 of FL)
                   do pt=0,ipt
                      FLt = 2d0
-     1                   * ( SCL(jgrid,nf,1,pt,0,beta) ! Gluon
-     2                   * ( V_ud2 + V_us2 )
+     1                   * ( ( V_ud2 + V_us2 ) ! Gluon
+     2                   * ( SCL(jgrid,nf,1,pt,0,beta)
      3                   * fph(jgrid,0,alpha+beta)
-c     4                   + SCL(jgrid,nf,2,pt,0,beta)   ! Singlet
-c     5                   * singlet
+     4                   + SCL(jgrid,nf,2,pt,0,beta)   ! Singlet
+     5                   * singlet )
      6                   + SCL(jgrid,nf,3,pt,0,beta)   ! Non-singlet
      7                   * ( V_ud2 * fph(jgrid,1*ipr,alpha+beta) 
      8                   + ( V_ud2 + V_us2 )
@@ -365,11 +377,11 @@ c     5                   * singlet
 *     FLcharm
                      if(nf.ge.4)then
                         FLt = 2d0
-     1                      * ( SCL(jgrid,nf,1,pt,0,beta) ! Gluon
-     2                      * ( V_cd2 + V_cs2 )
+     1                      * ( ( V_cd2 + V_cs2 ) ! Gluon
+     2                      * ( SCL(jgrid,nf,1,pt,0,beta)
      3                      * fph(jgrid,0,alpha+beta)
-c     4                      + SCL(jgrid,nf,2,pt,0,beta)   ! Singlet
-c     5                      * singlet
+     4                      + SCL(jgrid,nf,2,pt,0,beta)   ! Singlet
+     5                      * singlet )
      6                      + SCL(jgrid,nf,3,pt,0,beta)   ! Non-singlet
      7                      * ( V_cd2
      8                      * ( fph(jgrid,1*ipr,alpha+beta) 
@@ -384,11 +396,11 @@ c     5                      * singlet
 *     FLbottom
                      if(nf.ge.5)then
                         FLt = 2d0
-     1                      * ( SCL(jgrid,nf,1,pt,0,beta) ! Gluon
-     2                      * ( V_ub2 + V_cb2 )
+     1                      * ( ( V_ub2 + V_cb2 ) ! Gluon
+     2                      * ( SCL(jgrid,nf,1,pt,0,beta)
      3                      * fph(jgrid,0,alpha+beta)
-c     4                      + SCL(jgrid,nf,2,pt,0,beta)   ! Singlet
-c     5                      * singlet
+     4                      + SCL(jgrid,nf,2,pt,0,beta)   ! Singlet
+     5                      * singlet )
      6                      + SCL(jgrid,nf,3,pt,0,beta)   ! Non-singlet
      7                      * ( V_ub2
      8                      * ( fph(jgrid,-2*ipr,alpha+beta) 
@@ -403,11 +415,11 @@ c     5                      * singlet
 *     FLtop
                      if(nf.ge.6)then
                         FLt = 2d0 
-     1                      * ( SCL(jgrid,nf,1,pt,0,beta) ! Gluon
-     2                      * ( V_td2 + V_ts2 + V_tb2 )
+     1                      * ( ( V_td2 + V_ts2 + V_tb2 ) ! Gluon
+     2                      * ( SCL(jgrid,nf,1,pt,0,beta)
      3                      * fph(jgrid,0,alpha+beta)
-c     4                      + SCL(jgrid,nf,2,pt,0,beta)   ! Singlet
-c     5                      * singlet
+     4                      + SCL(jgrid,nf,2,pt,0,beta)   ! Singlet
+     5                      * singlet )
      6                      + SCL(jgrid,nf,3,pt,0,beta)   ! Non-singlet
      7                      * ( V_td2
      8                      * ( fph(jgrid,1*ipr,alpha+beta) 

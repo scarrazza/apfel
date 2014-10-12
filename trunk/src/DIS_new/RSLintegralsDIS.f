@@ -224,43 +224,6 @@ c      data eps / 1d-7, 1d-5 /
                integC3(2) = C3ns2RS
             endif
          endif
-
-
-
-c$$$*
-c$$$*     NNLO
-c$$$*
-c$$$         if(ipt.ge.2)then
-c$$$*     Plus
-c$$$            if(k.eq.1)then
-c$$$               PL(k,2)  = ns2Lp
-c$$$               integ(2) = ns2RSp
-c$$$*     Minus
-c$$$            elseif(k.eq.2)then
-c$$$               PL(k,2) = ns2Lm
-c$$$               integ(2) = ns2RSm
-c$$$*     Valence
-c$$$            elseif(k.eq.3)then
-c$$$               PL(k,2) = ns2Lm
-c$$$               integ(2) = ns2RSv
-c$$$*     Quark-Quark
-c$$$            elseif(k.eq.4)then
-c$$$               PL(k,2) = ns2Lp
-c$$$               integ(2) = qq2RS
-c$$$*     Quark-Gluon
-c$$$            elseif(k.eq.5)then
-c$$$               PL(k,2) = 0d0
-c$$$               integ(2) = qg2RS
-c$$$*     Gluon-Quark
-c$$$            elseif(k.eq.6)then
-c$$$               PL(k,2) = 0d0
-c$$$               integ(2) = gq2RS
-c$$$*     Gluon-Gluon
-c$$$            elseif(k.eq.7)then
-c$$$               PL(k,2) = gg2L
-c$$$               integ(2) = gg2RS
-c$$$            endif
-c$$$         endif
 *
 *     Integrals
 *
