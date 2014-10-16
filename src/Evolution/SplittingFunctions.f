@@ -1120,7 +1120,7 @@ c       COMMON / P1SOFTT / A2T
      1       + ( 8d0 * lnx * ln1mx - lnx**2d0 - 4d0 * lnx / 3d0 
      2       + 10d0 * ln1mx / 3d0 + 2d0 * ln1mx**2d0 - 16d0 * S1x 
      3       - 7d0 * pi**2d0 / 3d0 + 178d0 / 9d0 ) * pqg 
-     4       + 2d0 * pqgmx * S2x ) ) !/ 2d0 / NF
+     4       + 2d0 * pqgmx * S2x ) ) / 2d0 / NF
 *
       RETURN
       END
@@ -1202,14 +1202,9 @@ c       COMMON / P1SOFTT / A2T
      6      - ( 20d0 / 9d0 + 8d0 * lnx / 3d0 ) * pgg )
      7      + 4d0 * CA * CA * ( 27d0 * ( 1d0 - x ) / 2d0 
      8      + 67d0 * ( x**2d0 - 1d0 / x ) / 9d0
-     9      + ( 11d0 / 3d0 - 25d0 * x / 3d0 - 44d0 / 3d0 / x ) * lnx  ! time-like
-
-c$$$     1      + ( 11d0 * x / 3d0 - 25d0 / 3d0 - 44d0 * x**2d0 / 3d0 )*lnx ! space-like
-     1      - 4d0 * ( 1d0 + x ) * lnx**2d0 ! time-like
-c$$$     1      + 4d0 * ( 1d0 + x ) * lnx**2d0 ! space-like
-     2      + ( 4d0 * lnx * ln1mx - 3d0 * lnx**2d0 + 22d0 * lnx / 3d0 ! time-like
-c$$$     1      + ( - 4d0 * lnx * ln1mx + lnx**2d0 ! space-like
-
+     9      + ( 11d0 / 3d0 - 25d0 * x / 3d0 - 44d0 / 3d0 / x ) * lnx
+     1      - 4d0 * ( 1d0 + x ) * lnx**2d0
+     2      + ( 4d0 * lnx * ln1mx - 3d0 * lnx**2d0 + 22d0 * lnx / 3d0
      3      - 2d0 * z2 + 67d0 / 9d0 ) * pgg + 2d0 * pggmx * S2x )
 *
 * ...The soft (`+'-distribution) part of the splitting function
