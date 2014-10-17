@@ -18,13 +18,13 @@
       integer inf,nfi,nff
       double precision t1,t2
 *
-*     Initialize the APFEL evolution
-*
-      call InitializeAPFEL
-*
 *     Read input parameters
 *
       call initParametersDIS
+*
+*     Initialize the APFEL evolution
+*
+      call InitializeAPFEL
 *
 *     Evaluate DIS integrals on the grid
 *
@@ -35,7 +35,7 @@
       call cpu_time(t2)
 *
       if(Welcome)then
-         write(6,"(a,a,f7.3,a)") "Initialization of the DIS module",
+         write(6,"(a,a,f8.3,a)") " Initialization of the DIS module",
      1                           " completed in",t2-t1," s"
          write(6,*) " "
       endif

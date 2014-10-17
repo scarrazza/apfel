@@ -17,7 +17,7 @@
       data m_coef( 13 ) /  15  /
       data m_coef( 14 ) /  15  /
    
-      data ximin /  0.69999999999999996D0     /
+      data ximin /  0.40000000000000002D0     /
       data ximax /   10000.000000000000D0     /
    
       data xigrid(   1 ) /  0.40000000000000002D0     /

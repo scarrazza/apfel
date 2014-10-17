@@ -47,7 +47,7 @@ UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f core/gamma.f core/beta.f
 
 DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
 
-DIS_NEW = DIS_new/InitializeAPFEL_DIS.f DIS_new/initParametersDIS.f DIS_new/SetMassScheme.f DIS_new/initIntegralsDIS.f DIS_new/ZMCoefficientFunctions.f DIS_new/RSLintegralsDIS.f DIS_new/ComputeStructureFunctionsAPFEL.f DIS_new/ConvolutePDFsWithCFs.f DIS_new/F2total.f DIS_new/F2light.f DIS_new/F2charm.f DIS_new/F2bottom.f DIS_new/F2top.f DIS_new/FLtotal.f DIS_new/FLlight.f DIS_new/FLcharm.f DIS_new/FLbottom.f DIS_new/FLtop.f DIS_new/F3total.f DIS_new/F3light.f DIS_new/F3charm.f DIS_new/F3bottom.f DIS_new/F3top.f DIS_new/integrandsDIS.f DIS_new/SetProcessDIS.f DIS_new/ComputeChargesDIS.f DIS_new/SetPolarizationDIS.f DIS_new/SetProjectileDIS.f DIS_new/SetTargetDIS.f
+DIS_NEW = DIS_new/InitializeAPFEL_DIS.f DIS_new/initParametersDIS.f DIS_new/SetMassScheme.f DIS_new/initIntegralsDIS.f DIS_new/ZeroMassCoefficientFunctions.f DIS_new/RSLintegralsDIS.f DIS_new/ComputeStructureFunctionsAPFEL.f DIS_new/ConvolutePDFsWithCFs.f DIS_new/F2total.f DIS_new/F2light.f DIS_new/F2charm.f DIS_new/F2bottom.f DIS_new/F2top.f DIS_new/FLtotal.f DIS_new/FLlight.f DIS_new/FLcharm.f DIS_new/FLbottom.f DIS_new/FLtop.f DIS_new/F3total.f DIS_new/F3light.f DIS_new/F3charm.f DIS_new/F3bottom.f DIS_new/F3top.f DIS_new/integrandsDIS.f DIS_new/SetProcessDIS.f DIS_new/ComputeChargesDIS.f DIS_new/SetPolarizationDIS.f DIS_new/SetProjectileDIS.f DIS_new/SetTargetDIS.f DIS_new/MassiveCoefficientFunctions.f
 
 EXTRA_DIST = commons
 
