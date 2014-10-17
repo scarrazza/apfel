@@ -16,9 +16,11 @@
       include "../commons/PolarizationDIS.h"
       include "../commons/ProjectileDIS.h"
       include "../commons/TargetDIS.h"
+      include "../commons/ipt.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
+      if(InWelcome.ne."done")         call EnableWelcomeMessage(.true.)
       if(InMassScheme.ne."done")      call SetMassScheme("ZM-VFNS")     ! "ZM-VFNS", "FFNS", "FONLL-A", "FONLL-B" or "FONLL-C"
       if(InProcessDIS.ne."done")      call SetProcessDIS("EM")          ! "EM", "NC" or "CC"
       if(InPolarizationDIS.ne."done") call SetPolarizationDIS(0d0)
@@ -37,7 +39,11 @@
          write(6,*) "  "
          write(6,*) "The options are:"
          write(6,*) "- 'ZM-VFNS'"
-         write(6,*) "- 'FFNS'"
+         write(6,*) "- 'FFNS' (default NF=3)"
+         write(6,*) "- 'FFNS3'"
+         write(6,*) "- 'FFNS4'"
+         write(6,*) "- 'FFNS5'"
+         write(6,*) "- 'FFNS6'"
          write(6,*) "- 'FONLL-A'"
          write(6,*) "- 'FONLL-B'"
          write(6,*) "- 'FONLL-C'"
@@ -100,9 +106,48 @@
          call exit(-10)
       endif
 *
+*     Additional settings
+*
+      if(MassScheme(1:4).eq."FFNS")then
+         if(MassScheme(5:5).eq."3")then
+            call SetFFNS(3)
+            write(6,*) "INFO: Setting NF = 3 FFNS PDF evolution"
+         elseif(MassScheme(5:5).eq."4")then
+            call SetFFNS(4)
+            write(6,*) "INFO: Setting NF = 4 FFNS PDF evolution"
+         elseif(MassScheme(5:5).eq."5")then
+            call SetFFNS(5)
+            write(6,*) "INFO: Setting NF = 5 FFNS PDF evolution"
+         elseif(MassScheme(5:5).eq."6")then
+            call SetFFNS(6)
+            write(6,*) "INFO: Setting NF = 6 FFNS PDF evolution"
+         else
+            call SetFFNS(3)
+         endif
+      else
+         call SetVFNS
+         write(6,*) "INFO: Setting VFNS PDF evolution"
+         if(MassScheme(1:5).eq."FONLL".and.ipt.eq.0)then
+            call SetMassScheme("ZM-VFNS")
+            write(6,*) "INFO: any of the FONLL schemes at LO",
+     1                 " concides with the the ZM-VFNS"
+         endif
+         if(MassScheme.eq."FONLL-C".and.ipt.eq.1)then
+            call SetMassScheme("FONLL-A")
+            write(6,*) "INFO: the FONLL-C scheme at NLO concides",
+     1                 " with the the FONLL-A scheme"
+         endif
+         if(MassScheme.eq."FONLL-B".and.ipt.eq.2)then
+            call SetMassScheme("FONLL-C")
+            write(6,*) "INFO: the FONLL-B scheme at NNLO concides",
+     1                 " with the the FONLL-C scheme"
+         endif
+      endif
+*
 *     Print welcome message and report of the parameters (if enabled)
 *
       if(Welcome)then
+         write(6,*) " "
          write(6,*) "Report of the DIS parameters:"
          write(6,*) "  "
 *
@@ -110,11 +155,11 @@
      1                      " mass scheme"
 *
          if(ProcessDIS.eq."EM")then
-            write(6,"(a,a,a)") " Electromagnetic process"
+            write(6,"(a,a,a)") " Electromagnetic (EM) process"
          elseif(ProcessDIS.eq."NC")then
-            write(6,"(a,a,a)") " Neutral current process"
+            write(6,"(a,a,a)") " Neutral Current (NC) process"
          elseif(ProcessDIS.eq."CC")then
-            write(6,"(a,a,a)") " Charged current process"
+            write(6,"(a,a,a)") " Charged Current (CC) process"
          endif
 *
          if(ProjectileDIS(1:8).eq."electron".or.
@@ -129,9 +174,8 @@
      3                           " - ",TargetDIS
          endif
 *
-         write(6,"(a,f7.3)") " Polarization fraction =",PolarizationDIS
-*
-         write(6,*) " "
+         if(PolarizationDIS.ne.0d0) 
+     1   write(6,"(a,f7.3)") " Polarization fraction =",PolarizationDIS
       endif
 *
       return
