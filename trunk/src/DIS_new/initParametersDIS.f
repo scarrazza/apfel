@@ -21,19 +21,20 @@
 *     Initialize default parameters (those that were not initialized before)
 *
       if(InWelcome.ne."done")         call EnableWelcomeMessage(.true.)
-      if(InMassScheme.ne."done")      call SetMassScheme("ZM-VFNS")     ! "ZM-VFNS", "FFNS", "FONLL-A", "FONLL-B" or "FONLL-C"
-      if(InProcessDIS.ne."done")      call SetProcessDIS("EM")          ! "EM", "NC" or "CC"
+      if(InMassScheme.ne."done")      call SetMassScheme("ZM-VFNS")
+      if(InProcessDIS.ne."done")      call SetProcessDIS("EM")
       if(InPolarizationDIS.ne."done") call SetPolarizationDIS(0d0)
-      if(InProjectileDIS.ne."done")   call SetProjectileDIS("electron") ! "electron", "positron", "neutrino" or "antineutrino"
-      if(InTargetDIS.ne."done")       call SetTargetDIS("proton")       ! "proton", "neutron" or "isoscalar"
+      if(InProjectileDIS.ne."done")   call SetProjectileDIS("electron")
+      if(InTargetDIS.ne."done")       call SetTargetDIS("proton")
 *
 *     Check the consistency of the input parameters
 *
       if(MassScheme.ne."ZM-VFNS".and.
      1   MassScheme(1:4).ne."FFNS".and.
-     2   MassScheme.ne."FONLL-A".and.
-     3   MassScheme.ne."FONLL-B".and.
-     4   MassScheme.ne."FONLL-C")then
+     2   MassScheme(1:4).ne."FFN0".and.
+     3   MassScheme.ne."FONLL-A".and.
+     4   MassScheme.ne."FONLL-B".and.
+     5   MassScheme.ne."FONLL-C")then
          write(6,*) "Mass scheme unknown:"
          write(6,*) "MassScheme = ",MassScheme
          write(6,*) "  "
@@ -44,6 +45,11 @@
          write(6,*) "- 'FFNS4'"
          write(6,*) "- 'FFNS5'"
          write(6,*) "- 'FFNS6'"
+         write(6,*) "- 'FFN0' (default NF=3)"
+         write(6,*) "- 'FFN03'"
+         write(6,*) "- 'FFN04'"
+         write(6,*) "- 'FFN05'"
+         write(6,*) "- 'FFN06'"
          write(6,*) "- 'FONLL-A'"
          write(6,*) "- 'FONLL-B'"
          write(6,*) "- 'FONLL-C'"
@@ -108,7 +114,8 @@
 *
 *     Additional settings
 *
-      if(MassScheme(1:4).eq."FFNS")then
+      if(MassScheme(1:4).eq."FFNS".or.
+     1   MassScheme(1:4).eq."FFN0")then
          if(MassScheme(5:5).eq."3")then
             call SetFFNS(3)
             write(6,*) "INFO: Setting NF = 3 FFNS PDF evolution"
