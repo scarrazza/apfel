@@ -128,19 +128,40 @@
                      do pt=0,ipt
                         do k=1,3
                            SC2(jgrid,i,k,pt,0,alpha) = 
-     1                          SC2zm(jgrid,nf,k,pt,0,alpha)
+     1                          SC2zm(jgrid,Nf_FF,k,pt,0,alpha)
                            SCL(jgrid,i,k,pt,0,alpha) = 
-     1                          SCLzm(jgrid,nf,k,pt,0,alpha)
+     1                          SCLzm(jgrid,Nf_FF,k,pt,0,alpha)
                            SC3(jgrid,i,k,pt,0,alpha) = 
-     1                          SC3zm(jgrid,nf,k,pt,0,alpha)
+     1                          SC3zm(jgrid,Nf_FF,k,pt,0,alpha)
                         enddo
+*
+*     Add the massive part at NNLO
+*
+                        if(pt.ge.2)then
+                           if(Nf_FF.lt.6)then
+                              W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) 
+     1                           / xg(jgrid,alpha)
+                              do j=Nf_FF+1,6
+                                 if(W2.ge.4d0*m2th(i))then
+                                    SC2(jgrid,i,3,pt,0,alpha) = 
+     1                              SC2(jgrid,i,3,pt,0,alpha)
+     2                       + c0(j) * SC2m(jgrid,ixi(j),3,pt,0,alpha)
+     3                       + c1(j) * SC2m(jgrid,ixi(j)+1,3,pt,0,alpha)
+                                    SCL(jgrid,i,3,pt,0,alpha) = 
+     1                              SCL(jgrid,i,3,pt,0,alpha)
+     2                       + c0(j) * SCLm(jgrid,ixi(j),3,pt,0,alpha)
+     3                       + c1(j) * SCLm(jgrid,ixi(j)+1,3,pt,0,alpha)
+                                 endif
+                              enddo
+                           endif
+                        endif
                      enddo
                   enddo
 *
 *     Heavy coefficient functions
 *
                   if(Nf_FF.lt.6)then
-                     do i=Nf_FF+1,nf
+                     do i=Nf_FF+1,6
                         do pt=0,ipt
                            do k=1,2
                               SC2(jgrid,i,k,pt,0,alpha) = 
@@ -152,6 +173,70 @@
                               SC3(jgrid,i,k,pt,0,alpha) = 
      1                       c0(i) * SC3m(jgrid,ixi(i),k,pt,0,alpha)
      2                     + c1(i) * SC3m(jgrid,ixi(i)+1,k,pt,0,alpha)
+                           enddo
+                           SC2(jgrid,i,3,pt,0,alpha) = 0d0
+                           SCL(jgrid,i,3,pt,0,alpha) = 0d0
+                           SC3(jgrid,i,3,pt,0,alpha) = 0d0
+                        enddo
+                     enddo
+                  endif
+               enddo
+            enddo
+         elseif(MassScheme(1:4).eq."FFN0")then
+            do jgrid=1,ngrid
+               do alpha=0,nin(jgrid)
+*
+*     Light coefficient functions
+*
+                  do i=1,Nf_FF
+                     do pt=0,ipt
+                        do k=1,3
+                           SC2(jgrid,i,k,pt,0,alpha) = 
+     1                          SC2zm(jgrid,Nf_FF,k,pt,0,alpha)
+                           SCL(jgrid,i,k,pt,0,alpha) = 
+     1                          SCLzm(jgrid,Nf_FF,k,pt,0,alpha)
+                           SC3(jgrid,i,k,pt,0,alpha) = 
+     1                          SC3zm(jgrid,Nf_FF,k,pt,0,alpha)
+                        enddo
+*
+*     Add the massive part at NNLO
+*
+                        if(pt.ge.2)then
+                           if(Nf_FF.lt.6)then
+                              W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) 
+     1                           / xg(jgrid,alpha)
+                              do j=Nf_FF+1,6
+                                 if(W2.ge.4d0*m2th(i))then
+                                    SC2(jgrid,i,3,pt,0,alpha) = 
+     1                              SC2(jgrid,i,3,pt,0,alpha)
+     2                      + c0(j) * SC2m0(jgrid,ixi(j),3,pt,0,alpha)
+     3                      + c1(j) * SC2m0(jgrid,ixi(j)+1,3,pt,0,alpha)
+                                    SCL(jgrid,i,3,pt,0,alpha) = 
+     1                              SCL(jgrid,i,3,pt,0,alpha)
+     2                      + c0(j) * SCLm0(jgrid,ixi(j),3,pt,0,alpha)
+     3                      + c1(j) * SCLm0(jgrid,ixi(j)+1,3,pt,0,alpha)
+                                 endif
+                              enddo
+                           endif
+                        endif
+                     enddo
+                  enddo
+*
+*     Heavy coefficient functions
+*
+                  if(Nf_FF.lt.6)then
+                     do i=Nf_FF+1,6
+                        do pt=0,ipt
+                           do k=1,2
+                              SC2(jgrid,i,k,pt,0,alpha) = 
+     1                       c0(i) * SC2m0(jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SC2m0(jgrid,ixi(i)+1,k,pt,0,alpha)
+                              SCL(jgrid,i,k,pt,0,alpha) =
+     1                       c0(i) * SCLm0(jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SCLm0(jgrid,ixi(i)+1,k,pt,0,alpha)
+                              SC3(jgrid,i,k,pt,0,alpha) = 
+     1                       c0(i) * SC3m0(jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SC3m0(jgrid,ixi(i)+1,k,pt,0,alpha)
                            enddo
                            SC2(jgrid,i,3,pt,0,alpha) = 0d0
                            SCL(jgrid,i,3,pt,0,alpha) = 0d0
@@ -230,7 +315,7 @@
      2                       + fph(jgrid,-i,alpha+beta)
                   enddo
 *     F2 flavour by flavour
-                  do i=1,nf
+                  do i=1,6
                      do pt=0,ipt
                         F2t = bq(i) 
      1                      * ( SC2(jgrid,i,1,pt,0,beta) ! Gluon
@@ -252,7 +337,8 @@
                      F2(7,jgrid,alpha) = F2(7,jgrid,alpha)
      1                                 + F2(i,jgrid,alpha)
                   enddo
-               elseif(MassScheme(1:4).eq."FFNS")then
+               elseif(MassScheme(1:4).eq."FFNS".or.
+     1                MassScheme(1:4).eq."FFN0")then
                   do i=1,Nf_FF
                      F2(7,jgrid,alpha) = F2(7,jgrid,alpha)
      1                                 + F2(i,jgrid,alpha)
@@ -286,7 +372,7 @@
      2                       + fph(jgrid,-i,alpha+beta)
                   enddo
 *     FL flavour by flavour
-                  do i=1,nf
+                  do i=1,6
                      do pt=0,ipt
                         FLt = bq(i) 
      1                      * ( SCL(jgrid,i,1,pt,0,beta) ! Gluon
@@ -308,7 +394,8 @@
                      FL(7,jgrid,alpha) = FL(7,jgrid,alpha)
      1                                 + FL(i,jgrid,alpha)
                   enddo
-               elseif(MassScheme(1:4).eq."FFNS")then
+               elseif(MassScheme(1:4).eq."FFNS".or.
+     1                MassScheme(1:4).eq."FFN0")then
                   do i=1,Nf_FF
                      FL(7,jgrid,alpha) = FL(7,jgrid,alpha)
      1                                 + FL(i,jgrid,alpha)
