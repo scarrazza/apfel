@@ -142,7 +142,7 @@
                               W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) 
      1                           / xg(jgrid,alpha)
                               do j=Nf_FF+1,6
-                                 if(W2.ge.4d0*m2th(i))then
+                                 if(W2.ge.4d0*m2th(j))then
                                     SC2(jgrid,i,3,pt,0,alpha) = 
      1                              SC2(jgrid,i,3,pt,0,alpha)
      2                       + c0(j) * SC2m(jgrid,ixi(j),3,pt,0,alpha)
@@ -195,7 +195,7 @@
      1                          SC2zm(jgrid,Nf_FF,k,pt,0,alpha)
                            SCL(jgrid,i,k,pt,0,alpha) = 
      1                          SCLzm(jgrid,Nf_FF,k,pt,0,alpha)
-                           SC3(jgrid,i,k,pt,0,alpha) = 
+                           SC3(jgrid,i,k,pt,0,alpha) =
      1                          SC3zm(jgrid,Nf_FF,k,pt,0,alpha)
                         enddo
 *
@@ -206,7 +206,7 @@
                               W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) 
      1                           / xg(jgrid,alpha)
                               do j=Nf_FF+1,6
-                                 if(W2.ge.4d0*m2th(i))then
+                                 if(W2.ge.4d0*m2th(j))then
                                     SC2(jgrid,i,3,pt,0,alpha) = 
      1                              SC2(jgrid,i,3,pt,0,alpha)
      2                      + c0(j) * SC2m0(jgrid,ixi(j),3,pt,0,alpha)

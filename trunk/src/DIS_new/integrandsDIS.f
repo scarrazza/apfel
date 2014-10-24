@@ -302,7 +302,7 @@ c     1                  + MassiveCF(13,wixi,y) * dlog(xigrid(wixi))
      1                  + MassiveCF(12,wixi,y) * dlog(xigrid(wixi))
 *     Non-singlet
             elseif(k.eq.3)then
-               CLR(k,2) = MassiveCF(7,wixi,y)
+               CLR(k,2) = MassiveCF(8,wixi,y)
             endif
 *     C3
          elseif(sf.eq.3)then

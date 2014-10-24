@@ -774,7 +774,7 @@
 *
       DOUBLE PRECISION CLNS2AM0_AQ
 *
-      CLNS2AM0_AQ = 16D0 * CF * TR * X
+      CLNS2AM0_AQ = 16D0 * CF * TR * X / 3D0
 *
       RETURN
       END

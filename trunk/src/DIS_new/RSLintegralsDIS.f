@@ -40,6 +40,7 @@
       double precision fL
       double precision dgauss,a,b,eps(2)
       double precision integrandsDISzm,integrandsDISm,integrandsDISm0
+      double precision cm22q_adler
       double precision integC2(0:2),integCL(0:2),integC3(0:2)
       double precision C2ns1RS,C2ns1L,C2g1R,CLns1RS,CLg1R,C3ns1RS,C3ns1L
       double precision C2g2R,C2g2L,C2ps2R,C2ns2RS,C2ns2L,CLg2R,CLns2RS
@@ -57,6 +58,7 @@
       double precision C2NS2CM0_A0,C2NS2CM0_AQ,C2NS2CM0_AQ2
       double precision kQF2,lnQ,lnF,lnQ2,lnQF
       external integrandsDISzm,integrandsDISm,integrandsDISm0
+      external cm22q_adler
 c      data eps / 5d-8, 1d-3 /
 c      data eps / 5d-8, 1d-5 /
       data eps / 1d-6, 1d-3 /
@@ -304,6 +306,7 @@ c      data eps / 1d-7, 1d-5 /
                C2ps2R  = dgauss(integrandsDISm,a,b,eps(wipt))
                k = 3
                C2ns2RS = dgauss(integrandsDISm,a,b,eps(wipt))
+               C2ns2L  = - dgauss(cm22q_adler,0d0,1d0,eps(wipt))
 *
                sf = 2
                k = 1
@@ -326,6 +329,7 @@ c      data eps / 1d-7, 1d-5 /
 *     LO
 *
 *     C2
+               C2L(k,0) = 0d0
                integC2(0) = 0d0
 *     CL
                integCL(0) = 0d0
@@ -341,6 +345,7 @@ c      data eps / 1d-7, 1d-5 /
 *     Gluon
                   if(k.eq.1)then
 *     C2
+                     C2L(k,1) = 0d0
                      integC2(1) = C2g1R
 *     CL
                      integCL(1) = CLg1R
@@ -350,6 +355,7 @@ c      data eps / 1d-7, 1d-5 /
 *     Pure-Singlet
                   elseif(k.eq.2)then
 *     C2
+                     C2L(k,1) = 0d0
                      integC2(1) = 0d0
 *     CL
                      integCL(1) = 0d0
@@ -359,6 +365,7 @@ c      data eps / 1d-7, 1d-5 /
 *     Non-singlet
                   elseif(k.eq.3)then
 *     C2
+                     C2L(k,1) = 0d0
                      integC2(1) = 0d0
 *     CL
                      integCL(1) = 0d0
@@ -374,6 +381,7 @@ c      data eps / 1d-7, 1d-5 /
 *     Gluon
                   if(k.eq.1)then
 *     C2
+                     C2L(k,2) = 0d0
                      integC2(2) = C2g2R
 *     CL
                      integCL(2) = CLg2R
@@ -383,6 +391,7 @@ c      data eps / 1d-7, 1d-5 /
 *     Pure-Singlet
                   elseif(k.eq.2)then
 *     C2
+                     C2L(k,2) = 0d0
                      integC2(2) = C2ps2R
 *     CL
                      integCL(2) = CLps2R
@@ -392,6 +401,7 @@ c      data eps / 1d-7, 1d-5 /
 *     Non-singlet
                   elseif(k.eq.3)then
 *     C2
+                     C2L(k,2) = C2ns2L
                      integC2(2) = C2ns2RS
 *     CL
                      integCL(2) = CLns2RS
@@ -406,6 +416,7 @@ c      data eps / 1d-7, 1d-5 /
 
                do wipt=0,ipt
                   SC2m(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
+     1                                              + C2L(k,wipt) * fL
                   SCLm(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
                   SC3m(igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
      1                                              + C3L(k,wipt) * fL
@@ -634,9 +645,6 @@ c      data eps / 1d-7, 1d-5 /
             enddo
          enddo
       endif
-
-
-
 *
       return
       end

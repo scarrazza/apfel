@@ -355,20 +355,6 @@ C Equation (4.8): Light quark coefficient function for F2
 C -- Regular part
       DOUBLE PRECISION FUNCTION C2Q2R(X,Q2,HM2)
       IMPLICIT REAL*8(A-H,O-Z)
-      PARAMETER (TF=0.5D0)
-      PARAMETER (CF=4D0/3D0)
-      DLX=DLOG(X)
-      DLM=DLOG(1.0D0-X)
-      A3=(1.0D0+13.0D0*X)*DLM-(3.0D0+23.0D0*X)*DLX+29.0D0/6.0D0
-     1-295.0D0*X/6.0D0
-      C2Q2R=2.0D0*CF*TF*A3/3.0D0
-      RETURN
-      END
-
-C Equation (4.8): Light quark coefficient function for F2
-C -- Singular part
-      DOUBLE PRECISION FUNCTION C2Q2S(X,Q2,HM2)
-      IMPLICIT REAL*8(A-H,O-Z)
       DOUBLE PRECISION WGPLG
       PARAMETER (TF=0.5D0)
       PARAMETER (CF=4D0/3D0)
@@ -380,12 +366,73 @@ C -- Singular part
       DLM2=DLM*DLM
       DL=DLOG(Q2/HM2)
       DL2=DL*DL
-      A1=2.0D0*(1.0D0+X*X)*DL2/(1.0D0-X)+(4.0D0*(1.0D0+X*X)*DLM/
-     1(1.0D0-X)-8.0D0*(1.0D0+X*X)*DLX/(1.0D0-X)-29.0D0*(1.0D0+X*
-     2X)/(1.0D0-X)/3.0D0+13.0D0*X+1.0D0)*DL
-      A2=(1.0D0+X*X)*(-4.0D0*SPX-4.0D0*ZETA2+2.0D0*DLM2-8.0D0*DLX
-     1*DLM-29.0D0*DLM/3.0D0+6.0D0*DLX2+67.0D0*DLX/3.0D0+359D0/18.0D0
+      A1=(-8.0D0*(1.0D0+X*X)*DLX/(1.0D0-X)+13.0D0*X+1.0D0)*DL
+      A2=(1.0D0+X*X)*(-4.0D0*SPX-8.0D0*DLX
+     1*DLM+6.0D0*DLX2+67.0D0*DLX/3.0D0
      2)/(1.0D0-X)
-      C2Q2S=2.0D0*CF*TF*(A1+A2)/3.0D0
+      A2=A2+(-1.0D0-X)*(2.0D0*DL2+4.0D0*DLM*DL
+     1-29.0D0/3.0D0*DL-4.0D0*ZETA2+2.0D0*DLM2
+     1-29.0D0*DLM/3.0D0+359D0/18.0D0)
+      A3=(1.0D0+13.0D0*X)*DLM-(3.0D0+23.0D0*X)*DLX+29.0D0/6.0D0
+     1-295.0D0*X/6.0D0
+
+      C2Q2R=2.0D0*CF*TF*(A1+A2+A3)/3.0D0
       RETURN
       END
+
+C Equation (4.8): Light quark coefficient function for F2
+C -- Singular part
+      DOUBLE PRECISION FUNCTION C2Q2S(X,Q2,HM2)
+      IMPLICIT REAL*8(A-H,O-Z)
+      PARAMETER (TF=0.5D0)
+      PARAMETER (CF=4D0/3D0)
+      DLM=DLOG(1.0D0-X)
+      DLM2=DLM*DLM
+      DL=DLOG(Q2/HM2)
+      DL2=DL*DL
+      A2=2D0*(2.0D0*DL2+4.0D0*DLM*DL-29.0D0/3.0D0*DL
+     1-4.0D0*ZETA2+2.0D0*DLM2
+     1-29.0D0*DLM/3.0D0+359D0/18.0D0
+     2)/(1.0D0-X)
+      C2Q2S=2.0D0*CF*TF*A2/3.0D0
+      RETURN
+      END
+
+c$$$C Equation (4.8): Light quark coefficient function for F2
+c$$$C -- Regular part
+c$$$      DOUBLE PRECISION FUNCTION C2Q2R(X,Q2,HM2)
+c$$$      IMPLICIT REAL*8(A-H,O-Z)
+c$$$      PARAMETER (TF=0.5D0)
+c$$$      PARAMETER (CF=4D0/3D0)
+c$$$      DLX=DLOG(X)
+c$$$      DLM=DLOG(1.0D0-X)
+c$$$      A3=(1.0D0+13.0D0*X)*DLM-(3.0D0+23.0D0*X)*DLX+29.0D0/6.0D0
+c$$$     1-295.0D0*X/6.0D0
+c$$$      C2Q2R=2.0D0*CF*TF*A3/3.0D0
+c$$$      RETURN
+c$$$      END
+c$$$
+c$$$C Equation (4.8): Light quark coefficient function for F2
+c$$$C -- Singular part
+c$$$      DOUBLE PRECISION FUNCTION C2Q2S(X,Q2,HM2)
+c$$$      IMPLICIT REAL*8(A-H,O-Z)
+c$$$      DOUBLE PRECISION WGPLG
+c$$$      PARAMETER (TF=0.5D0)
+c$$$      PARAMETER (CF=4D0/3D0)
+c$$$      ZETA2=1.6449340668D0
+c$$$      SPX=WGPLG(1,1,1.0D0-X)
+c$$$      DLX=DLOG(X)
+c$$$      DLX2=DLX*DLX
+c$$$      DLM=DLOG(1.0D0-X)
+c$$$      DLM2=DLM*DLM
+c$$$      DL=DLOG(Q2/HM2)
+c$$$      DL2=DL*DL
+c$$$      A1=2.0D0*(1.0D0+X*X)*DL2/(1.0D0-X)+(4.0D0*(1.0D0+X*X)*DLM/
+c$$$     1(1.0D0-X)-8.0D0*(1.0D0+X*X)*DLX/(1.0D0-X)-29.0D0*(1.0D0+X*
+c$$$     2X)/(1.0D0-X)/3.0D0+13.0D0*X+1.0D0)*DL
+c$$$      A2=(1.0D0+X*X)*(-4.0D0*SPX-4.0D0*ZETA2+2.0D0*DLM2-8.0D0*DLX
+c$$$     1*DLM-29.0D0*DLM/3.0D0+6.0D0*DLX2+67.0D0*DLX/3.0D0+359D0/18.0D0
+c$$$     2)/(1.0D0-X)
+c$$$      C2Q2S=2.0D0*CF*TF*(A1+A2)/3.0D0
+c$$$      RETURN
+c$$$      END

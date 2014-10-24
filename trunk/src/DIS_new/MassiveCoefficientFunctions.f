@@ -269,73 +269,36 @@
 *
       return
       end
+*
+************************************************************************
+*
+*     Evaluation of the integral in eq. (97) of ArXiv.1001.2312 needed 
+*     for the Adler sum rule to be true
+*
+************************************************************************
+      function cm22q_adler(z)
+*
+      implicit none
+*
+      include "../commons/wrapDIS.h"
+      include "../commons/coeffhqmellin.h"
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Input Variables
+*
+      double precision xi
+      double precision cm22q
+**
+*     Output Variables
+*
+      double precision cm22q_adler
+*
+      xi = xigrid(wixi)
+      cm22q_adler = cm22q(xi,z)
+*
+      return
+      end
 
-
-
-
-
-
-
-
-
-
-
-
-
-c$$$************************************************************************
-c$$$*
-c$$$*     Evaluation of the integral in eq. (97) of ArXiv.1001.2312 needed 
-c$$$*     for the Adler sum rule to be true
-c$$$*
-c$$$************************************************************************
-c$$$      FUNCTION ADLERSR(Q2,M2)
-c$$$*
-c$$$      IMPLICIT NONE
-c$$$*
-c$$$      include "../commons/vfns.h"
-c$$$**
-c$$$*     Input Variables
-c$$$*
-c$$$      DOUBLE PRECISION Q2,M2
-c$$$**
-c$$$*     Internal Variables
-c$$$*
-c$$$      DOUBLE PRECISION DGAUSS,A,B,EPS
-c$$$      DOUBLE PRECISION LN,ZETA2,CF,TR
-c$$$      PARAMETER(TR=1D0/2D0)
-c$$$      PARAMETER(CF=4D0/3D0)
-c$$$
-c$$$      DOUBLE PRECISION QQ2,MM2
-c$$$      COMMON/SCALES/QQ2,MM2
-c$$$
-c$$$      DOUBLE PRECISION L22Q
-c$$$      EXTERNAL L22Q
-c$$$**
-c$$$*     Output Variables
-c$$$*
-c$$$      DOUBLE PRECISION ADLERSR
-c$$$*
-c$$$      IF(VFNS.EQ."FFNS")THEN
-c$$$         QQ2 = Q2
-c$$$         MM2 = M2
-c$$$*
-c$$$         A   = 1D-6
-c$$$         B   = 1D0
-c$$$         EPS = 1D-5
-c$$$         ADLERSR = DGAUSS(L22Q,A,B,EPS)
-c$$$      ELSEIF(VFNS.EQ."FFN0")THEN
-c$$$         LN = DLOG(Q2/M2)
-c$$$         ZETA2 = 1.6449340668D0
-c$$$*     Eq (4.10) of hep-ph/9601302 (Appendix D)
-c$$$         ADLERSR = CF * TR * ( 2D0 * LN**2D0 - ( 32D0 * ZETA2 / 3D0 
-c$$$     1           + 38D0 / 3D0 ) * LN + 268D0 * ZETA2 / 9D0 
-c$$$     2           + 265D0 / 9D0 )
-c$$$      ENDIF
-c$$$*
-c$$$      RETURN
-c$$$      END
-c$$$*
-c$$$
-c$$$
-c$$$
-c$$$
