@@ -297,6 +297,7 @@ c      data eps / 1d-7, 1d-5 /
                C3ns1L  = C3NS1C(a)
             endif
             if(ipt.ge.2)then
+*
                wipt = 2
 *
                sf = 1
@@ -306,7 +307,14 @@ c      data eps / 1d-7, 1d-5 /
                C2ps2R  = dgauss(integrandsDISm,a,b,eps(wipt))
                k = 3
                C2ns2RS = dgauss(integrandsDISm,a,b,eps(wipt))
-               C2ns2L  = - dgauss(cm22q_adler,0d0,1d0,eps(wipt))
+*
+*     Coefficient to be addet to the NNLO non-singlet coefficient function
+*     of F2 to fullfil the Adler sum rule (can be done only the first time).
+*
+               if(alpha.eq.0.and.beta.eq.0.and.igrid.eq.1)
+     1              adler_coef(ixi) = 
+     2              - dgauss(cm22q_adler,0d0,1d0,eps(wipt))
+               C2ns2L  = adler_coef(ixi)
 *
                sf = 2
                k = 1
