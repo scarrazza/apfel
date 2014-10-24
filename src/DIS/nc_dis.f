@@ -600,7 +600,7 @@
             VFNS = "FFNS"
             DO I=4,6
                Q2H = Q2TH(I)
-               IF(W2.GT.Q2H)THEN
+               IF(W2.GT.4D0*Q2H)THEN
                   ADSR = ADLERSR(Q2,Q2H)
                   INTEG2(1) = INTEG2(1)
      1                    + BQ(1) * ( DGAUSS(XDP_XC2Q_UNPLUS_NC,A,B,EPS)
@@ -624,11 +624,11 @@
             VFNS = "FFN0"
             DO I=4,6
                Q2H = Q2TH(I)
-               IF(Q2.GT.Q2H)THEN
+               IF(W2.GT.4D0*Q2H)THEN
                   ADSR = ADLERSR(Q2,Q2H)
                   INTEG2(1) = INTEG2(1)
      1                    + BQ(1) * ( DGAUSS(XDP_XC2Q_UNPLUS_NC,A,B,EPS)
-     2                    + DGAUSS(XDP_XC2Q_PLUS_NC,A,B,EPS) 
+     2                    + DGAUSS(XDP_XC2Q_PLUS_NC,A,B,EPS)
      3                    + ADSR * XDP(X,Q) )
                   INTEG2(2) = INTEG2(2)
      1                    + BQ(2) * ( DGAUSS(XUP_XC2Q_UNPLUS_NC,A,B,EPS)
@@ -636,7 +636,7 @@
      3                    + ADSR * XUP(X,Q) )
                   INTEG2(3) = INTEG2(3)
      1                    + BQ(3) * ( DGAUSS(XSP_XC2Q_UNPLUS_NC,A,B,EPS)
-     2                    + DGAUSS(XSP_XC2Q_PLUS_NC,A,B,EPS) 
+     2                    + DGAUSS(XSP_XC2Q_PLUS_NC,A,B,EPS)
      3                    + ADSR * XSP(X,Q) )
 *
                   INTEGL(1) = INTEGL(1)
