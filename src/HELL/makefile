@@ -7,7 +7,7 @@ CFLAGS = -O2 -Wall -I.
 
 obj = objects
 
-OBJECTS = $(obj)/hell.o $(obj)/DGLAPevol.o
+OBJECTS = $(obj)/hell.o $(obj)/DGLAPevol.o $(obj)/gammaNLO.o
 
 
 
