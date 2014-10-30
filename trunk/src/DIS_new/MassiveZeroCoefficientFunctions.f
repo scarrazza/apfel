@@ -1,5 +1,9 @@
 ************************************************************************
 *
+*     NEUTRAL CURRENT
+*
+************************************************************************
+*
 *     MassiveZeroCoefficientFunctions.f:
 *
 *     This file contains all the exact asymptotic massive coefficient
@@ -1075,4 +1079,27 @@
 *
       RETURN
       END
-
+*
+************************************************************************
+*
+*     CHARGED CURRENT
+*
+************************************************************************
+      FUNCTION CG1ACCM0_AL(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION CG1ACCM0_AL
+*
+      CG1ACCM0_AL = 2D0 * TR * ( X**2D0 + ( 1D0 - X )** 2D0 )
+*
+      RETURN
+      END

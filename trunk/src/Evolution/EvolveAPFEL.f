@@ -88,7 +88,7 @@
 *
       call cpu_time(t2)
 *
-      write(6,*) "Evolution done in",t2-t1," s"
+      write(6,"(a,f7.3,a)") " Evolution completed in",t2-t1," s"
       write(6,*) " "
 *
       return

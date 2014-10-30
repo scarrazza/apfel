@@ -115,7 +115,8 @@ C            XC1G =  XC1G - PQG * DLOG(Q2/Q2H)
             XC1Q_UNPLUS = 4D0 / 3D0 * ( - (1D0 + X**2D0) * DLOG(X) 
      1                  / ( 1D0 -  X ) - 2D0 * (1D0 + X) * DLOG(1D0-X)
      2                  + (1D0 + X) * DLOG(1D0-LAMBDA*X) + ( 3D0 - X )
-     3                  + X * ( 1D0 - X ) / ( 1D0 - LAMBDA * X ) )
+     3                  + 1D0 / LAMBDA**2D0 + ( X - 1D0 ) / LAMBDA 
+     4                  + ( 1D0 + X ) * DLOG(LAMBDA) )
             XC1Q_UNPLUS = X * XC1Q_UNPLUS
          ELSE
             XC1Q_UNPLUS = 0D0
@@ -191,7 +192,7 @@ C            XC1G =  XC1G - PQG * DLOG(Q2/Q2H)
          IF(IPT.EQ.1)THEN
             Q2 = Q * Q
             LAMBDA = 1D0 / ( 1D0 + Q2H / Q2 )
-            PQQ = 4D0 / 3D0 * ( 1D0 + X**2D0) / ( 1D0 - X )
+            PQQ = 4D0 / 3D0 * 2D0 / ( 1D0 - X )
 *
 *     Massive scheme coefficient function
 *
@@ -199,7 +200,8 @@ C            XC1G =  XC1G - PQG * DLOG(Q2/Q2H)
      1                * ( 4D0 * DLOG( 1D0 - X ) / ( 1D0 - X ) 
      2                - 2D0 * DLOG( 1D0 - LAMBDA * X ) / ( 1D0 - X )
      3                - 2D0 / ( 1D0 - X ) + 1D0 / 2D0 * ( ( 1D0 - X ) 
-     4                / ( 1D0 - LAMBDA * X )**2D0 ) )
+     4                / ( 1D0 - LAMBDA * X )**2D0 ) + ( LAMBDA - 1D0 ) 
+     5                / LAMBDA**2D0 / ( 1D0 - LAMBDA * X ) )
             XC1Q_PLUS = X * XC1Q_PLUS
          ELSE
             XC1Q_PLUS = 0D0
@@ -259,7 +261,7 @@ C            XC1G =  XC1G - PQG * DLOG(Q2/Q2H)
      1           + 2D0 * DLOG( ( 1D0 - X ) / X ) )
      2           + ( 8D0 - 18D0 * ( 1D0 - LAMBDA ) 
      3           + 12D0 * ( 1D0 - LAMBDA )**2D0 ) * X * ( 1D0 - X )
-     4           + ( 1D0 - LAMBDA ) / ( 1D0 - LAMBDA * X) - 1D0
+     4           + ( 1D0 - LAMBDA ) / ( 1D0 - LAMBDA * X ) - 1D0
      5           + 6D0 * LAMBDA * ( 1D0 - LAMBDA ) * X 
      6           * ( 1D0 - 2D0 * LAMBDA * X ) 
      7           * DLOG( ( 1D0 - LAMBDA * X ) / ( ( 1D0 - LAMBDA) * X ))
@@ -330,8 +332,9 @@ C            XC2G =  XC2G - PQG * DLOG( Q2 / Q2H )
             XC2Q_UNPLUS = 4D0 / 3D0 * ( - (1D0 + X**2D0) * DLOG(X) 
      1                  / ( 1D0 -  X ) - 2D0 * (1D0 + X) * DLOG(1D0-X)
      2                  + (1D0 + X) * DLOG(1D0-LAMBDA*X) + ( 2D0 * X 
-     3                  + 2D0 - 2D0 / X ) + ( 2D0 / X - 1D0 - X )
-     4                  / ( 1D0 - LAMBDA * X ))
+     3                  + 2D0 ) + 1D0 / LAMBDA 
+     4                  + ( 1D0 + X ) * DLOG(LAMBDA) )
+*
             XC2Q_UNPLUS = X * XC2Q_UNPLUS
          ELSE
             XC2Q_UNPLUS = 0D0
@@ -408,15 +411,18 @@ C            XC2G =  XC2G - PQG * DLOG( Q2 / Q2H )
          IF(IPT.EQ.1)THEN
             Q2 = Q * Q
             LAMBDA = 1D0 / ( 1D0 + Q2H / Q2 )
-            PQQ = 4D0 / 3D0 * ( 1D0 + X**2D0) / ( 1D0 - X )
+            PQQ = 4D0 / 3D0 * 2D0 / ( 1D0 - X )
 *
 *     Massive scheme coefficient function
 *
             XC2Q_PLUS = - PQQ * DLOG(LAMBDA) + 4D0 / 3D0 
-     1                * ( 4D0 * DLOG( 1D0 - X ) / ( 1D0 - X ) 
-     2                - 2D0 * DLOG( 1D0 - LAMBDA * X ) / ( 1D0 - X )
+     1                * ( 4D0 * DLOG( 1D0 - X ) / ( 1D0 - X )
+     2                - 2D0 * DLOG( 1D0 - LAMBDA * X ) / ( 1D0 - X ) 
      3                - 2D0 / ( 1D0 - X ) + 1D0 / 2D0 * ( ( 1D0 - X ) 
-     4                / ( 1D0 - LAMBDA * X )**2D0 ) )
+     4                / ( 1D0 - LAMBDA * X )**2D0 ) 
+     5                + ( 2D0 * LAMBDA**2D0 - LAMBDA - 1D0 ) / LAMBDA                  
+     6                / ( 1D0 - LAMBDA * X ) )
+*
             XC2Q_PLUS = X * XC2Q_PLUS
          ELSE
             XC2Q_PLUS = 0D0
@@ -535,10 +541,10 @@ C            XC3G =  XC3G + PQG * DLOG( Q2 / Q2H )
 *
 *     Massive scheme coefficient function
 *
-            XC3Q_UNPLUS = 4D0 / 3D0 * ( - (1D0 + X**2D0) * DLOG(X) 
+            XC3Q_UNPLUS = 4D0 / 3D0 * ( - ( 1D0 + X**2D0 ) * DLOG(X) 
      1                  / ( 1D0 -  X ) - 2D0 * (1D0 + X) * DLOG(1D0-X)
      2                  + (1D0 + X) * DLOG(1D0-LAMBDA*X) + ( 1D0 + X )
-     3                  + ( 1D0 - X ) / ( 1D0 - LAMBDA * X ) )
+     3                  + 1D0 / LAMBDA + ( 1D0 + X ) * DLOG(LAMBDA) )
             XC3Q_UNPLUS = X * XC3Q_UNPLUS
          ELSE
             XC3Q_UNPLUS = 0D0
@@ -592,7 +598,7 @@ C            XC3G =  XC3G + PQG * DLOG( Q2 / Q2H )
          IF(IPT.EQ.1)THEN
             Q2 = Q * Q
             LAMBDA = 1D0 / ( 1D0 + Q2H / Q2 )
-            PQQ = 4D0 / 3D0 * ( 1D0 + X**2D0) / ( 1D0 - X )
+            PQQ = 4D0 / 3D0 * 2D0 / ( 1D0 - X )
 *
 *     Massive scheme coefficient function
 *
@@ -600,7 +606,8 @@ C            XC3G =  XC3G + PQG * DLOG( Q2 / Q2H )
      1                * ( 4D0 * DLOG( 1D0 - X ) / ( 1D0 - X ) 
      2                - 2D0 * DLOG( 1D0 - LAMBDA * X ) / ( 1D0 - X )
      3                - 2D0 / ( 1D0 - X ) + 1D0 / 2D0 * ( ( 1D0 - X ) 
-     4                / ( 1D0 - LAMBDA * X )**2D0 ) )
+     4                / ( 1D0 - LAMBDA * X )**2D0 ) + ( LAMBDA - 1D0 ) 
+     5                / LAMBDA / ( 1D0 - LAMBDA * X ) )
             XC3Q_PLUS = X * XC3Q_PLUS
          ELSE
             XC3Q_PLUS = 0D0

@@ -444,6 +444,7 @@
       VFNS_TMP = VFNS
       VFNS     = "ZMVN"
       XBJ      = X
+      IF(SCHEME(1:4).EQ."FFNS".OR.SCHEME(1:4).EQ."FFN0") NF = 3
 *
 *     LO
 *
