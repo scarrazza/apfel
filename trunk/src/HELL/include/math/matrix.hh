@@ -119,11 +119,12 @@ int operator != (const vec2<T> &a, const vec2<T> &b) {
    return((a.r == b.r) && (a.i == b.i) ? 0 : 1);}
 */
 
-
+/*
 template <class T> ostream & operator << (ostream & os, const vec2<T> & a){
   return os << "/ "  << setw(8) << setprecision(5) << a.entry1() << " \\" << endl
 	    << "\\ " << setw(8) << setprecision(5) << a.entry2() << " /"  << endl;
 }
+*/
 template <class T> ostream & operator << (ostream & os, vec2<T> & a){
   return os << "/ "  << setw(8) << setprecision(5) << a.entry1() << " \\" << endl
 	    << "\\ " << setw(8) << setprecision(5) << a.entry2() << " /"  << endl;
