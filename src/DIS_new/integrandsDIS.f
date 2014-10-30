@@ -70,7 +70,7 @@
 *
 *     NLO
 *
-      if(wipt.ge.1)then
+      if(wipt.eq.1)then
 *     C2
          if(sf.eq.1)then
 *     Gluon
@@ -121,7 +121,7 @@
 *
 *     NNLO
 *
-      if(wipt.ge.2)then
+      if(wipt.eq.2)then
 *     C2
          if(sf.eq.1)then
 *     Gluon
@@ -186,10 +186,10 @@ c         integrandsDISzm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 ************************************************************************
 *
-*     Massive coefficient functions
+*     Massive coefficient functions (Neutral Current)
 *
 ************************************************************************
-      function integrandsDISm(y)
+      function integrandsDISNCm(y)
 *
       implicit none
 *
@@ -213,7 +213,7 @@ c         integrandsDISzm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 **
 *     Output Variables
 *
-      double precision integrandsDISm
+      double precision integrandsDISNCm
 *
 *     Interpolant functions
 *
@@ -229,7 +229,7 @@ c         integrandsDISzm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 *     NLO
 *
-      if(wipt.ge.1)then
+      if(wipt.eq.1)then
 *     C2
          if(sf.eq.1)then
 *     Gluon
@@ -274,7 +274,7 @@ c         integrandsDISzm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 *     NNLO
 *
-      if(wipt.ge.2)then
+      if(wipt.eq.2)then
 *     C2
          if(sf.eq.1)then
 *     Gluon
@@ -323,14 +323,14 @@ c     1                  + MassiveCF(13,wixi,y) * dlog(xigrid(wixi))
       endif
 *
       if(sf.eq.1)then
-         integrandsDISm = C2R(k,wipt) * fR
-c         integrandsDISm = z * C2R(k,wipt) * fR / y
+         integrandsDISNCm = C2R(k,wipt) * fR
+c         integrandsDISNCm = z * C2R(k,wipt) * fR / y
       elseif(sf.eq.2)then
-         integrandsDISm = CLR(k,wipt) * fR
-c         integrandsDISm = z * CLR(k,wipt) / y
+         integrandsDISNCm = CLR(k,wipt) * fR
+c         integrandsDISNCm = z * CLR(k,wipt) / y
       elseif(sf.eq.3)then
-         integrandsDISm = C3R(k,wipt) * fR + C3S(k,wipt) * fS
-c         integrandsDISm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
+         integrandsDISNCm = C3R(k,wipt) * fR + C3S(k,wipt) * fS
+c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
       endif
 *
       return
@@ -338,13 +338,13 @@ c         integrandsDISm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 ************************************************************************
 *
-*     Massive zero coefficient functions
+*     Massive zero coefficient functions (Neutral Current)
 *
 *     wl =  1    2    3    4    5
 *           A0   AQ   AQ2  AF   AQF
 *
 ************************************************************************
-      function integrandsDISm0(y)
+      function integrandsDISNCm0(y)
 *
       implicit none
 *
@@ -376,7 +376,7 @@ c         integrandsDISm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 **
 *     Output Variables
 *
-      double precision integrandsDISm0
+      double precision integrandsDISNCm0
 *
 *     Interpolant functions
 *
@@ -392,7 +392,7 @@ c         integrandsDISm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 *     NLO
 *
-      if(wipt.ge.1)then
+      if(wipt.eq.1)then
 *     C2
          if(sf.eq.1)then
 *     Gluon
@@ -448,7 +448,7 @@ c         integrandsDISm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 *     NNLO
 *
-      if(wipt.ge.2)then
+      if(wipt.eq.2)then
 *     C2
          if(sf.eq.1)then
 *     Gluon
@@ -548,12 +548,172 @@ c         integrandsDISm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
       endif
 *
       if(sf.eq.1)then
-         integrandsDISm0 = C2R(k,wipt,wl) * fR + C2S(k,wipt,wl) * fS
+         integrandsDISNCm0 = C2R(k,wipt,wl) * fR + C2S(k,wipt,wl) * fS
       elseif(sf.eq.2)then
-         integrandsDISm0 = CLR(k,wipt,wl) * fR
+         integrandsDISNCm0 = CLR(k,wipt,wl) * fR
       elseif(sf.eq.3)then
-         integrandsDISm0 = C3R(k,wipt) * fR + C3S(k,wipt) * fS
+         integrandsDISNCm0 = C3R(k,wipt) * fR + C3S(k,wipt) * fS
       endif
+*
+      return
+      end
+*
+************************************************************************
+*
+*     Massive coefficient functions (Charged Current)
+*
+************************************************************************
+      function integrandsDISCCm(y)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/wrapDIS.h"
+      include "../commons/coeffhqmellin.h"
+**
+*     Input Variables
+*
+      double precision y
+**
+*     Internal Variables
+*
+      double precision z,w_int,fR,fS,fL
+      double precision xi
+      double precision C2R(3,2),C2S(3,2)
+      double precision CLR(3,2),CLS(3,2)
+      double precision C3R(3,2),C3S(3,2)
+      double precision c2ns1cca,c2ns1ccb,c2g1cca
+      double precision clns1cca,clns1ccb,clg1cca
+      double precision c3ns1cca,c3ns1ccb,c3g1cca
+**
+*     Output Variables
+*
+      double precision integrandsDISCCm
+*
+      xi = xigrid(wixi)
+*
+*     Interpolant functions
+*
+      z = xg(igrid,wbeta) / y
+*
+      fL = 0d0
+      if(walpha.eq.wbeta) fL = 1d0
+*
+      fR = w_int(inter_degree(igrid),walpha,z)
+      fS = fR - fL
+*
+*     Contructing integrands order by order
+*
+*     NLO
+*
+      if(wipt.eq.1)then
+*     C2
+         if(sf.eq.1)then
+*     Gluon
+            if(k.eq.1)then
+               C2R(k,wipt) = c2g1cca(xi,y)
+               C2S(k,wipt) = 0d0
+*     Pure-singlet
+            elseif(k.eq.2)then
+               C2R(k,wipt) = 0d0
+               C2S(k,wipt) = 0d0
+*     Non-singlet
+            elseif(k.eq.3)then
+               C2R(k,wipt) = c2ns1cca(xi,y)
+               C2S(k,wipt) = c2ns1ccb(xi,y)
+            endif
+*     CL
+         elseif(sf.eq.2)then
+*     Gluon
+            if(k.eq.1)then
+               CLR(k,wipt) = clg1cca(xi,y)
+               CLS(k,wipt) = 0d0
+*     Pure-singlet
+            elseif(k.eq.2)then
+               CLR(k,wipt) = 0d0
+               CLS(k,wipt) = 0d0
+*     Non-singlet
+            elseif(k.eq.3)then
+               CLR(k,wipt) = clns1cca(xi,y)
+               CLS(k,wipt) = clns1ccb(xi,y)
+            endif
+*     C3
+         elseif(sf.eq.3)then
+*     Gluon
+            if(k.eq.1)then
+               C3R(k,wipt) = c3g1cca(xi,y)
+               C3S(k,wipt) = 0d0
+*     Pure-singlet
+            elseif(k.eq.2)then
+               C3R(k,wipt) = 0d0
+               C3S(k,wipt) = 0d0
+*     Non-singlet
+            elseif(k.eq.3)then
+               C3R(k,wipt) = c3ns1cca(xi,y)
+               C3S(k,wipt) = c3ns1ccb(xi,y)
+            endif
+         endif
+      endif
+*
+*     NNLO
+*
+      if(wipt.eq.2)then
+*     C2
+         C2R(k,wipt) = 0d0
+         C2S(k,wipt) = 0d0
+*     CL
+         CLR(k,wipt) = 0d0
+         CLS(k,wipt) = 0d0
+*     C3
+         C3R(k,wipt) = 0d0
+         C3S(k,wipt) = 0d0
+      endif
+*
+      if(sf.eq.1)then
+         integrandsDISCCm = C2R(k,wipt) * fR + C2S(k,wipt) * fS
+      elseif(sf.eq.2)then
+         integrandsDISCCm = CLR(k,wipt) * fR + CLS(k,wipt) * fS
+      elseif(sf.eq.3)then
+         integrandsDISCCm = C3R(k,wipt) * fR + C3S(k,wipt) * fS
+      endif
+*
+      return
+      end
+*
+************************************************************************
+*
+*     Massive zero coefficient functions (Charged Current)
+*
+************************************************************************
+      function integrandsDISCCm0(y)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/wrapDIS.h"
+**
+*     Input Variables
+*
+      double precision y
+**
+*     Internal Variables
+*
+      double precision z,w_int,fR
+      double precision CG1ACCM0_AL
+**
+*     Output Variables
+*
+      double precision integrandsDISCCm0
+*
+*     Interpolant functions
+*
+      z = xg(igrid,wbeta) / y
+*
+      fR = w_int(inter_degree(igrid),walpha,z)
+*
+*     Contructing integrand
+*
+      integrandsDISCCm0 = CG1ACCM0_AL(y) * fR
 *
       return
       end

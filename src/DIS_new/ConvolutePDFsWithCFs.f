@@ -37,6 +37,7 @@
       integer pt
       integer ipr
       integer ixi(4:6)
+      double precision t1,t2
       double precision Q2,W2,xi(4:6),c0(4:6),c1(4:6)
       double precision singlet
       double precision F2t,FLt,F3t
@@ -49,7 +50,10 @@
       double precision SCL(0:ngrid_max,6,3,0:2,0:nint_max,0:nint_max)
       double precision SC3(0:ngrid_max,6,3,0:2,0:nint_max,0:nint_max)
 *
-      Q2 = Q * Q
+      call cpu_time(t1)
+*
+      Q2    = Q * Q
+      Q2DIS = Q2
 *
 *     Find number of active flavours
 *
@@ -99,14 +103,14 @@
 *
       if(ProcessDIS.eq."EM".or.ProcessDIS.eq."NC")then
 *
-*     Construct the coefficient functions acccording to the scheme chosen
+*     Construct the coefficient functions according to the scheme chosen
 *
          if(MassScheme.eq."ZM-VFNS")then
             do jgrid=1,ngrid
                do alpha=0,nin(jgrid)
-                  do i=1,nf
-                     do pt=0,ipt
-                        do k=1,3
+                  do pt=0,ipt
+                     do k=1,3
+                        do i=1,nf
                            SC2(jgrid,i,k,pt,0,alpha) = 
      1                          SC2zm(jgrid,nf,k,pt,0,alpha)
                            SCL(jgrid,i,k,pt,0,alpha) = 
@@ -114,6 +118,13 @@
                            SC3(jgrid,i,k,pt,0,alpha) = 
      1                          SC3zm(jgrid,nf,k,pt,0,alpha)
                         enddo
+                        if(nf.lt.6)then
+                           do i=nf+1,6
+                              SC2(jgrid,i,k,pt,0,alpha) = 0d0
+                              SCL(jgrid,i,k,pt,0,alpha) = 0d0
+                              SC3(jgrid,i,k,pt,0,alpha) = 0d0
+                           enddo
+                        endif
                      enddo
                   enddo
                enddo
@@ -121,6 +132,8 @@
          elseif(MassScheme(1:4).eq."FFNS")then
             do jgrid=1,ngrid
                do alpha=0,nin(jgrid)
+                  W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) / xg(jgrid,alpha)
+
 *
 *     Light coefficient functions
 *
@@ -139,18 +152,16 @@
 *
                         if(pt.ge.2)then
                            if(Nf_FF.lt.6)then
-                              W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) 
-     1                           / xg(jgrid,alpha)
                               do j=Nf_FF+1,6
                                  if(W2.ge.4d0*m2th(j))then
                                     SC2(jgrid,i,3,pt,0,alpha) = 
      1                              SC2(jgrid,i,3,pt,0,alpha)
-     2                       + c0(j) * SC2m(jgrid,ixi(j),3,pt,0,alpha)
-     3                       + c1(j) * SC2m(jgrid,ixi(j)+1,3,pt,0,alpha)
+     2                     + c0(j) * SC2m(1,jgrid,ixi(j),3,pt,0,alpha)
+     3                     + c1(j) * SC2m(1,jgrid,ixi(j)+1,3,pt,0,alpha)
                                     SCL(jgrid,i,3,pt,0,alpha) = 
      1                              SCL(jgrid,i,3,pt,0,alpha)
-     2                       + c0(j) * SCLm(jgrid,ixi(j),3,pt,0,alpha)
-     3                       + c1(j) * SCLm(jgrid,ixi(j)+1,3,pt,0,alpha)
+     2                     + c0(j) * SCLm(1,jgrid,ixi(j),3,pt,0,alpha)
+     3                     + c1(j) * SCLm(1,jgrid,ixi(j)+1,3,pt,0,alpha)
                                  endif
                               enddo
                            endif
@@ -164,15 +175,21 @@
                      do i=Nf_FF+1,6
                         do pt=0,ipt
                            do k=1,2
-                              SC2(jgrid,i,k,pt,0,alpha) = 
-     1                       c0(i) * SC2m(jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SC2m(jgrid,ixi(i)+1,k,pt,0,alpha)
-                              SCL(jgrid,i,k,pt,0,alpha) =
-     1                       c0(i) * SCLm(jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SCLm(jgrid,ixi(i)+1,k,pt,0,alpha)
-                              SC3(jgrid,i,k,pt,0,alpha) = 
-     1                       c0(i) * SC3m(jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SC3m(jgrid,ixi(i)+1,k,pt,0,alpha)
+                              if(W2.ge.4d0*m2th(i))then
+                                 SC2(jgrid,i,k,pt,0,alpha) = 
+     1                       c0(i) * SC2m(1,jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SC2m(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+                                 SCL(jgrid,i,k,pt,0,alpha) =
+     1                       c0(i) * SCLm(1,jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SCLm(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+                                 SC3(jgrid,i,k,pt,0,alpha) = 
+     1                       c0(i) * SC3m(1,jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SC3m(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+                             else
+                                 SC2(jgrid,i,k,pt,0,alpha) = 0d0
+                                 SCL(jgrid,i,k,pt,0,alpha) = 0d0
+                                 SC3(jgrid,i,k,pt,0,alpha) = 0d0
+                              endif
                            enddo
                            SC2(jgrid,i,3,pt,0,alpha) = 0d0
                            SCL(jgrid,i,3,pt,0,alpha) = 0d0
@@ -185,6 +202,7 @@
          elseif(MassScheme(1:4).eq."FFN0")then
             do jgrid=1,ngrid
                do alpha=0,nin(jgrid)
+                  W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) / xg(jgrid,alpha)
 *
 *     Light coefficient functions
 *
@@ -203,18 +221,16 @@
 *
                         if(pt.ge.2)then
                            if(Nf_FF.lt.6)then
-                              W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) 
-     1                           / xg(jgrid,alpha)
                               do j=Nf_FF+1,6
                                  if(W2.ge.4d0*m2th(j))then
                                     SC2(jgrid,i,3,pt,0,alpha) = 
      1                              SC2(jgrid,i,3,pt,0,alpha)
-     2                      + c0(j) * SC2m0(jgrid,ixi(j),3,pt,0,alpha)
-     3                      + c1(j) * SC2m0(jgrid,ixi(j)+1,3,pt,0,alpha)
+     2                    + c0(j) * SC2m0(1,jgrid,ixi(j),3,pt,0,alpha)
+     3                    + c1(j) * SC2m0(1,jgrid,ixi(j)+1,3,pt,0,alpha)
                                     SCL(jgrid,i,3,pt,0,alpha) = 
      1                              SCL(jgrid,i,3,pt,0,alpha)
-     2                      + c0(j) * SCLm0(jgrid,ixi(j),3,pt,0,alpha)
-     3                      + c1(j) * SCLm0(jgrid,ixi(j)+1,3,pt,0,alpha)
+     2                    + c0(j) * SCLm0(1,jgrid,ixi(j),3,pt,0,alpha)
+     3                    + c1(j) * SCLm0(1,jgrid,ixi(j)+1,3,pt,0,alpha)
                                  endif
                               enddo
                            endif
@@ -228,15 +244,21 @@
                      do i=Nf_FF+1,6
                         do pt=0,ipt
                            do k=1,2
-                              SC2(jgrid,i,k,pt,0,alpha) = 
-     1                       c0(i) * SC2m0(jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SC2m0(jgrid,ixi(i)+1,k,pt,0,alpha)
-                              SCL(jgrid,i,k,pt,0,alpha) =
-     1                       c0(i) * SCLm0(jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SCLm0(jgrid,ixi(i)+1,k,pt,0,alpha)
-                              SC3(jgrid,i,k,pt,0,alpha) = 
-     1                       c0(i) * SC3m0(jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SC3m0(jgrid,ixi(i)+1,k,pt,0,alpha)
+                              if(W2.ge.4d0*m2th(i))then
+                                 SC2(jgrid,i,k,pt,0,alpha) = 
+     1                      c0(i) * SC2m0(1,jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SC2m0(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+                                 SCL(jgrid,i,k,pt,0,alpha) = 
+     1                      c0(i) * SCLm0(1,jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SCLm0(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+                                 SC3(jgrid,i,k,pt,0,alpha) = 
+     1                      c0(i) * SC3m0(1,jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SC3m0(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+                              else
+                                 SC2(jgrid,i,k,pt,0,alpha) = 0d0
+                                 SCL(jgrid,i,k,pt,0,alpha) = 0d0
+                                 SC3(jgrid,i,k,pt,0,alpha) = 0d0
+                              endif
                            enddo
                            SC2(jgrid,i,3,pt,0,alpha) = 0d0
                            SCL(jgrid,i,3,pt,0,alpha) = 0d0
@@ -258,49 +280,27 @@
 *     Rearrange PDFs in case the target is not a proton.
 *     (This assumes isospin symmetry)
 *
-               if(TargetDIS(1:7).eq."neutron")then
-*     Exchage up and down
-                  do beta=0,nin(jgrid)
-                     fdw = fph(jgrid,1,beta)
-                     fdb = fph(jgrid,-1,beta)
-                     fup = fph(jgrid,2,beta)
-                     fub = fph(jgrid,-2,beta)
-*
-                     fph(jgrid,1,beta)  = fup
-                     fph(jgrid,-1,beta) = fub
-                     fph(jgrid,2,beta)  = fdw
-                     fph(jgrid,-2,beta) = fdb
-                  enddo
+               if(TargetDIS(1:7).eq."proton")then
+                  frac = 1d0
+               elseif(TargetDIS(1:7).eq."neutron")then
+                  frac = 0d0
                elseif(TargetDIS.eq."isoscalar")then
-*     Average up and down
-                  do beta=0,nin(jgrid)
-                     fdw = fph(jgrid,1,beta)
-                     fdb = fph(jgrid,-1,beta)
-                     fup = fph(jgrid,2,beta)
-                     fub = fph(jgrid,-2,beta)
-*
-                     fph(jgrid,1,beta)  = ( fup + fdw ) / 2d0
-                     fph(jgrid,-1,beta) = ( fub + fdb ) / 2d0
-                     fph(jgrid,2,beta)  = fph(jgrid,1,beta)
-                     fph(jgrid,-2,beta) = fph(jgrid,-1,beta)
-                  enddo
+                  frac = 0.5d0
                elseif(TargetDIS(1:4).eq."iron")then
-*     Reweight up and down by frac
-                  frac = 23.403d0 / 49.618d0
-                  do beta=0,nin(jgrid)
-                     fdw = fph(jgrid,1,beta)
-                     fdb = fph(jgrid,-1,beta)
-                     fup = fph(jgrid,2,beta)
-                     fub = fph(jgrid,-2,beta)
-*
-                     fph(jgrid,1,beta)  = frac * fup
-     1                                  + ( 1d0 - frac ) * fdw 
-                     fph(jgrid,-1,beta) = frac * fub
-     1                                  + ( 1d0 - frac ) * fdb
-                     fph(jgrid,2,beta)  = fph(jgrid,1,beta)
-                     fph(jgrid,-2,beta) = fph(jgrid,-1,beta)
-                  enddo
+                  frac = 0.47166350921037d0 !23.403d0 / 49.618d0
                endif
+*     Reweight up and down by frac
+               do beta=0,nin(jgrid)
+                  fdw = fph(jgrid,1,beta)
+                  fdb = fph(jgrid,-1,beta)
+                  fup = fph(jgrid,2,beta)
+                  fub = fph(jgrid,-2,beta)
+*
+                  fph(jgrid,1,beta)  = frac * fdw + ( 1d0 - frac ) * fup
+                  fph(jgrid,-1,beta) = frac * fdb + ( 1d0 - frac ) * fub
+                  fph(jgrid,2,beta)  = frac * fup + ( 1d0 - frac ) * fdw
+                  fph(jgrid,-2,beta) = frac * fub + ( 1d0 - frac ) * fdb
+               enddo
 *
 *     F2
 *
@@ -332,32 +332,10 @@
                   enddo
                enddo
 *     F2 total (combine according to the massive scheme)
-               if(MassScheme.eq."ZM-VFNS")then
-                  do i=1,nf
-                     F2(7,jgrid,alpha) = F2(7,jgrid,alpha)
-     1                                 + F2(i,jgrid,alpha)
-                  enddo
-               elseif(MassScheme(1:4).eq."FFNS".or.
-     1                MassScheme(1:4).eq."FFN0")then
-                  do i=1,Nf_FF
-                     F2(7,jgrid,alpha) = F2(7,jgrid,alpha)
-     1                                 + F2(i,jgrid,alpha)
-                  enddo
-                  if(Nf_FF.lt.6)then
-*     In the FFNS include a heavy quark structure function in the total one
-*     only if W2 is bigget than the physical threshold 4*mh^2
-                     W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) 
-     1                  / xg(jgrid,alpha)
-                     do i=Nf_FF+1,6
-                        if(W2.ge.4d0*m2th(i))then
-                           F2(7,jgrid,alpha) = F2(7,jgrid,alpha)
-     1                                       + F2(i,jgrid,alpha)
-                        else
-                           F2(i,jgrid,alpha) = 0d0
-                        endif
-                     enddo
-                  endif
-               endif
+               do i=1,6
+                  F2(7,jgrid,alpha) = F2(7,jgrid,alpha)
+     1                              + F2(i,jgrid,alpha)
+               enddo
 *
 *     FL
 *
@@ -389,32 +367,10 @@
                   enddo
                enddo
 *     FL total (combine according to the massive scheme)
-               if(MassScheme.eq."ZM-VFNS")then
-                  do i=1,nf
-                     FL(7,jgrid,alpha) = FL(7,jgrid,alpha)
-     1                                 + FL(i,jgrid,alpha)
-                  enddo
-               elseif(MassScheme(1:4).eq."FFNS".or.
-     1                MassScheme(1:4).eq."FFN0")then
-                  do i=1,Nf_FF
-                     FL(7,jgrid,alpha) = FL(7,jgrid,alpha)
-     1                                 + FL(i,jgrid,alpha)
-                  enddo
-                  if(Nf_FF.lt.6)then
-*     In the FFNS include a heavy quark structure function in the total one
-*     only if W2 is bigget than the physical threshold 4*mh^2
-                     W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) 
-     1                  / xg(jgrid,alpha)
-                     do i=Nf_FF+1,6
-                        if(W2.ge.4d0*m2th(i))then
-                           FL(7,jgrid,alpha) = FL(7,jgrid,alpha)
-     1                                       + FL(i,jgrid,alpha)
-                        else
-                           FL(i,jgrid,alpha) = 0d0
-                        endif
-                     enddo
-                  endif
-               endif
+               do i=1,6
+                  FL(7,jgrid,alpha) = FL(7,jgrid,alpha)
+     1                              + FL(i,jgrid,alpha)
+               enddo
 *
 *     F3
 *
@@ -436,7 +392,7 @@
                   enddo
                enddo
 *     F3 total (it is always in the ZM scheme)
-               do i=1,nf
+               do i=1,6
                   F3(7,jgrid,alpha) = F3(7,jgrid,alpha)
      1                              + F3(i,jgrid,alpha)
                enddo
@@ -444,14 +400,14 @@
          enddo
       elseif(ProcessDIS.eq."CC")then
 *
-*     Construct the coefficient functions acccording to the scheme chosen
+*     Construct the coefficient functions according to the scheme chosen
 *
          if(MassScheme.eq."ZM-VFNS")then
             do jgrid=1,ngrid
                do alpha=0,nin(jgrid)
-                  do i=3,nf
-                     do pt=0,ipt
-                        do k=1,3
+                  do pt=0,ipt
+                     do k=1,3
+                        do i=3,nf
                            SC2(jgrid,i,k,pt,0,alpha) = 
      1                          SC2zm(jgrid,nf,k,pt,0,alpha)
                            SCL(jgrid,i,k,pt,0,alpha) = 
@@ -459,11 +415,118 @@
                            SC3(jgrid,i,k,pt,0,alpha) = 
      1                          SC3zm(jgrid,nf,k,pt,0,alpha)
                         enddo
+                        if(nf.lt.6)then
+                           do i=nf+1,6
+                              SC2(jgrid,i,k,pt,0,alpha) = 0d0
+                              SCL(jgrid,i,k,pt,0,alpha) = 0d0
+                              SC3(jgrid,i,k,pt,0,alpha) = 0d0
+                           enddo
+                        endif
                      enddo
                   enddo
                enddo
             enddo
+         elseif(MassScheme(1:4).eq."FFNS")then
+            do jgrid=1,ngrid
+               do alpha=0,nin(jgrid)
+                  W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) / xg(jgrid,alpha)
+*
+*     Light coefficient functions
+*
+                  do i=3,Nf_FF
+                     do pt=0,ipt
+                        do k=1,3
+                           SC2(jgrid,i,k,pt,0,alpha) = 
+     1                          SC2zm(jgrid,Nf_FF,k,pt,0,alpha)
+                           SCL(jgrid,i,k,pt,0,alpha) = 
+     1                          SCLzm(jgrid,Nf_FF,k,pt,0,alpha)
+                           SC3(jgrid,i,k,pt,0,alpha) = 
+     1                          SC3zm(jgrid,Nf_FF,k,pt,0,alpha)
+                        enddo
+
+                     enddo
+                  enddo
+*
+*     Heavy coefficient functions
+*
+                  if(Nf_FF.lt.6)then
+                     do i=Nf_FF+1,6
+                        do pt=0,ipt
+                           do k=1,3
+                              if(W2.ge.m2th(i))then
+                                 SC2(jgrid,i,k,pt,0,alpha) = 
+     1                       c0(i) * SC2m(2,jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SC2m(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+                                 SCL(jgrid,i,k,pt,0,alpha) =
+     1                       c0(i) * SCLm(2,jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SCLm(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+                                 SC3(jgrid,i,k,pt,0,alpha) = 
+     1                       c0(i) * SC3m(2,jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SC3m(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+                              else
+                                 SC2(jgrid,i,k,pt,0,alpha) = 0d0
+                                 SCL(jgrid,i,k,pt,0,alpha) = 0d0
+                                 SC3(jgrid,i,k,pt,0,alpha) = 0d0
+                              endif
+                           enddo
+                        enddo
+                     enddo
+                  endif
+               enddo
+            enddo
+         elseif(MassScheme(1:4).eq."FFN0")then
+            do jgrid=1,ngrid
+               do alpha=0,nin(jgrid)
+                  W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) / xg(jgrid,alpha)
+*
+*     Light coefficient functions
+*
+                  do i=1,Nf_FF
+                     do pt=0,ipt
+                        do k=1,3
+                           SC2(jgrid,i,k,pt,0,alpha) = 
+     1                          SC2zm(jgrid,Nf_FF,k,pt,0,alpha)
+                           SCL(jgrid,i,k,pt,0,alpha) = 
+     1                          SCLzm(jgrid,Nf_FF,k,pt,0,alpha)
+                           SC3(jgrid,i,k,pt,0,alpha) =
+     1                          SC3zm(jgrid,Nf_FF,k,pt,0,alpha)
+                        enddo
+                     enddo
+                  enddo
+*
+*     Heavy coefficient functions
+*
+                  if(Nf_FF.lt.6)then
+                     do i=Nf_FF+1,6
+                        do pt=0,ipt
+                           do k=1,3
+                              if(W2.ge.m2th(i))then
+                                 SC2(jgrid,i,k,pt,0,alpha) = 
+     1                      c0(i) * SC2m0(2,jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SC2m0(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+                                 SCL(jgrid,i,k,pt,0,alpha) =
+     1                      c0(i) * SCLm0(2,jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SCLm0(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+                                 SC3(jgrid,i,k,pt,0,alpha) = 
+     1                      c0(i) * SC3m0(2,jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SC3m0(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+                              else
+                                 SC2(jgrid,i,k,pt,0,alpha) = 0d0
+                                 SCL(jgrid,i,k,pt,0,alpha) = 0d0
+                                 SC3(jgrid,i,k,pt,0,alpha) = 0d0
+                              endif
+                           enddo
+                        enddo
+                     enddo
+                  endif
+               enddo
+            enddo
          endif
+
+
+
+
+
 *
          do jgrid=1,ngrid
             do alpha=0,nin(jgrid)
@@ -516,7 +579,7 @@
 *     F2light (all in the component 3 of F2)
                   do pt=0,ipt
                      F2t = 2d0
-     1                   * ( ( V_ud2 + V_us2 )         ! Gluon
+     1                   * ( ( V_ud2 + V_us2 )        ! Gluon
      2                   * ( SC2(jgrid,3,1,pt,0,beta)
      3                   * fph(jgrid,0,alpha+beta)
      4                   + SC2(jgrid,3,2,pt,0,beta)   ! Singlet
@@ -530,69 +593,63 @@
                      F2(3,jgrid,alpha) = F2(3,jgrid,alpha)
      1                                 + as**pt * F2t
 *     F2charm
-                     if(nf.ge.4)then
-                        F2t = 2d0
-     1                      * ( ( V_cd2 + V_cs2 )         ! Gluon
-     2                      * ( SC2(jgrid,4,1,pt,0,beta)
-     3                      * fph(jgrid,0,alpha+beta)
-     4                      + SC2(jgrid,4,2,pt,0,beta)   ! Singlet
-     5                      * singlet )
-     6                      + SC2(jgrid,4,3,pt,0,beta)   ! Non-singlet
-     7                      * ( V_cd2
-     8                      * ( fph(jgrid,1*ipr,alpha+beta) 
-     9                      + fph(jgrid,-4*ipr,alpha+beta) )
-     1                      + V_cs2
-     2                      * ( fph(jgrid,3*ipr,alpha+beta) 
-     3                      + fph(jgrid,-4*ipr,alpha+beta) ) ) )
+                     F2t = 2d0
+     1                   * ( ( V_cd2 + V_cs2 )         ! Gluon
+     2                   * ( SC2(jgrid,4,1,pt,0,beta)
+     3                   * fph(jgrid,0,alpha+beta)
+     4                   + SC2(jgrid,4,2,pt,0,beta)   ! Singlet
+     5                   * singlet )
+     6                   + SC2(jgrid,4,3,pt,0,beta)   ! Non-singlet
+     7                   * ( V_cd2
+     8                   * ( fph(jgrid,1*ipr,alpha+beta)
+     9                   + fph(jgrid,-4*ipr,alpha+beta) )
+     1                   + V_cs2
+     2                   * ( fph(jgrid,3*ipr,alpha+beta) 
+     3                   + fph(jgrid,-4*ipr,alpha+beta) ) ) )
 *             
-                        F2(4,jgrid,alpha) = F2(4,jgrid,alpha)
-     1                                    + as**pt * F2t
-                     endif
+                     F2(4,jgrid,alpha) = F2(4,jgrid,alpha)
+     1                                 + as**pt * F2t
 *     F2bottom
-                     if(nf.ge.5)then
-                        F2t = 2d0
-     1                      * ( ( V_ub2 + V_cb2 )         ! Gluon
-     2                      * ( SC2(jgrid,5,1,pt,0,beta)
-     3                      * fph(jgrid,0,alpha+beta)
-     4                      + SC2(jgrid,5,2,pt,0,beta)   ! Singlet
-     5                      * singlet )
-     6                      + SC2(jgrid,5,3,pt,0,beta)   ! Non-singlet
-     7                      * ( V_ub2
-     8                      * ( fph(jgrid,-2*ipr,alpha+beta) 
-     9                      + fph(jgrid,5*ipr,alpha+beta) )
-     1                      + V_cb2
-     2                      * ( fph(jgrid,-4*ipr,alpha+beta) 
-     3                      + fph(jgrid,5*ipr,alpha+beta) ) ) )
-*                     
-                        F2(5,jgrid,alpha) = F2(5,jgrid,alpha)
-     1                                    + as**pt * F2t
-                     endif
+                     F2t = 2d0
+     1                   * ( ( V_ub2 + V_cb2 )         ! Gluon
+     2                   * ( SC2(jgrid,5,1,pt,0,beta)
+     3                   * fph(jgrid,0,alpha+beta)
+     4                   + SC2(jgrid,5,2,pt,0,beta)   ! Singlet
+     5                   * singlet )
+     6                   + SC2(jgrid,5,3,pt,0,beta)   ! Non-singlet
+     7                   * ( V_ub2
+     8                   * ( fph(jgrid,-2*ipr,alpha+beta) 
+     9                   + fph(jgrid,5*ipr,alpha+beta) )
+     1                   + V_cb2
+     2                   * ( fph(jgrid,-4*ipr,alpha+beta) 
+     3                   + fph(jgrid,5*ipr,alpha+beta) ) ) )
+*                    
+                     F2(5,jgrid,alpha) = F2(5,jgrid,alpha)
+     1                                 + as**pt * F2t
 *     F2top
-                     if(nf.ge.6)then
-                        F2t = 2d0 
-     1                      * ( ( V_td2 + V_ts2 + V_tb2 ) ! Gluon
-     2                      * ( SC2(jgrid,6,1,pt,0,beta)
-     3                      * fph(jgrid,0,alpha+beta)
-     4                      + SC2(jgrid,6,2,pt,0,beta)   ! Singlet
-     5                      * singlet )
-     6                      + SC2(jgrid,6,3,pt,0,beta)   ! Non-singlet
-     7                      * ( V_td2
-     8                      * ( fph(jgrid,1*ipr,alpha+beta) 
-     9                      + fph(jgrid,-6*ipr,alpha+beta) )
-     1                      + V_ts2
-     2                      * ( fph(jgrid,3*ipr,alpha+beta) 
-     3                      + fph(jgrid,-6*ipr,alpha+beta) )
-     4                      + V_tb2
-     5                      * ( fph(jgrid,5*ipr,alpha+beta) 
-     6                      + fph(jgrid,-6*ipr,alpha+beta) ) ) )
+                     F2t = 2d0 
+     1                   * ( ( V_td2 + V_ts2 + V_tb2 ) ! Gluon
+     2                   * ( SC2(jgrid,6,1,pt,0,beta)
+     3                   * fph(jgrid,0,alpha+beta)
+     4                   + SC2(jgrid,6,2,pt,0,beta)   ! Singlet
+     5                   * singlet )
+     6                   + SC2(jgrid,6,3,pt,0,beta)   ! Non-singlet
+     7                   * ( V_td2
+     8                   * ( fph(jgrid,1*ipr,alpha+beta) 
+     9                   + fph(jgrid,-6*ipr,alpha+beta) )
+     1                   + V_ts2
+     2                   * ( fph(jgrid,3*ipr,alpha+beta) 
+     3                   + fph(jgrid,-6*ipr,alpha+beta) )
+     4                   + V_tb2
+     5                   * ( fph(jgrid,5*ipr,alpha+beta) 
+     6                   + fph(jgrid,-6*ipr,alpha+beta) ) ) )
 *                  
-                        F2(6,jgrid,alpha) = F2(6,jgrid,alpha)
-     1                                    + as**pt * F2t
-                     endif
+                     F2(6,jgrid,alpha) = F2(6,jgrid,alpha)
+     1                                 + as**pt * F2t
                   enddo
                enddo
 *     F2 total
-               do i=3,nf
+               do i=3,6
                   F2(7,jgrid,alpha) = F2(7,jgrid,alpha)
      1                              + F2(i,jgrid,alpha)
                enddo
@@ -626,69 +683,63 @@
                      FL(3,jgrid,alpha) = FL(3,jgrid,alpha)
      1                                 + as**pt * FLt
 *     FLcharm
-                     if(nf.ge.4)then
-                        FLt = 2d0
-     1                      * ( ( V_cd2 + V_cs2 )         ! Gluon
-     2                      * ( SCL(jgrid,4,1,pt,0,beta)
-     3                      * fph(jgrid,0,alpha+beta)
-     4                      + SCL(jgrid,4,2,pt,0,beta)   ! Singlet
-     5                      * singlet )
-     6                      + SCL(jgrid,4,3,pt,0,beta)   ! Non-singlet
-     7                      * ( V_cd2
-     8                      * ( fph(jgrid,1*ipr,alpha+beta) 
-     9                      + fph(jgrid,-4*ipr,alpha+beta) )
-     1                      + V_cs2
-     2                      * ( fph(jgrid,3*ipr,alpha+beta) 
-     3                      + fph(jgrid,-4*ipr,alpha+beta) ) ) )
-*                    
-                        FL(4,jgrid,alpha) = FL(4,jgrid,alpha)
-     1                                    + as**pt * FLt
-                     endif
+                     FLt = 2d0
+     1                   * ( ( V_cd2 + V_cs2 )         ! Gluon
+     2                   * ( SCL(jgrid,4,1,pt,0,beta)
+     3                   * fph(jgrid,0,alpha+beta)
+     4                   + SCL(jgrid,4,2,pt,0,beta)   ! Singlet
+     5                   * singlet )
+     6                   + SCL(jgrid,4,3,pt,0,beta)   ! Non-singlet
+     7                   * ( V_cd2
+     8                   * ( fph(jgrid,1*ipr,alpha+beta) 
+     9                   + fph(jgrid,-4*ipr,alpha+beta) )
+     1                   + V_cs2
+     2                   * ( fph(jgrid,3*ipr,alpha+beta) 
+     3                   + fph(jgrid,-4*ipr,alpha+beta) ) ) )
+*                 
+                     FL(4,jgrid,alpha) = FL(4,jgrid,alpha)
+     1                                 + as**pt * FLt
 *     FLbottom
-                     if(nf.ge.5)then
-                        FLt = 2d0
-     1                      * ( ( V_ub2 + V_cb2 )         ! Gluon
-     2                      * ( SCL(jgrid,5,1,pt,0,beta)
-     3                      * fph(jgrid,0,alpha+beta)
-     4                      + SCL(jgrid,5,2,pt,0,beta)   ! Singlet
-     5                      * singlet )
-     6                      + SCL(jgrid,5,3,pt,0,beta)   ! Non-singlet
-     7                      * ( V_ub2
-     8                      * ( fph(jgrid,-2*ipr,alpha+beta) 
-     9                      + fph(jgrid,5*ipr,alpha+beta) )
-     1                      + V_cb2
-     2                      * ( fph(jgrid,-4*ipr,alpha+beta) 
-     3                      + fph(jgrid,5*ipr,alpha+beta) ) ) )
-*                      
-                        FL(5,jgrid,alpha) = FL(5,jgrid,alpha)
-     1                                    + as**pt * FLt
-                     endif
+                     FLt = 2d0
+     1                   * ( ( V_ub2 + V_cb2 )         ! Gluon
+     2                   * ( SCL(jgrid,5,1,pt,0,beta)
+     3                   * fph(jgrid,0,alpha+beta)
+     4                   + SCL(jgrid,5,2,pt,0,beta)   ! Singlet
+     5                   * singlet )
+     6                   + SCL(jgrid,5,3,pt,0,beta)   ! Non-singlet
+     7                   * ( V_ub2
+     8                   * ( fph(jgrid,-2*ipr,alpha+beta) 
+     9                   + fph(jgrid,5*ipr,alpha+beta) )
+     1                   + V_cb2
+     2                   * ( fph(jgrid,-4*ipr,alpha+beta) 
+     3                   + fph(jgrid,5*ipr,alpha+beta) ) ) )
+*                   
+                     FL(5,jgrid,alpha) = FL(5,jgrid,alpha)
+     1                                 + as**pt * FLt
 *     FLtop
-                     if(nf.ge.6)then
-                        FLt = 2d0 
-     1                      * ( ( V_td2 + V_ts2 + V_tb2 ) ! Gluon
-     2                      * ( SCL(jgrid,6,1,pt,0,beta)
-     3                      * fph(jgrid,0,alpha+beta)
-     4                      + SCL(jgrid,6,2,pt,0,beta)   ! Singlet
-     5                      * singlet )
-     6                      + SCL(jgrid,6,3,pt,0,beta)   ! Non-singlet
-     7                      * ( V_td2
-     8                      * ( fph(jgrid,1*ipr,alpha+beta) 
-     9                      + fph(jgrid,-6*ipr,alpha+beta) )
-     1                      + V_ts2
-     2                      * ( fph(jgrid,3*ipr,alpha+beta) 
-     3                      + fph(jgrid,-6*ipr,alpha+beta) )
-     4                      + V_tb2
-     5                      * ( fph(jgrid,5*ipr,alpha+beta) 
-     6                      + fph(jgrid,-6*ipr,alpha+beta) ) ) )
-*                    
-                        FL(6,jgrid,alpha) = FL(6,jgrid,alpha)
-     1                                    + as**pt * FLt
-                     endif
+                     FLt = 2d0 
+     1                   * ( ( V_td2 + V_ts2 + V_tb2 ) ! Gluon
+     2                   * ( SCL(jgrid,6,1,pt,0,beta)
+     3                   * fph(jgrid,0,alpha+beta)
+     4                   + SCL(jgrid,6,2,pt,0,beta)   ! Singlet
+     5                   * singlet )
+     6                   + SCL(jgrid,6,3,pt,0,beta)   ! Non-singlet
+     7                   * ( V_td2
+     8                   * ( fph(jgrid,1*ipr,alpha+beta) 
+     9                   + fph(jgrid,-6*ipr,alpha+beta) )
+     1                   + V_ts2
+     2                   * ( fph(jgrid,3*ipr,alpha+beta) 
+     3                   + fph(jgrid,-6*ipr,alpha+beta) )
+     4                   + V_tb2
+     5                   * ( fph(jgrid,5*ipr,alpha+beta) 
+     6                   + fph(jgrid,-6*ipr,alpha+beta) ) ) )
+*                 
+                     FL(6,jgrid,alpha) = FL(6,jgrid,alpha)
+     1                                 + as**pt * FLt
                   enddo
                enddo
 *     FL total
-               do i=3,nf
+               do i=3,6
                   FL(7,jgrid,alpha) = FL(7,jgrid,alpha)
      1                              + FL(i,jgrid,alpha)
                enddo
@@ -711,60 +762,61 @@
                      F3(3,jgrid,alpha) = F3(3,jgrid,alpha)
      1                                 + as**pt * F3t
 *     F3charm
-                     if(nf.ge.4)then
-                        F3t = 2d0
-     1                      * ( SC3(jgrid,4,3,pt,0,beta)   ! Non-singlet
-     2                      * ( V_cd2
-     3                      * ( fph(jgrid,1*ipr,alpha+beta) 
-     4                      - fph(jgrid,-4*ipr,alpha+beta) )
-     5                      + V_cs2
-     6                      * ( fph(jgrid,3*ipr,alpha+beta) 
-     7                      - fph(jgrid,-4*ipr,alpha+beta) ) ) )
+                     F3t = 2d0 * ( ( V_cd2 + V_cs2 )         ! Gluon
+     1                   * SC3(jgrid,4,1,pt,0,beta)
+     2                   * fph(jgrid,0,alpha+beta)
+     3                   + SC3(jgrid,4,3,pt,0,beta)          ! Non-singlet
+     4                   * ( V_cd2
+     5                   * ( fph(jgrid,1*ipr,alpha+beta) 
+     6                   - fph(jgrid,-4*ipr,alpha+beta) )
+     7                   + V_cs2
+     8                   * ( fph(jgrid,3*ipr,alpha+beta) 
+     9                   - fph(jgrid,-4*ipr,alpha+beta) ) ) )
 *                 
-                        F3(4,jgrid,alpha) = F3(4,jgrid,alpha)
-     1                                    + as**pt * F3t
-                     endif
+                     F3(4,jgrid,alpha) = F3(4,jgrid,alpha)
+     1                                 + as**pt * F3t
 *     F3bottom
-                     if(nf.ge.5)then
-                        F3t = 2d0
-     1                      * ( SC3(jgrid,5,3,pt,0,beta)   ! Non-singlet
-     2                      * ( V_ub2
-     3                      * ( - fph(jgrid,-2*ipr,alpha+beta) 
-     4                      + fph(jgrid,5*ipr,alpha+beta) )
-     5                      + V_cb2
-     6                      * ( - fph(jgrid,-4*ipr,alpha+beta) 
-     7                      + fph(jgrid,5*ipr,alpha+beta) ) ) )
-*                  
-                        F3(5,jgrid,alpha) = F3(5,jgrid,alpha)
-     1                                    + as**pt * F3t
-                     endif
+                     F3t = 2d0
+     1                   * ( SC3(jgrid,5,3,pt,0,beta)   ! Non-singlet
+     2                   * ( V_ub2
+     3                   * ( - fph(jgrid,-2*ipr,alpha+beta) 
+     4                   + fph(jgrid,5*ipr,alpha+beta) )
+     5                   + V_cb2
+     6                   * ( - fph(jgrid,-4*ipr,alpha+beta) 
+     7                   + fph(jgrid,5*ipr,alpha+beta) ) ) )
+*                 
+                     F3(5,jgrid,alpha) = F3(5,jgrid,alpha)
+     1                                 + as**pt * F3t
 *     F3top
-                     if(nf.ge.6)then
-                        F3t = 2d0 
-     1                      * ( SC3(jgrid,6,3,pt,0,beta)   ! Non-singlet
-     2                      * ( V_td2
-     3                      * ( fph(jgrid,1*ipr,alpha+beta) 
-     4                      - fph(jgrid,-6*ipr,alpha+beta) )
-     5                      + V_ts2
-     6                      * ( fph(jgrid,3*ipr,alpha+beta) 
-     7                      - fph(jgrid,-6*ipr,alpha+beta) )
-     8                      + V_tb2
-     9                      * ( fph(jgrid,5*ipr,alpha+beta) 
-     1                      - fph(jgrid,-6*ipr,alpha+beta) ) ) )
-*                    
-                        F3(6,jgrid,alpha) = F3(6,jgrid,alpha)
-     1                                    + as**pt * F3t
-                     endif
+                     F3t = 2d0 
+     1                   * ( SC3(jgrid,6,3,pt,0,beta)   ! Non-singlet
+     2                   * ( V_td2
+     3                   * ( fph(jgrid,1*ipr,alpha+beta) 
+     4                   - fph(jgrid,-6*ipr,alpha+beta) )
+     5                   + V_ts2
+     6                   * ( fph(jgrid,3*ipr,alpha+beta) 
+     7                   - fph(jgrid,-6*ipr,alpha+beta) )
+     8                   + V_tb2
+     9                   * ( fph(jgrid,5*ipr,alpha+beta) 
+     1                   - fph(jgrid,-6*ipr,alpha+beta) ) ) )
+*                 
+                     F3(6,jgrid,alpha) = F3(6,jgrid,alpha)
+     1                                 + as**pt * F3t
                   enddo
                enddo
 *     F3 total
-               do i=3,nf
+               do i=3,6
                   F3(7,jgrid,alpha) = F3(7,jgrid,alpha)
      1                              + F3(i,jgrid,alpha)
                enddo
             enddo
          enddo
       endif
+*
+      call cpu_time(t2)
+*
+      write(6,"(a,f7.3,a)") " Convolution completed in",t2-t1," s"
+      write(6,*) " "
 *
       return
       end

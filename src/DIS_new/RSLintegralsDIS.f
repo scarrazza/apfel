@@ -35,14 +35,18 @@
 **
 *     Internal Variables
 *
-      integer bound,inf,ixi
+      integer bound,inf,ixi,iptmx
       double precision C2L(3,0:2),CLL(3,0:2),C3L(3,0:2)
       double precision fL
       double precision dgauss,a,b,eps(2)
-      double precision integrandsDISzm,integrandsDISm,integrandsDISm0
+      double precision integrandsDISzm
+      double precision integrandsDISNCm,integrandsDISNCm0
+      double precision integrandsDISCCm,integrandsDISCCm0
       double precision cm22q_adler
+      double precision CGCOLM0,lnC2,lnC3,CGM0
       double precision integC2(0:2),integCL(0:2),integC3(0:2)
       double precision C2ns1RS,C2ns1L,C2g1R,CLns1RS,CLg1R,C3ns1RS,C3ns1L
+      double precision CLns1L,C3g1R
       double precision C2g2R,C2g2L,C2ps2R,C2ns2RS,C2ns2L,CLg2R,CLns2RS
       double precision CLps2R,CLns2L,C3ps2R,C3ns2RS,C3ns2L
       double precision C2g1R0,C2g1RQ,CLg1R0
@@ -56,8 +60,12 @@
       double precision C2NS1C,C3NS1C
       double precision C2G2C,C2NSP2C,CLNSP2C,C3NSP2C
       double precision C2NS2CM0_A0,C2NS2CM0_AQ,C2NS2CM0_AQ2
+      double precision c2ns1ccc,clns1ccc,c3ns1ccc
       double precision kQF2,lnQ,lnF,lnQ2,lnQF
-      external integrandsDISzm,integrandsDISm,integrandsDISm0
+      double precision lambda,Rf,Rfun
+      external integrandsDISzm
+      external integrandsDISNCm,integrandsDISNCm0
+      external integrandsDISCCm,integrandsDISCCm0
       external cm22q_adler
 c      data eps / 5d-8, 1d-3 /
 c      data eps / 5d-8, 1d-5 /
@@ -75,6 +83,10 @@ c      data eps / 1d-7, 1d-5 /
 *
       fL = 0d0
       if(alpha.eq.beta) fL = 1d0
+*
+*     Ration between Scale and factorization scale squared (to be put in a common)
+*
+      kQF2 = 1d0                ! Q2 / muF2
 *
 *     Initialize Integrals
 *
@@ -262,12 +274,15 @@ c      data eps / 1d-7, 1d-5 /
 *     FFNS
 *
       if(MassScheme(1:4).eq."FFNS".or.MassScheme(1:5).eq."FONLL")then
+*
+*     Neutral Current
+*
          do ixi=1,nxi
             do k=1,3
                do wipt=0,ipt
-                  SC2m(igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SCLm(igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SC3m(igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC2m(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SCLm(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC3m(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
                enddo
             enddo
 *
@@ -285,11 +300,11 @@ c      data eps / 1d-7, 1d-5 /
 *
                sf = 1
                k = 1
-               C2g1R = dgauss(integrandsDISm,a,b,eps(wipt))
+               C2g1R = dgauss(integrandsDISNCm,a,b,eps(wipt))
 *
                sf = 2
                k = 1
-               CLg1R = dgauss(integrandsDISm,a,b,eps(wipt))
+               CLg1R = dgauss(integrandsDISNCm,a,b,eps(wipt))
 *
                sf = 3
                k = 3
@@ -302,11 +317,11 @@ c      data eps / 1d-7, 1d-5 /
 *
                sf = 1
                k = 1
-               C2g2R   = dgauss(integrandsDISm,a,b,eps(wipt))
+               C2g2R   = dgauss(integrandsDISNCm,a,b,eps(wipt))
                k = 2
-               C2ps2R  = dgauss(integrandsDISm,a,b,eps(wipt))
+               C2ps2R  = dgauss(integrandsDISNCm,a,b,eps(wipt))
                k = 3
-               C2ns2RS = dgauss(integrandsDISm,a,b,eps(wipt))
+               C2ns2RS = dgauss(integrandsDISNCm,a,b,eps(wipt))
 *
 *     Coefficient to be addet to the NNLO non-singlet coefficient function
 *     of F2 to fullfil the Adler sum rule (can be done only the first time).
@@ -318,17 +333,17 @@ c      data eps / 1d-7, 1d-5 /
 *
                sf = 2
                k = 1
-               CLg2R   = dgauss(integrandsDISm,a,b,eps(wipt))
+               CLg2R   = dgauss(integrandsDISNCm,a,b,eps(wipt))
                k = 2
-               CLps2R  = dgauss(integrandsDISm,a,b,eps(wipt))
+               CLps2R  = dgauss(integrandsDISNCm,a,b,eps(wipt))
                k = 3
-               CLns2RS = dgauss(integrandsDISm,a,b,eps(wipt))
+               CLns2RS = dgauss(integrandsDISNCm,a,b,eps(wipt))
 *
                sf = 3
                k = 2
-               C3ps2R  = dgauss(integrandsDISm,a,b,eps(wipt))
+               C3ps2R  = dgauss(integrandsDISNCm,a,b,eps(wipt))
                k = 3
-               C3ns2RS = dgauss(integrandsDISm,a,b,eps(wipt))
+               C3ns2RS = dgauss(integrandsDISNCm,a,b,eps(wipt))
                C3ns2L  = C3NSP2C(a,inf)
             endif
 *
@@ -423,11 +438,144 @@ c      data eps / 1d-7, 1d-5 /
 *
 
                do wipt=0,ipt
-                  SC2m(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
-     1                                              + C2L(k,wipt) * fL
-                  SCLm(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
-                  SC3m(igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
-     1                                              + C3L(k,wipt) * fL
+                  SC2m(1,igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
+     1                                                + C2L(k,wipt) * fL
+                  SCLm(1,igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
+                  SC3m(1,igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
+     1                                                + C3L(k,wipt) * fL
+               enddo
+            enddo
+         enddo
+*
+*     Charged Current
+*
+         do ixi=1,nxi
+*
+            lambda = xigrid(ixi) / ( 1d0 + xigrid(ixi) )
+            Rf = RFun(xigrid(ixi),a)
+*
+            do k=1,3
+               do wipt=0,ipt
+                  SC2m(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SCLm(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC3m(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+               enddo
+            enddo
+*
+*     Variables needed for wrapping the integrand functions
+*
+            wnf    = Nf_FF
+            wixi   = ixi
+            walpha = alpha
+            wbeta  = beta
+*
+*     Precompute integrals
+*
+
+            if(ipt.ge.1)then
+               wipt = 1
+*
+               sf = 1
+               k = 1
+               C2g1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               k = 3
+               C2ns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               C2ns1L  = c2ns1ccc(Rf,xigrid(ixi),a)
+*
+               sf = 2
+               k = 1
+               CLg1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               k = 3
+               CLns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               CLns1L  = clns1ccc(Rf,xigrid(ixi),a)
+*
+               sf = 3
+               k = 1
+               C3g1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               k = 3
+               C3ns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               C3ns1L  = c3ns1ccc(Rf,xigrid(ixi),a)
+            endif
+*
+            do k=1,3
+*
+*     LO
+*
+*     C2
+               C2L(k,0)   = 0d0
+               if(k.eq.3) C2L(k,0) = 1d0
+               integC2(0) = 0d0
+*     CL
+               CLL(k,0)   = 0d0
+               if(k.eq.3) CLL(k,0) = 1d0 - lambda
+               integCL(0) = 0d0
+*     C3
+               C3L(k,0) = 0d0
+               if(k.eq.3) C3L(k,0) = 1d0
+               integC3(0) = 0d0
+*
+*     NLO
+*
+               if(ipt.ge.1)then
+*     Gluon
+                  if(k.eq.1)then
+*     C2
+                     C2L(k,1)   = 0d0
+                     integC2(1) = C2g1R
+*     CL
+                     CLL(k,1)   = 0d0
+                     integCL(1) = CLg1R
+*     C3
+                     C3L(k,1)   = 0d0
+                     integC3(1) = C3g1R
+*     Pure-Singlet
+                  elseif(k.eq.2)then
+*     C2
+                     C2L(k,1)   = 0d0
+                     integC2(1) = 0d0
+*     CL
+                     CLL(k,1)   = 0d0
+                     integCL(1) = 0d0
+*     C3
+                     C3L(k,1)   = 0d0
+                     integC3(1) = 0d0
+*     Non-singlet
+                  elseif(k.eq.3)then
+*     C2
+                     C2L(k,1)   = C2ns1L
+                     integC2(1) = C2ns1RS
+*     CL
+                     CLL(k,1)   = CLns1L
+                     integCL(1) = CLns1RS
+*     C3
+                     C3L(k,1)   = C3ns1L
+                     integC3(1) = C3ns1RS
+                  endif
+               endif
+*
+*     NNLO (Unknown yet)
+*
+               if(ipt.ge.2)then
+*     C2
+                  C2L(k,2)   = 0d0
+                  integC2(2) = 0d0
+*     CL
+                  CLL(k,2)   = 0d0
+                  integCL(2) = 0d0
+*     C3
+                  C3L(k,2)   = 0d0
+                  integC3(2) = 0d0
+               endif
+*
+*     Integrals
+*
+               do wipt=0,ipt
+                  SC2m(2,igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
+     1                                                + C2L(k,wipt) * fL
+                  SCLm(2,igrid,ixi,k,wipt,beta,alpha) = integCL(wipt)
+     1                                                + CLL(k,wipt) * fL 
+                  SC3m(2,igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
+     1                                                + C3L(k,wipt) * fL
                enddo
             enddo
          enddo
@@ -436,6 +584,9 @@ c      data eps / 1d-7, 1d-5 /
 *     Massive zero FFNS needed for the FONLL scheme
 *
       if(MassScheme(1:4).eq."FFN0".or.MassScheme(1:5).eq."FONLL")then
+*
+*     Neutral Current
+*
 *
 *     Variables needed for wrapping the integrand functions
 *
@@ -451,14 +602,14 @@ c      data eps / 1d-7, 1d-5 /
             sf = 1
             k = 1
             wl = 1
-            C2g1R0 = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2g1R0 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
-            C2g1RQ = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2g1RQ = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
             sf = 2
             k = 1
             wl = 1
-            CLg1R0 = dgauss(integrandsDISm0,a,b,eps(wipt))
+            CLg1R0 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
             sf = 3
             k = 3
@@ -471,81 +622,80 @@ c      data eps / 1d-7, 1d-5 /
             sf = 1
             k = 1
             wl = 1
-            C2g2R0  = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2g2R0  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
-            C2g2RQ  = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2g2RQ  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 3
-            C2g2RQ2 = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2g2RQ2 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 4
-            C2g2RF  = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2g2RF  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 5
-            C2g2RQF = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2g2RQF = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
             k = 2
             wl = 1
-            C2ps2R0  = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2ps2R0  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
-            C2ps2RQ  = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2ps2RQ  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 3
-            C2ps2RQ2 = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2ps2RQ2 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 4
-            C2ps2RF  = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2ps2RF  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 5
-            C2ps2RQF = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2ps2RQF = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
             k = 3
             wl = 1
-            C2ns2RS0  = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2ns2RS0  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             C2ns2L0   = C2NS2CM0_A0(a)
             wl = 2
-            C2ns2RSQ  = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2ns2RSQ  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             C2ns2LQ   = C2NS2CM0_AQ(a)
             wl = 3
-            C2ns2RSQ2 = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C2ns2RSQ2 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             C2ns2LQ2  = C2NS2CM0_AQ2(a)
 *
             sf = 2
             k = 1
             wl = 1
-            CLg2R0 = dgauss(integrandsDISm0,a,b,eps(wipt))
+            CLg2R0 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
-            CLg2RQ = dgauss(integrandsDISm0,a,b,eps(wipt))
+            CLg2RQ = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 4
-            CLg2RF = dgauss(integrandsDISm0,a,b,eps(wipt))
+            CLg2RF = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
             k = 2
             wl = 1
-            CLps2R0 = dgauss(integrandsDISm0,a,b,eps(wipt))
+            CLps2R0 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
-            CLps2RQ = dgauss(integrandsDISm0,a,b,eps(wipt))
+            CLps2RQ = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 4
-            CLps2RF = dgauss(integrandsDISm0,a,b,eps(wipt))
+            CLps2RF = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
             k = 3
             wl = 1
-            CLns2R0 = dgauss(integrandsDISm0,a,b,eps(wipt))
+            CLns2R0 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
-            CLns2RQ = dgauss(integrandsDISm0,a,b,eps(wipt))
+            CLns2RQ = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
             sf = 3
             k = 2
-            C3ps2R  = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C3ps2R  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             k = 3
-            C3ns2RS = dgauss(integrandsDISm0,a,b,eps(wipt))
+            C3ns2RS = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             C3ns2L  = C3NSP2C(a,inf)
          endif
 *
          do ixi=1,nxi
-            kQF2 = 1d0 ! Q2 / muF2
             lnQ  = dlog(xigrid(ixi))
             lnF  = dlog(kQF2) - lnQ
             lnQ2 = lnQ * lnQ
             lnQF = lnQ * lnF
             do k=1,3
                do wipt=0,ipt
-                  SC2m0(igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SCLm0(igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SC3m0(igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC2m0(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SCLm0(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC3m0(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
                enddo
             enddo
 *
@@ -644,12 +794,58 @@ c      data eps / 1d-7, 1d-5 /
 *     Integrals
 *
                do wipt=0,ipt
-                  SC2m0(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
-     1                                               + C2L(k,wipt) * fL
-                  SCLm0(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
-                  SC3m0(igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
-     1                                               + C3L(k,wipt) * fL
+                  SC2m0(1,igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
+     1               + C2L(k,wipt) * fL
+                  SCLm0(1,igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
+                  SC3m0(1,igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
+     1                 + C3L(k,wipt) * fL
                enddo
+            enddo
+         enddo
+*
+*     Charged Current
+*
+         walpha = alpha
+         wbeta  = beta
+*
+         CGCOLM0 = dgauss(integrandsDISCCm0,a,b,eps(1))
+*
+         do ixi=1,nxi
+            lnC2 = dlog(kQF2) + dlog(xigrid(ixi))
+            lnC3 = dlog(kQF2) - dlog(xigrid(ixi))
+*
+            do k=1,3
+               do wipt=0,ipt
+                  SC2m0(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SCLm0(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC3m0(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+               enddo
+            enddo
+*
+            iptmx = ipt
+            if(ipt.gt.1) iptmx = 1
+            do wipt=0,iptmx
+               CGM0 = 0d0
+               if(wipt.ge.1) CGM0 = CGCOLM0
+*
+*     Gluon
+*
+               SC2m0(2,igrid,ixi,1,wipt,beta,alpha) = 
+     1              SC2zm(igrid,Nf_FF,1,wipt,beta,alpha) + CGM0 * lnC2
+               SCLm0(2,igrid,ixi,1,wipt,beta,alpha) = 
+     1              SCLzm(igrid,Nf_FF,1,wipt,beta,alpha)
+               SC3m0(2,igrid,ixi,1,wipt,beta,alpha) = 
+     1              SC3zm(igrid,Nf_FF,1,wipt,beta,alpha) + CGM0 * lnC3
+*
+*     Non-singlet
+*
+               SC2m0(2,igrid,ixi,3,wipt,beta,alpha) = 
+     1              SC2zm(igrid,Nf_FF,3,wipt,beta,alpha)
+               SCLm0(2,igrid,ixi,3,wipt,beta,alpha) = 
+     1              SCLzm(igrid,Nf_FF,3,wipt,beta,alpha)
+               SC3m0(2,igrid,ixi,3,wipt,beta,alpha) = 
+     1              SC3zm(igrid,Nf_FF,3,wipt,beta,alpha)
+
             enddo
          enddo
       endif
