@@ -119,7 +119,7 @@
 *    Gamma-Gamma
          elseif(k.eq.3)then
             cp(k) = e2sig
-            PL(k) = - 2d0 / 3d0
+            PL(k) = - 4d0 / 3d0
             integ = 0d0
 *    Gamma-Quark
          elseif(k.eq.4)then
