@@ -145,15 +145,24 @@
             write(6,*) "INFO: Any of the FONLL schemes at LO",
      1                 " concides with the the ZM-VFNS"
          endif
-         if(MassScheme.eq."FONLL-C".and.ipt.eq.1)then
-            call SetMassScheme("FONLL-A")
-            write(6,*) "INFO: The FONLL-C scheme at NLO concides",
-     1                 " with the the FONLL-A scheme"
+
+
+         if(MassScheme.eq."FONLL-A".and.ipt.eq.2)then
+            call SetPertubativeOrder(1)
+            write(6,*) "INFO: For the FONLL-A scheme the perturbative",
+ 1                     " order has been automatically set to NLO"
          endif
+
+
          if(MassScheme.eq."FONLL-B".and.ipt.eq.2)then
             call SetMassScheme("FONLL-C")
             write(6,*) "INFO: The FONLL-B scheme at NNLO concides",
      1                 " with the the FONLL-C scheme"
+         endif
+         if(MassScheme.eq."FONLL-C".and.ipt.eq.1)then
+            call SetMassScheme("FONLL-A")
+            write(6,*) "INFO: The FONLL-C scheme at NLO concides",
+     1                 " with the the FONLL-A scheme"
          endif
       endif
 *
