@@ -49,11 +49,22 @@
       double precision SC2(0:ngrid_max,6,3,0:2,0:nint_max,0:nint_max)
       double precision SCL(0:ngrid_max,6,3,0:2,0:nint_max,0:nint_max)
       double precision SC3(0:ngrid_max,6,3,0:2,0:nint_max,0:nint_max)
+      double precision damp(4:6)
 *
       call cpu_time(t1)
 *
       Q2    = Q * Q
       Q2DIS = Q2
+*
+*     Dumping factor for FONLL
+*
+      do i=4,6
+         if(q2.gt.m2th(i))then
+            damp(i) = ( 1d0 - m2th(i) / Q2 )**2d0
+         else
+            damp(i) = 0d0
+         endif
+      enddo
 *
 *     Find number of active flavours
 *
@@ -133,7 +144,6 @@
             do jgrid=1,ngrid
                do alpha=0,nin(jgrid)
                   W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) / xg(jgrid,alpha)
-
 *
 *     Light coefficient functions
 *
@@ -268,6 +278,118 @@
                   endif
                enddo
             enddo
+         elseif(MassScheme(1:5).eq."FONLL")then
+
+
+
+
+
+
+
+
+            do jgrid=1,ngrid
+               do alpha=0,nin(jgrid)
+                  W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) / xg(jgrid,alpha)
+*
+*     Light coefficient functions
+*
+                  do i=1,Nf_FF
+                     do pt=0,ipt
+                        do k=1,3
+                           SC2(jgrid,i,k,pt,0,alpha) = 
+     1                          SC2zm(jgrid,nf,k,pt,0,alpha)
+                           SCL(jgrid,i,k,pt,0,alpha) = 
+     1                          SCLzm(jgrid,nf,k,pt,0,alpha)
+                           SC3(jgrid,i,k,pt,0,alpha) = 
+     1                          SC3zm(jgrid,nf,k,pt,0,alpha)
+                        enddo
+c$$$*
+c$$$*     Add the massive part at NNLO
+c$$$*
+c$$$                        if(pt.ge.2)then
+c$$$                           if(Nf_FF.lt.6)then
+c$$$                              do j=Nf_FF+1,6
+c$$$                                 if(W2.ge.4d0*m2th(j))then
+c$$$                                    SC2(jgrid,i,3,pt,0,alpha) = 
+c$$$     1                              SC2(jgrid,i,3,pt,0,alpha)
+c$$$     2                     + c0(j) * SC2m(1,jgrid,ixi(j),3,pt,0,alpha)
+c$$$     3                     + c1(j) * SC2m(1,jgrid,ixi(j)+1,3,pt,0,alpha)
+c$$$                                    SCL(jgrid,i,3,pt,0,alpha) = 
+c$$$     1                              SCL(jgrid,i,3,pt,0,alpha)
+c$$$     2                     + c0(j) * SCLm(1,jgrid,ixi(j),3,pt,0,alpha)
+c$$$     3                     + c1(j) * SCLm(1,jgrid,ixi(j)+1,3,pt,0,alpha)
+c$$$                                 endif
+c$$$                              enddo
+c$$$                           endif
+c$$$                        endif
+                     enddo
+                  enddo
+*
+*     Heavy coefficient functions
+*
+                  if(Nf_FF.lt.6)then
+                     do i=Nf_FF+1,6
+                        do pt=0,ipt
+                           do k=1,3
+                              SC2(jgrid,i,k,pt,0,alpha) = 0d0
+                              SCL(jgrid,i,k,pt,0,alpha) = 0d0
+                              SC3(jgrid,i,k,pt,0,alpha) = 0d0
+*
+*     Zero Mass Part
+*
+                              if(Q2.ge.m2th(i))then
+                                 SC2(jgrid,i,k,pt,0,alpha) = 
+     1                           SC2(jgrid,i,k,pt,0,alpha)
+     2                         + damp(i) * SC2zm(jgrid,nf,k,pt,0,alpha)
+*
+                                 SCL(jgrid,i,k,pt,0,alpha) = 
+     1                           SCL(jgrid,i,k,pt,0,alpha)
+     2                         + damp(i) * SCLzm(jgrid,nf,k,pt,0,alpha)
+*
+                                 SC3(jgrid,i,k,pt,0,alpha) = 
+     1                           SC3(jgrid,i,k,pt,0,alpha)
+     2                         + damp(i) * SC3zm(jgrid,nf,k,pt,0,alpha)
+                              endif
+                           enddo
+*
+*     Massive Parts
+*
+                           do k=1,2
+                              if(W2.ge.4d0*m2th(i))then
+                                 SC2(jgrid,i,k,pt,0,alpha) =
+     1                           SC2(jgrid,i,k,pt,0,alpha)
+     2               + c0(i) * ( SC2m(1,jgrid,ixi(i),k,pt,0,alpha)
+     3               - damp(i) * SC2m0(1,jgrid,ixi(i),k,pt,0,alpha) )
+     4               + c1(i) * ( SC2m(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+     5               - damp(i) * SC2m0(1,jgrid,ixi(i)+1,k,pt,0,alpha) )
+
+                                 SCL(jgrid,i,k,pt,0,alpha) =
+     1                           SCL(jgrid,i,k,pt,0,alpha)
+     2               + c0(i) * ( SCLm(1,jgrid,ixi(i),k,pt,0,alpha)
+     3               - damp(i) * SCLm0(1,jgrid,ixi(i),k,pt,0,alpha) )
+     4               + c1(i) * ( SCLm(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+     5               - damp(i) * SCLm0(1,jgrid,ixi(i)+1,k,pt,0,alpha) )
+
+                                 SC3(jgrid,i,k,pt,0,alpha) =
+     1                           SC3(jgrid,i,k,pt,0,alpha)
+     2               + c0(i) * ( SC3m(1,jgrid,ixi(i),k,pt,0,alpha)
+     3               - damp(i) * SC3m0(1,jgrid,ixi(i),k,pt,0,alpha) )
+     4               + c1(i) * ( SC3m(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+     5               - damp(i) * SC3m0(1,jgrid,ixi(i)+1,k,pt,0,alpha) )
+                              endif
+                           enddo
+                        enddo
+                     enddo
+                  endif
+               enddo
+            enddo
+
+
+
+
+
+
+
          endif
 *
 *     Compute needed couplings
