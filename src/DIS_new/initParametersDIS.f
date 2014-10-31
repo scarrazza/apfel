@@ -17,6 +17,7 @@
       include "../commons/ProjectileDIS.h"
       include "../commons/TargetDIS.h"
       include "../commons/ipt.h"
+      include "../commons/Nf_FF.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -29,6 +30,7 @@
 *
 *     Check the consistency of the input parameters
 *
+      write(6,*) "  "
       if(MassScheme.ne."ZM-VFNS".and.
      1   MassScheme(1:4).ne."FFNS".and.
      2   MassScheme(1:4).ne."FFN0".and.
@@ -117,36 +119,40 @@
       if(MassScheme(1:4).eq."FFNS".or.
      1   MassScheme(1:4).eq."FFN0")then
          if(MassScheme(5:5).eq."3")then
-            call SetFFNS(3)
             write(6,*) "INFO: Setting NF = 3 FFNS PDF evolution"
+            call SetFFNS(3)
          elseif(MassScheme(5:5).eq."4")then
-            call SetFFNS(4)
             write(6,*) "INFO: Setting NF = 4 FFNS PDF evolution"
+            call SetFFNS(4)
          elseif(MassScheme(5:5).eq."5")then
-            call SetFFNS(5)
             write(6,*) "INFO: Setting NF = 5 FFNS PDF evolution"
+            call SetFFNS(5)
          elseif(MassScheme(5:5).eq."6")then
-            call SetFFNS(6)
             write(6,*) "INFO: Setting NF = 6 FFNS PDF evolution"
+            call SetFFNS(6)
          else
+            write(6,*) "INFO: Setting NF = 3 FFNS PDF evolution"
             call SetFFNS(3)
          endif
       else
+*     If the number of active flavour has not been specified (by means of SetFFNS)
+*     set it automatically to 3.
+         if(Nf_FF.lt.3.or.Nf_FF.gt.6) Nf_FF = 3
          call SetVFNS
          write(6,*) "INFO: Setting VFNS PDF evolution"
          if(MassScheme(1:5).eq."FONLL".and.ipt.eq.0)then
             call SetMassScheme("ZM-VFNS")
-            write(6,*) "INFO: any of the FONLL schemes at LO",
+            write(6,*) "INFO: Any of the FONLL schemes at LO",
      1                 " concides with the the ZM-VFNS"
          endif
          if(MassScheme.eq."FONLL-C".and.ipt.eq.1)then
             call SetMassScheme("FONLL-A")
-            write(6,*) "INFO: the FONLL-C scheme at NLO concides",
+            write(6,*) "INFO: The FONLL-C scheme at NLO concides",
      1                 " with the the FONLL-A scheme"
          endif
          if(MassScheme.eq."FONLL-B".and.ipt.eq.2)then
             call SetMassScheme("FONLL-C")
-            write(6,*) "INFO: the FONLL-B scheme at NNLO concides",
+            write(6,*) "INFO: The FONLL-B scheme at NNLO concides",
      1                 " with the the FONLL-C scheme"
          endif
       endif
