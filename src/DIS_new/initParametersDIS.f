@@ -148,7 +148,7 @@
 
 
          if(MassScheme.eq."FONLL-A".and.ipt.eq.2)then
-            call SetPertubativeOrder(1)
+            call SetPerturbativeOrder(1)
             write(6,*) "INFO: For the FONLL-A scheme the perturbative",
      1                 " order has been automatically set to NLO"
          endif
