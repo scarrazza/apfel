@@ -12,7 +12,7 @@
 #include <cstdlib>
 #include <sys/time.h> 
 
-#include "include/hell.hh"
+#include "HELL/include/hell.hh"
 
 
 using namespace std;
@@ -47,7 +47,7 @@ int main (int argc, char* argv[]) {
   HELL::Order fixed_order_to_be_matched_to = HELL::NNLO;
   double as = 0.12;
   double x = 0.01;
-  sqmatrix<double> xdPNLL = sxD.xDeltaP(as, x, fixed_order_to_be_matched_to);  // gives x*DeltaP(x,as)
+  sqmatrix<double> xdPNLL = sxD.DeltaP(as, x, fixed_order_to_be_matched_to);  // gives x*DeltaP(x,as)
   cout << endl << "Printing x*DeltaP_ij(x=" << x << ", as=" << as << ")"  << endl;
   cout << "gg: " << xdPNLL.gg() << endl
        << "gq: " << xdPNLL.gq() << endl
