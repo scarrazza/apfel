@@ -65,8 +65,8 @@ namespace HELL {
     int alphas_interpolation(double as, double &p1, double &p2, double &r1, double &r2, double &factor);
     sqmatrix<dcomplex> DeltaGammaLL (dcomplex N, double as, Order matched_to_fixed_order);
     sqmatrix<dcomplex> DeltaGammaNLL(dcomplex N, double as, Order matched_to_fixed_order);
-    sqmatrix<double> xDeltaPLL     (double x,  double as, Order matched_to_fixed_order);
-    sqmatrix<double> xDeltaPNLL    (double x,  double as, Order matched_to_fixed_order);
+    sqmatrix<double>   DeltaPLL     (double x,  double as, Order matched_to_fixed_order);
+    sqmatrix<double>   DeltaPNLL    (double x,  double as, Order matched_to_fixed_order);
   public:
     HELLnf(int nf, LogOrder order, string prepath);
     ~HELLnf();
@@ -89,7 +89,7 @@ namespace HELL {
     dcomplex deltaC2g_deriv_N(double as, dcomplex N);
     // Delta Gamma
     sqmatrix<dcomplex> DeltaGamma(double as, dcomplex N, Order matched_to_fixed_order = NLO);
-    sqmatrix<double> xDeltaP    (double as, double x,  Order matched_to_fixed_order = NLO);
+    sqmatrix<double>   DeltaP    (double as, double x,  Order matched_to_fixed_order = NLO);
   };
 
 
@@ -139,7 +139,7 @@ namespace HELL {
     dcomplex deltaC2g_deriv_N(double as, dcomplex N);
     // Delta Gamma
     sqmatrix<dcomplex> DeltaGamma(double as, dcomplex N, Order matched_to_fixed_order = NLO);
-    sqmatrix<double> xDeltaP    (double as, double x,  Order matched_to_fixed_order = NLO);
+    sqmatrix<double>   DeltaP    (double as, double x,  Order matched_to_fixed_order = NLO);
   };
 
 

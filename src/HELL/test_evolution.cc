@@ -27,9 +27,9 @@
 
 #include <iostream>
 #include <sys/time.h>
-#include "include/DGLAPevol.hh"
-#include "include/math/matrix.hh"
-#include "include/hell.hh"
+#include "HELL/include/DGLAPevol.hh"
+#include "HELL/include/math/matrix.hh"
+#include "HELL/include/hell.hh"
 //#include "../QCD.hh"
 //#include "../anomalous_dimensions/gammaLO.hh"
 //#include "../anomalous_dimensions/gammaNLO.hh"
@@ -55,7 +55,7 @@ double as(double t) {
 
 
 
-#include "include/gammaNLO.hh"
+#include "HELL/include/gammaNLO.hh"
 // LO
 sqmatrix<dcomplex> gamma_LO(dcomplex N) {
   return sqmatrix<dcomplex>( gamma0gg(N,_nf), gamma0gq(N), gamma0qg(N,_nf), gamma0qq(N) );
@@ -116,9 +116,51 @@ sqmatrix<dcomplex> gammaResNLO_as(double as, dcomplex N) {
 }
 
 
-
-
-
+/*
+double dPgg(double x, double as) {
+  return sxD->DeltaP(as,x,HELL::NLO).entry11();
+}
+dcomplex dGgg(dcomplex N, double as) {
+  return sxD->DeltaGamma(as,N,HELL::NLO).entry11();
+}
+#include<gsl/gsl_integration.h>
+double gauss(double f(double,void*), double xmin, double xmax, double prec, double *error, void *par) {
+  double result, err;
+  gsl_function F;
+  gsl_integration_workspace * w = gsl_integration_workspace_alloc (1000);
+  F.function = f;
+  F.params=par;
+  gsl_integration_qags (&F, xmin, xmax, 0, prec, 1000,    w, &result, &err);
+  gsl_integration_workspace_free (w);
+  if(error) *error = err;
+  return result;
+}
+double AS = 0.1;
+double MellinInversionIntegrand(double t, void *p) {
+  double x = *(double*)p;
+  dcomplex N = 3. + (1.-I)*log(t);
+  dcomplex res = dGgg(N,AS);
+  res *= (I-1.) * exp(-N*log(x)) /t;
+  return imag(res)/M_PI;
+}
+double MellinInversion(double x, double *err=NULL) {
+  double res=0, prec = 1.e-3;
+  res = gauss(MellinInversionIntegrand, 0., 1., prec, err, &x);
+  return res;
+}
+//
+double MellinIntegrand(double x, void *p) {
+  dcomplex N = *(dcomplex*)p;
+  dcomplex res = dPgg(x,AS);
+  res *= exp(N*log(x))/x;
+  return real(res);
+}
+double Mellin(dcomplex N, double *err=NULL) {
+  double res=0, prec = 1.e-3;
+  res = gauss(MellinIntegrand, 0., 1., prec, err, &N);
+  return res;
+}
+*/
 
 
 
@@ -130,9 +172,24 @@ int main() {
   struct timeval time0, time1;
   gettimeofday(&time0,NULL);
 
+  string prepath = "./data/";
 
   _nf = 5;
   cout << endl << "Using  nf = " << _nf << endl << endl;
+
+  /*
+  cout << "Check:" << endl;
+  sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
+  double xx = 0.01;
+  cout << dPgg(xx,AS) << endl;
+  cout << MellinInversion(xx) << endl;
+  dcomplex NN = 2;
+  cout << real(dGgg(NN,AS)) << endl;
+  cout << Mellin(NN) << endl;
+  delete sxD;
+  exit(0);
+  */
+
 
   double Q = 10;
   double t = 2*log(Q), t0=0.;
@@ -160,7 +217,6 @@ int main() {
 
   // resummation part
 
-  string prepath = "./data/";
   sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
   PO.SetEvolMatrix(gammaResLO);
   //U = PO.evolU(t, t0, N, nsub);
@@ -223,6 +279,7 @@ int main() {
   cout << "initial condition:" << endl << f0 << endl;
   cout << "evolved:" << endl << f1 << endl;
   //cout << "evolved LO exact:" << endl << f2 << endl;
+
 
 
 

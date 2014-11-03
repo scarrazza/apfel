@@ -16,7 +16,7 @@ lib: lib$(PKG).a
 
 
 test%: test%.cc lib$(PKG).a
-	$(CC) $(CFLAGS) -o $@ $< lib$(PKG).a
+	$(CC) $(CFLAGS) -o $@ $< lib$(PKG).a -lgsl -lgslcblas
 
 lib$(PKG).a: $(OBJECTS)
 	ar -r lib$(PKG).a $^
