@@ -96,8 +96,7 @@
       call cpu_time(t2)
 *
       if(Welcome)then
-         write(6,"(a,a,f7.3,a)") " Initialization of the evolution",
-     1                           " completed in",t2-t1," s"
+         write(6,*) "Initialization completed in",t2-t1," s"
          write(6,*) " "
       endif
 *

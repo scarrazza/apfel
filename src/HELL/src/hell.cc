@@ -284,17 +284,17 @@ namespace HELL {
     dcomplex dGqg = deltaGammaqg(as, N);
     dcomplex d0 = 0;
     if(matched_to_fixed_order < NLO) {
-      dGp  += as*as/M_PI/M_PI/4. * _nf*(26.*CF-23.*CA)/9./(N-1.);
-      dGqg += as*as/M_PI/M_PI/4. * _nf*20.*CA/9./(N-1.);
+      dGp  += as*as/M_PI/M_PI/4. * _nf*(26.*CF-23.*CA)/9./N;
+      dGqg += as*as/M_PI/M_PI/4. * _nf*20.*CA/9./N;
     }
     if(matched_to_fixed_order < LO)  {
       d0 = as/M_PI * _nf/3. * CF/CA;
-      dGp  += as/M_PI * (CA/(N-1.) - (11.*CA+2.*_nf*(1.-2.*CF/CA))/12.) ;
+      dGp  += as/M_PI * (CA/N - (11.*CA+2.*_nf*(1.-2.*CF/CA))/12.) ;
       dGqg += as/M_PI * _nf/3.;
     }
     if(matched_to_fixed_order > NLO) {
-      dGp  -= as*as*as/M_PI/M_PI/M_PI/8. * (-12.38818182*CA*CA*CA - 3.066013837*CA*CA*_nf + 6.132027674*CA*CF*_nf)/(N-1.)/(N-1.);
-      dGqg -= as*as*as/M_PI/M_PI/M_PI/8. * 112.*CA*CA*_nf/27./(N-1.)/(N-1.);
+      dGp  -= as*as*as/M_PI/M_PI/M_PI/8. * (-12.38818182*CA*CA*CA - 3.066013837*CA*CA*_nf + 6.132027674*CA*CF*_nf)/N/N;
+      dGqg -= as*as*as/M_PI/M_PI/M_PI/8. * 112.*CA*CA*_nf/27./N/N;
     }
     dcomplex dGgg = dGp - CF/CA*dGqg;
     return sqmatrix<dcomplex>(dGgg, CF/CA*(dGgg+d0), dGqg, CF/CA*dGqg-d0);
@@ -311,16 +311,16 @@ namespace HELL {
 
 
   // Splitting Function Matrix
-  sqmatrix<double> HELLnf::DeltaPLL(double x, double as, Order matched_to_fixed_order) {
-    double dGgg = xdeltaPplus(as, x)/x;
+  sqmatrix<double> HELLnf::xDeltaPLL(double x, double as, Order matched_to_fixed_order) {
+    double dGgg = xdeltaPplus(as, x);
     if(matched_to_fixed_order < LO) dGgg += as*CA/M_PI;
     // Both of the following options are equally acceptable
     return sqmatrix<double>(dGgg, CF/CA*dGgg, 0., 0.);
     return sqmatrix<double>(dGgg, 0., 0., 0.);
   }
-  sqmatrix<double> HELLnf::DeltaPNLL(double x, double as, Order matched_to_fixed_order) {
-    double dGp  = xdeltaPplus(as, x)/x;
-    double dGqg = xdeltaPqg(as, x)/x;
+  sqmatrix<double> HELLnf::xDeltaPNLL(double x, double as, Order matched_to_fixed_order) {
+    double dGp  = xdeltaPplus(as, x);
+    double dGqg = xdeltaPqg(as, x);
     if(matched_to_fixed_order < NLO) {
       dGp  += as*as/M_PI/M_PI/4. * _nf*(26.*CF-23.*CA)/9./x;
       dGqg += as*as/M_PI/M_PI/4. * _nf*20.*CA/9./x;
@@ -336,11 +336,11 @@ namespace HELL {
     double dGgg = dGp - CF/CA*dGqg;
     return sqmatrix<double>(dGgg, CF/CA*dGgg, dGqg, CF/CA*dGqg);
   }
-  sqmatrix<double> HELLnf::DeltaP(double as, double x, Order matched_to_fixed_order) {
+  sqmatrix<double> HELLnf::xDeltaP(double as, double x, Order matched_to_fixed_order) {
     if(_order==0)
-      return DeltaPLL(x, as, matched_to_fixed_order);
+      return xDeltaPLL(x, as, matched_to_fixed_order);
     else if(_order==1) {
-      return DeltaPNLL(x, as, matched_to_fixed_order);
+      return xDeltaPNLL(x, as, matched_to_fixed_order);
     }
     return sqmatrix<double>(0,0,0,0);
   }
@@ -501,9 +501,9 @@ namespace HELL {
     return sxD[nf-nf_min]->DeltaGamma(as, N, matched_to_fixed_order);
   }
   // Delta P Matrix
-  sqmatrix<double> HELL::DeltaP(double as, double x,  Order matched_to_fixed_order) {
+  sqmatrix<double> HELL::xDeltaP(double as, double x,  Order matched_to_fixed_order) {
     int nf = nf_of_as(as);
-    return sxD[nf-nf_min]->DeltaP(as, x, matched_to_fixed_order);
+    return sxD[nf-nf_min]->xDeltaP(as, x, matched_to_fixed_order);
   }
 
 

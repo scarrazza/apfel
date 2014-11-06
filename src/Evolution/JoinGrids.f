@@ -109,8 +109,8 @@
                      do j=-nfi,nfi
                         PhQCD(0,i,j,alpha,beta) = 
      1                       PhQCD(dgrid,i,j,alphap,betap)
-                        if(abs(PhQCD(0,i,j,alpha,beta)).lt.eps)
-     1                     PhQCD(0,i,j,alpha,beta) = 0d0 
+                        if(dabs(PhQCD(0,i,j,alpha,beta)).lt.eps)
+     1                       PhQCD(0,i,j,alpha,beta) = 0d0 
                      enddo
                   enddo
                   betap = betap + 1

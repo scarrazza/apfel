@@ -252,14 +252,8 @@
             write(6,*) "Space-like evolution (PDFs)"
          endif
          write(6,*) "Solution of the DGLAP equation: ",PDFEvol
-         if(Evs.eq."VF")then
-            write(6,"(a,a,i1,a)") " Evolution scheme = ",
-     1                            "VFNS at N",ipt,"LO"
-         elseif(Evs.eq."FF")then
-            write(6,"(a,a,i1,a,i1,a)") " Evolution scheme = ",
-     1                                 "FFNS with ",Nf_FF,
-     2                                 " active flavours at N",ipt,"LO"
-         endif
+         write(6,"(a,a,a,i1,a)") " Evolution scheme = ",Evs,
+     1                           "NS at N",ipt,"LO"
 *
          write(6,"(a,f7.2,a,f8.2,a)") " Evolution range [",
      1               dsqrt(Q2min)," :",dsqrt(Q2max)," ] GeV"

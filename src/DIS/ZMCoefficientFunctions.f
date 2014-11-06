@@ -58,46 +58,46 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
        RETURN
        END
 *
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..This is the regular gluon piece, denoted by C2G2 in WvN's program. 
-c$$$*    Nine numerical coefficients are fitted as above, the ones of 1/y, 
-c$$$*    ln^3(1-y), and ln^2(1-y) are exact up to truncation.
-c$$$*
-c$$$       FUNCTION C2G2A (Y, NF)
-c$$$       IMPLICIT REAL*8 (A-Z)
-c$$$       INTEGER NF
-c$$$*
-c$$$       DL  = LOG (Y)
-c$$$       DL1 = LOG (1.-Y)
-c$$$*
-c$$$       C2G2A =   NF * ( 1./Y * (11.90 + 1494.* DL1) + 5.319 * DL**3  
-c$$$     1         - 59.48 * DL**2 - 284.8 * DL + 392.4 - 1483.* DL1
-c$$$     2         + (6.445 + 209.4 * (1.-Y)) * DL1**3 - 24.00 * DL1**2
-c$$$     3         - 724.1 * DL**2 * DL1 - 871.8 * DL * DL1**2 )
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$* 
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..This is the 'local' gluon piece, which has no counterpart in WvN's
-c$$$*    program, as it does not exist in the exact expressions. Here it 
-c$$$*    is, however, relevant for achieving the highest accuracy of the 
-c$$$*    convolution, as are the adjustments of the constant in the non-
-c$$$*    singlet quark coefficient functions. The value is fixed from the 
-c$$$*    lowest moments. 
-c$$$*
-c$$$       FUNCTION C2G2C (Y, NF)
-c$$$       IMPLICIT REAL*8 (A-Z)
-c$$$       INTEGER NF
-c$$$*
-c$$$       C2G2C = - NF * 0.28  
-c$$$*
-c$$$       RETURN
-c$$$       END
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the regular gluon piece, denoted by C2G2 in WvN's program. 
+*    Nine numerical coefficients are fitted as above, the ones of 1/y, 
+*    ln^3(1-y), and ln^2(1-y) are exact up to truncation.
+*
+       FUNCTION C2G2A (Y, NF)
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER NF
+*
+       DL  = LOG (Y)
+       DL1 = LOG (1.-Y)
+*
+       C2G2A =   NF * ( 1./Y * (11.90 + 1494.* DL1) + 5.319 * DL**3  
+     1         - 59.48 * DL**2 - 284.8 * DL + 392.4 - 1483.* DL1
+     2         + (6.445 + 209.4 * (1.-Y)) * DL1**3 - 24.00 * DL1**2
+     3         - 724.1 * DL**2 * DL1 - 871.8 * DL * DL1**2 )
+*
+       RETURN
+       END
+* 
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' gluon piece, which has no counterpart in WvN's
+*    program, as it does not exist in the exact expressions. Here it 
+*    is, however, relevant for achieving the highest accuracy of the 
+*    convolution, as are the adjustments of the constant in the non-
+*    singlet quark coefficient functions. The value is fixed from the 
+*    lowest moments. 
+*
+       FUNCTION C2G2C (Y, NF)
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER NF
+*
+       C2G2C = - NF * 0.28  
+*
+       RETURN
+       END
 *
 * =================================================================av==
 *
@@ -198,28 +198,28 @@ c$$$       END
        RETURN
        END
 *
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..This is the singular NS piece, denoted by SOFT2 in WvN's program. 
-c$$$*    It is the same for all F2 and F3 cases. The numerical coefficients 
-c$$$*    are exact, but truncated.
-c$$$*
-c$$$       FUNCTION C2NS2B (Y, NF)
-c$$$       IMPLICIT REAL*8 (A-Z)
-c$$$       INTEGER NF
-c$$$*
-c$$$       DL1 = LOG (1.-Y)
-c$$$       DM  = 1./(1.-Y)
-c$$$*
-c$$$       C2NS2B = 
-c$$$     1          + 14.2222 * DL1**3 - 61.3333 * DL1**2 - 31.105 * DL1 
-c$$$     2          + 188.64 
-c$$$     3        + NF * ( 1.77778 * DL1**2 - 8.5926 * DL1 + 6.3489 ) 
-c$$$       C2NS2B = DM * C2NS2B
-c$$$*
-c$$$       RETURN
-c$$$       END
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the singular NS piece, denoted by SOFT2 in WvN's program. 
+*    It is the same for all F2 and F3 cases. The numerical coefficients 
+*    are exact, but truncated.
+*
+       FUNCTION C2NS2B (Y, NF)
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER NF
+*
+       DL1 = LOG (1.-Y)
+       DM  = 1./(1.-Y)
+*
+       C2NS2B = 
+     1          + 14.2222 * DL1**3 - 61.3333 * DL1**2 - 31.105 * DL1 
+     2          + 188.64 
+     3        + NF * ( 1.77778 * DL1**2 - 8.5926 * DL1 + 6.3489 ) 
+       C2NS2B = DM * C2NS2B
+*
+       RETURN
+       END
 *
 * ---------------------------------------------------------------------
 *
@@ -347,29 +347,29 @@ c$$$       END
        RETURN
        END
 *
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..This is the singular NS piece, denoted by SOFT2 in WvN's program. 
-c$$$*    It is the same for all F2 and F3 cases. The numerical coefficients 
-c$$$*    are exact, but truncated.
-c$$$*
-c$$$       FUNCTION C3NS2B (Y, NF)
-c$$$       IMPLICIT REAL*8 (A-Z)
-c$$$       INTEGER NF
-c$$$*
-c$$$       DL1 = LOG (1.-Y)
-c$$$       DM  = 1./(1.-Y)
-c$$$*
-c$$$       C3NS2B = 
-c$$$     1          + 14.2222 * DL1**3 - 61.3333 * DL1**2 - 31.105 * DL1 
-c$$$     2          + 188.64 
-c$$$     3        + NF * ( 1.77778 * DL1**2 - 8.5926 * DL1 + 6.3489 ) 
-c$$$       C3NS2B = DM * C3NS2B
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the singular NS piece, denoted by SOFT2 in WvN's program. 
+*    It is the same for all F2 and F3 cases. The numerical coefficients 
+*    are exact, but truncated.
+*
+       FUNCTION C3NS2B (Y, NF)
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER NF
+*
+       DL1 = LOG (1.-Y)
+       DM  = 1./(1.-Y)
+*
+       C3NS2B = 
+     1          + 14.2222 * DL1**3 - 61.3333 * DL1**2 - 31.105 * DL1 
+     2          + 188.64 
+     3        + NF * ( 1.77778 * DL1**2 - 8.5926 * DL1 + 6.3489 ) 
+       C3NS2B = DM * C3NS2B
+*
+       RETURN
+       END
+*
 * ---------------------------------------------------------------------
 *
 *                                        __
@@ -457,28 +457,28 @@ c$$$*
        RETURN
        END
 *
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..This is the gluon contribution, denoted by C2G2 in WvN's program. 
-c$$$*    Six numerical coefficients are fitted as above, the one of 1/y is
-c$$$*    exact up to truncation.
-c$$$*
-c$$$       FUNCTION CLG2A (Y, NF)
-c$$$       IMPLICIT REAL*8 (A-Z)
-c$$$       INTEGER NF
-c$$$*
-c$$$       DL  = LOG (Y)
-c$$$       DL1 = LOG (1.-Y)
-c$$$*
-c$$$       CLG2A = NF * ( (94.74 - 49.20 * Y) * (1.-Y) * DL1**2 
-c$$$     1         + 864.8 * (1.-Y) * DL1 + 1161.* Y * DL * DL1 
-c$$$     2         + 60.06 * Y * DL**2 + 39.66 * (1.-Y) * DL 
-c$$$     3         - 5.333 * (1./Y - 1.) )
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$* 
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the gluon contribution, denoted by C2G2 in WvN's program. 
+*    Six numerical coefficients are fitted as above, the one of 1/y is
+*    exact up to truncation.
+*
+       FUNCTION CLG2A (Y, NF)
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER NF
+*
+       DL  = LOG (Y)
+       DL1 = LOG (1.-Y)
+*
+       CLG2A = NF * ( (94.74 - 49.20 * Y) * (1.-Y) * DL1**2 
+     1         + 864.8 * (1.-Y) * DL1 + 1161.* Y * DL * DL1 
+     2         + 60.06 * Y * DL**2 + 39.66 * (1.-Y) * DL 
+     3         - 5.333 * (1./Y - 1.) )
+*
+       RETURN
+       END
+* 
 * =================================================================av==
 *
 * ..File: xclns2p.f    FL_NS

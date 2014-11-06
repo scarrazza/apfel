@@ -7,7 +7,7 @@ CFLAGS = -O2 -Wall -I.
 
 obj = objects
 
-OBJECTS = $(obj)/hell.o $(obj)/DGLAPevol.o $(obj)/gammaNLO.o
+OBJECTS = $(obj)/hell.o $(obj)/DGLAPevol.o
 
 
 
@@ -16,7 +16,7 @@ lib: lib$(PKG).a
 
 
 test%: test%.cc lib$(PKG).a
-	$(CC) $(CFLAGS) -o $@ $< lib$(PKG).a -lgsl -lgslcblas
+	$(CC) $(CFLAGS) -o $@ $< lib$(PKG).a
 
 lib$(PKG).a: $(OBJECTS)
 	ar -r lib$(PKG).a $^

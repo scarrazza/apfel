@@ -58,7 +58,7 @@ extern "C" {
 
   double xdeltap_(int *k, double *as, double *x)
   {
-    xdPNLL = sxD->DeltaP(*as, *x, fixed_order_to_be_matched_to);
+    xdPNLL = sxD->xDeltaP(*as, *x, fixed_order_to_be_matched_to);
     double xdp = 0;
     if(*k == 4)      xdp = xdPNLL.qq();
     else if(*k == 5) xdp = xdPNLL.qg();

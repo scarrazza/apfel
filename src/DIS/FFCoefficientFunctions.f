@@ -89,17 +89,17 @@ c      close(41)
       ELSEIF(XI.EQ.XIMAX)THEN
          CALL MINIMAX(ICO,NXI,X,TRANS)
          IF(ICO.EQ.1.OR.ICO.EQ.2)THEN
-            CH_FFNS_NC_AB = TRANS / ( PI * EPS ) / X       !NLO (LO)
+            CH_FFNS_NC_AB = TRANS / ( PI * EPS )        !NLO (LO)
          ELSE
-            CH_FFNS_NC_AB = 16D0 * PI * TRANS / EPS / X    !NNLO (NLO)
+            CH_FFNS_NC_AB = 16D0 * PI * TRANS / EPS     !NNLO (NLO)
          ENDIF
          RETURN
       ELSEIF(XI.EQ.XIMIN)THEN
          CALL MINIMAX(ICO,1,X,TRANS)
          IF(ICO.EQ.1.OR.ICO.EQ.2)THEN
-            CH_FFNS_NC_AB = TRANS / ( PI * EPS ) / X       !NLO (LO)
+            CH_FFNS_NC_AB = TRANS / ( PI * EPS )        !NLO (LO)
          ELSE
-            CH_FFNS_NC_AB = 16D0 * PI * TRANS / EPS / X    !NNLO (NLO)
+            CH_FFNS_NC_AB = 16D0 * PI * TRANS / EPS     !NNLO (NLO)
          ENDIF
          RETURN
       ENDIF

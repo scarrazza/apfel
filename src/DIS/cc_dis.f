@@ -59,7 +59,7 @@
       DOUBLE PRECISION NNLOQ2,NNLOG2,NNLO2
       DOUBLE PRECISION NNLOQ3,NNLOG3,NNLO3
       DOUBLE PRECISION PLUS_TERM1,PLUS_TERM2,PLUS_TERM3
-      DOUBLE PRECISION C2G2C,C2NN2C,CLNN2C,C3NM2C,C3NP2C
+      DOUBLE PRECISION C2G2C,C2NN2C,CLNN2C,C3NM2C
       DOUBLE PRECISION F1CG(3),F2CG(3),F3CG(3),FLCG(3),SIGMACG(3)
       DOUBLE PRECISION F1BG(3),F2BG(3),F3BG(3),FLBG(3),SIGMABG(3)
       DOUBLE PRECISION F1TG(3),F2TG(3),F3TG(3),FLTG(3),SIGMATG(3)
@@ -253,10 +253,10 @@
          F3SGN = 1
       ELSEIF(PROJ(1:8).EQ."NEUTRINO")THEN
          NEUT  = 1
-         F3SGN = 1
+         F3SGN = - 1
       ELSEIF(PROJ(1:12).EQ."ANTINEUTRINO")THEN
          NEUT  = - 1
-         F3SGN = 1
+         F3SGN = - 1
       ELSE
          WRITE(6,*) "In cc_dis.f:"
          WRITE(6,*) "Unknown value projectile = ",PROJ
@@ -326,7 +326,6 @@
 *     Always ZM-VFNS
 *
       VFNS = "ZMVN"
-      IF(SCHEME(1:4).EQ."FFNS".OR.SCHEME(1:4).EQ."FFN0") NF = 3
 *
       Y      = X
       CONST1 = - 4D0 / 3D0 * ( PI**2D0 / 3D0 + 9D0 / 2D0 )
@@ -507,7 +506,7 @@
 *
          PLUS_TERM1 = C2NN2C(X,NF) - CLNN2C(X,NF)
          PLUS_TERM2 = C2NN2C(X,NF)
-         PLUS_TERM3 = C3NP2C(X,NF)
+         PLUS_TERM3 = C3NM2C(X,NF)
 *
 *        F1
 *
@@ -613,7 +612,7 @@
 *
       F1L = LO1 + ASQ * NLO1 + ASQ2 * NNLO1
       F2L = LO2 + ASQ * NLO2 + ASQ2 * NNLO2
-      F3L = F3SGN * ( LO3 + ASQ * NLO3 + ASQ2 * NNLO3 )
+      F3L = F3SGN * ( LO3 + ASQ * NLO3  + ASQ2 * NNLO3 )
 *
 *     FL
 *
@@ -657,10 +656,10 @@
          KA     = ( 1D0 - LAMBDA ) * DLOG( 1D0 - LAMBDA ) / LAMBDA
          CONST1 = - 4D0 / 3D0 * ( 4D0 + 1D0 / ( 2D0 * LAMBDA )
      1          + PI**2D0 / 3D0 + ( 1D0 + 3D0 * LAMBDA ) * KA 
-     2          / ( 2D0 * LAMBDA ) + 3D0 * DLOG(LAMBDA) / 2D0 )
+     2          / (2D0 * LAMBDA ) )
          CONST2 = - 4D0 / 3D0 * ( 4D0 + 1D0 / ( 2D0 * LAMBDA )
      1          + PI**2D0 / 3D0 + ( 1D0 + LAMBDA ) * KA 
-     2          / ( 2D0 * LAMBDA ) + 3D0 * DLOG(LAMBDA) / 2D0 )
+     2          / (2D0 * LAMBDA ) )
          CONST3 = CONST1
          XBJ    = XI
       ENDIF
@@ -705,29 +704,29 @@
 *
 *        Contribution coming from the plus prescription in an integral between x and 1
 *
-         PLUS_TERM1 = - DGAUSS(C1Q_PLUS_WRAP,C,D,EPS)
-         PLUS_TERM2 = - DGAUSS(C2Q_PLUS_WRAP,C,D,EPS)
-         PLUS_TERM3 = - DGAUSS(C3Q_PLUS_WRAP,C,D,EPS)
+         PLUS_TERM1 = DGAUSS(C1Q_PLUS_WRAP,C,D,EPS)
+         PLUS_TERM2 = DGAUSS(C2Q_PLUS_WRAP,C,D,EPS)
+         PLUS_TERM3 = DGAUSS(C3Q_PLUS_WRAP,C,D,EPS)
 *
 *        F1
 *
          INTEG1(1) = 2D0 * V_CD2 * FRAT 
      1             * ( DGAUSS(XD_XC1Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XD_XC1Q_PLUS,A,B,EPS) 
-     3             + ( CONST1 + PLUS_TERM1 ) * XD(Y,Q) )
+     3             + ( CONST1 - PLUS_TERM1 ) * XD(Y,Q) )
          INTEG1(2) = 2D0 * V_CD2 * ( 1D0 - FRAT )
      1             * ( DGAUSS(XU_XC1Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XU_XC1Q_PLUS,A,B,EPS) 
-     3             + ( CONST1 + PLUS_TERM1 ) * XU(Y,Q) )
+     3             + ( CONST1 - PLUS_TERM1 ) * XU(Y,Q) )
          INTEG1(3) = 2D0 * V_CS2
      1             * ( DGAUSS(XS_XC1Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XS_XC1Q_PLUS,A,B,EPS) 
-     3             + ( CONST1 + PLUS_TERM1 ) * XS(Y,Q) )
+     3             + ( CONST1 - PLUS_TERM1 ) * XS(Y,Q) )
          IF(VFNS.EQ."ZMVN")THEN
             INTEG1(4) = 2D0 * ( V_CD2 + V_CS2 )
      1                * ( DGAUSS(XC_XC1Q_UNPLUS,A,B,EPS)
      2                +   DGAUSS(XC_XC1Q_PLUS,A,B,EPS) 
-     3                + ( CONST1 + PLUS_TERM1 ) * XC(Y,Q) )
+     3                + ( CONST1 - PLUS_TERM1 ) * XC(Y,Q) )
          ELSE
             INTEG1(4) = 0D0
          ENDIF
@@ -738,21 +737,21 @@
 *
          INTEG2(1) = 2D0 * V_CD2 * FRAT 
      1             * ( DGAUSS(XD_XC2Q_UNPLUS,A,B,EPS)
-     2             +   DGAUSS(XD_XC2Q_PLUS,A,B,EPS)
-     3             + ( CONST2 + PLUS_TERM2 ) * XD(Y,Q) )
+     2             +   DGAUSS(XD_XC2Q_PLUS,A,B,EPS) 
+     3             + ( CONST2 - PLUS_TERM2 ) * XD(Y,Q) )
          INTEG2(2) = 2D0 * V_CD2 * ( 1D0 - FRAT )
      1             * ( DGAUSS(XU_XC2Q_UNPLUS,A,B,EPS)
-     2             +   DGAUSS(XU_XC2Q_PLUS,A,B,EPS)
-     3             + ( CONST2 + PLUS_TERM2 ) * XU(Y,Q) )
+     2             +   DGAUSS(XU_XC2Q_PLUS,A,B,EPS) 
+     3             + ( CONST2 - PLUS_TERM2 ) * XU(Y,Q) )
          INTEG2(3) = 2D0 * V_CS2
      1             * ( DGAUSS(XS_XC2Q_UNPLUS,A,B,EPS)
-     2             +   DGAUSS(XS_XC2Q_PLUS,A,B,EPS)
-     3             + ( CONST2 + PLUS_TERM2 ) * XS(Y,Q) )
+     2             +   DGAUSS(XS_XC2Q_PLUS,A,B,EPS) 
+     3             + ( CONST2 - PLUS_TERM2 ) * XS(Y,Q) )
          IF(VFNS.EQ."ZMVN")THEN
             INTEG2(4) = 2D0 * ( V_CD2 + V_CS2 )
      1                * ( DGAUSS(XC_XC2Q_UNPLUS,A,B,EPS)
      2                +   DGAUSS(XC_XC2Q_PLUS,A,B,EPS) 
-     3                + ( CONST2 + PLUS_TERM2 ) * XC(Y,Q) )
+     3                + ( CONST2 - PLUS_TERM2 ) * XC(Y,Q) )
          ELSE
             INTEG2(4) = 0D0
          ENDIF
@@ -764,20 +763,20 @@
          INTEG3(1) = 2D0 * V_CD2 * FRAT 
      1             * ( DGAUSS(XD_XC3Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XD_XC3Q_PLUS,A,B,EPS) 
-     3             + ( CONST3 + PLUS_TERM3 ) * XD(Y,Q) )
+     3             + ( CONST3 - PLUS_TERM3 ) * XD(Y,Q) )
          INTEG3(2) = 2D0 * V_CD2 * ( 1D0 - FRAT )
      1             * ( DGAUSS(XU_XC3Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XU_XC3Q_PLUS,A,B,EPS) 
-     3             + ( CONST3 + PLUS_TERM3 ) * XU(Y,Q) )
+     3             + ( CONST3 - PLUS_TERM3 ) * XU(Y,Q) )
          INTEG3(3) = 2D0 * V_CS2
      1             * ( DGAUSS(XS_XC3Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XS_XC3Q_PLUS,A,B,EPS) 
-     3             + ( CONST3 + PLUS_TERM3 ) * XS(Y,Q) )
+     3             + ( CONST3 - PLUS_TERM3 ) * XS(Y,Q) )
          IF(VFNS.EQ."ZMVN")THEN
             INTEG3(4) = - 2D0 * ( V_CD2 + V_CS2 )
      1                * ( DGAUSS(XC_XC3Q_UNPLUS,A,B,EPS)
      2                +   DGAUSS(XC_XC3Q_PLUS,A,B,EPS) 
-     3                + ( CONST3 + PLUS_TERM3 ) * XC(Y,Q) )
+     3                + ( CONST3 - PLUS_TERM3 ) * XC(Y,Q) )
          ELSE
             INTEG3(4) = 0D0
          ENDIF
@@ -859,7 +858,7 @@
 *
          PLUS_TERM1 = C2NN2C(X,NF) - CLNN2C(X,NF)
          PLUS_TERM2 = C2NN2C(X,NF)
-         PLUS_TERM3 = C3NP2C(X,NF)
+         PLUS_TERM3 = C3NM2C(X,NF)
 *
 *        F1
 *
@@ -875,14 +874,10 @@
      1             * ( DGAUSS(XS_XC1Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XS_XC1Q_PLUS,A,B,EPS) 
      3             +   PLUS_TERM1 * XS(Y,Q) )
-         IF(VFNS.EQ."ZMVN")THEN
-            INTEG1(4) = ( V_CD2 + V_CS2 ) * FRAT 
-     1                * ( DGAUSS(XC_XC1Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XC_XC1Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM1 * XC(Y,Q) )
-         ELSE
-            INTEG1(4) = 0D0
-         ENDIF
+         INTEG1(4) = ( V_CD2 + V_CS2 ) * FRAT 
+     1             * ( DGAUSS(XU_XC1Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XU_XC1Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM1 * XU(Y,Q) )
          INTEG1(5) = 0D0
          INTEG1(6) = 0D0
 *
@@ -900,14 +895,10 @@
      1             * ( DGAUSS(XS_XC2Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XS_XC2Q_PLUS,A,B,EPS) 
      3             +   PLUS_TERM2 * XS(Y,Q) )
-         IF(VFNS.EQ."ZMVN")THEN
-            INTEG2(4) = ( V_CD2 + V_CS2 ) * FRAT 
-     1                * ( DGAUSS(XC_XC2Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XC_XC2Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM2 * XC(Y,Q) )
-         ELSE
-            INTEG2(4) = 0D0
-         ENDIF
+         INTEG2(4) = ( V_CD2 + V_CS2 ) * FRAT 
+     1             * ( DGAUSS(XU_XC2Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XU_XC2Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM2 * XU(Y,Q) )
          INTEG2(5) = 0D0
          INTEG2(6) = 0D0
 *
@@ -925,14 +916,10 @@
      1             * ( DGAUSS(XS_XC3Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XS_XC3Q_PLUS,A,B,EPS) 
      3             +   PLUS_TERM3 * XS(Y,Q) )
-         IF(VFNS.EQ."ZMVN")THEN
-            INTEG3(4) = - ( V_CD2 + V_CS2 ) * FRAT 
-     1                * ( DGAUSS(XC_XC3Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XC_XC3Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM3 * XC(Y,Q) )
-         ELSE
-            INTEG3(4) = 0D0
-         ENDIF
+         INTEG3(4) = - ( V_CD2 + V_CS2 ) * FRAT 
+     1             * ( DGAUSS(XU_XC3Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XU_XC3Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM3 * XU(Y,Q) )
          INTEG3(5) = 0D0
          INTEG3(6) = 0D0
 *
@@ -963,9 +950,6 @@
       F1C = LO1 + ASQ * NLO1 + ASQ2 * NNLO1
       F2C = LO2 + ASQ * NLO2 + ASQ2 * NNLO2
       F3C = F3SGN * ( LO3 + ASQ * NLO3 + ASQ2 * NNLO3 )
-c      F1C = ASQ * NLO1
-c      F2C = ASQ * NLO2
-c      F3C = F3SGN * ( ASQ * NLO3 )
 *
 *     FL
 *
@@ -1044,14 +1028,14 @@ c      F3C = F3SGN * ( ASQ * NLO3 )
 *
       LO1 = LO
       LO2 = LO
-      LO3 = - LO
+      LO3 = LO
       IF(VFNS.EQ."ZMVN")THEN
          LO1 = LO1 + 2D0 * ( V_UB2 + V_CB2 ) * XB(Y,Q) 
      1       + 2D0 * V_CB2 * XC(Y,Q)
          LO2 = LO2 + 2D0 * ( V_UB2 + V_CB2 ) * XB(Y,Q) 
      1       + 2D0 * V_CB2 * XC(Y,Q)
-         LO3 = LO3 + 2D0 * ( V_UB2 + V_CB2 ) * XB(Y,Q) 
-     1       - 2D0 * V_CB2 * XC(Y,Q)
+         LO3 = LO3 - 2D0 * ( V_UB2 + V_CB2 ) * XB(Y,Q) 
+     1       + 2D0 * V_CB2 * XC(Y,Q)
       ENDIF
 *
 *     Bounds of the integrals
@@ -1138,21 +1122,21 @@ c      F3C = F3SGN * ( ASQ * NLO3 )
 *
 *        F3
 *
-         INTEG3(1) = - 2D0 * V_UB2 * ( 1D0 - FRAT )
+         INTEG3(1) = 2D0 * V_UB2 * ( 1D0 - FRAT )
      1             * ( DGAUSS(XD_XC3Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XD_XC3Q_PLUS,A,B,EPS) 
      3             + ( CONST3 - PLUS_TERM3 ) * XD(Y,Q) )
-         INTEG3(2) = - 2D0 * V_UB2 * FRAT
+         INTEG3(2) = 2D0 * V_UB2 * FRAT
      1             * ( DGAUSS(XU_XC3Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XU_XC3Q_PLUS,A,B,EPS) 
      3             + ( CONST3 - PLUS_TERM3 ) * XU(Y,Q) )
          INTEG3(3) = 0D0
          IF(VFNS.EQ."ZMVN")THEN
-            INTEG3(4) = - 2D0 * V_CB2
+            INTEG3(4) = 2D0 * V_CB2
      1                * ( DGAUSS(XC_XC3Q_UNPLUS,A,B,EPS)
      2                +   DGAUSS(XC_XC3Q_PLUS,A,B,EPS) 
      3                + ( CONST3 - PLUS_TERM3 ) * XC(Y,Q) )
-            INTEG3(5) = 2D0 * ( V_UB2 + V_CB2 )
+            INTEG3(5) = - 2D0 * ( V_UB2 + V_CB2 )
      1                * ( DGAUSS(XB_XC3Q_UNPLUS,A,B,EPS)
      2                +   DGAUSS(XB_XC3Q_PLUS,A,B,EPS) 
      3                + ( CONST3 - PLUS_TERM3 ) * XB(Y,Q) )
@@ -1214,7 +1198,7 @@ c      F3C = F3SGN * ( ASQ * NLO3 )
 *
          PLUS_TERM1 = C2NN2C(X,NF) - CLNN2C(X,NF)
          PLUS_TERM2 = C2NN2C(X,NF)
-         PLUS_TERM3 = C3NP2C(X,NF)
+         PLUS_TERM3 = C3NM2C(X,NF)
 *
 *        F1
 *
@@ -1227,19 +1211,14 @@ c      F3C = F3SGN * ( ASQ * NLO3 )
      2             +   DGAUSS(XU_XC1Q_PLUS,A,B,EPS) 
      3             +   PLUS_TERM1 * XU(Y,Q) )
          INTEG1(3) = 0D0
-         IF(VFNS.EQ."ZMVN")THEN
-            INTEG1(4) = V_CB2 
-     1                * ( DGAUSS(XC_XC1Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XC_XC1Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM1 * XC(Y,Q) )
-            INTEG1(5) = ( V_UB2 + V_CB2 )
-     1                * ( DGAUSS(XB_XC1Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XB_XC1Q_PLUS,A,B,EPS)
-     3                +   PLUS_TERM1 * XB(Y,Q) )
-         ELSE
-            INTEG1(4) = 0D0
-            INTEG1(5) = 0D0
-         ENDIF
+         INTEG1(4) = V_CB2 
+     1             * ( DGAUSS(XC_XC1Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XC_XC1Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM1 * XC(Y,Q) )
+         INTEG1(5) = ( V_UB2 + V_CB2 )
+     1             * ( DGAUSS(XB_XC1Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XB_XC1Q_PLUS,A,B,EPS)
+     3             +   PLUS_TERM1 * XB(Y,Q) )
          INTEG1(6) = 0D0
 *
 *        F2
@@ -1253,45 +1232,35 @@ c      F3C = F3SGN * ( ASQ * NLO3 )
      2             +   DGAUSS(XU_XC2Q_PLUS,A,B,EPS) 
      3             +   PLUS_TERM2 * XU(Y,Q) )
          INTEG2(3) = 0D0
-         IF(VFNS.EQ."ZMVN")THEN
-            INTEG2(4) = V_CB2
-     1                * ( DGAUSS(XC_XC2Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XC_XC2Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM2 * XC(Y,Q) )
-            INTEG2(5) = ( V_UB2 + V_CB2 )
-     1                * ( DGAUSS(XB_XC2Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XB_XC2Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM2 * XB(Y,Q) )
-         ELSE
-            INTEG2(4) = 0D0
-            INTEG2(5) = 0D0
-         ENDIF
+         INTEG2(4) = V_CB2
+     1             * ( DGAUSS(XC_XC2Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XC_XC2Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM2 * XC(Y,Q) )
+         INTEG2(5) = ( V_UB2 + V_CB2 )
+     1             * ( DGAUSS(XB_XC2Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XB_XC2Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM2 * XB(Y,Q) )
          INTEG2(6) = 0D0
 *
 *        F3
 *
-         INTEG3(1) = - V_UB2 * ( 1D0 - FRAT )
+         INTEG3(1) = V_UB2 * ( 1D0 - FRAT )
      1             * ( DGAUSS(XD_XC3Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XD_XC3Q_PLUS,A,B,EPS) 
      3             +   PLUS_TERM3 * XD(Y,Q) )
-         INTEG3(2) = - V_UB2 * FRAT
+         INTEG3(2) = V_UB2 * FRAT
      1             * ( DGAUSS(XU_XC3Q_UNPLUS,A,B,EPS)
      2             +   DGAUSS(XU_XC3Q_PLUS,A,B,EPS) 
      3             +   PLUS_TERM3 * XU(Y,Q) )
          INTEG3(3) = 0D0
-         IF(VFNS.EQ."ZMVN")THEN
-            INTEG3(4) = - V_CB2
-     1                * ( DGAUSS(XC_XC3Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XC_XC3Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM3 * XC(Y,Q) )
-            INTEG3(5) = ( V_UB2 + V_CB2 )
-     1                * ( DGAUSS(XB_XC3Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XB_XC3Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM3 * XB(Y,Q) )
-         ELSE
-            INTEG3(4) = 0D0
-            INTEG3(5) = 0D0
-         ENDIF
+         INTEG3(4) = V_CB2
+     1             * ( DGAUSS(XC_XC3Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XC_XC3Q_PLUS,A,B,EPS) 
+     3             + ( CONST3 - PLUS_TERM3 ) * XC(Y,Q) )
+         INTEG3(5) = - ( V_UB2 + V_CB2 )
+     1             * ( DGAUSS(XB_XC3Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XB_XC3Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM3 * XB(Y,Q) )
          INTEG3(6) = 0D0
 *
          NNLOG1 = 0D0
@@ -1320,7 +1289,7 @@ c      F3C = F3SGN * ( ASQ * NLO3 )
 *
       F1B = LO1 + ASQ * NLO1 + ASQ2 * NNLO1
       F2B = LO2 + ASQ * NLO2 + ASQ2 * NNLO2
-      F3B = F3SGN * ( LO3 + ASQ * NLO3 + ASQ2 * NNLO3 )
+      F3B = - NEUT * F3SGN * ( LO3 + ASQ * NLO3 + ASQ2 * NNLO3 )
 *
 *     FL
 *
@@ -1585,7 +1554,7 @@ c      F3C = F3SGN * ( ASQ * NLO3 )
 *
          PLUS_TERM1 = C2NN2C(X,NF) - CLNN2C(X,NF)
          PLUS_TERM2 = C2NN2C(X,NF)
-         PLUS_TERM3 = C3NP2C(X,NF)
+         PLUS_TERM3 = C3NM2C(X,NF)
 *
 *        F1
 *
@@ -1602,19 +1571,14 @@ c      F3C = F3SGN * ( ASQ * NLO3 )
      2             +   DGAUSS(XS_XC1Q_PLUS,A,B,EPS) 
      3             +   PLUS_TERM1 * XS(Y,Q) )
          INTEG1(4) = 0D0
-         IF(VFNS.EQ."ZMVN")THEN
-            INTEG1(5) = V_TB2
-     1                * ( DGAUSS(XB_XC1Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XB_XC1Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM1 * XB(Y,Q) )
-            INTEG1(6) = ( V_TD2 + V_TS2 + V_TB2 )
-     1                * ( DGAUSS(XT_XC1Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XT_XC1Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM1 * XT(Y,Q) )
-         ELSE
-            INTEG1(5) = 0D0
-            INTEG1(6) = 0D0
-         ENDIF
+         INTEG1(5) = V_TB2
+     1             * ( DGAUSS(XB_XC1Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XB_XC1Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM1 * XB(Y,Q) )
+         INTEG1(6) = ( V_TD2 + V_TS2 + V_TB2 )
+     1             * ( DGAUSS(XT_XC1Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XT_XC1Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM1 * XT(Y,Q) )
 *
 *        F2
 *
@@ -1631,19 +1595,14 @@ c      F3C = F3SGN * ( ASQ * NLO3 )
      2             +   DGAUSS(XS_XC2Q_PLUS,A,B,EPS) 
      3             +   PLUS_TERM2 * XS(Y,Q) )
          INTEG2(4) = 0D0
-         IF(VFNS.EQ."ZMVN")THEN
-            INTEG2(5) = V_TB2
-     1                * ( DGAUSS(XB_XC2Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XB_XC2Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM2 * XB(Y,Q) )
-            INTEG2(6) = ( V_TD2 + V_TS2 + V_TB2 )
-     1                * ( DGAUSS(XT_XC2Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XT_XC2Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM2 * XT(Y,Q) )
-         ELSE
-            INTEG2(5) = 0D0
-            INTEG2(6) = 0D0
-         ENDIF
+         INTEG2(5) = V_TB2
+     1             * ( DGAUSS(XB_XC2Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XB_XC2Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM2 * XB(Y,Q) )
+         INTEG2(6) = ( V_TD2 + V_TS2 + V_TB2 )
+     1             * ( DGAUSS(XT_XC2Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XT_XC2Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM2 * XT(Y,Q) )
 *
 *        F3
 *
@@ -1660,19 +1619,14 @@ c      F3C = F3SGN * ( ASQ * NLO3 )
      2             +   DGAUSS(XS_XC3Q_PLUS,A,B,EPS) 
      3             +   PLUS_TERM3 * XS(Y,Q) )
          INTEG3(4) = 0D0
-         IF(VFNS.EQ."ZMVN")THEN
-            INTEG3(5) = V_TB2
-     1                * ( DGAUSS(XB_XC3Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XB_XC3Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM3 * XB(Y,Q) )
-            INTEG3(6) = - ( V_TD2 + V_TS2 + V_TB2 )
-     1                * ( DGAUSS(XT_XC3Q_UNPLUS,A,B,EPS)
-     2                +   DGAUSS(XT_XC3Q_PLUS,A,B,EPS) 
-     3                +   PLUS_TERM3 * XT(Y,Q) )
-         ELSE
-            INTEG3(5) = 0D0
-            INTEG3(6) = 0D0
-         ENDIF
+         INTEG3(5) = V_TB2
+     1             * ( DGAUSS(XB_XC3Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XB_XC3Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM3 * XB(Y,Q) )
+         INTEG3(6) = - ( V_TD2 + V_TS2 + V_TB2 )
+     1             * ( DGAUSS(XT_XC3Q_UNPLUS,A,B,EPS)
+     2             +   DGAUSS(XT_XC3Q_PLUS,A,B,EPS) 
+     3             +   PLUS_TERM3 * XT(Y,Q) )
 *
          NNLOG1 = 0D0
          NNLOG2 = 0D0
