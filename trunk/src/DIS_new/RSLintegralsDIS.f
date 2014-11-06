@@ -446,139 +446,139 @@ c      data eps / 1d-7, 1d-5 /
                enddo
             enddo
          enddo
-c$$$*
-c$$$*     Charged Current
-c$$$*
-c$$$         do ixi=1,nxi
-c$$$*
-c$$$            lambda = xigrid(ixi) / ( 1d0 + xigrid(ixi) )
-c$$$            Rf = RFun(xigrid(ixi),a)
-c$$$*
-c$$$            do k=1,3
-c$$$               do wipt=0,ipt
-c$$$                  SC2m(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
-c$$$                  SCLm(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
-c$$$                  SC3m(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
-c$$$               enddo
-c$$$            enddo
-c$$$*
-c$$$*     Variables needed for wrapping the integrand functions
-c$$$*
-c$$$            wnf    = Nf_FF
-c$$$            wixi   = ixi
-c$$$            walpha = alpha
-c$$$            wbeta  = beta
-c$$$*
-c$$$*     Precompute integrals
-c$$$*
-c$$$
-c$$$            if(ipt.ge.1)then
-c$$$               wipt = 1
-c$$$*
-c$$$               sf = 1
-c$$$               k = 1
-c$$$               C2g1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
-c$$$               k = 3
-c$$$               C2ns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
-c$$$               C2ns1L  = c2ns1ccc(Rf,xigrid(ixi),a)
-c$$$*
-c$$$               sf = 2
-c$$$               k = 1
-c$$$               CLg1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
-c$$$               k = 3
-c$$$               CLns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
-c$$$               CLns1L  = clns1ccc(Rf,xigrid(ixi),a)
-c$$$*
-c$$$               sf = 3
-c$$$               k = 1
-c$$$               C3g1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
-c$$$               k = 3
-c$$$               C3ns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
-c$$$               C3ns1L  = c3ns1ccc(Rf,xigrid(ixi),a)
-c$$$            endif
-c$$$*
-c$$$            do k=1,3
-c$$$*
-c$$$*     LO
-c$$$*
-c$$$*     C2
-c$$$               C2L(k,0)   = 0d0
-c$$$               if(k.eq.3) C2L(k,0) = 1d0
-c$$$               integC2(0) = 0d0
-c$$$*     CL
-c$$$               CLL(k,0)   = 0d0
-c$$$               if(k.eq.3) CLL(k,0) = 1d0 - lambda
-c$$$               integCL(0) = 0d0
-c$$$*     C3
-c$$$               C3L(k,0) = 0d0
-c$$$               if(k.eq.3) C3L(k,0) = 1d0
-c$$$               integC3(0) = 0d0
-c$$$*
-c$$$*     NLO
-c$$$*
-c$$$               if(ipt.ge.1)then
-c$$$*     Gluon
-c$$$                  if(k.eq.1)then
-c$$$*     C2
-c$$$                     C2L(k,1)   = 0d0
-c$$$                     integC2(1) = C2g1R
-c$$$*     CL
-c$$$                     CLL(k,1)   = 0d0
-c$$$                     integCL(1) = CLg1R
-c$$$*     C3
-c$$$                     C3L(k,1)   = 0d0
-c$$$                     integC3(1) = C3g1R
-c$$$*     Pure-Singlet
-c$$$                  elseif(k.eq.2)then
-c$$$*     C2
-c$$$                     C2L(k,1)   = 0d0
-c$$$                     integC2(1) = 0d0
-c$$$*     CL
-c$$$                     CLL(k,1)   = 0d0
-c$$$                     integCL(1) = 0d0
-c$$$*     C3
-c$$$                     C3L(k,1)   = 0d0
-c$$$                     integC3(1) = 0d0
-c$$$*     Non-singlet
-c$$$                  elseif(k.eq.3)then
-c$$$*     C2
-c$$$                     C2L(k,1)   = C2ns1L
-c$$$                     integC2(1) = C2ns1RS
-c$$$*     CL
-c$$$                     CLL(k,1)   = CLns1L
-c$$$                     integCL(1) = CLns1RS
-c$$$*     C3
-c$$$                     C3L(k,1)   = C3ns1L
-c$$$                     integC3(1) = C3ns1RS
-c$$$                  endif
-c$$$               endif
-c$$$*
-c$$$*     NNLO (Unknown yet)
-c$$$*
-c$$$               if(ipt.ge.2)then
-c$$$*     C2
-c$$$                  C2L(k,2)   = 0d0
-c$$$                  integC2(2) = 0d0
-c$$$*     CL
-c$$$                  CLL(k,2)   = 0d0
-c$$$                  integCL(2) = 0d0
-c$$$*     C3
-c$$$                  C3L(k,2)   = 0d0
-c$$$                  integC3(2) = 0d0
-c$$$               endif
-c$$$*
-c$$$*     Integrals
-c$$$*
-c$$$               do wipt=0,ipt
-c$$$                  SC2m(2,igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
-c$$$     1                                                + C2L(k,wipt) * fL
-c$$$                  SCLm(2,igrid,ixi,k,wipt,beta,alpha) = integCL(wipt)
-c$$$     1                                                + CLL(k,wipt) * fL 
-c$$$                  SC3m(2,igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
-c$$$     1                                                + C3L(k,wipt) * fL
-c$$$               enddo
-c$$$            enddo
-c$$$         enddo
+*
+*     Charged Current
+*
+         do ixi=1,nxi
+*
+            lambda = xigrid(ixi) / ( 1d0 + xigrid(ixi) )
+            Rf = RFun(xigrid(ixi),a)
+*
+            do k=1,3
+               do wipt=0,ipt
+                  SC2m(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SCLm(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC3m(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+               enddo
+            enddo
+*
+*     Variables needed for wrapping the integrand functions
+*
+            wnf    = Nf_FF
+            wixi   = ixi
+            walpha = alpha
+            wbeta  = beta
+*
+*     Precompute integrals
+*
+
+            if(ipt.ge.1)then
+               wipt = 1
+*
+               sf = 1
+               k = 1
+               C2g1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               k = 3
+               C2ns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               C2ns1L  = c2ns1ccc(Rf,xigrid(ixi),a)
+*
+               sf = 2
+               k = 1
+               CLg1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               k = 3
+               CLns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               CLns1L  = clns1ccc(Rf,xigrid(ixi),a)
+*
+               sf = 3
+               k = 1
+               C3g1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               k = 3
+               C3ns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               C3ns1L  = c3ns1ccc(Rf,xigrid(ixi),a)
+            endif
+*
+            do k=1,3
+*
+*     LO
+*
+*     C2
+               C2L(k,0)   = 0d0
+               if(k.eq.3) C2L(k,0) = 1d0
+               integC2(0) = 0d0
+*     CL
+               CLL(k,0)   = 0d0
+               if(k.eq.3) CLL(k,0) = 1d0 - lambda
+               integCL(0) = 0d0
+*     C3
+               C3L(k,0) = 0d0
+               if(k.eq.3) C3L(k,0) = 1d0
+               integC3(0) = 0d0
+*
+*     NLO
+*
+               if(ipt.ge.1)then
+*     Gluon
+                  if(k.eq.1)then
+*     C2
+                     C2L(k,1)   = 0d0
+                     integC2(1) = C2g1R
+*     CL
+                     CLL(k,1)   = 0d0
+                     integCL(1) = CLg1R
+*     C3
+                     C3L(k,1)   = 0d0
+                     integC3(1) = C3g1R
+*     Pure-Singlet
+                  elseif(k.eq.2)then
+*     C2
+                     C2L(k,1)   = 0d0
+                     integC2(1) = 0d0
+*     CL
+                     CLL(k,1)   = 0d0
+                     integCL(1) = 0d0
+*     C3
+                     C3L(k,1)   = 0d0
+                     integC3(1) = 0d0
+*     Non-singlet
+                  elseif(k.eq.3)then
+*     C2
+                     C2L(k,1)   = C2ns1L
+                     integC2(1) = C2ns1RS
+*     CL
+                     CLL(k,1)   = CLns1L
+                     integCL(1) = CLns1RS
+*     C3
+                     C3L(k,1)   = C3ns1L
+                     integC3(1) = C3ns1RS
+                  endif
+               endif
+*
+*     NNLO (Unknown yet)
+*
+               if(ipt.ge.2)then
+*     C2
+                  C2L(k,2)   = 0d0
+                  integC2(2) = 0d0
+*     CL
+                  CLL(k,2)   = 0d0
+                  integCL(2) = 0d0
+*     C3
+                  C3L(k,2)   = 0d0
+                  integC3(2) = 0d0
+               endif
+*
+*     Integrals
+*
+               do wipt=0,ipt
+                  SC2m(2,igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
+     1                                                + C2L(k,wipt) * fL
+                  SCLm(2,igrid,ixi,k,wipt,beta,alpha) = integCL(wipt)
+     1                                                + CLL(k,wipt) * fL 
+                  SC3m(2,igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
+     1                                                + C3L(k,wipt) * fL
+               enddo
+            enddo
+         enddo
       endif
 *
 *     Massive zero FFNS needed for the FONLL scheme
