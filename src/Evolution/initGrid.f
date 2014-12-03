@@ -89,6 +89,8 @@
      2                 xg(igrid,nin(igrid))
             write(6,*) "Check the input grid"
             call exit(-10)
+         else
+            xg(igrid,nin(igrid)) = 1d0
          endif
 *
 *     Extend the grid for x > 1 for interpolation reasons using the same

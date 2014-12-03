@@ -166,12 +166,12 @@
                                  if(W2.ge.4d0*m2th(j))then
                                     SC2(jgrid,i,3,pt,0,alpha) = 
      1                              SC2(jgrid,i,3,pt,0,alpha)
-     2                     + c0(j) * SC2m(1,jgrid,ixi(j),3,pt,0,alpha)
-     3                     + c1(j) * SC2m(1,jgrid,ixi(j)+1,3,pt,0,alpha)
+     2                     + c0(j) * SC2mNC(jgrid,ixi(j),3,pt,0,alpha)
+     3                     + c1(j) * SC2mNC(jgrid,ixi(j)+1,3,pt,0,alpha)
                                     SCL(jgrid,i,3,pt,0,alpha) = 
      1                              SCL(jgrid,i,3,pt,0,alpha)
-     2                     + c0(j) * SCLm(1,jgrid,ixi(j),3,pt,0,alpha)
-     3                     + c1(j) * SCLm(1,jgrid,ixi(j)+1,3,pt,0,alpha)
+     2                     + c0(j) * SCLmNC(jgrid,ixi(j),3,pt,0,alpha)
+     3                     + c1(j) * SCLmNC(jgrid,ixi(j)+1,3,pt,0,alpha)
                                  endif
                               enddo
                            endif
@@ -187,14 +187,14 @@
                            do k=1,2
                               if(W2.ge.4d0*m2th(i))then
                                  SC2(jgrid,i,k,pt,0,alpha) = 
-     1                       c0(i) * SC2m(1,jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SC2m(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                       c0(i) * SC2mNC(jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SC2mNC(jgrid,ixi(i)+1,k,pt,0,alpha)
                                  SCL(jgrid,i,k,pt,0,alpha) =
-     1                       c0(i) * SCLm(1,jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SCLm(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                       c0(i) * SCLmNC(jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SCLmNC(jgrid,ixi(i)+1,k,pt,0,alpha)
                                  SC3(jgrid,i,k,pt,0,alpha) = 
-     1                       c0(i) * SC3m(1,jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SC3m(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                       c0(i) * SC3mNC(jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SC3mNC(jgrid,ixi(i)+1,k,pt,0,alpha)
                              else
                                  SC2(jgrid,i,k,pt,0,alpha) = 0d0
                                  SCL(jgrid,i,k,pt,0,alpha) = 0d0
@@ -235,12 +235,12 @@
                                  if(W2.ge.4d0*m2th(j))then
                                     SC2(jgrid,i,3,pt,0,alpha) = 
      1                              SC2(jgrid,i,3,pt,0,alpha)
-     2                    + c0(j) * SC2m0(1,jgrid,ixi(j),3,pt,0,alpha)
-     3                    + c1(j) * SC2m0(1,jgrid,ixi(j)+1,3,pt,0,alpha)
+     2                    + c0(j) * SC2m0NC(jgrid,ixi(j),3,pt,0,alpha)
+     3                    + c1(j) * SC2m0NC(jgrid,ixi(j)+1,3,pt,0,alpha)
                                     SCL(jgrid,i,3,pt,0,alpha) = 
      1                              SCL(jgrid,i,3,pt,0,alpha)
-     2                    + c0(j) * SCLm0(1,jgrid,ixi(j),3,pt,0,alpha)
-     3                    + c1(j) * SCLm0(1,jgrid,ixi(j)+1,3,pt,0,alpha)
+     2                    + c0(j) * SCLm0NC(jgrid,ixi(j),3,pt,0,alpha)
+     3                    + c1(j) * SCLm0NC(jgrid,ixi(j)+1,3,pt,0,alpha)
                                  endif
                               enddo
                            endif
@@ -256,14 +256,14 @@
                            do k=1,2
                               if(W2.ge.4d0*m2th(i))then
                                  SC2(jgrid,i,k,pt,0,alpha) = 
-     1                      c0(i) * SC2m0(1,jgrid,ixi(i),k,pt,0,alpha)
-     2                    + c1(i) * SC2m0(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                      c0(i) * SC2m0NC(jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SC2m0NC(jgrid,ixi(i)+1,k,pt,0,alpha)
                                  SCL(jgrid,i,k,pt,0,alpha) = 
-     1                      c0(i) * SCLm0(1,jgrid,ixi(i),k,pt,0,alpha)
-     2                    + c1(i) * SCLm0(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                      c0(i) * SCLm0NC(jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SCLm0NC(jgrid,ixi(i)+1,k,pt,0,alpha)
                                  SC3(jgrid,i,k,pt,0,alpha) = 
-     1                      c0(i) * SC3m0(1,jgrid,ixi(i),k,pt,0,alpha)
-     2                    + c1(i) * SC3m0(1,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                      c0(i) * SC3m0NC(jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SC3m0NC(jgrid,ixi(i)+1,k,pt,0,alpha)
                               else
                                  SC2(jgrid,i,k,pt,0,alpha) = 0d0
                                  SCL(jgrid,i,k,pt,0,alpha) = 0d0
@@ -312,12 +312,12 @@ c$$$                              do j=Nf_FF+1,6
 c$$$                                 if(W2.ge.4d0*m2th(j))then
 c$$$                                    SC2(jgrid,i,3,pt,0,alpha) = 
 c$$$     1                              SC2(jgrid,i,3,pt,0,alpha)
-c$$$     2                     + c0(j) * SC2m(1,jgrid,ixi(j),3,pt,0,alpha)
-c$$$     3                     + c1(j) * SC2m(1,jgrid,ixi(j)+1,3,pt,0,alpha)
+c$$$     2                     + c0(j) * SC2mNC(jgrid,ixi(j),3,pt,0,alpha)
+c$$$     3                     + c1(j) * SC2mNC(jgrid,ixi(j)+1,3,pt,0,alpha)
 c$$$                                    SCL(jgrid,i,3,pt,0,alpha) = 
 c$$$     1                              SCL(jgrid,i,3,pt,0,alpha)
-c$$$     2                     + c0(j) * SCLm(1,jgrid,ixi(j),3,pt,0,alpha)
-c$$$     3                     + c1(j) * SCLm(1,jgrid,ixi(j)+1,3,pt,0,alpha)
+c$$$     2                     + c0(j) * SCLmNC(jgrid,ixi(j),3,pt,0,alpha)
+c$$$     3                     + c1(j) * SCLmNC(jgrid,ixi(j)+1,3,pt,0,alpha)
 c$$$                                 endif
 c$$$                              enddo
 c$$$                           endif
@@ -358,24 +358,24 @@ c$$$                        endif
                               if(W2.ge.4d0*m2th(i))then
                                  SC2(jgrid,i,k,pt,0,alpha) =
      1                           SC2(jgrid,i,k,pt,0,alpha)
-     2               + c0(i) * ( SC2m(1,jgrid,ixi(i),k,pt,0,alpha)
-     3               - damp(i) * SC2m0(1,jgrid,ixi(i),k,pt,0,alpha) )
-     4               + c1(i) * ( SC2m(1,jgrid,ixi(i)+1,k,pt,0,alpha)
-     5               - damp(i) * SC2m0(1,jgrid,ixi(i)+1,k,pt,0,alpha) )
+     2               + c0(i) * ( SC2mNC(jgrid,ixi(i),k,pt,0,alpha)
+     3               - damp(i) * SC2m0NC(jgrid,ixi(i),k,pt,0,alpha) )
+     4               + c1(i) * ( SC2mNC(jgrid,ixi(i)+1,k,pt,0,alpha)
+     5               - damp(i) * SC2m0NC(jgrid,ixi(i)+1,k,pt,0,alpha) )
 
                                  SCL(jgrid,i,k,pt,0,alpha) =
      1                           SCL(jgrid,i,k,pt,0,alpha)
-     2               + c0(i) * ( SCLm(1,jgrid,ixi(i),k,pt,0,alpha)
-     3               - damp(i) * SCLm0(1,jgrid,ixi(i),k,pt,0,alpha) )
-     4               + c1(i) * ( SCLm(1,jgrid,ixi(i)+1,k,pt,0,alpha)
-     5               - damp(i) * SCLm0(1,jgrid,ixi(i)+1,k,pt,0,alpha) )
+     2               + c0(i) * ( SCLmNC(jgrid,ixi(i),k,pt,0,alpha)
+     3               - damp(i) * SCLm0NC(jgrid,ixi(i),k,pt,0,alpha) )
+     4               + c1(i) * ( SCLmNC(jgrid,ixi(i)+1,k,pt,0,alpha)
+     5               - damp(i) * SCLm0NC(jgrid,ixi(i)+1,k,pt,0,alpha) )
 
                                  SC3(jgrid,i,k,pt,0,alpha) =
      1                           SC3(jgrid,i,k,pt,0,alpha)
-     2               + c0(i) * ( SC3m(1,jgrid,ixi(i),k,pt,0,alpha)
-     3               - damp(i) * SC3m0(1,jgrid,ixi(i),k,pt,0,alpha) )
-     4               + c1(i) * ( SC3m(1,jgrid,ixi(i)+1,k,pt,0,alpha)
-     5               - damp(i) * SC3m0(1,jgrid,ixi(i)+1,k,pt,0,alpha) )
+     2               + c0(i) * ( SC3mNC(jgrid,ixi(i),k,pt,0,alpha)
+     3               - damp(i) * SC3m0NC(jgrid,ixi(i),k,pt,0,alpha) )
+     4               + c1(i) * ( SC3mNC(jgrid,ixi(i)+1,k,pt,0,alpha)
+     5               - damp(i) * SC3m0NC(jgrid,ixi(i)+1,k,pt,0,alpha) )
                               endif
                            enddo
                         enddo
@@ -577,14 +577,14 @@ c$$$                        endif
                            do k=1,3
                               if(W2.ge.m2th(i))then
                                  SC2(jgrid,i,k,pt,0,alpha) = 
-     1                       c0(i) * SC2m(2,jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SC2m(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                       c0(i) * SC2mCC(jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SC2mCC(jgrid,ixi(i)+1,k,pt,0,alpha)
                                  SCL(jgrid,i,k,pt,0,alpha) =
-     1                       c0(i) * SCLm(2,jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SCLm(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                       c0(i) * SCLmCC(jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SCLmCC(jgrid,ixi(i)+1,k,pt,0,alpha)
                                  SC3(jgrid,i,k,pt,0,alpha) = 
-     1                       c0(i) * SC3m(2,jgrid,ixi(i),k,pt,0,alpha)
-     2                     + c1(i) * SC3m(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                       c0(i) * SC3mCC(jgrid,ixi(i),k,pt,0,alpha)
+     2                     + c1(i) * SC3mCC(jgrid,ixi(i)+1,k,pt,0,alpha)
                               else
                                  SC2(jgrid,i,k,pt,0,alpha) = 0d0
                                  SCL(jgrid,i,k,pt,0,alpha) = 0d0
@@ -624,14 +624,14 @@ c$$$                        endif
                            do k=1,3
                               if(W2.ge.m2th(i))then
                                  SC2(jgrid,i,k,pt,0,alpha) = 
-     1                      c0(i) * SC2m0(2,jgrid,ixi(i),k,pt,0,alpha)
-     2                    + c1(i) * SC2m0(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                      c0(i) * SC2m0CC(jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SC2m0CC(jgrid,ixi(i)+1,k,pt,0,alpha)
                                  SCL(jgrid,i,k,pt,0,alpha) =
-     1                      c0(i) * SCLm0(2,jgrid,ixi(i),k,pt,0,alpha)
-     2                    + c1(i) * SCLm0(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                      c0(i) * SCLm0CC(jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SCLm0CC(jgrid,ixi(i)+1,k,pt,0,alpha)
                                  SC3(jgrid,i,k,pt,0,alpha) = 
-     1                      c0(i) * SC3m0(2,jgrid,ixi(i),k,pt,0,alpha)
-     2                    + c1(i) * SC3m0(2,jgrid,ixi(i)+1,k,pt,0,alpha)
+     1                      c0(i) * SC3m0CC(jgrid,ixi(i),k,pt,0,alpha)
+     2                    + c1(i) * SC3m0CC(jgrid,ixi(i)+1,k,pt,0,alpha)
                               else
                                  SC2(jgrid,i,k,pt,0,alpha) = 0d0
                                  SCL(jgrid,i,k,pt,0,alpha) = 0d0
@@ -716,7 +716,7 @@ c$$$                        endif
      1                                 + as**pt * F2t
 *     F2charm
                      F2t = 2d0
-     1                   * ( ( V_cd2 + V_cs2 )         ! Gluon
+     1                   * ( ( V_cd2 + V_cs2 )        ! Gluon
      2                   * ( SC2(jgrid,4,1,pt,0,beta)
      3                   * fph(jgrid,0,alpha+beta)
      4                   + SC2(jgrid,4,2,pt,0,beta)   ! Singlet
@@ -733,7 +733,7 @@ c$$$                        endif
      1                                 + as**pt * F2t
 *     F2bottom
                      F2t = 2d0
-     1                   * ( ( V_ub2 + V_cb2 )         ! Gluon
+     1                   * ( ( V_ub2 + V_cb2 )        ! Gluon
      2                   * ( SC2(jgrid,5,1,pt,0,beta)
      3                   * fph(jgrid,0,alpha+beta)
      4                   + SC2(jgrid,5,2,pt,0,beta)   ! Singlet
@@ -753,9 +753,9 @@ c$$$                        endif
      1                   * ( ( V_td2 + V_ts2 + V_tb2 ) ! Gluon
      2                   * ( SC2(jgrid,6,1,pt,0,beta)
      3                   * fph(jgrid,0,alpha+beta)
-     4                   + SC2(jgrid,6,2,pt,0,beta)   ! Singlet
+     4                   + SC2(jgrid,6,2,pt,0,beta)    ! Singlet
      5                   * singlet )
-     6                   + SC2(jgrid,6,3,pt,0,beta)   ! Non-singlet
+     6                   + SC2(jgrid,6,3,pt,0,beta)    ! Non-singlet
      7                   * ( V_td2
      8                   * ( fph(jgrid,1*ipr,alpha+beta) 
      9                   + fph(jgrid,-6*ipr,alpha+beta) )
@@ -791,7 +791,7 @@ c$$$                        endif
 *     FLlight (all in the component 3 of FL)
                   do pt=0,ipt
                      FLt = 2d0
-     1                   * ( ( V_ud2 + V_us2 )         ! Gluon
+     1                   * ( ( V_ud2 + V_us2 )        ! Gluon
      2                   * ( SCL(jgrid,3,1,pt,0,beta)
      3                   * fph(jgrid,0,alpha+beta)
      4                   + SCL(jgrid,3,2,pt,0,beta)   ! Singlet
@@ -806,7 +806,7 @@ c$$$                        endif
      1                                 + as**pt * FLt
 *     FLcharm
                      FLt = 2d0
-     1                   * ( ( V_cd2 + V_cs2 )         ! Gluon
+     1                   * ( ( V_cd2 + V_cs2 )        ! Gluon
      2                   * ( SCL(jgrid,4,1,pt,0,beta)
      3                   * fph(jgrid,0,alpha+beta)
      4                   + SCL(jgrid,4,2,pt,0,beta)   ! Singlet
@@ -823,7 +823,7 @@ c$$$                        endif
      1                                 + as**pt * FLt
 *     FLbottom
                      FLt = 2d0
-     1                   * ( ( V_ub2 + V_cb2 )         ! Gluon
+     1                   * ( ( V_ub2 + V_cb2 )        ! Gluon
      2                   * ( SCL(jgrid,5,1,pt,0,beta)
      3                   * fph(jgrid,0,alpha+beta)
      4                   + SCL(jgrid,5,2,pt,0,beta)   ! Singlet
@@ -843,9 +843,9 @@ c$$$                        endif
      1                   * ( ( V_td2 + V_ts2 + V_tb2 ) ! Gluon
      2                   * ( SCL(jgrid,6,1,pt,0,beta)
      3                   * fph(jgrid,0,alpha+beta)
-     4                   + SCL(jgrid,6,2,pt,0,beta)   ! Singlet
+     4                   + SCL(jgrid,6,2,pt,0,beta)    ! Singlet
      5                   * singlet )
-     6                   + SCL(jgrid,6,3,pt,0,beta)   ! Non-singlet
+     6                   + SCL(jgrid,6,3,pt,0,beta)    ! Non-singlet
      7                   * ( V_td2
      8                   * ( fph(jgrid,1*ipr,alpha+beta) 
      9                   + fph(jgrid,-6*ipr,alpha+beta) )
@@ -875,7 +875,7 @@ c$$$                        endif
 *     F3light (all in the component 3 of F3)
                   do pt=0,ipt
                      F3t = 2d0
-     1                   * ( SC3(jgrid,3,3,pt,0,beta)      ! Non-singlet
+     1                   * ( SC3(jgrid,3,3,pt,0,beta)        ! Non-singlet
      2                   * ( V_ud2 * fph(jgrid,1*ipr,alpha+beta) 
      3                   - ( V_ud2 + V_us2 )
      4                   * fph(jgrid,-2*ipr,alpha+beta) 
