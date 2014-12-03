@@ -94,10 +94,16 @@ c      ln = index(name,char(0)) - 1
          ln = 10
 *
 *     Kretzer's parametrization at Q2 = 0.4 GeV^2 of the light partons
-*     for pi+ taken at NLO from hep-ph/0003177 (used for the benchmark).
+*     for pi+ taken at NLO from hep-ph/0003177.
 *
       elseif(name(1:7).eq."kretzer")then
          ln = 7
+*
+*     HKNS parametrization at Q2 = 1 GeV^2 of the light partons
+*     for pi+ taken at NLO from hep-ph/0702250 (used for the benchmark against MELA).
+*
+      elseif(name(1:4).eq."MELA")then
+         ln = 4
 *
 *     External LHAPDF grids
 *

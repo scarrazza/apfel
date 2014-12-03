@@ -61,7 +61,7 @@
       double precision C2G2C,C2NSP2C,CLNSP2C,C3NSP2C
       double precision C2NS2CM0_A0,C2NS2CM0_AQ,C2NS2CM0_AQ2
       double precision c2ns1ccc,clns1ccc,c3ns1ccc
-      double precision kQF2,lnQ,lnF,lnQ2,lnQF
+      double precision kQF2,lnkQF2,lnQ,lnF,lnQ2,lnQF
       double precision lambda,Rf,Rfun
       external integrandsDISzm
       external integrandsDISNCm,integrandsDISNCm0
@@ -87,6 +87,7 @@ c      data eps / 1d-7, 1d-5 /
 *     Ration between Scale and factorization scale squared (to be put in a common)
 *
       kQF2 = 1d0                ! Q2 / muF2
+      lnkQF2 = dlog(kQF2)
 *
 *     Initialize Integrals
 *
@@ -280,9 +281,9 @@ c      data eps / 1d-7, 1d-5 /
          do ixi=1,nxi
             do k=1,3
                do wipt=0,ipt
-                  SC2m(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SCLm(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SC3m(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC2mNC(igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SCLmNC(igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC3mNC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                enddo
             enddo
 *
@@ -438,10 +439,10 @@ c      data eps / 1d-7, 1d-5 /
 *
 
                do wipt=0,ipt
-                  SC2m(1,igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
+                  SC2mNC(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
      1                                                + C2L(k,wipt) * fL
-                  SCLm(1,igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
-                  SC3m(1,igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
+                  SCLmNC(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
+                  SC3mNC(igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
      1                                                + C3L(k,wipt) * fL
                enddo
             enddo
@@ -456,9 +457,9 @@ c      data eps / 1d-7, 1d-5 /
 *
             do k=1,3
                do wipt=0,ipt
-                  SC2m(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SCLm(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SC3m(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC2mCC(igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SCLmCC(igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC3mCC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                enddo
             enddo
 *
@@ -570,11 +571,11 @@ c      data eps / 1d-7, 1d-5 /
 *     Integrals
 *
                do wipt=0,ipt
-                  SC2m(2,igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
+                  SC2mCC(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
      1                                                + C2L(k,wipt) * fL
-                  SCLm(2,igrid,ixi,k,wipt,beta,alpha) = integCL(wipt)
+                  SCLmCC(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt)
      1                                                + CLL(k,wipt) * fL 
-                  SC3m(2,igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
+                  SC3mCC(igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
      1                                                + C3L(k,wipt) * fL
                enddo
             enddo
@@ -688,14 +689,14 @@ c      data eps / 1d-7, 1d-5 /
 *
          do ixi=1,nxi
             lnQ  = dlog(xigrid(ixi))
-            lnF  = dlog(kQF2) - lnQ
+            lnF  = lnkQF2 - lnQ
             lnQ2 = lnQ * lnQ
             lnQF = lnQ * lnF
             do k=1,3
                do wipt=0,ipt
-                  SC2m0(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SCLm0(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SC3m0(1,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC2m0NC(igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SCLm0NC(igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC3m0NC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                enddo
             enddo
 *
@@ -707,7 +708,6 @@ c      data eps / 1d-7, 1d-5 /
                integC2(0) = 0d0
 *     CL
                integCL(0) = 0d0
-*     C3
 *     C3
                C3L(k,0) = 0d0
                if(k.eq.3) C3L(k,0) = 1d0
@@ -794,10 +794,10 @@ c      data eps / 1d-7, 1d-5 /
 *     Integrals
 *
                do wipt=0,ipt
-                  SC2m0(1,igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
+                  SC2m0NC(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
      1               + C2L(k,wipt) * fL
-                  SCLm0(1,igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
-                  SC3m0(1,igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
+                  SCLm0NC(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
+                  SC3m0NC(igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
      1                 + C3L(k,wipt) * fL
                enddo
             enddo
@@ -811,14 +811,15 @@ c      data eps / 1d-7, 1d-5 /
          CGCOLM0 = dgauss(integrandsDISCCm0,a,b,eps(1))
 *
          do ixi=1,nxi
-            lnC2 = dlog(kQF2) + dlog(xigrid(ixi))
-            lnC3 = dlog(kQF2) - dlog(xigrid(ixi))
+            lnQ = dlog(xigrid(ixi))
+            lnC2 = lnkQF2 + lnQ
+            lnC3 = lnkQF2 - lnQ
 *
             do k=1,3
                do wipt=0,ipt
-                  SC2m0(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SCLm0(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SC3m0(2,igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC2m0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
+c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
+                  SC3m0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                enddo
             enddo
 *
@@ -830,20 +831,20 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     Gluon
 *
-               SC2m0(2,igrid,ixi,1,wipt,beta,alpha) = 
+               SC2m0CC(igrid,ixi,1,wipt,beta,alpha) = 
      1              SC2zm(igrid,Nf_FF,1,wipt,beta,alpha) + CGM0 * lnC2
-               SCLm0(2,igrid,ixi,1,wipt,beta,alpha) = 
+               SCLm0CC(igrid,ixi,1,wipt,beta,alpha) = 
      1              SCLzm(igrid,Nf_FF,1,wipt,beta,alpha)
-               SC3m0(2,igrid,ixi,1,wipt,beta,alpha) = 
+               SC3m0CC(igrid,ixi,1,wipt,beta,alpha) = 
      1              SC3zm(igrid,Nf_FF,1,wipt,beta,alpha) + CGM0 * lnC3
 *
 *     Non-singlet
 *
-               SC2m0(2,igrid,ixi,3,wipt,beta,alpha) = 
+               SC2m0CC(igrid,ixi,3,wipt,beta,alpha) = 
      1              SC2zm(igrid,Nf_FF,3,wipt,beta,alpha)
-               SCLm0(2,igrid,ixi,3,wipt,beta,alpha) = 
+               SCLm0CC(igrid,ixi,3,wipt,beta,alpha) = 
      1              SCLzm(igrid,Nf_FF,3,wipt,beta,alpha)
-               SC3m0(2,igrid,ixi,3,wipt,beta,alpha) = 
+               SC3m0CC(igrid,ixi,3,wipt,beta,alpha) = 
      1              SC3zm(igrid,Nf_FF,3,wipt,beta,alpha)
 
             enddo
