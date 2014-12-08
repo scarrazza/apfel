@@ -90,22 +90,22 @@ namespace APFEL {
   void CleanUp(void);
 
   /// Enables welcome message
-  void EnableWelcomeMessage(bool);
+  void EnableWelcomeMessage(int);
 
   /// Enables evolution operator computation
-  void EnableEvolutionOperator(bool);
+  void EnableEvolutionOperator(int);
 
   /// Lock internal subgrids
-  void LockGrids(bool);
+  void LockGrids(int);
 
   /// Switch to the time-like evolution
-  void SetTimeLikeEvolution(bool);
+  void SetTimeLikeEvolution(int);
 
   /// Switch to the fast evolution
-  void SetFastEvolution(bool);
+  void SetFastEvolution(int);
 
   /// Switch on the small-x resummation
-  void SetSmallxResummation(bool, const std::string& la);  
+  void SetSmallxResummation(int, const std::string& la);  
 
   /// Sets the reference values of $alpha_{s}$ at the reference scale
   void SetAlphaQCDRef(double alpharef, double Qref);
