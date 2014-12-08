@@ -119,32 +119,32 @@ namespace APFEL {
     fcleanup();
   }
 
-  void EnableWelcomeMessage(bool wc)
+  void EnableWelcomeMessage(int wc)
   {
     fenablewelcomemessage(&wc);
   }
 
-  void EnableEvolutionOperator(bool eo)
+  void EnableEvolutionOperator(int eo)
   {
     fenableevolutionoperator(&eo);
   }
 
-  void LockGrids(bool lg)
+  void LockGrids(int lg)
   {
     flockgrids(&lg);
   }
 
-  void SetTimeLikeEvolution(bool tl)
+  void SetTimeLikeEvolution(int tl)
   {
     fsettimelikeevolution(&tl);
   }
 
-  void SetFastEvolution(bool fe)
+  void SetFastEvolution(int fe)
   {
     fsetfastevolution(&fe);
   }
 
-  void SetSmallxResummation(bool sx, const std::string& la)
+  void SetSmallxResummation(int sx, const std::string& la)
   {
     char cla[SIZE+1];
     strncpy(cla, la.c_str(), SIZE);

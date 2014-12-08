@@ -65,22 +65,22 @@ extern "C" {
   void fcleanup(void);
 
 #define fenablewelcomemessage FC_FUNC(enablewelcomemessage,ENABLEWELCOMEMESSAGE)
-  void fenablewelcomemessage(bool*);
+  void fenablewelcomemessage(int*);
 
 #define fenableevolutionoperator FC_FUNC(enableevolutionoperator,ENABLEEVOLUTIONOPERATOR)
-  void fenableevolutionoperator(bool*);
+  void fenableevolutionoperator(int*);
 
 #define flockgrids FC_FUNC(lockgrids,LOCKGRIDS)
-  void flockgrids(bool*);
+  void flockgrids(int*);
 
 #define fsettimelikeevolution FC_FUNC(settimelikeevolution,SETTIMELIKEEVOLUTION)
-  void fsettimelikeevolution(bool*);
+  void fsettimelikeevolution(int*);
 
 #define fsetfastevolution FC_FUNC(setfastevolution,SETFASTEVOLUTION)
-  void fsetfastevolution(bool*);
+  void fsetfastevolution(int*);
 
 #define fsetsmallxresummation FC_FUNC(setsmallxresummation,SETSMALLXRESUMMATION)
-  void fsetsmallxresummation(bool*,char*);
+  void fsetsmallxresummation(int*,char*);
 
 #define fheavyquarkmass FC_FUNC(heavyquarkmass,HEAVYQUARKMASS)
   double fheavyquarkmass(int*,double*);
