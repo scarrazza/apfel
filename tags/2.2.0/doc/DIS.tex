@@ -1,0 +1,745 @@
+%% LyX 2.0.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[twoside,english]{paper}
+\usepackage{lmodern}
+\renewcommand{\ttdefault}{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
+\usepackage{breakurl}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{babel}
+
+\@ifundefined{showcaptionsetup}{}{%
+ \PassOptionsToPackage{caption=false}{subfig}}
+\usepackage{subfig}
+\makeatother
+
+
+\usepackage{listings}
+
+\begin{document}
+
+\title{The APFEL DIS Module}
+
+\author{Valerio Bertone$^{a}$}
+
+\institution{$^{a}$PH Department, TH Unit, CERN, CH-1211 Geneva 23, Switzerland}
+\maketitle
+
+\begin{abstract}
+In this document I will descrive the old and the new DIS module
+embedded in APFEL.
+\end{abstract}
+\tableofcontents{}
+
+\newpage{}
+
+\section{Usage of the DIS code in APFEL}
+
+Starting from release 2.0.0, APFEL implements a new module that
+computes DIS neutral and charged current structure functions and 
+cross sections up to order $\alpha_s^2$ (when possible) in the FONLL,
+FFN and ZM-VFN schemes. In this short document we provide a short user
+manual to use the new DIS module in APFEL.
+
+The new DIS module can be used either in conjunction with the PDF
+evolution provided by APFEL iteself or directly interfaced to LHAPDF.
+To obtain any DIS observables it is enough to call one single
+function, $i.e.$ {\tt DIS\_xsec}, providing a set of input parameters
+that are needed to specify the computation to be performed.
+
+Here follows the list of input/output parameters taken by the function {\tt DIS\_xsec}:
+\begin{lstlisting}
+APFEL::DIS_xsec(x,q0,q,y,proc,scheme,pto,pdfset,irep,target,proj,
+                          F2,F3,FL,sigma);
+\end{lstlisting}
+where the input parameters are:
+\begin{itemize}
+\item the real variable {\tt x} that is the value of the Bjorken variable where the DIS
+ obsevables are computed.
+\item the real variable {\tt q0} that is the value of the initial scale (in GeV) used in the
+ PDF evolution. This entry is used only if the APFEL internal
+ evolution is used.
+\item the real variable {\tt q} that is the value of the scale (in GeV) where the DIS
+ observable is computed.
+\item the real variable {\tt y} that is the value of the inelasticity where the DIS
+observables are computed.
+\item The string variable {\tt proc} that can take the values {\tt "EM"} for the
+  electro-magnetic DIS computation (photon only exchange), {\tt "NC"}
+  for the neutral current computation and {\tt CC"} for a charged
+  current computation.
+\item The string variable {\tt scheme} that can take the values {\tt "FONLL"} for FONLL, {\tt "FFNS"}
+  for the FFN scheme and {\tt ZMVN"} for the ZM-VFN scheme. There is a
+  further possibility, that is {\tt FFN0}, which refers to the
+  zero-mass limit of the FFN scheme.
+\item The integer variable {\tt pto} that can take the values 0, 1 or
+  2. The user should be aware of the fact that when chosing {\tt
+    pto=1} with {\tt scheme="FONLL"} the code automatically uses the
+  FONLL-A scheme while when chosing {\tt
+    pto=2} with {\tt scheme="FONLL"} the code automatically uses the
+  FONLL-C scheme. As for the FONLL-B scheme, we
+  plan to implement it in one of the next releases.
+\item The string variable {\tt pdfset} that can take any of the PDF set
+  names included in LHAPDF (including the {\tt .LHgrid} extension,
+  $e.g$ {\tt pdfset ="NNPDF23\_nnlo\_as\_0118.LHgrid"}). This way APFEL will use
+  the selected PDF set to compute the DIS observables using the evolution
+  given in the grid itself. As an alternative, the user can choose {\tt
+    pdfset="APFEL"}. This way the DIS observables will be computed
+  using the evolution provided by APFEL bewteen the scales {\tt q0} and {\tt
+    q}. For the setting of the PDF evolution, the user can refer to
+  the APFEL manual.
+\item The integer value {\tt irep} that specifies the replica of the PDF
+  set to be used in the computation.
+\item The string variable {\tt target} that takes the value {\tt
+    "PROTON"} in case the target is a proton, {\tt "NEUTRON"} in case
+  the target is a netron (assuming the isospin symmetry) or {\tt
+    "ISOSCALAR"} if the target is an isoscalar, $e.g.$ a
+  deuteron (also this option assumes isospin asymmetry). There is a
+  further option which is {\tt "IRON"} which in addition uses the cross-section
+  normalization used in the NeTeV experiment which is on iron nuclei.
+\item The string variable {\tt proj} that takes the values {\tt
+    "ELECTRON"} and {\tt "POSITRON"} if {\tt proc="EM"} or {\tt "NC"}
+  in case the projectile is either an electron or a positron. If
+  instead {\tt proc="CC"} the variable {\tt proj} can also take the
+  values {\tt "NEUTRINO"} or {\tt "ANTINEUTRINO"} with obviuos meaning.
+\end{itemize}
+
+Once all these input parameters have been provided, the output
+array variables are {\tt F2, F3, FL} and {\tt sigma}. Each of them has
+5 entries corresponding to light, charm, bottom, top and total
+components of the corresponding quantity.
+The user should be careful because in the FORTRAN interface the arrays
+are numerated from 3 to 7 ($e.g.$ {\tt F2(3)} = $F_2^l$, {\tt F2(4)} =
+$F_2^c$, {\tt F2(5)} = $F_2^b$, {\tt F2(6)} = $F_2^t$, {\tt F2(7)} =
+$F_2^p$) while in the C++ version they are numerated from 0 to 4 ($e.g.$ {\tt F2(0)} = $F_2^l$, {\tt F2(1)} =
+$F_2^c$, {\tt F2(2)} = $F_2^b$, {\tt F2(3)} = $F_2^t$, {\tt F2(4)} =
+$F_2^p$)
+
+
+\section{Computing DIS Structure Functions on a Grid}
+
+In order to speed up and optimize the compution of the DIS structure
+functions in {\tt APFEL} we decided to use the same technology used
+for the PDF evolution. In fact, up to version 2.0.0, the computation
+of such observables in {\tt APFEL} was perfomed by directly
+convoluting PDFs with the coefficient functions by mean of a
+numerical integration.
+
+Now the aim is that of precomputing on a grid the convolution of the
+coefficient functions with a set of interpolating polynomials. This
+way, the time consuming task of precomputing the coefficient functions
+of the grid needs to be done only once and the numerical convolution
+with any PDF set is instead very fast. In addition, as we will see
+below, this approach provides a very natural framework to combine
+precomputed coefficient functions and evolution operators, so that any
+prediction of structure functions at any scale $Q$ can be obtained
+very quickly by convolution with PDFs at some initial scale $Q_0$. 
+Ultimately, this is particularly suitable for PDF fits.
+
+
+\subsection{Zero Mass Structure Functions}
+
+A structure function in the Zero-Mass (ZM) scheme is given by the
+following convolution:
+\begin{equation}
+F(x,Q) = \sum_{i=g,q}x\int_x^1\frac{dy}y C_i\left(\frac{x}{y},\alpha_s(Q)\right)q_i(y,Q)\,,
+\end{equation}
+Now, defining $t = \ln (Q^2)$, $\widetilde{C}_i^{(n)}(y,t) = yC_i^{(n)}(y,\alpha_s(Q))$
+and $\widetilde{q}_i(y,t) = y q_i(y,Q)$, the integral above can be
+written as:
+\begin{equation}\label{exact}
+F(x,t) = \sum_{i=g,q}\int_x^1\frac{dy}y \widetilde{C}_i\left(\frac{x}{y},t\right)\widetilde{q}_i(y,t)\,.
+\end{equation}
+But, using a suitable interpolation basis, we can write:
+\begin{equation}
+\tilde{q}_i(y,t)=\sum^{N_{x}}_{\alpha=0}w_{\alpha}^{(k)}(y)\tilde{q}_i(x_{\alpha},t)\,,
+\end{equation}
+so that eq. (\ref{exact}) becomes:
+\begin{equation}
+F(x,t) = \sum_{i=g,q}\sum^{N_{x}}_{\alpha=0}\left[\int_x^1\frac{dy}y \widetilde{C}_i\left(\frac{x}{y},t\right) w_{\alpha}^{(k)}(y)\right]\tilde{q}_i(x_{\alpha},t)\,.
+\end{equation}
+Now let's assume that $x$ is on the grid, so that $x = x_\beta$. This
+way we have:
+\begin{equation}
+F(x_\beta,t) = \sum_{i=g,q}\sum^{N_{x}}_{\alpha=0}\underbrace{\left[\int_{x_\beta}^1\frac{dy}y \widetilde{C}_i\left(\frac{x_\beta}{y},t\right) w_{\alpha}^{(k)}(y)\right]}_{\Gamma_{i,\beta\alpha}(t)}\tilde{q}(x_{\alpha},t)\,.
+\end{equation}
+
+Using the same arguments presented in the evolution code notes, we
+have that:
+\begin{equation}
+\Gamma_{i,\beta\alpha}(t) \neq 0 \quad\mbox{for}\quad\beta\leq\alpha\,,
+\end{equation}
+and:
+\begin{equation}
+\Gamma_{i,\beta\alpha}(t) = \int_{c}^d\frac{dy}y \widetilde{C}_i\left(y,t\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)
+\end{equation}
+with:
+\begin{equation}\label{bounds2}
+c =  \mbox{max}(x_\beta,x_\beta/x_{\alpha+1}) \quad\mbox{and}\quad d = \mbox{min}(1,x_\beta/x_{\alpha-k}) \,.
+\end{equation}
+The same symmetries holding for the splitting function case hold also here.
+
+\subsection{Coefficient Functions Treatment}
+
+The struncture of the DIS coefficient functions is very similar to
+that of splitting functions with only one small complication, that is
+the presence of a more divergent singular term. In practice the
+structure of the DIS coefficient functions is the following:
+\begin{equation}
+\widetilde{C}_{i}(x,t) = xC_{i}^{R}(x,t) +
+xC_{i}^{S1}(t)\left[\frac{1}{1-x}\right]_+ +
+xC_{i}^{S2}(t)\left[\frac{\ln(1-x)}{1-x}\right]_+ + xC_{i}^{L}(t)\delta(1-x)\,.
+\end{equation}
+The term proportional to $C_{i}^{S2}$ can be treated, considering that:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \int_c^ddy\left[\frac{\ln(1-y)}{1-y}\right]_+f(y)
+&=&\displaystyle \int_c^ddy\frac{\ln(1-y)}{1-y}\left[f(y)-f(1)\theta(d-1)\right]\\
+\\
+&+&\displaystyle \frac12 f(1) \ln^2(1-c)\theta(d-1)
+\end{array}
+\end{equation}
+On the same line of splitting functions, we know that the coefficient
+functions ha the following perturbative expansion:
+\begin{equation}
+C_{i}^{J}(x,t) = \sum_{n=0}^{N}a_s^{n}(t)C_{i}^{J,(n)}(x)\qquad\mbox{with}\qquad J=R,S1,S2,L
+\end{equation}
+
+Therefore one has that:
+\begin{equation}
+\begin{array}{c}
+\displaystyle \Gamma_{j,\beta\alpha}(t) = \\
+\\
+\displaystyle \sum_{n=0}^{N} a_s^{n}(t) \bigg\{\int^{d}_{c}dy\left[{C}_{i}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{C}_{i}^{S1,(n)}+{C}_{i}^{S2,(n)}\ln(1-y)}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\theta(d-1)\right)\right]\\
+\\
+\displaystyle +\left[{C}_{i}^{S1,(n)}\ln(1-c)\theta(d-1)+\frac12{C}_{i}^{S2,(n)}\ln^2(1-c)\theta(d-1)+{C}_{i}^{L,(n)}\right]\delta_{\beta\alpha}\bigg\}\,.
+\end{array}
+\end{equation}
+
+Calling:
+\begin{equation}
+\begin{array}{c}
+\displaystyle \Gamma_{i,\beta\alpha}^{(n)}(t) = \\
+\\
+\displaystyle \int^{d}_{c}dy\left[{C}_{i}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{C}_{i}^{S1,(n)}+{C}_{i}^{S2,(n)}\ln(1-y)}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\theta(d-1)\right)\right]\\
+\\
+\displaystyle +\left[{C}_{i}^{S1,(n)}\ln(1-c)\theta(d-1)+\frac12{C}_{i}^{S2,(n)}\ln^2(1-c)\theta(d-1)+{C}_{i}^{L,(n)}\right]\delta_{\beta\alpha}\,,
+\end{array}
+\end{equation}
+we have that:
+\begin{equation}\label{splittingexp}
+\Gamma_{i,\beta\alpha}(t) = \sum_{n=0}^{N} a_s^{n}(t) \Gamma_{i,\beta\alpha}^{(n)}\,,
+\end{equation}
+and the integrals $\Gamma_{i,\beta\alpha}^{(n)}$ do not depend on the energy therefore, once the grid (and the number of active flavours) has been fixed, they can be evaluate once and for all at the beginning and used for the convolution at any scale.
+
+Now, assuming to have computed the evolution operator
+$M_{ij,\alpha\beta}(t,t_0)$ between the
+scales $t=\ln(Q^2)$ and $t_0=\ln(Q_0^2)$ on the same grid where we
+have computed the operator $\Gamma_{i,\beta\alpha}(t)$, one can esily
+combine the two obtaining the prediction for the structure function
+$F$ on the grid in terms of PDFs at the initial scale $Q_0$ just by performing the
+following convolution:
+\begin{equation}
+F(x_\alpha,t) = \Gamma_{i,\alpha\beta}(t) M_{ij,\beta\gamma}(t,t_0) \tilde{q}_j(x_{\gamma},t_0)
+\end{equation}
+where a sum of the repeated indeces is understood.
+
+\subsection{Massive Structure Functions}
+
+When computing structure functions in the massive scheme, there is a
+further complication that prevents a fast precomputation of the
+cefficient functions on the $x$-space grid.
+
+\subsection{Charged Current Coefficient Functions}
+
+\begin{equation}
+\xi = \frac{Q^2}{m_H^2}
+\end{equation}
+
+\begin{equation}
+\lambda = \frac{Q^2}{Q^2+m_H^2} = \frac{\xi}{1+\xi}
+\end{equation}
+
+
+\begin{equation}
+K_F^2 = \frac{Q^2}{\mu_F^2}
+\end{equation}
+
+
+
+\begin{equation}
+P_{qq}^{(0)}(z) = C_F\left[\frac{1+z^2}{(1-z)_+}+\frac32\delta(1-z)\right]=C_F\left[\frac{2}{(1-z)_+}-(1+z)+\frac32\delta(1-z)\right]
+\end{equation}
+
+
+
+\begin{equation}
+K_A=\frac{1}{\lambda}(1-\lambda)\ln(1-\lambda)
+\end{equation}
+
+Eccole:
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{1,q}&=&\displaystyle 2C_F \bigg\{
+\bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
+\ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
+\\
+&-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
+\left(-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+  z)\right)(1+z)+(3-z)+\frac{1}{\lambda^2}+\frac{z-1}{\lambda}\\
+\\
+&+&\displaystyle 2
+\left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+\\
+&+& \displaystyle \frac{\lambda-1}{\lambda^2}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+      z)^2}\right]_+\bigg\}
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{2,q}&=&\displaystyle 2C_F \bigg\{
+\bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
+\ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
+\\
+&-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
+\left(2-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+  z)\right)(1+z)+\frac{1}{\lambda}\\
+\\
+&+&\displaystyle 2
+\left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+\\
+&+& \displaystyle \frac{2\lambda^2-\lambda-1}{\lambda}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+      z)^2}\right]_+\bigg\}
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{3,q}&=&\displaystyle 2C_F \bigg\{
+\bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
+\ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
+\\
+&-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
+\left(1-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+  z)\right)(1+z)+\frac{1}{\lambda}\\
+\\
+&+&\displaystyle 2
+\left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+\\
+&+& \displaystyle \frac{\lambda-1}{\lambda}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+      z)^2}\right]_+\bigg\}
+\end{array}
+\end{equation}
+
+
+% \begin{equation}
+% \begin{array}{rcl}
+% C^{(n_l)}_{1,q}&=&\displaystyle {P_{qq}^{(0)}(z)}\ln \frac{K_F^2}{\lambda}+C_F\bigg\{-\bigg(4+\frac{1}{2\lambda}+2\zeta_2+\frac{1+3\lambda}{2\lambda}K_A\bigg)\delta(1-z)\\
+% \\
+% &-&\displaystyle{\frac{(1+z^2)\ln z}{1-z}}+2{(1+z^2)\left[\frac{\ln(1-z)}{1-z}\right]_+}-{(1+z^2)\left[\frac{\ln(1-\lambda z)}{1-z}\right]_+}\\
+% \\
+% &+&\displaystyle{(1-4z+z^2)\left[\frac{1}{1-z}\right]_+}+{(z-z^2)\left[\frac{1}{1-\lambda z}\right]}+\frac{1}{2}{\left[\frac{1-z}{(1-\lambda z)^2}\right]_+}\bigg\}\\
+% \\
+% &=&\displaystyle C_F \bigg\{
+% \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
+% \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
+% \\
+% &-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
+% \left(-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+%   z)\right)(1+z)+(3-z)+\frac{1}{\lambda^2}+\frac{z-1}{\lambda}\\
+% \\
+% &+&\displaystyle 2
+% \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
+% 2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+% \\
+% &+& \displaystyle \frac{\lambda-1}{\lambda^2}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+%       z)^2}\right]_+\bigg\}
+% \end{array}
+% \end{equation}
+
+% \begin{equation}
+% \begin{array}{rcl}
+% C^{(n_l)}_{2,q}&=&\displaystyle {P_{qq}^{(0)}(z)}\ln \frac{K_F^2}{\lambda}+C_F\bigg\{-\bigg(4+\frac{1}{2\lambda}+2\zeta_2+\frac{1+\lambda}{2\lambda}K_A\bigg)\delta(1-z)\\
+% \\
+% &-&\displaystyle{\frac{(1+z^2)\ln z}{1-z}}+2{(1+z^2)\left[\frac{\ln(1-z)}{1-z}\right]_+}-{(1+z^2)\left[\frac{\ln(1-\lambda z)}{1-z}\right]_+}\\
+% \\
+% &+&\displaystyle
+% {(2-2z^2-\tfrac{2}{z})\left[\frac{1}{1-z}\right]_+}+{(\tfrac{2}{z}-1-z)\left[\frac{1}{1-\lambda
+%       z}\right]}+\frac{1}{2}{\left[\frac{1-z}{(1-\lambda
+%       z)^2}\right]_+}\bigg\}\\
+% \\
+% &=&\displaystyle C_F \bigg\{
+% \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
+% \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
+% \\
+% &-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
+% \left(2-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+%   z)\right)(1+z)+\frac{1}{\lambda}\\
+% \\
+% &+&\displaystyle 2
+% \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
+% 2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+% \\
+% &+& \displaystyle \frac{2\lambda^2-\lambda-1}{\lambda}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+%       z)^2}\right]_+\bigg\}
+% \end{array}
+% \end{equation}
+
+% \begin{equation}
+% \begin{array}{rcl}
+% C^{(n_l)}_{3,q}&=&\displaystyle {P_{qq}^{(0)}(z)}\ln \frac{K_F^2}{\lambda}+C_F\bigg\{-\bigg(4+\frac{1}{2\lambda}+2\zeta_2+\frac{1+3\lambda}{2\lambda}K_A\bigg)\delta(1-z)\\
+% \\
+% &-&\displaystyle{\frac{(1+z^2)\ln z}{1-z}}+2{(1+z^2)\left[\frac{\ln(1-z)}{1-z}\right]_+}-{(1+z^2)\left[\frac{\ln(1-\lambda z)}{1-z}\right]_+}\\
+% \\
+% &-&\displaystyle{(1+z^2)\left[\frac{1}{1-z}\right]_+}+{(1-z)\left[\frac{1}{1-\lambda
+%       z}\right]}+\frac{1}{2}{\left[\frac{1-z}{(1-\lambda
+%       z)^2}\right]_+}\bigg\}\\
+% \\
+% &=&\displaystyle C_F \bigg\{
+% \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
+% \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
+% \\
+% &-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
+% \left(1-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+%   z)\right)(1+z)+\frac{1}{\lambda}\\
+% \\
+% &+&\displaystyle 2
+% \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
+% 2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+% \\
+% &+& \displaystyle \frac{\lambda-1}{\lambda}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+%       z)^2}\right]_+\bigg\}
+% \end{array}
+% \end{equation}
+
+
+
+But:
+\begin{equation}\label{clll}
+C^{(n_l)}_{L,q(g)} = C^{(n_l)}_{2,q(g)}-\lambda C^{(n_l)}_{1,q(g)}
+\end{equation}
+
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{L,q}
+% &=&\displaystyle C_F \bigg\{
+% (1-\lambda)\bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
+% \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)+K_A \delta(1-z)\\
+% \\
+% &-&\displaystyle (1-\lambda)\frac{(1+z^2)\ln z}{1-z} +
+% (1-\lambda)\left(-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+%   z)\right)(1+z)+3(1-\lambda)+(1+\lambda)z\\
+% \\
+% &+&\displaystyle 2 (1-\lambda)
+% \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
+% 2 (1-\lambda)\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+% \\
+% &-& \displaystyle 2(1-\lambda)\left[\frac{1}{1-\lambda z}\right]_+ +\frac{(1-\lambda)}{2}\left[\frac{1-z}{(1-\lambda
+%       z)^2}\right]_+\bigg\}\\
+% \\
+&=&\displaystyle 2C_F (1-\lambda)\bigg\{
+\bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
+\ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
+\\
+&-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
+\left(-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+  z)\right)(1+z)+3\\
+\\
+&+&\displaystyle 2 
+\left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
+2 \left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+\\
+&-& \displaystyle 2\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+      z)^2}\right]_+\bigg\} + 2C_F \left[\lambda K_A \delta(1-z) + (1+\lambda)z\right]
+
+\end{array}
+\end{equation}
+
+The generalized +-prescription:
+\begin{equation}
+\begin{array}{c}
+\displaystyle \int_x^1 dz\left[f(z)\right]_+g(z) = \int_x^1
+dz\,f(z)\left[g(z)-g(1)\right]-g(1)\underbrace{\int_0^xdz\,f(z)}_{-R_f(x)}=\\
+\\
+\displaystyle \int_x^1 dz\left\{\left[f(z)\right]_++R_f(x)\delta(1-z)\right\}g(z)
+\end{array}
+\end{equation}
+where the +-prescription in the r.h.s of the equation above should be
+understood in the usual way independently of the integration bounds.
+
+The function $R_f(x)$ can be often evaluated analytically but
+sometimes instead can be evaluated only performing numerically the
+integral. In particular:
+\begin{equation}
+-\int_0^x\frac{dz}{1-z} = \ln(1-x)
+\end{equation}
+
+\begin{equation}
+-\int_0^xdz\frac{\ln(1-z)}{1-z} = \frac12 \ln^2(1-x)
+\end{equation}
+
+\begin{equation}
+-\int_0^x\frac{dz}{1-\lambda z} = \frac{1}{\lambda}\ln(1-\lambda x)
+\end{equation}
+
+\begin{equation}
+-\int_0^xdz\frac{1-z}{(1-\lambda z)^2} =
+\frac{1}{\lambda^2}\ln(1-\lambda
+x)+\frac{1-\lambda}{\lambda}\frac{x}{1-\lambda x}
+\end{equation}
+but we do not know hot to solve analytically the integral:
+\begin{equation}
+R(x)=-\int_0^xdz\frac{\ln(1-\lambda z)}{1-z}
+\end{equation}
+therefore we compute it numerically.
+
+As a conclusion, when convoluting in the point $x$, we need to add to the local terms of the coefficient
+function above, the following terms:
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{1,q}&\rightarrow& \displaystyle C^{(n_l)}_{1,q} +
+2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
+\\
+&&\displaystyle +\frac{\lambda-1}{\lambda^3}\ln(1-\lambda
+  x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
+\end{array}
+\end{equation}
+
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{2,q}&\rightarrow& \displaystyle C^{(n_l)}_{2,q} +
+2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
+\\
+&&\displaystyle +\frac{2\lambda^2-\lambda-1}{\lambda^2}\ln(1-\lambda
+  x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
+\end{array}
+\end{equation}
+
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{3,q}&\rightarrow& \displaystyle C^{(n_l)}_{3,q} +
+2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
+\\
+&&\displaystyle +\frac{\lambda-1}{\lambda^2}\ln(1-\lambda
+  x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
+\end{array}
+\end{equation}
+
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{L,q}&\rightarrow& \displaystyle C^{(n_l)}_{L,q} +
+2C_F(1-\lambda)\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
+\\
+&&\displaystyle -\frac{2}{\lambda}\ln(1-\lambda
+  x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
+\end{array}
+\end{equation}
+
+Gluon coefficient functions:
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{1,g}&=&\displaystyle 2T_R\bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+    -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}
+\right]+\\
+\\
+&&\displaystyle 4z(1-z) - 1+\\
+ \\
+&&\displaystyle (1-\lambda)\left[-4z(1-z) + \frac{z}{1-\lambda z}
+  +2z(1-2\lambda z)\ln\frac{1-\lambda
+      z}{(1-\lambda)z}\right]\bigg\}\\
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{2,g}&=&\displaystyle 2T_R \bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+    -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}
+\right]+\\
+\\
+&&\displaystyle 8z(1-z)- 1+\\
+\\
+&&\displaystyle (1-\lambda)\left[-6(1+2\lambda) z(1-z)+\frac{1}{1-\lambda z} + 6\lambda z(1-2\lambda z)\ln\frac{1-\lambda
+      z}{(1-\lambda)z}\right]\bigg\}\\
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{3,g}&=&\displaystyle 2T_R \bigg\{[z^2+(1-z)^2]\left[
+  2\ln\left(\frac{1-z}{1-\lambda z}\right)+\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}\right]+\\
+\\
+&&\displaystyle (1-\lambda)\left[2 z(1-z) - 2z[1-(1+\lambda
+  )z]\ln\frac{1-\lambda z}{(1-\lambda)z}\right]\bigg\}\\
+\end{array}
+\end{equation}
+
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{L,g}&=&\displaystyle 2T_R \bigg\{(1-\lambda)[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+    -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}
+\right]+\\
+\\
+&&\displaystyle 4(2-\lambda)z(1-z)+\\
+\\
+&&\displaystyle (1-\lambda)\left[-2(3+4\lambda) z(1-z)+ 4\lambda z(1-2\lambda z)\ln\frac{1-\lambda
+      z}{(1-\lambda)z}\right]\bigg\}\\
+\end{array}
+\end{equation}
+
+\subsubsection{Massless limit}
+
+Considering that:
+\begin{equation}
+\begin{array}{l}
+\lambda \rightarrow 1\\
+K_A \rightarrow 0
+\end{array}
+\end{equation}
+we find:
+
+
+
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{1,q}&=&\displaystyle 2C_F \bigg\{
+-\left(\frac{9}{2}+2\zeta_2-\frac32
+\ln K_F^2\right)\delta(1-z)\\
+\\
+&-&\displaystyle \frac{(1+z^2)\ln z}{1-z}
+-\left(\ln(1-z)+\ln K_F^2\right)(1+z)+3\\
+\\
+&+&\displaystyle 2
+\left[\frac{\ln(1-z)}{1-z}\right]_+
+-\left(\frac{3}{2}-2\ln K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
+\end{array}
+\end{equation}
+
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{2,q}&=&\displaystyle 2C_F \bigg\{
+-\left(\frac{9}{2}+2\zeta_2-\frac32
+\ln K_F^2\right)\delta(1-z)\\
+\\
+&-&\displaystyle \frac{(1+z^2)\ln z}{1-z}
+-\left(\ln(1-z)+\ln K_F^2\right)(1+z)+2z+3\\
+\\
+&+&\displaystyle 2
+\left[\frac{\ln(1-z)}{1-z}\right]_+
+-\left(\frac{3}{2}-2\ln K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
+\end{array}
+\end{equation}
+
+
+\begin{equation}
+\begin{array}{rcl}
+C^{(n_l)}_{3,q}&=&\displaystyle 2C_F \bigg\{
+-\left(\frac{9}{2}+2\zeta_2-\frac32
+\ln K_F^2\right)\delta(1-z)\\
+\\
+&-&\displaystyle \frac{(1+z^2)\ln z}{1-z}
+-\left(\ln(1-z)+\ln K_F^2\right)(1+z)+z+2\\
+\\
+&+&\displaystyle 2
+\left[\frac{\ln(1-z)}{1-z}\right]_+
+-\left(\frac{3}{2}-2\ln K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
+\end{array}
+\end{equation}
+
+therefore:
+
+\begin{equation}
+C^{(n_l)}_{L,q}= 4C_F z
+\end{equation}
+
+The local term to be added to the quark coefficient functions,
+considering that,
+\begin{equation}
+R(x) = \frac12\ln(1-x)^2
+\end{equation}
+are:
+\begin{equation}
+C^{(n_l)}_{1,q}\rightarrow C^{(n_l)}_{1,q} +
+2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)
+\end{equation}
+
+\begin{equation}
+C^{(n_l)}_{2,q}\rightarrow C^{(n_l)}_{2,q} +
+2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)
+\end{equation}
+
+\begin{equation}
+C^{(n_l)}_{3,q}\rightarrow C^{(n_l)}_{3,q} +
+2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)
+\end{equation}
+while no local term needs to be added to $C^{(n_l)}_{L,q}$.
+
+Now, let us turn to the gluon coefficient functions where we need to
+know that:
+\begin{equation}
+\ln(1-\lambda) \rightarrow -\ln\left(\frac{Q^2}{m_H^2}\right)
+\end{equation}
+so that:
+
+\begin{equation}
+C^{(n_l)}_{1,g} = 2T_R\left\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+    +\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]+ 4z(1-z) - 1\right\}\\
+\end{equation}
+
+\begin{equation}
+C^{(n_l)}_{2,g} = 2T_R\left\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+    +\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]+ 8z(1-z) - 1\right\}\\
+\end{equation}
+
+\begin{equation}
+C^{(n_l)}_{3,g} = 2T_R[z^2+(1-z)^2]\left[-\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]\\
+\end{equation}
+
+\begin{equation}
+C^{(n_l)}_{L,g} = 2T_R\left[4z(1-z)\right]
+\end{equation}
+
+
+\end{document}
