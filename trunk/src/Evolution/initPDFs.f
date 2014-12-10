@@ -25,8 +25,9 @@
       integer alpha
       integer ifl
       integer Nrep
-      double precision f0(-6:6),fp0
+      double precision f0(-6:6),fp0,fext0(-6:7)
       logical has_photon
+      external ExternalSetAPFEL
 *     Fragmentation functions variables
       integer iset,icharge
       integer ih,ic,io
@@ -68,6 +69,17 @@
                f0ph(ifl,alpha) = f0(ifl)
             enddo
             f0bos(alpha) = 0d0
+         enddo
+*
+*     External Set
+*
+      elseif(pdfset(1:8).eq."external")then
+         do alpha=0,nin(igrid)
+            call ExternalSetAPFEL(xg(igrid,alpha),fext0)
+            do ifl=-6,6
+               f0ph(ifl,alpha) = fext0(ifl)
+            enddo
+            f0bos(alpha) = fext0(7)
          enddo
 *
 *     HKNS07 fragmentation functions

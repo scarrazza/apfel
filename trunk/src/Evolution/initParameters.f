@@ -73,24 +73,46 @@
       if(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
      1   Th.eq."QECDP".or.Th.eq."QECDS".or.
      2   Th.eq."QavDP".or.Th.eq."QavDS")then
+         write(6,*) "   "
+         write(6,*) "WARNING: fast evolution not available with the ",
+     1              Th," solution"
+         write(6,*) "         ... disabling fast evolution"
          call SetFastEvolution(.false.)
       endif
 *
 *     If the fast evolution is enabled, disable automatically
 *     the computation of the evolution operator
 *
-      if(FastEvol) call EnableEvolutionOperator(.false.)
+      if(EvolOp.and.FastEvol)then
+         write(6,*) "   "
+         write(6,*) "WARNING: Computation of the evolution operator",
+     1              " not possible if the fast evolution is enabled"
+         write(6,*) "         ... disabling fast evolution"
+         call SetFastEvolution(.false.)
+      endif
 *
 *     If there is more than one subgrid and one of them is an external grid
 *     the external evolution operator cannot be computed
 *
-      if(ngrid.gt.1.and.ThereAreExtGrids) 
-     1     call EnableEvolutionOperator(.false.)
+      if(ngrid.gt.1.and.ThereAreExtGrids)then
+         write(6,*) "   "
+         write(6,*) "WARNING: Computation of the evolution operator",
+     1              " not possible if there is more than one subgrid"
+         write(6,*) "         ... disabling evolution operator",
+     1              " computation"
+         call EnableEvolutionOperator(.false.)
+      endif
 *
 *     When the computation of the Evolution Operator is enabled
 *     lock the grids by default.
 *
-      if(EvolOp) call LockGrids(.true.)
+      if(EvolOp)then
+         write(6,*) "   "
+         write(6,*) "WARNING: computation of the evolution operator",
+     1              " possible only on locked subgrids"
+         write(6,*) "         ... locking subgrids"
+         call LockGrids(.true.)
+      endif
 *
 *     If there are external grids the grids cannot be locked
 *
@@ -244,6 +266,10 @@
 *
          if(FastEvol)then
             write(6,*) "Fast evolution enabled"
+         endif
+*
+         if(EvolOp)then
+            write(6,*) "Computation of the evolution operator enabled"
          endif
 *
          if(TimeLike)then

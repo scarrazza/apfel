@@ -28,6 +28,8 @@ c      ln = index(name,char(0)) - 1
          ln = 7
       elseif(name(1:5).eq."apfel")then
          ln = 5
+      elseif(name(1:8).eq."external")then
+         ln = 8
 *
 *     Hardcoded fragmentation functions
 *
