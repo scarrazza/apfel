@@ -38,6 +38,7 @@ noinst_PROGRAMS = Tabulation$(EXEEXT) SumRules$(EXEEXT) \
 	LHgridProduction$(EXEEXT) LHgridDerivativeProduction$(EXEEXT) \
 	Luminosity$(EXEEXT) DISObservables$(EXEEXT) \
 	TabulationStep$(EXEEXT) TabulationFrag$(EXEEXT) \
+	TabulationExternal$(EXEEXT) \
 	TabulationCxx$(EXEEXT) SumRulesCxx$(EXEEXT) \
 	LHgridProductionCxx$(EXEEXT) \
 	LHgridDerivativeProductionCxx$(EXEEXT) LuminosityCxx$(EXEEXT) \
@@ -105,6 +106,9 @@ TabulationCxx_LDADD = $(LDADD)
 am_TabulationFrag_OBJECTS = TabulationFrag.$(OBJEXT)
 TabulationFrag_OBJECTS = $(am_TabulationFrag_OBJECTS)
 TabulationFrag_LDADD = $(LDADD)
+am_TabulationExternal_OBJECTS = TabulationExternal.$(OBJEXT)
+TabulationExternal_OBJECTS = $(am_TabulationExternal_OBJECTS)
+TabulationExternal_LDADD = $(LDADD)
 am_TabulationFragCxx_OBJECTS = TabulationFragCxx.$(OBJEXT)
 TabulationFragCxx_OBJECTS = $(am_TabulationFragCxx_OBJECTS)
 TabulationFragCxx_LDADD = $(LDADD)
@@ -165,6 +169,7 @@ SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(Tabulation_SOURCES) $(TabulationCxx_SOURCES) \
 	$(TabulationFrag_SOURCES) $(TabulationFragCxx_SOURCES) \
 	$(TabulationStep_SOURCES) $(TabulationStepCxx_SOURCES) \
+	$(TabulationExternal_SOURCES) \
 	$(Timing_SOURCES)
 DIST_SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(LHgridDerivativeProduction_SOURCES) \
@@ -175,6 +180,7 @@ DIST_SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(Tabulation_SOURCES) $(TabulationCxx_SOURCES) \
 	$(TabulationFrag_SOURCES) $(TabulationFragCxx_SOURCES) \
 	$(TabulationStep_SOURCES) $(TabulationStepCxx_SOURCES) \
+	$(TabulationExternal_SOURCES) \
 	$(Timing_SOURCES)
 ETAGS = etags
 CTAGS = ctags
@@ -325,6 +331,7 @@ Luminosity_SOURCES = Luminosity.f
 DISObservables_SOURCES = DISObservables.f
 TabulationStep_SOURCES = TabulationStep.f
 TabulationFrag_SOURCES = TabulationFrag.f
+TabulationExternal_SOURCES = TabulationFrag.f
 TabulationCxx_SOURCES = TabulationCxx.cc
 SumRulesCxx_SOURCES = SumRulesCxx.cc
 LHgridProductionCxx_SOURCES = LHgridProductionCxx.cc
@@ -417,6 +424,9 @@ TabulationCxx$(EXEEXT): $(TabulationCxx_OBJECTS) $(TabulationCxx_DEPENDENCIES) $
 TabulationFrag$(EXEEXT): $(TabulationFrag_OBJECTS) $(TabulationFrag_DEPENDENCIES) $(EXTRA_TabulationFrag_DEPENDENCIES) 
 	@rm -f TabulationFrag$(EXEEXT)
 	$(AM_V_F77LD)$(F77LINK) $(TabulationFrag_OBJECTS) $(TabulationFrag_LDADD) $(LIBS)
+TabulationExternal$(EXEEXT): $(TabulationExternal_OBJECTS) $(TabulationExternal_DEPENDENCIES) $(EXTRA_TabulationExternal_DEPENDENCIES) 
+	@rm -f TabulationExternal$(EXEEXT)
+	$(AM_V_F77LD)$(F77LINK) $(TabulationExternal_OBJECTS) $(TabulationExternal_LDADD) $(LIBS)
 TabulationFragCxx$(EXEEXT): $(TabulationFragCxx_OBJECTS) $(TabulationFragCxx_DEPENDENCIES) $(EXTRA_TabulationFragCxx_DEPENDENCIES) 
 	@rm -f TabulationFragCxx$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(TabulationFragCxx_OBJECTS) $(TabulationFragCxx_LDADD) $(LIBS)
