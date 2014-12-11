@@ -32,7 +32,7 @@ extern "C" {
   double fdxgamma(double*);
 
 #define fexternalevolutionoperator FC_FUNC(externalevolutionoperator,EXTERNALEVOLUTIONOPERATOR)
-  double fexternalevolutionoperator(int*,int*,double*,int*);
+  double fexternalevolutionoperator(char*,int*,int*,double*,int*);
 
 #define flhapdfgrid FC_FUNC(lhapdfgrid,LHAPDFGRID)
   void flhapdfgrid(int*, double*, char*);

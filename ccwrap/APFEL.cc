@@ -55,9 +55,11 @@ namespace APFEL {
     return fdxgamma(&x);
   }
 
-  double ExternalEvolutionOperator(int i, int j, double x, int beta)
+  double ExternalEvolutionOperator(const std::string& fname, int i, int j, double x, int beta)
   {
-    return fexternalevolutionoperator(&i,&j,&x,&beta);
+    char cfname[SIZE+1];
+    strncpy(cfname, fname.c_str(), SIZE);
+    return fexternalevolutionoperator(cfname,&i,&j,&x,&beta);
   }
 
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname)
