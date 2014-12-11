@@ -82,12 +82,12 @@
             do beta=0,nin(0)
                do i=-6,6
                   do j=-6,6
-                     PhQCD(0,i,j,alpha,beta) = 0
+                     Ph2PhQCD(0,i,j,alpha,beta) = 0
                   enddo
                enddo
             enddo
          enddo
-*     
+*
 *     Fill Evolution Operator
 *     
          do alpha=0,nin(0)
@@ -105,14 +105,33 @@
             betap   = alphap
             do jgrid=dgrid,ngrid
                do beta=istart,TransitionPoint(jgrid+1),density
-                  do i=-nff,nff
-                     do j=-nfi,nfi
-                        PhQCD(0,i,j,alpha,beta) = 
-     1                       PhQCD(dgrid,i,j,alphap,betap)
-                        if(abs(PhQCD(0,i,j,alpha,beta)).lt.eps)
-     1                     PhQCD(0,i,j,alpha,beta) = 0d0 
+                  do i=0,13
+                     do j=0,13
+                        Ev2EvQCD(0,i,j,alpha,beta) = 
+     1                       Ev2EvQCD(dgrid,i,j,alphap,betap)
+                        if(abs(Ph2PhQCD(0,i,j,alpha,beta)).lt.eps)
+     1                     Ev2EvQCD(0,i,j,alpha,beta) = 0d0 
                      enddo
                   enddo
+*
+                  do i=-nff,nff
+                     do j=0,13
+                        Ev2PhQCD(0,i,j,alpha,beta) = 
+     1                       Ev2PhQCD(dgrid,i,j,alphap,betap)
+                        if(abs(Ev2PhQCD(0,i,j,alpha,beta)).lt.eps)
+     1                     Ev2PhQCD(0,i,j,alpha,beta) = 0d0 
+                     enddo
+                  enddo
+*
+                  do i=-nff,nff
+                     do j=-nfi,nfi
+                        Ph2PhQCD(0,i,j,alpha,beta) = 
+     1                       Ph2PhQCD(dgrid,i,j,alphap,betap)
+                        if(abs(Ph2PhQCD(0,i,j,alpha,beta)).lt.eps)
+     1                     Ph2PhQCD(0,i,j,alpha,beta) = 0d0 
+                     enddo
+                  enddo
+*
                   betap = betap + 1
                enddo
                offset = ( density 
