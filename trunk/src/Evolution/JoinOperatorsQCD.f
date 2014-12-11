@@ -481,19 +481,16 @@
                   Ev2PhQCD(jgrid,i-7,j,alpha,beta) = 0d0
                   Ph2PhQCD(jgrid,i-7,j-7,alpha,beta) = 0d0
                   do k=0,13
-
                      Ev2PhQCD(jgrid,i-7,j,alpha,beta) = 
-     1                    Ph2PhQCD(jgrid,i-7,j,alpha,beta)
+     1                    Ev2PhQCD(jgrid,i-7,j,alpha,beta)
      2                       + Tev2phQCD(nff,i,k)
      3                       * EvQCD(k,j,alpha,beta)
-
                      do l=0,13
                         Ph2PhQCD(jgrid,i-7,j-7,alpha,beta) = 
      1                       Ph2PhQCD(jgrid,i-7,j-7,alpha,beta)
      2                       + Tev2phQCD(nff,i,k)
      3                       * EvQCD(k,l,alpha,beta)
      4                       * Tph2evQCD(nfi,l,j)
-                        
                      enddo
                   enddo
                enddo
