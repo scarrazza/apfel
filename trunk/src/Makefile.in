@@ -120,7 +120,8 @@ am__objects_8 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
 	Evolution/PDFphys2evUni.lo Evolution/dxPDF.lo \
 	Evolution/dxgamma.lo Evolution/DeriveQCD.lo \
 	Evolution/DeriveQED.lo Evolution/DerivePDFs.lo \
-	Evolution/xGrid.lo Evolution/nIntervals.lo
+	Evolution/xGrid.lo Evolution/nIntervals.lo \
+	Evolution/ExternalSetAPFEL.lo
 am__objects_9 = core/dgauss.lo core/wgplg.lo core/ddilog.lo core/gamma.lo core/beta.lo
 am__objects_10 = DIS/cc_dis.lo DIS/FF0CoefficientFunctions.lo \
 	DIS/integrands_cc.lo DIS/nc_dis.lo DIS/xcoeffunc_cc.lo \
@@ -372,7 +373,7 @@ PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQE
 	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f Evolution/JoinGrids.f \
 	Evolution/PDFevUni2evQCD.f Evolution/PDFevQCD2evUni.f Evolution/PDFevUni2phys.f Evolution/PDFphys2evUni.f \
 	Evolution/dxPDF.f Evolution/dxgamma.f Evolution/DeriveQCD.f Evolution/DeriveQED.f Evolution/DerivePDFs.f \
-	Evolution/xGrid.f Evolution/nIntervals.f
+	Evolution/xGrid.f Evolution/nIntervals.f Evolution/ExternalSetAPFEL.f
 
 UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f core/gamma.f core/beta.f
 
@@ -677,6 +678,8 @@ Evolution/xGrid.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/nIntervals.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/ExternalSetAPFEL.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
 core/$(am__dirstamp):
 	@$(MKDIR_P) core
 	@: > core/$(am__dirstamp)
@@ -900,6 +903,8 @@ mostlyclean-compile:
 	-rm -f Evolution/xGrid.lo
 	-rm -f Evolution/nIntervals.$(OBJEXT)
 	-rm -f Evolution/nIntervals.lo
+	-rm -f Evolution/ExternalSetAPFEL.$(OBJEXT)
+	-rm -f Evolution/ExternalSetAPFEL.lo
 	-rm -f Evolution/DeriveQCD.$(OBJEXT)
 	-rm -f Evolution/DeriveQCD.lo
 	-rm -f Evolution/DeriveQED.$(OBJEXT)

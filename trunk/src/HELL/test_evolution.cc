@@ -27,25 +27,24 @@
 
 #include <iostream>
 #include <sys/time.h>
-#include "HELL/include/DGLAPevol.hh"
-#include "HELL/include/math/matrix.hh"
-#include "HELL/include/hell.hh"
+#include "include/DGLAPevol.hh"
+#include "include/math/matrix.hh"
+#include "include/hell.hh"
 //#include "../QCD.hh"
 //#include "../anomalous_dimensions/gammaLO.hh"
 //#include "../anomalous_dimensions/gammaNLO.hh"
 
 using namespace std;
-
+using namespace HELL;
 
 double _nf;
-double as0 = 0.1;
+double as0 = 0.24;
 
 
 double beta0(int nf) {
-  return (11.*HELL::CA - 2.*nf)/12./M_PI;
+  return (11.*CA - 2.*nf)/12./M_PI;
 }
 double beta1(int nf){
-  using namespace HELL;
   return (17.*CA*CA - (10.*CA*0.5+6.*CF*0.5)*nf)/(24.*M_PI*M_PI);
 }
 double as(double t) {
@@ -55,7 +54,7 @@ double as(double t) {
 
 
 
-#include "HELL/include/gammaNLO.hh"
+#include "include/gammaNLO.hh"
 // LO
 sqmatrix<dcomplex> gamma_LO(dcomplex N) {
   return sqmatrix<dcomplex>( gamma0gg(N,_nf), gamma0gq(N), gamma0qg(N,_nf), gamma0qq(N) );
@@ -104,24 +103,24 @@ sqmatrix<dcomplex> gammaNLO_as(double as, dcomplex N) {
 }
 
 // resummed evolution matrix
-HELL::HELLnf *sxD;
+HELLnf *sxD;
 sqmatrix<dcomplex> gammaResLO(double t, dcomplex N) {
-  return as(t) * gamma_LO(N) + sxD->DeltaGamma(as(t), N, HELL::LO);
+  return as(t) * gamma_LO(N) + sxD->DeltaGamma(as(t), N, LO);
 }
 sqmatrix<dcomplex> gammaResLO_as(double as, dcomplex N) {
-  return ( as*gamma_LO(N) + sxD->DeltaGamma(as,N,HELL::LO) ) / ( -beta0(_nf)*as*as );
+  return ( as*gamma_LO(N) + sxD->DeltaGamma(as,N,LO) ) / ( -beta0(_nf)*as*as );
 }
 sqmatrix<dcomplex> gammaResNLO_as(double as, dcomplex N) {
-  return ( as*gamma_LO(N) + as*as*gamma_NLO(N) + sxD->DeltaGamma(as,N,HELL::NLO) ) / ( -beta0(_nf)*as*as -beta1(_nf)*as*as*as);
+  return ( as*gamma_LO(N) + as*as*gamma_NLO(N) + sxD->DeltaGamma(as,N,NLO) ) / ( -beta0(_nf)*as*as -beta1(_nf)*as*as*as);
 }
 
 
 /*
 double dPgg(double x, double as) {
-  return sxD->DeltaP(as,x,HELL::NLO).entry11();
+  return sxD->DeltaP(as,x,NLO).entry11();
 }
 dcomplex dGgg(dcomplex N, double as) {
-  return sxD->DeltaGamma(as,N,HELL::NLO).entry11();
+  return sxD->DeltaGamma(as,N,NLO).entry11();
 }
 #include<gsl/gsl_integration.h>
 double gauss(double f(double,void*), double xmin, double xmax, double prec, double *error, void *par) {
@@ -179,7 +178,7 @@ int main() {
 
   /*
   cout << "Check:" << endl;
-  sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
+  sxD = new HELLnf(_nf, NLL, prepath);
   double xx = 0.01;
   cout << dPgg(xx,AS) << endl;
   cout << MellinInversion(xx) << endl;
@@ -217,15 +216,22 @@ int main() {
 
   // resummation part
 
-  sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
+  sxD = new HELLnf(_nf, LL, prepath);
   PO.SetEvolMatrix(gammaResLO);
-  //U = PO.evolU(t, t0, N, nsub);
-  cout << "Resummed evolution at LO+NLL with  n = " << nsub << "  subdivisions:" << endl
+  U = PO.evolU(t, t0, N, nsub);
+  cout << "Resummed evolution at LO+LL with  n = " << nsub << "  subdivisions:" << endl
        << U << endl;
 
   PO.SetEvolMatrix(gammaResLO_as);
-  //U = PO.evolU(as(t), as(t0), N, nsub);
-  cout << "Resummed evolution at LO+NLL with  n = " << nsub << "  subdivisions using as evolution:" << endl
+  U = PO.evolU(as(t), as(t0), N, nsub);
+  cout << "Resummed evolution at LO+LL with  n = " << nsub << "  subdivisions using as evolution:" << endl
+       << U << endl;
+
+  delete sxD;
+  sxD = new HELLnf(_nf, NLL, prepath);
+  PO.SetEvolMatrix(gammaResNLO_as);
+  U = PO.evolU(as(t), as(t0), N, nsub);
+  cout << "Resummed evolution at NLO+NLL with  n = " << nsub << "  subdivisions using as evolution:" << endl
        << U << endl;
 
 
@@ -247,23 +253,23 @@ int main() {
   as1 = as(log(10000./2.));
   cout << as1 << endl;
   //
-  N = 2;
+  N = 5;
   /*
   _nf = 3;
   delete sxD;
-  sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
+  sxD = new HELLnf(_nf, NLL, prepath);
   U = PO.evolU(asc, as0, N, nsub);
   _nf = 4;
   delete sxD;
-  sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
+  sxD = new HELLnf(_nf, NLL, prepath);
   U = PO.evolU(asb, asc, N, nsub) * U;
   _nf = 5;
   delete sxD;
-  sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
+  sxD = new HELLnf(_nf, NLL, prepath);
   U = PO.evolU(as1, asb, N, nsub) * U;
   */
   delete sxD;
-  sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
+  sxD = new HELLnf(_nf, NLL, prepath);
   U = PO.evolU(as1, as0, N, nsub);
   //U = PO.evolU(t, t0, N, nsub);
   //
@@ -271,8 +277,8 @@ int main() {
   //double s0 = 0.635141627;
   //vec2<dcomplex> f0(g0, s0);
   //vec2<dcomplex> f0(0.36479821649757477, 0.63510921112928409);
-  vec2<dcomplex> f0(0.364857610, 0.635141627);
-  //vec2<dcomplex> f0(0.003729506,  0.027428291);
+  //vec2<dcomplex> f0(0.364857610, 0.635141627);
+  vec2<dcomplex> f0(0.003729506,  0.027428291);
   vec2<dcomplex> f1 = U*f0;
   //vec2<dcomplex> f2 = Ue*f0;
   //
@@ -295,15 +301,15 @@ int main() {
   //
   _nf = 3;
   delete sxD;
-  sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
+  sxD = new HELLnf(_nf, NLL, prepath);
   U = PO.evolU(as0, asc, N, nsub);
   _nf = 4;
   delete sxD;
-  sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
+  sxD = new HELLnf(_nf, NLL, prepath);
   U = PO.evolU(asc, asb, N, nsub) * U;
   _nf = 5;
   delete sxD;
-  sxD = new HELL::HELLnf(_nf, HELL::NLL, prepath);
+  sxD = new HELLnf(_nf, NLL, prepath);
   U = PO.evolU(asb, as1, N, nsub) * U;
   //
   f1 = U*f0;
