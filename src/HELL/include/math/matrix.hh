@@ -305,5 +305,6 @@ vec2<T> operator * (sqmatrix<T> &a, vec2<T> &b) {
 
 
 
+
 #endif    /*  MATRIX_H  */
 

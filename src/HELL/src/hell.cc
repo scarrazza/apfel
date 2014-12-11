@@ -37,11 +37,7 @@ namespace HELL {
   HELLnf::HELLnf(int nf, LogOrder order, string prepath) {
     _order = order;
     string sord;
-    if     (_order==0) {
-      //sord = "/LO_nf";
-      sord = "/NLO_nf";
-      cout << "WARNING: LL resummation currently uses NLL resummed eigenvector (there are double counting problems with NLO or higher)" << endl;
-    }
+    if     (_order==0) sord = "/LO_nf";
     else if(_order==1) sord = "/NLO_nf";
     else {
       cout << "ERROR: LogOrder can be only 0 or 1: NNLL or higher small-x resummation is NOT available." << endl;
@@ -60,8 +56,8 @@ namespace HELL {
       exit(1);
     }
     if(_order==0)
-      //infile >> Nas >> Np1 >> Np2;
-      infile >> Nas >> Np1 >> Np2 >> Np3; /// !!!!! hack to be able to read NLL files as LL files!
+      infile >> Nas >> Np1 >> Np2;
+      //infile >> Nas >> Np1 >> Np2 >> Np3; /// !!!!! hack to be able to read NLL files as LL files!
     else
       infile >> Nas >> Np1 >> Np2 >> Np3;
     //
@@ -82,8 +78,8 @@ namespace HELL {
       pdDC2g[i] = new double[Np3+2];
       infile >> alphas[i] >> Npole1[i] >> Npole2[i] >> residue1[i] >> residue2[i];
       for(int j=0; j<=Np1+Np2; j++) infile >> pDPp[i][j];
-      //if(_order>0) {
-      if(_order>=0) { /// !!!!! hack to be able to read NLL files as LL files!
+      if(_order>0) {
+      //if(_order>=0) { /// !!!!! hack to be able to read NLL files as LL files!
 	for(int j=0; j<Np3+2; j++)    infile >> pDPqg[i][j];
 	for(int j=0; j<Np3+2; j++)    infile >> pDC2g[i][j];
 	for(int j=0; j<Np3+2; j++)    infile >> pdDC2g[i][j];
@@ -154,7 +150,7 @@ namespace HELL {
     for(int i=0; i<Np3; i++) {
       res += p[i+2] * pow(log1ox, i);
     }
-    return res + p[1]/pow(x,p[0]);;
+    return res + p[1]/pow(x,p[0]);
   }
   dcomplex HELLnf::deltaFunc_fit_Nspace(dcomplex N, double *p) {
     dcomplex ooN = 1./N;

@@ -28,7 +28,6 @@
 *     Input Variables
 *
       Hellx = xDeltaP(k,alphas,y)
-c      write(45,*) k,alphas,y,Hellx
 *
       return
       end

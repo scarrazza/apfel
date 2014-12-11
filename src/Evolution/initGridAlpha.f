@@ -197,13 +197,11 @@
             do ig=1,nsubgrids
                ag(ncount)  = lbound(ig)
                nfg(ncount) = nfi + ig - 1
-               write(45,*) ig,ncount,ag(ncount),nfg(ncount)
                step = ( ubound(ig) - lbound(ig) ) / dble(nas(ig))
                do tau=1,nas(ig)
                   ncount = ncount + 1
                   ag(ncount)  = ag(ncount-1) + step
                   nfg(ncount) = nfi + ig - 1
-                  write(45,*) ig,ncount,ag(ncount),nfg(ncount)
                enddo
                ncount = ncount + 1
             enddo
