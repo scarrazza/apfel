@@ -483,7 +483,7 @@
                   do k=0,13
                      Ev2PhQCD(jgrid,i-7,j,alpha,beta) = 
      1                    Ev2PhQCD(jgrid,i-7,j,alpha,beta)
-     2                       + Tev2phQCD(nff,i,k)
+     2                       + Tev2phQCD(nfi,i,k)
      3                       * EvQCD(k,j,alpha,beta)
                      do l=0,13
                         Ph2PhQCD(jgrid,i-7,j-7,alpha,beta) = 
