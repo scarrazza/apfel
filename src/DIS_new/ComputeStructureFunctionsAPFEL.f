@@ -14,17 +14,16 @@
 *
       double precision Q0,Q
 *
-*     Force fast evolution
-*
-      call SetFastEvolution(.true.)
-*
-*     Compute PDF evolution (if needed)
+*     Compute PDF evolution
 *
       call EvolveAPFEL(Q0,Q)
 *
 *     Convolute evolved PDFs with the DIS coefficient functions
 *
-      call ConvolutePDFsWithCFs(Q)
+      call ComputeDISOperators(Q)
+      call ConvolutePDFsWithDISOperators
+*
+c      call ConvolutePDFsWithCFs(Q)
 *
       return
       end

@@ -13,13 +13,20 @@
 *     3) the grid indices walpha and wbeta,
 *     4) the particular plitting function denoted by k such that:
 *
-*        k =    1            2            3
-*             gluon     non-singlet  pure-singlet
+*        k      combination
+*     --------------------------
+*        1         gluon  
+*        2      pure-singlet
+*        3    non-singlet-plus
+*        4    non-singlet-minus
 *
 *     5) the structure function index:
 *
-*        sf = 1   2   3
-*             F2  FL  F3
+*        sf  Structure Function
+*     --------------------------
+*        1          F2
+*        2          FL
+*        3          F3
 *
 *     that are contained in the common block wrapDIS.h
 *
@@ -42,15 +49,15 @@
 *     Internal Variables
 *
       double precision z,w_int,fR,fS,fL
-      double precision C2R(3,2),C2S(3,2)
-      double precision CLR(3,2),CLS(3,2)
-      double precision C3R(3,2),C3S(3,2)
+      double precision C2R(4,2),C2S(4,2)
+      double precision CLR(4,2),CLS(4,2)
+      double precision C3R(4,2),C3S(4,2)
       double precision C2G1A,C2NS1A,C2NS1B
       double precision CLG1A,CLNS1A
       double precision C3NS1A,C3NS1B
-      double precision C2G2A,C2PS2A,C2NSP2A,C2NS2B
-      double precision CLG2A,CLPS2A,CLNSP2A
-      double precision C3NSP2A,C3NS2B
+      double precision C2G2A,C2PS2A,C2NSP2A,C2NSM2A,C2NS2B
+      double precision CLG2A,CLPS2A,CLNSP2A,CLNSM2A
+      double precision C3NSP2A,C3NSM2A,C3NS2B
 **
 *     Output Variables
 *
@@ -81,8 +88,8 @@
             elseif(k.eq.2)then
                C2R(k,1) = 0d0
                C2S(k,1) = 0d0
-*     Non-singlet
-            elseif(k.eq.3)then
+*     Non-singlet-plus/minus
+            elseif(k.eq.3.or.k.eq.4)then
                C2R(k,1) = C2NS1A(y)
                C2S(k,1) = C2NS1B(y)
             endif
@@ -96,8 +103,8 @@
             elseif(k.eq.2)then
                CLR(k,1) = 0d0
                CLS(k,1) = 0d0
-*     Non-singlet
-            elseif(k.eq.3)then
+*     Non-singlet-plus/minus
+            elseif(k.eq.3.or.k.eq.4)then
                CLR(k,1) = CLNS1A(y)
                CLS(k,1) = 0d0
             endif
@@ -111,8 +118,8 @@
             elseif(k.eq.2)then
                C3R(k,1) = 0d0
                C3S(k,1) = 0d0
-*     Non-singlet
-            elseif(k.eq.3)then
+*     Non-singlet-plus/minus
+            elseif(k.eq.3.or.k.eq.4)then
                C3R(k,1) = C3NS1A(y)
                C3S(k,1) = C3NS1B(y)
             endif
@@ -132,9 +139,13 @@
             elseif(k.eq.2)then
                C2R(k,2) = C2PS2A(y,1)
                C2S(k,2) = 0d0
-*     Non-singlet
+*     Non-singlet-plus
             elseif(k.eq.3)then
                C2R(k,2) = C2NSP2A(y,wnf)
+               C2S(k,2) = C2NS2B(y,wnf)
+*     Non-singlet-minus
+            elseif(k.eq.4)then
+               C2R(k,2) = C2NSM2A(y,wnf)
                C2S(k,2) = C2NS2B(y,wnf)
             endif
 *     CL
@@ -147,9 +158,13 @@
             elseif(k.eq.2)then
                CLR(k,2) = CLPS2A(y,1)
                CLS(k,2) = 0d0
-*     Non-singlet
+*     Non-singlet-plus
             elseif(k.eq.3)then
                CLR(k,2) = CLNSP2A(y,wnf)
+               CLS(k,2) = 0d0
+*     Non-singlet-minus
+            elseif(k.eq.4)then
+               CLR(k,2) = CLNSM2A(y,wnf)
                CLS(k,2) = 0d0
             endif
 *     C3
@@ -162,9 +177,13 @@
             elseif(k.eq.2)then
                C3R(k,2) = 0d0
                C3S(k,2) = 0d0
-*     Non-singlet
+*     Non-singlet-plus
             elseif(k.eq.3)then
                C3R(k,2) = C3NSP2A(y,wnf)
+               C3S(k,2) = C3NS2B(y,wnf)
+*     Non-singlet-minus
+            elseif(k.eq.4)then
+               C3R(k,2) = C3NSM2A(y,wnf)
                C3S(k,2) = C3NS2B(y,wnf)
             endif
          endif
