@@ -1,8 +1,8 @@
 *     -*-fortran-*-
 
-      real SC2zm(0:ngrid_max,3:6,3,0:2,0:nint_max_DIS,0:nint_max_DIS)
-      real SCLzm(0:ngrid_max,3:6,3,0:2,0:nint_max_DIS,0:nint_max_DIS)
-      real SC3zm(0:ngrid_max,3:6,3,0:2,0:nint_max_DIS,0:nint_max_DIS)
+      real SC2zm(0:ngrid_max,3:6,4,0:2,0:nint_max_DIS,0:nint_max_DIS)
+      real SCLzm(0:ngrid_max,3:6,4,0:2,0:nint_max_DIS,0:nint_max_DIS)
+      real SC3zm(0:ngrid_max,3:6,4,0:2,0:nint_max_DIS,0:nint_max_DIS)
 *
       real SC2mNC(0:ngrid_max,nxi,3,0:2,0:nint_max_DIS,0:nint_max_DIS)
       real SCLmNC(0:ngrid_max,nxi,3,0:2,0:nint_max_DIS,0:nint_max_DIS)
