@@ -497,16 +497,24 @@
             enddo
          enddo
       enddo
-c      do i=1,13
-c         write(56,"(a,13(2x,i3),a)")
-c     1        "{",(int(Tph2evQCD(6,i,j)),j=1,13)," }"
+c*
+c*     Print rotation matrices
+c*
+c      do k=3,6
+c         write(56,*) "Tph2evQCD, nf =",k
+c         do i=0,13
+c            write(56,"(a,14(2x,i3),a)")
+c     1           "{",(int(Tph2evQCD(k,i,j)),j=0,13)," }"
+c         enddo
+c         write(56,*) "   "
+c         write(57,*) "120d0*Tev2phQCD, nf =",k
+c         do i=0,13
+c            write(57,"(a,14(2x,i4),a)") 
+c     1           "{",(int(120d0*Tev2phQCD(k,i,j)),j=0,13)," }"
+c         enddo
+c         write(57,*) "   "
 c      enddo
-c      write(56,*) "   "
-c      do i=1,13
-c         write(57,"(a,13(2x,i4),a)") 
-c     1        "{",(int(120d0*Tev2phQCD(6,i,j)),j=1,13)," }"
-c      enddo
-c      write(57,*) "   "
+c      stop
 c$$$*
 c$$$*     Rotation matrix factory
 c$$$*
