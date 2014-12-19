@@ -171,7 +171,8 @@ c      integrandsQCD = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
       double precision PR(7,0:2),PS(7,0:2)
       double precision X0NSA,X0NSB,X0QGA,X0GQA,X0GGA,X0GGB
       double precision X1NSPTA,X1NSTB,X1NSMTA,X1PSTA,X1QGTA,X1GQTA
-      double precision X1GGTA,X1GGTB,P2NSPTA,P2NSTB,P2NSMTA,P2NSSTA
+      double precision X1GGTA,X1GGTB
+      double precision P2NSPTA,P2NSTB,P2NSMTA,P2NSSTA
       double precision P2GGTA,P2GGTB,P2PSTA,P2QGTA,P2GQTA
 **
 *     Output Variables
@@ -265,11 +266,11 @@ c      integrandsQCD = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
             PS(k,2) = P2NSTB(y,wnf)
 *     Quark-Gluon
          elseif(k.eq.5)then
-            PR(k,2) = P2QGTA(y,wnf)
+            PR(k,2) = P2GQTA(y,wnf)
             PS(k,2) = 0d0
 *     Gluon-Quark
          elseif(k.eq.6)then
-            PR(k,2) = P2GQTA(y,wnf)
+            PR(k,2) = P2QGTA(y,wnf)
             PS(k,2) = 0d0
 *     Gluon-Gluon
          elseif(k.eq.7)then
