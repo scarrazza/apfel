@@ -1364,7 +1364,7 @@ c       COMMON / P1GSOFTT / A2GT
      &         + (1. - 2.*Y + 2.*Y**2) * ( 3.8696 + 4.* (DL + DL1) 
      &         + 3.* (DL + DL1)**2 ) )
 * 
-       P2QGTA = NF * ( P2QG1 + NF * P2QG2 + NF**2 * P2QG3 )
+       P2QGTA = ( P2QG1 + NF * P2QG2 + NF**2 * P2QG3 ) / 2D0
 *
        RETURN
        END
@@ -1397,7 +1397,7 @@ c       COMMON / P1GSOFTT / A2GT
      &        + 6.0041/Y + 141.93/Y* DL 
      &        + 2912./(27.D0*Y)* DL**2 + 1280./(81.D0*Y)*DL**3
 *
-       P2GQTA = ( P2GQ0 + NF * P2GQ1 )
+       P2GQTA = 2D0 * NF * ( P2GQ0 + NF * P2GQ1 )
 *
        RETURN
        END
