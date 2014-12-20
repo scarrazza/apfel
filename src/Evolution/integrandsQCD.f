@@ -266,11 +266,11 @@ c      integrandsQCD = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
             PS(k,2) = P2NSTB(y,wnf)
 *     Quark-Gluon
          elseif(k.eq.5)then
-            PR(k,2) = P2GQTA(y,wnf)
+            PR(k,2) = P2QGTA(y,wnf)
             PS(k,2) = 0d0
 *     Gluon-Quark
          elseif(k.eq.6)then
-            PR(k,2) = P2QGTA(y,wnf)
+            PR(k,2) = P2GQTA(y,wnf)
             PS(k,2) = 0d0
 *     Gluon-Gluon
          elseif(k.eq.7)then
