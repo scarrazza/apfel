@@ -1,0 +1,2 @@
+      INTEGER NF
+      COMMON/NUMFLAPFEL/NF
