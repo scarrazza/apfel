@@ -29,7 +29,7 @@
 **
 *     Internal Variables
 *
-      integer jgrid,ipdf,ihq,pt
+      integer jgrid,ipdf,ihq,pt,ipt_FF
       integer alpha,beta
       integer nf
       integer gbound
@@ -44,6 +44,7 @@
       double precision C3g(3:6),C3nsp(3:6),C3nsm(3:6)
       double precision Kl,Kc,Kb,Kt
       double precision sgn,diff(nxi),xi(4:6),c0(4:6),c1(4:6)
+      double precision damp(4:6)
       double precision t1,t2
 *
       call cpu_time(t1)
@@ -111,7 +112,7 @@ c      if(MassScheme(1:3).eq."FFN") nf = Nf_FF
          ixi(ihq) = 0
          xi(ihq)  = Q2 / m2th(ihq)
          if(xi(ihq).le.ximin)then
-            ixi(ihq) = 1
+            ixi(ihq) = 0
          elseif(xi(ihq).ge.ximax)then
             ixi(ihq) = nxi
          else
@@ -127,10 +128,22 @@ c      if(MassScheme(1:3).eq."FFN") nf = Nf_FF
 *
 *     Coefficients of the linear interpolation on the xi grid
 *
-         c0(ihq) = dlog(xigrid(ixi(ihq)+1)/xi(ihq))
-     1           / dlog(xigrid(ixi(ihq)+1)/xigrid(ixi(ihq)))
-         c1(ihq) = dlog(xi(ihq)/xigrid(ixi(ihq)))
-     1           / dlog(xigrid(ixi(ihq)+1)/xigrid(ixi(ihq)))
+         c0(ihq) = 0d0
+         c1(ihq) = 0d0
+         if(ixi(ihq).gt.0.and.ixi(ihq).lt.nxi)then
+            c0(ihq) = dlog(xigrid(ixi(ihq)+1)/xi(ihq))
+     1              / dlog(xigrid(ixi(ihq)+1)/xigrid(ixi(ihq)))
+            c1(ihq) = dlog(xi(ihq)/xigrid(ixi(ihq)))
+     1              / dlog(xigrid(ixi(ihq)+1)/xigrid(ixi(ihq)))
+         endif
+*
+*     Damping factors needed for the FONLL structure functions
+*
+         if(Q2.gt.m2th(ihq))then
+            damp(ihq) = ( 1d0 - m2th(ihq) / Q2 )**2d0
+         else
+            damp(ihq) = 0d0
+         endif
       enddo
 *
 *     Electromagnetic and Neutral current structure functions
@@ -203,7 +216,7 @@ c      if(MassScheme(1:3).eq."FFN") nf = Nf_FF
                            C3nsm(ihq) = C3nsm(3)
                         enddo
                      endif
-                  elseif(MassScheme.eq."FFN0")then
+                  elseif(MassScheme(1:4).eq."FFN0")then
 *
 *     Light coefficient functions
 *
@@ -262,65 +275,273 @@ c      if(MassScheme(1:3).eq."FFN") nf = Nf_FF
 *
 *     Heavy quark coefficient functions
 *
-                  if(Nf_FF.lt.6)then
-                     do ihq=Nf_FF+1,6
-                        if(W2.ge.4d0*m2th(ihq))then
-                           do pt=0,ipt
-                              C2g(ihq) = C2g(ihq) + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SC2m0NC(jgrid,ixi(ihq),
-     3                             1,pt,0,alpha)
-     4                             + c1(ihq)
-     5                             * SC2m0NC(jgrid,ixi(ihq)+1,
-     6                             1,pt,0,alpha) )
-                              C2ps(ihq) = C2ps(ihq) + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SC2m0NC(jgrid,ixi(ihq),
-     3                             2,pt,0,alpha)
-     4                             + c1(ihq)
-     5                             * SC2m0NC(jgrid,ixi(ihq)+1,
-     6                             2,pt,0,alpha) )
-                              CLg(ihq) = CLg(ihq) + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SCLm0NC(jgrid,ixi(ihq),
-     3                             1,pt,0,alpha)
-     4                             + c1(ihq)
-     5                             * SCLm0NC(jgrid,ixi(ihq)+1,
-     6                             1,pt,0,alpha) )
-                              CLps(ihq) = CLps(ihq) + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SCLm0NC(jgrid,ixi(ihq),
-     3                             2,pt,0,alpha)
-     4                             + c1(ihq)
-     5                             * SCLm0NC(jgrid,ixi(ihq)+1,
-     6                             2,pt,0,alpha) )
-                           enddo
-                           C3nsm(ihq) = C3nsm(3)
-                        endif
+                     if(Nf_FF.lt.6)then
+                        do ihq=Nf_FF+1,6
+                           if(W2.ge.4d0*m2th(ihq))then
+                              do pt=0,ipt
+                                 C2g(ihq) = C2g(ihq) + as(pt)
+     1                                * ( c0(ihq)
+     2                                * SC2m0NC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2m0NC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) )
+                                 C2ps(ihq) = C2ps(ihq) + as(pt)
+     1                                * ( c0(ihq)
+     2                                * SC2m0NC(jgrid,ixi(ihq),
+     3                                2,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2m0NC(jgrid,ixi(ihq)+1,
+     6                                2,pt,alpha,beta) )
+                                 CLg(ihq) = CLg(ihq) + as(pt)
+     1                                * ( c0(ihq)
+     2                                * SCLm0NC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLm0NC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) )
+                                 CLps(ihq) = CLps(ihq) + as(pt)
+     1                                * ( c0(ihq)
+     2                                * SCLm0NC(jgrid,ixi(ihq),
+     3                                2,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLm0NC(jgrid,ixi(ihq)+1,
+     6                                2,pt,alpha,beta) )
+                              enddo
+                           endif
+                        enddo
+                     endif
+                  elseif(MassScheme(1:4).eq."FFNS")then
+*
+*     Light coefficient functions
+*
+                     do pt=0,ipt
+                        C2g(3)   = C2g(3) + as(pt)
+     1                       * SC2zm(jgrid,Nf_FF,1,pt,alpha,beta)
+                        C2ps(3)  = C2ps(3) + as(pt)
+     1                       * SC2zm(jgrid,Nf_FF,2,pt,alpha,beta)
+                        C2nsp(3) = C2nsp(3) + as(pt)
+     1                       * SC2zm(jgrid,Nf_FF,3,pt,alpha,beta)
+                        CLg(3)   = CLg(3) + as(pt)
+     1                       * SCLzm(jgrid,Nf_FF,1,pt,alpha,beta)
+                        CLps(3)  = CLps(3) + as(pt)
+     1                       * SCLzm(jgrid,Nf_FF,2,pt,alpha,beta)
+                        CLnsp(3) = CLnsp(3) + as(pt)
+     1                       * SCLzm(jgrid,Nf_FF,3,pt,alpha,beta)
+                        C3nsm(3) = C3nsm(3) + as(pt)
+     1                       * SC3zm(jgrid,Nf_FF,4,pt,alpha,beta)
                      enddo
-                  endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                     if(Nf_FF.gt.3)then
+                        do ihq=4,Nf_FF
+                           C2g(ihq)   = C2g(3)
+                           C2ps(ihq)  = C2ps(3)
+                           C2nsp(ihq) = C2nsp(3)
+                           CLg(ihq)   = CLg(3)
+                           CLps(ihq)  = CLps(3)
+                           CLnsp(ihq) = CLnsp(3)
+                           C3nsm(ihq) = C3nsm(3)
+                        enddo
+                     endif
+*
+*     Add the massive part at NNLO to the light CFs
+*
+                     if(ipt.ge.2)then
+                        if(Nf_FF.lt.6)then
+                           do ihq=Nf_FF+1,6
+                              if(W2.ge.4d0*m2th(ihq))then
+                                 C2nsp(3) = C2nsp(3) + as(2) *
+     1                                ( c0(ihq)
+     2                                * SC2mNC(jgrid,ixi(ihq),
+     3                                3,2,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2mNC(jgrid,ixi(ihq)+1,
+     6                                3,2,alpha,beta) )
+                                 CLnsp(3) = CLnsp(3) + as(2) *
+     1                                ( c0(ihq)
+     2                                * SCLmNC(jgrid,ixi(ihq),
+     3                                3,2,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLmNC(jgrid,ixi(ihq)+1,
+     6                                3,2,alpha,beta) )
+                              endif
+                           enddo
+                        endif
+                     endif
+*
+*     Heavy quark coefficient functions
+*
+                     if(Nf_FF.lt.6)then
+                        do ihq=Nf_FF+1,6
+                           if(W2.ge.4d0*m2th(ihq))then
+                              do pt=0,ipt
+                                 C2g(ihq) = C2g(ihq) + as(pt)
+     1                                * ( c0(ihq)
+     2                                * SC2mNC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2mNC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) )
+                                 C2ps(ihq) = C2ps(ihq) + as(pt)
+     1                                * ( c0(ihq)
+     2                                * SC2mNC(jgrid,ixi(ihq),
+     3                                2,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2mNC(jgrid,ixi(ihq)+1,
+     6                                2,pt,alpha,beta) )
+                                 CLg(ihq) = CLg(ihq) + as(pt)
+     1                                * ( c0(ihq)
+     2                                * SCLmNC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLmNC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) )
+                                 CLps(ihq) = CLps(ihq) + as(pt)
+     1                                * ( c0(ihq)
+     2                                * SCLmNC(jgrid,ixi(ihq),
+     3                                2,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLmNC(jgrid,ixi(ihq)+1,
+     6                                2,pt,alpha,beta) )
+                              enddo
+                           endif
+                        enddo
+                     endif
+                  elseif(MassScheme(1:5).eq."FONLL")then
+*
+*     In case of FONLL-B
+*
+                     ipt_FF = ipt
+                     if(MassScheme.eq."FONLL-B".and.ipt.ge.1) ipt_FF = 2
+*
+*     Light coefficient functions
+*
+                     do pt=0,ipt
+                        C2g(3)   = C2g(3) + as(pt)
+     1                       * SC2zm(jgrid,nf,1,pt,alpha,beta)
+                        C2ps(3)  = C2ps(3) + as(pt)
+     1                       * SC2zm(jgrid,nf,2,pt,alpha,beta)
+                        C2nsp(3) = C2nsp(3) + as(pt)
+     1                       * SC2zm(jgrid,nf,3,pt,alpha,beta)
+                        CLg(3)   = CLg(3) + as(pt)
+     1                       * SCLzm(jgrid,nf,1,pt,alpha,beta)
+                        CLps(3)  = CLps(3) + as(pt)
+     1                       * SCLzm(jgrid,nf,2,pt,alpha,beta)
+                        CLnsp(3) = CLnsp(3) + as(pt)
+     1                       * SCLzm(jgrid,nf,3,pt,alpha,beta)
+                        C3nsm(3) = C3nsm(3) + as(pt)
+     1                       * SC3zm(jgrid,nf,4,pt,alpha,beta)
+                     enddo
+                     if(nf.gt.3)then
+                        do ihq=4,nf
+                           C2g(ihq)   = damp(ihq) * C2g(3)
+                           C2ps(ihq)  = damp(ihq) * C2ps(3)
+                           C2nsp(ihq) = damp(ihq) * C2nsp(3)
+                           CLg(ihq)   = damp(ihq) * CLg(3)
+                           CLps(ihq)  = damp(ihq) * CLps(3)
+                           CLnsp(ihq) = damp(ihq) * CLnsp(3)
+                           C3nsm(ihq) = damp(ihq) * C3nsm(3)
+                        enddo
+                     endif
+*
+*     Add the massive part at NNLO to the light CFs
+*
+                     if(ipt_FF.ge.2)then
+                        if(Nf_FF.lt.6)then
+                           do ihq=Nf_FF+1,6
+                              if(W2.ge.4d0*m2th(ihq))then
+                                 C2nsp(3) = C2nsp(3) + as(2) *
+     1                                ( ( c0(ihq)
+     2                                * SC2mNC(jgrid,ixi(ihq),
+     3                                3,2,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2mNC(jgrid,ixi(ihq)+1,
+     6                                3,2,alpha,beta) ) 
+     7                                - damp(ihq) * ( c0(ihq)
+     8                                * SC2m0NC(jgrid,ixi(ihq),
+     9                                3,2,alpha,beta)
+     1                                + c1(ihq)
+     2                                * SC2m0NC(jgrid,ixi(ihq)+1,
+     3                                3,2,alpha,beta) ) )
+                                 CLnsp(3) = CLnsp(3) + as(2) *
+     1                                ( ( c0(ihq)
+     2                                * SCLmNC(jgrid,ixi(ihq),
+     3                                3,2,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLmNC(jgrid,ixi(ihq)+1,
+     6                                3,2,alpha,beta) ) 
+     7                                - damp(ihq) * ( c0(ihq)
+     8                                * SCLm0NC(jgrid,ixi(ihq),
+     9                                3,2,alpha,beta)
+     1                                + c1(ihq)
+     2                                * SCLm0NC(jgrid,ixi(ihq)+1,
+     3                                3,2,alpha,beta) ) )
+                              endif
+                           enddo
+                        endif
+                     endif
+*
+*     Heavy quark coefficient functions
+*
+                     if(Nf_FF.lt.6)then
+                        do ihq=Nf_FF+1,6
+                           if(W2.ge.4d0*m2th(ihq))then
+                              do pt=0,ipt_FF
+                                 C2g(ihq) = C2g(ihq) + as(pt)
+     1                                * ( ( c0(ihq)
+     2                                * SC2mNC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2mNC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) )
+     7                                - damp(ihq) * ( c0(ihq)
+     8                                * SC2m0NC(jgrid,ixi(ihq),
+     9                                1,pt,alpha,beta)
+     1                                + c1(ihq)
+     2                                * SC2m0NC(jgrid,ixi(ihq)+1,
+     3                                1,pt,alpha,beta) ) )
+                                 C2ps(ihq) = C2ps(ihq) + as(pt)
+     1                                * ( ( c0(ihq)
+     2                                * SC2mNC(jgrid,ixi(ihq),
+     3                                2,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2mNC(jgrid,ixi(ihq)+1,
+     6                                2,pt,alpha,beta) )
+     7                                - damp(ihq) * ( c0(ihq)
+     8                                * SC2m0NC(jgrid,ixi(ihq),
+     9                                2,pt,alpha,beta)
+     1                                + c1(ihq)
+     2                                * SC2m0NC(jgrid,ixi(ihq)+1,
+     3                                2,pt,alpha,beta) ) )
+                                 CLg(ihq) = CLg(ihq) + as(pt)
+     1                                * ( ( c0(ihq)
+     2                                * SCLmNC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLmNC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) ) 
+     7                                - damp(ihq) * ( c0(ihq)
+     8                                * SCLm0NC(jgrid,ixi(ihq),
+     9                                1,pt,alpha,beta)
+     1                                + c1(ihq)
+     2                                * SCLm0NC(jgrid,ixi(ihq)+1,
+     3                                1,pt,alpha,beta) ) )
+                                 CLps(ihq) = CLps(ihq) + as(pt)
+     1                                * ( ( c0(ihq)
+     2                                * SCLmNC(jgrid,ixi(ihq),
+     3                                2,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLmNC(jgrid,ixi(ihq)+1,
+     6                                2,pt,alpha,beta) )
+     7                                - damp(ihq) * ( c0(ihq)
+     8                                * SCLm0NC(jgrid,ixi(ihq),
+     9                                2,pt,alpha,beta)
+     1                                + c1(ihq)
+     2                                * SCLm0NC(jgrid,ixi(ihq)+1,
+     3                                2,pt,alpha,beta) ) )
+                              enddo
+                           endif
+                        enddo
+                     endif
                   endif
 *     
 *     F2
@@ -352,56 +573,51 @@ c      if(MassScheme(1:3).eq."FFN") nf = Nf_FF
 *     
 *     Charm Component
 *     
-                  if(nf.ge.4)then
 *     Singlet
-                     OpF2(jgrid,4,1,alpha,beta)  = bq(4)
-     1                    * ( C2ps(4) + C2nsp(4) / 6d0 )
+                  OpF2(jgrid,4,1,alpha,beta)  = bq(4)
+     1                 * ( C2ps(4) + C2nsp(4) / 6d0 )
 *     Gluon
-                     OpF2(jgrid,4,2,alpha,beta)  = bq(4) * C2g(4)
+                  OpF2(jgrid,4,2,alpha,beta)  = bq(4) * C2g(4)
 *     T15
-                     OpF2(jgrid,4,11,alpha,beta) = - bq(4) * C2nsp(4)
-     1                    / 4d0
+                  OpF2(jgrid,4,11,alpha,beta) = - bq(4) * C2nsp(4)
+     1                 / 4d0
 *     T24
-                     OpF2(jgrid,4,12,alpha,beta) = bq(4) * C2nsp(4)
-     1                    / 20d0
+                  OpF2(jgrid,4,12,alpha,beta) = bq(4) * C2nsp(4)
+     1                 / 20d0
 *     T35
-                     OpF2(jgrid,4,13,alpha,beta) = bq(4) * C2nsp(4)
-     1                    / 30d0
-                  endif
+                  OpF2(jgrid,4,13,alpha,beta) = bq(4) * C2nsp(4)
+     1                 / 30d0
 *     
 *     Bottom Component
 *     
-                  if(nf.ge.5)then
 *     Singlet
-                     OpF2(jgrid,5,1,alpha,beta)  = bq(5)
-     1                    * ( C2ps(5) + C2nsp(5) / 6d0 )
+                  OpF2(jgrid,5,1,alpha,beta)  = bq(5)
+     1                 * ( C2ps(5) + C2nsp(5) / 6d0 )
 *     Gluon
-                     OpF2(jgrid,5,2,alpha,beta)  = bq(5) * C2g(5)
+                  OpF2(jgrid,5,2,alpha,beta)  = bq(5) * C2g(5)
 *     T24
-                     OpF2(jgrid,5,12,alpha,beta) = - bq(5) * C2nsp(5)
-     1                    / 5d0
+                  OpF2(jgrid,5,12,alpha,beta) = - bq(5) * C2nsp(5)
+     1                 / 5d0
 *     T35
-                     OpF2(jgrid,5,13,alpha,beta) = bq(5) * C2nsp(5)
-     1                    / 30d0
-                  endif
+                  OpF2(jgrid,5,13,alpha,beta) = bq(5) * C2nsp(5)
+     1                 / 30d0
 *     
 *     Top Component
 *     
-                  if(nf.ge.6)then
 *     Singlet
-                     OpF2(jgrid,6,1,alpha,beta)  = bq(6)
-     1                    * ( C2ps(6) + C2nsp(6) / 6d0 )
+                  OpF2(jgrid,6,1,alpha,beta)  = bq(6)
+     1                 * ( C2ps(6) + C2nsp(6) / 6d0 )
 *     Gluon
-                     OpF2(jgrid,6,2,alpha,beta)  = bq(6) * C2g(6)
+                  OpF2(jgrid,6,2,alpha,beta)  = bq(6) * C2g(6)
 *     T35
-                     OpF2(jgrid,6,13,alpha,beta) = - bq(6) * C2nsp(6)
-     1                    / 6d0
-                  endif
+                  OpF2(jgrid,6,13,alpha,beta) = - bq(6) * C2nsp(6)
+     1                 / 6d0
+c     endif
 *     
 *     Total
 *     
                   do ipdf=0,13
-                     do ihq=3,nf
+                     do ihq=3,6
                         OpF2(jgrid,7,ipdf,alpha,beta) = 
      1                       OpF2(jgrid,7,ipdf,alpha,beta)
      2                       + OpF2(jgrid,ihq,ipdf,alpha,beta)
@@ -437,63 +653,57 @@ c      if(MassScheme(1:3).eq."FFN") nf = Nf_FF
 *     
 *     Charm Component
 *     
-                  if(nf.ge.4)then
 *     Singlet
-                     OpFL(jgrid,4,1,alpha,beta)  = bq(4)
-     1                    * ( CLps(4) + CLnsp(4) / 6d0 )
+                  OpFL(jgrid,4,1,alpha,beta)  = bq(4)
+     1                 * ( CLps(4) + CLnsp(4) / 6d0 )
 *     Gluon
-                     OpFL(jgrid,4,2,alpha,beta)  = bq(4) * CLg(4)
+                  OpFL(jgrid,4,2,alpha,beta)  = bq(4) * CLg(4)
 *     T15
-                     OpFL(jgrid,4,11,alpha,beta) = - bq(4) * CLnsp(4)
-     1                    / 4d0
+                  OpFL(jgrid,4,11,alpha,beta) = - bq(4) * CLnsp(4)
+     1                 / 4d0
 *     T24
-                     OpFL(jgrid,4,12,alpha,beta) = bq(4) * CLnsp(4)
-     1                    / 20d0
+                  OpFL(jgrid,4,12,alpha,beta) = bq(4) * CLnsp(4)
+     1                 / 20d0
 *     T35
-                     OpFL(jgrid,4,13,alpha,beta) = bq(4) * CLnsp(4)
-     1                    / 30d0
-                  endif
+                  OpFL(jgrid,4,13,alpha,beta) = bq(4) * CLnsp(4)
+     1                 / 30d0
 *     
 *     Bottom Component
 *     
-                  if(nf.ge.5)then
 *     Singlet
-                     OpFL(jgrid,5,1,alpha,beta)  = bq(5)
-     1                    * ( CLps(5) + CLnsp(5) / 6d0 )
+                  OpFL(jgrid,5,1,alpha,beta)  = bq(5)
+     1                 * ( CLps(5) + CLnsp(5) / 6d0 )
 *     Gluon
-                     OpFL(jgrid,5,2,alpha,beta)  = bq(5) * CLg(5)
+                  OpFL(jgrid,5,2,alpha,beta)  = bq(5) * CLg(5)
 *     T24
-                     OpFL(jgrid,5,12,alpha,beta) = - bq(5) * CLnsp(5)
-     1                    / 5d0
+                  OpFL(jgrid,5,12,alpha,beta) = - bq(5) * CLnsp(5)
+     1                 / 5d0
 *     T35
-                     OpFL(jgrid,5,13,alpha,beta) = bq(5) * CLnsp(5)
-     1                    / 30d0
-                  endif
+                  OpFL(jgrid,5,13,alpha,beta) = bq(5) * CLnsp(5)
+     1                 / 30d0
 *     
 *     Top Component
 *     
-                  if(nf.ge.6)then
 *     Singlet
-                     OpFL(jgrid,6,1,alpha,beta)  = bq(6)
-     1                    * ( CLps(6) + CLnsp(6) / 6d0 )
+                  OpFL(jgrid,6,1,alpha,beta)  = bq(6)
+     1                 * ( CLps(6) + CLnsp(6) / 6d0 )
 *     Gluon
-                     OpFL(jgrid,6,2,alpha,beta)  = bq(6) * CLg(6)
+                  OpFL(jgrid,6,2,alpha,beta)  = bq(6) * CLg(6)
 *     T35
-                     OpFL(jgrid,6,13,alpha,beta) = - bq(6) * CLnsp(6)
-     1                    / 6d0
-                  endif
+                  OpFL(jgrid,6,13,alpha,beta) = - bq(6) * CLnsp(6)
+     1                 / 6d0
 *     
 *     Total
 *     
                   do ipdf=0,13
-                     do ihq=3,nf
+                     do ihq=3,6
                         OpFL(jgrid,7,ipdf,alpha,beta) = 
      1                       OpFL(jgrid,7,ipdf,alpha,beta)
      2                       + OpFL(jgrid,ihq,ipdf,alpha,beta)
                      enddo
                   enddo
 *     
-*     F3 (Only for neutral current processes)
+*     F3 (Only for neutral current processes and always ZM)
 *     
                   if(ProcessDIS.eq."NC")then
 *     
@@ -1112,9 +1322,9 @@ c      if(MassScheme(1:3).eq."FFN") nf = Nf_FF
 *
       call cpu_time(t2)
 *
-      write(6,"(a,a,f9.5,a)") " Computation of the DIS operators",
-     1                        " completed in",t2-t1," s"
-      write(6,*) " "
+c      write(6,"(a,a,f9.5,a)") " Computation of the DIS operators",
+c     1                        " completed in",t2-t1," s"
+c      write(6,*) " "
 *
       return
       end 
