@@ -43,7 +43,7 @@
 **
 *     Internal Variables
 *
-      integer bound,inf,ixi,iptmx
+      integer bound,inf,ixi,iptmx,ipt_FF
       double precision C2L(4,0:2),CLL(4,0:2),C3L(4,0:2)
       double precision fL
       double precision dgauss,a,b,eps(2)
@@ -312,9 +312,14 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     Neutral Current
 *
+*     In case of FONLL-B
+*
+         ipt_FF = ipt
+         if(MassScheme.eq."FONLL-B".and.ipt.ge.1) ipt_FF = 2
+*
          do ixi=1,nxi
             do k=1,3
-               do wipt=0,ipt
+               do wipt=0,ipt_FF
                   SC2mNC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                   SCLmNC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                   SC3mNC(igrid,ixi,k,wipt,beta,alpha) = 0d0
@@ -330,7 +335,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     Precompute integrals
 *
-            if(ipt.ge.1)then
+            if(ipt_FF.ge.1)then
                wipt = 1
 *
                sf = 1
@@ -346,7 +351,7 @@ c      data eps / 1d-7, 1d-5 /
                C3ns1RS = dgauss(integrandsDISzm,a,b,eps(wipt))
                C3ns1L  = C3NS1C(a)
             endif
-            if(ipt.ge.2)then
+            if(ipt_FF.ge.2)then
 *
                wipt = 2
 *
@@ -399,7 +404,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     NLO
 *
-               if(ipt.ge.1)then
+               if(ipt_FF.ge.1)then
 *     Gluon
                   if(k.eq.1)then
 *     C2
@@ -435,7 +440,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     NNLO
 *
-               if(ipt.ge.2)then
+               if(ipt_FF.ge.2)then
 *     Gluon
                   if(k.eq.1)then
 *     C2
@@ -472,7 +477,7 @@ c      data eps / 1d-7, 1d-5 /
 *     Integrals
 *
 
-               do wipt=0,ipt
+               do wipt=0,ipt_FF
                   SC2mNC(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
      1                                                + C2L(k,wipt) * fL
                   SCLmNC(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
@@ -622,6 +627,10 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     Neutral Current
 *
+*     In case of FONLL-B
+*
+         ipt_FF = ipt
+         if(MassScheme.eq."FONLL-B".and.ipt.ge.1) ipt_FF = 2
 *
 *     Variables needed for wrapping the integrand functions
 *
@@ -631,7 +640,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     Precompute integrals
 *
-         if(ipt.ge.1)then
+         if(ipt_FF.ge.1)then
             wipt = 1
 *
             sf = 1
@@ -651,7 +660,7 @@ c      data eps / 1d-7, 1d-5 /
             C3ns1RS = dgauss(integrandsDISzm,a,b,eps(wipt))
             C3ns1L  = C3NS1C(a)
          endif
-         if(ipt.ge.2)then
+         if(ipt_FF.ge.2)then
             wipt = 2
 *
             sf = 1
@@ -749,7 +758,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     NLO
 *
-               if(ipt.ge.1)then
+               if(ipt_FF.ge.1)then
 *     Gluon
                   if(k.eq.1)then
 *     C2
@@ -785,7 +794,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     NNLO
 *
-               if(ipt.ge.2)then
+               if(ipt_FF.ge.2)then
 *     Gluon
                   if(k.eq.1)then
 *     C2
@@ -797,6 +806,13 @@ c      data eps / 1d-7, 1d-5 /
 *     C3
                      C3L(k,2)   = 0d0
                      integC3(2) = 0d0
+*
+*     Subtract the constant term for FONLL-B
+*
+                     if(MassScheme.eq."FONLL-B")then
+                        integC2(2) = integC2(2) - C2g2R0
+                        integCL(2) = integCL(2) - CLg2R0
+                     endif
 *     Pure-Singlet
                   elseif(k.eq.2)then
 *     C2
@@ -810,6 +826,13 @@ c      data eps / 1d-7, 1d-5 /
 *     C3
                      C3L(k,2)   = 0d0
                      integC3(2) = 0d0
+*
+*     Subtract the constant term for FONLL-B
+*
+                     if(MassScheme.eq."FONLL-B")then
+                        integC2(2) = integC2(2) - C2ps2R0
+                        integCL(2) = integCL(2) - CLps2R0
+                     endif
 *     Non-singlet
                   elseif(k.eq.3)then
 *     C2
@@ -822,12 +845,19 @@ c      data eps / 1d-7, 1d-5 /
 *     C3
                      C3L(k,2)   = C3ns2L
                      integC3(2) = C3ns2RS
+*
+*     Subtract the constant term for FONLL-B
+*
+                     if(MassScheme.eq."FONLL-B")then
+                        integC2(2) = integC2(2) - C2ns2RS0
+                        integCL(2) = integCL(2) - CLns2R0
+                     endif
                   endif
                endif
 *
 *     Integrals
 *
-               do wipt=0,ipt
+               do wipt=0,ipt_FF
                   SC2m0NC(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
      1               + C2L(k,wipt) * fL
                   SCLm0NC(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 

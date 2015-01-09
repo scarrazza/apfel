@@ -188,11 +188,11 @@ c      kappa = 1d0          ! mu_R / mu_F
 *
       double precision as_expanded
 *
-      b1    = beta1(nf) / beta0(nf)
-      b2    = beta2(nf) / beta0(nf)
+      b1 = beta1(nf) / beta0(nf)
+      b2 = beta2(nf) / beta0(nf)
 *
       asi = as0
-      t = log(mu2/mu20)
+      t   = log(mu2/mu20)
       den = 1d0 + beta0(nf) * asi * t
       alo = asi / den
 *
@@ -223,8 +223,6 @@ c      kappa = 1d0          ! mu_R / mu_F
       FUNCTION AS_EXACT(NF,MU20,AS0,MU2,IPT)
 *
       IMPLICIT NONE
-*
-      include "../commons/consts.h"
 **
 *     Input Variables
 *
@@ -487,7 +485,7 @@ c      kappa = 1d0          ! mu_R / mu_F
 *
 ****************************************************************************
 *
-*     Functions of which it is needed to finf the root to find LambdaQCD.
+*     Functions needed to find the roots to find LambdaQCD.
 *
 ****************************************************************************
       function LambdaMatchUp(i,lambda)

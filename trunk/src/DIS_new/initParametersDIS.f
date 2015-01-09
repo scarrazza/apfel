@@ -165,39 +165,39 @@
      1                 " with the the FONLL-A scheme"
          endif
       endif
+      write(6,*) " "
 *
 *     Print welcome message and report of the parameters (if enabled)
 *
       if(Welcome)then
-         write(6,*) " "
-         write(6,*) "Report of the DIS parameters:"
-         write(6,*) "  "
+c$$$         write(6,*) "Report of the DIS parameters:"
+c$$$         write(6,*) "  "
 *
          write(6,"(a,a,a)") " Computation in the ",MassScheme,
      1                      " mass scheme"
-*
-         if(ProcessDIS.eq."EM")then
-            write(6,"(a,a,a)") " Electromagnetic (EM) process"
-         elseif(ProcessDIS.eq."NC")then
-            write(6,"(a,a,a)") " Neutral Current (NC) process"
-         elseif(ProcessDIS.eq."CC")then
-            write(6,"(a,a,a)") " Charged Current (CC) process"
-         endif
-*
-         if(ProjectileDIS(1:8).eq."electron".or.
-     1      ProjectileDIS(1:8).eq."positron".or.
-     2      ProjectileDIS(1:8).eq."neutrino")then
-            write(6,"(a,a,a,a)") " Scattering ",
-     1                           ProjectileDIS(1:8),
-     2                           " - ",TargetDIS
-         else
-            write(6,"(a,a,a,a)") " Scattering ",
-     1                           ProjectileDIS,
-     3                           " - ",TargetDIS
-         endif
-*
-         if(PolarizationDIS.ne.0d0) 
-     1   write(6,"(a,f7.3)") " Polarization fraction =",PolarizationDIS
+c$$$*
+c$$$         if(ProcessDIS.eq."EM")then
+c$$$            write(6,"(a,a,a)") " Electromagnetic (EM) process"
+c$$$         elseif(ProcessDIS.eq."NC")then
+c$$$            write(6,"(a,a,a)") " Neutral Current (NC) process"
+c$$$         elseif(ProcessDIS.eq."CC")then
+c$$$            write(6,"(a,a,a)") " Charged Current (CC) process"
+c$$$         endif
+c$$$*
+c$$$         if(ProjectileDIS(1:8).eq."electron".or.
+c$$$     1      ProjectileDIS(1:8).eq."positron".or.
+c$$$     2      ProjectileDIS(1:8).eq."neutrino")then
+c$$$            write(6,"(a,a,a,a)") " Scattering ",
+c$$$     1                           ProjectileDIS(1:8),
+c$$$     2                           " - ",TargetDIS
+c$$$         else
+c$$$            write(6,"(a,a,a,a)") " Scattering ",
+c$$$     1                           ProjectileDIS,
+c$$$     3                           " - ",TargetDIS
+c$$$         endif
+c$$$*
+c$$$         if(PolarizationDIS.ne.0d0) 
+c$$$     1   write(6,"(a,f7.3)") " Polarization fraction =",PolarizationDIS
       endif
 *
       return
