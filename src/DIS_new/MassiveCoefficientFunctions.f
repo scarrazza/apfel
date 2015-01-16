@@ -688,7 +688,7 @@
 *
       c3ns1ccc = 2d0 * CF * ( - 4d0 - 1d0 / 2d0 / lambda - 2d0 * zeta2
      1         - ( 1d0 + 3d0 * lambda ) * KA / 2d0 / lambda 
-     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0
+     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0 
      3         + 2d0 * ln1mz**2d0 - 2d0 * Rf 
      4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
      5         + ( lambda - 1d0 / 2d0 ) 

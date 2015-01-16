@@ -45,8 +45,8 @@
 *
       integer bound,inf,ixi,iptmx,ipt_FF
       double precision C2L(4,0:2),CLL(4,0:2),C3L(4,0:2)
-      double precision fL
-      double precision dgauss,a,b,eps(2)
+      double precision fL,fL_CCm,w_int
+      double precision dgauss,a,b,eps(2),b_CCm
       double precision integrandsDISzm
       double precision integrandsDISNCm,integrandsDISNCm0
       double precision integrandsDISCCm,integrandsDISCCm0
@@ -490,10 +490,6 @@ c      data eps / 1d-7, 1d-5 /
 *     Charged Current
 *
          do ixi=1,nxi
-*
-            lambda = xigrid(ixi) / ( 1d0 + xigrid(ixi) )
-            Rf = RFun(xigrid(ixi),a)
-*
             do k=1,3
                do wipt=0,ipt
                   SC2mCC(igrid,ixi,k,wipt,beta,alpha) = 0d0
@@ -501,6 +497,15 @@ c      data eps / 1d-7, 1d-5 /
                   SC3mCC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                enddo
             enddo
+*
+            lambda = xigrid(ixi) / ( 1d0 + xigrid(ixi) )
+c            if(xg(igrid,alpha).ge.lambda) cycle
+            if(a.ge.lambda) cycle
+*
+            Rf     = RFun(xigrid(ixi),a/lambda)
+            fL_CCm = w_int(inter_degree(igrid),alpha,
+     1                     xg(igrid,beta)/lambda)
+            b_CCm = min(lambda,xg(igrid,beta)/xg(igrid,bound))
 *
 *     Variables needed for wrapping the integrand functions
 *
@@ -517,24 +522,24 @@ c      data eps / 1d-7, 1d-5 /
 *
                sf = 1
                k = 1
-               C2g1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               C2g1R   = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
                k = 3
-               C2ns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
-               C2ns1L  = c2ns1ccc(Rf,xigrid(ixi),a)
+               C2ns1RS = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
+               C2ns1L  = c2ns1ccc(Rf,xigrid(ixi),a/lambda)
 *
                sf = 2
                k = 1
-               CLg1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               CLg1R   = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
                k = 3
-               CLns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
-               CLns1L  = clns1ccc(Rf,xigrid(ixi),a)
+               CLns1RS = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
+               CLns1L  = clns1ccc(Rf,xigrid(ixi),a/lambda)
 *
                sf = 3
                k = 1
-               C3g1R   = dgauss(integrandsDISCCm,a,b,eps(wipt))
+               C3g1R   = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
                k = 3
-               C3ns1RS = dgauss(integrandsDISCCm,a,b,eps(wipt))
-               C3ns1L  = c3ns1ccc(Rf,xigrid(ixi),a)
+               C3ns1RS = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
+               C3ns1L  = c3ns1ccc(Rf,xigrid(ixi),a/lambda)
             endif
 *
             do k=1,3
@@ -611,11 +616,11 @@ c      data eps / 1d-7, 1d-5 /
 *
                do wipt=0,ipt
                   SC2mCC(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
-     1                                                + C2L(k,wipt) * fL
+     1                 + C2L(k,wipt) * fL_CCm
                   SCLmCC(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt)
-     1                                                + CLL(k,wipt) * fL 
+     1                 + CLL(k,wipt) * fL_CCm 
                   SC3mCC(igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
-     1                                                + C3L(k,wipt) * fL
+     1                 + C3L(k,wipt) * fL_CCm
                enddo
             enddo
          enddo

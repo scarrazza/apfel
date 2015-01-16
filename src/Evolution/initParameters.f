@@ -245,11 +245,11 @@
             write(6,*) "Logarithmic accuracy not allowed:"
             write(6,*) "LogAcc =",LogAcc
             write(6,*) " "
-         write(6,*) "The options are:"
-         write(6,*) "- 'LL'"
-         write(6,*) "- 'NLL'"
-         write(6,*) "  "
-         call exit(-10)
+            write(6,*) "The options are:"
+            write(6,*) "- 'LL'"
+            write(6,*) "- 'NLL'"
+            write(6,*) "  "
+            call exit(-10)
          endif
       endif
 *

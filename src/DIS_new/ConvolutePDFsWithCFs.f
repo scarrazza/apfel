@@ -54,7 +54,6 @@
       call cpu_time(t1)
 *
       Q2    = Q * Q
-      Q2DIS = Q2
 *
 *     Dumping factor for FONLL
 *
