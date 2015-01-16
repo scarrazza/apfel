@@ -37,27 +37,50 @@
          do alpha=0,nin(igrid)
             fev(0,alpha) = fgamma(igrid,alpha)
          enddo
-
-         do ihq=3,7
-            do alpha=0,nin(igrid)
-               F2(ihq,igrid,alpha) = 0d0
-               FL(ihq,igrid,alpha) = 0d0
-               F3(ihq,igrid,alpha) = 0d0
-               do beta=0,nin(igrid)-alpha
-                  do ipdf=0,13
-                     F2(ihq,igrid,alpha) = F2(ihq,igrid,alpha)
-     1                    + OpF2(igrid,ihq,ipdf,0,beta)
-     2                    * fev(ipdf,alpha+beta)
-                     FL(ihq,igrid,alpha) = FL(ihq,igrid,alpha)
-     1                    + OpFL(igrid,ihq,ipdf,0,beta)
-     2                    * fev(ipdf,alpha+beta)
-                     F3(ihq,igrid,alpha) = F3(ihq,igrid,alpha)
-     1                    + OpF3(igrid,ihq,ipdf,0,beta)
-     2                    * fev(ipdf,alpha+beta)
+*
+         if(IsExt(igrid))then
+            do ihq=3,7
+               do alpha=0,nin(igrid)
+                  F2(ihq,igrid,alpha) = 0d0
+                  FL(ihq,igrid,alpha) = 0d0
+                  F3(ihq,igrid,alpha) = 0d0
+                  do beta=alpha,nin(igrid)
+                     do ipdf=0,13
+                        F2(ihq,igrid,alpha) = F2(ihq,igrid,alpha)
+     1                       + OpF2(igrid,ihq,ipdf,alpha,beta)
+     2                       * fev(ipdf,beta)
+                        FL(ihq,igrid,alpha) = FL(ihq,igrid,alpha)
+     1                       + OpFL(igrid,ihq,ipdf,alpha,beta)
+     2                       * fev(ipdf,beta)
+                        F3(ihq,igrid,alpha) = F3(ihq,igrid,alpha)
+     1                       + OpF3(igrid,ihq,ipdf,alpha,beta)
+     2                       * fev(ipdf,beta)
+                     enddo
                   enddo
                enddo
             enddo
-         enddo
+         else
+            do ihq=3,7
+               do alpha=0,nin(igrid)
+                  F2(ihq,igrid,alpha) = 0d0
+                  FL(ihq,igrid,alpha) = 0d0
+                  F3(ihq,igrid,alpha) = 0d0
+                  do beta=0,nin(igrid)-alpha
+                     do ipdf=0,13
+                        F2(ihq,igrid,alpha) = F2(ihq,igrid,alpha)
+     1                       + OpF2(igrid,ihq,ipdf,0,beta)
+     2                       * fev(ipdf,alpha+beta)
+                        FL(ihq,igrid,alpha) = FL(ihq,igrid,alpha)
+     1                       + OpFL(igrid,ihq,ipdf,0,beta)
+     2                       * fev(ipdf,alpha+beta)
+                        F3(ihq,igrid,alpha) = F3(ihq,igrid,alpha)
+     1                       + OpF3(igrid,ihq,ipdf,0,beta)
+     2                       * fev(ipdf,alpha+beta)
+                     enddo
+                  enddo
+               enddo
+            enddo
+         endif
       enddo
 *
       call cpu_time(t2)

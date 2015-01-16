@@ -597,7 +597,7 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *     Internal Variables
 *
       double precision z,w_int,fR,fS,fL
-      double precision xi
+      double precision xi,lambda,ym
       double precision C2R(3,2),C2S(3,2)
       double precision CLR(3,2),CLS(3,2)
       double precision C3R(3,2),C3S(3,2)
@@ -610,16 +610,22 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
       double precision integrandsDISCCm
 *
       xi = xigrid(wixi)
+      lambda = xi / ( 1d0 + xi )
+*
+      integrandsDISCCm = 0d0
+      if(y.ge.lambda) return
 *
 *     Interpolant functions
 *
       z = xg(igrid,wbeta) / y
 *
-      fL = 0d0
-      if(walpha.eq.wbeta) fL = 1d0
-*
+      fL = w_int(inter_degree(igrid),walpha,xg(igrid,wbeta)/lambda)
       fR = w_int(inter_degree(igrid),walpha,z)
       fS = fR - fL
+*
+*     rescaled variable
+*
+      ym = y / lambda
 *
 *     Contructing integrands order by order
 *
@@ -630,7 +636,7 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
          if(sf.eq.1)then
 *     Gluon
             if(k.eq.1)then
-               C2R(k,wipt) = c2g1cca(xi,y)
+               C2R(k,wipt) = c2g1cca(xi,ym)
                C2S(k,wipt) = 0d0
 *     Pure-singlet
             elseif(k.eq.2)then
@@ -638,14 +644,14 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
                C2S(k,wipt) = 0d0
 *     Non-singlet
             elseif(k.eq.3)then
-               C2R(k,wipt) = c2ns1cca(xi,y)
-               C2S(k,wipt) = c2ns1ccb(xi,y)
+               C2R(k,wipt) = c2ns1cca(xi,ym)
+               C2S(k,wipt) = c2ns1ccb(xi,ym)
             endif
 *     CL
          elseif(sf.eq.2)then
 *     Gluon
             if(k.eq.1)then
-               CLR(k,wipt) = clg1cca(xi,y)
+               CLR(k,wipt) = clg1cca(xi,ym)
                CLS(k,wipt) = 0d0
 *     Pure-singlet
             elseif(k.eq.2)then
@@ -653,14 +659,14 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
                CLS(k,wipt) = 0d0
 *     Non-singlet
             elseif(k.eq.3)then
-               CLR(k,wipt) = clns1cca(xi,y)
-               CLS(k,wipt) = clns1ccb(xi,y)
+               CLR(k,wipt) = clns1cca(xi,ym)
+               CLS(k,wipt) = clns1ccb(xi,ym)
             endif
 *     C3
          elseif(sf.eq.3)then
 *     Gluon
             if(k.eq.1)then
-               C3R(k,wipt) = c3g1cca(xi,y)
+               C3R(k,wipt) = c3g1cca(xi,ym)
                C3S(k,wipt) = 0d0
 *     Pure-singlet
             elseif(k.eq.2)then
@@ -668,8 +674,8 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
                C3S(k,wipt) = 0d0
 *     Non-singlet
             elseif(k.eq.3)then
-               C3R(k,wipt) = c3ns1cca(xi,y)
-               C3S(k,wipt) = c3ns1ccb(xi,y)
+               C3R(k,wipt) = c3ns1cca(xi,ym)
+               C3S(k,wipt) = c3ns1ccb(xi,ym)
             endif
          endif
       endif
@@ -695,6 +701,8 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
       elseif(sf.eq.3)then
          integrandsDISCCm = C3R(k,wipt) * fR + C3S(k,wipt) * fS
       endif
+*
+      integrandsDISCCm = integrandsDISCCm / lambda
 *
       return
       end
