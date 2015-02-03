@@ -143,7 +143,9 @@ am__objects_11 = DIS_new/InitializeAPFEL_DIS.lo \
 	DIS_new/SetPolarizationDIS.lo DIS_new/SetProjectileDIS.lo \
 	DIS_new/SetTargetDIS.lo DIS_new/MassiveCoefficientFunctions.lo \
 	DIS_new/MassiveZeroCoefficientFunctions.lo DIS_new/ComputeDISOperators.lo \
-	DIS_new/ConvolutePDFsWithDISOperators.lo
+	DIS_new/ConvolutePDFsWithDISOperators.lo DIS_new/JoinDISOperators.lo \
+	DIS_new/ConvoluteEvolutionWithDISOperators.lo \
+	DIS_new/ExternalDISOperator.lo
 am__objects_12 = HELL/src/hell.lo HELL/src/DGLAPevol.lo \
 	HELL/src/hell_wrapper.lo
 am_libAPFELCore_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
@@ -381,7 +383,7 @@ UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f core/gamma.f core/beta.f
 DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f \
 	DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
 
-DIS_NEW = DIS_new/InitializeAPFEL_DIS.f DIS_new/initParametersDIS.f DIS_new/SetMassScheme.f DIS_new/initIntegralsDIS.f DIS_new/ZeroMassCoefficientFunctions.f DIS_new/RSLintegralsDIS.f DIS_new/ComputeStructureFunctionsAPFEL.f DIS_new/ConvolutePDFsWithCFs.f DIS_new/F2total.f DIS_new/F2light.f DIS_new/F2charm.f DIS_new/F2bottom.f DIS_new/F2top.f DIS_new/FLtotal.f DIS_new/FLlight.f DIS_new/FLcharm.f DIS_new/FLbottom.f DIS_new/FLtop.f DIS_new/F3total.f DIS_new/F3light.f DIS_new/F3charm.f DIS_new/F3bottom.f DIS_new/F3top.f DIS_new/integrandsDIS.f DIS_new/SetProcessDIS.f DIS_new/ComputeChargesDIS.f DIS_new/SetPolarizationDIS.f DIS_new/SetProjectileDIS.f DIS_new/SetTargetDIS.f DIS_new/MassiveCoefficientFunctions.f DIS_new/MassiveZeroCoefficientFunctions.f DIS_new/ComputeDISOperators.f DIS_new/ConvolutePDFsWithDISOperators.f
+DIS_NEW = DIS_new/InitializeAPFEL_DIS.f DIS_new/initParametersDIS.f DIS_new/SetMassScheme.f DIS_new/initIntegralsDIS.f DIS_new/ZeroMassCoefficientFunctions.f DIS_new/RSLintegralsDIS.f DIS_new/ComputeStructureFunctionsAPFEL.f DIS_new/ConvolutePDFsWithCFs.f DIS_new/F2total.f DIS_new/F2light.f DIS_new/F2charm.f DIS_new/F2bottom.f DIS_new/F2top.f DIS_new/FLtotal.f DIS_new/FLlight.f DIS_new/FLcharm.f DIS_new/FLbottom.f DIS_new/FLtop.f DIS_new/F3total.f DIS_new/F3light.f DIS_new/F3charm.f DIS_new/F3bottom.f DIS_new/F3top.f DIS_new/integrandsDIS.f DIS_new/SetProcessDIS.f DIS_new/ComputeChargesDIS.f DIS_new/SetPolarizationDIS.f DIS_new/SetProjectileDIS.f DIS_new/SetTargetDIS.f DIS_new/MassiveCoefficientFunctions.f DIS_new/MassiveZeroCoefficientFunctions.f DIS_new/ComputeDISOperators.f DIS_new/ConvolutePDFsWithDISOperators.f DIS_new/JoinDISOperators.f DIS_new/ConvoluteEvolutionWithDISOperators.f DIS_new/ExternalDISOperator.f
 
 EXTRA_DIST = commons
 
@@ -787,6 +789,12 @@ DIS_new/ComputeDISOperators.lo: DIS_new/$(am__dirstamp) \
 	DIS_new/$(DEPDIR)/$(am__dirstamp)
 DIS_new/ConvolutePDFsWithDISOperators.lo: DIS_new/$(am__dirstamp) \
 	DIS_new/$(DEPDIR)/$(am__dirstamp)
+DIS_new/JoinDISOperators.lo: DIS_new/$(am__dirstamp) \
+	DIS_new/$(DEPDIR)/$(am__dirstamp)
+DIS_new/ConvoluteEvolutionWithDISOperators.lo: DIS_new/$(am__dirstamp) \
+	DIS_new/$(DEPDIR)/$(am__dirstamp)
+DIS_new/ExternalDISOperator.lo: DIS_new/$(am__dirstamp) \
+	DIS_new/$(DEPDIR)/$(am__dirstamp)
 HELL/src/$(am__dirstamp):
 	@$(MKDIR_P) HELL/src
 	@: > HELL/src/$(am__dirstamp)
@@ -894,6 +902,12 @@ mostlyclean-compile:
 	-rm -f DIS_new/ComputeDISOperators.lo
 	-rm -f DIS_new/ConvolutePDFsWithDISOperators.$(OBJEXT)
 	-rm -f DIS_new/ConvolutePDFsWithDISOperators.lo
+	-rm -f DIS_new/JoinDISOperators.$(OBJEXT)
+	-rm -f DIS_new/JoinDISOperators.lo
+	-rm -f DIS_new/ConvoluteEvolutionWithDISOperators.$(OBJEXT)
+	-rm -f DIS_new/ConvoluteEvolutionWithDISOperators.lo
+	-rm -f DIS_new/ExternalDISOperators.$(OBJEXT)
+	-rm -f DIS_new/ExternalDISOperators.lo
 	-rm -f Evolution/AlphaQCD.$(OBJEXT)
 	-rm -f Evolution/AlphaQCD.lo
 	-rm -f Evolution/AlphaQED.$(OBJEXT)
