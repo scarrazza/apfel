@@ -27,7 +27,7 @@
 *     Internal Variables
 *
       integer inf
-      double precision mu2i(3:6),mu2f(4:7)
+      double precision mu2i(3:6),mu2f(3:6)
       double precision M0sg(2,2,0:nint_max,0:nint_max)
       double precision M0nsp(0:nint_max,0:nint_max)
       double precision M0nsm(0:nint_max,0:nint_max)
@@ -37,7 +37,7 @@
       double precision Mnsm(0:nint_max,0:nint_max)
       double precision Mnsv(0:nint_max,0:nint_max)
       double precision tiny
-      parameter(tiny=1d-10)
+      parameter(tiny=1d-14)
 *
 *     Initial Conditions (Unity matrices)
 *

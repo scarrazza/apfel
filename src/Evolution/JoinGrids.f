@@ -109,7 +109,7 @@
                      do j=0,13
                         Ev2EvQCD(0,i,j,alpha,beta) = 
      1                       Ev2EvQCD(dgrid,i,j,alphap,betap)
-                        if(abs(Ph2PhQCD(0,i,j,alpha,beta)).lt.eps)
+                        if(abs(Ev2EvQCD(0,i,j,alpha,beta)).lt.eps)
      1                     Ev2EvQCD(0,i,j,alpha,beta) = 0d0 
                      enddo
                   enddo

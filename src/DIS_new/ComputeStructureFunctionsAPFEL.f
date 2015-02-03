@@ -13,6 +13,9 @@
 *     Input Variables
 *
       double precision Q0,Q
+      double precision t1,t2
+*
+      call cpu_time(t1)
 *
 *     Compute PDF evolution
 *
@@ -20,10 +23,16 @@
 *
 *     Convolute evolved PDFs with the DIS coefficient functions
 *
+c      call ConvolutePDFsWithCFs(Q) ! Old and incomplete (to be removed)
       call ComputeDISOperators(Q)
       call ConvolutePDFsWithDISOperators
 *
-c      call ConvolutePDFsWithCFs(Q)
+      call cpu_time(t2)
+*
+      write(6,"(a,a,f9.5,a)") " Computation of the DIS structure ",
+     1                        "functions with PDFs completed in",
+     2                        t2-t1," s"
+      write(6,*) " "
 *
       return
       end
