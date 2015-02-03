@@ -22,6 +22,7 @@
       include "../commons/CKM.h"
       include "../commons/MassScheme.h"
       include "../commons/Nf_FF.h"
+      include "../commons/EvolOp.h"
 **
 *     Internal Variables
 *
@@ -1697,6 +1698,15 @@ c     endif
                enddo
             enddo
          enddo
+      endif
+*
+*     If the computation of the evolution operator is enabled
+*     join the DIS operator grids and then convolute with the
+*     evolution operator.
+*
+      if(EvolOp)then
+         call JoinDISOperators
+         call ConvoluteEvolutionWithDISOperators
       endif
 *
       call cpu_time(t2)

@@ -4,7 +4,7 @@
 *
 *     This function returns the "external" evolution operator on the
 *     interpolation grid. This is possible only if the internal grids are 
-*     used of if one single external grid is provided.
+*     used or if one single external grid is provided.
 *
 ************************************************************************
       function ExternalEvolutionOperator(Bs2Bs,i,j,x,beta)
