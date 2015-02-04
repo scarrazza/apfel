@@ -1,7 +1,7 @@
 *     -*-fortran-*-
 
       integer xistep
-      parameter(xistep=1)
+      parameter(xistep=3)
       integer nxir
       parameter(nxir=nxi/xistep)
 

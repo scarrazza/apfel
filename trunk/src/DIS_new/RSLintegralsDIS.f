@@ -317,7 +317,7 @@ c      data eps / 1d-7, 1d-5 /
          ipt_FF = ipt
          if(MassScheme.eq."FONLL-B".and.ipt.ge.1) ipt_FF = 2
 *
-         do ixi=1,nxi
+         do ixi=1,nxir
             do k=1,3
                do wipt=1,ipt_FF
                   SC2mNC(igrid,ixi,k,wipt,beta,alpha) = 0d0
@@ -328,7 +328,7 @@ c      data eps / 1d-7, 1d-5 /
 *     Variables needed for wrapping the integrand functions
 *
             wnf    = Nf_FF
-            wixi   = ixi
+            wixi   = ixi * xistep
             walpha = alpha
             wbeta  = beta
 *
@@ -446,7 +446,7 @@ c      data eps / 1d-7, 1d-5 /
          iptmx = ipt
          if(ipt.gt.1) iptmx = 1
 *
-         do ixi=1,nxi
+         do ixi=1,nxir
             do k=1,3
                do wipt=0,iptmx
                   SC2mCC(igrid,ixi,k,wipt,beta,alpha) = 0d0
@@ -455,11 +455,11 @@ c      data eps / 1d-7, 1d-5 /
                enddo
             enddo
 *
-            lambda = xigrid(ixi) / ( 1d0 + xigrid(ixi) )
+            lambda = xigrid(ixi*xistep) / ( 1d0 + xigrid(ixi*xistep) )
 c            if(xg(igrid,alpha).ge.lambda) cycle
             if(a.ge.lambda) cycle
 *
-            Rf     = RFun(xigrid(ixi),a/lambda)
+            Rf     = RFun(xigrid(ixi*xistep),a/lambda)
             fL_CCm = w_int(inter_degree(igrid),alpha,
      1                     xg(igrid,beta)/lambda)
             b_CCm = min(lambda,xg(igrid,beta)/xg(igrid,bound))
@@ -467,7 +467,7 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
 *     Variables needed for wrapping the integrand functions
 *
             wnf    = Nf_FF
-            wixi   = ixi
+            wixi   = ixi * xistep
             walpha = alpha
             wbeta  = beta
 *
@@ -482,21 +482,21 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
                C2g1R   = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
                k = 3
                C2ns1RS = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
-               C2ns1L  = c2ns1ccc(Rf,xigrid(ixi),a/lambda)
+               C2ns1L  = c2ns1ccc(Rf,xigrid(ixi*xistep),a/lambda)
 *
                sf = 2
                k = 1
                CLg1R   = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
                k = 3
                CLns1RS = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
-               CLns1L  = clns1ccc(Rf,xigrid(ixi),a/lambda)
+               CLns1L  = clns1ccc(Rf,xigrid(ixi*xistep),a/lambda)
 *
                sf = 3
                k = 1
                C3g1R   = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
                k = 3
                C3ns1RS = dgauss(integrandsDISCCm,a,b_CCm,eps(wipt))
-               C3ns1L  = c3ns1ccc(Rf,xigrid(ixi),a/lambda)
+               C3ns1L  = c3ns1ccc(Rf,xigrid(ixi*xistep),a/lambda)
             endif
 *
             do k=1,3
@@ -692,8 +692,8 @@ c               endif
             C3ns2L  = C3NSP2C(a,inf)
          endif
 *
-         do ixi=1,nxi
-            lnQ  = dlog(xigrid(ixi))
+         do ixi=1,nxir
+            lnQ  = dlog(xigrid(ixi*xistep))
             lnF  = lnkQF2 - lnQ
             lnQ2 = lnQ * lnQ
             lnQF = lnQ * lnF
@@ -807,8 +807,8 @@ c               endif
          iptmx = ipt
          if(ipt.gt.1) iptmx = 1
 *
-         do ixi=1,nxi
-            lnQ = dlog(xigrid(ixi))
+         do ixi=1,nxir
+            lnQ = dlog(xigrid(ixi*xistep))
             lnC2 = lnkQF2 + lnQ
             lnC3 = lnkQF2 - lnQ
 *

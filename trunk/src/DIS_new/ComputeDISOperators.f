@@ -44,7 +44,7 @@
       double precision CLg(3:6),CLps(3:6),CLnsp(3:6),CLnsm(3:6)
       double precision C3g(3:6),C3nsp(3:6),C3nsm(3:6)
       double precision Kl,Kc,Kb,Kt
-      double precision sgn,diff(nxi),xi(4:6),c0(4:6),c1(4:6)
+      double precision sgn,diff(nxir),xi(4:6),c0(4:6),c1(4:6)
       double precision damp(4:6)
       double precision t1,t2
 *
@@ -111,14 +111,14 @@
       do ihq=4,6
          ixi(ihq) = 0
          xi(ihq)  = Q2 / m2th(ihq)
-         if(xi(ihq).le.ximin)then
+         if(xi(ihq).le.xigrid(xistep))then
             ixi(ihq) = 0
          elseif(xi(ihq).ge.ximax)then
-            ixi(ihq) = nxi
+            ixi(ihq) = nxir
          else
             diff(1) = xi(ihq) - xigrid(1)
-            do i=2,nxi
-               diff(i) = xi(ihq) - xigrid(i)
+            do i=2,nxir
+               diff(i) = xi(ihq) - xigrid(i*xistep)
                sgn = diff(i-1) * diff(i)
                if(sgn.lt.0.d0)then
                   ixi(ihq) = i - 1
@@ -130,11 +130,11 @@
 *
          c0(ihq) = 0d0
          c1(ihq) = 0d0
-         if(ixi(ihq).gt.0.and.ixi(ihq).lt.nxi)then
-            c0(ihq) = dlog(xigrid(ixi(ihq)+1)/xi(ihq))
-     1              / dlog(xigrid(ixi(ihq)+1)/xigrid(ixi(ihq)))
-            c1(ihq) = dlog(xi(ihq)/xigrid(ixi(ihq)))
-     1              / dlog(xigrid(ixi(ihq)+1)/xigrid(ixi(ihq)))
+         if(ixi(ihq).gt.0.and.ixi(ihq).lt.nxir)then
+            c0(ihq) = dlog(xigrid(xistep*(ixi(ihq)+1))/xi(ihq))
+     1      / dlog(xigrid(xistep*(ixi(ihq)+1))/xigrid(xistep*ixi(ihq)))
+            c1(ihq) = dlog(xi(ihq)/xigrid(xistep*ixi(ihq)))
+     1      / dlog(xigrid(xistep*(ixi(ihq)+1))/xigrid(xistep*ixi(ihq)))
          endif
 *
 *     Damping factors needed for the FONLL structure functions
