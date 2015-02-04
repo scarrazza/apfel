@@ -291,4 +291,130 @@ namespace APFEL {
 	     F2,F3,FL,sigma);
   }
 
+  // Functions for the new DIS module
+  void InitializeAPFEL_DIS()
+  {
+    finitializeapfel_dis();
+  }
+
+  void ComputeStructureFunctionsAPFEL(double Q0, double Q)
+  {
+    fcomputestructurefunctionsapfel(&Q0,&Q);
+  }
+
+  void SetMassScheme(const std::string& ms)
+  {
+    char cms[SIZE+1];
+    strncpy(cms, ms.c_str(), SIZE);
+    fsetmassscheme(cms);
+  }
+
+  void SetPolarizationDIS(double pol)
+  {
+    fsetpolarizationdis(&pol);
+  }
+
+  void SetProcessDIS(const std::string& pr)
+  {
+    char cpr[SIZE+1];
+    strncpy(cpr, pr.c_str(), SIZE);
+    fsetprocessdis(cpr);
+  }
+
+  void SetProjectileDIS(const std::string& lept)
+  {
+    char clept[SIZE+1];
+    strncpy(clept, lept.c_str(), SIZE);
+    fsetprojectiledis(clept);
+  }
+
+  void SetTargetDIS(const std::string& tar)
+  {
+    char ctar[SIZE+1];
+    strncpy(ctar, tar.c_str(), SIZE);
+    fsettargetdis(ctar);
+  }
+
+  double ExternalDISOperator(const std::string& SF,int ihq,int i,double x,int beta)
+  {
+    char cSF[SIZE+1];
+    strncpy(cSF, SF.c_str(), SIZE);
+    return fexternaldisoperator(cSF,&ihq,&i,&x,&beta);
+  }
+
+  double F2light(double x)
+  {
+    return ff2light(&x);
+  }
+
+  double F2charm(double x)
+  {
+    return ff2charm(&x);
+  }
+
+  double F2bottom(double x)
+  {
+    return ff2bottom(&x);
+  }
+
+  double F2top(double x)
+  {
+    return ff2top(&x);
+  }
+
+  double F2total(double x)
+  {
+    return ff2total(&x);
+  }
+
+  double FLlight(double x)
+  {
+    return ffllight(&x);
+  }
+
+  double FLcharm(double x)
+  {
+    return fflcharm(&x);
+  }
+
+  double FLbottom(double x)
+  {
+    return fflbottom(&x);
+  }
+
+  double FLtop(double x)
+  {
+    return ffltop(&x);
+  }
+
+  double FLtotal(double x)
+  {
+    return ffltotal(&x);
+  }
+
+  double F3light(double x)
+  {
+    return ff3light(&x);
+  }
+
+  double F3charm(double x)
+  {
+    return ff3charm(&x);
+  }
+
+  double F3bottom(double x)
+  {
+    return ff3bottom(&x);
+  }
+
+  double F3top(double x)
+  {
+    return ff3top(&x);
+  }
+
+  double F3total(double x)
+  {
+    return ff3total(&x);
+  }
+
 }

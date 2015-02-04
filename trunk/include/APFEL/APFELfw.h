@@ -151,6 +151,76 @@ extern "C" {
 #define fdisxsec FC_FUNC(fdisxsec,FDISXSEC)
   void fdisxsec(double*,double*,double*,double*,double*,char*,char*,int*,
                 char*,int*,char*,char*,double*,double*,double*,double*);
+
+#define finitializeapfel_dis FC_FUNC(initializeapfel_dis,INITIALIZEAPFEL_DIS)
+  void finitializeapfel_dis(void);
+
+#define fcomputestructurefunctionsapfel FC_FUNC(computestructurefunctionsapfel,COMPUTESTRUCTUREFUNCTIONSAPFEL)
+  void fcomputestructurefunctionsapfel(double*, double*);
+
+#define fsetmassscheme FC_FUNC(setmassscheme,SETMASSSCHEME)
+  void fsetmassscheme(char*);
+
+#define fsetpolarizationdis FC_FUNC(setpolarizationdis,SETPOLARIZATIONDIS)
+  void fsetpolarizationdis(double*);
+
+#define fsetprocessdis FC_FUNC(setprocessdis,SETPROCESSDIS)
+  void fsetprocessdis(char*);
+
+#define fsetprojectiledis FC_FUNC(setprojectiledis,SETPROJECTILEDIS)
+  void fsetprojectiledis(char*);
+
+#define fsettargetdis FC_FUNC(settargetdis,SETTARGETDIS)
+  void fsettargetdis(char*);
+
+#define fexternaldisoperator FC_FUNC(externaldisoperator,EXTERNALDISOPERATOR)
+  double fexternaldisoperator(char*,int*,int*,double*,int*);
+
+#define ff2light FC_FUNC(f2light,F2LIGHT)
+  double ff2light(double*);
+
+#define ff2charm FC_FUNC(f2charm,F2CHARM)
+  double ff2charm(double*);
+
+#define ff2bottom FC_FUNC(f2bottom,F2BOTTOM)
+  double ff2bottom(double*);
+
+#define ff2top FC_FUNC(f2top,F2TOP)
+  double ff2top(double*);
+
+#define ff2total FC_FUNC(f2total,F2TOTAL)
+  double ff2total(double*);
+
+#define ffllight FC_FUNC(fllight,FLLIGHT)
+  double ffllight(double*);
+
+#define fflcharm FC_FUNC(flcharm,FLCHARM)
+  double fflcharm(double*);
+
+#define fflbottom FC_FUNC(flbottom,FLBOTTOM)
+  double fflbottom(double*);
+
+#define ffltop FC_FUNC(fltop,FLTOP)
+  double ffltop(double*);
+
+#define ffltotal FC_FUNC(fltotal,FLTOTAL)
+  double ffltotal(double*);
+
+#define ff3light FC_FUNC(f3light,F3LIGHT)
+  double ff3light(double*);
+
+#define ff3charm FC_FUNC(f3charm,F3CHARM)
+  double ff3charm(double*);
+
+#define ff3bottom FC_FUNC(f3bottom,F3BOTTOM)
+  double ff3bottom(double*);
+
+#define ff3top FC_FUNC(f3top,F3TOP)
+  double ff3top(double*);
+
+#define ff3total FC_FUNC(f3total,F3TOTAL)
+  double ff3total(double*);
+
 }
 
 #endif
