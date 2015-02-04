@@ -19,7 +19,6 @@
       integer i,j,ihq
       integer alpha,beta,gamma
 *
-      write(6,*) "...",nin(0)
       do ihq=3,7
          do i=0,13
             do alpha=0,nin(0)

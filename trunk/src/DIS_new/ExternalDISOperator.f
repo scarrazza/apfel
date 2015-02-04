@@ -7,7 +7,7 @@
 *     used or if one single external grid is provided.
 *
 ************************************************************************
-      function ExternalDISOperator(SF,ihq,i,alpha,beta)
+      function ExternalDISOperator(SF,ihq,i,x,beta)
 *
       implicit none
 *
@@ -18,8 +18,15 @@
 *     Input Variables
 *
       integer ihq,i
-      integer alpha,beta
+      double precision x
+      integer beta
       character*2 SF
+**
+*     Internal Variables
+*
+      integer n
+      integer alpha
+      double precision w_int_gen
 **
 *     Output Variables
 *
@@ -50,7 +57,7 @@
          call exit(-10)
       endif
 *
-      if(ihq.lt.3.or.i.gt.7)then
+      if(ihq.lt.3.or.ihq.gt.7)then
          write(6,*) "In ExternalDISOperator.f:"
          write(6,*) "Invalid HQ index, ihq =",ihq
          write(6,*) "  "
@@ -63,9 +70,9 @@
          call exit(-10)
       endif
 *
-      if(alpha.lt.0.or.alpha.gt.nin(0))then
+      if(x.lt.xmin(1).or.x.gt.xmax)then
          write(6,*) "In ExternalDISOperator.f:"
-         write(6,*) "Invalid index, alpha =",alpha
+         write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
       if(beta.lt.0.or.beta.gt.nin(0))then
@@ -74,12 +81,28 @@
          call exit(-10)
       endif
 *
+*     interpolate
+*
+      n = inter_degree(0)
+      ExternalDISOperator = 0d0
       if(SF.eq."F2")then
-         ExternalDISOperator = EvOpF2(ihq,i,alpha,beta)
+         do alpha=0,nin(0)
+            ExternalDISOperator = ExternalDISOperator 
+     1                          + w_int_gen(n,alpha,x)
+     2                          * EvOpF2(ihq,i,alpha,beta)
+         enddo
       elseif(SF.eq."FL")then
-         ExternalDISOperator = EvOpFL(ihq,i,alpha,beta)
+         do alpha=0,nin(0)
+            ExternalDISOperator = ExternalDISOperator 
+     1                          + w_int_gen(n,alpha,x)
+     2                          * EvOpFL(ihq,i,alpha,beta)
+         enddo
       elseif(SF.eq."F3")then
-         ExternalDISOperator = EvOpF3(ihq,i,alpha,beta)
+         do alpha=0,nin(0)
+            ExternalDISOperator = ExternalDISOperator 
+     1                          + w_int_gen(n,alpha,x)
+     2                          * EvOpF3(ihq,i,alpha,beta)
+         enddo
       endif
 *
       return
