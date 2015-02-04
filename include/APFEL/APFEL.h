@@ -170,7 +170,7 @@ namespace APFEL {
   void SetVFNS(void);
 
   /*
-   *DIS module
+   * DIS module
    */
 
   /// DIS observables
@@ -179,6 +179,53 @@ namespace APFEL {
 		int pto,const std::string& pdfset, int irep,
 		const std::string& target, const std::string& proj,
 		double *F2, double *F3, double *FL, double *sigma);
+
+  /*
+   * New DIS module
+   */
+
+  /// Initialize the new DIS module
+  void InitializeAPFEL_DIS();
+
+  /// Precompute the structure functions
+  void ComputeStructureFunctionsAPFEL(double Q0, double Q);
+
+  /// Set the mass scheme for the structure functions
+  void SetMassScheme(const std::string& ms);
+
+  /// Set the polarization
+  void SetPolarizationDIS(double pol);
+
+  // Set the process of the structure functions (EM, NC or CC)
+  void SetProcessDIS(const std::string& pr);
+
+  /// Set the projectile
+  void SetProjectileDIS(const std::string& lept);
+
+  /// Set the target
+  void SetTargetDIS(const std::string& tar);
+
+  /// Returns the DIS operator times the evolution factors on the grid
+  double ExternalDISOperator(const std::string& SF,int ihq,int i,double x,int beta);
+
+  /// Structure functions
+  double F2light(double x);
+  double F2charm(double x);
+  double F2bottom(double x);
+  double F2top(double x);
+  double F2total(double x);
+
+  double FLlight(double x);
+  double FLcharm(double x);
+  double FLbottom(double x);
+  double FLtop(double x);
+  double FLtotal(double x);
+
+  double F3light(double x);
+  double F3charm(double x);
+  double F3bottom(double x);
+  double F3top(double x);
+  double F3total(double x);
 
 }
 

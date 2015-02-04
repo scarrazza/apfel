@@ -343,6 +343,98 @@ SetVFNS = _apfel.SetVFNS
 def DIS_xsec(x, qi, qf, y, pol, proc, scheme, pto, pdfset, irep, target, proj, F2, F3, FL, sigma):
     return _apfel.DIS_xsec(x, qi, qf, y, pol, proc, scheme, pto, pdfset, irep, target, proj, F2, F3, FL, sigma)
 DIS_xsec = _apfel.DIS_xsec
+
+def InitializeAPFEL_DIS():
+    return _apfel.InitializeAPFEL_DIS()
+InitializeAPFEL_DIS = _apfel.InitializeAPFEL_DIS
+
+def ComputeStructureFunctionsAPFEL(Q0, Q):
+    return _apfel.ComputeStructureFunctionsAPFEL(Q0, Q)
+ComputeStructureFunctionsAPFEL = _apfel.ComputeStructureFunctionsAPFEL
+
+def SetMassScheme(ms):
+    return _apfel.SetMassScheme(ms)
+SetMassScheme = _apfel.SetMassScheme
+
+def SetPolarizationDIS(pol):
+    return _apfel.SetPolarizationDIS(pol)
+SetPolarizationDIS = _apfel.SetPolarizationDIS
+
+def SetProcessDIS(pr):
+    return _apfel.SetProcessDIS(pr)
+SetProcessDIS = _apfel.SetProcessDIS
+
+def SetProjectileDIS(lept):
+    return _apfel.SetProjectileDIS(lept)
+SetProjectileDIS = _apfel.SetProjectileDIS
+
+def SetTargetDIS(tar):
+    return _apfel.SetTargetDIS(tar)
+SetTargetDIS = _apfel.SetTargetDIS
+
+def ExternalDISOperator(SF, ihq, i, x, beta):
+    return _apfel.ExternalDISOperator(SF, ihq, i, x, beta)
+ExternalDISOperator = _apfel.ExternalDISOperator
+
+def F2light(x):
+    return _apfel.F2light(x)
+F2light = _apfel.F2light
+
+def F2charm(x):
+    return _apfel.F2charm(x)
+F2charm = _apfel.F2charm
+
+def F2bottom(x):
+    return _apfel.F2bottom(x)
+F2bottom = _apfel.F2bottom
+
+def F2top(x):
+    return _apfel.F2top(x)
+F2top = _apfel.F2top
+
+def F2total(x):
+    return _apfel.F2total(x)
+F2total = _apfel.F2total
+
+def FLlight(x):
+    return _apfel.FLlight(x)
+FLlight = _apfel.FLlight
+
+def FLcharm(x):
+    return _apfel.FLcharm(x)
+FLcharm = _apfel.FLcharm
+
+def FLbottom(x):
+    return _apfel.FLbottom(x)
+FLbottom = _apfel.FLbottom
+
+def FLtop(x):
+    return _apfel.FLtop(x)
+FLtop = _apfel.FLtop
+
+def FLtotal(x):
+    return _apfel.FLtotal(x)
+FLtotal = _apfel.FLtotal
+
+def F3light(x):
+    return _apfel.F3light(x)
+F3light = _apfel.F3light
+
+def F3charm(x):
+    return _apfel.F3charm(x)
+F3charm = _apfel.F3charm
+
+def F3bottom(x):
+    return _apfel.F3bottom(x)
+F3bottom = _apfel.F3bottom
+
+def F3top(x):
+    return _apfel.F3top(x)
+F3top = _apfel.F3top
+
+def F3total(x):
+    return _apfel.F3total(x)
+F3total = _apfel.F3total
 # This file is compatible with both classic and new-style classes.
 
 

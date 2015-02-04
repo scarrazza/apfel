@@ -902,8 +902,8 @@ mostlyclean-compile:
 	-rm -f DIS_new/JoinDISOperators.lo
 	-rm -f DIS_new/ConvoluteEvolutionWithDISOperators.$(OBJEXT)
 	-rm -f DIS_new/ConvoluteEvolutionWithDISOperators.lo
-	-rm -f DIS_new/ExternalDISOperators.$(OBJEXT)
-	-rm -f DIS_new/ExternalDISOperators.lo
+	-rm -f DIS_new/ExternalDISOperator.$(OBJEXT)
+	-rm -f DIS_new/ExternalDISOperator.lo
 	-rm -f Evolution/AlphaQCD.$(OBJEXT)
 	-rm -f Evolution/AlphaQCD.lo
 	-rm -f Evolution/AlphaQED.$(OBJEXT)
