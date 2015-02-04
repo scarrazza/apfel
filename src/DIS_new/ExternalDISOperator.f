@@ -36,7 +36,7 @@
 *
       if(.not.EvolOp)then
          write(6,*) "The evolution operator computation is disabled."
-         write(6,*) "This function cannot be used."
+         write(6,*) "The 'ExternalDISOperator' function cannot be used."
          write(6,*) "   "
          call exit(-10)
       endif
