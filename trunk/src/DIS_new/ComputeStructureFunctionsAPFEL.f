@@ -23,7 +23,6 @@
 *
 *     Convolute evolved PDFs with the DIS coefficient functions
 *
-c      call ConvolutePDFsWithCFs(Q) ! Old and incomplete (to be removed)
       call ComputeDISOperators(Q)
       call ConvolutePDFsWithDISOperators
 *
