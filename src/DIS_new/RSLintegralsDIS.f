@@ -319,10 +319,9 @@ c      data eps / 1d-7, 1d-5 /
 *
          do ixi=1,nxi
             do k=1,3
-               do wipt=0,ipt_FF
+               do wipt=1,ipt_FF
                   SC2mNC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                   SCLmNC(igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SC3mNC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                enddo
             enddo
 *
@@ -345,11 +344,6 @@ c      data eps / 1d-7, 1d-5 /
                sf = 2
                k = 1
                CLg1R = dgauss(integrandsDISNCm,a,b,eps(wipt))
-*
-               sf = 3
-               k = 3
-               C3ns1RS = dgauss(integrandsDISzm,a,b,eps(wipt))
-               C3ns1L  = C3NS1C(a)
             endif
             if(ipt_FF.ge.2)then
 *
@@ -363,7 +357,7 @@ c      data eps / 1d-7, 1d-5 /
                k = 3
                C2ns2RS = dgauss(integrandsDISNCm,a,b,eps(wipt))
 *
-*     Coefficient to be addet to the NNLO non-singlet coefficient function
+*     Coefficient to be added to the NNLO non-singlet coefficient function
 *     of F2 to fullfil the Adler sum rule (can be done only the first time).
 *
                if(alpha.eq.0.and.beta.eq.0.and.igrid.eq.1)
@@ -378,29 +372,9 @@ c      data eps / 1d-7, 1d-5 /
                CLps2R  = dgauss(integrandsDISNCm,a,b,eps(wipt))
                k = 3
                CLns2RS = dgauss(integrandsDISNCm,a,b,eps(wipt))
-*
-               sf = 3
-               k = 2
-               C3ps2R  = dgauss(integrandsDISNCm,a,b,eps(wipt))
-               k = 3
-               C3ns2RS = dgauss(integrandsDISNCm,a,b,eps(wipt))
-               C3ns2L  = C3NSP2C(a,inf)
             endif
 *
             do k=1,3
-*
-*     LO
-*
-*     C2
-               C2L(k,0) = 0d0
-               integC2(0) = 0d0
-*     CL
-               integCL(0) = 0d0
-*     C3
-*     C3
-               C3L(k,0) = 0d0
-               if(k.eq.3) C3L(k,0) = 1d0
-               integC3(0) = 0d0
 *
 *     NLO
 *
@@ -412,9 +386,6 @@ c      data eps / 1d-7, 1d-5 /
                      integC2(1) = C2g1R
 *     CL
                      integCL(1) = CLg1R
-*     C3
-                     C3L(k,1)   = 0d0
-                     integC3(1) = 0d0
 *     Pure-Singlet
                   elseif(k.eq.2)then
 *     C2
@@ -422,9 +393,6 @@ c      data eps / 1d-7, 1d-5 /
                      integC2(1) = 0d0
 *     CL
                      integCL(1) = 0d0
-*     C3
-                     C3L(k,1)   = 0d0
-                     integC3(1) = 0d0
 *     Non-singlet
                   elseif(k.eq.3)then
 *     C2
@@ -432,9 +400,6 @@ c      data eps / 1d-7, 1d-5 /
                      integC2(1) = 0d0
 *     CL
                      integCL(1) = 0d0
-*     C3
-                     C3L(k,1)   = C3ns1L
-                     integC3(1) = C3ns1RS
                   endif
                endif
 *
@@ -448,9 +413,6 @@ c      data eps / 1d-7, 1d-5 /
                      integC2(2) = C2g2R
 *     CL
                      integCL(2) = CLg2R
-*     C3
-                     C3L(k,2)   = 0d0
-                     integC3(2) = 0d0
 *     Pure-Singlet
                   elseif(k.eq.2)then
 *     C2
@@ -458,9 +420,6 @@ c      data eps / 1d-7, 1d-5 /
                      integC2(2) = C2ps2R
 *     CL
                      integCL(2) = CLps2R
-*     C3
-                     C3L(k,2)   = 0d0
-                     integC3(2) = 0d0
 *     Non-singlet
                   elseif(k.eq.3)then
 *     C2
@@ -468,30 +427,28 @@ c      data eps / 1d-7, 1d-5 /
                      integC2(2) = C2ns2RS
 *     CL
                      integCL(2) = CLns2RS
-*     C3
-                     C3L(k,2)   = C3ns2L
-                     integC3(2) = C3ns2RS
                   endif
                endif
 *
 *     Integrals
 *
 
-               do wipt=0,ipt_FF
+               do wipt=1,ipt_FF
                   SC2mNC(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
      1                                                + C2L(k,wipt) * fL
                   SCLmNC(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
-                  SC3mNC(igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
-     1                                                + C3L(k,wipt) * fL
                enddo
             enddo
          enddo
 *
 *     Charged Current
 *
+         iptmx = ipt
+         if(ipt.gt.1) iptmx = 1
+*
          do ixi=1,nxi
             do k=1,3
-               do wipt=0,ipt
+               do wipt=0,iptmx
                   SC2mCC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                   SCLmCC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                   SC3mCC(igrid,ixi,k,wipt,beta,alpha) = 0d0
@@ -517,7 +474,7 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
 *     Precompute integrals
 *
 
-            if(ipt.ge.1)then
+            if(iptmx.ge.1)then
                wipt = 1
 *
                sf = 1
@@ -561,7 +518,7 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
 *
 *     NLO
 *
-               if(ipt.ge.1)then
+               if(iptmx.ge.1)then
 *     Gluon
                   if(k.eq.1)then
 *     C2
@@ -597,24 +554,24 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
                      integC3(1) = C3ns1RS
                   endif
                endif
-*
-*     NNLO (Unknown yet)
-*
-               if(ipt.ge.2)then
-*     C2
-                  C2L(k,2)   = 0d0
-                  integC2(2) = 0d0
-*     CL
-                  CLL(k,2)   = 0d0
-                  integCL(2) = 0d0
-*     C3
-                  C3L(k,2)   = 0d0
-                  integC3(2) = 0d0
-               endif
+c*
+c*     NNLO (Unknown yet)
+c*
+c               if(iptmx.ge.2)then
+c*     C2
+c                  C2L(k,2)   = 0d0
+c                  integC2(2) = 0d0
+c*     CL
+c                  CLL(k,2)   = 0d0
+c                  integCL(2) = 0d0
+c*     C3
+c                  C3L(k,2)   = 0d0
+c                  integC3(2) = 0d0
+c               endif
 *
 *     Integrals
 *
-               do wipt=0,ipt
+               do wipt=0,iptmx
                   SC2mCC(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
      1                 + C2L(k,wipt) * fL_CCm
                   SCLmCC(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt)
@@ -741,25 +698,13 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
             lnQ2 = lnQ * lnQ
             lnQF = lnQ * lnF
             do k=1,3
-               do wipt=0,ipt
+               do wipt=1,ipt_FF
                   SC2m0NC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                   SCLm0NC(igrid,ixi,k,wipt,beta,alpha) = 0d0
-                  SC3m0NC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                enddo
             enddo
 *
             do k=1,3
-*
-*     LO
-*
-*     C2
-               integC2(0) = 0d0
-*     CL
-               integCL(0) = 0d0
-*     C3
-               C3L(k,0) = 0d0
-               if(k.eq.3) C3L(k,0) = 1d0
-               integC3(0) = 0d0
 *
 *     NLO
 *
@@ -771,9 +716,6 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
                      integC2(1) = C2g1R0 + C2g1RQ * lnQ
 *     CL
                      integCL(1) = CLg1R0
-*     C3
-                     C3L(k,1)   = 0d0
-                     integC3(1) = 0d0
 *     Pure-Singlet
                   elseif(k.eq.2)then
 *     C2
@@ -781,9 +723,6 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
                      integC2(1) = 0d0
 *     CL
                      integCL(1) = 0d0
-*     C3
-                     C3L(k,1)   = 0d0
-                     integC3(1) = 0d0
 *     Non-singlet
                   elseif(k.eq.3)then
 *     C2
@@ -791,9 +730,6 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
                      integC2(1) = 0d0
 *     CL
                      integCL(1) = 0d0
-*     C3
-                     C3L(k,1)   = C3ns1L
-                     integC3(1) = C3ns1RS
                   endif
                endif
 *
@@ -808,9 +744,6 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
      1                          + C2g2RF * lnF + C2g2RQF * lnQF
 *     CL
                      integCL(2) = CLg2R0 + CLg2RQ * lnQ + CLg2RF * lnF
-*     C3
-                     C3L(k,2)   = 0d0
-                     integC3(2) = 0d0
 *
 *     Subtract the constant term for FONLL-B
 *
@@ -828,9 +761,6 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
 *     CL
                      integCL(2) = CLps2R0 + CLps2RQ * lnQ 
      1                          + CLps2RF * lnF
-*     C3
-                     C3L(k,2)   = 0d0
-                     integC3(2) = 0d0
 *
 *     Subtract the constant term for FONLL-B
 *
@@ -847,9 +777,6 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
      1                          + C2ns2RSQ2 * lnQ2
 *     CL
                      integCL(2) = CLns2R0 + CLns2RQ * lnQ
-*     C3
-                     C3L(k,2)   = C3ns2L
-                     integC3(2) = C3ns2RS
 *
 *     Subtract the constant term for FONLL-B
 *
@@ -862,12 +789,10 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
 *
 *     Integrals
 *
-               do wipt=0,ipt_FF
+               do wipt=1,ipt_FF
                   SC2m0NC(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
      1               + C2L(k,wipt) * fL
                   SCLm0NC(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt) 
-                  SC3m0NC(igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
-     1                 + C3L(k,wipt) * fL
                enddo
             enddo
          enddo
@@ -879,21 +804,22 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
 *
          CGCOLM0 = dgauss(integrandsDISCCm0,a,b,eps(1))
 *
+         iptmx = ipt
+         if(ipt.gt.1) iptmx = 1
+*
          do ixi=1,nxi
             lnQ = dlog(xigrid(ixi))
             lnC2 = lnkQF2 + lnQ
             lnC3 = lnkQF2 - lnQ
 *
             do k=1,3
-               do wipt=0,ipt
+               do wipt=0,iptmx
                   SC2m0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
 c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                   SC3m0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
                enddo
             enddo
 *
-            iptmx = ipt
-            if(ipt.gt.1) iptmx = 1
             do wipt=0,iptmx
                CGM0 = 0d0
                if(wipt.ge.1) CGM0 = CGCOLM0
