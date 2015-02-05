@@ -417,4 +417,41 @@ namespace APFEL {
     return ff3total(&x);
   }
 
+  void SetZMass(double massz)
+  {
+    fsetzmass(&massz);
+  }
+
+  void SetWMass(double massw)
+  {
+    fsetwmass(&massw);
+  }
+
+  void SetProtonMass(double massp)
+  {
+    fsetprotonmass(&massp);
+  }
+
+  void SetDinThetaW(double sw)
+  {
+    fsetsinthetaw(&sw);
+  }
+
+  void SetCKM(double vud,double vus,double vub,double vcd,double vcs,double vcb,double vtd,double vts,double vtb)
+  {
+    fsetckm(&vud,&vus,&vub,&vcd,&vcs,&vcb,&vtd,&vts,&vtb);
+  }
+
+  void SetGFermi(double gf)
+  {
+    fsetgfermi(&gf);
+  }
+
+  double FKSimulator(const std::string& obs,double x,double q,double y,int i,int beta)
+  {
+    char cobs[SIZE+1];
+    strncpy(cobs, obs.c_str(), SIZE);
+    return ffksimulator(cobs,&x,&q,&y,&i,&beta);
+  }
+
 }

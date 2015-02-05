@@ -1,6 +1,7 @@
 *     -*-fortran-*-
 
       double precision MZ
+      character*4 InMZ
 *
-      parameter(MZ = 91.1876d0)
+      common / ZedMassAPFEL / MZ,InMZ
 

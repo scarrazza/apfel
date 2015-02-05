@@ -227,6 +227,27 @@ namespace APFEL {
   double F3top(double x);
   double F3total(double x);
 
+  /// Set the value of the Z mass in GeV
+  void SetZMass(double massz);
+
+  /// Set the value of the W mass in GeV
+  void SetWMass(double massw);
+
+  /// Set the value of the proton mass in GeV
+  void SetProtonMass(double massp);
+
+  /// Set the value of sin(theta_W)
+  void SetDinThetaW(double sw);
+
+  /// Set the absolute value of the entries of the CKM matrix
+  void SetCKM(double vud,double vus,double vub,double vcd,double vcs,double vcb,double vtd,double vts,double vtb);
+
+  /// Set the value of the Fermi constant
+  void SetGFermi(double gf);
+
+  /// Emulator of the FKgenerator
+  double FKSimulator(const std::string& obs,double x,double q,double y,int i,int beta);
+
 }
 
 #endif

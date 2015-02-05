@@ -1,6 +1,6 @@
 *     -*-fortran-*-
 
-      double precision sw
+      double precision SinThetaW
+      character*4 InSinThetaW
 *
-      parameter(sw = 0.2312d0)
-
+      common / SinThetaWAPFEL / SinThetaW,InSinThetaW

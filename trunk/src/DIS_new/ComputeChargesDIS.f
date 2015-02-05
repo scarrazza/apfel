@@ -71,12 +71,12 @@
 *
 *     Vector Couplings
 *
-      vq(1) = - 0.5d0 + 2d0 / 3d0 * sw
-      vq(2) = + 0.5d0 - 4d0 / 3d0 * sw
-      vq(3) = - 0.5d0 + 2d0 / 3d0 * sw
-      vq(4) = + 0.5d0 - 4d0 / 3d0 * sw
-      vq(5) = - 0.5d0 + 2d0 / 3d0 * sw
-      vq(6) = + 0.5d0 - 4d0 / 3d0 * sw
+      vq(1) = - 0.5d0 + 2d0 / 3d0 * SinThetaW
+      vq(2) = + 0.5d0 - 4d0 / 3d0 * SinThetaW
+      vq(3) = - 0.5d0 + 2d0 / 3d0 * SinThetaW
+      vq(4) = + 0.5d0 - 4d0 / 3d0 * SinThetaW
+      vq(5) = - 0.5d0 + 2d0 / 3d0 * SinThetaW
+      vq(6) = + 0.5d0 - 4d0 / 3d0 * SinThetaW
 *
 *     Axial Couplings
 *
@@ -89,7 +89,7 @@
 *
 *     Vector and Axial Electron Couplings
 *
-      ve = - 0.5d0 + 2d0 * sw
+      ve = - 0.5d0 + 2d0 * SinThetaW
       ae = - 0.5d0
 *
 *     Set the electric charges to zero id the projectile is a
@@ -102,7 +102,7 @@
             eq(i)  = 0d0
             eq2(i) = 0d0
          enddo
-         ve = 0.5d0 + 2d0 * sw
+         ve = 0.5d0 + 2d0 * SinThetaW
          ae = 0.5d0
       endif
 *
@@ -112,7 +112,8 @@
             dq(i) = 0d0
          enddo
       elseif(ProcessDIS.eq."NC")then
-         pz = Q2 / ( Q2 + MZ**2d0 ) / ( 4d0 * sw * ( 1d0 - sw ) )
+         pz = Q2 / ( Q2 + MZ**2d0 ) 
+     1      / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) )
          do i=1,6
             bq(i) = eq2(i) 
      1            - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz

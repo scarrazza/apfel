@@ -435,6 +435,34 @@ F3top = _apfel.F3top
 def F3total(x):
     return _apfel.F3total(x)
 F3total = _apfel.F3total
+
+def SetZMass(massz):
+    return _apfel.SetZMass(massz)
+SetZMass = _apfel.SetZMass
+
+def SetWMass(massw):
+    return _apfel.SetWMass(massw)
+SetWMass = _apfel.SetWMass
+
+def SetProtonMass(massp):
+    return _apfel.SetProtonMass(massp)
+SetProtonMass = _apfel.SetProtonMass
+
+def SetDinThetaW(sw):
+    return _apfel.SetDinThetaW(sw)
+SetDinThetaW = _apfel.SetDinThetaW
+
+def SetCKM(vud, vus, vub, vcd, vcs, vcb, vtd, vts, vtb):
+    return _apfel.SetCKM(vud, vus, vub, vcd, vcs, vcb, vtd, vts, vtb)
+SetCKM = _apfel.SetCKM
+
+def SetGFermi(gf):
+    return _apfel.SetGFermi(gf)
+SetGFermi = _apfel.SetGFermi
+
+def FKSimulator(obs, x, q, y, i, beta):
+    return _apfel.FKSimulator(obs, x, q, y, i, beta)
+FKSimulator = _apfel.FKSimulator
 # This file is compatible with both classic and new-style classes.
 
 
