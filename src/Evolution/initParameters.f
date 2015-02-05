@@ -106,7 +106,7 @@
 *     When the computation of the Evolution Operator is enabled
 *     lock the grids by default.
 *
-      if(EvolOp)then
+      if(EvolOp.and..not.lock)then
          write(6,*) "   "
          write(6,*) "WARNING: computation of the evolution operator",
      1              " possible only on locked subgrids"
