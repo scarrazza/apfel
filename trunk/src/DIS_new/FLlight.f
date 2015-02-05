@@ -21,7 +21,6 @@
 *
       integer n
       integer alpha
-      integer i
       double precision w_int
 **
 *     Output Variables
@@ -47,9 +46,7 @@
  101  FLlight = 0d0
       n = inter_degree(igrid)
       do alpha=0,nin(igrid)
-         do i=1,3
-            FLlight = FLlight + w_int(n,alpha,x) * FL(i,igrid,alpha)
-         enddo
+         FLlight = FLlight + w_int(n,alpha,x) * FL(3,igrid,alpha)
       enddo
       if(dabs(FLlight).le.1d-14) FLlight = 0d0
 *

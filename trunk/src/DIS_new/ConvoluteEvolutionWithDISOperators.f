@@ -18,6 +18,9 @@
 *
       integer i,j,ihq
       integer alpha,beta,gamma
+      double precision t1,t2
+*
+      call cpu_time(t1)
 *
       do ihq=3,7
          do i=0,13
@@ -50,6 +53,13 @@
             enddo
          enddo
       enddo
+*
+      call cpu_time(t2)
+*
+      write(6,"(a,a,f9.5,a)") " Convolution of the DIS operators with ",
+     1                        "the evolution operators completed in",
+     2                        t2-t1," s"
+      write(6,*) " "
 *
       return
       end

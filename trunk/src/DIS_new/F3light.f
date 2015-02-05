@@ -21,7 +21,6 @@
 *
       integer n
       integer alpha
-      integer i
       double precision w_int
 **
 *     Output Variables
@@ -47,9 +46,7 @@
  101  F3light = 0d0
       n = inter_degree(igrid)
       do alpha=0,nin(igrid)
-         do i=1,3
-            F3light = F3light + w_int(n,alpha,x) * F3(i,igrid,alpha)
-         enddo
+         F3light = F3light + w_int(n,alpha,x) * F3(3,igrid,alpha)
       enddo
       if(dabs(F3light).le.1d-14) F3light = 0d0
 *
