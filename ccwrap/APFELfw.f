@@ -477,3 +477,49 @@ ccccccccccccc
       ff3total = F3total(x)
       return
       end
+
+ccccccccccccc
+      subroutine fsetzmass(massz)
+      double precision massz
+      call SetZMass(massz)
+      end subroutine fsetzmass
+
+ccccccccccccc
+      subroutine fsetwmass(massw)
+      double precision massw
+      call SetWMass(massw)
+      end subroutine fsetwmass
+
+ccccccccccccc
+      subroutine fsetprotonmass(massp)
+      double precision massp
+      call SetProtonMass(massp)
+      end subroutine fsetprotonmass
+
+ccccccccccccc
+      subroutine fsetsinthetaw(sw)
+      double precision sw
+      call SetDinThetaW(sw)
+      end subroutine fsetsinthetaw
+
+ccccccccccccc
+      subroutine fsetckm(vud,vus,vub,vcd,vcs,vcb,vtd,vts,vtb)
+      double precision vud,vus,vub,vcd,vcs,vcb,vtd,vts,vtb
+      call SetCKM(vud,vus,vub,vcd,vcs,vcb,vtd,vts,vtb)
+      end subroutine fsetckm
+
+ccccccccccccc
+      subroutine fsetgfermi(gf)
+      double precision gf
+      call SetGFermi(gf)
+      end subroutine fsetgfermi
+
+ccccccccccccc
+      function ffksimulator(obs,x,q,y,i,beta)
+      integer i,beta
+      double precision x,q,y
+      character obs*(*)
+      double precision ffksimulator
+      ffksimulator = FKSimulator(obs,x,q,y,i,beta)
+      return
+      end

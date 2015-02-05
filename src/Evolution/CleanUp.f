@@ -39,6 +39,12 @@
       include "../commons/PolarizationDIS.h"
       include "../commons/ProjectileDIS.h"
       include "../commons/TargetDIS.h"
+      include "../commons/ZedMass.h"
+      include "../commons/WMass.h"
+      include "../commons/ProtonMass.h"
+      include "../commons/SinThetaW.h"
+      include "../commons/GFermi.h"
+      include "../commons/CKM.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -65,11 +71,19 @@
       InLambdaQCD       = "xxxx"
       InPDFEvol         = "xxxx"
       InFastEvol        = "xxxx"
+*
       InMassScheme      = "xxxx"
       inProcessDIS      = "xxxx"
       inPolarizationDIS = "xxxx"
       inProjectileDIS   = "xxxx"
       inTargetDIS       = "xxxx"
+*
+      InMZ              = "xxxx"
+      InMW              = "xxxx"
+      InMProton         = "xxxx"
+      InSinThetaW       = "xxxx"
+      InGFermi          = "xxxx"
+      InCKM             = "xxxx"
 *
       return
       end

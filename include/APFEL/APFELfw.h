@@ -221,6 +221,27 @@ extern "C" {
 #define ff3total FC_FUNC(f3total,F3TOTAL)
   double ff3total(double*);
 
+#define fsetzmass FC_FUNC(setzmass,SETZMASS)
+  void fsetzmass(double*);
+
+#define fsetwmass FC_FUNC(setwmass,SETWMASS)
+  void fsetwmass(double*);
+
+#define fsetprotonmass FC_FUNC(setprotonmass,SETPROTONMASS)
+  void fsetprotonmass(double*);
+
+#define fsetsinthetaw FC_FUNC(setsinthetaw,SETSINTHETAW)
+  void fsetsinthetaw(double*);
+
+#define fsetckm FC_FUNC(setckm,SETCKM)
+  void fsetckm(double*,double*,double*,double*,double*,double*,double*,double*,double*);
+
+#define fsetgfermi FC_FUNC(fsetgfermi,FSETGFERMI)
+  void fsetgfermi(double*);
+
+#define ffksimulator FC_FUNC(fksimulator,FKSIMULATOR)
+  double ffksimulator(char*,double*,double*,double*,int*,int*);
+
 }
 
 #endif

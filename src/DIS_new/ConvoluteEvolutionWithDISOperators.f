@@ -56,10 +56,10 @@
 *
       call cpu_time(t2)
 *
-      write(6,"(a,a,f9.5,a)") " Convolution of the DIS operators with ",
-     1                        "the evolution operators completed in",
-     2                        t2-t1," s"
-      write(6,*) " "
+c      write(6,"(a,a,f9.5,a)") " Convolution of the DIS operators with ",
+c     1                        "the evolution operators completed in",
+c     2                        t2-t1," s"
+c      write(6,*) " "
 *
       return
       end

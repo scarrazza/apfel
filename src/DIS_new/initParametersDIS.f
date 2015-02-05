@@ -18,6 +18,12 @@
       include "../commons/TargetDIS.h"
       include "../commons/ipt.h"
       include "../commons/Nf_FF.h"
+      include "../commons/ZedMass.h"
+      include "../commons/WMass.h"
+      include "../commons/ProtonMass.h"
+      include "../commons/SinThetaW.h"
+      include "../commons/GFermi.h"
+      include "../commons/CKM.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -27,6 +33,16 @@
       if(InPolarizationDIS.ne."done") call SetPolarizationDIS(0d0)
       if(InProjectileDIS.ne."done")   call SetProjectileDIS("electron")
       if(InTargetDIS.ne."done")       call SetTargetDIS("proton")
+*
+      if(InMZ.ne."done")              call SetZMass(91.1876d0)
+      if(InMW.ne."done")              call SetWMass(80.385d0)
+      if(InMProton.ne."done")         call SetProtonMass(0.938272046d0)
+      if(InSinThetaW.ne."done")       call SetSinThetaW(0.23126d0)
+      if(InGFermi.ne."done")          call SetGFermi(1.1663787d-5)
+      if(InCKM.ne."done")             call SetCKM(
+     1                                0.97427d0, 0.22536d0, 0.00355d0,
+     2                                0.22522d0, 0.97343d0, 0.04140d0,
+     3                                0.00886d0, 0.04050d0, 0.99914d0)
 *
 *     Check the consistency of the input parameters
 *
@@ -170,6 +186,18 @@
 *     Print welcome message and report of the parameters (if enabled)
 *
       if(Welcome)then
+         write(6,*) "Report of the electroweak parameters:"
+         write(6,*) "  "
+         write(6,"(a,f7.3,a)")  " Mass of the Z =",MZ," GeV"
+         write(6,"(a,f7.3,a)")  " Mass of the W =",MW," GeV"
+         write(6,"(a,f7.4,a)")  " Mass of the proton =",MProton," GeV"
+         write(6,"(a,f7.4)")    " sin(thetaW) =",SinThetaW
+         write(6,"(a,es12.5)")   " GFermi =",GFermi
+         write(6,"(a,3f7.4,a)") "       |",V_ud,V_us,V_ub," |"
+         write(6,"(a,3f7.4,a)") " CKM = |",V_cd,V_cs,V_cb," |"
+         write(6,"(a,3f7.4,a)") "       |",V_td,V_ts,V_tb," |"
+         write(6,*) "  "
+*
 c$$$         write(6,*) "Report of the DIS parameters:"
 c$$$         write(6,*) "  "
 *
