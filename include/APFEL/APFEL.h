@@ -237,7 +237,7 @@ namespace APFEL {
   void SetProtonMass(double massp);
 
   /// Set the value of sin(theta_W)
-  void SetDinThetaW(double sw);
+  void SetSinThetaW(double sw);
 
   /// Set the absolute value of the entries of the CKM matrix
   void SetCKM(double vud,double vus,double vub,double vcd,double vcs,double vcb,double vtd,double vts,double vtb);
