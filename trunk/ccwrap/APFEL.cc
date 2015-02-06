@@ -432,7 +432,7 @@ namespace APFEL {
     fsetprotonmass(&massp);
   }
 
-  void SetDinThetaW(double sw)
+  void SetSinThetaW(double sw)
   {
     fsetsinthetaw(&sw);
   }

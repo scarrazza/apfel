@@ -6567,20 +6567,20 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_SetDinThetaW(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_SetSinThetaW(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double val1 ;
   int ecode1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:SetDinThetaW",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:SetSinThetaW",&obj0)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetDinThetaW" "', argument " "1"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetSinThetaW" "', argument " "1"" of type '" "double""'");
   } 
   arg1 = static_cast< double >(val1);
-  APFEL::SetDinThetaW(arg1);
+  APFEL::SetSinThetaW(arg1);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -6870,7 +6870,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetZMass", _wrap_SetZMass, METH_VARARGS, NULL},
 	 { (char *)"SetWMass", _wrap_SetWMass, METH_VARARGS, NULL},
 	 { (char *)"SetProtonMass", _wrap_SetProtonMass, METH_VARARGS, NULL},
-	 { (char *)"SetDinThetaW", _wrap_SetDinThetaW, METH_VARARGS, NULL},
+	 { (char *)"SetSinThetaW", _wrap_SetSinThetaW, METH_VARARGS, NULL},
 	 { (char *)"SetCKM", _wrap_SetCKM, METH_VARARGS, NULL},
 	 { (char *)"SetGFermi", _wrap_SetGFermi, METH_VARARGS, NULL},
 	 { (char *)"FKSimulator", _wrap_FKSimulator, METH_VARARGS, NULL},

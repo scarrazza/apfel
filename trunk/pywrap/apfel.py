@@ -448,9 +448,9 @@ def SetProtonMass(massp):
     return _apfel.SetProtonMass(massp)
 SetProtonMass = _apfel.SetProtonMass
 
-def SetDinThetaW(sw):
-    return _apfel.SetDinThetaW(sw)
-SetDinThetaW = _apfel.SetDinThetaW
+def SetSinThetaW(sw):
+    return _apfel.SetSinThetaW(sw)
+SetSinThetaW = _apfel.SetSinThetaW
 
 def SetCKM(vud, vus, vub, vcd, vcs, vcb, vtd, vts, vtb):
     return _apfel.SetCKM(vud, vus, vub, vcd, vcs, vcb, vtd, vts, vtb)
