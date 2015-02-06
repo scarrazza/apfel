@@ -499,7 +499,7 @@ ccccccccccccc
 ccccccccccccc
       subroutine fsetsinthetaw(sw)
       double precision sw
-      call SetDinThetaW(sw)
+      call SetSinThetaW(sw)
       end subroutine fsetsinthetaw
 
 ccccccccccccc
