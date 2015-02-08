@@ -28,7 +28,7 @@
 *
       integer alpha,beta,tau,kk
       double precision coup
-      double precision fbeta,beta0,beta1,beta2,b1,b2
+      double precision fbeta,beta0apf,beta1apf,beta2apf,b1,b2
       double precision c1,c2
 **
 *     Internal Variables
@@ -90,19 +90,19 @@
       elseif(PDFEvol.eq."expandalpha")then
          integralsQCD = SP(igrid,wnf,kk,0,alpha,beta)
          if(ipt.ge.1)then
-            b1 = beta1(wnf) / beta0(wnf)
+            b1 = beta1apf(wnf) / beta0apf(wnf)
             integralsQCD = integralsQCD 
      1                   + coup * ( SP(igrid,wnf,kk,1,alpha,beta) 
      2                   - b1 * SP(igrid,wnf,kk,0,alpha,beta) )
          endif
          if(ipt.ge.2)then
-            b2 = beta2(wnf) / beta0(wnf)
+            b2 = beta2apf(wnf) / beta0apf(wnf)
             integralsQCD = integralsQCD 
      1           + coup**2d0 * ( SP(igrid,wnf,kk,2,alpha,beta) 
      2           - b1 * SP(igrid,wnf,kk,1,alpha,beta)
      3           + ( b1**2d0 - b2 ) * SP(igrid,wnf,kk,0,alpha,beta) )
          endif
-         integralsQCD = - integralsQCD / beta0(wnf) / coup
+         integralsQCD = - integralsQCD / beta0apf(wnf) / coup
       endif
 *
       return
