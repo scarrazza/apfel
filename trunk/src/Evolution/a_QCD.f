@@ -182,18 +182,18 @@ c      kappa = 1d0          ! mu_R / mu_F
 *
       double precision asi
       double precision alo,t,as,den
-      double precision beta0,beta1,beta2,b1,b2
+      double precision beta0apf,beta1apf,beta2apf,b1,b2
 **
 *     Output Variables
 *
       double precision as_expanded
 *
-      b1 = beta1(nf) / beta0(nf)
-      b2 = beta2(nf) / beta0(nf)
+      b1 = beta1apf(nf) / beta0apf(nf)
+      b2 = beta2apf(nf) / beta0apf(nf)
 *
       asi = as0
       t   = log(mu2/mu20)
-      den = 1d0 + beta0(nf) * asi * t
+      den = 1d0 + beta0apf(nf) * asi * t
       alo = asi / den
 *
 *     LO
@@ -234,7 +234,7 @@ c      kappa = 1d0          ! mu_R / mu_F
 *
       INTEGER NFMIN,NFMAX,NSTEP,K1
       DOUBLE PRECISION AS
-      DOUBLE PRECISION BETA0,FBETA
+      DOUBLE PRECISION BETA0APF,FBETA
       DOUBLE PRECISION DLR,LRRAT,SXTH
       DOUBLE PRECISION XK0,XK1,XK2,XK3
 
@@ -256,7 +256,7 @@ c      kappa = 1d0          ! mu_R / mu_F
 *   (fourth-order Runge-Kutta beyond the leading order)
 *     
       IF(IPT.EQ.0)THEN
-         AS = AS0 / ( 1D0 + BETA0(NF) * AS0 * LRRAT )
+         AS = AS0 / ( 1D0 + BETA0APF(NF) * AS0 * LRRAT )
       ELSEIF(IPT.EQ.1)THEN
          DO 2 K1=1,NSTEP
             XK0 = DLR * FBETA(AS,NF,IPT)
@@ -292,7 +292,7 @@ c      kappa = 1d0          ! mu_R / mu_F
 **
 *     Internal Variables
 *
-      double precision beta0,beta1,beta2
+      double precision beta0apf,beta1apf,beta2apf
       double precision b1,b2
       double precision lo,L,lnL
 **
@@ -301,10 +301,10 @@ c      kappa = 1d0          ! mu_R / mu_F
       double precision as_lambda
 *
       L   = dlog(mu2/lambda2)
-      b1  = beta1(nf) / beta0(nf)
-      b2  = beta2(nf) / beta0(nf)
+      b1  = beta1apf(nf) / beta0apf(nf)
+      b2  = beta2apf(nf) / beta0apf(nf)
       lnL = dlog(L)
-      lo  = 1d0 / L / beta0(nf)
+      lo  = 1d0 / L / beta0apf(nf)
 *
       as_lambda = lo
       if(ipt.ge.1)then
@@ -334,26 +334,26 @@ c      kappa = 1d0          ! mu_R / mu_F
 **
 *     Internal Variables
 *
-      double precision beta0,beta1,beta2
+      double precision beta0apf,beta1apf,beta2apf
 **
 *     Output Variables
 *
       double precision fbeta
 *
       if(ipt.eq.0)then
-         fbeta = - a**2d0 * beta0(nf)
+         fbeta = - a**2d0 * beta0apf(nf)
       elseif(ipt.eq.1)then
-         fbeta = - a**2d0 * ( beta0(nf) + a * beta1(nf) )
+         fbeta = - a**2d0 * ( beta0apf(nf) + a * beta1apf(nf) )
       elseif(ipt.eq.2)then
-         fbeta = - a**2d0 * ( beta0(nf) 
-     1           + a * ( beta1(nf) + a * beta2(nf) ) )
+         fbeta = - a**2d0 * ( beta0apf(nf) 
+     1           + a * ( beta1apf(nf) + a * beta2apf(nf) ) )
       endif
 *
       return
       end
 *
 ****************************************************************************
-      function beta0(nf)
+      function beta0apf(nf)
 *
       implicit none
 **
@@ -363,15 +363,15 @@ c      kappa = 1d0          ! mu_R / mu_F
 **
 *     Output Variables
 *
-      double precision beta0
+      double precision beta0apf
 *
-      beta0 = ( 33d0 - 2d0 * nf ) / 3d0
+      beta0apf = ( 33d0 - 2d0 * nf ) / 3d0
 *
       return
       end
 *
 ****************************************************************************
-      function beta1(nf)
+      function beta1apf(nf)
 *
       implicit none
 **
@@ -381,15 +381,15 @@ c      kappa = 1d0          ! mu_R / mu_F
 **
 *     Output Variables
 *
-      double precision beta1
+      double precision beta1apf
 *
-      beta1 = 102d0 - 38d0 / 3d0 * nf
+      beta1apf = 102d0 - 38d0 / 3d0 * nf
 *
       return
       end
 *
 ****************************************************************************
-      function beta2(nf)
+      function beta2apf(nf)
 *
       implicit none
 **
@@ -399,9 +399,10 @@ c      kappa = 1d0          ! mu_R / mu_F
 **
 *     Output Variables
 *
-      double precision beta2
+      double precision beta2apf
 *
-      beta2 = 2857d0 / 2d0 - 5033d0 / 18d0 * nf + 325d0 / 54d0 * nf**2d0
+      beta2apf = 2857d0 / 2d0 - 5033d0 / 18d0 * nf 
+     1         + 325d0 / 54d0 * nf**2d0
 *
       return
       end
