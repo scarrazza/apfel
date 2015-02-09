@@ -55,6 +55,11 @@ namespace APFEL {
     return fdxgamma(&x);
   }
 
+  void xPDFall(double x, double *xf)
+  {
+    fxpdfall(&x,xf);
+  }
+
   double ExternalEvolutionOperator(const std::string& fname, int i, int j, double x, int beta)
   {
     char cfname[SIZE+1];

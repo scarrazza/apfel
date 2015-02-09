@@ -184,6 +184,10 @@ def dxgamma(x):
     return _apfel.dxgamma(x)
 dxgamma = _apfel.dxgamma
 
+def xPDFall(x, xf):
+    return _apfel.xPDFall(x, xf)
+xPDFall = _apfel.xPDFall
+
 def ExternalEvolutionOperator(fname, i, j, x, beta):
     return _apfel.ExternalEvolutionOperator(fname, i, j, x, beta)
 ExternalEvolutionOperator = _apfel.ExternalEvolutionOperator

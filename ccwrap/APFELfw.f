@@ -56,6 +56,13 @@ ccccccccccccc
       return
       end
 
+ccccccccccccc      
+      function fxpdfall(x,xf)
+      double precision x, xf(-6:6), fxpdfall
+      fxpdfall = xPDFall(x,xf)
+      return
+      end
+
 ccccccccccccc
       function fexternalevolutionoperator(fname,i,j,x,beta)
       integer i,j,beta

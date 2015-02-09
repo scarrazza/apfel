@@ -4660,6 +4660,36 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_xPDFall(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double *arg2 = (double *) 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:xPDFall",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "xPDFall" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "xPDFall" "', argument " "2"" of type '" "double *""'"); 
+  }
+  arg2 = reinterpret_cast< double * >(argp2);
+  APFEL::xPDFall(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_ExternalEvolutionOperator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
@@ -6804,6 +6834,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"xgamma", _wrap_xgamma, METH_VARARGS, NULL},
 	 { (char *)"xgammaj", _wrap_xgammaj, METH_VARARGS, NULL},
 	 { (char *)"dxgamma", _wrap_dxgamma, METH_VARARGS, NULL},
+	 { (char *)"xPDFall", _wrap_xPDFall, METH_VARARGS, NULL},
 	 { (char *)"ExternalEvolutionOperator", _wrap_ExternalEvolutionOperator, METH_VARARGS, NULL},
 	 { (char *)"LHAPDFgrid", _wrap_LHAPDFgrid, METH_VARARGS, NULL},
 	 { (char *)"LHAPDFgridDerivative", _wrap_LHAPDFgridDerivative, METH_VARARGS, NULL},
