@@ -7,6 +7,7 @@
       double precision coef_p1,coef_p2,coef
 *
       parameter (nxi=300,n_pol=15,ncoef=14)
-      common /forminimaxAPFEL/ ximin,ximax,xigrid(nxi),adler_coef(nxi),
-     1                         coef_p1(ncoef),coef_p2(ncoef),
-     2                         coef(ncoef,nxi,n_pol),m_coef(ncoef)
+      common / forminimaxAPFEL / ximin,ximax,xigrid(nxi),
+     1                           adler_coef(nxi),coef_p1(ncoef),
+     2                           coef_p2(ncoef),coef(ncoef,nxi,n_pol),
+     3                           m_coef(ncoef)

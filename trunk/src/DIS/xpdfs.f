@@ -13,8 +13,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
 **
 *     Input Variables
 *
@@ -47,9 +47,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/vfns.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/vfns.h"
 **
 *     Input Variables
 *
@@ -100,9 +100,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/nucleon.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/nucleon.h"
 **
 *     Input Variables
 *
@@ -143,9 +143,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/nucleon.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/nucleon.h"
 **
 *     Input Variables
 *
@@ -186,9 +186,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/nucleon.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/nucleon.h"
 **
 *     Input Variables
 *
@@ -229,9 +229,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/nucleon.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/nucleon.h"
 **
 *     Input Variables
 *
@@ -272,8 +272,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
 **
 *     Input Variables
 *
@@ -302,8 +302,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
 **
 *     Input Variables
 *
@@ -332,8 +332,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
 **
 *     Input Variables
 *
@@ -362,8 +362,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
 **
 *     Input Variables
 *
@@ -392,8 +392,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
 **
 *     Input Variables
 *
@@ -422,8 +422,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
 **
 *     Input Variables
 *
@@ -452,8 +452,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
 **
 *     Input Variables
 *
@@ -482,8 +482,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
 **
 *     Input Variables
 *
@@ -516,9 +516,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/neut.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/neut.h"
 **
 *     Input Variables
 *
@@ -583,9 +583,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/neut.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/neut.h"
 **
 *     Input Variables
 *
@@ -650,9 +650,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/neut.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/neut.h"
 **
 *     Input Variables
 *
@@ -689,9 +689,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/neut.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/neut.h"
 **
 *     Input Variables
 *
@@ -728,9 +728,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/neut.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/neut.h"
 **
 *     Input Variables
 *
@@ -767,9 +767,9 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/pdf.h"
-      include "../commons/neut.h"
+      include "commons/scale.h"
+      include "commons/pdf.h"
+      include "commons/neut.h"
 **
 *     Input Variables
 *

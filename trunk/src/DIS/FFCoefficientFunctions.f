@@ -175,7 +175,7 @@ c      close(41)
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
+      include "commons/vfns.h"
 **
 *     Input Variables
 *

@@ -9,10 +9,10 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/scale.h"
-      include "../commons/hmass.h"
-      include "../commons/jpt.h"
+      include "commons/vfns.h"
+      include "commons/scale.h"
+      include "commons/hmass.h"
+      include "commons/jpt.h"
 **
 *     Input Variables
 *
@@ -85,11 +85,11 @@ C======================================================================
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/scale.h"
-      include "../commons/hmass.h"
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/vfns.h"
+      include "commons/scale.h"
+      include "commons/hmass.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *
@@ -150,10 +150,10 @@ C======================================================================
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/scale.h"
-      include "../commons/hmass.h"
-      include "../commons/jpt.h"
+      include "commons/vfns.h"
+      include "commons/scale.h"
+      include "commons/hmass.h"
+      include "commons/jpt.h"
 **
 *     Input Variables
 *
@@ -207,11 +207,11 @@ C======================================================================
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/scale.h"
-      include "../commons/hmass.h"
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/vfns.h"
+      include "commons/scale.h"
+      include "commons/hmass.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *
@@ -248,7 +248,7 @@ C======================================================================
 *
       IMPLICIT NONE
 *
-      include "../commons/jpt.h"
+      include "commons/jpt.h"
 **
 *     Input Variables
 *
@@ -269,8 +269,8 @@ C======================================================================
 *
       IMPLICIT NONE
 *
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *
@@ -302,8 +302,8 @@ C======================================================================
 *
       IMPLICIT NONE
 *
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *
@@ -334,10 +334,10 @@ C======================================================================
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/scale.h"
-      include "../commons/hmass.h"
-      include "../commons/jpt.h"
+      include "commons/vfns.h"
+      include "commons/scale.h"
+      include "commons/hmass.h"
+      include "commons/jpt.h"
 **
 *     Input Variables
 *
@@ -403,11 +403,11 @@ C======================================================================
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/scale.h"
-      include "../commons/hmass.h"
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/vfns.h"
+      include "commons/scale.h"
+      include "commons/hmass.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *
@@ -466,10 +466,10 @@ C======================================================================
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/scale.h"
-      include "../commons/hmass.h"
-      include "../commons/jpt.h"
+      include "commons/vfns.h"
+      include "commons/scale.h"
+      include "commons/hmass.h"
+      include "commons/jpt.h"
 **
 *     Input Variables
 *
