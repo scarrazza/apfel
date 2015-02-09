@@ -9,10 +9,10 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/hmass.h"
-      include "../commons/scale.h"
-      include "../commons/jpt.h"
+      include "commons/vfns.h"
+      include "commons/hmass.h"
+      include "commons/scale.h"
+      include "commons/jpt.h"
 **
 *     Input Variables
 *
@@ -79,11 +79,11 @@ C            XC1G =  XC1G - PQG * DLOG(Q2/Q2H)
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/hmass.h"
-      include "../commons/scale.h"
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/vfns.h"
+      include "commons/hmass.h"
+      include "commons/scale.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *
@@ -162,11 +162,11 @@ C            XC1G =  XC1G - PQG * DLOG(Q2/Q2H)
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/hmass.h"
-      include "../commons/scale.h"
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/vfns.h"
+      include "commons/hmass.h"
+      include "commons/scale.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *
@@ -224,10 +224,10 @@ C            XC1G =  XC1G - PQG * DLOG(Q2/Q2H)
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/hmass.h"
-      include "../commons/scale.h"
-      include "../commons/jpt.h"
+      include "commons/vfns.h"
+      include "commons/hmass.h"
+      include "commons/scale.h"
+      include "commons/jpt.h"
 **
 *     Input Variables
 *
@@ -295,11 +295,11 @@ C            XC2G =  XC2G - PQG * DLOG( Q2 / Q2H )
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/hmass.h"
-      include "../commons/scale.h"
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/vfns.h"
+      include "commons/hmass.h"
+      include "commons/scale.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *
@@ -381,11 +381,11 @@ C            XC2G =  XC2G - PQG * DLOG( Q2 / Q2H )
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/hmass.h"
-      include "../commons/scale.h"
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/vfns.h"
+      include "commons/hmass.h"
+      include "commons/scale.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *
@@ -445,10 +445,10 @@ C            XC2G =  XC2G - PQG * DLOG( Q2 / Q2H )
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/hmass.h"
-      include "../commons/scale.h"
-      include "../commons/jpt.h"
+      include "commons/vfns.h"
+      include "commons/hmass.h"
+      include "commons/scale.h"
+      include "commons/jpt.h"
 **
 *     Input Variables
 *
@@ -507,11 +507,11 @@ C            XC3G =  XC3G + PQG * DLOG( Q2 / Q2H )
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/hmass.h"
-      include "../commons/scale.h"
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/vfns.h"
+      include "commons/hmass.h"
+      include "commons/scale.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *
@@ -568,11 +568,11 @@ C            XC3G =  XC3G + PQG * DLOG( Q2 / Q2H )
 *
       IMPLICIT NONE
 *
-      include "../commons/vfns.h"
-      include "../commons/hmass.h"
-      include "../commons/scale.h"
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/vfns.h"
+      include "commons/hmass.h"
+      include "commons/scale.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Variables
 *

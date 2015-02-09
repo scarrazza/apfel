@@ -9,7 +9,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -38,7 +38,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -68,7 +68,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -97,7 +97,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -126,7 +126,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -155,7 +155,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -184,7 +184,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -213,7 +213,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -242,7 +242,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -271,7 +271,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -300,7 +300,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -329,7 +329,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -358,7 +358,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -387,7 +387,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -416,7 +416,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -445,7 +445,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -474,7 +474,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -503,7 +503,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -532,7 +532,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -561,7 +561,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -590,7 +590,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -619,7 +619,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -648,7 +648,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -677,7 +677,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -706,7 +706,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -735,7 +735,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -764,7 +764,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -793,7 +793,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -822,7 +822,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -851,7 +851,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -880,7 +880,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -909,7 +909,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -938,7 +938,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -967,7 +967,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -996,7 +996,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1025,7 +1025,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1054,7 +1054,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1083,7 +1083,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1112,7 +1112,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1141,7 +1141,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1170,7 +1170,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1199,7 +1199,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1228,7 +1228,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1257,7 +1257,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1286,7 +1286,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1315,7 +1315,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1344,7 +1344,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1373,7 +1373,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1402,7 +1402,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1431,7 +1431,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1460,7 +1460,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1489,7 +1489,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1518,7 +1518,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1548,7 +1548,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1577,7 +1577,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1606,7 +1606,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1635,7 +1635,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1664,7 +1664,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1693,7 +1693,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1722,7 +1722,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1751,7 +1751,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1780,7 +1780,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1809,7 +1809,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1838,7 +1838,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1867,7 +1867,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1896,7 +1896,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1925,7 +1925,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1954,7 +1954,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -1983,7 +1983,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -2012,7 +2012,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -2041,7 +2041,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -2070,7 +2070,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -2099,7 +2099,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -2128,7 +2128,7 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
+      include "commons/xbj.h"
 **
 *     Input Variables
 *
@@ -2157,8 +2157,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
-      include "../commons/scale.h"
+      include "commons/xbj.h"
+      include "commons/scale.h"
 **
 *     Input Variables
 *
@@ -2187,8 +2187,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
-      include "../commons/scale.h"
+      include "commons/xbj.h"
+      include "commons/scale.h"
 **
 *     Input Variables
 *
@@ -2217,8 +2217,8 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/xbj.h"
-      include "../commons/scale.h"
+      include "commons/xbj.h"
+      include "commons/scale.h"
 **
 *     Input Variables
 *

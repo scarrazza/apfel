@@ -10,13 +10,13 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/scale.h"
-      include "../commons/heavythr.h"
-      include "../commons/asq.h"
-      include "../commons/nf.h"
-      include "../commons/vfns.h"
-      include "../commons/pdf.h"
-      include "../commons/jpt.h"
+      include "commons/scale.h"
+      include "commons/heavythr.h"
+      include "commons/asq.h"
+      include "commons/nf.h"
+      include "commons/vfns.h"
+      include "commons/pdf.h"
+      include "commons/jpt.h"
 **
 *     Input Varibles
 *

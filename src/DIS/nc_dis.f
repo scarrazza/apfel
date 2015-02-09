@@ -10,16 +10,16 @@
 *
       IMPLICIT NONE
 *
-      include "../commons/hmass.h"
-      include "../commons/nucleon.h"
-      include "../commons/vfns.h"
-      include "../commons/heavythr.h"
-      include "../commons/asq.h"
-      include "../commons/xbj.h"
-      include "../commons/scale.h"
-      include "../commons/beta.h"
-      include "../commons/jpt.h"
-      include "../commons/nf.h"
+      include "commons/hmass.h"
+      include "commons/nucleon.h"
+      include "commons/vfns.h"
+      include "commons/heavythr.h"
+      include "commons/asq.h"
+      include "commons/xbj.h"
+      include "commons/scale.h"
+      include "commons/beta.h"
+      include "commons/jpt.h"
+      include "commons/nf.h"
 **
 *     Input Varibles
 *
