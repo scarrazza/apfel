@@ -44,6 +44,9 @@ namespace APFEL {
   /// Returns the derivative of x*gamma
   double dxgamma(double x);
 
+  /// Returns all PDFs on the joint grid
+  void xPDFall(double x, double *xf);
+
   /// External Evolution Operator
   double ExternalEvolutionOperator(const std::string& fname, int i, int j, double x, int beta);
 

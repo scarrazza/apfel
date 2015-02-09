@@ -31,6 +31,9 @@ extern "C" {
 #define fdxgamma FC_FUNC(dxgamma,DXGAMMA)
   double fdxgamma(double*);
 
+#define fxpdfall FC_FUNC(xpdfall,XPDFALL)
+  void fxpdfall(double*,double*);
+
 #define fexternalevolutionoperator FC_FUNC(externalevolutionoperator,EXTERNALEVOLUTIONOPERATOR)
   double fexternalevolutionoperator(char*,int*,int*,double*,int*);
 
