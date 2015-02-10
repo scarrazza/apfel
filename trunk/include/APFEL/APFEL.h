@@ -251,6 +251,9 @@ namespace APFEL {
   /// Emulator of the FKgenerator
   double FKSimulator(const std::string& obs,double x,double q,double y,int i,int beta);
 
+  /// Set the observable for FKgenerator simulator
+  void SetFKObservable(const std::string& obs);
+
 }
 
 #endif

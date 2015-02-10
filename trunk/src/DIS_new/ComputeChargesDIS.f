@@ -62,12 +62,12 @@
 *
 *     Squared Charges
 *
-      eq2(1) = 1d0 / 9d0
-      eq2(2) = 4d0 / 9d0
-      eq2(3) = 1d0 / 9d0
-      eq2(4) = 4d0 / 9d0
-      eq2(5) = 1d0 / 9d0
-      eq2(6) = 4d0 / 9d0
+      eq2(1) = eq(1) * eq(1) ! 1d0 / 9d0
+      eq2(2) = eq(2) * eq(2) ! 4d0 / 9d0
+      eq2(3) = eq(3) * eq(3) ! 1d0 / 9d0
+      eq2(4) = eq(4) * eq(4) ! 4d0 / 9d0
+      eq2(5) = eq(5) * eq(5) ! 1d0 / 9d0
+      eq2(6) = eq(6) * eq(6) ! 4d0 / 9d0
 *
 *     Vector Couplings
 *

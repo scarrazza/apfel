@@ -85,9 +85,6 @@
 ****  Light structure function F2light
 *
       if(obs(1:7).eq."DIS_F2L")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpF2(3,i,alpha,beta)
@@ -96,36 +93,24 @@
 ****  Up structure function F2u
 *
       elseif(obs(1:7).eq."DIS_F2U")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          write(6,*) "For this observables I don't know yet what to do!"
          call exit(-10)
 *
 ****  Down structure function F2d
 *
       elseif(obs(1:7).eq."DIS_F2d")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          write(6,*) "For this observables I don't know yet what to do!"
          call exit(-10)
 *
 ****  Strange structure function F2s
 *
       elseif(obs(1:7).eq."DIS_F2S")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          write(6,*) "For this observables I don't know yet what to do!"
          call exit(-10)
 *
 ****  Charm structure function F2charm
 *
       elseif(obs(1:7).eq."DIS_F2C")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpF2(4,i,alpha,beta)
@@ -134,9 +119,6 @@
 ****  Bottom structure function F2bottom
 *
       elseif(obs(1:7).eq."DIS_F2B")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpF2(5,i,alpha,beta)
@@ -145,9 +127,6 @@
 ****  Top structure function F2top
 *
       elseif(obs(1:7).eq."DIS_F2T")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpF2(6,i,alpha,beta)
@@ -156,9 +135,6 @@
 ****  Proton structure function F2
 *
       elseif(obs(1:7).eq."DIS_F2P")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpF2(7,i,alpha,beta)
@@ -167,9 +143,6 @@
 ****  Deuteron structure function F2
 *
       elseif(obs(1:7).eq."DIS_F2D")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("isoscalar")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpF2(7,i,alpha,beta)
@@ -178,9 +151,6 @@
 ****  Light structure function FLlight
 *
       elseif(obs(1:7).eq."DIS_FLL")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpFL(3,i,alpha,beta)
@@ -189,9 +159,6 @@
 ****  Charm structure function FLcharm
 *
       elseif(obs(1:7).eq."DIS_FLC")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpFL(4,i,alpha,beta)
@@ -200,9 +167,6 @@
 ****  Bottom structure function FLbottom
 *
       elseif(obs(1:7).eq."DIS_FLB")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpFL(5,i,alpha,beta)
@@ -211,9 +175,6 @@
 ****  Top structure function FLtop
 *
       elseif(obs(1:7).eq."DIS_FLT")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpFL(6,i,alpha,beta)
@@ -222,9 +183,6 @@
 ****  Proton structure function FL
 *
       elseif(obs(1:7).eq."DIS_FLP")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpFL(7,i,alpha,beta)
@@ -233,9 +191,6 @@
 ****  Deuteron structure function FL
 *
       elseif(obs(1:7).eq."DIS_FLD")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("isoscalar")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpFL(7,i,alpha,beta)
@@ -246,9 +201,6 @@
 ****  F2 structure function
 *
       elseif(obs(1:10).eq."DIS_F2P_NC")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpF2(7,i,alpha,beta)
@@ -258,9 +210,6 @@
 *
       elseif(obs(1:10).eq."DIS_FLP_NC".or.
      1       obs(1:14).eq."DIS_FLP_CON_NC")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpFL(7,i,alpha,beta)
@@ -269,9 +218,6 @@
 ****  F3 structure function
 *
       elseif(obs(1:10).eq."DIS_F3P_NC")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * EvOpF3(7,i,alpha,beta)
@@ -280,9 +226,6 @@
 ****  Electron scattering Reduced Cross-Section (inclusive)
 *
       elseif(obs(1:7).eq."DIS_NCE")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(7,i,alpha,beta) 
@@ -293,9 +236,6 @@
 ****  Positron scattering Reduced Cross-Section (inclusive)
 *
       elseif(obs(1:7).eq."DIS_NCP")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("positron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(7,i,alpha,beta) 
@@ -306,9 +246,6 @@
 ****  Electron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_NCE_L")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(3,i,alpha,beta) 
@@ -319,9 +256,6 @@
 ****  Positron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_NCP_L")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("positron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(3,i,alpha,beta) 
@@ -332,9 +266,6 @@
 ****  Electron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:10).eq."DIS_NCE_CH")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(4,i,alpha,beta) 
@@ -345,9 +276,6 @@
 ****  Positron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:10).eq."DIS_NCP_CH")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("positron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(4,i,alpha,beta) 
@@ -358,9 +286,6 @@
 ****  Electron scattering Reduced Cross-Section (bottom)
 *
       elseif(obs(1:10).eq."DIS_NCE_BT")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(5,i,alpha,beta) 
@@ -371,9 +296,6 @@
 ****  Positron scattering Reduced Cross-Section (bottom)
 *
       elseif(obs(1:10).eq."DIS_NCP_BT")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("positron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(5,i,alpha,beta) 
@@ -384,9 +306,6 @@
 ****  Electron scattering Reduced Cross-Section (top)
 *
       elseif(obs(1:10).eq."DIS_NCE_TP")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(6,i,alpha,beta) 
@@ -397,9 +316,6 @@
 ****  Positron scattering Reduced Cross-Section (top)
 *
       elseif(obs(1:10).eq."DIS_NCP_TP")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("positron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(6,i,alpha,beta) 
@@ -410,9 +326,6 @@
 ****  Electron scattering Reduced Cross-Section on deuteron (inclusive)
 *
       elseif(obs(1:9).eq."DIS_NCE_D")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("isoscalar")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(7,i,alpha,beta) 
@@ -423,9 +336,6 @@
 ****  Positron scattering Reduced Cross-Section on deuteron (inclusive)
 *
       elseif(obs(1:9).eq."DIS_NCP_D")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("positron")
-         call SetTargetDIS("isoscalar")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( EvOpF2(7,i,alpha,beta) 
@@ -438,9 +348,6 @@
 ****  Electron scattering Reduced Cross-Section (inclusive)
 *
       elseif(obs(1:7).eq."DIS_CCE")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( yp * EvOpF2(7,i,alpha,beta) 
@@ -452,9 +359,6 @@
 ****  Positron scattering Reduced Cross-Section (inclusive)
 *
       elseif(obs(1:7).eq."DIS_CCP")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("positron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( yp * EvOpF2(7,i,alpha,beta) 
@@ -466,9 +370,6 @@
 ****  Electron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_CCE_L")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( yp * EvOpF2(3,i,alpha,beta) 
@@ -480,9 +381,6 @@
 ****  Positron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_CCP_L")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("positron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( yp * EvOpF2(3,i,alpha,beta) 
@@ -494,9 +392,6 @@
 ****  Electron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:9).eq."DIS_CCE_C")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( yp * EvOpF2(4,i,alpha,beta) 
@@ -508,9 +403,6 @@
 ****  Positron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:9).eq."DIS_CCP_C")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("positron")
-         call SetTargetDIS("proton")
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( yp * EvOpF2(4,i,alpha,beta) 
@@ -524,9 +416,6 @@
 ****  Neutrino scattering Reduced Cross-Section (inclusive)
 *
       elseif(obs(1:7).eq."DIS_SNU")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("neutrino")
-         call SetTargetDIS("isoscalar")
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
@@ -540,9 +429,6 @@
 ****  Antineutrino scattering Reduced Cross-Section (inclusive)
 *
       elseif(obs(1:7).eq."DIS_SNB")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("antineutrino")
-         call SetTargetDIS("isoscalar")
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
@@ -556,9 +442,6 @@
 ****  Neutrino scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_SNU_L")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("neutrino")
-         call SetTargetDIS("isoscalar")
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
@@ -572,9 +455,6 @@
 ****  Antineutrino scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_SNB_L")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("antineutrino")
-         call SetTargetDIS("isoscalar")
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
@@ -588,9 +468,6 @@
 ****  Neutrino scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:9).eq."DIS_SNU_C")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("neutrino")
-         call SetTargetDIS("isoscalar")
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
@@ -604,9 +481,6 @@
 ****  Antineutrino scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:9).eq."DIS_SNB_C")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("antineutrino")
-         call SetTargetDIS("isoscalar")
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
@@ -648,9 +522,6 @@
 ****  Dimuon neutrino cross section
 *
       elseif(obs(1:9).eq."DIS_DM_NU".or.obs(1:11).eq."DIS_DMN_CON")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("neutrino")
-         call SetTargetDIS("iron")
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = 100d0 / 2d0 / ( 1d0 + Q2 / MW2 )**2d0 
          do alpha=0,nin(0)
@@ -664,9 +535,6 @@
 ****  Dimuon anti-neutrino cross section
 *
       elseif(obs(1:9).eq."DIS_DM_NB")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("antineutrino")
-         call SetTargetDIS("iron")
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = 100d0 / 2d0 / ( 1d0 + Q2 / MW2 )**2d0 
          do alpha=0,nin(0)

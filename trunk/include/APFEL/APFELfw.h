@@ -245,6 +245,9 @@ extern "C" {
 #define ffksimulator FC_FUNC(fksimulator,FKSIMULATOR)
   double ffksimulator(char*,double*,double*,double*,int*,int*);
 
+#define fsetfkobservable FC_FUNC(setfkobservable,SETFKOBSERVABLE)
+  double fsetfkobservable(char*);
+
 }
 
 #endif
