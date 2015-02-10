@@ -277,7 +277,7 @@
 ************************************************************************
 *
 *     Evaluation of the integral in eq. (97) of ArXiv.1001.2312 needed 
-*     for the Adler sum rule to be true.
+*     for the Adler sum rule to be fulfilled.
 *
 ************************************************************************
       function cm22q_adler(z)

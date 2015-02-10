@@ -530,3 +530,10 @@ ccccccccccccc
       ffksimulator = FKSimulator(obs,x,q,y,i,beta)
       return
       end
+
+ccccccccccccc
+      subroutine fsetfkobservable(obs)
+      character obs*(*)
+      call SetFKObservable(obs)
+      return
+      end
