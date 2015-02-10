@@ -466,4 +466,11 @@ namespace APFEL {
     fsetfkobservable(cobs);
   }
 
+  double FKObservables(const std::string& obs,double x,double q,double y)
+  {
+    char cobs[SIZE+1];
+    strncpy(cobs, obs.c_str(), SIZE);
+    return ffkobservables(cobs,&x,&q,&y);
+  }
+
 }
