@@ -459,7 +459,7 @@ namespace APFEL {
     return ffksimulator(cobs,&x,&q,&y,&i,&beta);
   }
 
-  void FKSimulator(const std::string& obs)
+  void SetFKObservable(const std::string& obs)
   {
     char cobs[SIZE+1];
     strncpy(cobs, obs.c_str(), SIZE);
