@@ -537,3 +537,12 @@ ccccccccccccc
       call SetFKObservable(obs)
       return
       end
+
+ccccccccccccc
+      function ffkobservables(obs,x,q,y)
+      double precision x,q,y
+      character obs*(*)
+      double precision ffkobservables
+      ffkobservables = FKObservables(obs,x,q,y)
+      return
+      end

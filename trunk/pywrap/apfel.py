@@ -467,6 +467,14 @@ SetGFermi = _apfel.SetGFermi
 def FKSimulator(obs, x, q, y, i, beta):
     return _apfel.FKSimulator(obs, x, q, y, i, beta)
 FKSimulator = _apfel.FKSimulator
+
+def SetFKObservable(obs):
+    return _apfel.SetFKObservable(obs)
+SetFKObservable = _apfel.SetFKObservable
+
+def FKObservables(obs, x, q, y):
+    return _apfel.FKObservables(obs, x, q, y)
+FKObservables = _apfel.FKObservables
 # This file is compatible with both classic and new-style classes.
 
 
