@@ -160,6 +160,10 @@ def EvolveAPFEL(Q0, Q):
     return _apfel.EvolveAPFEL(Q0, Q)
 EvolveAPFEL = _apfel.EvolveAPFEL
 
+def DeriveAPFEL(Q):
+    return _apfel.DeriveAPFEL(Q)
+DeriveAPFEL = _apfel.DeriveAPFEL
+
 def xPDF(i, x):
     return _apfel.xPDF(i, x)
 xPDF = _apfel.xPDF

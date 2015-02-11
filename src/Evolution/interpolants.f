@@ -18,6 +18,8 @@
 *
 *     "w_int_herm" implements the Hermite cubic interpolation.
 *
+*     "dw_int" n-th derivative of "w_int" in the nodes.
+*
 ************************************************************************
       function w_int(k,beta,x)
 *
@@ -351,6 +353,68 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
       double precision h11
 *
       h11 = t**3d0 - t**2d0
+*
+      return
+      end
+*
+************************************************************************
+*
+*     N-th derivative of the interpolation function in the grid nodes.
+*     (Needed for the MSbar masses and tensor gluons implementation)
+*
+************************************************************************
+      function dw_int(n,k,alpha,rho)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+**
+*     Input Variables
+*
+      integer n,k
+      integer alpha,rho
+**
+*     Internal Variables
+*
+      integer sigma
+**
+*     Output Variables
+*
+      double precision dw_int
+*
+      if(n.ge.k)then
+         write(6,*) "In src/Evolution/interpolants.f:"
+         write(6,*) "The derivative order cannot be larger or equal to",
+     1        " the interpolation degree, n =",n,", k =",k
+         write(6,*) " "
+         call exit(-10)
+      endif
+*
+*     Provisory check to limit the derivative order to one.
+*     (Need to find aefficient way to implement higher orders)
+*
+      if(n.gt.1)then
+         write(6,*) "In src/Evolution/interpolants.f:"
+         write(6,*) "The derivative order cannot be larger than yet."
+         write(6,*) " "
+         call exit(-10)
+      endif
+*
+      if(alpha.eq.rho)then
+         dw_int = 0d0
+         if(sigma.ne.alpha) 
+     1        dw_int = dw_int + 1d0 
+     2               / ( xg(igrid,alpha) - xg(igrid,sigma) )
+      else
+         dw_int = 1d0
+         do sigma=0,k
+            if(sigma.ne.alpha.and.sigma.ne.rho) 
+     1           dw_int = dw_int 
+     2                  * ( xg(igrid,rho) - xg(igrid,sigma) )
+     3                  / ( xg(igrid,alpha) - xg(igrid,sigma) )
+         enddo
+         dw_int = dw_int / ( xg(igrid,alpha) - xg(igrid,rho) )**n
+      endif
 *
       return
       end

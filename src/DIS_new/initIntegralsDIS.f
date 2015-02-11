@@ -16,6 +16,17 @@
 *
       integer alpha,beta
 *
+*     Check that the number of intervals does not exceed the maximum number
+*
+      if(nin(igrid)+inter_degree(igrid).gt.nint_max_DIS)then
+         write(6,*) "In initIntegralsDIS.f:"
+         write(6,*) "Number of grid points too large:"
+         write(6,*) "Maximum value allowed =",nint_max_DIS
+         write(6,*) "You should reduce it."
+         write(6,*) " "
+         call exit(-10)
+      endif
+*
 *     Initialize integrals
 *
       if(IsExt(igrid))then

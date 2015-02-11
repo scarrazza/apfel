@@ -4501,6 +4501,27 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_DeriveAPFEL(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:DeriveAPFEL",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DeriveAPFEL" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  APFEL::DeriveAPFEL(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_xPDF(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
@@ -6912,6 +6933,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SwigPyIterator_swigregister", SwigPyIterator_swigregister, METH_VARARGS, NULL},
 	 { (char *)"InitializeAPFEL", _wrap_InitializeAPFEL, METH_VARARGS, NULL},
 	 { (char *)"EvolveAPFEL", _wrap_EvolveAPFEL, METH_VARARGS, NULL},
+	 { (char *)"DeriveAPFEL", _wrap_DeriveAPFEL, METH_VARARGS, NULL},
 	 { (char *)"xPDF", _wrap_xPDF, METH_VARARGS, NULL},
 	 { (char *)"dxPDF", _wrap_dxPDF, METH_VARARGS, NULL},
 	 { (char *)"xPDFj", _wrap_xPDFj, METH_VARARGS, NULL},
