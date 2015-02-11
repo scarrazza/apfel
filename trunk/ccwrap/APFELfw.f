@@ -12,6 +12,12 @@ ccccccccccccc
       end subroutine
 
 ccccccccccccc      
+      subroutine fderiveapfel(Q)
+      double precision Q
+      call DeriveAPFEL(Q)
+      end subroutine
+
+ccccccccccccc      
       function fxpdf(i,x)
       integer i
       double precision x, fxpdf

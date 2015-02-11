@@ -26,6 +26,9 @@ namespace APFEL {
   /// Computes evolution 
   void EvolveAPFEL(double Q0, double Q);
 
+  /// Computes the derivative of PDFs 
+  void DeriveAPFEL(double Q);
+
   /// Returns x*PDF
   double xPDF(int i, double x);
 

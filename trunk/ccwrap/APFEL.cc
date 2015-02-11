@@ -25,6 +25,11 @@ namespace APFEL {
     fevolveapfel(&Q0, &Q);
   }
 
+  void DeriveAPFEL(double Q)
+  {
+    fderiveapfel(&Q);
+  }
+
   double xPDF(int i, double x)
   {
     return fxpdf(&i, &x);

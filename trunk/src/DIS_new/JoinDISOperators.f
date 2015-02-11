@@ -21,6 +21,17 @@
       integer jgrid,dgrid,istart,density,offset
       double precision eps
       parameter(eps=1d-14)
+*
+*     Check that the number of intervals does not exceed the maximum number
+*
+      if(nin(0)+inter_degree(0).gt.nint_max_DIS)then
+         write(6,*) "In JoinDISOperators.f:"
+         write(6,*) "Number of grid points too large:"
+         write(6,*) "Maximum value allowed =",nint_max_DIS
+         write(6,*) "You should reduce it."
+         write(6,*) " "
+         call exit(-10)
+      endif
 *     
 *     Set DIS Operators to zero
 *     

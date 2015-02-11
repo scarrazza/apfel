@@ -13,6 +13,9 @@ extern "C" {
 #define fevolveapfel FC_FUNC(evolveapfel,EVOLVEAPFEL)
   void fevolveapfel(double*,double*);
 
+#define fderiveapfel FC_FUNC(deriveapfel,DERIVEAPFEL)
+  void fderiveapfel(double*);
+
 #define fxpdf FC_FUNC(xpdf,XPDF)
   double fxpdf(int*, double*);
 
