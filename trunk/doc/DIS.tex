@@ -211,7 +211,7 @@ The struncture of the DIS coefficient functions is very similar to
 that of splitting functions with only one small complication, that is
 the presence of a more divergent singular term. In practice the
 structure of the DIS coefficient functions is the following:
-\begin{equation}
+\begin{equation}\label{CFstructure}
 \widetilde{C}_{i}(x,t) = xC_{i}^{R}(x,t) +
 xC_{i}^{S1}(t)\left[\frac{1}{1-x}\right]_+ +
 xC_{i}^{S2}(t)\left[\frac{\ln(1-x)}{1-x}\right]_+ + xC_{i}^{L}(t)\delta(1-x)\,.
@@ -232,7 +232,7 @@ C_{i}^{J}(x,t) = \sum_{n=0}^{N}a_s^{n}(t)C_{i}^{J,(n)}(x)\qquad\mbox{with}\qquad
 \end{equation}
 
 Therefore one has that:
-\begin{equation}
+\begin{equation}\label{Kernels}
 \begin{array}{c}
 \displaystyle \Gamma_{j,\beta\alpha}(t) = \\
 \\
@@ -270,11 +270,93 @@ F(x_\alpha,t) = \Gamma_{i,\alpha\beta}(t) M_{ij,\beta\gamma}(t,t_0) \tilde{q}_j(
 \end{equation}
 where a sum of the repeated indeces is understood.
 
+Bofore proceeding to treatment of the massive coefficient functions,
+it is opportune at this point to mention that when considering
+charged-current observables at NLO in the massive scheme, there is a
+further contribution to be added to eq.~(\ref{CFstructure}) that has the form:
+\begin{equation}
+C_{i}^{SL}(t)\frac{d}{dx}\delta(1-x)\,.
+\end{equation}
+Starting from the relation:
+\begin{equation}
+x\frac{d}{dx}\delta(x) = -\delta(x)\,,
+\end{equation}
+one can easily show that:
+\begin{equation}\label{KeyIdentity}
+\frac{d}{dx}\delta(1-x) = \left[\frac{\delta(1-x)}{1-x}\right]_+\,.
+\end{equation}
+To ensure that this identity is correct, we try to convolute both
+the r.h.s. and the l.h.s. of eq.~(\ref{KeyIdentity}) with the test
+function $f(x)$, such that $f(1) = 0$, to see what is the result and
+whether the results are equal. Using the l.h.s. we have:
+\begin{equation}
+\int_x^1dy\,f(y)\,\frac{d}{dx}\delta(1-y) =
+\underbrace{f(y)\delta(1-y)\Big{|}_{x}^1}_{=0} -
+\int_x^1dy\frac{df(y)}{dy}\delta(1-y) = -\frac{df(y)}{dy}\bigg{|}_{y=1}\,,
+\end{equation}
+while using the r.h.s.(\footnote{Since the delta function selects the
+  point $y=1$ in the following integral, the ``incomplete'' integral of
+  plus-prescripted function does not give rise to any residual
+  logarithm of the form $\ln(1-x)$.}):
+\begin{equation}
+\begin{array}{c}
+\displaystyle \int_x^1dy\,f(y)\,\left[\frac{\delta(1-y)}{1-y}\right]_+ =
+\int_x^1dy\frac{f(y)-f(1)}{1-y}\delta(1-y) = \lim_{\epsilon\rightarrow
+  0^+} \int_x^1dy\frac{f(y)-f(1)}{1-y}\delta(1-\epsilon-y) =\\
+\\
+\displaystyle - \lim_{\epsilon\rightarrow
+  0^+} \frac{f(1)-f(1-\epsilon)}{\epsilon} =
+-\frac{df(y)}{dy}\bigg{|}_{y=1}\,.
+\end{array}
+\end{equation}
+So the results are equal and the distributions in
+eq.~(\ref{KeyIdentity}) when convoluted with a test function extract
+its derivative in $y=1$, up to a minus sign.
+
+At the end of the day one has to include inside the curly brackets of eq.~(\ref{Kernels}) the term:
+\begin{equation}
+- C_{i}^{SL,(n)}\frac{dw_\alpha^{(k)}(x_\beta)}{dx}
+\end{equation}
+
+In addition, when using a Lagrange interpolation, one can show that
+the first derivative of the Lagrange polynomials have the form:
+\begin{equation}\label{LagrangFirstDerivative}
+\frac{d w_\alpha^{(k)}(x_\rho)}{dx} =
+\left\{
+\begin{array}{ll}
+\displaystyle \sum_{\sigma=0\atop \sigma\neq\alpha}^k\frac{1}{x_\alpha-x_\sigma}  & \quad \rho = \alpha \\
+\\
+\displaystyle \frac{1}{x_\alpha-x_\rho}
+\prod_{\sigma=0\atop\sigma\neq\alpha,\rho}^k\frac{x_\rho - x_\sigma}{x_\alpha-x_\sigma} & \quad \rho \neq \alpha
+\end{array}
+\right.
+\end{equation}
+The relation in eq.~(\ref{LagrangFirstDerivative}) is proved in the
+``Lagrange\_derivative.pdf'' notes.
+
+
 \subsection{Massive Structure Functions}
 
-When computing structure functions in the massive scheme, there is a
-further complication that prevents a fast precomputation of the
-cefficient functions on the $x$-space grid.
+Now we can proceed considering the massive structure functions. When
+computing structure functions in the massive scheme, there is a
+further complication that complicates a fast precomputation of the
+cefficient functions on the $x$-space grid and it is the fact that the
+coefficients of the perturbative expansion of the massive coeffient
+functions carry an intrinsic dependence on the scale of the process.
+This prevents a scale independent pre-tabulation of the coefficient
+functions on on $x$-space grid.
+
+One possible way out is to pre-tabulate the coefficient functions, not
+only on an $x$-space grid, but also on a $Q$-space grid, where $Q$ is
+the scale at which the structure functions are evaluated. Actually the
+most efficient way of precomputing the massive coefficient functions
+is on $\xi$-space grid, where $\xi$ is defined as:
+\begin{equation}
+\xi = \frac{Q^2}{m_H^2}\,.
+\end{equation}
+In fact, for dimentional reasons, massive coefficient functions depend
+on the scale $Q$ through $\xi$.
+
 
 \subsection{Charged Current Coefficient Functions}
 

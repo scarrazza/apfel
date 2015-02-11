@@ -1,0 +1,466 @@
+%% LyX 2.0.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[twoside,english]{paper}
+\usepackage{lmodern}
+\renewcommand{\ttdefault}{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
+\usepackage{breakurl}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{babel}
+
+\@ifundefined{showcaptionsetup}{}{%
+ \PassOptionsToPackage{caption=false}{subfig}}
+\usepackage{subfig}
+\makeatother
+
+\begin{document}
+
+\title{Tensor Gluons in {APFEL}}
+
+\author{Valerio Bertone$^{a}$}
+
+\institution{$^{a}$PH Department, TH Unit, CERN, CH-1211 Geneva 23, Switzerland}
+\maketitle
+
+\begin{abstract}
+In this document I will present the strategy to implement the DGLAP
+evolution in {APFEL} in the presence of tensor gluons.
+\end{abstract}
+\tableofcontents{}
+
+\section{Tensor Gluon Splitting Functions}
+
+When considering the PDF evolution in the presence of tensor gluons we
+need consider a generalized prescription to subtract the soft
+difergence in in $x=1$ from the plitting functions. In particular, one
+of the new typologies of integral we need to consider is:
+\begin{equation}
+J_{n,m}[f(z)]=\int_x^1 dz\frac{z^nf(z)}{(1-z)_+^m}\,,\qquad n\geq 0\,.
+\end{equation}
+But using the binomial expansion we can write:
+\begin{equation}
+z^n = \sum_{i=0}^n (-1)^i {n \choose i} (1-z)^i\,.
+\end{equation}
+Therefore:
+\begin{equation}\label{Jnmfz}
+\begin{array}{c}
+\displaystyle J_{n,m}[f(z)]=\sum_{i=0}^n (-1)^i {n \choose i} \int_x^1
+dz\frac{f(z)}{(1-z)_+^{m-i}}\\
+\\
+\displaystyle = \sum_{i=0}^{m-1} (-1)^i {n \choose i} \int_x^1
+dz\frac{f(z)}{(1-z)_+^{m-i}} + \sum_{j=0}^{n-m}(-1)^{j+m}{n \choose j+m}\int_x^1dzf(z)(1-z)^j\,.
+\end{array}
+\end{equation}
+So, it's clear that, if $n\geq m$, the second sum in the equation
+above does not need any +-prescription because it is always
+convergent, while the first term is relatively easy to treat, provided
+that we know how to compute the derivatives of $f(z)$. We will deat
+with this kind of integrals later. Now, to complete the picture, the
+second new typoligy of integrals to consider in the presence of tensor
+gluons is:
+\begin{equation}
+J_{-1,m}[f(z)]=\int_x^1 dz\frac{f(z)}{z(1-z)_+^m}\,.
+\end{equation}
+Now, using the geometrical series, we can write that:
+\begin{equation}
+\frac1z = \sum_{i=0}^\infty (1-z)^i\,.
+\end{equation}
+Therefore:
+\begin{equation}\label{Jm1mfz}
+\begin{array}{c}
+\displaystyle J_{-1,m}[f(z)]=\sum_{i=0}^\infty \int_x^1
+dz\frac{f(z)}{(1-z)_+^{m-i}}
+\displaystyle = \sum_{i=0}^{m-1} \int_x^1
+dz\frac{f(z)}{(1-z)_+^{m-i}} +
+\sum_{j=0}^{\infty}\int_x^1dzf(z)(1-z)^j\\
+\\
+\displaystyle = \sum_{i=0}^{m-1} \int_x^1
+dz\frac{f(z)}{(1-z)_+^{m-i}} +
+\int_x^1dz\frac{f(z)}{z}\,.
+\end{array}
+\end{equation}
+where again the second integral in the equation above is convergent
+without the need of any prescriton.
+
+Now, looking at eqs. (\ref{Jnmfz}) and (\ref{Jm1mfz}), we notice that
+both contain the same typology of integral which need to be
+regularized according to the prescription given in
+Ref. \cite{Savvidy:2013gsa}. In particular we need to consider the
+following integral:
+\begin{equation}
+\begin{array}{rl}
+L_j[f(z)] &=\displaystyle \int_x^1 dz\frac{f(z)}{(1-z)_+^j} = \int_0^1
+dz\frac{f(z)}{(1-z)_+^j} - \int_0^x dz\frac{f(z)}{(1-z)^j}\\
+\\
+& =\displaystyle \int_0^1 dz\frac{1}{(1-z)_+^j}\left\{f(z) - \sum_{l=0}^{j-1} \frac{(-1)^l}{l!}
+  f^{(l)}(1) (1-z)^l
+\right\} - \int_0^x dz\frac{f(z)}{(1-z)^j}\\
+\\
+& = \displaystyle \int_x^1 dz\frac{1}{(1-z)_+^j}\left\{f(z) - \sum_{l=0}^{j-1} \frac{(-1)^l}{l!}
+  f^{(l)}(1) (1-z)^l
+\right\} \\
+\\
+&- \displaystyle \sum_{l=0}^{j-1} \frac{(-1)^l}{l!}
+  f^{(l)}(1) \int_0^x\frac{dz}{(1-z)^{j-l}}\,.
+\end{array}
+\end{equation}
+In addition we have that:
+\begin{equation}
+\int_0^x\frac{dz}{(1-z)^{s}} =
+\left\{
+\begin{array}{ll}
+- \ln(1-x) & \quad s = 1\\
+\\
+\displaystyle - \frac1{s-1}\left[\frac1{(1-x)^{s-1}}-1\right] & \quad s > 1
+\end{array}
+\right.\,,
+\end{equation}
+so that:
+\begin{equation}\label{ciao}
+\begin{array}{rl}
+L_j[f(z)] & = \displaystyle \int_x^1 dz\frac{1}{(1-z)_+^j}\left\{f(z) - \sum_{l=0}^{j-1} \frac{(-1)^l}{l!}
+  f^{(l)}(1) (1-z)^l
+\right\} \\
+\\
+& + \displaystyle \sum_{l=0}^{j-2} \frac{(-1)^l}{l!}
+  \frac{f^{(l)}(1)}{j-l-1}\left[\frac1{(1-x)^{j-l-1}}-1\right]\\
+\\
+& + \displaystyle \frac{(-1)^{j-1}}{(j-1)!}f^{(j-1)}(1)\ln(1-x)
+\end{array}
+\end{equation}
+Now, if $f(z)=w_{\alpha}^{(k)}(x_\beta/z)$, that is a Lagrange
+interpolation polynomial, the difficult part here is
+computing the derivatives $f^{(l)}(1)$. In order to do that, we try
+with an indirect strategy: we try to compute the expansion of the
+function $w_{\alpha}^{(k)}(x_\beta/z)$ around $z=1$ and then we put
+this expansion in relation with the Taylor's expansion to retrieve the
+derivatives.
+
+By means of the variable change $x_\beta/z\rightarrow y$, expanding the function $w_{\alpha}^{(k)}(x_\beta/z)$ around $z=1$ is
+equivalent to expand the function $w_{\alpha}^{(k)}(y)$ around
+$y=x_\beta$ and such an expansion takes the usual form:
+\begin{equation}
+w_{\alpha}^{(k)}(y) = \sum_{t=0}^\infty \frac{1}{t!} \left[\frac{d^t
+  w_\alpha^{(k)}(x_\beta)}{dy^t}\right] (y-x_\beta)^t\,.
+\end{equation}
+Now, restoring the old variable we find:
+\begin{equation}\label{pollo}
+w_{\alpha}^{(k)}(x_\beta/z) = \delta_{\alpha\beta}+\sum_{t=1}^\infty \frac{x_\beta^t}{t!} \left[\frac{d^t
+  w_\alpha^{(k)}(x_\beta)}{dy^t}\right] \frac{(1-z)^t}{z^t}\,.
+\end{equation}
+where we have used the fact that $w_{\alpha}^{(k)}(x_\beta) =
+\delta_{\alpha\beta}$. This is not all because now we need to expand the function $z^{-t}$
+($t \geq 1$) around $z=1$. But one can sho that:
+\begin{equation}
+\frac{1}{z^t}=\sum_{s=0}^{\infty}\frac{(s+t-1)!}{s!(t-1)!}(1-z)^s\,,
+\end{equation}
+which can be plugged into eq. (\ref{pollo}), obtaining:
+\begin{equation}\label{pollo1}
+w_{\alpha}^{(k)}(x_\beta/z) = \delta_{\alpha\beta}+\sum_{s=0}^{\infty}\sum_{t=1}^\infty \frac{(s+t-1)!}{s!(t-1)!}\frac{x_\beta^t}{t!} \left[\frac{d^t
+  w_\alpha^{(k)}(x_\beta)}{dy^t}\right] (1-z)^{t+s}\,.
+\end{equation}
+Now, defining $s+t=l$, we can rearrange the series above as follows:
+\begin{equation}\label{pollo2}
+w_{\alpha}^{(k)}(x_\beta/z) = \delta_{\alpha\beta}+\sum_{l=1}^{\infty}\frac1{l!}\left\{l!\sum_{t=1}^l \frac{(l-1)!}{(l-t)!(t-1)!}\frac{x_\beta^t}{t!} \left[\frac{d^t
+  w_\alpha^{(k)}(x_\beta)}{dy^t}\right] \right\}(1-z)^l
+\end{equation}
+Now, since the Taylor's expansion of $w_{\alpha}^{(k)}(x_\beta/z)$
+around $z=1$ is:
+\begin{equation}\label{pollo3}
+w_{\alpha}^{(k)}(x_\beta/z) = \delta_{\alpha\beta}+\sum_{l=1}^{\infty}\frac1{l!}\left[\frac{d^l
+  w_\alpha^{(k)}(x_\beta/z)}{dz^l}\right]_{z=1} (1-z)^l\,,
+\end{equation}
+we immediately read that, for $l\geq 1$:
+\begin{equation}\label{pollo4}
+(f^{(l)}(1)=)\left[\frac{d^l w_\alpha^{(k)}(x_\beta/z)}{dz^l}\right]_{z=1} = l!\sum_{t=1}^l \frac{(l-1)!}{(l-t)!(t-1)!}\frac{x_\beta^t}{t!} \left[\frac{d^t
+  w_\alpha^{(k)}(x_\beta)}{dy^t}\right]
+\end{equation}
+
+Plugging eq. (\ref{pollo4}) into eq. (\ref{ciao}), we have:
+\begin{equation}\label{ciao}
+\begin{array}{rl}
+L_j[w_\alpha^{(k)}(x_\beta/z)] & = \displaystyle \int_x^1 dz\frac{1}{(1-z)_+^j}\left\{w_\alpha^{(k)}(x_\beta/z) - \sum_{l=0}^{j-1} (-1)^l (1-z)^l
+  \sum_{t=1}^l \frac{(l-1)!}{(l-t)!(t-1)!}\frac{x_\beta^t}{t!} \left[\frac{d^t
+  w_\alpha^{(k)}(x_\beta)}{dy^t}\right] 
+\right\} \\
+\\
+& + \displaystyle \sum_{l=0}^{j-2} \frac{(-1)^l}{j-l-1}\left[\frac1{(1-x)^{j-l-1}}-1\right]
+  \sum_{t=1}^l \frac{(l-1)!}{(l-t)!(t-1)!}\frac{x_\beta^t}{t!} \left[\frac{d^t
+  w_\alpha^{(k)}(x_\beta)}{dy^t}\right]\\
+\\
+& + \displaystyle (-1)^{j-1}\ln(1-x)\sum_{t=1}^{j-1} \frac{(j-2)!}{(j-t-1)!(t-1)!}\frac{x_\beta^t}{t!} \left[\frac{d^t
+  w_\alpha^{(k)}(x_\beta)}{dy^t}\right] 
+\end{array}
+\end{equation}
+
+Finally, we can write that:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle J_{n,m}[w_\alpha^{(k)}(x_\beta/z)] &=& \displaystyle
+\sum_{i=0}^{m-1} (-1)^i {n \choose i}
+L_{m-i}[w_\alpha^{(k)}(x_\beta/z)] \\
+\\
+&+& \displaystyle \sum_{j=0}^{n-m}(-1)^{j+m}{n \choose j+m}\int_x^1dz
+\,w_\alpha^{(k)}(x_\beta/z) (1-z)^j\,.
+\end{array}
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{c}
+\displaystyle J_{-1,m}[w_\alpha^{(k)}(x_\beta/z)] = \sum_{i=0}^{m-1} L_{m-i}[w_\alpha^{(k)}(x_\beta/z)] +
+\int_x^1dz\frac{w_\alpha^{(k)}(x_\beta/z)}{z}\,.
+\end{array}
+\end{equation}
+
+
+\section{Derivatives of the Lagrange Polynomials}\label{DerivativesLP}
+
+Now we need to compute the derivative of the Lagrange polynomial
+$w_\alpha^{(k)}(x)$ of degree $k$ on the grid nodes appearing in eq. (\ref{pollo4}). A
+Lagrange polynomial solves the following differential system:
+\begin{equation}\label{DiffEq}
+\left\{
+\begin{array}{l}
+\displaystyle \frac{d w_\alpha^{(k)}(x)}{dx}
+=\left(\sum_{\beta=0\atop \beta\neq\alpha}^k\frac{1}{x-x_\beta}\right)
+w_\alpha^{(k)}(x)\\
+\\
+w_\alpha^{(k)}(x_\alpha) = 1
+\end{array}
+\right.
+ \end{equation}
+whose solution is:
+\begin{equation}
+w_\alpha^{(k)}(x) = \prod_{\beta=0\atop \beta\neq\alpha}^k\frac{x-x_\beta}{x_\alpha-x_\beta}
+\end{equation}
+
+Using eq. (\ref{DiffEq}), one can show that the $n$-th derivative of
+$w_\alpha^{(k)}(x)$ is equal to zero for $n>k$, while for $n\leq k$:
+\begin{equation}\label{NthDerivative}
+\frac{d^n w_\alpha^{(k)}(x)}{dx^n}
+=\left[\underbrace{\sum_{\beta=0\atop \beta\neq\alpha}^k\frac{1}{x-x_\beta}
+\sum_{\gamma=0\atop \gamma\neq\alpha,\beta}^k\frac{1}{x-x_\gamma}
+\sum_{\delta=0\atop \delta\neq\alpha,\beta,\gamma}^k\frac{1}{x-x_\delta}
+\dots}_{\mbox{$n$ factors}}\right]
+w_\alpha^{(k)}(x)
+\end{equation}
+
+\subsection{Value of the Derivatives on the Nodes}
+
+The value of the Lagrange interpolation function $w_\alpha^{(k)}(x)$
+in correspondence of the nodes is:
+\begin{equation}
+w_\alpha^{(k)}(x_\rho) = \delta_{\alpha\rho}\,.
+\end{equation}
+As a consequence, it looks like we could use this equation in
+eq. (\ref{NthDerivative}) to get the value of any derivative on the
+nodes. Unfortunately this is not so straightforward because, except
+for the case $\alpha=\rho$, this expression for the derivatives is
+defined only in the limit $x\rightarrow x_\rho$. In particular:
+\begin{equation}\label{diagonal}
+\frac{d^n w_\alpha^{(k)}(x_\alpha)}{dx^n}
+=\underbrace{\sum_{\beta=0\atop \beta\neq\alpha}^k\frac{1}{x_\alpha-x_\beta}
+\sum_{\gamma=0\atop \gamma\neq\alpha,\beta}^k\frac{1}{x_\alpha-x_\gamma}
+\sum_{\delta=0\atop \delta\neq\alpha,\beta,\gamma}^k\frac{1}{x_\alpha-x_\delta}
+\dots}_{\mbox{$n$ factors}}
+\end{equation}
+while for $\rho\neq\alpha$ we write eq. (\ref{NthDerivative}) in a
+different form, that is:
+\begin{equation}
+\frac{d^n w_\alpha^{(k)}(x)}{dx^n}
+=\underbrace{\sum_{\beta=0\atop \beta\neq\alpha}^k\frac{1}{x_\alpha-x_\beta}
+\sum_{\gamma=0\atop \gamma\neq\alpha,\beta}^k\frac{1}{x_\alpha-x_\gamma}
+\sum_{\delta=0\atop \delta\neq\alpha,\beta,\gamma}^k\frac{1}{x_\alpha-x_\delta}
+\dots}_{\mbox{$n$ factors}}
+\prod_{\sigma=0\atop\sigma\neq\alpha,\beta,\gamma,\delta,\dots}^k\frac{x - x_\sigma}{x_\alpha-x_\sigma} 
+\end{equation}
+which can now be evaluate on any node without the need of the limit, yielding:
+\begin{equation}\label{offdiagonal}
+\frac{d^n w_\alpha^{(k)}(x_\rho)}{dx^n}
+=\underbrace{\sum_{\beta=0\atop \beta\neq\alpha}^k\frac{1}{x_\alpha-x_\beta}
+\sum_{\gamma=0\atop \gamma\neq\alpha,\beta}^k\frac{1}{x_\alpha-x_\gamma}
+\sum_{\delta=0\atop \delta\neq\alpha,\beta,\gamma}^k\frac{1}{x_\alpha-x_\delta}
+\dots}_{\mbox{$n$ factors}}
+\prod_{\sigma=0\atop\sigma\neq\alpha,\beta,\gamma,\delta,\dots}^k\frac{x_\rho - x_\sigma}{x_\alpha-x_\sigma} 
+\end{equation}
+which in turn obviously reduces to eq. (\ref{diagonal}) for
+$\rho=\alpha$. But for $\rho\neq\alpha$ eq. (\ref{offdiagonal}) can be
+further simplified. In fact, the product in eq. (\ref{offdiagonal}) is
+different from only if
+$\rho = \beta,\gamma,\delta,\dots$ (here by definition we are assuming $\rho \neq \alpha$). Therefore we could write:
+\begin{equation}\label{offdiagonal2}
+\frac{d^n w_\alpha^{(k)}(x_\rho)}{dx^n}
+=\frac{1}{(x_\alpha-x_\rho)^n}
+\prod_{\sigma=0\atop\sigma\neq\alpha,\rho}^k\frac{x_\rho - x_\sigma}{x_\alpha-x_\sigma} 
+\end{equation}
+
+Eqs. (\ref{diagonal}) and (\ref{offdiagonal}) could be plugged into
+eq. (\ref{pollo4}) but, before doing it we can use a
+simplification. Suppose that the interpolation grid is such that:
+\begin{equation}
+x_\alpha - x_\beta = \delta x(\alpha-\beta)
+\end{equation}
+where $\delta x$ is a constant. Under this assumption, we have that:
+\begin{equation}
+\frac{d^n w_\alpha^{(k)}(x_\rho)}{dx^n} =
+\left\{
+\begin{array}{ll}
+\displaystyle \frac1{(\delta x)^n}\underbrace{\sum_{\beta=0\atop \beta\neq\alpha}^k\frac{1}{\alpha-\beta}
+\sum_{\gamma=0\atop \gamma\neq\alpha,\beta}^k\frac{1}{\alpha-\gamma}
+\sum_{\delta=0\atop \delta\neq\alpha,\beta,\gamma}^k\frac{1}{\alpha-\delta}
+\dots}_{\mbox{$n$ factors}}  & \quad \rho = \alpha \\
+\\
+\displaystyle \frac{1}{(\delta x)^n}
+\prod_{\sigma=0\atop\sigma\neq\alpha,\rho}^k\frac{\rho - \sigma}{\alpha-\sigma}  & \quad \rho \neq \alpha
+\end{array}
+\right.
+\end{equation}
+
+
+\section{Implementation in {APFEL}}
+
+In {APFEL} we express PDFs by means of a moving interpolation over
+an $x$-space grid, according to the formula:
+\begin{equation}
+{q}(x,\mu^2)=\sum^{N_{x}}_{\alpha=0}w_{\alpha}^{(k)}(x){q}(x_{\alpha},\mu^2)\,,
+\end{equation}
+where $w_{\alpha}^{(k)}$ are the "moving" Lagrange interpolation
+functions of degree $k$ which take the following form:
+\begin{equation}\label{LagrangeFormula}
+w_{\alpha}^{(k)}(x) = \sum_{j=0,j \leq \alpha}^{k}\theta(x-x_{\alpha-j})\theta(x_{\alpha-j+1}-x)\prod^{k}_{\delta=0,\delta\ne j}\frac{x-x_{\alpha-j+\delta}}{x_{\alpha}-x_{\alpha-j+\delta}}\,.
+\end{equation}
+
+
+% To implement the tensor gluon evolution in {APFEL} we will need to
+% perform integrals of the following kind:
+% \begin{equation}
+% \begin{array}{rl}
+% I &=\displaystyle \int_x^1 dz\frac{z^n w_{\alpha}^{(k)}(x_\beta/z)}{(1-z)_+^m} =
+% \int_0^1 dz\frac{z^n w_{\alpha}^{(k)}(x_\beta/z)}{(1-z)_+^m} -
+% \int_0^x dz\frac{z^n w_{\alpha}^{(k)}(x_\beta/z)}{(1-z)^m}\\
+% \\
+% & =\displaystyle \int_0^1 dz\frac{1}{(1-z)_+^m}\left\{z^n
+%   w_{\alpha}^{(k)}(x_\beta/z) - \sum_{k=0}^{m-1} \frac{(-1)^k}{k!}
+%   \left[\frac{d^k}{dz^k}z^n
+%   w_{\alpha}^{(k)}(x_\beta/z) \right]_{z=1} (1-z)^k
+% \right\} \\
+% \\
+% &- \displaystyle \int_0^x dz\frac{z^n
+%   w_{\alpha}^{(k)}(x_\beta/z)}{(1-z)^m}\\
+% \\
+% & = \displaystyle \int_x^1 dz\frac{1}{(1-z)_+^m}\left\{z^n
+%   w_{\alpha}^{(k)}(x_\beta/z) - \sum_{k=0}^{m-1} \frac{(-1)^k}{k!}
+%   \left[\frac{d^k}{dz^k}z^n
+%   w_{\alpha}^{(k)}(x_\beta/z) \right]_{z=1} (1-z)^k
+% \right\} \\
+% \\
+% &- \displaystyle \sum_{k=0}^{m-1} \frac{(-1)^k}{k!}
+%   \left[\frac{d^k}{dz^k}z^n
+%   w_{\alpha}^{(k)}(x_\beta/z) \right]_{z=1} \int_0^x\frac{dz}{(1-z)^{m-k}}
+% \end{array}
+% \end{equation}
+% This difficult part here is avaluating:
+% \begin{equation}
+% \left[\frac{d^k}{dz^k}z^n w_{\alpha}^{(k)}(x_\beta/z) \right]_{z=1}
+% \end{equation}
+% that are essentially the coefficients of the expansion of the function
+% $z^n w_{\alpha}^{(k)}(x_\beta/z)$ arount $z=1$. As a consequance we
+% may try to expand this function in some clever way: We start noting
+% that performing the following change of variable:
+% \begin{equation}
+% z^n w_{\alpha}^{(k)}(x_\beta/z) \mathop{\longrightarrow}_{x_\beta/z=y}
+% \left(\frac{x_\beta}{y}\right)^n w_{\alpha}^{(k)}(y)
+% \end{equation}
+% we can expand the function arond $y=x_\beta$. But using the geometric series:
+% \begin{equation}
+% \frac{x_\beta}{y} = \frac{1}{1-\left(1-\frac{y}{x_\beta}\right)} = \sum_{j=0}^\infty \left(1-\frac{y}{x_\beta}\right)^j
+% \end{equation}
+% Now, considering that:
+% \begin{equation}\label{Exp1}
+% \begin{array}{c}
+% \displaystyle\frac{d^n}{dy^n}\frac{1}{y} = \frac{(-1)^nn!}{y^{n+1}}\Longrightarrow
+% \left(\frac{x_\beta}{y}\right)^n =
+% \frac{(-1)^{n-1}x_\beta^{n-1}}{(n-1)!}\frac{d^{n-1}}{dy^{n-1}}\frac{x_\beta}{y}\\
+% \\
+% \displaystyle = \frac{(-1)^{n-1}x_\beta^{n-1}}{(n-1)!}\sum_{j=0}^\infty \frac{d^{n-1}}{dy^{n-1}}\left(1-\frac{y}{x_\beta}\right)^j=\sum_{j=0}^\infty\frac{(j+n-1)!}{j!(n-1)!}\left(1-\frac{y}{x_\beta}\right)^j
+% \end{array}
+% \end{equation}
+% At the same time:
+% \begin{equation}
+% w_{\alpha}^{(k)}(y) = \sum_{m=0}^k\frac{(-1)^mx_\beta^m}{m!} \left[\frac{d^m w_\alpha^{(k)}(x_\beta)}{dy^m}\right]\left(1-\frac{y}{x_\beta}\right)^m
+% \end{equation}
+% Therefore:
+% \begin{equation}
+% \left(\frac{x_\beta}{y}\right)^n w_{\alpha}^{(k)}(y) = \sum_{j=0}^\infty\sum_{m=0}^k\frac{(j+n-1)!}{j!(n-1)!}\frac{(-1)^mx_\beta^m}{m!} \left[\frac{d^m w_\alpha^{(k)}(x_\beta)}{dy^m}\right]\left(1-\frac{y}{x_\beta}\right)^{m+j}
+% \end{equation}
+% Going back to the variable $z$:
+% \begin{equation}
+% z^n w_{\alpha}^{(k)}(z/x_\beta) =
+% \sum_{j=0}^\infty\sum_{m=0}^k\frac{(j+n-1)!}{j!(n-1)!}\frac{(-1)^jx_\beta^m}{m!}
+% \left[\frac{d^m w_\alpha^{(k)}(x_\beta)}{dy^m}\right] \frac{(1-z)^{m+j}}{z^{m+j}}
+% \end{equation}
+% But using eq. (\ref{Exp1}), we also have that:
+% \begin{equation}\label{mimmo}
+% \frac{1}{z^{m+j}}=\sum_{t=0}^{\infty}\frac{(t+j+m-1)!}{t!(j+m-1)!}(1-z)^t
+% \end{equation}
+% Therefore:
+% \begin{equation}
+% \begin{array}{c}
+% \displaystyle z^n w_{\alpha}^{(k)}(z/x_\beta) =
+% \sum_{t=0}^{\infty}\sum_{j=0}^\infty\sum_{m=0}^k \frac{(t+j+m-1)!}{t!(j+m-1)!}\frac{(j+n-1)!}{j!(n-1)!}\frac{(-1)^jx_\beta^m}{m!}
+% \left[\frac{d^m w_\alpha^{(k)}(x_\beta)}{dy^m}\right] (1-z)^{m+j+t}\\
+% \\
+% \displaystyle = \sum_{m=0}^k \frac{x_\beta^m}{m!}
+% \left[\frac{d^m w_\alpha^{(k)}(x_\beta)}{dy^m}\right]
+% \sum_{j=0}^\infty (-1)^j\frac{(j+n-1)!}{j!(n-1)!} \sum_{t=0}^{\infty} \frac{(t+j+m-1)!}{t!(j+m-1)!}(1-z)^{m+j+t}
+% \end{array}
+% \end{equation}
+% What we need here is something of the form:
+% \begin{equation}
+% \displaystyle z^n w_{\alpha}^{(k)}(z/x_\beta) =\sum_{s=0}^\infty a_s(1-z)^s
+% \end{equation}
+
+
+
+\newpage
+
+\begin{thebibliography}{alp}
+
+%\cite{Savvidy:2013gsa}
+\bibitem{Savvidy:2013gsa} 
+  G.~Savvidy,
+  %``Invariant scalar product on extended Poincare algebra,''
+  J.\ Phys.\ A {\bf 47}, 055204 (2014)
+  [arXiv:1308.2695 [hep-th]].
+  %%CITATION = ARXIV:1308.2695;%%
+
+\end{thebibliography}
+
+\end{document}
