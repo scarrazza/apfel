@@ -119,7 +119,7 @@
 *
       INTEGER NF
       DOUBLE PRECISION BETA0APF,BETA1APF,BETA2APF,B1,B2
-      DOUBLE PRECISION GAMMA0APF,GAMM1APF,GAMMA2APF,C0,C1,C2
+      DOUBLE PRECISION GAMMA0APF,GAMMA1APF,GAMMA2APF,C0,C1,C2
       DOUBLE PRECISION AS,AS0
 **
 *     Internal Variables
@@ -133,7 +133,7 @@
       B1 = BETA1APF(NF) / BETA0APF(NF)
       B2 = BETA2APF(NF) / BETA0APF(NF)
       C0 = GAMMA0APF()  / BETA0APF(NF)
-      C1 = GAMM1APF(NF) / BETA0APF(NF)
+      C1 = GAMMA1APF(NF) / BETA0APF(NF)
       C2 = GAMMA2APF(NF) / BETA0APF(NF)
 *
       FACT = DEXP( C0 * DLOG(AS/AS0) )
@@ -257,7 +257,7 @@
       end
 *
 ****************************************************************************
-      function gamm1apf(nf)
+      function gamma1apf(nf)
 *
       implicit none
 **
@@ -267,9 +267,9 @@
 **
 *     Output Variables
 *
-      double precision gamm1apf
+      double precision gamma1apf
 *
-      gamm1apf = 202d0 / 3d0 - 20d0 / 9d0 * nf
+      gamma1apf = 202d0 / 3d0 - 20d0 / 9d0 * nf
 *
       return
       end
