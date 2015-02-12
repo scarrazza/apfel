@@ -142,7 +142,7 @@ $F_2^c$, {\tt F2(2)} = $F_2^b$, {\tt F2(3)} = $F_2^t$, {\tt F2(4)} =
 $F_2^p$)
 
 
-\section{Computing DIS Structure Functions on a Grid}
+\section{Computing DIS Structure Functions on a Grid: the New DIS Module}
 
 In order to speed up and optimize the compution of the DIS structure
 functions in {\tt APFEL} we decided to use the same technology used
@@ -205,7 +205,7 @@ c =  \mbox{max}(x_\beta,x_\beta/x_{\alpha+1}) \quad\mbox{and}\quad d = \mbox{min
 \end{equation}
 The same symmetries holding for the splitting function case hold also here.
 
-\subsection{Coefficient Functions Treatment}
+\subsubsection{Coefficient Functions Treatment}
 
 The struncture of the DIS coefficient functions is very similar to
 that of splitting functions with only one small complication, that is
@@ -270,8 +270,17 @@ F(x_\alpha,t) = \Gamma_{i,\alpha\beta}(t) M_{ij,\beta\gamma}(t,t_0) \tilde{q}_j(
 \end{equation}
 where a sum of the repeated indeces is understood.
 
-Bofore proceeding to treatment of the massive coefficient functions,
-it is opportune at this point to mention that when considering
+Before proceeding to treatment of the massive coefficient functions,
+we stress that in the massless scheme, for obviuos kinematical
+reasons, there is no need to distinguish between charged- and
+neutral-current coefficient functions. The difference between the two
+cases appears only at the level of structure functions where the
+coefficient functions are comvoluted with different combinations of
+PDFs and combined according to the structure of the couplings to
+quarks of the $Z/\gamma^*$ vector bosons in the neutral-current case
+and the $W^\pm$ in the charged-current case.
+
+It is opportune at this point to mention that, when considering
 charged-current observables at NLO in the massive scheme, there is a
 further contribution to be added to eq.~(\ref{CFstructure}) that has the form:
 \begin{equation}
@@ -285,7 +294,7 @@ one can easily show that:
 \begin{equation}\label{KeyIdentity}
 \frac{d}{dx}\delta(1-x) = \left[\frac{\delta(1-x)}{1-x}\right]_+\,.
 \end{equation}
-To ensure that this identity is correct, we try to convolute both
+To make sure that this identity is correct, we try to convolute both
 the r.h.s. and the l.h.s. of eq.~(\ref{KeyIdentity}) with the test
 function $f(x)$, such that $f(1) = 0$, to see what is the result and
 whether the results are equal. Using the l.h.s. we have:
@@ -354,42 +363,181 @@ is on $\xi$-space grid, where $\xi$ is defined as:
 \begin{equation}
 \xi = \frac{Q^2}{m_H^2}\,.
 \end{equation}
-In fact, for dimentional reasons, massive coefficient functions depend
-on the scale $Q$ through $\xi$.
-
-
-\subsection{Charged Current Coefficient Functions}
-
+where $m_H$ is the mass of the heavy quark under consideration.  In
+fact, for dimentional reasons, massive coefficient functions depend on
+the scale $Q$ through $\xi$. Neglecting for the moment the dependence
+on the renormalization and on the factorization scales, the massive
+coefficient functions allow for the following expansion:
 \begin{equation}
-\xi = \frac{Q^2}{m_H^2}
+C_i(x,Q,m_H) = \sum_n a_s^n(t)C_i^{(n)}(x,\xi)\,.
+\end{equation}
+Given this relation, the massive analogous of the
+eq.~(\ref{splittingexp}) is:
+\begin{equation}\label{splittingexp}
+\Gamma_{i,\beta\alpha}(Q,m_H) = \sum_n a_s^{n}(t) \Gamma_{i,\beta\alpha}^{(n)}(\xi)\,.
+\end{equation}
+In order not to recompute the operator
+$\Gamma_{i,\beta\alpha}^{(n)}(\xi)$ any time that $\xi$ changes, we
+can tabulate the on a grid in $\xi$,
+$\{\xi_1,\dots,\xi_\tau,\dots,\xi_{N_\xi}\}$, definining:
+\begin{equation}
+\Gamma_{i,\beta\alpha,\tau}^{(n)} = \Gamma_{i,\beta\alpha}^{(n)}(\xi_\tau),.
+\end{equation}
+and then interpolate to obtain the operator for a generic value of
+$\xi$. We have chosen to use a linear interpolation so that:
+\begin{equation}
+\Gamma_{i,\beta\alpha}^{(n)}(\xi) =
+c^{(0)}(\xi)\Gamma_{i,\beta\alpha,\tau}^{(n)} + c^{(1)}(\xi)\Gamma_{i,\beta\alpha,\tau+1}^{(n)}\,,
+\end{equation}
+with:
+\begin{equation}
+c^{(0)}(\xi) = \frac{\ln\xi_{\tau+1} - \ln\xi}{\ln\xi_{\tau+1} -
+  \ln\xi_\tau}\quad\mbox{and}\quad c^{(1)}(\xi) =
+\frac{\ln\xi - \ln\xi_\tau}{\ln\xi_{\tau+1} - \ln\xi_\tau} \,,
+\end{equation}
+provided that $\xi_\tau \leq \xi < \xi_{\tau+1}$.
+
+To conclude, once the operators $\Gamma_{i,\beta\alpha,\tau}^{(n)}$
+have been precomputed, the operator for a generic value of $\xi$ can
+be quickly computed by interpolation.
+
+\subsubsection{Neutral Current Coefficient Functions}
+
+As far as the neutral current coefficient functions are concerned,
+beyond LO(\footnote{We remind that, in the neutral current case, the
+  LO is order $\alpha_s$.}), a close analytical form is not available
+and only a semi-analitical form~\cite{Laenen:1992xs} which is not
+suitable for a fast numerical implementation. The authors of
+Ref.~\cite{Alekhin:2003ev} have used a simple parametrization to fit
+the exact coefficient functions. Such parametrization is actually
+meant to be used in Mellin space, however it can equally be used in
+$x$ space providing a fast and accurate enough alternative to the
+original implemetation. The parametrization of
+Ref.~\cite{Alekhin:2003ev} has the form:
+\begin{equation}
+C(x,\xi) = \theta(\rho-x)(\rho-x)^{-\kappa}\sum_{k=0}^K
+a_k(\rho)x^k\quad\mbox{with}\quad\rho = \frac{\xi}{\xi+4}\,,
+\end{equation}
+and the authors provide the numerical values of $\kappa$, $K$ and
+$a_k(\rho)$ for all the relevant coefficient functions at LO
+($\mathcal{O}(\alpha_s)$) and NLO ($\mathcal{O}(\alpha_s^2)$) 
+tabulated on a $\xi$-space grid for large enough range in $\xi$.
+Note the presence of the $\theta$-function that has the scope of
+reducing the phase scace available for the process due the production
+of two heavy quarks in the final state.
+
+In {\tt APFEL} we make use of the parametrization above only for the
+NLO coefficient functions as the exact form of the LO ones is
+available in Ref.~\cite{Forte:2010ta} and compact enough for an
+efficient implementation. In addition, also for the pure singlet NLO
+coefficient functions (sometimes called gluon-radiation terms) we
+employ the analytical expressions given in Appendix A of
+Ref.~\cite{Buza:1995ie}.
+
+We finally remark that massive coeffient functions for the neutral
+current structure functions are presently known only for $F_2$ and
+$F_L$. For the parity-violating structure function $F_3$ we thus use
+the massless coefficient functions.
+
+As far as the massless limit of the massive (massive-zero) coefficient
+functions is concerned, exact expressions up to
+$\mathcal{O}(\alpha_s^2)$ have been evaluated in
+Ref.~\cite{Buza:1995ie} and reported in Appendix D. Such expressions
+are implemented in {\tt APFEL}
+
+As in the massive case, massive-zero coefficient functions are know
+only for $F_2$ and $F_L$ and again for the $F_3$ structure function we
+use the massless coefficient functions.
+
+\subsubsection{Charged Current Coefficient Functions}
+
+We can now consider the charged-current sector. In this case, massive
+coeffincient functions are know only up to $\mathcal{O}(\alpha_s)$
+(NLO), therefore a proper computation of charged-current structure
+functions the NNLO version of the FONLL scheme (called FONLL-C) is
+impossible. However, the best we can do when computing charged-current
+structure functions in the FONLL-C scheme is to set the NNLO contributions to
+zero in the massive sectors but keeping those in the massless sector, as
+well as using NNLO evolution for PDFs and $\alpha_s$.
+
+The charged-current massive structure functions, like the other
+structure functions, are given by the convolution of PDFs with
+coefficient functions. Considering the heavy-quark $H$ structure functions in the
+approximation of diagonal CKM matrix, the definitions are:
+\begin{equation}\label{F1}
+F_1^H(x,Q,m_H)=\frac12\int_{\chi}^{1}\frac{dy}{y}\left[C_{1,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{1,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]
+\end{equation}
+\begin{equation}\label{F2}
+F_2^H(x,Q,m_H)=\chi\int_{\chi}^{1}\frac{dy}{y}\left[C_{2,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{2,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]
+\end{equation}
+\begin{equation}\label{F3}
+F_3^H(x,Q,m_H)=\int_{\chi}^{1}\frac{dy}{y}\left[C_{3,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{3,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]
+\end{equation}
+with:
+\begin{equation}
+\chi = x\left(1+\frac{m_H^2}{Q^2}\right) = \frac{x}{\lambda}\,,
+\end{equation}
+where:
+\begin{equation}
+\lambda = \frac{Q^2}{Q^2+m_H^2} = \frac{\xi}{1+\xi}\,.
+\end{equation}
+Now, defining:
+\begin{equation}
+F_L^H(x,Q,m_H) = F_2^H(x,Q,m_H) - 2xF_1^H(x,Q,m_H)\,,
+\end{equation}
+we have that:
+\begin{equation}\label{FL}
+F_L^H(x,Q,m_H)=\chi\int_{\chi}^{1}\frac{dy}{y}\left[C_{L,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{L,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]\,,
+\end{equation}
+where we have defined:
+\begin{equation}\label{clll}
+C_{L,q(g)}(y,\xi) = C_{2,q(g)}(y,\xi)-\lambda C_{1,q(g)}(y,\xi)
 \end{equation}
 
+All the coefficient functions entering the structure functions above
+admit a perturbative expansion that at N$^N$LO reads:
 \begin{equation}
-\lambda = \frac{Q^2}{Q^2+m_H^2} = \frac{\xi}{1+\xi}
+C_{k,q(g)}(y,\xi) = \sum_{n=0}^N a_s^n(Q)
+C_{k,q(g)}^{(n)}(y,\xi)\,,\quad k = 1,2,3,L\,.
+\end{equation}
+In the following we will truncate the expansion at NLO.
+
+After the definitions above we can write down, first the LO
+coefficient functions. While at LO the gluon coefficient functions are
+all zero ($C_{k,g}^{(0)}(y,\xi)=0$), the quark coefficient functions are:
+\begin{equation}
+\begin{array}{l}
+\displaystyle C^{(0)}_{1,q}(x,\xi) = \delta(1-x)\,,\\
+\\
+\displaystyle C^{(0)}_{2,q}(x,\xi) = \delta(1-x) \,,\\
+\\
+\displaystyle C^{(0)}_{3,q}(x,\xi) = \delta(1-x) \,,\\
+\\
+\displaystyle C^{(0)}_{L,q}(x,\xi) = (1-\lambda)\delta(1-x) \,.
+\end{array}
 \end{equation}
 
-
+The NLO charged-current massive coefficient have been computed and
+reported in Appendix A of Ref.~\cite{Gluck:1996ve}. However, before
+being implemented in {\tt APFEL} they need some manipulation. We start
+defining:
 \begin{equation}
-K_F^2 = \frac{Q^2}{\mu_F^2}
+K_A=\frac{1}{\lambda}(1-\lambda)\ln(1-\lambda)\,.
+\end{equation}
+In addition, in order to consider factorization scale variations, we also need to
+consider the splitting function:
+\begin{equation}
+P_{qq}^{(0)}(z) = C_F\left[\frac{1+z^2}{(1-z)_+}+\frac32\delta(1-z)\right]=C_F\left[\frac{2}{(1-z)_+}-(1+z)+\frac32\delta(1-z)\right]\,,
+\end{equation}
+and we also define:
+\begin{equation}
+K_F^2 =\frac{Q^2}{\mu_F^2}\,.
 \end{equation}
 
-
-
-\begin{equation}
-P_{qq}^{(0)}(z) = C_F\left[\frac{1+z^2}{(1-z)_+}+\frac32\delta(1-z)\right]=C_F\left[\frac{2}{(1-z)_+}-(1+z)+\frac32\delta(1-z)\right]
-\end{equation}
-
-
-
-\begin{equation}
-K_A=\frac{1}{\lambda}(1-\lambda)\ln(1-\lambda)
-\end{equation}
-
-Eccole:
-
+The explicit expressions of the NLO quark coefficient functions read:
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{1,q}&=&\displaystyle 2C_F \bigg\{
+C^{(1)}_{1,q}&=&\displaystyle 2C_F \bigg\{
 \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
 \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
 \\
@@ -403,12 +551,12 @@ C^{(n_l)}_{1,q}&=&\displaystyle 2C_F \bigg\{
 \\
 &+& \displaystyle \frac{\lambda-1}{\lambda^2}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
       z)^2}\right]_+\bigg\}
-\end{array}
+\end{array}\,,
 \end{equation}
 
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{2,q}&=&\displaystyle 2C_F \bigg\{
+C^{(1)}_{2,q}&=&\displaystyle 2C_F \bigg\{
 \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
 \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
 \\
@@ -422,12 +570,12 @@ C^{(n_l)}_{2,q}&=&\displaystyle 2C_F \bigg\{
 \\
 &+& \displaystyle \frac{2\lambda^2-\lambda-1}{\lambda}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
       z)^2}\right]_+\bigg\}
-\end{array}
+\end{array}\,,
 \end{equation}
 
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{3,q}&=&\displaystyle 2C_F \bigg\{
+C^{(1)}_{3,q}&=&\displaystyle 2C_F \bigg\{
 \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
 \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
 \\
@@ -441,116 +589,12 @@ C^{(n_l)}_{3,q}&=&\displaystyle 2C_F \bigg\{
 \\
 &+& \displaystyle \frac{\lambda-1}{\lambda}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
       z)^2}\right]_+\bigg\}
-\end{array}
+\end{array}\,,
 \end{equation}
-
-
-% \begin{equation}
-% \begin{array}{rcl}
-% C^{(n_l)}_{1,q}&=&\displaystyle {P_{qq}^{(0)}(z)}\ln \frac{K_F^2}{\lambda}+C_F\bigg\{-\bigg(4+\frac{1}{2\lambda}+2\zeta_2+\frac{1+3\lambda}{2\lambda}K_A\bigg)\delta(1-z)\\
-% \\
-% &-&\displaystyle{\frac{(1+z^2)\ln z}{1-z}}+2{(1+z^2)\left[\frac{\ln(1-z)}{1-z}\right]_+}-{(1+z^2)\left[\frac{\ln(1-\lambda z)}{1-z}\right]_+}\\
-% \\
-% &+&\displaystyle{(1-4z+z^2)\left[\frac{1}{1-z}\right]_+}+{(z-z^2)\left[\frac{1}{1-\lambda z}\right]}+\frac{1}{2}{\left[\frac{1-z}{(1-\lambda z)^2}\right]_+}\bigg\}\\
-% \\
-% &=&\displaystyle C_F \bigg\{
-% \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
-% \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
-% \\
-% &-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
-% \left(-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
-%   z)\right)(1+z)+(3-z)+\frac{1}{\lambda^2}+\frac{z-1}{\lambda}\\
-% \\
-% &+&\displaystyle 2
-% \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
-% 2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
-% \\
-% &+& \displaystyle \frac{\lambda-1}{\lambda^2}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
-%       z)^2}\right]_+\bigg\}
-% \end{array}
-% \end{equation}
-
-% \begin{equation}
-% \begin{array}{rcl}
-% C^{(n_l)}_{2,q}&=&\displaystyle {P_{qq}^{(0)}(z)}\ln \frac{K_F^2}{\lambda}+C_F\bigg\{-\bigg(4+\frac{1}{2\lambda}+2\zeta_2+\frac{1+\lambda}{2\lambda}K_A\bigg)\delta(1-z)\\
-% \\
-% &-&\displaystyle{\frac{(1+z^2)\ln z}{1-z}}+2{(1+z^2)\left[\frac{\ln(1-z)}{1-z}\right]_+}-{(1+z^2)\left[\frac{\ln(1-\lambda z)}{1-z}\right]_+}\\
-% \\
-% &+&\displaystyle
-% {(2-2z^2-\tfrac{2}{z})\left[\frac{1}{1-z}\right]_+}+{(\tfrac{2}{z}-1-z)\left[\frac{1}{1-\lambda
-%       z}\right]}+\frac{1}{2}{\left[\frac{1-z}{(1-\lambda
-%       z)^2}\right]_+}\bigg\}\\
-% \\
-% &=&\displaystyle C_F \bigg\{
-% \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
-% \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
-% \\
-% &-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
-% \left(2-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
-%   z)\right)(1+z)+\frac{1}{\lambda}\\
-% \\
-% &+&\displaystyle 2
-% \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
-% 2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
-% \\
-% &+& \displaystyle \frac{2\lambda^2-\lambda-1}{\lambda}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
-%       z)^2}\right]_+\bigg\}
-% \end{array}
-% \end{equation}
-
-% \begin{equation}
-% \begin{array}{rcl}
-% C^{(n_l)}_{3,q}&=&\displaystyle {P_{qq}^{(0)}(z)}\ln \frac{K_F^2}{\lambda}+C_F\bigg\{-\bigg(4+\frac{1}{2\lambda}+2\zeta_2+\frac{1+3\lambda}{2\lambda}K_A\bigg)\delta(1-z)\\
-% \\
-% &-&\displaystyle{\frac{(1+z^2)\ln z}{1-z}}+2{(1+z^2)\left[\frac{\ln(1-z)}{1-z}\right]_+}-{(1+z^2)\left[\frac{\ln(1-\lambda z)}{1-z}\right]_+}\\
-% \\
-% &-&\displaystyle{(1+z^2)\left[\frac{1}{1-z}\right]_+}+{(1-z)\left[\frac{1}{1-\lambda
-%       z}\right]}+\frac{1}{2}{\left[\frac{1-z}{(1-\lambda
-%       z)^2}\right]_+}\bigg\}\\
-% \\
-% &=&\displaystyle C_F \bigg\{
-% \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
-% \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
-% \\
-% &-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
-% \left(1-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
-%   z)\right)(1+z)+\frac{1}{\lambda}\\
-% \\
-% &+&\displaystyle 2
-% \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
-% 2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
-% \\
-% &+& \displaystyle \frac{\lambda-1}{\lambda}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
-%       z)^2}\right]_+\bigg\}
-% \end{array}
-% \end{equation}
-
-
-
-But:
-\begin{equation}\label{clll}
-C^{(n_l)}_{L,q(g)} = C^{(n_l)}_{2,q(g)}-\lambda C^{(n_l)}_{1,q(g)}
-\end{equation}
-
 
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{L,q}
-% &=&\displaystyle C_F \bigg\{
-% (1-\lambda)\bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
-% \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)+K_A \delta(1-z)\\
-% \\
-% &-&\displaystyle (1-\lambda)\frac{(1+z^2)\ln z}{1-z} +
-% (1-\lambda)\left(-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
-%   z)\right)(1+z)+3(1-\lambda)+(1+\lambda)z\\
-% \\
-% &+&\displaystyle 2 (1-\lambda)
-% \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
-% 2 (1-\lambda)\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
-% \\
-% &-& \displaystyle 2(1-\lambda)\left[\frac{1}{1-\lambda z}\right]_+ +\frac{(1-\lambda)}{2}\left[\frac{1-z}{(1-\lambda
-%       z)^2}\right]_+\bigg\}\\
-% \\
+C^{(1)}_{L,q}
 &=&\displaystyle 2C_F (1-\lambda)\bigg\{
 \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
 \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
@@ -565,102 +609,96 @@ C^{(n_l)}_{L,q}
 \\
 &-& \displaystyle 2\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
       z)^2}\right]_+\bigg\} + 2C_F \left[\lambda K_A \delta(1-z) + (1+\lambda)z\right]
-
-\end{array}
+\end{array}\,.
 \end{equation}
 
-The generalized +-prescription:
+In order to proceed with our manipulations we need to define the
+generalized or incomplete +-prescription:
 \begin{equation}
 \begin{array}{c}
 \displaystyle \int_x^1 dz\left[f(z)\right]_+g(z) = \int_x^1
 dz\,f(z)\left[g(z)-g(1)\right]-g(1)\underbrace{\int_0^xdz\,f(z)}_{-R_f(x)}=\\
 \\
-\displaystyle \int_x^1 dz\left\{\left[f(z)\right]_++R_f(x)\delta(1-z)\right\}g(z)
+\displaystyle \int_x^1 dz\left\{\left[f(z)\right]_++R_f(x)\delta(1-z)\right\}g(z)\,.
 \end{array}
 \end{equation}
 where the +-prescription in the r.h.s of the equation above should be
 understood in the usual way independently of the integration bounds.
 
-The function $R_f(x)$ can be often evaluated analytically but
-sometimes instead can be evaluated only performing numerically the
-integral. In particular:
+Often the residual $R_f(x)$ function can be evaluated analytically by
+performing the integral, however sometimes it need to be evaluated
+numerically performing the integral in a numerical way. In particular
+the $+$-prescripted functions that enter the expressions above give
+rise to the following residual functions that can be computed analytically:
 \begin{equation}
--\int_0^x\frac{dz}{1-z} = \ln(1-x)
+-\int_0^x\frac{dz}{1-z} = \ln(1-x)\,,
 \end{equation}
-
 \begin{equation}
--\int_0^xdz\frac{\ln(1-z)}{1-z} = \frac12 \ln^2(1-x)
+-\int_0^xdz\frac{\ln(1-z)}{1-z} = \frac12 \ln^2(1-x)\,,
 \end{equation}
-
 \begin{equation}
--\int_0^x\frac{dz}{1-\lambda z} = \frac{1}{\lambda}\ln(1-\lambda x)
+-\int_0^x\frac{dz}{1-\lambda z} = \frac{1}{\lambda}\ln(1-\lambda x)\,,
 \end{equation}
-
 \begin{equation}
 -\int_0^xdz\frac{1-z}{(1-\lambda z)^2} =
 \frac{1}{\lambda^2}\ln(1-\lambda
-x)+\frac{1-\lambda}{\lambda}\frac{x}{1-\lambda x}
+x)+\frac{1-\lambda}{\lambda}\frac{x}{1-\lambda x}\,,
 \end{equation}
-but we do not know hot to solve analytically the integral:
+while we do not know how to solve analytically the integral:
 \begin{equation}
 R(x)=-\int_0^xdz\frac{\ln(1-\lambda z)}{1-z}
 \end{equation}
-therefore we compute it numerically.
+therefore we will compute it numerically.
 
-As a conclusion, when convoluting in the point $x$, we need to add to the local terms of the coefficient
-function above, the following terms:
+As a consequence, when convoluting the coefficient functions above
+with PDFs in the point $x$, we can treat the $+$-prescripted functions
+using the standard definition at the price of adding to the local
+terms the following functions:
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{1,q}&\rightarrow& \displaystyle C^{(n_l)}_{1,q} +
+C^{(1)}_{1,q}&\rightarrow& \displaystyle C^{(1)}_{1,q} +
 2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
 \\
 &&\displaystyle +\frac{\lambda-1}{\lambda^3}\ln(1-\lambda
   x)+\frac{1}{2\lambda^2}\ln(1-\lambda
 x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
-\end{array}
+\end{array}\,,
 \end{equation}
-
-
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{2,q}&\rightarrow& \displaystyle C^{(n_l)}_{2,q} +
+C^{(1)}_{2,q}&\rightarrow& \displaystyle C^{(1)}_{2,q} +
 2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
 \\
 &&\displaystyle +\frac{2\lambda^2-\lambda-1}{\lambda^2}\ln(1-\lambda
   x)+\frac{1}{2\lambda^2}\ln(1-\lambda
 x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
-\end{array}
+\end{array}\,,
 \end{equation}
-
-
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{3,q}&\rightarrow& \displaystyle C^{(n_l)}_{3,q} +
+C^{(1)}_{3,q}&\rightarrow& \displaystyle C^{(1)}_{3,q} +
 2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
 \\
 &&\displaystyle +\frac{\lambda-1}{\lambda^2}\ln(1-\lambda
   x)+\frac{1}{2\lambda^2}\ln(1-\lambda
 x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
-\end{array}
+\end{array}\,,
 \end{equation}
-
-
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{L,q}&\rightarrow& \displaystyle C^{(n_l)}_{L,q} +
+C^{(1)}_{L,q}&\rightarrow& \displaystyle C^{(1)}_{L,q} +
 2C_F(1-\lambda)\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
 \\
 &&\displaystyle -\frac{2}{\lambda}\ln(1-\lambda
   x)+\frac{1}{2\lambda^2}\ln(1-\lambda
 x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
-\end{array}
+\end{array}\,.
 \end{equation}
 
-Gluon coefficient functions:
-
+Now let us consider the gluon coefficient functions, that read:
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{1,g}&=&\displaystyle 2T_R\bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+C^{(1)}_{1,g}&=&\displaystyle 2T_R\bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
     -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}
 \right]+\\
 \\
@@ -669,12 +707,11 @@ C^{(n_l)}_{1,g}&=&\displaystyle 2T_R\bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z
 &&\displaystyle (1-\lambda)\left[-4z(1-z) + \frac{z}{1-\lambda z}
   +2z(1-2\lambda z)\ln\frac{1-\lambda
       z}{(1-\lambda)z}\right]\bigg\}\\
-\end{array}
+\end{array}\,,
 \end{equation}
-
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{2,g}&=&\displaystyle 2T_R \bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+C^{(1)}_{2,g}&=&\displaystyle 2T_R \bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
     -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}
 \right]+\\
 \\
@@ -682,50 +719,45 @@ C^{(n_l)}_{2,g}&=&\displaystyle 2T_R \bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-
 \\
 &&\displaystyle (1-\lambda)\left[-6(1+2\lambda) z(1-z)+\frac{1}{1-\lambda z} + 6\lambda z(1-2\lambda z)\ln\frac{1-\lambda
       z}{(1-\lambda)z}\right]\bigg\}\\
-\end{array}
+\end{array}\,,
 \end{equation}
-
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{3,g}&=&\displaystyle 2T_R \bigg\{[z^2+(1-z)^2]\left[
+C^{(1)}_{3,g}&=&\displaystyle 2T_R \bigg\{[z^2+(1-z)^2]\left[
   2\ln\left(\frac{1-z}{1-\lambda z}\right)+\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}\right]+\\
 \\
 &&\displaystyle (1-\lambda)\left[2 z(1-z) - 2z[1-(1+\lambda
-  )z]\ln\frac{1-\lambda z}{(1-\lambda)z}\right]\bigg\}\\
+  )z]\ln\frac{1-\lambda z}{(1-\lambda)z}\right]\bigg\}\,,
 \end{array}
 \end{equation}
-
-
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{L,g}&=&\displaystyle 2T_R \bigg\{(1-\lambda)[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+C^{(1)}_{L,g}&=&\displaystyle 2T_R \bigg\{(1-\lambda)[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
     -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}
 \right]+\\
 \\
 &&\displaystyle 4(2-\lambda)z(1-z)+\\
 \\
 &&\displaystyle (1-\lambda)\left[-2(3+4\lambda) z(1-z)+ 4\lambda z(1-2\lambda z)\ln\frac{1-\lambda
-      z}{(1-\lambda)z}\right]\bigg\}\\
+      z}{(1-\lambda)z}\right]\bigg\}\,.
 \end{array}
 \end{equation}
+Since these functions do not contain any $+$-prescripted functions,
+they can be implemented as they are.
 
-\subsubsection{Massless limit}
-
-Considering that:
+We now consider the massless limit of the above massive coefficient
+functions.  We start considering that:
 \begin{equation}
 \begin{array}{l}
 \lambda \rightarrow 1\\
 K_A \rightarrow 0
-\end{array}
+\end{array}\,,
 \end{equation}
-we find:
-
-
-
-
+as consequence we find that the quarl coefficient functions tend to:
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{1,q}&=&\displaystyle 2C_F \bigg\{
+C^{(1)}_{1,q} \displaystyle\mathop{\longrightarrow}_{m_H\rightarrow 0}
+C^{0,(1)}_{1,q} &=&\displaystyle 2C_F \bigg\{
 -\left(\frac{9}{2}+2\zeta_2-\frac32
 \ln K_F^2\right)\delta(1-z)\\
 \\
@@ -737,11 +769,9 @@ C^{(n_l)}_{1,q}&=&\displaystyle 2C_F \bigg\{
 -\left(\frac{3}{2}-2\ln K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
 \end{array}
 \end{equation}
-
-
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{2,q}&=&\displaystyle 2C_F \bigg\{
+C^{(1)}_{2,q}\displaystyle\mathop{\longrightarrow}_{m_H\rightarrow 0}C^{0,(1)}_{2,q}&=&\displaystyle 2C_F \bigg\{
 -\left(\frac{9}{2}+2\zeta_2-\frac32
 \ln K_F^2\right)\delta(1-z)\\
 \\
@@ -753,11 +783,9 @@ C^{(n_l)}_{2,q}&=&\displaystyle 2C_F \bigg\{
 -\left(\frac{3}{2}-2\ln K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
 \end{array}
 \end{equation}
-
-
 \begin{equation}
 \begin{array}{rcl}
-C^{(n_l)}_{3,q}&=&\displaystyle 2C_F \bigg\{
+C^{(1)}_{3,q}\displaystyle\mathop{\longrightarrow}_{m_H\rightarrow 0 C^{0,(1)}_{3,q}}&=&\displaystyle 2C_F \bigg\{
 -\left(\frac{9}{2}+2\zeta_2-\frac32
 \ln K_F^2\right)\delta(1-z)\\
 \\
@@ -769,59 +797,140 @@ C^{(n_l)}_{3,q}&=&\displaystyle 2C_F \bigg\{
 -\left(\frac{3}{2}-2\ln K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
 \end{array}
 \end{equation}
-
-therefore:
-
 \begin{equation}
-C^{(n_l)}_{L,q}= 4C_F z
+C^{(1)}_{L,q}\mathop{\longrightarrow}_{m_H\rightarrow 0}
+C^{0,(1)}_{L,q} = 4C_F z
 \end{equation}
 
 The local term to be added to the quark coefficient functions,
-considering that,
+considering that:
 \begin{equation}
-R(x) = \frac12\ln(1-x)^2
+R(x) \mathop{\longrightarrow}_{m_H\rightarrow 0} \frac12\ln(1-x)^2\,,
 \end{equation}
 are:
 \begin{equation}
-C^{(n_l)}_{1,q}\rightarrow C^{(n_l)}_{1,q} +
-2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)
+C^{0,(1)}_{1,q}\rightarrow C^{0, (1)}_{1,q} +
+2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)\,,
 \end{equation}
-
 \begin{equation}
-C^{(n_l)}_{2,q}\rightarrow C^{(n_l)}_{2,q} +
-2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)
+C^{0, (1)}_{2,q}\rightarrow C^{0, (1)}_{2,q} +
+2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)\,,
 \end{equation}
-
 \begin{equation}
-C^{(n_l)}_{3,q}\rightarrow C^{(n_l)}_{3,q} +
-2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)
+C^{0, (1)}_{3,q}\rightarrow C^{0, (1)}_{3,q} +
+2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)\,,
 \end{equation}
-while no local term needs to be added to $C^{(n_l)}_{L,q}$.
+while no local term needs to be added to $C^{0, (1)}_{L,q}$.
 
-Now, let us turn to the gluon coefficient functions where we need to
+Now we turn to the gluon coefficient functions where we need to
 know that:
 \begin{equation}
-\ln(1-\lambda) \rightarrow -\ln\left(\frac{Q^2}{m_H^2}\right)
+\ln(1-\lambda) \mathop{\longrightarrow}_{m_H\rightarrow 0} -\ln\left(\frac{Q^2}{m_H^2}\right)
 \end{equation}
 so that:
-
 \begin{equation}
-C^{(n_l)}_{1,g} = 2T_R\left\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
-    +\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]+ 4z(1-z) - 1\right\}\\
+C^{(1)}_{1,g}\mathop{\longrightarrow}_{m_H\rightarrow 0} C^{0, (1)}_{1,g} = 2T_R\left\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+    +\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]+ 4z(1-z) - 1\right\}\,,
 \end{equation}
-
 \begin{equation}
-C^{(n_l)}_{2,g} = 2T_R\left\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
-    +\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]+ 8z(1-z) - 1\right\}\\
+C^{(1)}_{2,g}\mathop{\longrightarrow}_{m_H\rightarrow 0} C^{0, (1)}_{2,g} = 2T_R\left\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+    +\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]+ 8z(1-z) - 1\right\}\,,
 \end{equation}
-
 \begin{equation}
-C^{(n_l)}_{3,g} = 2T_R[z^2+(1-z)^2]\left[-\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]\\
+C^{(1)}_{3,g}\mathop{\longrightarrow}_{m_H\rightarrow 0} C^{0, (1)}_{3,g} = 2T_R[z^2+(1-z)^2]\left[-\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]\,,
 \end{equation}
-
 \begin{equation}
-C^{(n_l)}_{L,g} = 2T_R\left[4z(1-z)\right]
+C^{(1)}_{L,g}\mathop{\longrightarrow}_{m_H\rightarrow 0} C^{0,(1)}_{L,g} = 2T_R\left[4z(1-z)\right]\,.
 \end{equation}
+We also note that in the limit $m_H\rightarrow 0$, the covolution
+integrals in eqs.~(\ref{F1}), (\ref{F2}), (\ref{F3}) and~(\ref{FL})
+will extend from $x$ to 1 rather than from $\chi$ to 1.
 
+As clear from the definitions in eqs.~(\ref{F1}), (\ref{F2}),
+(\ref{F3}) and~(\ref{FL}), in order to compute a give structure
+functions for some given value of $x$, one needs to convolute the
+coefficient functions that we have written above with PDFs in the
+rescaled point $\chi=x/\lambda > x$, so in particular the convolution
+integral extends from $\chi$ to 1. This is a kinematical consequence
+of the mass of the heavy quark involved that reduces
+the phase space available for the process.
+
+From the point of view of the implementation of the FONLL scheme in
+{\tt APFEL}, given that the massive scheme needs to be combined with
+the massless and the massive-zero schemes whose convolution integrals
+extend from $x$ to 1, it would be convinient to rewrite eqs.~(\ref{F1}), (\ref{F2}),
+(\ref{F3}) and~(\ref{FL}) in such a way that the lower interagration bound
+is $x$ rather than $\chi$. To this end, let us consider the integral:
+\begin{equation}
+I=\int_\chi^1\frac{dy}{y} C(y)f\left(\frac{\chi}{y}\right)\,,
+\end{equation}
+where $\chi=x/\lambda$. By the change of integration variable $z =
+\lambda y$, we can rewrite the integral above as:
+\begin{equation}
+I=\int_x^\lambda\frac{dz}{z} C\left(\frac{z}{\lambda}\right)f\left(\frac{x}{y}\right) = \int_x^1\frac{dz}{z} \widetilde{C}(z,\lambda)f\left(\frac{x}{y}\right)\,,
+\end{equation}
+where:
+\begin{equation}
+\widetilde{C}(z,\lambda)=\theta(\lambda-z)C\left(\frac{z}{\lambda}\right)\,.
+\end{equation}
+In this way we have achived the goal of expressing the ``reduced''
+convolution in eqs.~(\ref{F1}), (\ref{F2}), (\ref{F3}) and~(\ref{FL})
+as a ``standard'' convolution between $x$ and 1. The price to pay is
+to consider the massive coefficient functions during the integration
+as explicit functions of the variable $z/\lambda$ and to cut off the
+region $z>\lambda$ by means of the heaviside $\theta$-function.  Of
+course, this does not neet to be done in the massive-zero case as the
+convolution already extends between $x$ and $1$.
+
+\newpage
+
+\begin{thebibliography}{alp}
+
+%\cite{Alekhin:2003ev}
+\bibitem{Alekhin:2003ev}
+  S.~I.~Alekhin and J.~Blumlein,
+  %``Mellin representation for the heavy flavor contributions to deep inelastic structure functions,''
+  Phys.\ Lett.\ B {\bf 594} (2004) 299
+  [hep-ph/0404034].
+  %%CITATION = HEP-PH/0404034;%%
+  %63 citations counted in INSPIRE as of 12 Feb 2015
+
+%\cite{Laenen:1992xs}
+\bibitem{Laenen:1992xs}
+  E.~Laenen, S.~Riemersma, J.~Smith and W.~L.~van Neerven,
+  %``O(alpha-s) corrections to heavy flavor inclusive distributions in electroproduction,''
+  Nucl.\ Phys.\ B {\bf 392} (1993) 229.
+  %%CITATION = NUPHA,B392,229;%%
+  %154 citations counted in INSPIRE as of 12 Feb 2015
+
+%\cite{Forte:2010ta}
+\bibitem{Forte:2010ta}
+  S.~Forte, E.~Laenen, P.~Nason and J.~Rojo,
+  %``Heavy quarks in deep-inelastic scattering,''
+  Nucl.\ Phys.\ B {\bf 834} (2010) 116
+  [arXiv:1001.2312 [hep-ph]].
+  %%CITATION = ARXIV:1001.2312;%%
+  %98 citations counted in INSPIRE as of 12 Feb 2015
+
+%\cite{Buza:1995ie}
+\bibitem{Buza:1995ie}
+  M.~Buza, Y.~Matiounine, J.~Smith, R.~Migneron and W.~L.~van Neerven,
+  %``Heavy quark coefficient functions at asymptotic values Q**2 >> m**2,''
+  Nucl.\ Phys.\ B {\bf 472} (1996) 611
+  [hep-ph/9601302].
+  %%CITATION = HEP-PH/9601302;%%
+  %164 citations counted in INSPIRE as of 12 Feb 2015
+
+%\cite{Gluck:1996ve}
+\bibitem{Gluck:1996ve}
+  M.~Gluck, S.~Kretzer and E.~Reya,
+  %``The Strange sea density and charm production in deep inelastic charged current processes,''
+  Phys.\ Lett.\ B {\bf 380} (1996) 171
+   [Erratum-ibid.\ B {\bf 405} (1997) 391]
+  [hep-ph/9603304].
+  %%CITATION = HEP-PH/9603304;%%
+  %88 citations counted in INSPIRE as of 12 Feb 2015
+
+\end{thebibliography}
 
 \end{document}

@@ -119,7 +119,7 @@
 *
       INTEGER NF
       DOUBLE PRECISION BETA0APF,BETA1APF,BETA2APF,B1,B2
-      DOUBLE PRECISION GAMMA0,GAMMA1,GAMMA2,C0,C1,C2
+      DOUBLE PRECISION GAMMA0APF,GAMM1APF,GAMMA2APF,C0,C1,C2
       DOUBLE PRECISION AS,AS0
 **
 *     Internal Variables
@@ -132,9 +132,9 @@
 *
       B1 = BETA1APF(NF) / BETA0APF(NF)
       B2 = BETA2APF(NF) / BETA0APF(NF)
-      C0 = GAMMA0()  / BETA0APF(NF)
-      C1 = GAMMA1(NF) / BETA0APF(NF)
-      C2 = GAMMA2(NF) / BETA0APF(NF)
+      C0 = GAMMA0APF()  / BETA0APF(NF)
+      C1 = GAMM1APF(NF) / BETA0APF(NF)
+      C2 = GAMMA2APF(NF) / BETA0APF(NF)
 *
       FACT = DEXP( C0 * DLOG(AS/AS0) )
       IF(IPT.EQ.0)THEN
@@ -209,21 +209,55 @@
       END
 *
 ****************************************************************************
-      function gamma0()
+*
+*     QCD gamma function.
+*
+****************************************************************************
+      function fgamma(a,nf,ipt)
 *
       implicit none
 **
+*     Input Variables
+*
+      double precision a
+      integer nf,ipt
+**
+*     Internal Variables
+*
+      double precision gamma0apf,gamma1apf,gamma2apf
+**
 *     Output Variables
 *
-      double precision gamma0
+      double precision fgamma
 *
-      gamma0 = 4d0
+      if(ipt.eq.0)then
+         fgamma = - a * gamma0apf()
+      elseif(ipt.eq.1)then
+         fgamma = - a * ( gamma0apf() + a * gamma1apf(nf) )
+      elseif(ipt.eq.2)then
+         fgamma = - a * ( gamma0apf() 
+     1            + a * ( gamma1apf(nf) + a * gamma2apf(nf) ) )
+      endif
 *
       return
       end
 *
 ****************************************************************************
-      function gamma1(nf)
+      function gamma0apf()
+*
+      implicit none
+**
+*     Output Variables
+*
+      double precision gamma0apf
+*
+      gamma0apf = 4d0
+*
+      return
+      end
+*
+****************************************************************************
+      function gamm1apf(nf)
 *
       implicit none
 **
@@ -233,15 +267,15 @@
 **
 *     Output Variables
 *
-      double precision gamma1
+      double precision gamm1apf
 *
-      gamma1 = 202d0 / 3d0 - 20d0 / 9d0 * nf
+      gamm1apf = 202d0 / 3d0 - 20d0 / 9d0 * nf
 *
       return
       end
 *
 ****************************************************************************
-      function gamma2(nf)
+      function gamma2apf(nf)
 *
       implicit none
 *
@@ -253,10 +287,10 @@
 **
 *     Output Variables
 *
-      double precision gamma2
+      double precision gamma2apf
 *
-      gamma2 = 1249d0 - ( 2216d0 / 27d0 + 160d0 / 3d0 * zeta3 ) * nf 
-     1       - 140d0 / 81d0 * nf**2d0
+      gamma2apf = 1249d0 - ( 2216d0 / 27d0 + 160d0 / 3d0 * zeta3 ) * nf 
+     1          - 140d0 / 81d0 * nf**2d0
 *
       return
       end

@@ -23,6 +23,8 @@
       Q2 = Q * Q
 *
       do igrid=1,ngrid
+*     Initialize PDFs at the initial scale on the grid
+         call initPDFs(Q2)
 *     Evaluate evolution operators on the grid
          if(Th.eq."QCD")then
             call DerivativeOperatorsQCD(Q2)
@@ -37,8 +39,6 @@
             write(6,*) "Derivative for the unified evolution"
             write(6,*) "not implemented yet."
          endif
-*     Initialize PDFs at the initial scale on the grid
-         call initPDFs(Q2)
 *     Convolute intial PDFs with the evolution operators
          call DerivePDFs(igrid)
       enddo
