@@ -22,8 +22,8 @@
 *
       integer Nrep
       logical islhapdf6
-      double precision Qin, AlphaQCD
-      character*30 fname, str
+      double precision Qin
+      character*30 fname
 **
 *     Intenal Variables
 *
@@ -35,6 +35,8 @@
       double precision xpdfLHA(-6:6,nxLHA,nq2LHA)
       double precision xgammaLHA(nxLHA,nq2LHA)
       double precision xPDF,xgamma
+      double precision AlphaQCD
+      character*30 str
       parameter(lref=0.239d0)
 *
 *     Specify initialization for the LHgrid

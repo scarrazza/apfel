@@ -27,6 +27,7 @@
 *
       integer inf
       double precision coup,alphasPDF!,a_QCD
+      double precision mc,mb,mt
 *
 *     Mass scheme
 *
@@ -36,16 +37,28 @@
 *     Variable Flavour Number Scheme
       elseif(Evs.eq."VF")then
 *     Find number of flavours
-         if(muF2.gt.m2th(6))then
+         call GetQmass(4,mc)
+         call GetQmass(5,mb)
+         call GetQmass(6,mt)
+         if(muF2.gt.mt*mt)then
             inf = 6
-         elseif(muF2.gt.m2th(5))then
+         elseif(muF2.gt.mb*mb)then
             inf = 5
-         elseif(muF2.gt.m2th(4))then
+         elseif(muF2.gt.mc*mc)then
             inf = 4
          else
             inf = 3
          endif
-         if(inf.gt.nfMaxPDFs) inf = nfMaxPDFs
+c         if(muF2.gt.m2th(6))then
+c            inf = 6
+c         elseif(muF2.gt.m2th(5))then
+c            inf = 5
+c         elseif(muF2.gt.m2th(4))then
+c            inf = 4
+c         else
+c            inf = 3
+c         endif
+c         if(inf.gt.nfMaxPDFs) inf = nfMaxPDFs
       endif
 *
 c      coup = a_QCD(muF2)
