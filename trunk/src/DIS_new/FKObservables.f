@@ -400,7 +400,7 @@
 *
       elseif(obs(1:7).eq."DIS_SNU")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKObservables = FKObservables + w_int(n,alpha,x)
      1                    * ( ypc * F2(7,igrid,alpha) 
@@ -413,7 +413,7 @@
 *
       elseif(obs(1:7).eq."DIS_SNB")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKObservables = FKObservables + w_int(n,alpha,x)
      1                    * ( ypc * F2(7,igrid,alpha) 
@@ -426,7 +426,7 @@
 *
       elseif(obs(1:9).eq."DIS_SNU_L")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKObservables = FKObservables + w_int(n,alpha,x)
      1                    * ( ypc * F2(3,igrid,alpha) 
@@ -439,7 +439,7 @@
 *
       elseif(obs(1:9).eq."DIS_SNB_L")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKObservables = FKObservables + w_int(n,alpha,x)
      1                    * ( ypc * F2(3,igrid,alpha) 
@@ -452,7 +452,7 @@
 *
       elseif(obs(1:9).eq."DIS_SNU_C")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKObservables = FKObservables + w_int(n,alpha,x)
      1                    * ( ypc * F2(4,igrid,alpha) 
@@ -465,7 +465,7 @@
 *
       elseif(obs(1:9).eq."DIS_SNB_C")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKObservables = FKObservables + w_int(n,alpha,x)
      1                    * ( ypc * F2(4,igrid,alpha) 

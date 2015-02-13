@@ -417,7 +417,7 @@
 *
       elseif(obs(1:7).eq."DIS_SNU")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( ypc * EvOpF2(7,i,alpha,beta) 
@@ -430,7 +430,7 @@
 *
       elseif(obs(1:7).eq."DIS_SNB")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( ypc * EvOpF2(7,i,alpha,beta) 
@@ -443,7 +443,7 @@
 *
       elseif(obs(1:9).eq."DIS_SNU_L")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( ypc * EvOpF2(3,i,alpha,beta) 
@@ -456,7 +456,7 @@
 *
       elseif(obs(1:9).eq."DIS_SNB_L")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( ypc * EvOpF2(3,i,alpha,beta) 
@@ -469,7 +469,7 @@
 *
       elseif(obs(1:9).eq."DIS_SNU_C")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( ypc * EvOpF2(4,i,alpha,beta) 
@@ -482,7 +482,7 @@
 *
       elseif(obs(1:9).eq."DIS_SNB_C")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
          do alpha=0,nin(0)
             FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
      1                  * ( ypc * EvOpF2(4,i,alpha,beta) 
