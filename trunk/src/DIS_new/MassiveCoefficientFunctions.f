@@ -11,28 +11,28 @@
 *
 *     O(as):
 *
-*        - icof = 1  F_2,g (NLO, gluon)
-*        - icof = 2  F_L,g (NLO, gluon)
+*        - icoef = 1  F_2,g (NLO, gluon)
+*        - icoef = 2  F_L,g (NLO, gluon)
 *
 *     O(as^2):
 *
-*        - icof = 3  F_2,g (NNLO, gluon)
-*        - icof = 4  F_2,q (NNLO, singlet)
-*        - icof = 5  F_L,g (NNLO, gluon)
-*        - icof = 6  F_L,q (NNLO, singlet)
+*        - icoef = 3  F_2,g (NNLO, gluon)
+*        - icoef = 4  F_2,q (NNLO, singlet)
+*        - icoef = 5  F_L,g (NNLO, gluon)
+*        - icoef = 6  F_L,q (NNLO, singlet)
 *
-*        - icof = 7  F_2,q (NNLO, non-singlet for the light structure function)
-*        - icof = 8  F_L,q (NNLO, non-singlet for the light structure function)
+*        - icoef = 7  F_2,q (NNLO, non-singlet for the light structure function)
+*        - icoef = 8  F_L,q (NNLO, non-singlet for the light structure function)
 *
 *     Coefficients of the terms proportional to ln(q2/m2):
 *
-*        - icof = 9  F_2,g (NNLO, gluon, bar term)
-*        - icof = 10 F_2,q (NNLO, singlet, bar term)
-*        - icof = 11 F_L,g (NNLO, gluon, bar term)
-*        - icof = 12 F_L,q (NNLO, singlet, bar term)
+*        - icoef = 9  F_2,g (NNLO, gluon, bar term)
+*        - icoef = 10 F_2,q (NNLO, singlet, bar term)
+*        - icoef = 11 F_L,g (NNLO, gluon, bar term)
+*        - icoef = 12 F_L,q (NNLO, singlet, bar term)
 *
-*        - icof = 13 F_2,q (NNLO, non-singlet for the light structure function, bar term)
-*        - icof = xx F_L,q (NNLO, non-singlet for the light structure function, bar term) = 0
+*        - icoef = 13 F_2,q (NNLO, non-singlet for the light structure function, bar term)
+*        - icoef = xx F_L,q (NNLO, non-singlet for the light structure function, bar term) = 0
 *
 *     "ixi" runs on the xi grid where xi = q2 / m2. 
 *
@@ -46,6 +46,8 @@
 *
       include "../commons/consts.h"
       include "../commons/coeffhqmellin.h"
+      include "../commons/ColorFactors.h"
+      include "../commons/mass_scheme.h"
 **
 *     input variables
 *
@@ -58,6 +60,8 @@
       double precision rho
       double precision cm21g,cml1g
       double precision cm22q,cml2q
+      double precision dcm21g,dcml1g
+      double precision h1
 **
 *     output variables
 *
@@ -93,6 +97,19 @@
      3          * MassiveCF
 *
       if(icoef.eq.1.or.icoef.eq.2) MassiveCF = MassiveCF / 16d0 / pi**2
+*
+*     If the MSbar masses are to be used, add the appropriate term to
+*     the NNLO gluon coefficient functions.
+*
+      if(mass_scheme.eq."MSbar")then
+         if(icoef.eq.3)then
+            h1 = CF * ( 4d0 + dlog(xigrid(ixi)) )
+            MassiveCF = MassiveCF + h1 * dcm21g(xigrid(ixi),z)
+         elseif(icoef.eq.5)then
+            h1 = CF * ( 4d0 + dlog(xigrid(ixi)) )
+            MassiveCF = MassiveCF + h1 * dcml1g(xigrid(ixi),z)
+         endif
+      endif
 *
       return
       end
@@ -131,9 +148,52 @@
       cm21g = ( z**2d0 + ( 1d0 - z )**2d0 
      1      + 4d0 * eps * z * ( 1d0 - 3d0 * z ) 
      2      - 8d0 * eps**2d0 * z**2d0 ) 
-     3      * dlog( ( 1d0 + v ) / ( 1d0 -v ) )
-     4      + ( 8d0 * z * (1d0 - z ) - 1d0 
+     3      * dlog( ( 1d0 + v ) / ( 1d0 - v ) )
+     4      + ( 8d0 * z * ( 1d0 - z ) - 1d0 
      5      - 4d0 * eps * z * ( 1d0 - z ) ) * v
+*
+      return
+      end
+*
+************************************************************************
+*
+*     Logarithmic derivative with rescpect to the mass M of the function
+*     "cm21g": dcm21g = M * d(cm21g)/dM.
+*     (Needed for the MSbar mass implementation).
+*
+************************************************************************
+      function dcm21g(xi,z)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision zmax
+      double precision eps,v
+**
+*     Output Variables
+*
+      double precision dcm21g
+*
+      zmax = 1d0 / ( 1d0 + 4d0 / xi )
+*
+      dcm21g = 0d0
+      if(z.gt.zmax) return
+*
+      eps = 1d0 / xi
+      v   = dsqrt( 1d0 - 4d0 * z / ( 1d0 - z ) / xi )
+*
+      dcm21g = 4d0 * eps * ( ( - 6d0 - 8d0 * eps ) * z**2d0 + 2d0 * z )
+     1       * dlog( ( 1d0 + v ) / ( 1d0 - v ) ) 
+     2       + 8d0 * eps * z * ( z - 1d0 ) * v 
+     3       - 2d0 * ( ( - 8d0 * eps**2d0 - 12d0 * eps + 2d0 ) * z**2d0
+     4       - ( 2d0 - 4d0 * eps ) * z + 1d0 ) / v 
+     5       + 4d0 * eps * z * ( - 4d0 * ( 2d0 - eps ) * z**2d0
+     6       + 4d0 * ( 2d0 - eps ) * z - 1d0 ) / v / ( z - 1d0 )
 *
       return
       end
@@ -167,6 +227,46 @@
       cml1g = - 8d0 * eps * z**2d0 
      1      * dlog( ( 1d0 + v ) / ( 1d0 - v ) )
      2      + 4d0 * v * z * ( 1d0 - z )
+*
+      return
+      end
+*
+************************************************************************
+*
+*     Logarithmic derivative with rescpect to the mass M of the function
+*     "cml1g": dcml1g = M * d(cml1g)/dM.
+*     (Needed for the MSbar mass implementation).
+*
+************************************************************************
+      function dcml1g(xi,z)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision zmax
+      double precision eps,v
+**
+*     Output Variables
+*
+      double precision dcml1g
+*
+      zmax = 1d0 / ( 1d0 + 4d0 / xi )
+*
+      dcml1g = 0d0
+      if(z.gt.zmax) return
+*
+      eps = 1d0 / xi
+      v   = dsqrt( 1d0 - 4d0 * z / ( 1d0 - z ) / xi )
+*
+      dcml1g = - 16d0 * eps * z**2d0 * dlog( ( 1d0 + v ) / ( 1d0 - v ) ) 
+     1       + 16d0 * eps * z**2d0 / v 
+     2       + 4d0 * eps * z * ( - 4d0 * z**2d0 + 4d0 * z ) 
+     3       / v / ( z - 1d0 )
 *
       return
       end

@@ -45,6 +45,7 @@
       include "../commons/SinThetaW.h"
       include "../commons/GFermi.h"
       include "../commons/CKM.h"
+      include "../commons/MassRunning.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -58,6 +59,7 @@
       InAlpQED          = "xxxx"
       InKren            = "xxxx"  
       InMasses          = "xxxx"
+      InMassRunning     = "xxxx"
       InMFP             = "xxxx"
       InMFA             = "xxxx"
       InPDFs            = "xxxx"

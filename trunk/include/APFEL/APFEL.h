@@ -110,6 +110,9 @@ namespace APFEL {
   /// Switch to the fast evolution
   void SetFastEvolution(int);
 
+  /// Enables the running of the MSbar masses
+  void EnableMassRunning(int);
+
   /// Switch on the small-x resummation
   void SetSmallxResummation(int, const std::string& la);  
 

@@ -183,6 +183,12 @@ ccccccccccccc
       end subroutine fsetfastevolution
 
 ccccccccccccc      
+      subroutine fenablemassrunning(mr)
+      logical mr
+      call EnableMassRunning(mr)
+      end subroutine fenablemassrunning
+
+ccccccccccccc      
       subroutine fsetsmallxresummation(sx,la)
       logical sx
       character la*(*)

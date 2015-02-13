@@ -1,9 +1,9 @@
 ************************************************************************
 *
-*     msbarmass.f:
+*     MSbarmass.f:
 *
-*     Function that provides the running of the heavy quark in the
-*     MSbar scheme.
+*     Function that provides the running of the heavy quark masses in
+*     the MSbar scheme.
 *
 ************************************************************************
       FUNCTION MSBARMASS(IM,Q2)
@@ -29,14 +29,14 @@
       DOUBLE PRECISION INMASS,EVF
       DOUBLE PRECISION EVMASS,DECOUP
       DOUBLE PRECISION EPS
-      PARAMETER(EPS=1D-7)
+      PARAMETER(EPS=1D-10)
 **
 *     Output Variables
 *
       DOUBLE PRECISION MSBARMASS
 *
       IF(IM.LT.4.OR.IM.GT.6)THEN
-         WRITE(6,*) "In msbarmass.f:"
+         WRITE(6,*) "In src/Evolution/MSbarmass.f:"
          WRITE(6,*) "IM out of range, IM =",IM
          CALL EXIT(-10)
       ENDIF
@@ -130,15 +130,15 @@
 *
       DOUBLE PRECISION EVMASS
 *
-      B1 = BETA1APF(NF) / BETA0APF(NF)
-      B2 = BETA2APF(NF) / BETA0APF(NF)
-      C0 = GAMMA0APF()  / BETA0APF(NF)
+      B1 = BETA1APF(NF)  / BETA0APF(NF)
+      B2 = BETA2APF(NF)  / BETA0APF(NF)
+      C0 = GAMMA0APF()   / BETA0APF(NF)
       C1 = GAMMA1APF(NF) / BETA0APF(NF)
       C2 = GAMMA2APF(NF) / BETA0APF(NF)
 *
-      FACT = DEXP( C0 * DLOG(AS/AS0) )
+      FACT = DEXP( C0 * DLOG( AS / AS0 ) )
       IF(IPT.EQ.0)THEN
-         EVMASS = 1D0
+         EVMASS = FACT
       ELSEIF(IPT.EQ.1)THEN
          EVMASS = FACT * ( 1D0 + ( C1 - B1 * C0 ) * AS )
      1                 / ( 1D0 + ( C1 - B1 * C0 ) * AS0 )
@@ -184,13 +184,13 @@
          DECOUP = 1D0
          RETURN
       ELSE
-         ASTH2(4)  = (A_QCD(M2TH(4)))**2D0
-         ASTH2(5)  = (A_QCD(M2TH(5)))**2D0
-         ASTH2(6)  = (A_QCD(M2TH(6)))**2D0
+         ASTH2(4)  = A_QCD(M2TH(4))**2D0
+         ASTH2(5)  = A_QCD(M2TH(5))**2D0
+         ASTH2(6)  = A_QCD(M2TH(6))**2D0
 *
-         ASTHM2(4) = (A_QCD(M2TH(4)-EPS))**2D0
-         ASTHM2(5) = (A_QCD(M2TH(5)-EPS))**2D0
-         ASTHM2(6) = (A_QCD(M2TH(6)-EPS))**2D0
+         ASTHM2(4) = A_QCD(M2TH(4)-EPS)**2D0
+         ASTHM2(5) = A_QCD(M2TH(5)-EPS)**2D0
+         ASTHM2(6) = A_QCD(M2TH(6)-EPS)**2D0
 *
          IF(DIR.EQ."DW")THEN
             DECOUP = 1D0 + ASTH2(IM) * ( 89D0 / 27D0 - 20D0 / 9D0 * LN 
@@ -199,7 +199,7 @@
             DECOUP = 1D0 - ASTHM2(IM) * ( 89D0 / 27D0 - 20D0 / 9D0 * LN 
      1                                  + 4D0 / 3D0 * LN**2D0 )
          ELSE
-            WRITE(6,*) "In modules/evolutionQCD/msbarmass.f:"
+            WRITE(6,*) "In src/Evolution/MSbarmass.f:"
             WRITE(6,*) "Unknown direction, DIR =",DIR
             CALL EXIT(-10)
          ENDIF

@@ -34,30 +34,35 @@
       include "../commons/TimeLike.h"
       include "../commons/Smallx.h"
       include "../commons/FastEvol.h"
+      include "../commons/MassRunning.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
-      if(InWelcome.ne."done")   call EnableWelcomeMessage(.true.)
-      if(InScales.ne."done")    call SetQLimits(0.5d0,1000d0)
-      if(InPt.ne."done")        call SetPerturbativeOrder(2)
-      if(InEvs.ne."done")       call SetVFNS
-      if(InTheory.ne."done")    call SetTheory("QCD")
-      if(InFastEvol.ne."done")  call SetFastEvolution(.true.)
-      if(InTimeLike.ne."done")  call SetTimeLikeEvolution(.false.)
-      if(InSmallx.ne."done")    call SetSmallxResummation(.false.,"NLL")
-      if(InAlpQCD.ne."done")    call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
-      if(InAlpQED.ne."done")    call SetAlphaQEDRef(7.496252d-3,1.777d0)
-      if(InAlphaEvol.ne."done") call SetAlphaEvolution("exact")
-      if(InPDFEvol.ne."done")   call SetPDFEvolution("exactmu")
-      if(InLambdaQCD.ne."done") call SetLambdaQCDRef(0.220d0,5)
-      if(InKren.ne."done")      call SetRenFacRatio(1d0)
-      if(InMasses.ne."done")  call SetPoleMasses(dsqrt(2d0),4.5d0,175d0)
-      if(InMFP.ne."done")       call SetMaxFlavourPDFs(6)
-      if(InMFA.ne."done")       call SetMaxFlavourAlpha(6)
-      if(InPDFs.ne."done")      call SetPDFset("ToyLH")
-      if(InRep.ne."done")       call SetReplica(0)
-      if(InEvolOp.ne."done")    call EnableEvolutionOperator(.false.)
-      if(InLock.ne."done")      call LockGrids(.false.)
+      if(InWelcome.ne."done")     call EnableWelcomeMessage(.true.)
+      if(InScales.ne."done")      call SetQLimits(0.5d0,1000d0)
+      if(InPt.ne."done")          call SetPerturbativeOrder(2)
+      if(InEvs.ne."done")         call SetVFNS
+      if(InTheory.ne."done")      call SetTheory("QCD")
+      if(InFastEvol.ne."done")    call SetFastEvolution(.true.)
+      if(InTimeLike.ne."done")    call SetTimeLikeEvolution(.false.)
+      if(InSmallx.ne."done")      call SetSmallxResummation(.false.,
+     1                                                      "NLL")
+      if(InAlpQCD.ne."done")      call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
+      if(InAlpQED.ne."done")      call SetAlphaQEDRef(7.496252d-3,
+     1                                                1.777d0)
+      if(InAlphaEvol.ne."done")   call SetAlphaEvolution("exact")
+      if(InPDFEvol.ne."done")     call SetPDFEvolution("exactmu")
+      if(InLambdaQCD.ne."done")   call SetLambdaQCDRef(0.220d0,5)
+      if(InKren.ne."done")        call SetRenFacRatio(1d0)
+      if(InMasses.ne."done")      call SetPoleMasses(dsqrt(2d0),4.5d0,
+     1                                               175d0)
+      if(InMassRunning.ne."done") call EnableMassRunning(.true.)
+      if(InMFP.ne."done")         call SetMaxFlavourPDFs(6)
+      if(InMFA.ne."done")         call SetMaxFlavourAlpha(6)
+      if(InPDFs.ne."done")        call SetPDFset("ToyLH")
+      if(InRep.ne."done")         call SetReplica(0)
+      if(InEvolOp.ne."done")      call EnableEvolutionOperator(.false.)
+      if(InLock.ne."done")        call LockGrids(.false.)
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,80,3,1d-5)
@@ -320,10 +325,22 @@
             endif
          endif
 *
-         write(6,"(a,a,a)") " ",mass_scheme," heavy quark thresholds:"
-         write(6,"(a,f6.2,a)") " - mc = ",dsqrt(m2th(4))," GeV"
-         write(6,"(a,f6.2,a)") " - mb = ",dsqrt(m2th(5))," GeV"
-         write(6,"(a,f6.2,a)") " - mt = ",dsqrt(m2th(6))," GeV"
+         if(mass_scheme.eq."MSbar")then
+            write(6,*) "MSbar heavy quark thresholds:"
+            write(6,"(a,f6.2,a)") " - mc(mc) = ",dsqrt(m2th(4))," GeV"
+            write(6,"(a,f6.2,a)") " - mb(mb) = ",dsqrt(m2th(5))," GeV"
+            write(6,"(a,f6.2,a)") " - mt(mt) = ",dsqrt(m2th(6))," GeV"
+            if(MassRunning)then
+               write(6,*) "Running of the masses enabled"
+            else
+               write(6,*) "Running of the masses disabled"
+            endif
+         elseif(mass_scheme(1:4).eq."Pole")then
+            write(6,*) "Pole heavy quark thresholds:"
+            write(6,"(a,f6.2,a)") " - Mc = ",dsqrt(m2th(4))," GeV"
+            write(6,"(a,f6.2,a)") " - Mb = ",dsqrt(m2th(5))," GeV"
+            write(6,"(a,f6.2,a)") " - Mt = ",dsqrt(m2th(6))," GeV"
+         endif
 *
          write(6,*) " "
       endif
