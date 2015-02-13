@@ -50,6 +50,9 @@
          endif
       enddo
 *
+ 101  n = inter_degree(igrid)
+      FKObservables = 0d0
+*
 *     Useful definitions
 *
       Q2  = Q * Q
@@ -59,11 +62,6 @@
       yp  = 1d0 + ( 1d0 - y )**2d0
       ym  = 1d0 - ( 1d0 - y )**2d0
       y2  = y * y
-*
-*     Interpolate
-*
- 101  n = inter_degree(igrid)
-      FKObservables = 0d0
 **
 *     Electromagnetic Observables
 *
