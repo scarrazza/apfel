@@ -156,6 +156,11 @@ namespace APFEL {
     fsetfastevolution(&fe);
   }
 
+  void EnableMassRunning(int mr)
+  {
+    fenablemassrunning(&mr);
+  }
+
   void SetSmallxResummation(int sx, const std::string& la)
   {
     char cla[SIZE+1];

@@ -36,6 +36,8 @@
       include "../commons/integralsDIS.h"
       include "../commons/MassScheme.h"
       include "../commons/Nf_FF.h"
+      include "../commons/mass_scheme.h"
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -45,7 +47,7 @@
 *
       integer bound,inf,ixi,iptmx,ipt_FF
       double precision C2L(4,0:2),CLL(4,0:2),C3L(4,0:2)
-      double precision fL,fL_CCm,w_int
+      double precision fL,fL_CCm,dfL_CCm,w_int,dw_int
       double precision dgauss,a,b,eps(2),b_CCm
       double precision integrandsDISzm
       double precision integrandsDISNCm,integrandsDISNCm0
@@ -77,6 +79,7 @@
       double precision c2ns1ccc,clns1ccc,c3ns1ccc
       double precision kQF2,lnkQF2,lnQ,lnF,lnQ2,lnQF
       double precision lambda,Rf,Rfun
+      double precision h1
       external integrandsDISzm
       external integrandsDISNCm,integrandsDISNCm0
       external integrandsDISCCm,integrandsDISCCm0
@@ -462,6 +465,9 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
             Rf     = RFun(xigrid(ixi*xistep),a/lambda)
             fL_CCm = w_int(inter_degree(igrid),alpha,
      1                     xg(igrid,beta)/lambda)
+            if(mass_scheme.eq."MSbar")
+     1           dfL_CCm = dw_int(1,inter_degree(igrid),alpha,
+     2                            xg(igrid,beta)/lambda)
             b_CCm = min(lambda,xg(igrid,beta)/xg(igrid,bound))
 *
 *     Variables needed for wrapping the integrand functions
@@ -580,6 +586,22 @@ c               endif
      1                 + C3L(k,wipt) * fL_CCm
                enddo
             enddo
+*
+*     If the MSbar masses are to be used, add the appropriate term to
+*     the NLO quark non-singlet coefficient functions.
+*
+            if(mass_scheme.eq."MSbar")then
+               h1 = CF * ( 4d0 + dlog(xigrid(wixi)) )
+               SC2mCC(igrid,ixi,3,1,beta,alpha) = 
+     1              SC2mCC(igrid,ixi,3,1,beta,alpha)
+     2              - 2d0 * h1 * ( 1d0 - lambda ) * dfL_CCm
+               SCLmCC(igrid,ixi,3,1,beta,alpha) = 
+     1              SCLmCC(igrid,ixi,3,1,beta,alpha)
+     2              - 2d0 * h1 * ( 1d0 - lambda )**2d0 * dfL_CCm
+               SC3mCC(igrid,ixi,3,1,beta,alpha) = 
+     1              SC3mCC(igrid,ixi,3,1,beta,alpha)
+     2              - 2d0 * h1 * ( 1d0 - lambda ) * ( dfL_CCm + fL_CCm )
+            endif
          enddo
       endif
 *

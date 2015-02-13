@@ -85,6 +85,9 @@ extern "C" {
 #define fsetfastevolution FC_FUNC(setfastevolution,SETFASTEVOLUTION)
   void fsetfastevolution(int*);
 
+#define fenablemassrunning FC_FUNC(enablemassrunning,ENABLEMASSRUNNING)
+  void fenablemassrunning(int*);
+
 #define fsetsmallxresummation FC_FUNC(setsmallxresummation,SETSMALLXRESUMMATION)
   void fsetsmallxresummation(int*,char*);
 

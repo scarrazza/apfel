@@ -16,6 +16,7 @@
       include "../commons/kren.h"
       include "../commons/m2th.h"
       include "../commons/mass_scheme.h"
+      include "../commons/MassRunning.h"
 **
 *     Input Variables
 *
@@ -40,8 +41,12 @@
       endif
 *
       if(mass_scheme.eq."MSbar")then
-         Q2 = Q * Q / kren
-         HeavyQuarkMass = MSbarmass(i,Q2)
+         if(MassRunning)then
+            Q2 = Q * Q / kren
+            HeavyQuarkMass = MSbarmass(i,Q2)
+         else
+            HeavyQuarkMass = dsqrt(m2th(i))
+         endif
       elseif(mass_scheme.eq."Pole")then
          HeavyQuarkMass = dsqrt(m2th(i))
       endif
