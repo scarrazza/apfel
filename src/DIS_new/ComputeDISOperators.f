@@ -36,7 +36,7 @@
       integer gbound
       integer ipr
       integer i,ixi(4:6)
-      double precision Q2,W2
+      double precision Q2,W2,M2(4:6),HeavyQuarkMass
       double precision as(0:2),a_QCD
       double precision bq(6),dq(6)
       double precision frac,fr3
@@ -110,7 +110,9 @@
 *
       do ihq=4,6
          ixi(ihq) = 0
-         xi(ihq)  = Q2 / m2th(ihq)
+         M2(ihq) = HeavyQuarkMass(ihq,Q)**2d0
+         xi(ihq)  = Q2 / M2(ihq)
+c         xi(ihq)  = Q2 / m2th(ihq)
          if(xi(ihq).le.xigrid(xistep))then
             ixi(ihq) = 0
          elseif(xi(ihq).ge.ximax)then
