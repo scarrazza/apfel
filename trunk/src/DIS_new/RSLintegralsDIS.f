@@ -719,6 +719,7 @@ c               endif
             lnF  = lnkQF2 - lnQ
             lnQ2 = lnQ * lnQ
             lnQF = lnQ * lnF
+            h1   = CF * ( 4d0 + dlog(xigrid(ixi*xistep)) )
             do k=1,3
                do wipt=1,ipt_FF
                   SC2m0NC(igrid,ixi,k,wipt,beta,alpha) = 0d0
@@ -764,6 +765,8 @@ c               endif
                      C2L(k,2) = 0d0
                      integC2(2) = C2g2R0 + C2g2RQ * lnQ + C2g2RQ2 * lnQ2 
      1                          + C2g2RF * lnF + C2g2RQF * lnQF
+                     if(mass_scheme.eq."MSbar") 
+     1                    integC2(2) = integC2(2) - 2d0 * h1 * C2g1RQ
 *     CL
                      integCL(2) = CLg2R0 + CLg2RQ * lnQ + CLg2RF * lnF
 *
