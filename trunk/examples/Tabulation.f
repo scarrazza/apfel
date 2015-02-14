@@ -13,7 +13,7 @@
       double precision Q0,Q
       double precision Q02,Q2
       double precision AlphaQCD,AlphaQED
-      double precision xPDF,xgamma
+      double precision xPDFj,xgamma,xf(-6:6)
       double precision eps
       double precision xlha(11)
 
@@ -70,11 +70,27 @@ c      call SetMaxFlavourAlpha(5)
       do ilha=3,11
          write(6,'(es7.1,6es12.4)') 
      1         xlha(ilha),
-     2         xPDF(2,xlha(ilha)) - xPDF(-2,xlha(ilha)),
-     3         xPDF(1,xlha(ilha)) - xPDF(-1,xlha(ilha)),
-     4         2d0 * ( xPDF(-1,xlha(ilha)) + xPDF(-2,xlha(ilha)) ),
-     5         xPDF(4,xlha(ilha)) + xPDF(-4,xlha(ilha)),
-     6         xPDF(0,xlha(ilha)),
+     2         xPDFj(2,xlha(ilha)) - xPDFj(-2,xlha(ilha)),
+     3         xPDFj(1,xlha(ilha)) - xPDFj(-1,xlha(ilha)),
+     4         2d0 * ( xPDFj(-1,xlha(ilha)) + xPDFj(-2,xlha(ilha)) ),
+     5         xPDFj(4,xlha(ilha)) + xPDFj(-4,xlha(ilha)),
+     6         xPDFj(0,xlha(ilha)),
+     7         xgamma(xlha(ilha))
+      enddo
+      write(*,*) "  "
+*
+      write(6,*) "Standard evolution using the xPDFall function:"
+      write(6,'(a5,2a12,a14,a10,2a12)') "x",
+     1         "u-ubar","d-dbar","2(ubr+dbr)","c+cbar","gluon","photon"
+      do ilha=3,11
+         call xPDFall(xlha(ilha),xf)
+         write(6,'(es7.1,6es12.4)') 
+     1         xlha(ilha),
+     2         xf(2) - xf(-2),
+     3         xf(1) - xf(-1),
+     4         2d0 * ( xf(-1) + xf(-2) ),
+     5         xf(4) + xf(-4),
+     6         xf(0),
      7         xgamma(xlha(ilha))
       enddo
       write(*,*) "  "

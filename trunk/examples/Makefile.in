@@ -38,12 +38,13 @@ noinst_PROGRAMS = Tabulation$(EXEEXT) SumRules$(EXEEXT) \
 	LHgridProduction$(EXEEXT) LHgridDerivativeProduction$(EXEEXT) \
 	Luminosity$(EXEEXT) DISObservables$(EXEEXT) \
 	TabulationStep$(EXEEXT) TabulationFrag$(EXEEXT) \
-	TabulationExternal$(EXEEXT) \
+	TabulationExternal$(EXEEXT) ListFunctions$(EXEEXT) \
 	TabulationCxx$(EXEEXT) SumRulesCxx$(EXEEXT) \
 	LHgridProductionCxx$(EXEEXT) \
 	LHgridDerivativeProductionCxx$(EXEEXT) LuminosityCxx$(EXEEXT) \
 	Timing$(EXEEXT) DISObservablesCxx$(EXEEXT) \
-	TabulationStepCxx$(EXEEXT) TabulationFragCxx$(EXEEXT)
+	TabulationStepCxx$(EXEEXT) TabulationFragCxx$(EXEEXT) \
+	ListFunctionsCxx$(EXEEXT)
 subdir = examples
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -109,9 +110,15 @@ TabulationFrag_LDADD = $(LDADD)
 am_TabulationExternal_OBJECTS = TabulationExternal.$(OBJEXT)
 TabulationExternal_OBJECTS = $(am_TabulationExternal_OBJECTS)
 TabulationExternal_LDADD = $(LDADD)
+am_ListFunctions_OBJECTS = ListFunctions.$(OBJEXT)
+ListFunctions_OBJECTS = $(am_ListFunctions_OBJECTS)
+ListFunctions_LDADD = $(LDADD)
 am_TabulationFragCxx_OBJECTS = TabulationFragCxx.$(OBJEXT)
 TabulationFragCxx_OBJECTS = $(am_TabulationFragCxx_OBJECTS)
 TabulationFragCxx_LDADD = $(LDADD)
+am_ListFunctionsCxx_OBJECTS = ListFunctionsCxx.$(OBJEXT)
+ListFunctionsCxx_OBJECTS = $(am_ListFunctionsCxx_OBJECTS)
+ListFunctionsCxx_LDADD = $(LDADD)
 am_TabulationStep_OBJECTS = TabulationStep.$(OBJEXT)
 TabulationStep_OBJECTS = $(am_TabulationStep_OBJECTS)
 TabulationStep_LDADD = $(LDADD)
@@ -170,7 +177,8 @@ SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(TabulationFrag_SOURCES) $(TabulationFragCxx_SOURCES) \
 	$(TabulationStep_SOURCES) $(TabulationStepCxx_SOURCES) \
 	$(TabulationExternal_SOURCES) \
-	$(Timing_SOURCES)
+	$(Timing_SOURCES) \
+	$(ListFunctions_SOURCES) $(ListFunctionsCxx_SOURCES)
 DIST_SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(LHgridDerivativeProduction_SOURCES) \
 	$(LHgridDerivativeProductionCxx_SOURCES) \
@@ -181,7 +189,8 @@ DIST_SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(TabulationFrag_SOURCES) $(TabulationFragCxx_SOURCES) \
 	$(TabulationStep_SOURCES) $(TabulationStepCxx_SOURCES) \
 	$(TabulationExternal_SOURCES) \
-	$(Timing_SOURCES)
+	$(Timing_SOURCES) \
+	$(ListFunctions_SOURCES) $(ListFunctionsCxx_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -332,6 +341,7 @@ DISObservables_SOURCES = DISObservables.f
 TabulationStep_SOURCES = TabulationStep.f
 TabulationFrag_SOURCES = TabulationFrag.f
 TabulationExternal_SOURCES = TabulationFrag.f
+ListFunctions_SOURCES = ListFunctions.f
 TabulationCxx_SOURCES = TabulationCxx.cc
 SumRulesCxx_SOURCES = SumRulesCxx.cc
 LHgridProductionCxx_SOURCES = LHgridProductionCxx.cc
@@ -341,6 +351,7 @@ LuminosityCxx_SOURCES = LuminosityCxx.cc
 DISObservablesCxx_SOURCES = DISObservablesCxx.cc
 TabulationStepCxx_SOURCES = TabulationStepCxx.cc
 TabulationFragCxx_SOURCES = TabulationFragCxx.cc
+ListFunctionsCxx_SOURCES = ListFunctionsCxx.cc
 EXTRA_DIST = TabulationPython SumRulesPython LHgridProductionPython LuminosityPython
 all: all-am
 
@@ -427,6 +438,9 @@ TabulationFrag$(EXEEXT): $(TabulationFrag_OBJECTS) $(TabulationFrag_DEPENDENCIES
 TabulationExternal$(EXEEXT): $(TabulationExternal_OBJECTS) $(TabulationExternal_DEPENDENCIES) $(EXTRA_TabulationExternal_DEPENDENCIES) 
 	@rm -f TabulationExternal$(EXEEXT)
 	$(AM_V_F77LD)$(F77LINK) $(TabulationExternal_OBJECTS) $(TabulationExternal_LDADD) $(LIBS)
+ListFunctions$(EXEEXT): $(ListFunctions_OBJECTS) $(ListFunctions_DEPENDENCIES) $(EXTRA_ListFunctions_DEPENDENCIES) 
+	@rm -f ListFunctions$(EXEEXT)
+	$(AM_V_F77LD)$(F77LINK) $(ListFunctions_OBJECTS) $(ListFunctions_LDADD) $(LIBS)
 TabulationFragCxx$(EXEEXT): $(TabulationFragCxx_OBJECTS) $(TabulationFragCxx_DEPENDENCIES) $(EXTRA_TabulationFragCxx_DEPENDENCIES) 
 	@rm -f TabulationFragCxx$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(TabulationFragCxx_OBJECTS) $(TabulationFragCxx_LDADD) $(LIBS)
@@ -439,6 +453,9 @@ TabulationStepCxx$(EXEEXT): $(TabulationStepCxx_OBJECTS) $(TabulationStepCxx_DEP
 Timing$(EXEEXT): $(Timing_OBJECTS) $(Timing_DEPENDENCIES) $(EXTRA_Timing_DEPENDENCIES) 
 	@rm -f Timing$(EXEEXT)
 	$(AM_V_CXXLD)$(CXXLINK) $(Timing_OBJECTS) $(Timing_LDADD) $(LIBS)
+ListFunctionsCxx$(EXEEXT): $(ListFunctionsCxx_OBJECTS) $(ListFunctionsCxx_DEPENDENCIES) $(EXTRA_ListFunctionsCxx_DEPENDENCIES) 
+	@rm -f ListFunctionsCxx$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(ListFunctionsCxx_OBJECTS) $(ListFunctionsCxx_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -455,6 +472,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TabulationFragCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TabulationStepCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Timing.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ListFunctionsCxx.Po@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
