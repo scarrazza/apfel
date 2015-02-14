@@ -765,6 +765,9 @@ c               endif
                      C2L(k,2) = 0d0
                      integC2(2) = C2g2R0 + C2g2RQ * lnQ + C2g2RQ2 * lnQ2 
      1                          + C2g2RF * lnF + C2g2RQF * lnQF
+*
+*     If the MSbar masses are enabled, add the appropriate term
+*
                      if(mass_scheme.eq."MSbar") 
      1                    integC2(2) = integC2(2) - 2d0 * h1 * C2g1RQ
 *     CL

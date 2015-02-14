@@ -78,7 +78,7 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetPDFEvolution.lo Evolution/hknsff07.lo \
 	Evolution/fDSS.lo Evolution/LHAPDFgridDerivative.lo \
 	Evolution/SetSmallxResummation.lo Evolution/SetFastEvolution.lo \
-	Evolution/EnableMassRunning.lo
+	Evolution/EnableMassRunning.lo Evolution/ListFunctions.lo
 am__objects_3 = Evolution/interpolants.lo
 am__objects_4 = Evolution/SplittingFunctions.lo Evolution/Hellx.lo
 am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
@@ -356,7 +356,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f \
 	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f Evolution/SetTimeLikeEvolution.f Evolution/SetAlphaEvolution.f \
 	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/hknsff07.f Evolution/fDSS.f Evolution/LHAPDFgridDerivative.f \
-	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f Evolution/EnableMassRunning.f
+	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f Evolution/EnableMassRunning.f Evolution/ListFunctions.f
 
 INTER = Evolution/interpolants.f
 SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f Evolution/Hellx.f
@@ -542,6 +542,8 @@ Evolution/SetSmallxResummation.lo: Evolution/$(am__dirstamp) \
 Evolution/SetFastEvolution.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/EnableMassRunning.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/ListFunctions.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -1102,6 +1104,8 @@ mostlyclean-compile:
 	-rm -f Evolution/SetFastEvolution.lo
 	-rm -f Evolution/EnableMassRunning.$(OBJEXT)
 	-rm -f Evolution/EnableMassRunning.lo
+	-rm -f Evolution/ListFunctions.$(OBJEXT)
+	-rm -f Evolution/ListFunctions.lo
 	-rm -f Evolution/SetTheory.$(OBJEXT)
 	-rm -f Evolution/SetTheory.lo
 	-rm -f Evolution/SetTimeLikeEvolution.$(OBJEXT)

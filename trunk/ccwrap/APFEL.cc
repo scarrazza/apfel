@@ -483,4 +483,9 @@ namespace APFEL {
     return ffkobservables(cobs,&x,&q,&y);
   }
 
+  void ListFunctions(void) 
+  {
+    flistfunctions();
+  }
+
 }
