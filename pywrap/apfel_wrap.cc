@@ -6932,6 +6932,18 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_ListFunctions(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  
+  if (!PyArg_ParseTuple(args,(char *)":ListFunctions")) SWIG_fail;
+  APFEL::ListFunctions();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"SWIG_PyInstanceMethod_New", (PyCFunction)SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { (char *)"delete_SwigPyIterator", _wrap_delete_SwigPyIterator, METH_VARARGS, NULL},
@@ -7035,6 +7047,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"FKSimulator", _wrap_FKSimulator, METH_VARARGS, NULL},
 	 { (char *)"SetFKObservable", _wrap_SetFKObservable, METH_VARARGS, NULL},
 	 { (char *)"FKObservables", _wrap_FKObservables, METH_VARARGS, NULL},
+	 { (char *)"ListFunctions", _wrap_ListFunctions, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 

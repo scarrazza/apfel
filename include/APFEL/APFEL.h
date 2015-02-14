@@ -263,6 +263,9 @@ namespace APFEL {
   /// Observable according to the FKgenerator naming
   double FKObservables(const std::string& obs,double x,double q,double y);
 
+  /// List the functions of APFEL
+  void ListFunctions(void);
+
 }
 
 #endif

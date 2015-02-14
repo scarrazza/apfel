@@ -257,6 +257,9 @@ extern "C" {
 #define ffkobservables FC_FUNC(fkobservables,FKOBSERVABLES)
   double ffkobservables(char*,double*,double*,double*);
 
+#define flistfunctions FC_FUNC(listfunctions,LISTFUNCTIONS)
+  void flistfunctions(void);
+
 }
 
 #endif

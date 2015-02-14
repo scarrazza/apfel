@@ -486,6 +486,10 @@ SetFKObservable = _apfel.SetFKObservable
 def FKObservables(obs, x, q, y):
     return _apfel.FKObservables(obs, x, q, y)
 FKObservables = _apfel.FKObservables
+
+def ListFunctions():
+    return _apfel.ListFunctions()
+ListFunctions = _apfel.ListFunctions
 # This file is compatible with both classic and new-style classes.
 
 
