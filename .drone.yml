@@ -5,3 +5,7 @@ script:
    - ./examples/Luminosity
    - ./examples/Tabulation < examples/input.txt
    - ./examples/SumRules < examples/input.txt
+notify:
+  email:
+    recipients:
+      - stefano.carrazza@mi.infn.it
