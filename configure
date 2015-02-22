@@ -19560,7 +19560,7 @@ fi
 
 
 ## Basic Python checks
-if test x$enable_pyext == xyes; then
+if test x$enable_pywrap == xyes; then
 
 
     # Extract the first word of "python", so it can be a program name with args.

@@ -64,7 +64,7 @@ AC_ARG_ENABLE([lhapdf],
 if test x$enable_lhapdf == xyes; then
   AC_SEARCH_LHAPDF  
 else
-  AM_CPPFLAGS=["$AM_CPPFLAGS -DNOLHAPDF"]
+  AM_CPPFLAGS=["$AM_CPPFLAGS -DNOLHAPDF"]  
 fi
 AM_CONDITIONAL(ENABLE_LHAPDF, [test x$enable_lhapdf == xyes])
 
@@ -76,7 +76,7 @@ AC_ARG_ENABLE(pywrap, [AC_HELP_STRING(--disable-pywrap,
 enable_pywrap=yes
 AZ_PYTHON_DEFAULT
 ## Basic Python checks
-if test x$enable_pyext == xyes; then
+if test x$enable_pywrap == xyes; then
   AZ_PYTHON_PATH
   AZ_PYTHON_VERSION_ENSURE([2.3])
  ## Test for Python header
