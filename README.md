@@ -32,6 +32,13 @@ For the last development version you may clone the master code:
 git clone https://github.com/scarrazza/apfel.git
 ```
 
+For the latest tag:
+
+```Shell
+git tag -l
+git checkout tags/tag_name
+```
+
 ## Installation 
 
 Checkout the code and compile the code using the
