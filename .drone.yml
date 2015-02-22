@@ -9,3 +9,4 @@ notify:
   email:
     recipients:
       - stefano.carrazza@mi.infn.it
+      - valerio.bertone@cern.ch
