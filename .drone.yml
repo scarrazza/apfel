@@ -1,4 +1,4 @@
-image: ubuntu
+image: base
 script:
    - sudo apt-get update
    - sudo apt-get install gfortran g++ git make
