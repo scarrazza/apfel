@@ -10,3 +10,5 @@ notify:
     recipients:
       - stefano.carrazza@mi.infn.it
       - valerio.bertone@cern.ch
+    on_success: true
+    on_failure: true
