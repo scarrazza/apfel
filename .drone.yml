@@ -1,3 +1,4 @@
+image: gcc
 script:
    - ./configure --disable-lhapdf
    - make
