@@ -1,12 +1,16 @@
 #include "APFEL/FortranWrappers.h"
-#include "LHAPDF/LHAPDF.h"
 #include <string>
 #include <cstring>
 #include <cassert>
 
 #include <iostream>
 #include <cstdlib>
+#include <cstdio>
 #include <sys/stat.h>
+
+#ifndef NOLHAPDF
+#include "LHAPDF/LHAPDF.h"
+#endif
 
 using namespace std;
 
@@ -37,5 +41,22 @@ extern "C" {
   {
     mkdir(name, 0777);
   }
+
+#ifdef NOLHAPDF
+  void stop()
+  {
+    printf(" [Error] LHAPDF support disabled, please recompile APFEL without --disable-lhapdf.\n");
+    exit(-1);
+  }
+
+  void getqmass_(){ stop(); }
+  void initpdf_(){ stop(); }
+  void alphaspdf_(){ stop(); }
+  void has_photon_(){ stop(); }
+  void initpdfsetbyname_(){ stop(); }
+  void evolvepdfphoton_(){ stop(); }
+  void evolvepdf_(){ stop(); }
+  void numberpdf_(){ stop(); }
+#endif
 
 }

@@ -1,27 +1,15 @@
-AC_PREREQ(2.61)
+AC_PREREQ([2.69])
 AC_INIT([APFEL],[3.0.0],[stefano.carrazza@mi.infn.it],[apfel])
-if test "$prefix" = "$PWD"; then
-  AC_MSG_ERROR([Installation into the build directory is not supported:\
- use a different --prefix argument])
-fi
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
-AM_MAINTAINER_MODE([disable])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+AM_MAINTAINER_MODE([disable])
 
-
-## Library version flags (at least update the version comment with each new release version)
-VERSIONFLAGS="-version-info 3.0.0" ## for 3.0.0
-AC_SUBST(VERSIONFLAGS)
 AC_DEFINE_UNQUOTED(APFEL_VERSION, "$PACKAGE_VERSION", "APFEL version string")
 
-## Checks and config headers
-AC_LANG(C++)
-#AC_CONFIG_SRCDIR([src/LHpdflib.F])
-#AC_CONFIG_HEADERS([config/config.h include/LHAPDF/FortranWrappers.h include/LHAPDF/LHAPDFConfig.h])
+AC_PROG_CXX
 AC_CONFIG_HEADERS([config/config.h include/APFEL/FortranWrappers.h])
-
 
 ## Set Fortran compiler behaviour
 if test "x$FCFLAGS" == "x"; then
@@ -36,18 +24,13 @@ if test "x$FC" == "x"; then
   fi
 fi
 
-#AC_LANG_PUSH(Fortran)
 AC_PROG_FC
-#AC_FC_SRCEXT(f90)
 AC_FC_LIBRARY_LDFLAGS
 AC_FC_WRAPPERS
-#AC_FC_FREEFORM
-#AC_LANG_POP(Fortran)
 
-AC_DEFUN(AC_PROG_LHAPDF, [AC_CHECK_PROG(LHAPDF,lhapdf-config,yes)])
-AC_PROG_LHAPDF
-if test x"${LHAPDF}" != x"yes" ; then
-   AC_MSG_ERROR([Please install LHAPDF before trying to build.])
+if test "$prefix" = "$PWD"; then
+  AC_MSG_ERROR([Installation into the build directory is not supported:\
+ use a different --prefix argument])
 fi
 
 ## Enable binreloc
@@ -74,28 +57,16 @@ if test x$enable_debug == xyes; then
   [AM_FCFLAGS="$AM_FCFLAGS -g"]
 fi
 
-
-## Enable C++ wrapper
-#AC_ARG_ENABLE([ccwrap],
-#  [AC_HELP_STRING(--disable-ccwrap, [build without C++ wrapper])],
-#  [], [enable_ccwrap=yes])
-#if test x$enable_ccwrap == xyes; then
-#   AC_MSG_NOTICE(Building C++ wrapper)
-#else
-#   AC_MSG_NOTICE(Not building C++ wrapper)
-#fi
-#AM_CONDITIONAL(ENABLE_CCWRAP, [test x$enable_ccwrap == xyes])
-
-
 ## Build Doxygen if possible
-AC_ARG_ENABLE([doxygen],
-  [AC_HELP_STRING(--disable-doxygen, [don't try to make Doxygen documentation])],
-  [], [enable_doxygen=yes])
-if test x$enable_doxygen == xyes; then
-   AC_PATH_PROG(DOXYGEN, doxygen)
+AC_ARG_ENABLE([lhapdf],
+  [AC_HELP_STRING(--disable-lhapdf, [don't link to LHAPDF])],
+  [], [enable_lhapdf=yes])
+if test x$enable_lhapdf == xyes; then
+  AC_SEARCH_LHAPDF  
+else
+  AM_CPPFLAGS=["$AM_CPPFLAGS -DNOLHAPDF"]
 fi
-AM_CONDITIONAL(WITH_DOXYGEN, [test x$DOXYGEN != x])
-
+AM_CONDITIONAL(ENABLE_LHAPDF, [test x$enable_lhapdf == xyes])
 
 ## Python extension
 AC_ARG_ENABLE(pywrap, [AC_HELP_STRING(--disable-pywrap,
@@ -151,20 +122,8 @@ AM_CPPFLAGS="$AM_CPPFLAGS -I\$(top_srcdir)/include -I\$(top_builddir)/include"
 AM_CPPFLAGS=["$AM_CPPFLAGS -DDATA_PATH="$datadir" -DAPFEL_VERSION="$PACKAGE_VERSION" "]
 AC_SUBST(AM_CPPFLAGS)
 
-#
-#AC_CEDAR_CHECKCXXFLAG([-pedantic], [AM_CXXFLAGS="$AM_CXXFLAGS -pedantic "])
-#AC_CEDAR_CHECKCXXFLAG([-ansi], [AM_CXXFLAGS="$AM_CXXFLAGS -ansi "])
 AC_CEDAR_CHECKCXXFLAG([-Wall], [AM_CXXFLAGS="$AM_CXXFLAGS -Wall "])
 AC_SUBST(AM_CXXFLAGS)
-#
-#AC_CEDAR_CHECKFCFLAG([-Wunused], [AM_FCFLAGS="$AM_FCFLAGS -Wunused "])
-#AC_CEDAR_CHECKFCFLAG([-Wall], [AM_FCFLAGS="$AM_FCFLAGS -Wall "])
-#AC_CEDAR_CHECKFCFLAG([-ffree-form], [AM_FCFLAGS="$AM_FCFLAGS -ffree-form "])
-## For libtool F77 mode:
-#AM_FFLAGS=$AM_FCFLAGS
-#AC_SUBST(AM_FCFLAGS)
-#AC_SUBST(AM_FFLAGS)
-
 
 ## Output
 AC_CONFIG_FILES([Makefile])
