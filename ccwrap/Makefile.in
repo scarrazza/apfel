@@ -549,8 +549,8 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-@WITH_DOXYGEN_FALSE@install-data-local:
 @WITH_DOXYGEN_FALSE@mostlyclean-local:
+@WITH_DOXYGEN_FALSE@install-data-local:
 @WITH_DOXYGEN_FALSE@uninstall-local:
 clean: clean-am
 
