@@ -1,6 +1,4 @@
-image: 
-   - ubuntu
-   - gcc
+image: gcc
 script:
    - sudo apt-get update
    - sudo apt-get install gfortran g++
