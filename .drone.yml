@@ -1,6 +1,8 @@
-image: base
+image: gcc
 script:
    - sudo apt-get update
-   - sudo apt-get install gfortran g++ git make
+   - sudo apt-get install gfortran g++ make
    - ./configure --disable-lhapdf
    - make
+   - ./examples/Luminosity
+   - ./examples/Tabulation < examples/input.txt
