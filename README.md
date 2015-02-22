@@ -22,8 +22,7 @@ granting an easy access to all the APFEL's functionalities.
 
 ## Download
 
-The last stable release is APFEL v2.3.0. You may
-obtain APFEL v2.3.0 directly from the github repository:
+You may obtain APFEL directly from the github repository:
 
 https://github.com/scarrazza/apfel/releases
 
@@ -39,7 +38,7 @@ Checkout the code and compile the code using the
 following procedure:
 
 ```Shell
-cd apfel-2.3.0
+cd apfel
 ./configure --prefix=/where/install/apfel #(optional)
 make && make install
 ```
