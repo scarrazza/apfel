@@ -1,4 +1,7 @@
-image: ubuntu
+image: 
+   - ubuntu
+   - gcc
+   - gfotran
 script:
    - ./configure --disable-lhapdf
    - make
