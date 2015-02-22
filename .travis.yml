@@ -1,7 +1,0 @@
-before_install: sudo apt-get update
-install: sudo apt-get -y install g++ make gfortran binutils
-script:
-  - ./configure LD=gold --disable-lhapdf
-  - make
-  - cd examples
-  - ./Luminosity
