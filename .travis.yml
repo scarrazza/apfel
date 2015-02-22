@@ -3,3 +3,4 @@ install: sudo apt-get -y install g++ make gfortran
 script:
   - ./configure --disable-lhapdf
   - make
+  - cd examples
