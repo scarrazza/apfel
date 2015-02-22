@@ -2,5 +2,5 @@ before_install: sudo apt-get update
 install: sudo apt-get -y install g++ make gfortran
 script:
   - ./configure --disable-lhapdf
-  - make
+  - make LD=gold
   - cd examples
