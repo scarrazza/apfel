@@ -1,6 +1,7 @@
 *.out
 *Makefile
 *.deps
+autom4te.cache
 bin/apfel
 /bin/apfel-config
 *~
