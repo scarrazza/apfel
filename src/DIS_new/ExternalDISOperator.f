@@ -14,6 +14,7 @@
       include "../commons/EvolOp.h"
       include "../commons/grid.h"
       include "../commons/DISOperators.h"
+      include "../commons/TMC.h"
 **
 *     Input Variables
 *
@@ -27,6 +28,8 @@
       integer n
       integer alpha
       double precision w_int_gen
+      double precision tau,xi
+      double precision c1,c2
 **
 *     Output Variables
 *
@@ -70,39 +73,94 @@
          call exit(-10)
       endif
 *
-      if(x.lt.xmin(1).or.x.gt.xmax)then
-         write(6,*) "In ExternalDISOperator.f:"
-         write(6,*) "Invalid value of x =",x
-         call exit(-10)
-      endif
       if(beta.lt.0.or.beta.gt.nin(0))then
          write(6,*) "In ExternalDISOperator.f:"
          write(6,*) "Invalid index, beta =",beta
          call exit(-10)
       endif
 *
-*     interpolate
-*
       n = inter_degree(0)
       ExternalDISOperator = 0d0
-      if(SF.eq."F2")then
-         do alpha=0,nin(0)
-            ExternalDISOperator = ExternalDISOperator 
-     1                          + w_int_gen(n,alpha,x)
-     2                          * EvOpF2(ihq,i,alpha,beta)
-         enddo
-      elseif(SF.eq."FL")then
-         do alpha=0,nin(0)
-            ExternalDISOperator = ExternalDISOperator 
-     1                          + w_int_gen(n,alpha,x)
-     2                          * EvOpFL(ihq,i,alpha,beta)
-         enddo
-      elseif(SF.eq."F3")then
-         do alpha=0,nin(0)
-            ExternalDISOperator = ExternalDISOperator 
-     1                          + w_int_gen(n,alpha,x)
-     2                          * EvOpF3(ihq,i,alpha,beta)
-         enddo
+*
+*     Compute operator according to whether the target mass corrections
+*     have been enabled or not.
+*
+      if(TMC)then
+         tau = 1d0 + 4d0 * rhop * x**2d0
+         xi  = 2d0 * x / ( 1d0 + dsqrt(tau) )
+*
+         if(xi.lt.xmin(1).or.xi.gt.xmax)then
+            write(6,*) "In ExternalDISOperator.f:"
+            write(6,*) "Invalid value of x =",xi
+            call exit(-10)
+         endif
+*
+*     interpolate
+*
+         if(SF.eq."F2")then
+            c1 = x**2d0 / xi**2d0 / tau**1.5d0
+            c2 = 6d0 * rhop * x**3d0 / tau**2d0
+*
+            do alpha=0,nin(0)
+               ExternalDISOperator = ExternalDISOperator 
+     1                             + w_int_gen(n,alpha,xi)
+     2                             * ( c1 * EvOpF2(ihq,i,alpha,beta)
+     3                             +   c2 * EvOpI2(ihq,i,alpha,beta) )
+            enddo
+         elseif(SF.eq."FL")then
+            c1 = ( 1d0 - tau ) * x**2d0 / xi**2d0 / tau**1.5d0
+            c2 = ( 6d0 - 2d0 * tau ) * rhop * x**3d0 / tau**2d0
+*
+            do alpha=0,nin(0)
+               ExternalDISOperator = ExternalDISOperator 
+     1                             + w_int_gen(n,alpha,xi)
+     2                             * (      EvOpFL(ihq,i,alpha,beta)
+     2                             +   c1 * EvOpF2(ihq,i,alpha,beta)
+     3                             +   c2 * EvOpI2(ihq,i,alpha,beta) )
+
+            enddo
+         elseif(SF.eq."F3")then
+            c1 = x**2d0 / xi**2d0 / tau
+            c2 = 4d0 * rhop * x**3d0 / tau**1.5d0
+*
+            do alpha=0,nin(0)
+               ExternalDISOperator = ExternalDISOperator 
+     1                             + w_int_gen(n,alpha,xi)
+     2                             * ( c1 * EvOpF3(ihq,i,alpha,beta)
+     3                             +   c2 * EvOpI3(ihq,i,alpha,beta) )
+            enddo
+         endif
+
+
+
+      else
+         if(x.lt.xmin(1).or.x.gt.xmax)then
+            write(6,*) "In ExternalDISOperator.f:"
+            write(6,*) "Invalid value of x =",x
+            call exit(-10)
+         endif
+*
+*     interpolate
+*
+         if(SF.eq."F2")then
+            do alpha=0,nin(0)
+               ExternalDISOperator = ExternalDISOperator 
+     1                             + w_int_gen(n,alpha,x)
+     2                             * EvOpF2(ihq,i,alpha,beta)
+            enddo
+         elseif(SF.eq."FL")then
+            do alpha=0,nin(0)
+               ExternalDISOperator = ExternalDISOperator 
+     1                             + w_int_gen(n,alpha,x)
+     2                             * EvOpFL(ihq,i,alpha,beta)
+            enddo
+         elseif(SF.eq."F3")then
+            do alpha=0,nin(0)
+               ExternalDISOperator = ExternalDISOperator 
+     1                             + w_int_gen(n,alpha,x)
+     2                             * EvOpF3(ihq,i,alpha,beta)
+            enddo
+         endif
       endif
 *
       return

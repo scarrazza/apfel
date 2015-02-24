@@ -254,6 +254,9 @@ namespace APFEL {
   /// Set the value of the Fermi constant
   void SetGFermi(double gf);
 
+  /// Enables the target mass corrections
+  void EnableTargetMassCorrections(int);
+
   /// Emulator of the FKgenerator
   double FKSimulator(const std::string& obs,double x,double q,double y,int i,int beta);
 

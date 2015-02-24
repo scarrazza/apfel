@@ -12,13 +12,17 @@
 *
       include "../commons/grid.h"
       include "../commons/DISOperators.h"
+      include "../commons/coeffhqmellin.h"
+      include "../commons/integralsDIS.h"
       include "../commons/fph.h"
       include "../commons/StructureFunctions.h"
+      include "../commons/TMC.h"
 **
 *     Internal Variables
 *
       integer ipdf,ihq
       integer alpha,beta
+      integer alphap,dgrid
       double precision t1,t2
       double precision fpy(-6:6,0:nint_max)
       double precision fev(0:13,0:nint_max)
@@ -49,9 +53,6 @@
                         F2(ihq,igrid,alpha) = F2(ihq,igrid,alpha)
      1                       + OpF2(igrid,ihq,ipdf,alpha,beta)
      2                       * fev(ipdf,beta)
-                        FL(ihq,igrid,alpha) = FL(ihq,igrid,alpha)
-     1                       + OpFL(igrid,ihq,ipdf,alpha,beta)
-     2                       * fev(ipdf,beta)
                         F3(ihq,igrid,alpha) = F3(ihq,igrid,alpha)
      1                       + OpF3(igrid,ihq,ipdf,alpha,beta)
      2                       * fev(ipdf,beta)
@@ -59,6 +60,27 @@
                   enddo
                enddo
             enddo
+*
+*     Terms needed for the target mass corrections
+*
+            if(TMC)then
+               do ihq=3,7
+                  do alpha=0,nin(igrid)
+                     I2(ihq,igrid,alpha) = 0d0
+                     I3(ihq,igrid,alpha) = 0d0
+                     do beta=alpha,nin(igrid)
+                        I2(ihq,igrid,alpha) = I2(ihq,igrid,alpha)
+     1                       + J_TMC(igrid,alpha,beta)
+     2                       * F2(ihq,igrid,beta)
+     3                       / xg(igrid,beta)**2d0 
+                        I3(ihq,igrid,alpha) = I3(ihq,igrid,alpha)
+     1                       + J_TMC(igrid,alpha,beta)
+     2                       * F3(ihq,igrid,beta)
+     3                       / xg(igrid,beta)**2d0 
+                     enddo
+                  enddo
+               enddo
+            endif
          else
             do ihq=3,7
                do alpha=0,nin(igrid)
@@ -80,8 +102,53 @@
                   enddo
                enddo
             enddo
+*
+*     Terms needed for the target mass corrections
+*
+            if(TMC)then
+               do ihq=3,7
+                  do alpha=0,nin(igrid)
+                     I2(ihq,igrid,alpha) = 0d0
+                     I3(ihq,igrid,alpha) = 0d0
+                     do beta=0,nin(igrid)-alpha
+                        I2(ihq,igrid,alpha) = I2(ihq,igrid,alpha)
+     1                       + J_TMC(igrid,0,beta)
+     2                       * F2(ihq,igrid,alpha+beta)
+     3                       / xg(igrid,alpha+beta)**2d0 
+                        I3(ihq,igrid,alpha) = I3(ihq,igrid,alpha)
+     1                       + J_TMC(igrid,0,beta)
+     2                       * F3(ihq,igrid,alpha+beta)
+     3                       / xg(igrid,alpha+beta)**2d0 
+                     enddo
+                  enddo
+               enddo
+            endif
          endif
       enddo
+*
+*     Fill joint structure functions Operators
+*
+      do alpha=0,nin(0)+inter_degree(0)
+*     Determine starting grid
+         do dgrid=1,ngrid
+            if(alpha.ge.TransitionPoint(dgrid).and.
+     1         alpha.lt.TransitionPoint(dgrid+1))then
+               goto 102
+            endif
+         enddo
+         if(alpha.ge.nin(0)) dgrid = ngrid
+ 102     alphap  = alpha - TransitionPoint(dgrid)
+         do ihq=3,7
+            F2(ihq,0,alpha) = F2(ihq,dgrid,alphap)
+            FL(ihq,0,alpha) = FL(ihq,dgrid,alphap)
+            F3(ihq,0,alpha) = F3(ihq,dgrid,alphap)
+            I2(ihq,0,alpha) = I2(ihq,dgrid,alphap)
+            I3(ihq,0,alpha) = I3(ihq,dgrid,alphap)
+         enddo
+      enddo
+*
+      return
+      end
 *
       call cpu_time(t2)
 *

@@ -462,6 +462,11 @@ namespace APFEL {
     fsetgfermi(&gf);
   }
 
+  void EnableTargetMassCorrections(int tc)
+  {
+    fenabletargetmasscorrections(&tc);
+  }
+
   double FKSimulator(const std::string& obs,double x,double q,double y,int i,int beta)
   {
     char cobs[SIZE+1];

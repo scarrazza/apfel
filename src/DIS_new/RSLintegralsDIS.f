@@ -38,6 +38,7 @@
       include "../commons/Nf_FF.h"
       include "../commons/mass_scheme.h"
       include "../commons/ColorFactors.h"
+      include "../commons/TMC.h"
 **
 *     Input Variables
 *
@@ -49,9 +50,11 @@
       double precision C2L(4,0:2),CLL(4,0:2),C3L(4,0:2)
       double precision fL,fL_CCm,dfL_CCm,w_int,dw_int
       double precision dgauss,a,b,eps(2),b_CCm
+      double precision c,d
       double precision integrandsDISzm
       double precision integrandsDISNCm,integrandsDISNCm0
       double precision integrandsDISCCm,integrandsDISCCm0
+      double precision integrandsDISTMC
       double precision cm22q_adler
       double precision CGCOLM0,lnC2,lnC3,CGM0
       double precision integC2(0:2),integCL(0:2),integC3(0:2)
@@ -83,6 +86,7 @@
       external integrandsDISzm
       external integrandsDISNCm,integrandsDISNCm0
       external integrandsDISCCm,integrandsDISCCm0
+      external integrandsDISTMC
       external cm22q_adler
 c      data eps / 5d-8, 1d-3 /
 c      data eps / 5d-8, 1d-5 /
@@ -107,7 +111,6 @@ c      data eps / 1d-7, 1d-5 /
       lnkQF2 = dlog(kQF2)
 *
 *     Initialize Integrals
-*
 *
 *     ZM-VFNS
 *
@@ -872,6 +875,17 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
 
             enddo
          enddo
+      endif
+*
+*     Integrals needed for the computation of the Target Mass Corrections
+*
+      if(TMC)then
+         c = max(xg(igrid,beta),xg(igrid,bound))
+         d = min(1d0,xg(igrid,alpha+1))
+*
+         walpha = alpha
+*
+         J_TMC(igrid,beta,alpha) = dgauss(integrandsDISTMC,c,d,eps(1))
       endif
 *
       return

@@ -744,3 +744,35 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
       return
       end
+*
+************************************************************************
+*
+*     Integrands needed for the computation of the Target Mass
+*     Corrections.
+*
+************************************************************************
+      function integrandsDISTMC(y)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/wrapDIS.h"
+**
+*     Input Variables
+*
+      double precision y
+**
+*     Internal Variables
+*
+      double precision w_int
+**
+*     Output Variables
+*
+      double precision integrandsDISTMC
+*
+*     Contructing integrand
+*
+      integrandsDISTMC = w_int(inter_degree(igrid),walpha,y)
+*
+      return
+      end

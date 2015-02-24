@@ -55,7 +55,7 @@ c      call SetTheory("QED")
       write(6,*) "- Strange valence sum rule =",svsr
       write(6,*) "  "
 *
-      write(6,*) "Do you want evolve PDFs again? [y/n]"
+      write(6,*) "Do you want to evolve PDFs again? [y/n]"
       read(5,*) answer
       if(answer.eq."y") goto 101
 *

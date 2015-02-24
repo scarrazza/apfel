@@ -534,6 +534,12 @@ ccccccccccccc
       end subroutine fsetgfermi
 
 ccccccccccccc
+      subroutine fenabletargetmasscorrections(tc)
+      logical tc
+      call EnableTargetMassCorrections(tc)
+      end subroutine fenabletargetmasscorrections
+
+ccccccccccccc
       function ffksimulator(obs,x,q,y,i,beta)
       integer i,beta
       double precision x,q,y

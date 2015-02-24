@@ -23,8 +23,11 @@
       real SCLm0CC(0:ngrid_max,nxir,3,0:1,0:nint_max_DIS,0:nint_max_DIS)
       real SC3m0CC(0:ngrid_max,nxir,3,0:1,0:nint_max_DIS,0:nint_max_DIS)
 *
+      real J_TMC(0:ngrid_max,0:nint_max_DIS,0:nint_max_DIS)
+*
       common / IntegralsDISzmAPFEL / SC2zm,SCLzm,SC3zm
       common / IntegralsDISmAPFEL  / SC2mNC,SCLmNC,
      1                               SC2mCC,SCLmCC,SC3mCC
       common / IntegralsDISm0APFEL / SC2m0NC,SCLm0NC,
      1                               SC2m0CC,SCLm0CC,SC3m0CC
+      common / IntegralsDISTMCAPFEL / J_TMC

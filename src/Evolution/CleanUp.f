@@ -46,6 +46,7 @@
       include "../commons/GFermi.h"
       include "../commons/CKM.h"
       include "../commons/MassRunning.h"
+      include "../commons/TMC.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -79,6 +80,7 @@
       inPolarizationDIS = "xxxx"
       inProjectileDIS   = "xxxx"
       inTargetDIS       = "xxxx"
+      inTMC             = "xxxx"
 *
       InMZ              = "xxxx"
       InMW              = "xxxx"

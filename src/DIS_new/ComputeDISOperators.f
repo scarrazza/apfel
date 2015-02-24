@@ -23,6 +23,8 @@
       include "../commons/MassScheme.h"
       include "../commons/Nf_FF.h"
       include "../commons/EvolOp.h"
+      include "../commons/TMC.h"
+      include "../commons/ProtonMass.h"
 **
 *     Internal Variables
 *
@@ -31,7 +33,7 @@
 *     Internal Variables
 *
       integer jgrid,ipdf,ihq,pt,ipt_FF
-      integer alpha,beta
+      integer alpha,beta,gamma
       integer nf
       integer gbound
       integer ipr
@@ -71,6 +73,10 @@
 *     Final scale
 *
       Q2 = Q * Q
+*
+*     Ratio needed for the target mass corrections
+*
+      rhop = MProton**2d0 / Q2
 *
 *     Compute alphas
 *
@@ -1707,7 +1713,70 @@ c     endif
 *     evolution operator.
 *
       if(EvolOp)then
+*
+*     If the target mass corrections have been enabled,
+*     compute the needed additional operators (needed only
+*     when computing the external DIS operator).
+*
+         if(TMC)then
+            do jgrid=1,ngrid
+               if(IsExt(jgrid))then
+                  do ihq=3,7
+                     do ipdf=0,13
+                        do alpha=0,nin(jgrid)
+                           do beta=alpha,nin(jgrid)
+                              OpI2(jgrid,ihq,ipdf,alpha,beta) = 0d0
+                              OpI3(jgrid,ihq,ipdf,alpha,beta) = 0d0
+                              do gamma=alpha,beta
+                                 OpI2(jgrid,ihq,ipdf,alpha,beta) =
+     1                                OpI2(jgrid,ihq,ipdf,alpha,beta)
+     2                                + J_TMC(jgrid,alpha,gamma)
+     3                                * OpF2(jgrid,ihq,ipdf,gamma,beta)
+     4                                / xg(jgrid,gamma)**2d0
+                                 OpI3(jgrid,ihq,ipdf,alpha,beta) =
+     1                                OpI3(jgrid,ihq,ipdf,alpha,beta)
+     2                                + J_TMC(jgrid,alpha,gamma)
+     3                                * OpF3(jgrid,ihq,ipdf,gamma,beta)
+     4                                / xg(jgrid,gamma)**2d0
+                              enddo
+                           enddo
+                        enddo
+                     enddo
+                  enddo
+               else
+                  do ihq=3,7
+                     do ipdf=0,13
+                        do alpha=0,nin(jgrid)
+                           do beta=alpha,nin(jgrid)
+                              OpI2(jgrid,ihq,ipdf,alpha,beta) = 0d0
+                              OpI3(jgrid,ihq,ipdf,alpha,beta) = 0d0
+                              do gamma=alpha,beta
+                                 OpI2(jgrid,ihq,ipdf,alpha,beta) =
+     1                                OpI2(jgrid,ihq,ipdf,alpha,beta)
+     2                         + J_TMC(jgrid,0,gamma-alpha)
+     3                         * OpF2(jgrid,ihq,ipdf,0,beta-gamma)
+     4                         / xg(jgrid,gamma)**2d0
+                                 OpI3(jgrid,ihq,ipdf,alpha,beta) =
+     1                                OpI3(jgrid,ihq,ipdf,alpha,beta)
+     2                         + J_TMC(jgrid,0,gamma-alpha)
+     3                         * OpF3(jgrid,ihq,ipdf,0,beta-gamma)
+     4                         / xg(jgrid,gamma)**2d0
+                              enddo
+                           enddo
+                        enddo
+                     enddo
+                  enddo
+               endif
+            enddo
+         endif
+*
+*     Join DIS operators
+*
          call JoinDISOperators
+*
+*     Convolute DIS operators with the evolution operators
+*     on the joint grid.
+*
          call ConvoluteEvolutionWithDISOperators
       endif
 *

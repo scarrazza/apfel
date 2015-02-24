@@ -13,6 +13,7 @@
       include "../commons/grid.h"
       include "../commons/DISOperators.h"
       include "../commons/EvolutionOperator.h"
+      include "../commons/TMC.h"
 **
 *     Internal Variables
 *
@@ -53,6 +54,37 @@
             enddo
          enddo
       enddo
+*
+*     Now convolute the TMC operators if needed
+*
+      if(TMC)then
+         do ihq=3,7
+            do i=0,13
+               do alpha=0,nin(0)
+                  do beta=0,nin(0)
+                     EvOpI2(ihq,i,alpha,beta) = 0d0
+                     EvOpI3(ihq,i,alpha,beta) = 0d0
+                  enddo
+               enddo
+               do alpha=0,nin(0)
+                  do beta=alpha,nin(0)
+                     do j=0,13
+                        do gamma=alpha,beta
+                           EvOpI2(ihq,i,alpha,beta) =
+     1                          EvOpI2(ihq,i,alpha,beta)
+     2                          + OpI2(0,ihq,j,alpha,gamma)
+     3                          * Ev2EvQCD(0,j,i,gamma,beta)
+                           EvOpI3(ihq,i,alpha,beta) =
+     1                          EvOpI3(ihq,i,alpha,beta)
+     2                          + OpI3(0,ihq,j,alpha,gamma)
+     3                          * Ev2EvQCD(0,j,i,gamma,beta)
+                        enddo
+                     enddo
+                  enddo
+               enddo
+            enddo
+         enddo
+      endif
 *
       call cpu_time(t2)
 *

@@ -248,6 +248,9 @@ extern "C" {
 #define fsetgfermi FC_FUNC(fsetgfermi,FSETGFERMI)
   void fsetgfermi(double*);
 
+#define fenabletargetmasscorrections FC_FUNC(enabletargetmasscorrections,ENABLETARGETMASSCORRECTIONS)
+  void fenabletargetmasscorrections(int*);
+
 #define ffksimulator FC_FUNC(fksimulator,FKSIMULATOR)
   double ffksimulator(char*,double*,double*,double*,int*,int*);
 

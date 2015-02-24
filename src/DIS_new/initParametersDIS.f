@@ -24,6 +24,7 @@
       include "../commons/SinThetaW.h"
       include "../commons/GFermi.h"
       include "../commons/CKM.h"
+      include "../commons/TMC.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -33,6 +34,7 @@
       if(InPolarizationDIS.ne."done") call SetPolarizationDIS(0d0)
       if(InProjectileDIS.ne."done")   call SetProjectileDIS("electron")
       if(InTargetDIS.ne."done")       call SetTargetDIS("proton")
+      if(InTMC.ne."done")      call EnableTargetMassCorrections(.false.)
 *
       if(InMZ.ne."done")              call SetZMass(91.1876d0)
       if(InMW.ne."done")              call SetWMass(80.385d0)
@@ -226,6 +228,12 @@ c$$$         endif
 c$$$*
 c$$$         if(PolarizationDIS.ne.0d0) 
 c$$$     1   write(6,"(a,f7.3)") " Polarization fraction =",PolarizationDIS
+c$$$*
+         if(TMC)then
+            write(6,*) "Target Mass corrections enabled"
+         else
+            write(6,*) "Target Mass corrections disabled"
+         endif
       endif
 *
       return

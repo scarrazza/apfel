@@ -104,19 +104,10 @@
          call exit(-10)
       endif
 *
-*     Select the interpolation degree
-*
-c      do jgrid=1,ngrid
-c         if(x.ge.xmin(jgrid).and.x.lt.xmin(jgrid+1))then
-c            goto 101
-c         endif
-c      enddo
-c 101  n = inter_degree(jgrid)
-      n = inter_degree(0)
-*
 *     Interpolation
 *
       xPDFj = 0d0
+      n = inter_degree(0)
       do alpha=0,nin(0)
          xPDFj = xPDFj + w_int_gen(n,alpha,x) * fph(0,i,alpha)
       enddo

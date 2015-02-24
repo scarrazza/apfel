@@ -25,5 +25,12 @@
       endif
       InSmallx = "done"
 *
+      if(Smallx)then
+         write(6,*) "Small-x resummation currently not available."
+         write(6,*) "Disable it to use APFEL."
+         write(6,*) " "
+         call exit(-10)
+      endif
+*
       return
       end

@@ -23,7 +23,7 @@
       integer alpha,beta,alphap,betap
       integer jgrid,dgrid,istart,density,offset
       double precision eps
-      parameter(eps=1d-14)
+      parameter(eps=1d-12)
 *
 *     Join grids
 *
@@ -47,10 +47,15 @@
  101  enddo
       TransitionPoint(ngrid+1) = nin(0)
 *
+*     Ensure that the last point of the joint grid is
+*     exactly equal to 1.
+*
+      if(dabs(xg(0,nin(0))-1d0).gt.eps) xg(0,nin(0)) = 1d0
+*
 *     (Indicative) interpolation degree of the joint grid
 *     just to be used in the check below.
 *
-      inter_degree(0) = inter_degree(ngrid)
+      inter_degree(0) = inter_degree(1)
 *
 *     Grid and PDFs for x > 1 (Needed by the interpolation)
 *

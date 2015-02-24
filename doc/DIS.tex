@@ -259,13 +259,13 @@ we have that:
 and the integrals $\Gamma_{i,\beta\alpha}^{(n)}$ do not depend on the energy therefore, once the grid (and the number of active flavours) has been fixed, they can be evaluate once and for all at the beginning and used for the convolution at any scale.
 
 Now, assuming to have computed the evolution operator
-$M_{ij,\alpha\beta}(t,t_0)$ between the
-scales $t=\ln(Q^2)$ and $t_0=\ln(Q_0^2)$ on the same grid where we
-have computed the operator $\Gamma_{i,\beta\alpha}(t)$, one can esily
-combine the two obtaining the prediction for the structure function
-$F$ on the grid in terms of PDFs at the initial scale $Q_0$ just by performing the
-following convolution:
-\begin{equation}
+$M_{ij,\alpha\beta}(t,t_0)$ between the scales $t=\ln(Q^2)$ and
+$t_0=\ln(Q_0^2)$ on the same grid where we have computed the operator
+$\Gamma_{i,\beta\alpha}(t)$, one can esily combine the two obtaining
+the prediction for the structure function $F$ on the grid in terms of
+PDFs at the initial scale $Q_0$ just by performing the following
+convolution:
+\begin{equation}\label{CFtimesEvolution}
 F(x_\alpha,t) = \Gamma_{i,\alpha\beta}(t) M_{ij,\beta\gamma}(t,t_0) \tilde{q}_j(x_{\gamma},t_0)
 \end{equation}
 where a sum of the repeated indeces is understood.
@@ -881,6 +881,125 @@ as explicit functions of the variable $z/\lambda$ and to cut off the
 region $z>\lambda$ by means of the heaviside $\theta$-function.  Of
 course, this does not neet to be done in the massive-zero case as the
 convolution already extends between $x$ and $1$.
+
+\section{Target Mass Corrections}
+
+Kinematic corrections due to the finite mass of the target proton
+ $M_p$ which recoils against the photon might be relevant in the small-energy
+region. The leading contributions to such corrections have been
+computed long time ago in Ref.~\cite{} and, denoting the target-mass
+corrected struture functions with $\widetilde{\quad}$, they take the form:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \widetilde{F}_2(x,Q) &=& \displaystyle \frac{x^2}{\xi^2
+  \tau^{3/2}} F_2(\xi,Q) + \frac{6\rho x^3}{\tau^2} I_2(\xi,Q)\,,\\
+\\
+\displaystyle \widetilde{F}_L(x,Q) &=& \displaystyle F_L(\xi,Q)+\frac{x^2(1-\tau)}{\xi^2
+  \tau^{3/2}} F_2(\xi,Q) + \frac{\rho x^3(6-2\tau)}{\tau^2} I_2(\xi,Q)\,,\\
+\\
+\displaystyle x\widetilde{F}_3(x,Q) &=& \displaystyle \frac{x^2}{\xi^2
+  \tau} \xi F_3(\xi,Q) + \frac{4\rho x^3}{\tau^{3/2}} I_3(\xi,Q)\,,
+\end{array}
+\end{equation}
+where:
+\begin{equation}
+\rho = \frac{M_p^2}{Q^2}\,,\qquad \tau = 1 + 4\rho x^2\,,\qquad \xi = \frac{2x}{1+\sqrt{\tau}}\,,
+\end{equation}
+and:
+\begin{equation}
+I_2(\xi,Q) = \int_\xi^1dy \frac{F_2(y,Q)}{y^2}\,, \qquad I_3(\xi,Q) = \int_\xi^1dy \frac{yF_3(y,Q)}{y^2}\,.
+\end{equation}
+Using the interpolation formula, we have that:
+\begin{equation}
+\frac{F_2(y,Q)}{y^2} = \sum_{\alpha} \frac{F_2(x_\alpha,Q)}{x_\alpha^2} w_\alpha^{(k)}(y)\,,
+\end{equation}
+therefore:
+\begin{equation}
+I_2(\xi,Q) = \sum_{\alpha} \frac{F_2(x_\alpha,Q)}{x_\alpha^2} \int_\xi^1dy\,w_\alpha^{(k)}(y)\,,
+\end{equation}
+while:
+\begin{equation}
+I_3(\xi,Q) = \sum_{\alpha} \frac{x_\alpha F_3(x_\alpha,Q)}{x_\alpha^2} \int_\xi^1dy\,w_\alpha^{(k)}(y)\,.
+\end{equation}
+In turn, again using the interpolation formula, we can write:
+\begin{equation}
+J_\alpha(\xi)\equiv\int_\xi^1dy\,w_\alpha^{(k)}(y) = \sum_{\beta=0}^{N_x}
+\underbrace{\left[\int_{x_\beta}^1dy\,w_\alpha^{(k)}(y)\right]}_{J_{\beta\alpha}} w_\beta^{(k)}(\xi)\,.
+\end{equation}
+Considering the fact that:
+\begin{equation}\label{nonzero}
+w_{\alpha}^{(k)}(y) \neq 0 \quad\mbox{for}\quad x_{\alpha-k} < y < x_{\alpha+1}\,,
+\end{equation}
+it follows that:
+\begin{equation}
+J_{\beta\alpha} = 0\quad\mbox{for}\quad \beta > \alpha
+\end{equation}
+and thus:
+\begin{equation}
+J_\alpha(\xi)=\sum_{\beta=0}^\alpha 
+J_{\beta\alpha} w_\beta^{(k)}(\xi)\,.
+\end{equation}
+In addition, we can simplify the integral as follows:
+\begin{equation}
+J_{\beta\alpha}  = \int_c^d dy\,w_\alpha^{(k)}(y)\,,
+\end{equation}
+where:
+\begin{equation}
+c =  \mbox{max}(x_\beta,x_{\alpha-k})\quad\mbox{and}\quad d = \mbox{min}(1,x_{\alpha+1})\,.
+\end{equation}
+In conclusion, we can treat $J_{\beta\alpha}$ exactly in the same
+manner as the regular part of a massless coefficient function or a
+splitting function and thus it can be precomputed and stored.
+
+At the end of the day we have that:
+\begin{equation}
+I_2(\xi,Q) = \sum_{\alpha=0}^{N_x} \sum_{\beta=0}^\alpha 
+w_\beta^{(k)}(\xi) J_{\beta\alpha} \frac{F_2(x_\alpha,Q)}{x_\alpha^2} \,,
+\end{equation}
+that can also be written as:
+\begin{equation}
+I_2(\xi,Q) = \sum_{\beta=0}^{N_x} \underbrace{\left[\sum_{\alpha=\beta}^{N_x} 
+J_{\beta\alpha} \frac{F_2(x_\alpha,Q)}{x_\alpha^2}\right]}_{I_2(x_\beta,Q)} w_\beta^{(k)}(\xi) \,.
+\end{equation}
+Similarly:
+\begin{equation}
+I_3(\xi,Q) = \sum_{\beta=0}^{N_x} \underbrace{\left[\sum_{\alpha=\beta}^{N_x} 
+J_{\beta\alpha} \frac{x_\alpha F_3(x_\alpha,Q)}{x_\alpha^2}\right]}_{I_3(x_\beta,Q)} w_\beta^{(k)}(\xi) \,.
+\end{equation}
+Gathering all pieces we finally find:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \widetilde{F}_2(x,Q) &=& \displaystyle
+\sum_{\beta=0}^{N_x} \left[\frac{x^2}{\xi^2
+  \tau^{3/2}} F_2(x_\beta,Q) + \frac{6\rho x^3}{\tau^2} I_2(x_\beta,Q)\right]w_\beta^{(k)}(\xi)\,,\\
+\\
+\displaystyle \widetilde{F}_L(x,Q) &=& \displaystyle \sum_{\beta=0}^{N_x} \left[ F_L(x_\beta,Q)+\frac{x^2(1-\tau)}{\xi^2
+  \tau^{3/2}} F_2(x_\beta,Q) + \frac{\rho x^3(6-2\tau)}{\tau^2} I_2(x_\beta,Q) \right]w_\beta^{(k)}(\xi)\,,\\
+\\
+\displaystyle x\widetilde{F}_3(x,Q) &=& \displaystyle
+\sum_{\beta=0}^{N_x} \left[ \frac{x^2}{\xi^2
+  \tau} x_\beta F_3(x_\beta,Q) + \frac{4\rho x^3}{\tau^{3/2}} I_3(x_\beta,Q) \right]w_\beta^{(k)}(\xi)\,.
+\end{array}
+\end{equation}
+
+For the equations above is clear that in the case when $M_p = 0$, that
+implies $\rho = 0$, $\tau = 1$ and $\xi = x$, all structure functions
+reduce to the uncorrected formulas.
+
+When considering the extraction of the DIS operator times the
+evolution operator like in eq.~(\ref{CFtimesEvolution}), one shold be
+careful with $I_2$ and $I_3$. Condidering that:
+\begin{equation}
+F(x_\alpha,Q) = \sum_{\gamma,\delta}\sum_{i,j}\Gamma_{i,\alpha\gamma}(Q) M_{ij,\gamma\delta}(Q,Q_0) \tilde{q}_j(x_{\delta},Q_0)
+\end{equation}
+we have that:
+\begin{equation}
+I(x_\beta,Q) = \sum_{\alpha=\beta}^{N_x} 
+J_{\beta\alpha} \frac{F(x_\alpha,Q)}{x_\alpha^2} =
+\sum_{\gamma,\delta}\sum_{i,j} \left[\sum_{\alpha=\beta}^{N_x} 
+\frac{J_{\beta\alpha}\Gamma_{i,\alpha\gamma}(Q) }{x_\alpha^2}\right] M_{ij,\gamma\delta}(Q,Q_0)\tilde{q}_j(x_{\delta},Q_0)\,,
+\end{equation}
+
 
 \newpage
 
