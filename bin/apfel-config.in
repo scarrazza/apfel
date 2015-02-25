@@ -5,11 +5,11 @@ prefix=@prefix@
 exec_prefix=@exec_prefix@
 
 if [[ $# -eq 0 || -n $( echo $* | egrep -- "--help|-h" ) ]]; then
-    echo "apfel-config: configuration tool for the APFEL"
-    echo "               PDF evolution library"
-    echo "               http://projects.hepforge.org/apfel/"
     echo
-    echo "Usage: apfel-config [[--help|-h] | [--prefix] | [--pdfsets-path]]"
+    echo "apfel-config: configuration tool for APFEL: A PDF Evolution Library"
+    echo "              webpage: http://apfel.hepforge.org"
+    echo
+    echo "Usage: apfel-config [[--help|-h] | [--prefix] | [--ldflags]]"
     echo "Options:"
     echo "  --help | -h    : show this help message"
     echo "  --prefix       : show the installation prefix (cf. autoconf)"
@@ -17,6 +17,7 @@ if [[ $# -eq 0 || -n $( echo $* | egrep -- "--help|-h" ) ]]; then
     echo "  --libdir       : show the path to the APFEL library directory"
     echo "  --cppflags     : get compiler flags for use with the C preprocessor stage of C++ compilation"
     echo "  --ldflags      : get compiler flags for use with the linker stage of any compilation"
+    echo "  --list-funcs   : list functions available in the current version of APFEL with a short description"
     echo
     echo "  --version      : returns APFEL release version number"
 fi
@@ -37,6 +38,9 @@ test -n "$tmp" && OUT="$OUT @libdir@"
 
 tmp=$( echo "$*" | egrep -- '--\<ldflags\>')
 test -n "$tmp" && OUT="$OUT -L@libdir@ -lAPFEL"
+
+tmp=$( echo "$*" | egrep -- '--\<list-funcs\>')
+test -n "$tmp" && ListFunctions
 
 ## Version
 tmp=$( echo "$*" | egrep -- '--\<version\>')
