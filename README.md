@@ -9,7 +9,7 @@ Visit: http://apfel.hepforge.org and http://apfel.mi.infn.it/
 APFEL is able to perform DGLAP evolution up to NNLO in QCD and to LO
 in QED, both with pole and MSbar masses. The coupled DGLAP QCD+QED
 evolution equations are solved in x-space by means of higher order
-interpolations and Runge-Kutta techniques, and allows to explore
+interpolations and Runge-Kutta techniques, allowing to explore
 different options for the treatment of subleading terms.
 
 The APFEL library implements the following tools:
@@ -24,11 +24,11 @@ granting an easy access to all the APFEL's functionalities.
 
 ## Download
 
-You may obtain APFEL directly from the github repository:
+You can obtain APFEL directly from the github repository:
 
 https://github.com/scarrazza/apfel/releases
 
-For the last development version you may clone the master code:
+For the last development version you can clone the master code:
 
 ```Shell
 git clone https://github.com/scarrazza/apfel.git
