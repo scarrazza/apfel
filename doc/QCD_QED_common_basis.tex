@@ -21,6 +21,7 @@
  breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
  {hyperref}
 \usepackage{breakurl}
+\usepackage{mathrsfs}
 
 \makeatletter
 
@@ -59,8 +60,8 @@ In this document I will present a suitable flavout basis for the coupled QCD$\ti
 \section{The Structure of the DGLAP Equation}
 
 The DGLAP equation that governs the PDF evolution has a general
-structure that in QCD holds at any perturbative order. Suppose one wants to
-study the evolution coupled evolution of the gluon distrubution
+structure that in QCD holds at any perturbative order. Suppose one
+wants to study the coupled evolution of the gluon distrubution
 function $g(x,\mu)$, the $i$-th quark distribution function
 $q_i(x,\mu)$ and the $j$-th anti-quark distribution function
 $\overline{q}_j(x,\mu)$. In this case evolution equation would look
@@ -934,8 +935,59 @@ see later how the $e$ and $\mu$ PDF functional form at the initial
 scale can be guessed by assuming a dynamical generation by photon
 splitting at their respective mass thresholds.
 
+In order to write the full DGLAP equations in the presence of quarks,
+leptons, gluon and photon, we start considering
+eq.~(\ref{EvenMoreGeneralDGLAP}) where we add the leptons $\ell_\alpha$ and $\overline{\ell}_\beta$:
+\begin{equation}
+\mu^2\frac{\partial}{\partial \mu^2}
+\begin{pmatrix}
+\ell_\alpha\\
+u_j \\
+d_i\\
+g\\
+\gamma\\
+\overline{d}_k\\
+\overline{u}_h\\
+\overline{\ell}_\beta
+\end{pmatrix} = \sum_{e,l,m,n,\gamma,\delta} 
+\begin{pmatrix}
+\mathcal{P}_{\ell_\alpha \ell_\gamma} & \mathcal{P}_{\ell_\alpha u_e} & \mathcal{P}_{\ell_\alpha d_l} & \mathcal{P}_{\ell_\alpha g} & \mathcal{P}_{\ell_\alpha \gamma} & \mathcal{P}_{\ell_\alpha \overline{d}_m} & \mathcal{P}_{\ell_\alpha \overline{u}_n} & \mathcal{P}_{\ell_\alpha \overline{\ell}_\delta} \\ 
+\mathcal{P}_{u_j\ell_\gamma} & \mathcal{P}_{u_ju_e} & \mathcal{P}_{u_jd_l} & \mathcal{P}_{u_jg} & \mathcal{P}_{u_j\gamma} & \mathcal{P}_{u_j\overline{d}_m} & \mathcal{P}_{u_j\overline{u}_n} & \mathcal{P}_{u_j\overline{\ell}_\delta} \\ 
+\mathcal{P}_{d_i\ell_\gamma} & \mathcal{P}_{d_iu_e} & \mathcal{P}_{d_id_l} & \mathcal{P}_{d_ig} & \mathcal{P}_{d_i\gamma} & \mathcal{P}_{d_i\overline{d}_m} & \mathcal{P}_{d_i\overline{u}_n} & \mathcal{P}_{d_i\overline{\ell}_\delta} \\ 
+\mathcal{P}_{g\ell_\gamma}  & \mathcal{P}_{gu_e}  & \mathcal{P}_{gd_l} & \mathcal{P}_{gg} & \mathcal{P}_{g\gamma} & \mathcal{P}_{g\overline{d}_m} & \mathcal{P}_{g\overline{u}_n} & \mathcal{P}_{g\overline{\ell}_\delta}\\
+\mathcal{P}_{\gamma\ell_\gamma} & \mathcal{P}_{\gamma u_e} & \mathcal{P}_{\gamma d_l} & \mathcal{P}_{\gamma g} & \mathcal{P}_{\gamma\gamma} & \mathcal{P}_{\gamma\overline{d}_m} & \mathcal{P}_{\gamma\overline{u}_n} & \mathcal{P}_{\gamma\overline{\ell}_\delta}\\
+\mathcal{P}_{\overline{d}_k\ell_\gamma} & \mathcal{P}_{\overline{d}_ku_e} & \mathcal{P}_{\overline{d}_kd_l} & \mathcal{P}_{\overline{d}_kg} & \mathcal{P}_{\overline{d}_k\gamma} & \mathcal{P}_{\overline{d}_k\overline{d}_m} & \mathcal{P}_{\overline{d}_k\overline{u}_n} & \mathcal{P}_{\overline{d}_k\overline{\ell}_\delta}\\
+\mathcal{P}_{\overline{u}_h\ell_\gamma} & \mathcal{P}_{\overline{u}_hu_e} & \mathcal{P}_{\overline{u}_hd_l} & \mathcal{P}_{\overline{u}_hg} & \mathcal{P}_{\overline{u}_h\gamma} & \mathcal{P}_{\overline{u}_h\overline{d}_m} & \mathcal{P}_{\overline{u}_h\overline{u}_n} & \mathcal{P}_{\overline{u}_h\overline{\ell}_\delta}\\
+\mathcal{P}_{\overline{\ell}_\beta\ell_\gamma} & \mathcal{P}_{\overline{\ell}_\beta u_e} & \mathcal{P}_{\overline{\ell}_\beta d_l} & \mathcal{P}_{\overline{\ell}_\beta g} & \mathcal{P}_{\overline{\ell}_\beta \gamma} & \mathcal{P}_{\overline{\ell}_\beta \overline{d}_m} & \mathcal{P}_{\overline{\ell}_\beta \overline{u}_n} & \mathcal{P}_{\overline{\ell}_\beta \overline{\ell}_\delta}
+\end{pmatrix}
+\begin{pmatrix}
+\ell_\gamma\\
+u_e \\
+d_l\\
+g\\
+\gamma\\
+\overline{d}_m\\
+\overline{u}_n\\
+\overline{\ell}_\delta
+\end{pmatrix}
+\end{equation}
+where $\ell_\alpha,\ell_\gamma \in \{e^-,\mu^-,\tau^-\}$ and
+$\overline{\ell}_\beta,\overline{\ell}_\delta
+\in\{e^+,\mu^+,\tau^+\}$. Now we notice that up to two loops we have
+that $\mathcal{P}_{\ell_\alpha g} = \mathcal{P}_{\overline{\ell}_\beta
+  g} = \mathcal{P}_{g\ell_\gamma} =
+\mathcal{P}_{g\overline{\ell}_\delta} = 0$. In additions, all
+splitting functions connecting quarks and gluons like
+$\mathcal{P}_{\ell_\alpha u_e}$ start at
+$\mathcal{O}(\alpha\alpha_s)$, that is at two loops and thus don't
+have any pure-QCD contribution. Finally, the splitting functions
+connecting leptons with leptons and photon with leptons start at one
+loop but they are $\mathcal{O}(\alpha)$ and thus do not have any
+pure-QCD contribution.
 
-
+In conclusion, the pure-QCD matrix in the r.h.s. of
+eq.~(\ref{EvenMoreGeneralDGLAPciao}) is untouched by the inclusion of
+the leptons in the evolution
 
 
 \bibliographystyle{unsrt}

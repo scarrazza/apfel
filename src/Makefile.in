@@ -134,7 +134,7 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/fDSS.lo Evolution/LHAPDFgridDerivative.lo \
 	Evolution/SetSmallxResummation.lo \
 	Evolution/SetFastEvolution.lo Evolution/EnableMassRunning.lo \
-	Evolution/ListFunctions.lo
+	Evolution/ListFunctions.lo Evolution/GetPerturbativeOrder.lo
 am__objects_3 = Evolution/interpolants.lo
 am__objects_4 = Evolution/SplittingFunctions.lo Evolution/Hellx.lo
 am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
@@ -208,7 +208,10 @@ am__objects_11 = DIS_new/InitializeAPFEL_DIS.lo \
 	DIS_new/SetSinThetaW.lo DIS_new/SetWMass.lo \
 	DIS_new/SetZMass.lo DIS_new/FKSimulator.lo \
 	DIS_new/SetFKObservable.lo DIS_new/FKObservables.lo \
-	DIS_new/EnableTargetMassCorrections.lo
+	DIS_new/EnableTargetMassCorrections.lo DIS_new/GetCKM.lo \
+	DIS_new/GetGFermi.lo DIS_new/GetProtonMass.lo \
+	DIS_new/GetSinThetaW.lo DIS_new/GetWMass.lo \
+	DIS_new/GetZMass.lo
 am__objects_12 = HELL/src/hell.lo HELL/src/DGLAPevol.lo \
 	HELL/src/hell_wrapper.lo
 am_libAPFELCore_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
@@ -468,7 +471,8 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f \
 	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f Evolution/SetTimeLikeEvolution.f Evolution/SetAlphaEvolution.f \
 	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/hknsff07.f Evolution/fDSS.f Evolution/LHAPDFgridDerivative.f \
-	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f Evolution/EnableMassRunning.f Evolution/ListFunctions.f
+	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f Evolution/EnableMassRunning.f Evolution/ListFunctions.f \
+	Evolution/GetPerturbativeOrder.f
 
 INTER = Evolution/interpolants.f
 SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f Evolution/Hellx.f
@@ -507,7 +511,8 @@ DIS_NEW = DIS_new/InitializeAPFEL_DIS.f DIS_new/initParametersDIS.f DIS_new/SetM
 	DIS_new/ConvolutePDFsWithDISOperators.f DIS_new/JoinDISOperators.f DIS_new/ConvoluteEvolutionWithDISOperators.f \
 	DIS_new/ExternalDISOperator.f DIS_new/SetCKM.f DIS_new/SetGFermi.f DIS_new/SetProtonMass.f DIS_new/SetSinThetaW.f \
 	DIS_new/SetWMass.f DIS_new/SetZMass.f DIS_new/FKSimulator.f DIS_new/SetFKObservable.f DIS_new/FKObservables.f \
-	DIS_new/EnableTargetMassCorrections.f
+	DIS_new/EnableTargetMassCorrections.f DIS_new/GetCKM.f DIS_new/GetGFermi.f DIS_new/GetProtonMass.f DIS_new/GetSinThetaW.f \
+	DIS_new/GetWMass.f DIS_new/GetZMass.f
 
 EXTRA_DIST = commons
 HELL = HELL/src/hell.cc HELL/src/DGLAPevol.cc HELL/src/hell_wrapper.cc
@@ -663,6 +668,8 @@ Evolution/SetFastEvolution.lo: Evolution/$(am__dirstamp) \
 Evolution/EnableMassRunning.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/ListFunctions.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/GetPerturbativeOrder.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -939,6 +946,18 @@ DIS_new/SetFKObservable.lo: DIS_new/$(am__dirstamp) \
 DIS_new/FKObservables.lo: DIS_new/$(am__dirstamp) \
 	DIS_new/$(DEPDIR)/$(am__dirstamp)
 DIS_new/EnableTargetMassCorrections.lo: DIS_new/$(am__dirstamp) \
+	DIS_new/$(DEPDIR)/$(am__dirstamp)
+DIS_new/GetCKM.lo: DIS_new/$(am__dirstamp) \
+	DIS_new/$(DEPDIR)/$(am__dirstamp)
+DIS_new/GetGFermi.lo: DIS_new/$(am__dirstamp) \
+	DIS_new/$(DEPDIR)/$(am__dirstamp)
+DIS_new/GetProtonMass.lo: DIS_new/$(am__dirstamp) \
+	DIS_new/$(DEPDIR)/$(am__dirstamp)
+DIS_new/GetSinThetaW.lo: DIS_new/$(am__dirstamp) \
+	DIS_new/$(DEPDIR)/$(am__dirstamp)
+DIS_new/GetWMass.lo: DIS_new/$(am__dirstamp) \
+	DIS_new/$(DEPDIR)/$(am__dirstamp)
+DIS_new/GetZMass.lo: DIS_new/$(am__dirstamp) \
 	DIS_new/$(DEPDIR)/$(am__dirstamp)
 HELL/src/$(am__dirstamp):
 	@$(MKDIR_P) HELL/src

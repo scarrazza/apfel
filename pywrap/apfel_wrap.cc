@@ -5694,6 +5694,19 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_GetPerturbativeOrder(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetPerturbativeOrder")) SWIG_fail;
+  result = (int)APFEL::GetPerturbativeOrder();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_SetPoleMasses(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
@@ -6774,6 +6787,102 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_GetZMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetZMass")) SWIG_fail;
+  result = (double)APFEL::GetZMass();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GetWMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetWMass")) SWIG_fail;
+  result = (double)APFEL::GetWMass();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GetProtonMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetProtonMass")) SWIG_fail;
+  result = (double)APFEL::GetProtonMass();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GetSinThetaW(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetSinThetaW")) SWIG_fail;
+  result = (double)APFEL::GetSinThetaW();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GetCKM(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int arg2 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:GetCKM",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetCKM" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "GetCKM" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  result = (double)APFEL::GetCKM(arg1,arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GetGFermi(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetGFermi")) SWIG_fail;
+  result = (double)APFEL::GetGFermi();
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_EnableTargetMassCorrections(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
@@ -7030,6 +7139,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetNumberOfGrids", _wrap_SetNumberOfGrids, METH_VARARGS, NULL},
 	 { (char *)"SetPDFSet", _wrap_SetPDFSet, METH_VARARGS, NULL},
 	 { (char *)"SetPerturbativeOrder", _wrap_SetPerturbativeOrder, METH_VARARGS, NULL},
+	 { (char *)"GetPerturbativeOrder", _wrap_GetPerturbativeOrder, METH_VARARGS, NULL},
 	 { (char *)"SetPoleMasses", _wrap_SetPoleMasses, METH_VARARGS, NULL},
 	 { (char *)"SetRenFacRatio", _wrap_SetRenFacRatio, METH_VARARGS, NULL},
 	 { (char *)"SetReplica", _wrap_SetReplica, METH_VARARGS, NULL},
@@ -7065,6 +7175,12 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetSinThetaW", _wrap_SetSinThetaW, METH_VARARGS, NULL},
 	 { (char *)"SetCKM", _wrap_SetCKM, METH_VARARGS, NULL},
 	 { (char *)"SetGFermi", _wrap_SetGFermi, METH_VARARGS, NULL},
+	 { (char *)"GetZMass", _wrap_GetZMass, METH_VARARGS, NULL},
+	 { (char *)"GetWMass", _wrap_GetWMass, METH_VARARGS, NULL},
+	 { (char *)"GetProtonMass", _wrap_GetProtonMass, METH_VARARGS, NULL},
+	 { (char *)"GetSinThetaW", _wrap_GetSinThetaW, METH_VARARGS, NULL},
+	 { (char *)"GetCKM", _wrap_GetCKM, METH_VARARGS, NULL},
+	 { (char *)"GetGFermi", _wrap_GetGFermi, METH_VARARGS, NULL},
 	 { (char *)"EnableTargetMassCorrections", _wrap_EnableTargetMassCorrections, METH_VARARGS, NULL},
 	 { (char *)"FKSimulator", _wrap_FKSimulator, METH_VARARGS, NULL},
 	 { (char *)"SetFKObservable", _wrap_SetFKObservable, METH_VARARGS, NULL},

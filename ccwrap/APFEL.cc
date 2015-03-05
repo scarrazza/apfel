@@ -254,6 +254,11 @@ namespace APFEL {
     fsetperturbativeorder(&pto);
   }
 
+  int GetPerturbativeOrder()
+  {
+    return fgetperturbativeorder();
+  }
+
   void SetPoleMasses(double mc, double mb, double mt)
   {
     fsetpolemasses(&mc,&mb,&mt);
@@ -460,6 +465,36 @@ namespace APFEL {
   void SetGFermi(double gf)
   {
     fsetgfermi(&gf);
+  }
+
+  double GetZMass()
+  {
+    return fgetzmass();
+  }
+
+  double GetWMass()
+  {
+    return fgetwmass();
+  }
+
+  double GetProtonMass()
+  {
+    return fgetprotonmass();
+  }
+
+  double GetSinThetaW()
+  {
+    return fgetsinthetaw();
+  }
+
+  double GetCKM(int u, int d)
+  {
+    return fgetckm(&u,&d);
+  }
+
+  double GetGFermi()
+  {
+    return fgetgfermi();
   }
 
   void EnableTargetMassCorrections(int tc)

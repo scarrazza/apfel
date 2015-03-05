@@ -139,6 +139,9 @@ extern "C" {
 #define fsetperturbativeorder FC_FUNC(setperturbativeorder,SETPERTURBATIVEORDER)
   void fsetperturbativeorder(int*);
 
+#define fgetperturbativeorder FC_FUNC(getperturbativeorder,GETPERTURBATIVEORDER)
+  int fgetperturbativeorder();
+
 #define fsetpolemasses FC_FUNC(setpolemasses,SETPOLEMASSES)
   void fsetpolemasses(double*,double*,double*);
 
@@ -245,8 +248,26 @@ extern "C" {
 #define fsetckm FC_FUNC(setckm,SETCKM)
   void fsetckm(double*,double*,double*,double*,double*,double*,double*,double*,double*);
 
-#define fsetgfermi FC_FUNC(fsetgfermi,FSETGFERMI)
+#define fsetgfermi FC_FUNC(setgfermi,SETGFERMI)
   void fsetgfermi(double*);
+
+#define fgetzmass FC_FUNC(getzmass,GETZMASS)
+  double fgetzmass();
+
+#define fgetwmass FC_FUNC(getwmass,GETWMASS)
+  double fgetwmass();
+
+#define fgetprotonmass FC_FUNC(getprotonmass,GETPROTONMASS)
+  double fgetprotonmass();
+
+#define fgetsinthetaw FC_FUNC(getsinthetaw,GETSINTHETAW)
+  double fgetsinthetaw();
+
+#define fgetckm FC_FUNC(getckm,GETCKM)
+  double fgetckm(int*,int*);
+
+#define fgetgfermi FC_FUNC(fgetgfermi,FGETGFERMI)
+  double fgetgfermi();
 
 #define fenabletargetmasscorrections FC_FUNC(enabletargetmasscorrections,ENABLETARGETMASSCORRECTIONS)
   void fenabletargetmasscorrections(int*);

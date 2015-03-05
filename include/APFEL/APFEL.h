@@ -163,6 +163,9 @@ namespace APFEL {
   /// Sets the perturbative order of the evolution
   void SetPerturbativeOrder(int pto);
 
+  /// Returns the perturbative order of the evolution
+  int GetPerturbativeOrder();
+
   /// Sets as a default the heavy quark pole masses
   void SetPoleMasses(double mc, double mb, double mt);
 
@@ -253,6 +256,24 @@ namespace APFEL {
 
   /// Set the value of the Fermi constant
   void SetGFermi(double gf);
+
+  // Returns the mass of the Z
+  double GetZMass();
+
+  // Returns the mass of the W
+  double GetWMass();
+
+  // Returns the mass of the proton
+  double GetProtonMass();
+
+  // Returns sin(\theta_W)
+  double GetSinThetaW();
+
+  // Returns the entries of the CKM matrix
+  double GetCKM(int u, int d);
+
+  // Returns G_{Fermi}
+  double GetGFermi();
 
   /// Enables the target mass corrections
   void EnableTargetMassCorrections(int);

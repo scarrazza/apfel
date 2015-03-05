@@ -335,6 +335,10 @@ def SetPerturbativeOrder(pto):
     return _apfel.SetPerturbativeOrder(pto)
 SetPerturbativeOrder = _apfel.SetPerturbativeOrder
 
+def GetPerturbativeOrder():
+    return _apfel.GetPerturbativeOrder()
+GetPerturbativeOrder = _apfel.GetPerturbativeOrder
+
 def SetPoleMasses(mc, mb, mt):
     return _apfel.SetPoleMasses(mc, mb, mt)
 SetPoleMasses = _apfel.SetPoleMasses
@@ -474,6 +478,30 @@ SetCKM = _apfel.SetCKM
 def SetGFermi(gf):
     return _apfel.SetGFermi(gf)
 SetGFermi = _apfel.SetGFermi
+
+def GetZMass():
+    return _apfel.GetZMass()
+GetZMass = _apfel.GetZMass
+
+def GetWMass():
+    return _apfel.GetWMass()
+GetWMass = _apfel.GetWMass
+
+def GetProtonMass():
+    return _apfel.GetProtonMass()
+GetProtonMass = _apfel.GetProtonMass
+
+def GetSinThetaW():
+    return _apfel.GetSinThetaW()
+GetSinThetaW = _apfel.GetSinThetaW
+
+def GetCKM(u, d):
+    return _apfel.GetCKM(u, d)
+GetCKM = _apfel.GetCKM
+
+def GetGFermi():
+    return _apfel.GetGFermi()
+GetGFermi = _apfel.GetGFermi
 
 def EnableTargetMassCorrections(arg1):
     return _apfel.EnableTargetMassCorrections(arg1)

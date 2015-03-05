@@ -297,6 +297,13 @@ ccccccccccccc
       end subroutine fsetperturbativeorder
 
 ccccccccccccc      
+      function fgetperturbativeorder()
+      integer fgetperturbativeorder
+      fgetperturbativeorder = GetPerturbativeOrder()
+      return
+      end
+
+ccccccccccccc      
       subroutine fsetpolemasses(mc,mb,mt)
       double precision mc, mb, mt
       call SetPoleMasses(mc,mb,mt)
@@ -532,6 +539,49 @@ ccccccccccccc
       double precision gf
       call SetGFermi(gf)
       end subroutine fsetgfermi
+
+ccccccccccccc
+      function fgetzmass()
+      double precision fgetzmass
+      fgetzmass = GetZMass()
+      return
+      end
+
+ccccccccccccc
+      function fgetwmass()
+      double precision fgetwmass
+      fgetwmass = GetWMass()
+      return
+      end
+
+ccccccccccccc
+      function fgetprotonmass()
+      double precision fgetprotonmass
+      fgetprotonmass = GetProtonMass()
+      return
+      end
+
+ccccccccccccc
+      function fgetsinthetaw()
+      double precision fgetsinthetaw
+      fgetsinthetaw = GetSinThetaW()
+      return
+      end
+
+ccccccccccccc
+      function fgetckm(u,d)
+      integer u,d
+      double precision fgetckm
+      fgetckm = GetCKM(u,d)
+      return
+      end
+
+ccccccccccccc
+      function fgetgfermi()
+      double precision fgetgfermi
+      fgetgfermi = GetGFermi()
+      return
+      end
 
 ccccccccccccc
       subroutine fenabletargetmasscorrections(tc)
