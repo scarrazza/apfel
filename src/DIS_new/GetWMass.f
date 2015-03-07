@@ -15,6 +15,13 @@
 *
       double precision GetWMass
 *
+      if(inMW.ne."done")then
+         write(6,*) "GetWMass: Parameter not initialized"
+         write(6,*) "Set it by means of 'SetWMass'"
+         write(6,*) "  "
+         call exit(-10)
+      endif
+*
       GetWMass = MW
 *
       return

@@ -15,6 +15,13 @@
 *
       double precision GetSinThetaW
 *
+      if(inSinThetaW.ne."done")then
+         write(6,*) "GetSinThetaW: Parameter not initialized"
+         write(6,*) "Set it by means of 'SetSinThetaW'"
+         write(6,*) "  "
+         call exit(-10)
+      endif
+*
       GetSinThetaW = SinThetaW
 *
       return

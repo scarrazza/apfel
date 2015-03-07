@@ -15,6 +15,13 @@
 *
       double precision GetZMass
 *
+      if(inMZ.ne."done")then
+         write(6,*) "GetZMass: Parameter not initialized"
+         write(6,*) "Set it by means of 'SetZMass'"
+         write(6,*) "  "
+         call exit(-10)
+      endif
+*
       GetZMass = MZ
 *
       return

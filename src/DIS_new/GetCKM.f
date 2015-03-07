@@ -17,6 +17,13 @@
       integer u,d
       double precision GetCKM
 *
+      if(inCKM.ne."done")then
+         write(6,*) "GetCKM: Parameter not initialized"
+         write(6,*) "Set it by means of 'SetCKM'"
+         write(6,*) "  "
+         call exit(-10)
+      endif
+*
       if(u.lt.1.or.u.gt.3)then
          write(6,*) "invalid value of the up index"
          write(6,*) "u =",u

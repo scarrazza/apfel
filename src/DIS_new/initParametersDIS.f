@@ -153,7 +153,7 @@
             call SetFFNS(3)
          endif
       else
-*     If the number of active flavour has not been specified (by means of SetFFNS)
+*     If the number of active flavours has not been specified (by means of SetFFNS)
 *     set it automatically to 3.
          if(Nf_FF.lt.3.or.Nf_FF.gt.6) Nf_FF = 3
          call SetVFNS
@@ -163,15 +163,11 @@
             write(6,*) "INFO: Any of the FONLL schemes at LO",
      1                 " concides with the the ZM-VFNS"
          endif
-
-
          if(MassScheme.eq."FONLL-A".and.ipt.eq.2)then
             call SetPerturbativeOrder(1)
             write(6,*) "INFO: For the FONLL-A scheme the perturbative",
      1                 " order has been automatically set to NLO"
          endif
-
-
          if(MassScheme.eq."FONLL-B".and.ipt.eq.2)then
             call SetMassScheme("FONLL-C")
             write(6,*) "INFO: The FONLL-B scheme at NNLO concides",
