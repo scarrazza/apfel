@@ -1279,11 +1279,11 @@ c     endif
                         enddo
                      endif
                   endif
-*
-*     Change sign to the F3 coefficient functions according to the projectile
-*
-                  C3nsp = ipr * C3nsp
-                  C3nsm = ipr * C3nsm
+c*
+c*     Change sign to the F3 coefficient functions according to the projectile
+c*
+c                  C3nsp = ipr * C3nsp
+c                  C3nsm = ipr * C3nsm
 *     
 *     F2
 *     
