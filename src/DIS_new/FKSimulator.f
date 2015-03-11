@@ -365,7 +365,7 @@
          norm = 100d0 / 2d0 / ( 1d0 + Q2 / MW2 )**2d0 
          FKSimulator = ( ypc * ExternalDISOperator("F2",4,i,x,beta) 
      1               -   y2  * ExternalDISOperator("FL",4,i,x,beta)
-     2               +   ym  * ExternalDISOperator("F3",4,i,x,beta) )
+     2               -   ym  * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = norm * FKSimulator
 *
 ****  Dimuon anti-neutrino cross section
@@ -375,7 +375,7 @@
          norm = 100d0 / 2d0 / ( 1d0 + Q2 / MW2 )**2d0 
          FKSimulator = ( ypc * ExternalDISOperator("F2",4,i,x,beta) 
      1               -   y2  * ExternalDISOperator("FL",4,i,x,beta)
-     2               -   ym  * ExternalDISOperator("F3",4,i,x,beta) )
+     2               +   ym  * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = norm * FKSimulator
       else
          write(6,*) "In FKSimulator.f:"
