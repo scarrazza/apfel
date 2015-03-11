@@ -9,11 +9,6 @@
 *
       implicit none
 *
-      include "../commons/grid.h"
-      include "../commons/StructureFunctions.h"
-      include "../commons/WMass.h"
-      include "../commons/ProtonMass.h"
-      include "../commons/GFermi.h"
       include "../commons/consts.h"
 **
 *     Input Variables
@@ -23,11 +18,12 @@
 **
 *     Internal Variables
 *
-      integer n
-      integer alpha
-      double precision w_int
+      double precision F2light,F2charm,F2bottom,F2top,F2total
+      double precision FLlight,FLcharm,FLbottom,FLtop,FLtotal
+      double precision F3light,F3charm,F3bottom,F3top,F3total
+      double precision GetWMass,GetZMass,GetGFermi,GetProtonMass
       double precision yp,ym,y2,ypc
-      double precision Q2,MW2,GF2,MN
+      double precision Q2,MW,MW2,GF,GF2,MN
       double precision norm
       double precision conv
       parameter(conv=3.893793d10) ! conversion factor from GeV^-2 to 10^-38 cm^2
@@ -36,42 +32,23 @@
 *
       double precision FKObservables
 *
-      if(x.lt.xmin(1).or.x.gt.xmax)then
-         write(6,*) "In FKObservables.f:"
-         write(6,*) "Invalid value of x =",x
-         call exit(-10)
-      endif
-*
-*     Select the grid
-*
-      do igrid=1,ngrid
-         if(x.ge.xmin(igrid).and.x.lt.xmin(igrid+1))then
-            goto 101
-         endif
-      enddo
-*
- 101  n = inter_degree(igrid)
-      FKObservables = 0d0
-*
 *     Useful definitions
+*
+      MW = GetWMass()
+      MN = GetProtonMass()
+      GF = GetGFermi()
 *
       Q2  = Q * Q
       MW2 = MW * MW
-      GF2 = GFermi * GFermi
-      MN  = MProton
+      GF2 = GF * GF
       yp  = 1d0 + ( 1d0 - y )**2d0
       ym  = 1d0 - ( 1d0 - y )**2d0
       y2  = y * y
-**
-*     Electromagnetic Observables
 *
 ****  Light structure function F2light
 *
-      if(obs(1:7).eq."DIS_F2L")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * F2(3,igrid,alpha)
-         enddo
+      if(obs(1:7).eq."DIS_F2L")then         
+         FKObservables = F2light(x)
 *
 ****  Up structure function F2u
 *
@@ -94,345 +71,214 @@
 ****  Charm structure function F2charm
 *
       elseif(obs(1:7).eq."DIS_F2C")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * F2(4,igrid,alpha)
-         enddo
+         FKObservables = F2charm(x)
 *
 ****  Bottom structure function F2bottom
 *
       elseif(obs(1:7).eq."DIS_F2B")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * F2(5,igrid,alpha)
-         enddo
+         FKObservables = F2bottom(x)
 *
 ****  Top structure function F2top
 *
       elseif(obs(1:7).eq."DIS_F2T")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * F2(6,igrid,alpha)
-         enddo
+         FKObservables = F2top(x)
 *
-****  Proton structure function F2
+****  Proton structure function F2 (neutral current)
+*
+      elseif(obs(1:10).eq."DIS_F2P_NC")then
+         FKObservables = F2total(x)
+*
+****  Proton structure function F2 (electromagnetic)
 *
       elseif(obs(1:7).eq."DIS_F2P")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * F2(7,igrid,alpha)
-         enddo
+         FKObservables = F2total(x)
 *
 ****  Deuteron structure function F2
 *
       elseif(obs(1:7).eq."DIS_F2D")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * F2(7,igrid,alpha)
-         enddo
+         FKObservables = F2total(x)
 *
 ****  Light structure function FLlight
 *
       elseif(obs(1:7).eq."DIS_FLL")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * FL(3,igrid,alpha)
-         enddo
+         FKObservables = FLlight(x)
 *
 ****  Charm structure function FLcharm
 *
       elseif(obs(1:7).eq."DIS_FLC")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * FL(4,igrid,alpha)
-         enddo
+         FKObservables = FLcharm(x)
 *
 ****  Bottom structure function FLbottom
 *
       elseif(obs(1:7).eq."DIS_FLB")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * FL(5,igrid,alpha)
-         enddo
+         FKObservables = FLbottom(x)
 *
 ****  Top structure function FLtop
 *
       elseif(obs(1:7).eq."DIS_FLT")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * FL(6,igrid,alpha)
-         enddo
-*
-****  Proton structure function FL
-*
-      elseif(obs(1:7).eq."DIS_FLP")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * FL(7,igrid,alpha)
-         enddo
+         FKObservables = FLtop(x)
 *
 ****  Deuteron structure function FL
 *
       elseif(obs(1:7).eq."DIS_FLD")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * FL(7,igrid,alpha)
-         enddo
-**
-*     Neutral-Current Observables
+         FKObservables = FLtotal(x)
 *
-****  F2 structure function
-*
-      elseif(obs(1:10).eq."DIS_F2P_NC")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * F2(7,igrid,alpha)
-         enddo
-*
-****  FL longitudinal structure function
+****  Proton structure function FL (Neutral current)
 *
       elseif(obs(1:10).eq."DIS_FLP_NC".or.
      1       obs(1:14).eq."DIS_FLP_CON_NC")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * FL(7,igrid,alpha)
-         enddo
+         FKObservables = FLtotal(x)
+*
+****  Proton structure function FL (electromagnetic)
+*
+      elseif(obs(1:7).eq."DIS_FLP")then
+         FKObservables = FLtotal(x)
 *
 ****  F3 structure function
 *
       elseif(obs(1:10).eq."DIS_F3P_NC")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * F3(7,igrid,alpha)
-         enddo
-*
-****  Electron scattering Reduced Cross-Section (inclusive)
-*
-      elseif(obs(1:7).eq."DIS_NCE")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(7,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(7,igrid,alpha)
-     3                    + ( ym / yp ) * F3(7,igrid,alpha) )
-         enddo
-*
-****  Positron scattering Reduced Cross-Section (inclusive)
-*
-      elseif(obs(1:7).eq."DIS_NCP")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(7,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(7,igrid,alpha)
-     3                    - ( ym / yp ) * F3(7,igrid,alpha) )
-         enddo
+         FKObservables = F3total(x)
 *
 ****  Electron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_NCE_L")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(3,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(3,igrid,alpha)
-     3                    + ( ym / yp ) * F3(3,igrid,alpha) )
-         enddo
+         FKObservables = ( F2light(x) 
+     1                 - ( y2 / yp ) * FLlight(x)
+     2                 + ( ym / yp ) * F3light(x) )
 *
 ****  Positron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_NCP_L")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(3,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(3,igrid,alpha)
-     3                    - ( ym / yp ) * F3(3,igrid,alpha) )
-         enddo
+         FKObservables = ( F2light(x) 
+     1                 - ( y2 / yp ) * FLlight(x)
+     2                 - ( ym / yp ) * F3light(x) )
 *
 ****  Electron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:10).eq."DIS_NCE_CH")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(4,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(4,igrid,alpha)
-     3                    + ( ym / yp ) * F3(4,igrid,alpha) )
-         enddo
+         FKObservables = ( F2charm(x) 
+     1                 - ( y2 / yp ) * FLcharm(x)
+     2                 + ( ym / yp ) * F3charm(x) )
 *
 ****  Positron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:10).eq."DIS_NCP_CH")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(4,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(4,igrid,alpha)
-     3                    - ( ym / yp ) * F3(4,igrid,alpha) )
-         enddo
+         FKObservables = ( F2charm(x) 
+     1                 - ( y2 / yp ) * FLcharm(x)
+     2                 - ( ym / yp ) * F3charm(x) )
 *
 ****  Electron scattering Reduced Cross-Section (bottom)
 *
       elseif(obs(1:10).eq."DIS_NCE_BT")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(5,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(5,igrid,alpha)
-     3                    + ( ym / yp ) * F3(5,igrid,alpha) )
-         enddo
+         FKObservables = ( F2bottom(x) 
+     1                 - ( y2 / yp ) * FLbottom(x)
+     2                 + ( ym / yp ) * F3bottom(x) )
 *
 ****  Positron scattering Reduced Cross-Section (bottom)
 *
       elseif(obs(1:10).eq."DIS_NCP_BT")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(5,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(5,igrid,alpha)
-     3                    - ( ym / yp ) * F3(5,igrid,alpha) )
-         enddo
+         FKObservables = ( F2bottom(x) 
+     1                 - ( y2 / yp ) * FLbottom(x)
+     2                 - ( ym / yp ) * F3bottom(x) )
 *
 ****  Electron scattering Reduced Cross-Section (top)
 *
       elseif(obs(1:10).eq."DIS_NCE_TP")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(6,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(6,igrid,alpha)
-     3                    + ( ym / yp ) * F3(6,igrid,alpha) )
-         enddo
+         FKObservables = ( F2top(x) 
+     1                 - ( y2 / yp ) * FLtop(x)
+     2                 + ( ym / yp ) * F3top(x) )
 *
 ****  Positron scattering Reduced Cross-Section (top)
 *
       elseif(obs(1:10).eq."DIS_NCP_TP")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(6,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(6,igrid,alpha)
-     3                    - ( ym / yp ) * F3(6,igrid,alpha) )
-         enddo
+         FKObservables = ( F2top(x) 
+     1                 - ( y2 / yp ) * FLtop(x)
+     2                 - ( ym / yp ) * F3top(x) )
 *
 ****  Electron scattering Reduced Cross-Section on deuteron (inclusive)
 *
       elseif(obs(1:9).eq."DIS_NCE_D")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(7,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(7,igrid,alpha)
-     3                    + ( ym / yp ) * F3(7,igrid,alpha) )
-         enddo
+         FKObservables = ( F2total(x) 
+     1                 - ( y2 / yp ) * FLtotal(x)
+     2                 + ( ym / yp ) * F3total(x) )
 *
 ****  Positron scattering Reduced Cross-Section on deuteron (inclusive)
 *
       elseif(obs(1:9).eq."DIS_NCP_D")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( F2(7,igrid,alpha) 
-     2                    - ( y2 / yp ) * FL(7,igrid,alpha)
-     3                    - ( ym / yp ) * F3(7,igrid,alpha) )
-         enddo
-**
-*     Charged-Current Observables
+         FKObservables = ( F2total(x) 
+     1                 - ( y2 / yp ) * FLtotal(x)
+     2                 - ( ym / yp ) * F3total(x) )
 *
 ****  Electron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_CCE")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( yp * F2(7,igrid,alpha) 
-     2                    -   y2 * FL(7,igrid,alpha)
-     3                    -   ym * F3(7,igrid,alpha) )
-         enddo
-         FKObservables = FKObservables / 4d0
+      elseif(obs(1:7).eq."DIS_NCE")then
+         FKObservables = ( F2total(x) 
+     1                 - ( y2 / yp ) * FLtotal(x)
+     2                 + ( ym / yp ) * F3total(x) )
 *
 ****  Positron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_CCP")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( yp * F2(7,igrid,alpha) 
-     2                    -   y2 * FL(7,igrid,alpha)
-     3                    +   ym * F3(7,igrid,alpha) )
-         enddo
-         FKObservables = FKObservables / 4d0
+      elseif(obs(1:7).eq."DIS_NCP")then
+         FKObservables = ( F2total(x) 
+     1                 - ( y2 / yp ) * FLtotal(x)
+     2                 - ( ym / yp ) * F3total(x) )
 *
 ****  Electron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_CCE_L")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( yp * F2(3,igrid,alpha) 
-     2                    -   y2 * FL(3,igrid,alpha)
-     3                    -   ym * F3(3,igrid,alpha) )
-         enddo
+         FKObservables = ( yp * F2light(x) 
+     1                 -   y2 * FLlight(x)
+     2                 -   ym * F3light(x) )
          FKObservables = FKObservables / 4d0
 *
 ****  Positron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_CCP_L")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( yp * F2(3,igrid,alpha) 
-     2                    -   y2 * FL(3,igrid,alpha)
-     3                    +   ym * F3(3,igrid,alpha) )
-         enddo
+         FKObservables = ( yp * F2light(x) 
+     1                 -   y2 * FLlight(x)
+     2                 +   ym * F3light(x) )
          FKObservables = FKObservables / 4d0
 *
 ****  Electron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:9).eq."DIS_CCE_C")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( yp * F2(4,igrid,alpha) 
-     2                    -   y2 * FL(4,igrid,alpha)
-     3                    -   ym * F3(4,igrid,alpha) )
-         enddo
+         FKObservables = ( yp * F2charm(x) 
+     1                 -   y2 * FLcharm(x)
+     2                 -   ym * F3charm(x) )
          FKObservables = FKObservables / 4d0
 *
 ****  Positron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:9).eq."DIS_CCP_C")then
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( yp * F2(4,igrid,alpha) 
-     2                    -   y2 * FL(4,igrid,alpha)
-     3                    +   ym * F3(4,igrid,alpha) )
-         enddo
+         FKObservables = ( yp * F2charm(x) 
+     1                 -   y2 * FLcharm(x)
+     2                 +   ym * F3charm(x) )
          FKObservables = FKObservables / 4d0
-**
-*     Neutrino Observables
 *
-****  Neutrino scattering Reduced Cross-Section (inclusive)
+****  Electron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_SNU")then
-         ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( ypc * F2(7,igrid,alpha) 
-     2                    -   y2  * FL(7,igrid,alpha)
-     3                    +   ym  * F3(7,igrid,alpha) )
-         enddo
-         FKObservables = norm * FKObservables
+      elseif(obs(1:7).eq."DIS_CCE")then
+         FKObservables = ( yp * F2total(x) 
+     1                 -   y2 * FLtotal(x)
+     2                 -   ym * F3total(x) )
+         FKObservables = FKObservables / 4d0
 *
-****  Antineutrino scattering Reduced Cross-Section (inclusive)
+****  Positron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_SNB")then
-         ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( ypc * F2(7,igrid,alpha) 
-     2                    -   y2  * FL(7,igrid,alpha)
-     3                    -   ym  * F3(7,igrid,alpha) )
-         enddo
-         FKObservables = norm * FKObservables
+      elseif(obs(1:7).eq."DIS_CCP")then
+         FKObservables = ( yp * F2total(x) 
+     1                 -   y2 * FLtotal(x)
+     2                 +   ym * F3total(x) )
+         FKObservables = FKObservables / 4d0
 *
 ****  Neutrino scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_SNU_L")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( ypc * F2(3,igrid,alpha) 
-     2                    -   y2  * FL(3,igrid,alpha)
-     3                    +   ym  * F3(3,igrid,alpha) )
-         enddo
+         FKObservables = ( ypc * F2light(x) 
+     1                 -   y2  * FLlight(x)
+     2                 +   ym  * F3light(x) )
          FKObservables = norm * FKObservables
 *
 ****  Antineutrino scattering Reduced Cross-Section (light)
@@ -440,12 +286,9 @@
       elseif(obs(1:9).eq."DIS_SNB_L")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( ypc * F2(3,igrid,alpha) 
-     2                    -   y2  * FL(3,igrid,alpha)
-     3                    -   ym  * F3(3,igrid,alpha) )
-         enddo
+         FKObservables = ( ypc * F2light(x) 
+     1                 -   y2  * FLlight(x)
+     2                 -   ym  * F3light(x) )
          FKObservables = norm * FKObservables
 *
 ****  Neutrino scattering Reduced Cross-Section (charm)
@@ -453,12 +296,9 @@
       elseif(obs(1:9).eq."DIS_SNU_C")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( ypc * F2(4,igrid,alpha) 
-     2                    -   y2  * FL(4,igrid,alpha)
-     3                    +   ym  * F3(4,igrid,alpha) )
-         enddo
+         FKObservables = ( ypc * F2charm(x) 
+     1                 -   y2  * FLcharm(x)
+     2                 +   ym  * F3charm(x) )
          FKObservables = norm * FKObservables
 *
 ****  Antineutrino scattering Reduced Cross-Section (charm)
@@ -466,12 +306,29 @@
       elseif(obs(1:9).eq."DIS_SNB_C")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( ypc * F2(4,igrid,alpha) 
-     2                    -   y2  * FL(4,igrid,alpha)
-     3                    -   ym  * F3(4,igrid,alpha) )
-         enddo
+         FKObservables = ( ypc * F2charm(x) 
+     1                 -   y2  * FLcharm(x)
+     2                 -   ym  * F3charm(x) )
+         FKObservables = norm * FKObservables
+*
+****  Neutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:7).eq."DIS_SNU")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         FKObservables = ( ypc * F2total(x) 
+     1                 -   y2  * FLtotal(x)
+     2                 +   ym  * F3total(x) )
+         FKObservables = norm * FKObservables
+*
+****  Antineutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:7).eq."DIS_SNB")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         FKObservables = ( ypc * F2total(x) 
+     1                 -   y2  * FLtotal(x)
+     2                 -   ym  * F3total(x) )
          FKObservables = norm * FKObservables
 *
 ****  Dimuon neutrino and anti-neutrino cross section
@@ -507,12 +364,9 @@
       elseif(obs(1:9).eq."DIS_DM_NU".or.obs(1:11).eq."DIS_DMN_CON")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = 100d0 / 2d0 / ( 1d0 + Q2 / MW2 )**2d0 
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( ypc * F2(4,igrid,alpha) 
-     2                    -   y2  * FL(4,igrid,alpha)
-     3                    +   ym  * F3(4,igrid,alpha) )
-         enddo
+         FKObservables = ( ypc * F2charm(x) 
+     1                 -   y2  * FLcharm(x)
+     2                 +   ym  * F3charm(x) )
          FKObservables = norm * FKObservables
 *
 ****  Dimuon anti-neutrino cross section
@@ -520,12 +374,9 @@
       elseif(obs(1:9).eq."DIS_DM_NB")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = 100d0 / 2d0 / ( 1d0 + Q2 / MW2 )**2d0 
-         do alpha=0,nin(0)
-            FKObservables = FKObservables + w_int(n,alpha,x)
-     1                    * ( ypc * F2(4,igrid,alpha) 
-     2                    -   y2  * FL(4,igrid,alpha)
-     3                    -   ym  * F3(4,igrid,alpha) )
-         enddo
+         FKObservables = ( ypc * F2charm(x) 
+     1                 -   y2  * FLcharm(x)
+     2                 -   ym  * F3charm(x) )
          FKObservables = norm * FKObservables
       else
          write(6,*) "In FKObservables.f:"

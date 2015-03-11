@@ -13,8 +13,6 @@
 *     Input Variables
 *
       character*15 obs
-**
-*     Electromagnetic Observables
 *
 ****  Light structure function F2light
 *
@@ -65,13 +63,6 @@
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
 *
-****  Proton structure function F2
-*
-      elseif(obs(1:7).eq."DIS_F2P")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
-*
 ****  Deuteron structure function F2
 *
       elseif(obs(1:7).eq."DIS_F2D")then
@@ -107,34 +98,39 @@
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
 *
-****  Proton structure function FL
-*
-      elseif(obs(1:7).eq."DIS_FLP")then
-         call SetProcessDIS("EM")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
-*
 ****  Deuteron structure function FL
 *
       elseif(obs(1:7).eq."DIS_FLD")then
          call SetProcessDIS("EM")
          call SetProjectileDIS("electron")
          call SetTargetDIS("isoscalar")
-**
-*     Neutral-Current Observables
 *
-****  F2 structure function
+****  Proton structure function F2 (Neutral current)
 *
       elseif(obs(1:10).eq."DIS_F2P_NC")then
          call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
 *
-****  FL longitudinal structure function
+****  Proton structure function F2 (electromagnetic)
+*
+      elseif(obs(1:7).eq."DIS_F2P")then
+         call SetProcessDIS("EM")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  Proton structure function FL (Neutral current)
 *
       elseif(obs(1:10).eq."DIS_FLP_NC".or.
      1       obs(1:14).eq."DIS_FLP_CON_NC")then
          call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  Proton structure function FL (electromagnetic)
+*
+      elseif(obs(1:7).eq."DIS_FLP")then
+         call SetProcessDIS("EM")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
 *
@@ -143,20 +139,6 @@
       elseif(obs(1:10).eq."DIS_F3P_NC")then
          call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
-*
-****  Electron scattering Reduced Cross-Section (inclusive)
-*
-      elseif(obs(1:7).eq."DIS_NCE")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
-*
-****  Positron scattering Reduced Cross-Section (inclusive)
-*
-      elseif(obs(1:7).eq."DIS_NCP")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("positron")
          call SetTargetDIS("proton")
 *
 ****  Electron scattering Reduced Cross-Section (light)
@@ -228,20 +210,18 @@
          call SetProcessDIS("NC")
          call SetProjectileDIS("positron")
          call SetTargetDIS("isoscalar")
-**
-*     Charged-Current Observables
 *
 ****  Electron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_CCE")then
-         call SetProcessDIS("CC")
+      elseif(obs(1:7).eq."DIS_NCE")then
+         call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
 *
 ****  Positron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_CCP")then
-         call SetProcessDIS("CC")
+      elseif(obs(1:7).eq."DIS_NCP")then
+         call SetProcessDIS("NC")
          call SetProjectileDIS("positron")
          call SetTargetDIS("proton")
 *
@@ -272,22 +252,20 @@
          call SetProcessDIS("CC")
          call SetProjectileDIS("positron")
          call SetTargetDIS("proton")
-**
-*     Neutrino Observables
 *
-****  Neutrino scattering Reduced Cross-Section (inclusive)
+****  Electron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_SNU")then
+      elseif(obs(1:7).eq."DIS_CCE")then
          call SetProcessDIS("CC")
-         call SetProjectileDIS("neutrino")
-         call SetTargetDIS("isoscalar")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
 *
-****  Antineutrino scattering Reduced Cross-Section (inclusive)
+****  Positron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_SNB")then
+      elseif(obs(1:7).eq."DIS_CCP")then
          call SetProcessDIS("CC")
-         call SetProjectileDIS("antineutrino")
-         call SetTargetDIS("isoscalar")
+         call SetProjectileDIS("positron")
+         call SetTargetDIS("proton")
 *
 ****  Neutrino scattering Reduced Cross-Section (light)
 *
@@ -313,6 +291,20 @@
 ****  Antineutrino scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:9).eq."DIS_SNB_C")then
+         call SetProcessDIS("CC")
+         call SetProjectileDIS("antineutrino")
+         call SetTargetDIS("isoscalar")
+*
+****  Neutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:7).eq."DIS_SNU")then
+         call SetProcessDIS("CC")
+         call SetProjectileDIS("neutrino")
+         call SetTargetDIS("isoscalar")
+*
+****  Antineutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:7).eq."DIS_SNB")then
          call SetProcessDIS("CC")
          call SetProjectileDIS("antineutrino")
          call SetTargetDIS("isoscalar")

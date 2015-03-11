@@ -9,12 +9,6 @@
 *
       implicit none
 *
-      include "../commons/EvolOp.h"
-      include "../commons/grid.h"
-      include "../commons/DISOperators.h"
-      include "../commons/WMass.h"
-      include "../commons/ProtonMass.h"
-      include "../commons/GFermi.h"
       include "../commons/consts.h"
 **
 *     Input Variables
@@ -25,11 +19,10 @@
 **
 *     Internal Variables
 *
-      integer n
-      integer alpha
-      double precision w_int_gen
+      double precision ExternalDISOperator
+      double precision GetWMass,GetZMass,GetGFermi,GetProtonMass
       double precision yp,ym,y2,ypc
-      double precision Q2,MW2,GF2,MN
+      double precision Q2,MW,MW2,GF,GF2,MN
       double precision norm
       double precision conv
       parameter(conv=3.893793d10) ! conversion factor from GeV^-2 to 10^-38 cm^2
@@ -38,57 +31,23 @@
 *
       double precision FKSimulator
 *
-*     Check whether the evolution operator has been actually computed
-*
-      if(.not.EvolOp)then
-         write(6,*) "The evolution operator computation is disabled."
-         write(6,*) "The 'FKSimulator' function cannot be used."
-         write(6,*) "   "
-         call exit(-10)
-      endif
-*
-      if(i.lt.0.or.i.gt.13)then
-         write(6,*) "In FKSimulator.f:"
-         write(6,*) "Invalid index, i =",i
-         call exit(-10)
-      endif
-*
-      if(x.lt.xmin(1).or.x.gt.xmax)then
-         write(6,*) "In FKSimulator.f:"
-         write(6,*) "Invalid value of x =",x
-         call exit(-10)
-      endif
-*
-      if(beta.lt.0.or.beta.gt.nin(0))then
-         write(6,*) "In FKSimulator.f:"
-         write(6,*) "Invalid index, beta =",beta
-         call exit(-10)
-      endif
-*
 *     Useful definitions
+*
+      MW = GetWMass()
+      MN = GetProtonMass()
+      GF = GetGFermi()
 *
       Q2  = Q * Q
       MW2 = MW * MW
-      GF2 = GFermi * GFermi
-      MN  = MProton
+      GF2 = GF * GF
       yp  = 1d0 + ( 1d0 - y )**2d0
       ym  = 1d0 - ( 1d0 - y )**2d0
       y2  = y * y
 *
-*     Interpolate
-*
-      n = inter_degree(0)
-      FKSimulator = 0d0
-**
-*     Electromagnetic Observables
-*
 ****  Light structure function F2light
 *
       if(obs(1:7).eq."DIS_F2L")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpF2(3,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("F2",3,i,x,beta)
 *
 ****  Up structure function F2u
 *
@@ -111,345 +70,214 @@
 ****  Charm structure function F2charm
 *
       elseif(obs(1:7).eq."DIS_F2C")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpF2(4,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("F2",4,i,x,beta)
 *
 ****  Bottom structure function F2bottom
 *
       elseif(obs(1:7).eq."DIS_F2B")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpF2(5,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("F2",5,i,x,beta)
 *
 ****  Top structure function F2top
 *
       elseif(obs(1:7).eq."DIS_F2T")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpF2(6,i,alpha,beta)
-         enddo
-*
-****  Proton structure function F2
-*
-      elseif(obs(1:7).eq."DIS_F2P")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpF2(7,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("F2",6,i,x,beta)
 *
 ****  Deuteron structure function F2
 *
       elseif(obs(1:7).eq."DIS_F2D")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpF2(7,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("F2",7,i,x,beta)
 *
 ****  Light structure function FLlight
 *
       elseif(obs(1:7).eq."DIS_FLL")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpFL(3,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("FL",3,i,x,beta)
 *
 ****  Charm structure function FLcharm
 *
       elseif(obs(1:7).eq."DIS_FLC")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpFL(4,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("FL",4,i,x,beta)
 *
 ****  Bottom structure function FLbottom
 *
       elseif(obs(1:7).eq."DIS_FLB")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpFL(5,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("FL",5,i,x,beta)
 *
 ****  Top structure function FLtop
 *
       elseif(obs(1:7).eq."DIS_FLT")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpFL(6,i,alpha,beta)
-         enddo
-*
-****  Proton structure function FL
-*
-      elseif(obs(1:7).eq."DIS_FLP")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpFL(7,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("FL",6,i,x,beta)
 *
 ****  Deuteron structure function FL
 *
       elseif(obs(1:7).eq."DIS_FLD")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpFL(7,i,alpha,beta)
-         enddo
-**
-*     Neutral-Current Observables
+         FKSimulator = ExternalDISOperator("FL",7,i,x,beta)
 *
-****  F2 structure function
+****  Proton structure function F2 (Neutral current)
 *
       elseif(obs(1:10).eq."DIS_F2P_NC")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpF2(7,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("F2",7,i,x,beta)
 *
-****  FL longitudinal structure function
+****  Proton structure function F2 (electromagnetic)
+*
+      elseif(obs(1:7).eq."DIS_F2P")then
+         FKSimulator = ExternalDISOperator("F2",7,i,x,beta)
+*
+****  Proton structure function (Neutral current)
 *
       elseif(obs(1:10).eq."DIS_FLP_NC".or.
      1       obs(1:14).eq."DIS_FLP_CON_NC")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpFL(7,i,alpha,beta)
-         enddo
+         FKSimulator = ExternalDISOperator("FL",7,i,x,beta)
+*
+****  Proton structure function FL (electromagnetic)
+*
+      elseif(obs(1:7).eq."DIS_FLP")then
+         FKSimulator = ExternalDISOperator("FL",7,i,x,beta)
 *
 ****  F3 structure function
 *
       elseif(obs(1:10).eq."DIS_F3P_NC")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * EvOpF3(7,i,alpha,beta)
-         enddo
-*
-****  Electron scattering Reduced Cross-Section (inclusive)
-*
-      elseif(obs(1:7).eq."DIS_NCE")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(7,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(7,i,alpha,beta)
-     3                  + ( ym / yp ) * EvOpF3(7,i,alpha,beta) )
-         enddo
-*
-****  Positron scattering Reduced Cross-Section (inclusive)
-*
-      elseif(obs(1:7).eq."DIS_NCP")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(7,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(7,i,alpha,beta)
-     3                  - ( ym / yp ) * EvOpF3(7,i,alpha,beta) )
-         enddo
+         FKSimulator = ExternalDISOperator("F3",7,i,x,beta)
 *
 ****  Electron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_NCE_L")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(3,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(3,i,alpha,beta)
-     3                  + ( ym / yp ) * EvOpF3(3,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ExternalDISOperator("F2",3,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",3,i,x,beta)
+     2        + ( ym / yp ) * ExternalDISOperator("F3",3,i,x,beta) )
 *
 ****  Positron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_NCP_L")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(3,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(3,i,alpha,beta)
-     3                  - ( ym / yp ) * EvOpF3(3,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ExternalDISOperator("F2",3,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",3,i,x,beta)
+     2        - ( ym / yp ) * ExternalDISOperator("F3",3,i,x,beta) )
 *
 ****  Electron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:10).eq."DIS_NCE_CH")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(4,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(4,i,alpha,beta)
-     3                  + ( ym / yp ) * EvOpF3(4,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ExternalDISOperator("F2",4,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",4,i,x,beta)
+     2        + ( ym / yp ) * ExternalDISOperator("F3",4,i,x,beta) )
 *
 ****  Positron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:10).eq."DIS_NCP_CH")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(4,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(4,i,alpha,beta)
-     3                  - ( ym / yp ) * EvOpF3(4,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ExternalDISOperator("F2",4,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",4,i,x,beta)
+     2        - ( ym / yp ) * ExternalDISOperator("F3",4,i,x,beta) )
 *
 ****  Electron scattering Reduced Cross-Section (bottom)
 *
       elseif(obs(1:10).eq."DIS_NCE_BT")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(5,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(5,i,alpha,beta)
-     3                  + ( ym / yp ) * EvOpF3(5,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ExternalDISOperator("F2",5,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",5,i,x,beta)
+     2        + ( ym / yp ) * ExternalDISOperator("F3",5,i,x,beta) )
 *
 ****  Positron scattering Reduced Cross-Section (bottom)
 *
       elseif(obs(1:10).eq."DIS_NCP_BT")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(5,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(5,i,alpha,beta)
-     3                  - ( ym / yp ) * EvOpF3(5,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ExternalDISOperator("F2",5,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",5,i,x,beta)
+     2        - ( ym / yp ) * ExternalDISOperator("F3",5,i,x,beta) )
 *
 ****  Electron scattering Reduced Cross-Section (top)
 *
       elseif(obs(1:10).eq."DIS_NCE_TP")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(6,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(6,i,alpha,beta)
-     3                  + ( ym / yp ) * EvOpF3(6,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ExternalDISOperator("F2",6,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",6,i,x,beta)
+     2        + ( ym / yp ) * ExternalDISOperator("F3",6,i,x,beta) )
 *
 ****  Positron scattering Reduced Cross-Section (top)
 *
       elseif(obs(1:10).eq."DIS_NCP_TP")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(6,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(6,i,alpha,beta)
-     3                  - ( ym / yp ) * EvOpF3(6,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ExternalDISOperator("F2",6,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",6,i,x,beta)
+     2        - ( ym / yp ) * ExternalDISOperator("F3",6,i,x,beta) )
 *
 ****  Electron scattering Reduced Cross-Section on deuteron (inclusive)
 *
       elseif(obs(1:9).eq."DIS_NCE_D")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(7,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(7,i,alpha,beta)
-     3                  + ( ym / yp ) * EvOpF3(7,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ExternalDISOperator("F2",7,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",7,i,x,beta)
+     2        + ( ym / yp ) * ExternalDISOperator("F3",7,i,x,beta) )
 *
 ****  Positron scattering Reduced Cross-Section on deuteron (inclusive)
 *
       elseif(obs(1:9).eq."DIS_NCP_D")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( EvOpF2(7,i,alpha,beta) 
-     2                  - ( y2 / yp ) * EvOpFL(7,i,alpha,beta)
-     3                  - ( ym / yp ) * EvOpF3(7,i,alpha,beta) )
-         enddo
-**
-*     Charged-Current Observables
+         FKSimulator = ( ExternalDISOperator("F2",7,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",7,i,x,beta)
+     2        - ( ym / yp ) * ExternalDISOperator("F3",7,i,x,beta) )
 *
 ****  Electron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_CCE")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( yp * EvOpF2(7,i,alpha,beta) 
-     2                  -   y2 * EvOpFL(7,i,alpha,beta)
-     3                  -   ym * EvOpF3(7,i,alpha,beta) )
-         enddo
-         FKSimulator = FKSimulator / 4d0
+      elseif(obs(1:7).eq."DIS_NCE")then
+         FKSimulator = ( ExternalDISOperator("F2",7,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",7,i,x,beta)
+     2        + ( ym / yp ) * ExternalDISOperator("F3",7,i,x,beta) )
 *
 ****  Positron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_CCP")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( yp * EvOpF2(7,i,alpha,beta) 
-     2                  -   y2 * EvOpFL(7,i,alpha,beta)
-     3                  +   ym * EvOpF3(7,i,alpha,beta) )
-         enddo
-         FKSimulator = FKSimulator / 4d0
+      elseif(obs(1:7).eq."DIS_NCP")then
+         FKSimulator = ( ExternalDISOperator("F2",7,i,x,beta) 
+     1        - ( y2 / yp ) * ExternalDISOperator("FL",7,i,x,beta)
+     2        - ( ym / yp ) * ExternalDISOperator("F3",7,i,x,beta) )
 *
 ****  Electron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_CCE_L")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( yp * EvOpF2(3,i,alpha,beta) 
-     2                  -   y2 * EvOpFL(3,i,alpha,beta)
-     3                  -   ym * EvOpF3(3,i,alpha,beta) )
-         enddo
+         FKSimulator = ( yp * ExternalDISOperator("F2",3,i,x,beta) 
+     1               -   y2 * ExternalDISOperator("FL",3,i,x,beta)
+     2               -   ym * ExternalDISOperator("F3",3,i,x,beta) )
          FKSimulator = FKSimulator / 4d0
 *
 ****  Positron scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_CCP_L")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( yp * EvOpF2(3,i,alpha,beta) 
-     2                  -   y2 * EvOpFL(3,i,alpha,beta)
-     3                  +   ym * EvOpF3(3,i,alpha,beta) )
-         enddo
+         FKSimulator = ( yp * ExternalDISOperator("F2",3,i,x,beta) 
+     1               -   y2 * ExternalDISOperator("FL",3,i,x,beta)
+     2               +   ym * ExternalDISOperator("F3",3,i,x,beta) )
          FKSimulator = FKSimulator / 4d0
 *
 ****  Electron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:9).eq."DIS_CCE_C")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( yp * EvOpF2(4,i,alpha,beta) 
-     2                  -   y2 * EvOpFL(4,i,alpha,beta)
-     3                  -   ym * EvOpF3(4,i,alpha,beta) )
-         enddo
+         FKSimulator = ( yp * ExternalDISOperator("F2",4,i,x,beta) 
+     1               -   y2 * ExternalDISOperator("FL",4,i,x,beta)
+     2               -   ym * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = FKSimulator / 4d0
 *
 ****  Positron scattering Reduced Cross-Section (charm)
 *
       elseif(obs(1:9).eq."DIS_CCP_C")then
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( yp * EvOpF2(4,i,alpha,beta) 
-     2                  -   y2 * EvOpFL(4,i,alpha,beta)
-     3                  +   ym * EvOpF3(4,i,alpha,beta) )
-         enddo
+         FKSimulator = ( yp * ExternalDISOperator("F2",4,i,x,beta) 
+     1               -   y2 * ExternalDISOperator("FL",4,i,x,beta)
+     2               +   ym * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = FKSimulator / 4d0
-**
-*     Neutrino Observables
 *
-****  Neutrino scattering Reduced Cross-Section (inclusive)
+****  Electron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_SNU")then
-         ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( ypc * EvOpF2(7,i,alpha,beta) 
-     2                  -   y2  * EvOpFL(7,i,alpha,beta)
-     3                  +   ym  * EvOpF3(7,i,alpha,beta) )
-         enddo
-         FKSimulator = norm * FKSimulator
+      elseif(obs(1:7).eq."DIS_CCE")then
+         FKSimulator = ( yp * ExternalDISOperator("F2",7,i,x,beta) 
+     1               -   y2 * ExternalDISOperator("FL",7,i,x,beta)
+     2               -   ym * ExternalDISOperator("F3",7,i,x,beta) )
+         FKSimulator = FKSimulator / 4d0
 *
-****  Antineutrino scattering Reduced Cross-Section (inclusive)
+****  Positron scattering Reduced Cross-Section (inclusive)
 *
-      elseif(obs(1:7).eq."DIS_SNB")then
-         ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
-         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( ypc * EvOpF2(7,i,alpha,beta) 
-     2                  -   y2  * EvOpFL(7,i,alpha,beta)
-     3                  -   ym  * EvOpF3(7,i,alpha,beta) )
-         enddo
-         FKSimulator = norm * FKSimulator
+      elseif(obs(1:7).eq."DIS_CCP")then
+         FKSimulator = ( yp * ExternalDISOperator("F2",7,i,x,beta) 
+     1               -   y2 * ExternalDISOperator("FL",7,i,x,beta)
+     2               +   ym * ExternalDISOperator("F3",7,i,x,beta) )
+         FKSimulator = FKSimulator / 4d0
 *
 ****  Neutrino scattering Reduced Cross-Section (light)
 *
       elseif(obs(1:9).eq."DIS_SNU_L")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( ypc * EvOpF2(3,i,alpha,beta) 
-     2                  -   y2  * EvOpFL(3,i,alpha,beta)
-     3                  +   ym  * EvOpF3(3,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ypc * ExternalDISOperator("F2",3,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",3,i,x,beta)
+     2               +   ym  * ExternalDISOperator("F3",3,i,x,beta) )
          FKSimulator = norm * FKSimulator
 *
 ****  Antineutrino scattering Reduced Cross-Section (light)
@@ -457,12 +285,9 @@
       elseif(obs(1:9).eq."DIS_SNB_L")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( ypc * EvOpF2(3,i,alpha,beta) 
-     2                  -   y2  * EvOpFL(3,i,alpha,beta)
-     3                  -   ym  * EvOpF3(3,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ypc * ExternalDISOperator("F2",3,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",3,i,x,beta)
+     2               -   ym  * ExternalDISOperator("F3",3,i,x,beta) )
          FKSimulator = norm * FKSimulator
 *
 ****  Neutrino scattering Reduced Cross-Section (charm)
@@ -470,12 +295,9 @@
       elseif(obs(1:9).eq."DIS_SNU_C")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( ypc * EvOpF2(4,i,alpha,beta) 
-     2                  -   y2  * EvOpFL(4,i,alpha,beta)
-     3                  +   ym  * EvOpF3(4,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ypc * ExternalDISOperator("F2",4,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",4,i,x,beta)
+     2               +   ym  * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = norm * FKSimulator
 *
 ****  Antineutrino scattering Reduced Cross-Section (charm)
@@ -483,12 +305,29 @@
       elseif(obs(1:9).eq."DIS_SNB_C")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( ypc * EvOpF2(4,i,alpha,beta) 
-     2                  -   y2  * EvOpFL(4,i,alpha,beta)
-     3                  -   ym  * EvOpF3(4,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ypc * ExternalDISOperator("F2",4,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",4,i,x,beta)
+     2               -   ym  * ExternalDISOperator("F3",4,i,x,beta) )
+         FKSimulator = norm * FKSimulator
+*
+****  Neutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:7).eq."DIS_SNU")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         FKSimulator = ( ypc * ExternalDISOperator("F2",7,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",7,i,x,beta)
+     2               +   ym  * ExternalDISOperator("F3",7,i,x,beta) )
+         FKSimulator = norm * FKSimulator
+*
+****  Antineutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:7).eq."DIS_SNB")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2d0 )
+         FKSimulator = ( ypc * ExternalDISOperator("F2",7,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",7,i,x,beta)
+     2               -   ym  * ExternalDISOperator("F3",7,i,x,beta) )
          FKSimulator = norm * FKSimulator
 *
 ****  Dimuon neutrino and anti-neutrino cross section
@@ -524,12 +363,9 @@
       elseif(obs(1:9).eq."DIS_DM_NU".or.obs(1:11).eq."DIS_DMN_CON")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = 100d0 / 2d0 / ( 1d0 + Q2 / MW2 )**2d0 
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( ypc * EvOpF2(4,i,alpha,beta) 
-     2                  -   y2  * EvOpFL(4,i,alpha,beta)
-     3                  +   ym  * EvOpF3(4,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ypc * ExternalDISOperator("F2",4,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",4,i,x,beta)
+     2               +   ym  * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = norm * FKSimulator
 *
 ****  Dimuon anti-neutrino cross section
@@ -537,12 +373,9 @@
       elseif(obs(1:9).eq."DIS_DM_NB")then
          ypc  = yp - 2d0 * ( MN * x * y )**2d0 / Q2
          norm = 100d0 / 2d0 / ( 1d0 + Q2 / MW2 )**2d0 
-         do alpha=0,nin(0)
-            FKSimulator = FKSimulator + w_int_gen(n,alpha,x)
-     1                  * ( ypc * EvOpF2(4,i,alpha,beta) 
-     2                  -   y2  * EvOpFL(4,i,alpha,beta)
-     3                  -   ym  * EvOpF3(4,i,alpha,beta) )
-         enddo
+         FKSimulator = ( ypc * ExternalDISOperator("F2",4,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",4,i,x,beta)
+     2               -   ym  * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = norm * FKSimulator
       else
          write(6,*) "In FKSimulator.f:"

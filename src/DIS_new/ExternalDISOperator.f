@@ -67,9 +67,16 @@
          write(6,*) "Valid range: ihq in [3:7]"
          call exit(-10)
       endif
+*
       if(i.lt.0.or.i.gt.13)then
          write(6,*) "In ExternalDISOperator.f:"
          write(6,*) "Invalid index, i =",i
+         call exit(-10)
+      endif
+*
+      if(x.lt.xmin(1).or.x.gt.xmax)then
+         write(6,*) "In FKSimulator.f:"
+         write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
 *
@@ -79,12 +86,11 @@
          call exit(-10)
       endif
 *
-      n = inter_degree(0)
-      ExternalDISOperator = 0d0
-*
 *     Compute operator according to whether the target mass corrections
 *     have been enabled or not.
 *
+      n = inter_degree(0)
+      ExternalDISOperator = 0d0
       if(TMC)then
          tau = 1d0 + 4d0 * rhop * x**2d0
          xi  = 2d0 * x / ( 1d0 + dsqrt(tau) )
