@@ -227,7 +227,7 @@
       elseif(obs(1:9).eq."DIS_CCE_L")then
          FKSimulator = ( yp * ExternalDISOperator("F2",3,i,x,beta) 
      1               -   y2 * ExternalDISOperator("FL",3,i,x,beta)
-     2               -   ym * ExternalDISOperator("F3",3,i,x,beta) )
+     2               +   ym * ExternalDISOperator("F3",3,i,x,beta) )
          FKSimulator = FKSimulator / 4d0
 *
 ****  Positron scattering Reduced Cross-Section (light)
@@ -235,7 +235,7 @@
       elseif(obs(1:9).eq."DIS_CCP_L")then
          FKSimulator = ( yp * ExternalDISOperator("F2",3,i,x,beta) 
      1               -   y2 * ExternalDISOperator("FL",3,i,x,beta)
-     2               +   ym * ExternalDISOperator("F3",3,i,x,beta) )
+     2               -   ym * ExternalDISOperator("F3",3,i,x,beta) )
          FKSimulator = FKSimulator / 4d0
 *
 ****  Electron scattering Reduced Cross-Section (charm)
@@ -243,7 +243,7 @@
       elseif(obs(1:9).eq."DIS_CCE_C")then
          FKSimulator = ( yp * ExternalDISOperator("F2",4,i,x,beta) 
      1               -   y2 * ExternalDISOperator("FL",4,i,x,beta)
-     2               -   ym * ExternalDISOperator("F3",4,i,x,beta) )
+     2               +   ym * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = FKSimulator / 4d0
 *
 ****  Positron scattering Reduced Cross-Section (charm)
@@ -251,7 +251,7 @@
       elseif(obs(1:9).eq."DIS_CCP_C")then
          FKSimulator = ( yp * ExternalDISOperator("F2",4,i,x,beta) 
      1               -   y2 * ExternalDISOperator("FL",4,i,x,beta)
-     2               +   ym * ExternalDISOperator("F3",4,i,x,beta) )
+     2               -   ym * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = FKSimulator / 4d0
 *
 ****  Electron scattering Reduced Cross-Section (inclusive)
@@ -259,7 +259,7 @@
       elseif(obs(1:7).eq."DIS_CCE")then
          FKSimulator = ( yp * ExternalDISOperator("F2",7,i,x,beta) 
      1               -   y2 * ExternalDISOperator("FL",7,i,x,beta)
-     2               -   ym * ExternalDISOperator("F3",7,i,x,beta) )
+     2               +   ym * ExternalDISOperator("F3",7,i,x,beta) )
          FKSimulator = FKSimulator / 4d0
 *
 ****  Positron scattering Reduced Cross-Section (inclusive)
@@ -267,7 +267,7 @@
       elseif(obs(1:7).eq."DIS_CCP")then
          FKSimulator = ( yp * ExternalDISOperator("F2",7,i,x,beta) 
      1               -   y2 * ExternalDISOperator("FL",7,i,x,beta)
-     2               +   ym * ExternalDISOperator("F3",7,i,x,beta) )
+     2               -   ym * ExternalDISOperator("F3",7,i,x,beta) )
          FKSimulator = FKSimulator / 4d0
 *
 ****  Neutrino scattering Reduced Cross-Section (light)

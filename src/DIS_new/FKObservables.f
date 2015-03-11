@@ -228,7 +228,7 @@
       elseif(obs(1:9).eq."DIS_CCE_L")then
          FKObservables = ( yp * F2light(x) 
      1                 -   y2 * FLlight(x)
-     2                 -   ym * F3light(x) )
+     2                 +   ym * F3light(x) )
          FKObservables = FKObservables / 4d0
 *
 ****  Positron scattering Reduced Cross-Section (light)
@@ -236,7 +236,7 @@
       elseif(obs(1:9).eq."DIS_CCP_L")then
          FKObservables = ( yp * F2light(x) 
      1                 -   y2 * FLlight(x)
-     2                 +   ym * F3light(x) )
+     2                 -   ym * F3light(x) )
          FKObservables = FKObservables / 4d0
 *
 ****  Electron scattering Reduced Cross-Section (charm)
@@ -244,7 +244,7 @@
       elseif(obs(1:9).eq."DIS_CCE_C")then
          FKObservables = ( yp * F2charm(x) 
      1                 -   y2 * FLcharm(x)
-     2                 -   ym * F3charm(x) )
+     2                 +   ym * F3charm(x) )
          FKObservables = FKObservables / 4d0
 *
 ****  Positron scattering Reduced Cross-Section (charm)
@@ -252,7 +252,7 @@
       elseif(obs(1:9).eq."DIS_CCP_C")then
          FKObservables = ( yp * F2charm(x) 
      1                 -   y2 * FLcharm(x)
-     2                 +   ym * F3charm(x) )
+     2                 -   ym * F3charm(x) )
          FKObservables = FKObservables / 4d0
 *
 ****  Electron scattering Reduced Cross-Section (inclusive)
@@ -260,7 +260,7 @@
       elseif(obs(1:7).eq."DIS_CCE")then
          FKObservables = ( yp * F2total(x) 
      1                 -   y2 * FLtotal(x)
-     2                 -   ym * F3total(x) )
+     2                 +   ym * F3total(x) )
          FKObservables = FKObservables / 4d0
 *
 ****  Positron scattering Reduced Cross-Section (inclusive)
@@ -268,7 +268,7 @@
       elseif(obs(1:7).eq."DIS_CCP")then
          FKObservables = ( yp * F2total(x) 
      1                 -   y2 * FLtotal(x)
-     2                 +   ym * F3total(x) )
+     2                 -   ym * F3total(x) )
          FKObservables = FKObservables / 4d0
 *
 ****  Neutrino scattering Reduced Cross-Section (light)
