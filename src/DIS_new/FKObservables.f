@@ -366,7 +366,7 @@
          norm = 100d0 / 2d0 / ( 1d0 + Q2 / MW2 )**2d0 
          FKObservables = ( ypc * F2charm(x) 
      1                 -   y2  * FLcharm(x)
-     2                 -   ym  * F3charm(x) )
+     2                 +   ym  * F3charm(x) )
          FKObservables = norm * FKObservables
 *
 ****  Dimuon anti-neutrino cross section
@@ -376,7 +376,7 @@
          norm = 100d0 / 2d0 / ( 1d0 + Q2 / MW2 )**2d0 
          FKObservables = ( ypc * F2charm(x) 
      1                 -   y2  * FLcharm(x)
-     2                 +   ym  * F3charm(x) )
+     2                 -   ym  * F3charm(x) )
          FKObservables = norm * FKObservables
       else
          write(6,*) "In FKObservables.f:"
