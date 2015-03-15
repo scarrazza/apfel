@@ -416,481 +416,6 @@
 *     Expansion parameter alphas/4*pi
 *
 ************************************************************************
-      function c2ns1cca(xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-**
-*     Input Variables
-*
-      double precision xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision c2ns1cca
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-*
-      c2ns1cca = 2d0 * CF * ( - ( 1d0 + z**2d0 ) * dlog(z) / ( 1d0 - z )
-     1         + ( 2d0 - dlog( kQF2 / lambda ) 
-     2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
-     3         * ( 1d0 + z ) + 1d0 / lambda )
-*
-      return
-      end
-*
-************************************************************************
-      function c2ns1ccb(xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-**
-*     Input Variables
-*
-      double precision xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision c2ns1ccb
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-*
-      c2ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
-     1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z ) 
-     2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z )
-     3         + ( 2d0 * lambda**2d0 - lambda - 1d0 ) / lambda 
-     4         / ( 1d0 - lambda * z ) + ( 1d0 - z ) 
-     5         / ( 1d0 - lambda * z )**2d0 / 2d0 )
-*
-      return
-      end
-*
-************************************************************************
-      function c2ns1ccc(Rf,xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-      include "../commons/consts.h"
-**
-*     Input Variables
-*
-      double precision Rf,xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision KA,ln1mz,ln1mlz
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision c2ns1ccc
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-      KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
-      ln1mz  = dlog( 1d0 - z )
-      ln1mlz = dlog( 1d0 - lambda * z )
-*
-      c2ns1ccc = 2d0 * CF * ( - 4d0 - 1d0 / 2d0 / lambda - 2d0 * zeta2 
-     1         - ( 1d0 + lambda ) * KA / 2d0 / lambda 
-     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0
-     3         + 2d0 * ln1mz**2d0 - 2d0 * Rf 
-     4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
-     5         + ( 2d0 * lambda**2d0 - lambda - 1d0 / 2d0 ) 
-     6         * ln1mlz / lambda**2d0 + ( 1d0 - lambda ) * z 
-     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
-*
-      return
-      end
-*
-************************************************************************
-      function c2g1cca(xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-**
-*     Input Variables
-*
-      double precision xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision c2g1cca
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-*
-      c2g1cca = 4d0 * TR * ( ( z**2d0 + ( 1d0 - z )**2d0 )
-     1        * ( dlog( ( 1d0 -  z ) / z ) - dlog( 1d0 - lambda ) / 2d0 
-     2        + dlog( kQF2 / lambda ) / 2d0 ) + 8d0 * z * ( 1d0 - z )
-     3        - 1d0 + ( 1d0 - lambda ) * ( - 6d0 * ( 1d0 + 2d0*lambda )
-     4        * z * ( 1d0 - z ) + 1d0 / ( 1d0 - lambda * z ) 
-     5        + 6d0 * lambda * z * ( 1d0 - 2d0 * lambda * z ) 
-     6        * dlog( ( 1d0 - lambda * z ) / ( 1d0 - lambda ) / z ) ) )
-*
-      return
-      end
-*
-************************************************************************
-      function clns1cca(xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-**
-*     Input Variables
-*
-      double precision xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision clns1cca
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-*
-      clns1cca = 2d0 * CF * ( ( - ( 1d0 + z**2d0 ) * dlog(z) 
-     1         / ( 1d0 - z ) + ( - dlog( kQF2 / lambda ) 
-     2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
-     3         * ( 1d0 + z ) + 3d0 ) * ( 1d0 - lambda ) 
-     4         + ( 1d0 + lambda ) * z )
-*
-      return
-      end
-*
-************************************************************************
-      function clns1ccb(xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-**
-*     Input Variables
-*
-      double precision xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision clns1ccb
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-*
-      clns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
-     1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z )
-     2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z ) 
-     3         - 2d0 / ( 1d0 - lambda * z ) + ( 1d0 - z ) 
-     4         / ( 1d0 - lambda * z )**2d0 / 2d0 ) * ( 1d0 - lambda )
-*
-      return
-      end
-*
-************************************************************************
-      function clns1ccc(Rf,xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-      include "../commons/consts.h"
-**
-*     Input Variables
-*
-      double precision Rf,xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision KA,ln1mz,ln1mlz
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision clns1ccc
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-      KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
-      ln1mz  = dlog( 1d0 - z )
-      ln1mlz = dlog( 1d0 - lambda * z )
-*
-      clns1ccc = 2d0 * CF * ( ( - 4d0 - 1d0 / 2d0 / lambda - 2d0 * zeta2
-     1         - ( 1d0 + lambda ) * KA / 2d0 / lambda 
-     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0
-     3         + 2d0 * ln1mz**2d0 - 2d0 * Rf 
-     4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
-     5         + ( - 2d0 * lambda + 1d0 / 2d0 ) 
-     6         * ln1mlz / lambda**2d0 + ( 1d0 - lambda ) * z 
-     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
-     8         * ( 1d0 - lambda ) + lambda * KA )
-*
-      return
-      end
-*
-************************************************************************
-      function clg1cca(xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-**
-*     Input Variables
-*
-      double precision xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision clg1cca
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-*
-      clg1cca = 4d0 * TR * ( ( 1d0 - lambda ) 
-     1        * ( z**2d0 + ( 1d0 - z )**2d0 ) 
-     1        * ( dlog( ( 1d0 -  z ) / z ) - dlog( 1d0 - lambda ) / 2d0 
-     2        + dlog(kQF2 / lambda ) / 2d0 ) 
-     1        + 4d0 * ( 2d0 - lambda ) * z * ( 1d0 - z )
-     3        + ( 1d0 - lambda ) * ( - 2d0 * ( 3d0 + 4d0 * lambda ) 
-     4        * z * ( 1d0 - z ) 
-     5        + 4d0 * lambda * z * ( 1d0 - 2d0 * lambda * z ) 
-     6        * dlog( ( 1d0 - lambda * z ) / ( 1d0 - lambda ) / z ) ) )
-*
-      return
-      end
-*
-************************************************************************
-      function c3ns1cca(xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-**
-*     Input Variables
-*
-      double precision xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision c3ns1cca
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-*
-      c3ns1cca = 2d0 * CF * ( - ( 1d0 + z**2d0 ) * dlog(z) / ( 1d0 - z ) 
-     1         + ( 1d0 - dlog( kQF2 / lambda ) 
-     2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
-     3         * ( 1d0 + z ) + 1d0 / lambda )
-*
-      return
-      end
-*
-************************************************************************
-      function c3ns1ccb(xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-**
-*     Input Variables
-*
-      double precision xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision c3ns1ccb
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-*
-      c3ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
-     1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z )
-     2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z ) 
-     3         + ( lambda - 1d0 ) / lambda 
-     4         / ( 1d0 - lambda * z ) + ( 1d0 - z ) 
-     5         / ( 1d0 - lambda * z )**2d0 / 2d0 )
-*
-      return
-      end
-*
-************************************************************************
-      function c3ns1ccc(Rf,xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-      include "../commons/consts.h"
-**
-*     Input Variables
-*
-      double precision Rf,xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision KA,ln1mz,ln1mlz
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision c3ns1ccc
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-      KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
-      ln1mz  = dlog( 1d0 - z )
-      ln1mlz = dlog( 1d0 - lambda * z )
-*
-      c3ns1ccc = 2d0 * CF * ( - 4d0 - 1d0 / 2d0 / lambda - 2d0 * zeta2
-     1         - ( 1d0 + 3d0 * lambda ) * KA / 2d0 / lambda 
-     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0 
-     3         + 2d0 * ln1mz**2d0 - 2d0 * Rf 
-     4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
-     5         + ( lambda - 1d0 / 2d0 ) 
-     6         * ln1mlz / lambda**2d0 + ( 1d0 - lambda ) * z 
-     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
-*
-      return
-      end
-*
-************************************************************************
-      function c3g1cca(xi,z)
-*
-      implicit none
-*
-      include "../commons/ColorFactors.h"
-**
-*     Input Variables
-*
-      double precision xi,z
-**
-*     Internal Variables
-*
-      double precision lambda
-      double precision kQF2
-**
-*     Output Variables
-*
-      double precision c3g1cca
-*
-      kQF2 = 1d0                ! Q2 / muF2
-      lambda = xi / ( 1d0 + xi )
-*
-      c3g1cca = 4d0 * TR * ( ( z**2d0 + ( 1d0 - z )**2d0 ) 
-     1        * ( dlog( ( 1d0 -  z ) / ( 1d0 - lambda * z ) )
-     2        + dlog( 1d0 - lambda ) / 2d0 
-     2        + dlog(kQF2 / lambda ) / 2d0 )
-     3        + ( 1d0 - lambda ) * ( 2d0 * z * ( 1d0 - z )
-     5        - 2d0 * z * ( 1d0 - ( 1d0 + lambda ) * z ) 
-     6        * dlog( ( 1d0 - lambda * z ) / ( 1d0 - lambda ) / z ) ) )
-*
-      return
-      end
-*
-************************************************************************
-      function Rfun(xi,x)
-*
-      implicit none
-**
-*     Input Variables
-*
-      double precision xi,x
-**
-*     Internal Variables
-*
-      double precision dgauss
-      double precision FunLam
-      double precision eps
-      parameter(eps=1d-5)
-      external FunLam
-
-      double precision clam
-      common / IntLam / clam
-**
-*     Output Variables
-*
-      double precision Rfun
-*
-      clam = xi / ( 1d0 + xi )
-      Rfun = - dgauss(FunLam,0d0,x,eps)
-*
-      return
-      end
-*
-************************************************************************
-      function FunLam(x)
-*
-      implicit none
-**
-*     Input Variables
-*
-      double precision x
-**
-*     Internal Variables
-*
-      double precision clam
-      common / IntLam / clam
-**
-*     Output Variables
-*
-      double precision FunLam
-*
-      FunLam = dlog( 1d0 - clam * x ) / ( 1d0 - x )
-*
-      return
-      end
-*
-c$$$************************************************************************
-c$$$*
-c$$$*     Set of Coefficient functions to reproduce the FKgenerator
-c$$$*     results.
-c$$$*
-c$$$************************************************************************
 c$$$      function c2ns1cca(xi,z)
 c$$$*
 c$$$      implicit none
@@ -916,9 +441,7 @@ c$$$*
 c$$$      c2ns1cca = 2d0 * CF * ( - ( 1d0 + z**2d0 ) * dlog(z) / ( 1d0 - z )
 c$$$     1         + ( 2d0 - dlog( kQF2 / lambda ) 
 c$$$     2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
-c$$$     3         * ( 1d0 + z ) + 1d0 / lambda 
-c$$$     &         + ( 2d0 * lambda**2d0 - lambda - 1d0 ) / lambda 
-c$$$     &         / ( 1d0 - lambda * z ) )
+c$$$     3         * ( 1d0 + z ) + 1d0 / lambda )
 c$$$*
 c$$$      return
 c$$$      end
@@ -949,7 +472,9 @@ c$$$*
 c$$$      c2ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
 c$$$     1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z ) 
 c$$$     2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z )
-c$$$     3         + ( 1d0 - z ) / ( 1d0 - lambda * z )**2d0 / 2d0 )
+c$$$     3         + ( 2d0 * lambda**2d0 - lambda - 1d0 ) / lambda 
+c$$$     4         / ( 1d0 - lambda * z ) + ( 1d0 - z ) 
+c$$$     5         / ( 1d0 - lambda * z )**2d0 / 2d0 )
 c$$$*
 c$$$      return
 c$$$      end
@@ -987,7 +512,7 @@ c$$$     1         - ( 1d0 + lambda ) * KA / 2d0 / lambda
 c$$$     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0
 c$$$     3         + 2d0 * ln1mz**2d0 - 2d0 * Rf 
 c$$$     4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
-c$$$     5         + ( 1d0 / 2d0 ) 
+c$$$     5         + ( 2d0 * lambda**2d0 - lambda - 1d0 / 2d0 ) 
 c$$$     6         * ln1mlz / lambda**2d0 + ( 1d0 - lambda ) * z 
 c$$$     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
 c$$$*
@@ -1054,8 +579,8 @@ c$$$*
 c$$$      clns1cca = 2d0 * CF * ( ( - ( 1d0 + z**2d0 ) * dlog(z) 
 c$$$     1         / ( 1d0 - z ) + ( - dlog( kQF2 / lambda ) 
 c$$$     2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
-c$$$     3         * ( 1d0 + z ) + 3d0 - 2d0 / ( 1d0 - lambda * z ) )
-c$$$     4         * ( 1d0 - lambda ) + ( 1d0 + lambda ) * z )
+c$$$     3         * ( 1d0 + z ) + 3d0 ) * ( 1d0 - lambda ) 
+c$$$     4         + ( 1d0 + lambda ) * z )
 c$$$*
 c$$$      return
 c$$$      end
@@ -1086,7 +611,7 @@ c$$$*
 c$$$      clns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
 c$$$     1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z )
 c$$$     2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z ) 
-c$$$     3         + ( 1d0 - z ) 
+c$$$     3         - 2d0 / ( 1d0 - lambda * z ) + ( 1d0 - z ) 
 c$$$     4         / ( 1d0 - lambda * z )**2d0 / 2d0 ) * ( 1d0 - lambda )
 c$$$*
 c$$$      return
@@ -1125,7 +650,7 @@ c$$$     1         - ( 1d0 + lambda ) * KA / 2d0 / lambda
 c$$$     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0
 c$$$     3         + 2d0 * ln1mz**2d0 - 2d0 * Rf 
 c$$$     4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
-c$$$     5         + ( + 1d0 / 2d0 ) 
+c$$$     5         + ( - 2d0 * lambda + 1d0 / 2d0 ) 
 c$$$     6         * ln1mlz / lambda**2d0 + ( 1d0 - lambda ) * z 
 c$$$     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
 c$$$     8         * ( 1d0 - lambda ) + lambda * KA )
@@ -1195,8 +720,7 @@ c$$$*
 c$$$      c3ns1cca = 2d0 * CF * ( - ( 1d0 + z**2d0 ) * dlog(z) / ( 1d0 - z ) 
 c$$$     1         + ( 1d0 - dlog( kQF2 / lambda ) 
 c$$$     2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
-c$$$     3         * ( 1d0 + z ) + 1d0 / lambda + ( lambda - 1d0 ) / lambda 
-c$$$     4         / ( 1d0 - lambda * z ) )
+c$$$     3         * ( 1d0 + z ) + 1d0 / lambda )
 c$$$*
 c$$$      return
 c$$$      end
@@ -1227,7 +751,8 @@ c$$$*
 c$$$      c3ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
 c$$$     1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z )
 c$$$     2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z ) 
-c$$$     3         + ( 1d0 - z ) 
+c$$$     3         + ( lambda - 1d0 ) / lambda 
+c$$$     4         / ( 1d0 - lambda * z ) + ( 1d0 - z ) 
 c$$$     5         / ( 1d0 - lambda * z )**2d0 / 2d0 )
 c$$$*
 c$$$      return
@@ -1266,7 +791,7 @@ c$$$     1         - ( 1d0 + 3d0 * lambda ) * KA / 2d0 / lambda
 c$$$     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0 
 c$$$     3         + 2d0 * ln1mz**2d0 - 2d0 * Rf 
 c$$$     4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
-c$$$     5         + ( + 1d0 / 2d0 ) 
+c$$$     5         + ( lambda - 1d0 / 2d0 ) 
 c$$$     6         * ln1mlz / lambda**2d0 + ( 1d0 - lambda ) * z 
 c$$$     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
 c$$$*
@@ -1306,3 +831,478 @@ c$$$     6        * dlog( ( 1d0 - lambda * z ) / ( 1d0 - lambda ) / z ) ) )
 c$$$*
 c$$$      return
 c$$$      end
+*
+************************************************************************
+      function Rfun(xi,x)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision xi,x
+**
+*     Internal Variables
+*
+      double precision dgauss
+      double precision FunLam
+      double precision eps
+      parameter(eps=1d-5)
+      external FunLam
+
+      double precision clam
+      common / IntLam / clam
+**
+*     Output Variables
+*
+      double precision Rfun
+*
+      clam = xi / ( 1d0 + xi )
+      Rfun = - dgauss(FunLam,0d0,x,eps)
+*
+      return
+      end
+*
+************************************************************************
+      function FunLam(x)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision x
+**
+*     Internal Variables
+*
+      double precision clam
+      common / IntLam / clam
+**
+*     Output Variables
+*
+      double precision FunLam
+*
+      FunLam = dlog( 1d0 - clam * x ) / ( 1d0 - x )
+*
+      return
+      end
+*
+************************************************************************
+*
+*     Set of Coefficient functions to reproduce the FKgenerator
+*     results.
+*
+************************************************************************
+      function c2ns1cca(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision c2ns1cca
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+*
+      c2ns1cca = 2d0 * CF * ( - ( 1d0 + z**2d0 ) * dlog(z) / ( 1d0 - z )
+     1         + ( 2d0 - dlog( kQF2 / lambda ) 
+     2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
+     3         * ( 1d0 + z ) + 1d0 / lambda 
+     &         + ( 2d0 * lambda**2d0 - lambda - 1d0 ) / lambda 
+     &         / ( 1d0 - lambda * z ) )
+*
+      return
+      end
+*
+************************************************************************
+      function c2ns1ccb(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision c2ns1ccb
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+*
+      c2ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
+     1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z ) 
+     2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z )
+     3         + ( 1d0 - z ) / ( 1d0 - lambda * z )**2d0 / 2d0 )
+*
+      return
+      end
+*
+************************************************************************
+      function c2ns1ccc(Rf,xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/consts.h"
+**
+*     Input Variables
+*
+      double precision Rf,xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision KA,ln1mz,ln1mlz
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision c2ns1ccc
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+      KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
+      ln1mz  = dlog( 1d0 - z )
+      ln1mlz = dlog( 1d0 - lambda * z )
+*
+      c2ns1ccc = 2d0 * CF * ( - 4d0 - 1d0 / 2d0 / lambda - 2d0 * zeta2 
+     1         - ( 1d0 + lambda ) * KA / 2d0 / lambda 
+     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0
+     3         + 2d0 * ln1mz**2d0 - 2d0 * Rf 
+     4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
+     5         + ( 1d0 / 2d0 ) 
+     6         * ln1mlz / lambda**2d0 + ( 1d0 - lambda ) * z 
+     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
+*
+      return
+      end
+*
+************************************************************************
+      function c2g1cca(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision c2g1cca
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+*
+      c2g1cca = 4d0 * TR * ( ( z**2d0 + ( 1d0 - z )**2d0 )
+     1        * ( dlog( ( 1d0 -  z ) / z ) - dlog( 1d0 - lambda ) / 2d0 
+     2        + dlog( kQF2 / lambda ) / 2d0 ) + 8d0 * z * ( 1d0 - z )
+     3        - 1d0 + ( 1d0 - lambda ) * ( - 6d0 * ( 1d0 + 2d0*lambda )
+     4        * z * ( 1d0 - z ) + 1d0 / ( 1d0 - lambda * z ) 
+     5        + 6d0 * lambda * z * ( 1d0 - 2d0 * lambda * z ) 
+     6        * dlog( ( 1d0 - lambda * z ) / ( 1d0 - lambda ) / z ) ) )
+*
+      return
+      end
+*
+************************************************************************
+      function clns1cca(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision clns1cca
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+*
+      clns1cca = 2d0 * CF * ( ( - ( 1d0 + z**2d0 ) * dlog(z) 
+     1         / ( 1d0 - z ) + ( - dlog( kQF2 / lambda ) 
+     2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
+     3         * ( 1d0 + z ) + 3d0 - 2d0 / ( 1d0 - lambda * z ) )
+     4         * ( 1d0 - lambda ) + ( 1d0 + lambda ) * z )
+*
+      return
+      end
+*
+************************************************************************
+      function clns1ccb(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision clns1ccb
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+*
+      clns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
+     1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z )
+     2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z ) 
+     3         + ( 1d0 - z ) 
+     4         / ( 1d0 - lambda * z )**2d0 / 2d0 ) * ( 1d0 - lambda )
+*
+      return
+      end
+*
+************************************************************************
+      function clns1ccc(Rf,xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/consts.h"
+**
+*     Input Variables
+*
+      double precision Rf,xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision KA,ln1mz,ln1mlz
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision clns1ccc
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+      KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
+      ln1mz  = dlog( 1d0 - z )
+      ln1mlz = dlog( 1d0 - lambda * z )
+*
+      clns1ccc = 2d0 * CF * ( ( - 4d0 - 1d0 / 2d0 / lambda - 2d0 * zeta2
+     1         - ( 1d0 + lambda ) * KA / 2d0 / lambda 
+     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0
+     3         + 2d0 * ln1mz**2d0 - 2d0 * Rf 
+     4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
+     5         + ( + 1d0 / 2d0 ) 
+     6         * ln1mlz / lambda**2d0 + ( 1d0 - lambda ) * z 
+     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
+     8         * ( 1d0 - lambda ) + lambda * KA )
+*
+      return
+      end
+*
+************************************************************************
+      function clg1cca(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision clg1cca
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+*
+      clg1cca = 4d0 * TR * ( ( 1d0 - lambda ) 
+     1        * ( z**2d0 + ( 1d0 - z )**2d0 ) 
+     1        * ( dlog( ( 1d0 -  z ) / z ) - dlog( 1d0 - lambda ) / 2d0 
+     2        + dlog(kQF2 / lambda ) / 2d0 ) 
+     1        + 4d0 * ( 2d0 - lambda ) * z * ( 1d0 - z )
+     3        + ( 1d0 - lambda ) * ( - 2d0 * ( 3d0 + 4d0 * lambda ) 
+     4        * z * ( 1d0 - z ) 
+     5        + 4d0 * lambda * z * ( 1d0 - 2d0 * lambda * z ) 
+     6        * dlog( ( 1d0 - lambda * z ) / ( 1d0 - lambda ) / z ) ) )
+*
+      return
+      end
+*
+************************************************************************
+      function c3ns1cca(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision c3ns1cca
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+*
+      c3ns1cca = 2d0 * CF * ( - ( 1d0 + z**2d0 ) * dlog(z) / ( 1d0 - z ) 
+     1         + ( 1d0 - dlog( kQF2 / lambda ) 
+     2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
+     3         * ( 1d0 + z ) + 1d0 / lambda + ( lambda - 1d0 ) / lambda 
+     4         / ( 1d0 - lambda * z ) )
+*
+      return
+      end
+*
+************************************************************************
+      function c3ns1ccb(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision c3ns1ccb
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+*
+      c3ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
+     1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z )
+     2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z ) 
+     3         + ( 1d0 - z ) 
+     5         / ( 1d0 - lambda * z )**2d0 / 2d0 )
+*
+      return
+      end
+*
+************************************************************************
+      function c3ns1ccc(Rf,xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/consts.h"
+**
+*     Input Variables
+*
+      double precision Rf,xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision KA,ln1mz,ln1mlz
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision c3ns1ccc
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+      KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
+      ln1mz  = dlog( 1d0 - z )
+      ln1mlz = dlog( 1d0 - lambda * z )
+*
+      c3ns1ccc = 2d0 * CF * ( - 4d0 - 1d0 / 2d0 / lambda - 2d0 * zeta2
+     1         - ( 1d0 + 3d0 * lambda ) * KA / 2d0 / lambda 
+     2         + 3d0 * dlog( kQF2 / lambda ) / 2d0 
+     3         + 2d0 * ln1mz**2d0 - 2d0 * Rf 
+     4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
+     5         + ( + 1d0 / 2d0 ) 
+     6         * ln1mlz / lambda**2d0 + ( 1d0 - lambda ) * z 
+     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
+*
+      return
+      end
+*
+************************************************************************
+      function c3g1cca(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lambda
+      double precision kQF2
+**
+*     Output Variables
+*
+      double precision c3g1cca
+*
+      kQF2 = 1d0                ! Q2 / muF2
+      lambda = xi / ( 1d0 + xi )
+*
+      c3g1cca = 4d0 * TR * ( ( z**2d0 + ( 1d0 - z )**2d0 ) 
+     1        * ( dlog( ( 1d0 -  z ) / ( 1d0 - lambda * z ) )
+     2        + dlog( 1d0 - lambda ) / 2d0 
+     2        + dlog(kQF2 / lambda ) / 2d0 )
+     3        + ( 1d0 - lambda ) * ( 2d0 * z * ( 1d0 - z )
+     5        - 2d0 * z * ( 1d0 - ( 1d0 + lambda ) * z ) 
+     6        * dlog( ( 1d0 - lambda * z ) / ( 1d0 - lambda ) / z ) ) )
+*
+      return
+      end
