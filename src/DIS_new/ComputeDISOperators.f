@@ -1279,12 +1279,6 @@ c     endif
                         enddo
                      endif
                   endif
-*
-*     Change sign to the F3 coefficient functions according to the projectile
-*
-c                  C3g   = ipr * C3g
-c                  C3nsp = ipr * C3nsp
-c                  C3nsm = ipr * C3nsm
 *     
 *     F2
 *     
@@ -1573,7 +1567,7 @@ c                  C3nsm = ipr * C3nsm
 *     Light Component
 *     
 *     Gluon
-                  OpF3(jgrid,3,2,alpha,beta)  = 2d0 * Kl * C3g(3)
+                  OpF3(jgrid,3,2,alpha,beta)  = ipr * 2d0 * Kl * C3g(3)
 *     Valence
                   OpF3(jgrid,3,3,alpha,beta)  = Kl * C3nsm(3) / 3d0
 *     V3
@@ -1598,7 +1592,7 @@ c                  C3nsm = ipr * C3nsm
 *     Charm Component
 *     
 *     Gluon
-                  OpF3(jgrid,4,2,alpha,beta)  = 2d0 * Kc * C3g(4)
+                  OpF3(jgrid,4,2,alpha,beta)  = ipr * 2d0 * Kc * C3g(4)
 *     Valence
                   OpF3(jgrid,4,3,alpha,beta)  = Kc * C3nsm(4) / 3d0
 *     V3
@@ -1626,7 +1620,7 @@ c                  C3nsm = ipr * C3nsm
 *     Bottom Component
 *     
 *     Gluon
-                  OpF3(jgrid,5,2,alpha,beta)  = 2d0 * Kb * C3g(5)
+                  OpF3(jgrid,5,2,alpha,beta)  = ipr * 2d0 * Kb * C3g(5)
 *     Valence
                   OpF3(jgrid,5,3,alpha,beta)  = Kb * C3nsm(5) / 3d0
 *     V3
@@ -1659,7 +1653,7 @@ c                  C3nsm = ipr * C3nsm
 *     Top Component
 *     
 *     Gluon
-                  OpF3(jgrid,6,2,alpha,beta)  = 2d0 * Kt * C3g(6)
+                  OpF3(jgrid,6,2,alpha,beta)  = ipr * 2d0 * Kt * C3g(6)
 *     Valence
                   OpF3(jgrid,6,3,alpha,beta)  = Kt * C3nsm(6) / 3d0
 *     V3
