@@ -6992,11 +6992,10 @@ fail:
 
 SWIGINTERN PyObject *_wrap_GetFKObservable(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  string result;
   
   if (!PyArg_ParseTuple(args,(char *)":GetFKObservable")) SWIG_fail;
-  result = APFEL::GetFKObservable();
-  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  APFEL::GetFKObservable();
+  resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
   return NULL;
