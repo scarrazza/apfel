@@ -12,6 +12,7 @@
 *
       include "../commons/Welcome.h"
       include "../commons/grid.h"
+      include "../commons/TimeLike.h"
 *
 *     Variables
 *
@@ -26,12 +27,18 @@
 *
       call InitializeAPFEL
 *
-*     Evaluate DIS integrals on the grid
+*     Evaluate DIS or SIA integrals on the grid
 *
       call cpu_time(t1)
-      do igrid=1,ngrid
-         call initIntegralsDIS
-      enddo
+      if(TimeLike)then
+         do igrid=1,ngrid
+            call initIntegralsSIA
+         enddo
+      else
+         do igrid=1,ngrid
+            call initIntegralsDIS
+         enddo
+      endif
       call cpu_time(t2)
 *
       if(Welcome)then

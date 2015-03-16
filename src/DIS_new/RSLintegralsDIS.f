@@ -2,10 +2,10 @@
 *
 *     RSLintegralsDIS.f:
 *
-*     This routine evaluates and dump on the common integrals.h once and 
+*     This routine evaluates and dump on the common integralsDIS.h once and 
 *     for all for the pair (alpha,beta) the integral of the sum of Regular
 *     and Singular part plus the Local part of all the coefficient functions
-*     for all the needed orders in QCD.
+*     for all the needed orders in DIS.
 *     The index sf runs like that:
 *
 *        sf  Coefficient Function

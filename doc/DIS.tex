@@ -1001,6 +1001,103 @@ J_{\beta\alpha} \frac{F(x_\alpha,Q)}{x_\alpha^2} =
 \end{equation}
 
 
+\section{Implementation of the Semi-Inclusive $e^+e^-$ Annihilation}
+
+The implementation of the Semi-Inclusive $e^+e^-$ Annihilation (SIA)
+in {\tt APFEL} is not very complicated. The reason for that is the
+fact that SIA is structurally identical to DIS. In fact, we can regard
+SIA as the time-like counterpart of DIS and the differences are only
+at the level of coefficient functions and splitting functions.
+Condidering that {\tt APFEL} already implement the time-like
+evolution~\cite{Bertone:2015cwa} ($i.e.$ the time-like splitting
+functions), the only thing to do is implement the respective
+coefficient functions. Presently the coefficient functions for SIA are
+known up to $\mathcal{O}(\alpha_s^2)$ (NNLO) in the zero-mass scheme
+and they have been computed in Ref.~\cite{Mitov:2006wy} and the
+$x$-space expressions of interest for the implementation in {\tt
+  APFEL} reported in Appendix C.
+
+The way in which the SIA expressions are reported is slightly
+different from the standard way in which we are used to see the DIS
+expressions. We would like to reduce the SIA expressions to the same
+form of DIS in such a way to use the DIS module of {\tt APFEL} also
+for the SIA cross sections. In particular the SIA cross section is
+Ref.~\cite{Mitov:2006wy} expressed in terms of the three structure
+functions: $F_T$, $F_L$ and $F_A$. However, comparing the SIA cross
+section with the DIS cross sections it is easy to realize that
+defining:
+\begin{equation}\label{SIAtoDIS}
+\begin{array}{l}
+F_2(x,Q) = F_T(x,Q) + F_L(x,Q)\,,\\
+F_L(x,Q) = F_L(x,Q)\,,\\
+F_A(x,Q) = xF_3(x,Q)\,,
+\end{array}
+\end{equation}
+the SIA cross section reduces to the same structure of the DIS cross section.
+
+Assuming that:
+\begin{equation}
+F_k(x,Q) = \sum_{j=q,g} x\int_x^1\frac{dy}{y}
+c_{k,j}(\alpha_s(Q),x)\mathcal{D}_j\left(\frac{x}{y},Q\right)\,,\quad\mbox{with}\quad
+k = 2,L,3\,,
+\end{equation}
+(note that, to uniform the notation, we understood the factor $x$ in
+front of $F_3$) where $\mathcal{D}_j$ is the fragmentation function of
+the flavour $j$ and where the coefficient functions $c_{k,j}$ allow
+for the perturbative expansion:
+\begin{equation}
+c_{k,j}(\alpha_s(Q),x) = \sum_{n=0}^N \alpha_s^n(Q) c_{k,j}^{(n)}(x)\,,
+\end{equation}
+we have that the leading-order cofficient functions are trivially:
+\begin{equation}
+\begin{array}{l}
+c_{k,g}^{(0)}(x) = 0 \,,\quad k = 2,L,3\,,\\
+\\
+c_{L,q}^{(0)}(x) = 0\,, \\ 
+\\
+c_{2,q}^{(0)}(x) = c_{3,q}^{(0)}(x) = \delta(1-x)\,. \\ 
+\end{array}
+\end{equation}
+
+Now we consider the NLO coefficient functions. Their explicit
+expressions are give in eqs.~(C.13)-(C.17) of Ref.~\cite{Mitov:2006wy}
+but, in order to write them in a form suitable for the implementation
+in {\tt APFEL}, we need to isolate the regular, soft-divergent and
+local terms and finally combine them according to
+eq.~(\ref{SIAtoDIS}).
+
+\begin{equation}
+\begin{array}{lcl}
+\displaystyle c_{L,q}^{(1)}(x) = 2C_F & &\\
+\\
+\displaystyle c_{L,g}^{(1)}(x) = 2C_F\frac{4(1-x)}{x} & &\\
+\\
+\displaystyle c_{2,q}^{(1)}(x) = c_{T,q}^{(1)}(x) + c_{L,q}^{(1)}(x)
+&=& \displaystyle
+2C_F\bigg[2\left(\frac{\ln(1-x)}{1-x}\right)_+-\frac{3}{2}\left(\frac{1}{1-x}\right)_+
+- (1+x)\ln(1-x)\\
+\\
+& &\displaystyle +2\frac{1+x^2}{1-x}\ln x +\frac{5}{2} -\frac{3}{2} x 
++\left(4\zeta_2-\frac{9}{2}\right)\delta(1-x)\bigg]\\
+\\
+\displaystyle c_{2,g}^{(1)}(x) = c_{T,g}^{(1)}(x) + c_{L,g}^{(1)}(x)
+&=& \displaystyle 4C_F\frac{1+(1-x)^2}{x} \ln[x^2(1-x)]\\
+\\
+\displaystyle c_{3,q}^{(1)}(x) &=& \displaystyle
+2C_F\bigg[2\left(\frac{\ln(1-x)}{1-x}\right)_+-\frac{3}{2}\left(\frac{1}{1-x}\right)_+
+- (1+x)\ln(1-x)\\
+\\
+& &\displaystyle +2\frac{1+x^2}{1-x}\ln x +\frac{1}{2} -\frac{1}{2} x 
++\left(4\zeta_2-\frac{9}{2}\right)\delta(1-x)\bigg]\\
+\\
+\displaystyle c_{3,g}^{(1)}(x) = 0
+\end{array}
+\end{equation}
+
+It is interesting to notice that, as expected, the soft-singular part
+of the quark coefficient functions is exactly the same as in DIS and
+this allows us to reuse part of the DIS coefficient functions.
+
 \newpage
 
 \begin{thebibliography}{alp}
@@ -1057,6 +1154,24 @@ J_{\beta\alpha} \frac{F(x_\alpha,Q)}{x_\alpha^2} =
   Phys.\ Rev.\ D {\bf 14} (1976) 1829.
   %%CITATION = PHRVA,D14,1829;%%
   %925 citations counted in INSPIRE as of 25 Feb 2015
+
+%\cite{Bertone:2015cwa}
+\bibitem{Bertone:2015cwa}
+  V.~Bertone, S.~Carrazza and E.~R.~Nocera,
+  %``Reference results for time-like evolution up to $\mathcal{O}(\alpha_s^3)$,''
+  JHEP {\bf 1503} (2015) 046
+  [arXiv:1501.00494 [hep-ph]].
+  %%CITATION = ARXIV:1501.00494;%%
+  %1 citations counted in INSPIRE as of 16 Mar 2015
+
+%\cite{Mitov:2006wy}
+\bibitem{Mitov:2006wy}
+  A.~Mitov and S.~O.~Moch,
+  %``QCD Corrections to Semi-Inclusive Hadron Production in Electron-Positron Annihilation at Two Loops,''
+  Nucl.\ Phys.\ B {\bf 751} (2006) 18
+  [hep-ph/0604160].
+  %%CITATION = HEP-PH/0604160;%%
+  %39 citations counted in INSPIRE as of 16 Mar 2015
 
 \end{thebibliography}
 

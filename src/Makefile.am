@@ -59,7 +59,7 @@ DIS_NEW = DIS_new/InitializeAPFEL_DIS.f DIS_new/initParametersDIS.f DIS_new/SetM
 	DIS_new/ExternalDISOperator.f DIS_new/SetCKM.f DIS_new/SetGFermi.f DIS_new/SetProtonMass.f DIS_new/SetSinThetaW.f \
 	DIS_new/SetWMass.f DIS_new/SetZMass.f DIS_new/FKSimulator.f DIS_new/SetFKObservable.f DIS_new/FKObservables.f \
 	DIS_new/EnableTargetMassCorrections.f DIS_new/GetCKM.f DIS_new/GetGFermi.f DIS_new/GetProtonMass.f DIS_new/GetSinThetaW.f \
-	DIS_new/GetWMass.f DIS_new/GetZMass.f
+	DIS_new/GetWMass.f DIS_new/GetZMass.f DIS_new/RSLintegralsSIA.f DIS_new/integrandsSIA.f DIS_new/initIntegralsSIA.f
 
 EXTRA_DIST = commons
 

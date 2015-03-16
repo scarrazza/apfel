@@ -32,7 +32,7 @@
 *
 ************************************************************************
 *
-*     Zero Mass coefficient functions
+*     Zero Mass coefficient functions for DIS
 *
 ************************************************************************
       function integrandsDISzm(y)
@@ -205,7 +205,7 @@ c         integrandsDISzm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 ************************************************************************
 *
-*     Massive coefficient functions (Neutral Current)
+*     Massive coefficient functions (Neutral Current) for DIS
 *
 ************************************************************************
       function integrandsDISNCm(y)
@@ -357,7 +357,7 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 ************************************************************************
 *
-*     Massive zero coefficient functions (Neutral Current)
+*     Massive zero coefficient functions (Neutral Current) for DIS
 *
 *     wl =  1    2    3    4    5
 *           A0   AQ   AQ2  AF   AQF
@@ -579,7 +579,7 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 ************************************************************************
 *
-*     Massive coefficient functions (Charged Current)
+*     Massive coefficient functions (Charged Current) for DIS
 *
 ************************************************************************
       function integrandsDISCCm(y)
@@ -709,7 +709,7 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 ************************************************************************
 *
-*     Massive zero coefficient functions (Charged Current)
+*     Massive zero coefficient functions (Charged Current) for DIS
 *
 ************************************************************************
       function integrandsDISCCm0(y)

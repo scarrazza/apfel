@@ -6,7 +6,7 @@
 *
 ************************************************************************
 *
-*     Order alphas coeficient functions (NLO)
+*     Order alphas coefficient functions (NLO)
 *     Expansion parameter alphas/4*pi
 *
 ************************************************************************
@@ -220,7 +220,7 @@
 *
 ************************************************************************
 *
-*     Order alphas^2 coeficient functions (NNLO)
+*     Order alphas^2 coefficient functions (NNLO)
 *     Expansion parameter alphas/4*pi 
 *     Paramtrization by van Neerven and Vogt:
 *     - hep-ph/9907472
@@ -609,3 +609,220 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
 *
        RETURN
        END
+*
+************************************************************************
+*
+*     Order alphas coefficient functions (NLO) for the semi-inclusive
+*     e+e- annihilation. Expansion parameter alphas/4*pi
+*     Reference: hep-ph/0604160
+*
+************************************************************************
+*     F2: quark non-singlet - regular term (A)
+************************************************************************
+      FUNCTION C2NS1TA(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C2NS1TA
+*
+      C2NS1TA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
+     1     + 2D0 * ( 1D0 + X**2D0 ) * DLOG(X) / ( 1D0 - X ) + 5D0 / 2D0 
+     2     - 3D0 * X / 2D0 )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F2: quark non-singlet - singular term (B)
+************************************************************************
+      FUNCTION C2NS1TB(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C2NS1TB
+*
+      C2NS1TB = 2D0 * CF * ( 2D0 * DLOG( 1D0 - X ) - 3D0 / 2D0 ) 
+     1        / ( 1D0 - X )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F2: quark non-singlet - local term (C)
+************************************************************************
+      FUNCTION C2NS1TC(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+      INCLUDE "../commons/consts.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C2NS1TC
+*
+      C2NS1TC = 2D0 * CF * ( DLOG( 1D0 - X )**2D0 
+     1        - 3D0 * DLOG( 1D0 - X ) / 2D0 
+     2        + ( 4D0 * ZETA2 - 9D0 / 2D0 ) )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F2: gluon - regular term (A)
+************************************************************************
+      FUNCTION C2G1TA(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C2G1TA
+*
+      C2G1TA = 4D0 * CF * ( ( 1D0 + ( 1D0 - X )**2D0 ) 
+     1       * DLOG( X**2D0 * ( 1D0 - X ) ) / X )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     FL: quark non-singlet - regular term (A)
+************************************************************************
+      FUNCTION CLNS1TA(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION CLNS1TA
+*
+      CLNS1TA = 2D0 * CF
+*
+      RETURN
+      END
+*
+************************************************************************
+*     FL: gluon - regular term (A)
+************************************************************************
+      FUNCTION CLG1TA(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION CLG1TA
+*
+      CLG1TA = 8D0 * CF * ( 1D0 - X ) / X
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F3: quark non-singlet - regular term (A)
+************************************************************************
+      FUNCTION C3NS1TA(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C3NS1TA
+*
+      C3NS1TA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
+     1     + 2d0 * ( 1D0 + X**2D0 ) * DLOG(X) / ( 1D0 - X ) + 1D0 / 2D0
+     2     - X / 2D0 )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F3: quark non-singlet - singular term (B)
+************************************************************************
+      FUNCTION C3NS1TB(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C3NS1TB
+*
+      C3NS1TB = 2D0 * CF * ( 2D0 * DLOG( 1D0 - X ) - 3D0 / 2D0 ) 
+     1        / ( 1D0 - X )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F3: quark non-singlet - local term (C)
+************************************************************************
+      FUNCTION C3NS1TC(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+      INCLUDE "../commons/consts.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C3NS1TC
+*
+      C3NS1TC = 2D0 * CF * ( DLOG( 1D0 - X )**2D0 
+     1        - 3D0 * DLOG( 1D0 - X ) / 2D0 
+     2        + ( 4D0 * ZETA2 - 9D0 / 2D0 ) )
+*
+      RETURN
+      END

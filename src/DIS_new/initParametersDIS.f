@@ -25,6 +25,7 @@
       include "../commons/GFermi.h"
       include "../commons/CKM.h"
       include "../commons/TMC.h"
+      include "../commons/TimeLike.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -134,6 +135,13 @@
 *
 *     Additional settings
 *
+      if(InTimeLike.eq."done".and.TimeLike.and.
+     1   MassScheme.ne."ZM-VFNS")then
+         write(6,*) "INFO: Computation of the SIA struncture functions"
+         write(6,*) "      available only in the ZM-VFNS."
+         write(6,*) "      Setting ZM-VFNS."
+         call SetMassScheme("ZM-VFNS")
+      endif
       if(MassScheme(1:4).eq."FFNS".or.
      1   MassScheme(1:4).eq."FFN0")then
          if(MassScheme(5:5).eq."3")then
@@ -159,24 +167,24 @@
          call SetVFNS
          write(6,*) "INFO: Setting VFNS PDF evolution"
          if(MassScheme(1:5).eq."FONLL".and.ipt.eq.0)then
-            call SetMassScheme("ZM-VFNS")
             write(6,*) "INFO: Any of the FONLL schemes at LO",
      1                 " concides with the the ZM-VFNS"
+            call SetMassScheme("ZM-VFNS")
          endif
          if(MassScheme.eq."FONLL-A".and.ipt.eq.2)then
-            call SetPerturbativeOrder(1)
             write(6,*) "INFO: For the FONLL-A scheme the perturbative",
      1                 " order has been automatically set to NLO"
+            call SetPerturbativeOrder(1)
          endif
          if(MassScheme.eq."FONLL-B".and.ipt.eq.2)then
-            call SetMassScheme("FONLL-C")
             write(6,*) "INFO: The FONLL-B scheme at NNLO concides",
      1                 " with the the FONLL-C scheme"
+            call SetMassScheme("FONLL-C")
          endif
          if(MassScheme.eq."FONLL-C".and.ipt.eq.1)then
-            call SetMassScheme("FONLL-A")
             write(6,*) "INFO: The FONLL-C scheme at NLO concides",
      1                 " with the the FONLL-A scheme"
+            call SetMassScheme("FONLL-A")
          endif
       endif
       write(6,*) " "

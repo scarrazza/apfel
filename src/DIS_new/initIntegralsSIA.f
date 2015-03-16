@@ -1,0 +1,62 @@
+************************************************************************
+*
+*     initIntegralsSIA.f:
+*
+*     This routine initializes the integrals of coefficient functions
+*     and interpolation functions.
+*
+************************************************************************
+      subroutine initIntegralsSIA
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/ipt.h"
+**
+*     Internal Variables
+*
+      integer alpha,beta
+*
+*     Check that the number of intervals does not exceed the maximum number
+*
+      if(nin(igrid)+inter_degree(igrid).gt.nint_max_DIS)then
+         write(6,*) "In initIntegralsSIA.f:"
+         write(6,*) "Number of grid points too large:"
+         write(6,*) "Maximum value allowed =",nint_max_DIS
+         write(6,*) "You should reduce it."
+         write(6,*) " "
+         call exit(-10)
+      endif
+*
+      if(ipt.gt.1)then
+         write(6,*) "In initIntegralsSIA.f:"
+         write(6,*) "SIA observables currently available up to NLO"
+         write(6,*) "Perturbative order =",ipt
+         write(6,*) "You should reduce it."
+         write(6,*) " "
+         call exit(-10)
+      endif
+*
+*     Initialize integrals
+*
+      if(IsExt(igrid))then
+*
+*     If this is an external grid, compute the integrals for
+*     the entire splitting matrix ...
+*
+         do alpha=0,nin(igrid)-1
+            do beta=alpha,nin(igrid)-1
+               call RSLintegralsSIA(alpha,beta)
+            enddo
+         enddo
+      else
+*
+*     ... otherwise only for the first line
+*
+         do alpha=0,nin(igrid)-1
+            call RSLintegralsSIA(0,alpha)
+         enddo
+      endif
+*
+      return
+      end
