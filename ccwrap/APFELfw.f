@@ -606,6 +606,11 @@ ccccccccccccc
       end
 
 ccccccccccccc
+      subroutine fgetfkobservable
+      call GetFKObservable
+      end subroutine fgetfkobservable
+
+ccccccccccccc
       function ffkobservables(x,q,y)
       double precision x,q,y
       double precision ffkobservables

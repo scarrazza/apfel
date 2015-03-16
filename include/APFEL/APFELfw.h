@@ -278,6 +278,9 @@ extern "C" {
 #define fsetfkobservable FC_FUNC(setfkobservable,SETFKOBSERVABLE)
   void fsetfkobservable(char*);
 
+#define fgetfkobservable FC_FUNC(getfkobservable,GETFKOBSERVABLE)
+  void fgetfkobservable();
+
 #define ffkobservables FC_FUNC(fkobservables,FKOBSERVABLES)
   double ffkobservables(double*,double*,double*);
 

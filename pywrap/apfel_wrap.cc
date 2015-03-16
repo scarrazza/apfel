@@ -6990,6 +6990,19 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_GetFKObservable(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  string result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetFKObservable")) SWIG_fail;
+  result = APFEL::GetFKObservable();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_FKObservables(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
@@ -7152,6 +7165,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"EnableTargetMassCorrections", _wrap_EnableTargetMassCorrections, METH_VARARGS, NULL},
 	 { (char *)"FKSimulator", _wrap_FKSimulator, METH_VARARGS, NULL},
 	 { (char *)"SetFKObservable", _wrap_SetFKObservable, METH_VARARGS, NULL},
+	 { (char *)"GetFKObservable", _wrap_GetFKObservable, METH_VARARGS, NULL},
 	 { (char *)"FKObservables", _wrap_FKObservables, METH_VARARGS, NULL},
 	 { (char *)"ListFunctions", _wrap_ListFunctions, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }

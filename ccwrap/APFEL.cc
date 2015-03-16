@@ -3,6 +3,7 @@
 #include "APFEL/APFEL.h"
 #include "APFEL/APFELfw.h"
 
+#include <sstream>
 #include <cstring>
 #include <string>
 #include <iostream>
@@ -512,6 +513,11 @@ namespace APFEL {
     char cobs[SIZE+1];
     strncpy(cobs, obs.c_str(), SIZE);
     fsetfkobservable(cobs);
+  }
+
+  void GetFKObservable()
+  {
+    fgetfkobservable();
   }
 
   double FKObservables(double x,double q,double y)

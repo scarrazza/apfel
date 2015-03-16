@@ -515,6 +515,10 @@ def SetFKObservable(obs):
     return _apfel.SetFKObservable(obs)
 SetFKObservable = _apfel.SetFKObservable
 
+def GetFKObservable():
+    return _apfel.GetFKObservable()
+GetFKObservable = _apfel.GetFKObservable
+
 def FKObservables(x, q, y):
     return _apfel.FKObservables(x, q, y)
 FKObservables = _apfel.FKObservables

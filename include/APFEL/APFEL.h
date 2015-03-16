@@ -284,6 +284,9 @@ namespace APFEL {
   /// Set the observable for FKgenerator simulator
   void SetFKObservable(const std::string& obs);
 
+  /// Get the observable used by the FKgenerator simulator
+  void GetFKObservable();
+
   /// Observable according to the FKgenerator naming
   double FKObservables(double x,double q,double y);
 
