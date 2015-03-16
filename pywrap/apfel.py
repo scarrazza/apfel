@@ -507,16 +507,16 @@ def EnableTargetMassCorrections(arg1):
     return _apfel.EnableTargetMassCorrections(arg1)
 EnableTargetMassCorrections = _apfel.EnableTargetMassCorrections
 
-def FKSimulator(obs, x, q, y, i, beta):
-    return _apfel.FKSimulator(obs, x, q, y, i, beta)
+def FKSimulator(x, q, y, i, beta):
+    return _apfel.FKSimulator(x, q, y, i, beta)
 FKSimulator = _apfel.FKSimulator
 
 def SetFKObservable(obs):
     return _apfel.SetFKObservable(obs)
 SetFKObservable = _apfel.SetFKObservable
 
-def FKObservables(obs, x, q, y):
-    return _apfel.FKObservables(obs, x, q, y)
+def FKObservables(x, q, y):
+    return _apfel.FKObservables(x, q, y)
 FKObservables = _apfel.FKObservables
 
 def ListFunctions():

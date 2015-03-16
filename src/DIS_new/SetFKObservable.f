@@ -9,10 +9,14 @@
       subroutine SetFKObservable(obs)
 *
       implicit none
+*
+      include "../commons/FKObservable.h"
 **
 *     Input Variables
 *
       character*15 obs
+*
+      FKObservable = obs
 *
 ****  Light structure function F2light
 *

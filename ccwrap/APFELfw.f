@@ -590,12 +590,11 @@ ccccccccccccc
       end subroutine fenabletargetmasscorrections
 
 ccccccccccccc
-      function ffksimulator(obs,x,q,y,i,beta)
+      function ffksimulator(x,q,y,i,beta)
       integer i,beta
       double precision x,q,y
-      character obs*(*)
       double precision ffksimulator
-      ffksimulator = FKSimulator(obs,x,q,y,i,beta)
+      ffksimulator = FKSimulator(x,q,y,i,beta)
       return
       end
 
@@ -607,11 +606,10 @@ ccccccccccccc
       end
 
 ccccccccccccc
-      function ffkobservables(obs,x,q,y)
+      function ffkobservables(x,q,y)
       double precision x,q,y
-      character obs*(*)
       double precision ffkobservables
-      ffkobservables = FKObservables(obs,x,q,y)
+      ffkobservables = FKObservables(x,q,y)
       return
       end
 

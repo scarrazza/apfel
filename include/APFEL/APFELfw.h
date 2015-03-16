@@ -273,13 +273,13 @@ extern "C" {
   void fenabletargetmasscorrections(int*);
 
 #define ffksimulator FC_FUNC(fksimulator,FKSIMULATOR)
-  double ffksimulator(char*,double*,double*,double*,int*,int*);
+  double ffksimulator(double*,double*,double*,int*,int*);
 
 #define fsetfkobservable FC_FUNC(setfkobservable,SETFKOBSERVABLE)
   void fsetfkobservable(char*);
 
 #define ffkobservables FC_FUNC(fkobservables,FKOBSERVABLES)
-  double ffkobservables(char*,double*,double*,double*);
+  double ffkobservables(double*,double*,double*);
 
 #define flistfunctions FC_FUNC(listfunctions,LISTFUNCTIONS)
   void flistfunctions(void);

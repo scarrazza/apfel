@@ -502,11 +502,9 @@ namespace APFEL {
     fenabletargetmasscorrections(&tc);
   }
 
-  double FKSimulator(const std::string& obs,double x,double q,double y,int i,int beta)
+  double FKSimulator(double x,double q,double y,int i,int beta)
   {
-    char cobs[SIZE+1];
-    strncpy(cobs, obs.c_str(), SIZE);
-    return ffksimulator(cobs,&x,&q,&y,&i,&beta);
+    return ffksimulator(&x,&q,&y,&i,&beta);
   }
 
   void SetFKObservable(const std::string& obs)
@@ -516,11 +514,9 @@ namespace APFEL {
     fsetfkobservable(cobs);
   }
 
-  double FKObservables(const std::string& obs,double x,double q,double y)
+  double FKObservables(double x,double q,double y)
   {
-    char cobs[SIZE+1];
-    strncpy(cobs, obs.c_str(), SIZE);
-    return ffkobservables(cobs,&x,&q,&y);
+    return ffkobservables(&x,&q,&y);
   }
 
   void ListFunctions(void) 

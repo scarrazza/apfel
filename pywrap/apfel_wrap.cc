@@ -6906,43 +6906,34 @@ fail:
 
 SWIGINTERN PyObject *_wrap_FKSimulator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::string *arg1 = 0 ;
+  double arg1 ;
   double arg2 ;
   double arg3 ;
-  double arg4 ;
+  int arg4 ;
   int arg5 ;
-  int arg6 ;
-  int res1 = SWIG_OLDOBJ ;
+  double val1 ;
+  int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
-  double val4 ;
+  int val4 ;
   int ecode4 = 0 ;
   int val5 ;
   int ecode5 = 0 ;
-  int val6 ;
-  int ecode6 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
   PyObject * obj3 = 0 ;
   PyObject * obj4 = 0 ;
-  PyObject * obj5 = 0 ;
   double result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOOOO:FKSimulator",&obj0,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
-  {
-    std::string *ptr = (std::string *)0;
-    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FKSimulator" "', argument " "1"" of type '" "std::string const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FKSimulator" "', argument " "1"" of type '" "std::string const &""'"); 
-    }
-    arg1 = ptr;
-  }
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:FKSimulator",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "FKSimulator" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "FKSimulator" "', argument " "2"" of type '" "double""'");
@@ -6953,27 +6944,20 @@ SWIGINTERN PyObject *_wrap_FKSimulator(PyObject *SWIGUNUSEDPARM(self), PyObject 
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "FKSimulator" "', argument " "3"" of type '" "double""'");
   } 
   arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
   if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "FKSimulator" "', argument " "4"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "FKSimulator" "', argument " "4"" of type '" "int""'");
   } 
-  arg4 = static_cast< double >(val4);
+  arg4 = static_cast< int >(val4);
   ecode5 = SWIG_AsVal_int(obj4, &val5);
   if (!SWIG_IsOK(ecode5)) {
     SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "FKSimulator" "', argument " "5"" of type '" "int""'");
   } 
   arg5 = static_cast< int >(val5);
-  ecode6 = SWIG_AsVal_int(obj5, &val6);
-  if (!SWIG_IsOK(ecode6)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode6), "in method '" "FKSimulator" "', argument " "6"" of type '" "int""'");
-  } 
-  arg6 = static_cast< int >(val6);
-  result = (double)APFEL::FKSimulator((std::string const &)*arg1,arg2,arg3,arg4,arg5,arg6);
+  result = (double)APFEL::FKSimulator(arg1,arg2,arg3,arg4,arg5);
   resultobj = SWIG_From_double(static_cast< double >(result));
-  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
-  if (SWIG_IsNewObj(res1)) delete arg1;
   return NULL;
 }
 
@@ -7008,35 +6992,26 @@ fail:
 
 SWIGINTERN PyObject *_wrap_FKObservables(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
-  std::string *arg1 = 0 ;
+  double arg1 ;
   double arg2 ;
   double arg3 ;
-  double arg4 ;
-  int res1 = SWIG_OLDOBJ ;
+  double val1 ;
+  int ecode1 = 0 ;
   double val2 ;
   int ecode2 = 0 ;
   double val3 ;
   int ecode3 = 0 ;
-  double val4 ;
-  int ecode4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   PyObject * obj2 = 0 ;
-  PyObject * obj3 = 0 ;
   double result;
   
-  if (!PyArg_ParseTuple(args,(char *)"OOOO:FKObservables",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
-  {
-    std::string *ptr = (std::string *)0;
-    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "FKObservables" "', argument " "1"" of type '" "std::string const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "FKObservables" "', argument " "1"" of type '" "std::string const &""'"); 
-    }
-    arg1 = ptr;
-  }
+  if (!PyArg_ParseTuple(args,(char *)"OOO:FKObservables",&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "FKObservables" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
   ecode2 = SWIG_AsVal_double(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
     SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "FKObservables" "', argument " "2"" of type '" "double""'");
@@ -7047,17 +7022,10 @@ SWIGINTERN PyObject *_wrap_FKObservables(PyObject *SWIGUNUSEDPARM(self), PyObjec
     SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "FKObservables" "', argument " "3"" of type '" "double""'");
   } 
   arg3 = static_cast< double >(val3);
-  ecode4 = SWIG_AsVal_double(obj3, &val4);
-  if (!SWIG_IsOK(ecode4)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "FKObservables" "', argument " "4"" of type '" "double""'");
-  } 
-  arg4 = static_cast< double >(val4);
-  result = (double)APFEL::FKObservables((std::string const &)*arg1,arg2,arg3,arg4);
+  result = (double)APFEL::FKObservables(arg1,arg2,arg3);
   resultobj = SWIG_From_double(static_cast< double >(result));
-  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
-  if (SWIG_IsNewObj(res1)) delete arg1;
   return NULL;
 }
 

@@ -5,17 +5,17 @@
 *     This function returns simulates the FKgenerator of the NNPDF code.
 *
 ************************************************************************
-      function FKSimulator(obs,x,Q,y,i,beta)
+      function FKSimulator(x,Q,y,i,beta)
 *
       implicit none
 *
       include "../commons/consts.h"
+      include "../commons/FKObservable.h"
 **
 *     Input Variables
 *
       integer i,beta
       double precision x,Q,y
-      character*15 obs
 **
 *     Internal Variables
 *
@@ -26,10 +26,13 @@
       double precision norm
       double precision conv
       parameter(conv=3.893793d10) ! conversion factor from GeV^-2 to 10^-38 cm^2
+      character*15 obs
 **
 *     Output Variables
 *
       double precision FKSimulator
+*
+      obs = FKObservable
 *
 *     Useful definitions
 *

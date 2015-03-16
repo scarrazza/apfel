@@ -279,13 +279,13 @@ namespace APFEL {
   void EnableTargetMassCorrections(int);
 
   /// Emulator of the FKgenerator
-  double FKSimulator(const std::string& obs,double x,double q,double y,int i,int beta);
+  double FKSimulator(double x,double q,double y,int i,int beta);
 
   /// Set the observable for FKgenerator simulator
   void SetFKObservable(const std::string& obs);
 
   /// Observable according to the FKgenerator naming
-  double FKObservables(const std::string& obs,double x,double q,double y);
+  double FKObservables(double x,double q,double y);
 
   /// List the functions of APFEL
   void ListFunctions(void);
