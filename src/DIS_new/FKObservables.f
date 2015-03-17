@@ -56,20 +56,17 @@
 ****  Up structure function F2u
 *
       elseif(obs(1:7).eq."DIS_F2U")then
-         write(6,*) "For this observables I don't know yet what to do!"
-         call exit(-10)
+         FKObservables = F2light(x)
 *
 ****  Down structure function F2d
 *
       elseif(obs(1:7).eq."DIS_F2d")then
-         write(6,*) "For this observables I don't know yet what to do!"
-         call exit(-10)
+         FKObservables = F2light(x)
 *
 ****  Strange structure function F2s
 *
       elseif(obs(1:7).eq."DIS_F2S")then
-         write(6,*) "For this observables I don't know yet what to do!"
-         call exit(-10)
+         FKObservables = F2light(x)
 *
 ****  Charm structure function F2charm
 *

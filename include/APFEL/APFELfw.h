@@ -185,6 +185,9 @@ extern "C" {
 #define fsettargetdis FC_FUNC(settargetdis,SETTARGETDIS)
   void fsettargetdis(char*);
 
+#define fselectcharge FC_FUNC(selectcharge,SELECTCHARGE)
+  void fselectcharge(char*);
+
 #define fexternaldisoperator FC_FUNC(externaldisoperator,EXTERNALDISOPERATOR)
   double fexternaldisoperator(char*,int*,int*,double*,int*);
 

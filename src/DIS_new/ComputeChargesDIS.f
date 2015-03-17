@@ -14,6 +14,7 @@
       include "../commons/ProjectileDIS.h"
       include "../commons/SinThetaW.h"
       include "../commons/ZedMass.h"
+      include "../commons/SelectedCharge.h"
 **
 *     Input Variables
 *
@@ -23,6 +24,7 @@
 *
       integer i
       integer ie
+      integer nfi,nff
       double precision pol
       double precision eq(6),eq2(6)
       double precision vq(6),aq(6)
@@ -92,8 +94,8 @@
       ve = - 0.5d0 + 2d0 * SinThetaW
       ae = - 0.5d0
 *
-*     Set the electric charges to zero id the projectile is a
-*     neutrino or an antineutrino and correct the vector and axial
+*     Set the electric charges to zero if the projectile is either
+*     a neutrino or an antineutrino and correct the vector and axial
 *     couplings.
 *
       if(ProjectileDIS(1:8).eq."neutrino".or.
@@ -106,15 +108,46 @@
          ae = 0.5d0
       endif
 *
+*     Initialize charges
+*
+      do i=1,6
+         bq(i) = 0d0
+         dq(i) = 0d0
+      enddo
+*
+*     Select the charge
+*
+      nfi = 1
+      nff = 6
+      if(SelectedCharge(1:4).eq."down")then
+         nfi = 1
+         nff = 1
+      elseif(SelectedCharge(1:2).eq."up")then
+         nfi = 2
+         nff = 2
+      elseif(SelectedCharge(1:7).eq."strange")then
+         nfi = 3
+         nff = 3
+      elseif(SelectedCharge(1:5).eq."charm")then
+         nfi = 4
+         nff = 4
+      elseif(SelectedCharge(1:6).eq."bottom")then
+         nfi = 5
+         nff = 5
+      elseif(SelectedCharge(1:3).eq."top")then
+         nfi = 6
+         nff = 6
+      endif
+*
       if(ProcessDIS.eq."EM")then
-         do i=1,6
+         do i=nfi,nff
             bq(i) = eq2(i)
             dq(i) = 0d0
          enddo
       elseif(ProcessDIS.eq."NC")then
          pz = Q2 / ( Q2 + MZ**2d0 ) 
      1      / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) )
-         do i=1,6
+         do i=nfi,nff
             bq(i) = eq2(i) 
      1            - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
      2            + ( ve**2d0 + ae**2d0 ) * ( vq(i)**2d0 + aq(i)**2d0 

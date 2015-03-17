@@ -389,6 +389,12 @@ ccccccccccccc
       end subroutine fsettargetdis
 
 ccccccccccccc
+      subroutine fselectcharge(selch)
+      character selch*(*)
+      call SelectCharge(selch)
+      end subroutine fselectcharge
+
+ccccccccccccc
       function fexternaldisoperator(SF,ihq,i,x,beta)
       integer ihq,i
       double precision x

@@ -47,6 +47,7 @@
       include "../commons/CKM.h"
       include "../commons/MassRunning.h"
       include "../commons/TMC.h"
+      include "../commons/SelectedCharge.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -81,6 +82,7 @@
       inProjectileDIS   = "xxxx"
       inTargetDIS       = "xxxx"
       inTMC             = "xxxx"
+      inSelectedCharge  = "xxxx"
 *
       InMZ              = "xxxx"
       InMW              = "xxxx"

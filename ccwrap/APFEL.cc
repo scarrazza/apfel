@@ -356,6 +356,13 @@ namespace APFEL {
     fsettargetdis(ctar);
   }
 
+  void SelectCharge(const std::string& selch)
+  {
+    char cselch[SIZE+1];
+    strncpy(cselch, selch.c_str(), SIZE);
+    fselectcharge(cselch);
+  }
+
   double ExternalDISOperator(const std::string& SF,int ihq,int i,double x,int beta)
   {
     char cSF[SIZE+1];

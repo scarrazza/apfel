@@ -217,6 +217,9 @@ namespace APFEL {
   /// Set the target
   void SetTargetDIS(const std::string& tar);
 
+  /// Set the projectile
+  void SelectCharge(const std::string& selch);
+
   /// Returns the DIS operator times the evolution factors on the grid
   double ExternalDISOperator(const std::string& SF,int ihq,int i,double x,int beta);
 

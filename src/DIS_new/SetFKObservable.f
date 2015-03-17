@@ -28,6 +28,7 @@
 ****  Up structure function F2u
 *
       elseif(obs(1:7).eq."DIS_F2U")then
+         call SelectCharge("up")
          call SetProcessDIS("EM")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
@@ -35,6 +36,7 @@
 ****  Down structure function F2d
 *
       elseif(obs(1:7).eq."DIS_F2d")then
+         call SelectCharge("down")
          call SetProcessDIS("EM")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
@@ -42,6 +44,7 @@
 ****  Strange structure function F2s
 *
       elseif(obs(1:7).eq."DIS_F2S")then
+         call SelectCharge("strange")
          call SetProcessDIS("EM")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")

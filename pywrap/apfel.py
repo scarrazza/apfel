@@ -391,6 +391,10 @@ def SetTargetDIS(tar):
     return _apfel.SetTargetDIS(tar)
 SetTargetDIS = _apfel.SetTargetDIS
 
+def SelectCharge(selch):
+    return _apfel.SelectCharge(selch)
+SelectCharge = _apfel.SelectCharge
+
 def ExternalDISOperator(SF, ihq, i, x, beta):
     return _apfel.ExternalDISOperator(SF, ihq, i, x, beta)
 ExternalDISOperator = _apfel.ExternalDISOperator

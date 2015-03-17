@@ -6194,6 +6194,34 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_SelectCharge(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SelectCharge",&obj0)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SelectCharge" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SelectCharge" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  APFEL::SelectCharge((std::string const &)*arg1);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_ExternalDISOperator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
@@ -7133,6 +7161,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetProcessDIS", _wrap_SetProcessDIS, METH_VARARGS, NULL},
 	 { (char *)"SetProjectileDIS", _wrap_SetProjectileDIS, METH_VARARGS, NULL},
 	 { (char *)"SetTargetDIS", _wrap_SetTargetDIS, METH_VARARGS, NULL},
+	 { (char *)"SelectCharge", _wrap_SelectCharge, METH_VARARGS, NULL},
 	 { (char *)"ExternalDISOperator", _wrap_ExternalDISOperator, METH_VARARGS, NULL},
 	 { (char *)"F2light", _wrap_F2light, METH_VARARGS, NULL},
 	 { (char *)"F2charm", _wrap_F2charm, METH_VARARGS, NULL},

@@ -55,20 +55,17 @@
 ****  Up structure function F2u
 *
       elseif(obs(1:7).eq."DIS_F2U")then
-         write(6,*) "For this observables I don't know yet what to do!"
-         call exit(-10)
+         FKSimulator = ExternalDISOperator("F2",3,i,x,beta)
 *
 ****  Down structure function F2d
 *
       elseif(obs(1:7).eq."DIS_F2d")then
-         write(6,*) "For this observables I don't know yet what to do!"
-         call exit(-10)
+         FKSimulator = ExternalDISOperator("F2",3,i,x,beta)
 *
 ****  Strange structure function F2s
 *
       elseif(obs(1:7).eq."DIS_F2S")then
-         write(6,*) "For this observables I don't know yet what to do!"
-         call exit(-10)
+         FKSimulator = ExternalDISOperator("F2",3,i,x,beta)
 *
 ****  Charm structure function F2charm
 *

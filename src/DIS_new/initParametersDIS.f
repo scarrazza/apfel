@@ -26,6 +26,7 @@
       include "../commons/CKM.h"
       include "../commons/TMC.h"
       include "../commons/TimeLike.h"
+      include "../commons/SelectedCharge.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -35,6 +36,7 @@
       if(InPolarizationDIS.ne."done") call SetPolarizationDIS(0d0)
       if(InProjectileDIS.ne."done")   call SetProjectileDIS("electron")
       if(InTargetDIS.ne."done")       call SetTargetDIS("proton")
+      if(InSelectedCharge.ne."done")  call SelectCharge("all")
       if(InTMC.ne."done")      call EnableTargetMassCorrections(.false.)
 *
       if(InMZ.ne."done")              call SetZMass(91.1876d0)
@@ -129,6 +131,28 @@
          write(6,*) "- 'neutron'"
          write(6,*) "- 'isoscalar'"
          write(6,*) "- 'iron'"
+         write(6,*) "  "
+         call exit(-10)
+      endif
+*
+      if(SelectedCharge(1:4).ne."down".and.
+     1   SelectedCharge(1:2).ne."up".and.
+     2   SelectedCharge(1:7).ne."strange".and.
+     3   SelectedCharge(1:5).ne."charm".and.
+     4   SelectedCharge(1:6).ne."bottom".and.
+     5   SelectedCharge(1:3).ne."top".and.
+     6   SelectedCharge(1:3).ne."all")then
+         write(6,*) "Selected charge unknown:"
+         write(6,*) "SelectedCharge = ",SelectedCharge
+         write(6,*) "  "
+         write(6,*) "The options are:"
+         write(6,*) "- 'down'"
+         write(6,*) "- 'up'"
+         write(6,*) "- 'strange'"
+         write(6,*) "- 'charm'"
+         write(6,*) "- 'bottom'"
+         write(6,*) "- 'top'"
+         write(6,*) "- 'all'"
          write(6,*) "  "
          call exit(-10)
       endif
@@ -232,6 +256,9 @@ c$$$         endif
 c$$$*
 c$$$         if(PolarizationDIS.ne.0d0) 
 c$$$     1   write(6,"(a,f7.3)") " Polarization fraction =",PolarizationDIS
+c$$$*
+c$$$         if(SelectedCharge(1:3).ne."all") "Selected Charge: ",
+c$$$     1                                    SelectedCharge
 c$$$*
          if(TMC)then
             write(6,*) "Target Mass corrections enabled"
