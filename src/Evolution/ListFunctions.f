@@ -299,6 +299,7 @@
       write(6,*) "used in the NNPDF fits:"
       write(6,*) "  "
       write(6,*) "- SetFKObservable(string obs)"
+      write(6,*) "- GetFKObservable()"
       write(6,*) "- FKSimulator(string obs, double x,",
      1           " double q, double y, int i, int beta)"
       write(6,*) "- FKObservables(string obs, double x,",

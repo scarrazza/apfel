@@ -118,7 +118,6 @@
          ixi(ihq) = 0
          M2(ihq) = HeavyQuarkMass(ihq,Q)**2d0
          xi(ihq)  = Q2 / M2(ihq)
-c         xi(ihq)  = Q2 / m2th(ihq)
          if(xi(ihq).le.xigrid(xistep))then
             ixi(ihq) = 0
          elseif(xi(ihq).ge.ximax)then
@@ -636,7 +635,6 @@ c         xi(ihq)  = Q2 / m2th(ihq)
 *     T35
                   OpF2(jgrid,6,13,alpha,beta) = - bq(6) * C2nsp(6)
      1                 / 6d0
-c     endif
 *     
 *     Total
 *     
