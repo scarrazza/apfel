@@ -67,17 +67,17 @@
       do ix=1,nxLHA
          if(ix.le.nxmLHA)then
             xbLHA(ix) = xminLHA * ( xmLHA / xminLHA )
-     1           **( 2d0 * dble( ix-1 ) / dble( nxLHA - 1 ) )
+     1                **( 2d0 * dble( ix-1 ) / dble( nxLHA - 1 ) )
          else
             xbLHA(ix) = xmLHA + ( xmaxLHA - xmLHA ) 
-     1           * ( dble( ix - nxmLHA - 1 ) 
-     2           / dble( nxLHA - nxmLHA - 1 ) )
+     1                * ( dble( ix - nxmLHA - 1 ) 
+     2                / dble( nxLHA - nxmLHA - 1 ) )
          endif
       enddo
 *
 *     Compute Q2 grid.
 *     Use a distribution of the Q2 nodes uniform in ln(ln(Q2/Lambda2))
-*     and has nodes on the heavy quark thresholds.
+*     and that has nodes on the heavy quark thresholds.
 *
       lnQmin = dlog( q2minLHA / Lambda2 )
       lnQmax = dlog( q2maxLHA / Lambda2 )
@@ -164,17 +164,17 @@
 *     Write header
 *     
          write(13,*) "'Version'"," '5.8.9'"
-         write(13,*) "'Description:'"
+         write(13,*) "'Description: set generated with APFEL'"
          write(13,*) "'",fname(1:ln),".LHgrid'"
          write(13,*) "'Reference: arXiv:1310.1394'"
          write(13,*) "'APFEL: A PDF Evolution Library'"
          write(13,*) "'V. Bertone, S. Carrazza, J. Rojo'"
-         write(13,*)"' '"
-         write(13,*)"' '"
-         write(13,*)"' '"
-         write(13,*)"'This set has ",Nrep," member PDF'"
-         write(13,*)"'mem=0 --> average on replicas. '"
-         write(13,*)"'Evolution: pol. interpolation on the LH grid.'"
+         write(13,*) "' '"
+         write(13,*) "' '"
+         write(13,*) "' '"
+         write(13,*) "'This set has ",Nrep," member PDF'"
+         write(13,*) "'mem=0 --> average on replicas. '"
+         write(13,*) "'Evolution: pol. interpolation on the LH grid.'"
 *     
          write(13,*) "'Alphas:'"
          if(ipt.eq.0)then
@@ -261,7 +261,7 @@
                do ix=1,nxLHA
                   do iq2=1,nq2LHA
                      write(13,45) (xpdfLHA(ipdf,ix,iq2),ipdf=-6,6),
-     1                             Xgammalha(ix,iq2)
+     1                             xgammalha(ix,iq2)
                   enddo
                enddo
             endif
@@ -285,19 +285,19 @@
 *     
 *     Write header
 *     
-         write(13,*) "SetDesc: ",fname(1:ln)
-         write(13,*) "Authors: APFEL a PDF Evolution Library"
-         write(13,*) "Reference: 1310.1394"
+         write(13,*) "SetDesc: set generated with APFEL - ",fname(1:ln)
+         write(13,*) "Authors: V. Bertone, S. Carrazza, J. Rojo"
+         write(13,*) "Reference: ArXiv:1310.1394"
          write(13,*) "Format: lhagrid1"
          write(13,*) "DataVersion: 1"
          write(13,*) "NumMembers:", Nrep+1
          write(13,*) "Particle: 2212"
          if(Th.eq."QCD") then
             write(13,*) "Flavors: [-6, -5, -4, -3, -1, -2,",
-     1           "21, 2, 1, 3, 4, 5, 6]"
+     1                  "21, 2, 1, 3, 4, 5, 6]"
          else
             write(13,*) "Flavors: [-6, -5, -4, -3, -1, -2, 21, 2, 1,", 
-     1           "3, 4, 5, 6, 22]"
+     1                  "3, 4, 5, 6, 22]"
          endif
          write(13,*) "OrderQCD:",ipt
          write(13,*) "FlavorScheme: variable"
@@ -307,7 +307,7 @@
          write(13,*) "XMax:", xmaxLHA
          write(13,*) "QMin:", dsqrt(q2minLHA)
          write(13,*) "QMax:", dsqrt(q2maxLHA)
-         write(13,*) "MZ: 91.1876"
+         write(13,*) "MZ:",dsqrt(q2_ref_qcd)
          write(13,*) "MUp: 0"
          write(13,*) "MDown: 0"
          write(13,*) "MStrange: 0"
@@ -360,7 +360,6 @@
             iq2fi = nQ(nfin)
             do isg=nfin,nfMaxPDFs
                write(13,*) (xbLHA(ix),ix=1,nxLHA)
-c               write(13,*) (dsqrt(q2LHA(iq2)), iq2=1,nq2LHA)
                write(13,*) (dsqrt(q2LHA(iq2)), iq2=iq2in,iq2fi)
 *
                if(Th.eq."QCD") then
@@ -389,7 +388,7 @@ c               write(13,*) (dsqrt(q2LHA(iq2)), iq2=1,nq2LHA)
                   do ix=1,nxLHA
                      do iq2=iq2in,iq2fi
                         write(13,45) (xpdfLHA(ipdf,ix,iq2),ipdf=-6,6),
-     1                       xgammaLHA(ix,iq2)
+     1                                xgammaLHA(ix,iq2)
                      enddo
                   enddo
                endif
