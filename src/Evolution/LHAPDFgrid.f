@@ -5,6 +5,8 @@
 *     If LHAPDF5 is found, this subrotine produces the *.LHgrid file 
 *     that can be used with LHAPDF v5.9. If instead LHAPDF6 is found
 *     a folder contained the PDF set in a suitable format is produced.
+*     Note that if "Qin" < 0 then the internal evolution of the input
+*     PDF set will be used.
 *
 ************************************************************************
       subroutine LHAPDFgrid(Nrep,Qin,fname)
@@ -242,7 +244,11 @@
             write(6,*) "Evaluating replica",krep," ..."
             call SetReplica(krep)
             do iq2=1,nq2LHA
-               call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
+               if(Qin.gt.0d0)then
+                  call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
+               else
+                  call EvolveAPFEL(dsqrt(q2LHA(iq2)),dsqrt(q2LHA(iq2)))
+               endif
                do ix=1,nxLHA
                   do ipdf=-6,6
                      xpdfLHA(ipdf,ix,iq2) = xPDFj(ipdf,xbLHA(ix))
@@ -369,7 +375,12 @@
                endif
 *
                do iq2=iq2in,iq2fi
-                  call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
+                  if(Qin.gt.0d0)then
+                     call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
+                  else
+                     call EvolveAPFEL(dsqrt(q2LHA(iq2)),
+     1                                dsqrt(q2LHA(iq2)))
+                  endif
                   do ix=1,nxLHA
                      do ipdf=-6,6
                         xpdfLHA(ipdf,ix,iq2) = xPDFj(ipdf,xbLHA(ix))

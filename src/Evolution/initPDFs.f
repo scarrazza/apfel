@@ -75,7 +75,7 @@
 *
       elseif(pdfset(1:8).eq."external")then
          do alpha=0,nin(igrid)
-            call ExternalSetAPFEL(xg(igrid,alpha),fext0)
+            call ExternalSetAPFEL(xg(igrid,alpha),dsqrt(Q20),fext0)
             do ifl=-6,6
                f0ph(ifl,alpha) = fext0(ifl)
             enddo

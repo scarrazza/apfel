@@ -3,13 +3,13 @@
 *     Dummy subroutine for the external set to ensure the compilation
 *
 ************************************************************************
-      subroutine ExternalSetAPFEL(x,xf)
+      subroutine ExternalSetAPFEL(x,Q,xf)
 *
       implicit none
 **
 *     Input Variables
 *
-      double precision x
+      double precision x,Q
 **
 *     Internal Variables
 *

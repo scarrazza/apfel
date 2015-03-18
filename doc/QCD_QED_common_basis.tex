@@ -84,9 +84,10 @@ g\\
 \overline{q}_l
 \end{pmatrix}
 \end{equation}
-where we are understanding the convolution  and where the sum over $k$ and $l$ runs over all $n_f$ the active flavours.
-Because of charge conjugation invariance and $SU(n_f)$ flavour
-symmetry, one can show that:
+where we are understanding the convolution and where the sum over $k$
+and $l$ runs over all $n_f$ the active flavours.  Because of charge
+conjugation invariance and $SU(n_f)$ flavour symmetry, one can show
+that:
 \begin{equation}\label{decomposition}
 \begin{array}{l}
 P_{q_iq_j} = P_{\overline{q}_i\overline{q}_j} = \delta_{ij} P_{qq}^V+P_{qq}^S\\
@@ -178,7 +179,7 @@ we have:
 \begin{equation}
 \left\{
 \begin{array}{l}
-\displaystyle \mu^2\frac{\partial}{\partial \mu^2}g =P_{gq}g + P_{gg}\Sigma \\
+\displaystyle \mu^2\frac{\partial}{\partial \mu^2}g =P_{gg}g + P_{gq}\Sigma \\
 \\
 \displaystyle \mu^2\frac{\partial}{\partial \mu^2} q_i^+=
 P^+q_i^+ +\frac{1}{n_f}(P_{qq}-P^+)\Sigma + 2P_{qg}g \\ 
@@ -443,7 +444,7 @@ P_{q\overline{q}}^V & 0 & {P}_{qg} & 0 & 0 & P_{qq}^V
 \end{pmatrix}+
 \begin{pmatrix}
 e_u^2\widetilde{P}_{qq} & 0 & e_u^2\widetilde{P}_{qg} & e_u^2\widetilde{P}_{q\gamma} & 0 & 0 \\ 
-0 & e_d^2\widetilde{P}_{qq}^V & e_d^2\widetilde{P}_{qg} & e_d^2\widetilde{P}_{q\gamma} & 0 & 0 \\ 
+0 & e_d^2\widetilde{P}_{qq} & e_d^2\widetilde{P}_{qg} & e_d^2\widetilde{P}_{q\gamma} & 0 & 0 \\ 
 e_u^2\widetilde{P}_{gq}  & e_d^2\widetilde{P}_{gq} & e_\Sigma^2\widetilde{P}_{gg} & e_\Sigma^2\widetilde{P}_{g\gamma} & e_d^2\widetilde{P}_{gq} & e_u^2\widetilde{P}_{gq}\\
 e_u^2 \widetilde{P}_{\gamma q} & e_d^2\widetilde{P}_{\gamma q} &
 e_\Sigma^2\widetilde{P}_{\gamma g} & e_\Sigma^2\widetilde{P}_{\gamma\gamma} & e_d^2\widetilde{P}_{\gamma q}
@@ -515,7 +516,7 @@ eq. (\ref{EvenMoreGeneralDGLAPciaociao}) the following transformation:
 \end{pmatrix}
 \end{equation}
 so that we get:
-\begin{equation}
+\begin{equation}\label{macheneso}
 \begin{array}{rcl}
 \displaystyle \mu^2\frac{\partial}{\partial \mu^2}
 \begin{pmatrix}
@@ -731,7 +732,7 @@ QCD where there was only one coupled system.
 Now, let's write the eq. (\ref{pippo}) in a matricial form, separating the
 pure QCD splitting functions (those without tilde) from the QED
 contributions:
-\begin{equation}
+\begin{equation}\label{SingletDGLAP}
 \begin{array}{rcl}
 \displaystyle\mu^2\frac{\partial}{\partial \mu^2}
 \begin{pmatrix}
@@ -979,18 +980,538 @@ that $\mathcal{P}_{\ell_\alpha g} = \mathcal{P}_{\overline{\ell}_\beta
 \mathcal{P}_{g\overline{\ell}_\delta} = 0$. In additions, all
 splitting functions connecting quarks and gluons like
 $\mathcal{P}_{\ell_\alpha u_e}$ start at
-$\mathcal{O}(\alpha\alpha_s)$, that is at two loops and thus don't
+$\mathcal{O}(\alpha^2)$, that is at two loops and thus do not
 have any pure-QCD contribution. Finally, the splitting functions
 connecting leptons with leptons and photon with leptons start at one
 loop but they are $\mathcal{O}(\alpha)$ and thus do not have any
-pure-QCD contribution. In conclusion, the pure-QCD matrix in the
-r.h.s. of eq.~(\ref{EvenMoreGeneralDGLAPciao}) is untouched by the
-inclusion of the leptons in the evolution and only the QED-correction
-matrix gets contributions.
+pure-QCD contribution. In additions, it is easy to realize that such
+splitting functions do not get QCD corrections up to 3 loops. In
+conclusion, the pure-QCD matrix in the r.h.s. of
+eq.~(\ref{EvenMoreGeneralDGLAPciao}) is untouched by the inclusion of
+the leptons in the evolution and only the QED-correction matrix gets
+contributions.
 
-Now, in order to construct a suitable evolution basis when also
-including leptons, we need to understand the struncture of the new
-splitting functions.
+Based on these considerations, using the we can the usual charge
+conjugation invariance and flavour symmetry, up to two loops, one has
+that:
+\begin{equation}\label{decompositionLept}
+\begin{array}{l}
+\mathcal{P}_{\ell_\alpha\ell_\beta} = \mathcal{P}_{\overline{\ell}_\alpha\overline{\ell}_\beta} = \delta_{ij} \mathcal{P}_{\ell\ell}^V+\mathcal{P}_{\ell\ell}^S\\
+\mathcal{P}_{\overline{\ell}_\alpha\ell_\beta} =
+\mathcal{P}_{\ell_\alpha\overline{\ell}_\beta}  = \delta_{ij} \mathcal{P}_{\overline{\ell}\ell}^V+\mathcal{P}_{\ell\ell}^S\\
+\mathcal{P}_{\ell_\alpha\gamma}  =\mathcal{P}_{\overline{\ell}_\alpha\gamma} = \mathcal{P}_{\ell\gamma} \\
+\mathcal{P}_{\gamma\ell_\alpha}  =\mathcal{P}_{\gamma\overline{\ell}_\alpha} = \mathcal{P}_{\gamma\ell} \,.
+\end{array}
+\end{equation}
+In addition, since to this perturbative order they are pure QED
+splitting functions, they can be derived starting from the pure QCD
+splitting functions just by adjusting the color factors. Therefore,
+apart from replacing the strong coupling $\alpha_s$ with the
+fine-structure running constant $\alpha_s$ and assuming that the
+lepton charge is one, we can simply write:
+\begin{equation}\label{decompositionLept}
+\begin{array}{l}
+\mathcal{P}_{\ell\ell}^{V,S} = P_{qq}^{V,S}(T_R=1,C_F=1,C_A=0)\,,\\
+\\
+\mathcal{P}_{\overline{\ell}\ell}^V=P_{\overline{q}q}^{V}
+(T_R=1,C_F=1,C_A=0) \,,\\
+\\
+\mathcal{P}_{\ell\gamma} = P_{qg}(T_R=1,C_F=1,C_A=0) \,,\\
+\\
+\mathcal{P}_{\gamma\ell} = P_{gq}(T_R=1,C_F=1,C_A=0) \,.
+\end{array}
+\end{equation}
+
+The last cathegory of splitting functions we need to cosider is that
+connecting quarks and leptons of the kind $\mathcal{P}_{\ell_\alpha
+  q_i}$ or $\mathcal{P}_{q_i\ell_\alpha}$. As already mentioned, they
+start at two loops $\mathcal{O}(\alpha^2)$ and at this order
+they can be written as:
+\begin{equation}
+\mathcal{P}_{\ell_\alpha q_i} = \mathcal{P}_{q_i \ell_\alpha} =
+\mathcal{P}_{\overline{\ell}_\alpha q_i} = \mathcal{P}_{q_i
+  \overline{\ell}_\alpha} =
+\mathcal{P}_{\ell_\alpha \overline{q}_i} = \mathcal{P}_{\overline{q}_i
+  \ell_\alpha} = \mathcal{P}_{\overline{\ell}_\alpha \overline{q}_i} =
+\mathcal{P}_{\overline{q}_i \overline{\ell}_\alpha} = e_{q_i}^2\mathcal{P}_{q\ell}^S\,.
+\end{equation}
+
+My guess is that at $\mathcal{O}(\alpha\alpha_s)$ the
+$\mathcal{P}_{q\ell}^S$ can be obtained from the
+$\mathcal{O}(\alpha_s^2)$ contribution of the $P_{qq}$ splitting
+functions just by adjusting the color factors. However, we will leave
+these consideration for a later study when the full two-loop splitting
+functions will be explicitly considered.
+
+We can now generalize eq.~(\ref{EvenMoreGeneralDGLAPciaociao}) to
+include the presence of leptons in the DGLAP evolution into the system:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \mu^2\frac{\partial}{\partial \mu^2}
+\begin{pmatrix}
+\ell_\alpha\\
+u_j \\
+d_i\\
+g\\
+\gamma\\
+\overline{d}_i\\
+\overline{u}_j\\
+\overline{\ell}_\alpha
+\end{pmatrix} &=& \displaystyle
+\left[
+\mbox{QCD}_{\rm NS}+\mbox{QED}_{\rm NS}+
+\begin{pmatrix}
+0 & 0 & 0 & 0 &0 & 0 & 0 & 0\\
+0 & e_u^2\widetilde{P}_{qq} & 0 & e_u^2\widetilde{P}_{qg} & e_u^2\widetilde{P}_{q\gamma} & 0 & 0 & 0\\ 
+0 & 0 & e_d^2\widetilde{P}_{qq} & e_d^2\widetilde{P}_{qg} & e_d^2\widetilde{P}_{q\gamma} & 0 & 0 & 0\\ 
+0 & e_u^2\widetilde{P}_{gq}  & e_d^2\widetilde{P}_{gq} &
+e_\Sigma^2\widetilde{P}_{gg} & e_\Sigma^2\widetilde{P}_{g\gamma} & e_d^2\widetilde{P}_{gq} & e_u^2\widetilde{P}_{gq} & 0\\
+0 & e_u^2 \widetilde{P}_{\gamma q} & e_d^2\widetilde{P}_{\gamma q} & e_\Sigma^2\widetilde{P}_{\gamma g} & e_\Sigma^2\widetilde{P}_{\gamma\gamma} & e_d^2\widetilde{P}_{\gamma q}
+& e_u^2\widetilde{P}_{\gamma q} & 0\\
+0 & 0 & 0 & e_d^2\widetilde{P}_{qg} & e_d^2\widetilde{P}_{q\gamma} &
+e_d^2\widetilde{P}_{qq}^V & 0 & 0\\
+0 & 0 & 0 & e_u^2 \widetilde{P}_{qg} & e_u^2\widetilde{P}_{q\gamma} & 0 &
+e_u^2\widetilde{P}_{qq}^V & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\end{pmatrix}\right]
+\begin{pmatrix}
+\ell_\alpha\\
+u_j \\
+d_i\\
+g\\
+\gamma\\
+\overline{d}_i\\
+\overline{u}_j\\
+\overline{\ell}_\alpha
+\end{pmatrix}\\
+\\
+&+&
+\left[
+\mbox{QCD}_{\rm SG}+\mbox{QED}_{\rm SG}+
+\begin{pmatrix}
+0 & 0  & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & e_u^4\widetilde{P}_{qq}^S & e_u^2e_d^2\widetilde{P}_{qq}^S & 0 & 0 & e_u^2e_d^2\widetilde{P}_{qq}^S & e_u^4\widetilde{P}_{qq}^S & 0\\ 
+0 & e_u^2e_d^2\widetilde{P}_{qq}^S & e_d^4\widetilde{P}_{qq}^S & 0 & 0 & e_d^4\widetilde{P}_{qq}^S &  e_u^2e_d^2\widetilde{P}_{qq}^S & 0\\ 
+0 & 0  & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0  & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & e_u^2e_d^2\widetilde{P}_{qq}^S & e_d^4\widetilde{P}_{qq}^S & 0 & 0 & e_d^4\widetilde{P}_{qq}^S &  e_u^2e_d^2\widetilde{P}_{qq}^S & 0\\
+0 & e_u^4\widetilde{P}_{qq}^S & e_u^2e_d^2\widetilde{P}_{qq}^S & 0 & 0 &  e_u^2e_d^2\widetilde{P}_{qq}^S & e_u^4\widetilde{P}_{qq}^S & 0 \\
+0 & 0  & 0 & 0 & 0 & 0 & 0 & 0
+\end{pmatrix}
+\right]
+\begin{pmatrix}
+\sum_\gamma \ell_\gamma\\
+\sum_eu_e \\
+\sum_ld_l\\
+g\\
+\gamma\\
+\sum_m\overline{d}_m\\
+\sum_n\overline{u}_n\\
+\sum_\delta \overline{\ell}_\delta
+\end{pmatrix}
+\end{array}
+\end{equation}
+where:
+\begin{equation}
+\begin{array}{rcl}
+\mbox{QED}_{\rm NS}=
+\begin{pmatrix}
+\mathcal{P}_{\ell\ell}^V & 0 & 0 & 0 & \mathcal{P}_{\ell\gamma} & 0 & 0 & \mathcal{P}_{\overline{\ell}\ell}^V\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\mathcal{P}_{\gamma\ell} & 0 & 0 & 0 & 0 & 0 & 0 & \mathcal{P}_{\gamma\ell}\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\mathcal{P}_{\overline{\ell}\ell}^V & 0 & 0 & 0 & \mathcal{P}_{\ell\gamma} & 0 & 0 & \mathcal{P}_{\ell\ell}^V\\
+\end{pmatrix}
+\end{array}
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{rcl}
+\mbox{QED}_{\rm SG}=
+\begin{pmatrix}
+\mathcal{P}_{\ell\ell}^S & e_u^2\mathcal{P}_{q\ell}^S & e_d^2\mathcal{P}_{q\ell}^S & 0 & 0 & e_d^2\mathcal{P}_{q\ell}^S & e_u^2\mathcal{P}_{q\ell}^S & \mathcal{P}_{\ell\ell}^S \\
+e_u^2\mathcal{P}_{q\ell}^S & 0  & 0 & 0 & 0 & 0 & 0 & e_u^2\mathcal{P}_{q\ell}^S\\
+e_d^2\mathcal{P}_{q\ell}^S & 0  & 0 & 0 & 0 & 0 & 0 & e_d^2\mathcal{P}_{q\ell}^S\\
+0 & 0  & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0  & 0 & 0 & 0 & 0 & 0 & 0\\
+e_d^2\mathcal{P}_{q\ell}^S & 0  & 0 & 0 & 0 & 0 & 0 & e_d^2\mathcal{P}_{q\ell}^S\\
+e_u^2\mathcal{P}_{q\ell}^S & 0  & 0 & 0 & 0 & 0 & 0 & e_u^2\mathcal{P}_{q\ell}^S\\
+\mathcal{P}_{\ell\ell}^S & e_u^2\mathcal{P}_{q\ell}^S & e_d^2\mathcal{P}_{q\ell}^S & 0 & 0 & e_d^2\mathcal{P}_{q\ell}^S & e_u^2\mathcal{P}_{q\ell}^S & \mathcal{P}_{\ell\ell}^S 
+\end{pmatrix}
+\end{array}
+\end{equation}
+
+
+Now, using the tranformation:
+\begin{equation}\label{EvenMoreGeneralDGLAPbye}
+\mathbf{T} = 
+\begin{pmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 1 & 0 & 0 & 0 & 0 & 1  & 0\\
+0 & 0 & 1 & 0 & 0 & 1 & 0  & 0\\
+0 & 0 & 0 & 1 & 0 & 0 & 0  & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & 0  & 0\\
+0 & 0 & 1 & 0 & 0 & -1 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & -1 & 0\\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & -1
+\end{pmatrix}\quad\Longrightarrow\quad
+\mathbf{T}^{-1} = 
+\frac{1}{2}\begin{pmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 1 & 0 & 0 & 0 & 0 & 1 & 0\\
+0 & 0 & 1 & 0 & 0 & 1 & 0 & 0\\
+0 & 0 & 0 & 2 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 2 & 0 & 0 & 0\\
+0 & 0 & 1 & 0 & 0 & -1 & 0 & 0\\
+0 & 1 & 0 & 0 & 0 & 0 & -1 & 0\\
+1 & 0 & 0 & 0 & 0 & 0 & 0 & -1
+\end{pmatrix}
+\end{equation}
+For the non-leptonic parts, we get again the system in
+eq.~(\ref{macheneso}) while for the leptonic parts, defining:
+\begin{equation}
+\begin{array}{l}
+\displaystyle \mathcal{P}^\pm \equiv \mathcal{P}_{\ell\ell}^V \pm \mathcal{P}_{\ell\overline{\ell}}^V \\
+\\
+\displaystyle \mathcal{P}_{\ell\ell} \equiv P^+ + 2n_\ell \mathcal{P}_{\ell\ell}^S\\
+\\
+\displaystyle \mathcal{P}^V \equiv P^-
+\end{array}\,,
+\end{equation}
+being $n_\ell$ the number of active leptons, we have that:
+\begin{equation}
+\begin{array}{rcl}
+\mathbf{T}\mbox{QED}_{\rm NS}\mathbf{T}^{-1}=
+\begin{pmatrix}
+\mathcal{P}^+ & 0 & 0 & 0 & 2\mathcal{P}_{\ell\gamma} & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\ 
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\mathcal{P}_{\gamma\ell} & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathcal{P}^-\\
+\end{pmatrix}
+\end{array}
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \mathbf{T}\mbox{QED}_{\rm SG}\mathbf{T}^-1=\frac1{n_\ell}
+\begin{pmatrix}
+(\mathcal{P}_{\ell\ell}-\mathcal{P}^+) & 2 n_\ell e_u^2\mathcal{P}_{q\ell}^S & 2 n_\ell e_d^2\mathcal{P}_{q\ell}^S & 0 & 0 & 0 & 0 & 0 \\
+2 n_\ell e_u^2\mathcal{P}_{q\ell}^S & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+2 n_\ell e_d^2\mathcal{P}_{q\ell}^S & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{pmatrix}
+\end{array}
+\end{equation}
+In conclusion, the single equations are:
+\begin{equation}
+\begin{array}{l}
+\displaystyle \mu^2\frac{\partial \ell_\alpha^+}{\partial \mu^2} = \mathcal{P}^+\ell_\alpha^+
++\frac1{n_\ell}(\mathcal{P}_{\ell\ell}-\mathcal{P}^+)\Sigma_\ell+
+2 \mathcal{P}_{q\ell}^S (\eta^+\Sigma+\eta^-\Delta_\Sigma)
++2\mathcal{P}_{\ell\gamma}\gamma\\
+\\
+\displaystyle \mu^2\frac{\partial \ell_\alpha^-}{\partial \mu^2} =
+\mathcal{P}^-\ell_\alpha^-\\
+\\
+\displaystyle \mu^2\frac{\partial u_j^+}{\partial \mu^2} =\dots + 2
+e_u^2\mathcal{P}_{q\ell}^S\Sigma_\ell\\
+\\
+\displaystyle \mu^2\frac{\partial d_i^+}{\partial \mu^2} =\dots + 2
+e_d^2\mathcal{P}_{q\ell}^S\Sigma_\ell\\
+\\
+\displaystyle \mu^2\frac{\partial \gamma}{\partial \mu^2} =\dots + 
+\mathcal{P}_{\gamma\ell}\Sigma_\ell
+\end{array}
+\end{equation}
+where, as usual, we have defined:
+\begin{equation}
+\ell_\alpha^{\pm} = \ell_\alpha \pm \overline{\ell}_\alpha\,,
+\end{equation}
+and:
+\begin{equation}
+\eta^\pm = \frac12(e_u^2\pm e_d^2)\,.
+\end{equation}
+
+Now, let us consider the following combinations:
+\begin{equation}
+\begin{array}{l}
+\displaystyle \Sigma_\ell = \sum_{\alpha=e,\mu,\tau} \ell_{\alpha}^+\\
+\\
+\displaystyle  V_\ell = \sum_{\alpha=e,\mu,\tau} \ell_{\alpha}^-\\
+\\
+\displaystyle  T_{3}^{\ell} = \ell_e^+ - \ell_\mu^+\\
+\\
+\displaystyle  T_{8}^{\ell} = \ell_e^+ + \ell_\mu^+-2\ell_\tau^+\\
+\\
+\displaystyle  V_{3}^{\ell} = \ell_e^- - \ell_\mu^-\\
+\\
+\displaystyle  V_{8}^{\ell} = \ell_e^- + \ell_\mu^--2\ell_\tau^-
+\end{array}
+\end{equation}
+It is easy to see that above the $\tau$ mass threshold, they
+evolve according to the following equations:
+\begin{equation}
+\begin{array}{l}
+\displaystyle \mu^2\frac{\partial \Sigma_\ell}{\partial \mu^2} =
+2n_\ell\mathcal{P}_{\ell\gamma}\gamma +
+2n_\ell \mathcal{P}_{q\ell}^S (\eta^+\Sigma+\eta^-\Delta_\Sigma) +\mathcal{P}_{\ell\ell}\Sigma_\ell\\
+\\
+\displaystyle  \mu^2\frac{\partial V_\ell}{\partial \mu^2} =
+\mathcal{P}^-  V_\ell = \mathcal{P}^V  V_\ell\\
+\\
+\displaystyle  \mu^2\frac{\partial T_{3,8}^{\ell}}{\partial \mu^2} =
+\mathcal{P}^+  T_{3,8}^{\ell}\\
+\\
+\displaystyle  \mu^2\frac{\partial V_{3,8}^{\ell}}{\partial \mu^2} =
+\mathcal{P}^-  V_{3,8}^{\ell}
+\end{array}
+\end{equation}
+In addition, the photon and QCD singlet distributions $\Sigma$ and
+$\Delta_\Sigma$ acquire the
+following terms:
+\begin{equation}
+\begin{array}{l}
+\displaystyle \mu^2\frac{\partial \Sigma}{\partial \mu^2} =\dots + 2
+e_\Sigma^2\mathcal{P}_{q\ell}^S\Sigma_\ell\\
+\\
+
+\displaystyle \mu^2\frac{\partial \Delta_\Sigma}{\partial \mu^2} =\dots + 2
+\delta_e^2\mathcal{P}_{q\ell}^S\Sigma_\ell\\
+\\
+\displaystyle \mu^2\frac{\partial \gamma}{\partial \mu^2} =\dots + 
+\mathcal{P}_{\gamma\ell}\Sigma_\ell
+\end{array}
+\end{equation}
+
+In conclusion, the full system of equations in the evolution
+basis including leptons is the following:
+\begin{equation}\label{SingletDGLAPlept}
+\begin{array}{rcl}
+\displaystyle\mu^2\frac{\partial}{\partial \mu^2}
+\begin{pmatrix}
+g\\
+\gamma\\
+\Sigma\\
+\Delta_\Sigma\\
+\Sigma_\ell
+\end{pmatrix} &=& \displaystyle \left[
+\begin{pmatrix}
+P_{gg} & 0 & P_{gq} & 0 & 0\\
+0 & 0 & 0 & 0  & 0\\
+2n_fP_{qg} & 0 & P_{qq} & 0  & 0\\
+\frac{n_u-n_d}{n_f} 2n_fP_{qg} & 0 & \frac{n_u-n_d}{n_f}(P_{qq}-P^+) &
+P^+ & 0\\
+0 & 0 & 0 & 0  & 0
+\end{pmatrix}\right.
+\\
+\\
+&+&\left.\begin{pmatrix}
+e_\Sigma^2 \widetilde{P}_{gg}          & e_\Sigma^2 \widetilde{P}_{g\gamma} & \eta^+\widetilde{P}_{gq} & \eta^-\widetilde{P}_{gq}  & 0\\
+e_\Sigma^2 \widetilde{P}_{\gamma g} & e_\Sigma^2 \widetilde{P}_{\gamma\gamma} & \eta^+\widetilde{P}_{\gamma q} &\eta^-\widetilde{P}_{\gamma q}  & 0\\
+2 e_\Sigma^2 \widetilde{P}_{qg} & 2 e_\Sigma^2 \widetilde{P}_{q\gamma}
+& \eta^+\widetilde{P}^++\frac{\eta^+e_\Sigma^2}{n_f}(\widetilde{P}_{qq}-\widetilde{P}^+)  & \eta^-\widetilde{P}^++\frac{\eta^-e_\Sigma^2}{n_f}(\widetilde{P}_{qq}-\widetilde{P}^+)  & 0\\
+2 \delta_e^2 \widetilde{P}_{qg} & 2 \delta_e^2 \widetilde{P}_{q\gamma}
+&\eta^-\widetilde{P}^++\frac{\eta^+\delta_e^2}{n_f}(\widetilde{P}_{qq}-\widetilde{P}^+)
+&\eta^+\widetilde{P}^++\frac{\eta^-\delta_e^2}{n_f}(\widetilde{P}_{qq}-\widetilde{P}^+)  & 0\\
+0 & 0 & 0 & 0  & 0
+\end{pmatrix}\right.
+\\
+\\
+&+&\left.\begin{pmatrix}
+0 & 0 & 0 & 0  & 0\\
+0 & 0 & 0 & 0  & \mathcal{P}_{\gamma\ell}\\
+0 & 0 & 0 & 0  & 2e_\Sigma^2\mathcal{P}_{q\ell}^S\\
+0 & 0 & 0 & 0  & 2\delta_e^2\mathcal{P}_{q\ell}^S\Sigma_\ell\\
+0 & 2n_\ell\mathcal{P}_{\ell\gamma} & 2n_\ell \mathcal{P}_{q\ell}^S \eta^+ & 2n_\ell \mathcal{P}_{q\ell}^S \eta^-  & \mathcal{P}_{\ell\ell}
+\end{pmatrix}\right]
+\begin{pmatrix}
+g\\
+\gamma\\
+\Sigma\\
+\Delta_\Sigma\\
+\Sigma_\ell
+\end{pmatrix}
+\end{array}
+\end{equation}
+
+\begin{equation}
+\displaystyle\mu^2\frac{\partial}{\partial \mu^2}
+\begin{pmatrix}
+V\\
+\Delta_V
+\end{pmatrix} = 
+\left[
+\begin{pmatrix}
+P^V & 0 \\
+\frac{n_u-n_d}{n_f}(P^V-P^-)  & P^-
+\end{pmatrix}
++
+\begin{pmatrix}
+\eta^+\widetilde{P}^- & \eta^-\widetilde{P}^- \\
+\eta^-\widetilde{P}^- & \eta^+\widetilde{P}^- 
+\end{pmatrix}
+\right]
+\begin{pmatrix}
+V\\
+\Delta_V
+\end{pmatrix}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l}
+\displaystyle  \mu^2\frac{\partial V_\ell}{\partial \mu^2} =
+\mathcal{P}^-  V_\ell = \mathcal{P}^V  V_\ell
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{rcl}
+\\
+\displaystyle \mu^2\frac{\partial T^u_{1,2}}{\partial \mu^2} &=&
+\displaystyle (P^+ + e_u^2\widetilde{P}^+) T^u_{1,2}\\
+\\
+\displaystyle \mu^2\frac{\partial T^d_{1,2}}{\partial \mu^2} &=&
+\displaystyle (P^+ + e_d^2\widetilde{P}^+) T^d_{1,2}
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \mu^2\frac{\partial V^u_{1,2}}{\partial \mu^2} &=&
+\displaystyle (P^- + e_u^2\widetilde{P}^-) V^u_{1,2}\\
+\\
+\displaystyle \mu^2\frac{\partial V^d_{1,2}}{\partial \mu^2} &=&
+\displaystyle (P^- + e_d^2\widetilde{P}^-) V^d_{1,2}
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l}
+\displaystyle  \mu^2\frac{\partial T_{3,8}^{\ell}}{\partial \mu^2} =
+\mathcal{P}^+  T_{3,8}^{\ell}\\
+\\
+\displaystyle  \mu^2\frac{\partial V_{3,8}^{\ell}}{\partial \mu^2} =
+\mathcal{P}^-  V_{3,8}^{\ell}
+\end{array}
+\end{equation}
+
+
+\subsection{Evolution Equations at LO}
+
+At LO in QED, considering that $\mathcal{P}_{q\ell}^S = 0$ and that $\mathcal{P}_{ij}=\widetilde{P}_{ij}$, the
+evolution equations above reduce to:
+\begin{equation}\label{APFELsysLept}
+\begin{array}{rcl}
+\displaystyle\mu^2\frac{\partial}{\partial \mu^2}
+\begin{pmatrix}
+g\\
+\gamma\\
+\Sigma\\
+\Delta_\Sigma\\
+\Sigma_\ell
+\end{pmatrix} &=& \displaystyle \left[
+\begin{pmatrix}
+P_{gg} & 0 & P_{gq} & 0 & 0\\
+0 & 0 & 0 & 0 & 0\\
+2n_fP_{qg} & 0 & P_{qq} & 0 & 0\\
+\frac{n_u-n_d}{n_f} 2n_fP_{qg} & 0 & \frac{n_u-n_d}{n_f}(P_{qq}-P^+) &
+P^+ & 0\\
+0 & 0 & 0 & 0 & 0\\
+\end{pmatrix}\right.
+\\
+\\
+&+&\left.\begin{pmatrix}
+0 & 0 & 0 & 0 & 0\\
+0 & e_\Sigma^2 \widetilde{P}_{\gamma\gamma} & \eta^+\widetilde{P}_{\gamma q} &\eta^-\widetilde{P}_{\gamma q} & \widetilde{P}_{\gamma q}\\
+0 & 2 e_\Sigma^2 \widetilde{P}_{q\gamma} & \eta^+\widetilde{P}_{qq} &
+\eta^-\widetilde{P}_{qq} & 0\\
+0 & 2 \delta_e^2 \widetilde{P}_{q\gamma}
+&\eta^-\widetilde{P}_{qq}
+&\eta^+\widetilde{P}_{qq} & 0\\
+0 & 2n_\ell\widetilde{P}_{q\gamma} & 0 & 0 & \widetilde{P}_{qq}\\
+\end{pmatrix}\right]
+\begin{pmatrix}
+g\\
+\gamma\\
+\Sigma\\
+\Delta_\Sigma\\
+\Sigma_\ell
+\end{pmatrix}
+\end{array}
+\end{equation}
+
+\begin{equation}
+\displaystyle\mu^2\frac{\partial}{\partial \mu^2}
+\begin{pmatrix}
+V\\
+\Delta_V
+\end{pmatrix} = 
+\left[
+\begin{pmatrix}
+P^V & 0 \\
+\frac{n_u-n_d}{n_f}(P^V-P^-)  & P^- 
+\end{pmatrix}
++
+\begin{pmatrix}
+\eta^+\widetilde{P}_{qq} & \eta^-\widetilde{P}_{qq} \\
+\eta^-\widetilde{P}_{qq} & \eta^+\widetilde{P}_{qq}
+\end{pmatrix}
+\right]
+\begin{pmatrix}
+V\\
+\Delta_V
+\end{pmatrix}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l}
+\displaystyle  \mu^2\frac{\partial V_\ell}{\partial \mu^2} =
+\widetilde{P}_{qq}  V_\ell
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l}
+\begin{array}{rcl}
+\\
+\displaystyle \mu^2\frac{\partial T^u_{1,2}}{\partial \mu^2} &=&
+\displaystyle (P^+ + e_u^2\widetilde{P}_{qq}) T^u_{1,2}\\
+\\
+\displaystyle \mu^2\frac{\partial T^d_{1,2}}{\partial \mu^2} &=&
+\displaystyle (P^+ + e_d^2\widetilde{P}_{qq}) T^d_{1,2}
+\end{array}
+\\
+\\
+\begin{array}{rcl}
+\displaystyle \mu^2\frac{\partial V^u_{1,2}}{\partial \mu^2} &=&
+\displaystyle (P^- + e_u^2\widetilde{P}_{qq}) V^u_{1,2}\\
+\\
+\displaystyle \mu^2\frac{\partial V^d_{1,2}}{\partial \mu^2} &=&
+\displaystyle (P^- + e_d^2\widetilde{P}_{qq}) V^d_{1,2}
+\end{array}
+\end{array}
+\end{equation}
+
+\begin{equation}
+\begin{array}{l}
+\displaystyle  \mu^2\frac{\partial T_{3,8}^{\ell}}{\partial \mu^2} =
+\widetilde{P}_{qq}  T_{3,8}^{\ell}\\
+\\
+\displaystyle  \mu^2\frac{\partial V_{3,8}^{\ell}}{\partial \mu^2} =
+\widetilde{P}_{qq}  V_{3,8}^{\ell}
+\end{array}
+\end{equation}
 
 
 \bibliographystyle{unsrt}
