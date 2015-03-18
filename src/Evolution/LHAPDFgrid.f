@@ -363,9 +363,9 @@
                write(13,*) (dsqrt(q2LHA(iq2)), iq2=iq2in,iq2fi)
 *
                if(Th.eq."QCD") then
-                  write(13,"(a)") "-6 -5 -4 -3 -1 -2 21 2 1 3 4 5 6"
+                  write(13,"(a)") "-6 -5 -4 -3 -2 -1 21 1 2 3 4 5 6"
                else
-                  write(13,"(a)") "-6 -5 -4 -3 -1 -2 21 2 1 3 4 5 6 22"
+                  write(13,"(a)") "-6 -5 -4 -3 -2 -1 21 1 2 3 4 5 6 22"
                endif
 *
                do iq2=iq2in,iq2fi
