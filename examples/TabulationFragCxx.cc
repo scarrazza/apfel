@@ -4,25 +4,6 @@
   Example program used for fragmentation function evolution.
   The fragmentation functions are hardcoded and for the following
   options are available:
-                          
-  DSS                  HKNS:
-                          
-  - "dss_pip_lo"       - "hknsff07_pip_lo"
-  - "dss_pip_nlo"      - "hknsff07_pip_nlo"
-  - "dss_pim_lo"       - "hknsff07_pim_lo"
-  - "dss_pim_nlo"      - "hknsff07_pim_nlo"
-  - "dss_Kp_lo"        - "hknsff07_Kp_lo"
-  - "dss_Kp_nlo"       - "hknsff07_Kp_nlo"
-  - "dss_Km_lo"        - "hknsff07_Km_lo"
-  - "dss_Km_nlo"       - "hknsff07_Km_nlo"
-  - "dss_p_lo"         - "hknsff07_p_lo"
-  - "dss_p_nlo"        - "hknsff07_p_nlo"
-  - "dss_pb_lo"        - "hknsff07_pb_lo"
-  - "dss_pb_nlo"       - "hknsff07_pb_nlo"
-  - "dss_h_lo"    
-  - "dss_h_nlo"   
-  - "dss_hb_lo"   
-  - "dss_hb_nlo"  
 */
 
 #include <iostream>
@@ -42,9 +23,7 @@ int main()
   //
   APFEL::SetTimeLikeEvolution(true);
   //
-  // HKNS
-  //
-  APFEL::SetPDFSet("hknsff07_p_lo");
+  APFEL::SetPDFSet("kretzer");
   APFEL::SetPerturbativeOrder(0);
   APFEL::SetMaxFlavourPDFs(5);
   APFEL::SetMaxFlavourAlpha(5);
@@ -55,22 +34,6 @@ int main()
   APFEL::SetNumberOfGrids(2);
   APFEL::SetGridParameters(1,50,3,1e-2);
   APFEL::SetGridParameters(2,40,3,7e-1);
-  /*
-  //
-  // DSS
-  //
-  APFEL::SetPDFSet("dss_p_lo");
-  APFEL::SetPerturbativeOrder(0);
-  APFEL::SetMaxFlavourPDFs(5);
-  APFEL::SetMaxFlavourAlpha(5);
-  APFEL::SetPoleMasses(1.43,4.3,175);
-  APFEL::SetAlphaEvolution("lambda");
-  APFEL::SetLambdaQCDRef(0.220,4);
-  //APFEL::SetLambdaQCDRef(0.334,4);
-  APFEL::SetNumberOfGrids(2);
-  APFEL::SetGridParameters(1,50,3,5e-2);
-  APFEL::SetGridParameters(2,40,3,7e-1);
-  */
   // Initializes integrals on the grids
   APFEL::InitializeAPFEL();
 

@@ -130,8 +130,7 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/ExternalEvolutionOperator.lo Evolution/LockGrids.lo \
 	Evolution/SetTimeLikeEvolution.lo \
 	Evolution/SetAlphaEvolution.lo Evolution/SetLambdaQCDRef.lo \
-	Evolution/SetPDFEvolution.lo Evolution/hknsff07.lo \
-	Evolution/fDSS.lo Evolution/LHAPDFgridDerivative.lo \
+	Evolution/SetPDFEvolution.lo Evolution/LHAPDFgridDerivative.lo \
 	Evolution/SetSmallxResummation.lo \
 	Evolution/SetFastEvolution.lo Evolution/EnableMassRunning.lo \
 	Evolution/ListFunctions.lo Evolution/GetPerturbativeOrder.lo \
@@ -474,7 +473,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/SetMaxFlavourAlpha.f Evolution/SetReplica.f Evolution/AlphaQCD.f Evolution/AlphaQED.f Evolution/HeavyQuarkMass.f \
 	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f \
 	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f Evolution/SetTimeLikeEvolution.f Evolution/SetAlphaEvolution.f \
-	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/hknsff07.f Evolution/fDSS.f Evolution/LHAPDFgridDerivative.f \
+	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/LHAPDFgridDerivative.f \
 	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f Evolution/EnableMassRunning.f Evolution/ListFunctions.f \
 	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f
 
@@ -658,10 +657,6 @@ Evolution/SetAlphaEvolution.lo: Evolution/$(am__dirstamp) \
 Evolution/SetLambdaQCDRef.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetPDFEvolution.lo: Evolution/$(am__dirstamp) \
-	Evolution/$(DEPDIR)/$(am__dirstamp)
-Evolution/hknsff07.lo: Evolution/$(am__dirstamp) \
-	Evolution/$(DEPDIR)/$(am__dirstamp)
-Evolution/fDSS.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/LHAPDFgridDerivative.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
