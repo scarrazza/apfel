@@ -60,7 +60,7 @@
             do i=-6,6
                fph(jgrid,i,alpha) = fphQCD(i,alpha)
             enddo
-            fgamma(jgrid,alpha) = f0bos(alpha)
+            fgamma(jgrid,alpha) = f0lep(0,alpha)
          enddo
 *
 ************************************************************************
@@ -83,7 +83,7 @@
                fph(jgrid,i,alpha)  = fphQED(i,alpha)
                fph(jgrid,-i,alpha) = fphQED(-i,alpha)
             enddo
-            fph(jgrid,0,alpha)  = f0bos(alpha)
+            fph(jgrid,0,alpha)  = f0lep(0,alpha)
             fgamma(jgrid,alpha) = fphQED(0,alpha)
          enddo
 *
@@ -94,7 +94,7 @@
 *     Rotate initial PDFs from physical to QCD evolution basis
          call PDFphys2evQCD(f0ph,fevQCD)
          do alpha=0,nin(igrid)
-            fgm(alpha) = f0bos(alpha)
+            fgm(alpha) = f0lep(0,alpha)
          enddo
 *     Evolve PDFs
          do inf=nfi,nff,sgn
@@ -145,7 +145,7 @@
          do alpha=0,nin(igrid)
 *     Put gluon "fphQCD(0,alpha)" into fgl and replace it with f0bos
             fgl(alpha)      = fphQCD(0,alpha)
-            fphQCD(0,alpha) = f0bos(alpha)
+            fphQCD(0,alpha) = f0lep(0,alpha)
          enddo
 *     Rotate PDFs from physical to QED evolution basis
          call PDFphys2evQED(fphQCD,fevQED)
@@ -174,7 +174,7 @@
 *     Rotate initial PDFs from physical to QED evolution basis
          call PDFphys2evQED(f0ph,fevQED)
          do alpha=0,nin(igrid)
-            fgl(alpha) = f0bos(alpha)
+            fgl(alpha) = f0lep(0,alpha)
          enddo
 *     Evolve PDFs
          do inf=nfi,nff,sgn
@@ -229,7 +229,7 @@
          do alpha=0,nin(igrid)
 *     Put gluon "fphQED(0,alpha)" into fgm and replace it with f0bos
             fgm(alpha)      = fphQED(0,alpha)
-            fphQED(0,alpha) = f0bos(alpha)
+            fphQED(0,alpha) = f0lep(0,alpha)
          enddo
 *     Rotate PDFs from physical to QCD evolution basis
          call PDFphys2evQCD(fphQED,fevQCD)
@@ -253,12 +253,12 @@
       elseif(Th.eq."QavDP")then
          call PDFphys2evQCD(f0ph,fevQCD)
          do alpha=0,nin(igrid)
-            fgm(alpha) = f0bos(alpha)
+            fgm(alpha) = f0lep(0,alpha)
          enddo
          call switchGluonPhoton
          call PDFphys2evQED(f0ph,fevQED)
          do alpha=0,nin(igrid)
-            fgl(alpha) = f0bos(alpha)
+            fgl(alpha) = f0lep(0,alpha)
          enddo
 *
          do inf=nfi,nff,sgn
@@ -325,7 +325,7 @@
 *     QCD x QED
          call PDFphys2evQCD(f0ph,fevQCD)
          do alpha=0,nin(igrid)
-            fgm(alpha) = f0bos(alpha)
+            fgm(alpha) = f0lep(0,alpha)
          enddo
 *
          do inf=nfi,nff,sgn
@@ -349,7 +349,7 @@
          call switchGluonPhoton
          call PDFphys2evQED(f0ph,fevQED)
          do alpha=0,nin(igrid)
-            fgl(alpha) = f0bos(alpha)
+            fgl(alpha) = f0lep(0,alpha)
          enddo
          do inf=nfi,nff,sgn
             call EvolveQED(inf,fevQED)
@@ -385,7 +385,7 @@
 ************************************************************************
       elseif(Th.eq."QUniD")then
 *     Rotate initial PDFs from physical to Unified evolution basis
-         call PDFphys2evUni(f0bos,f0ph,fevUni)
+         call PDFphys2evUni(f0lep,f0ph,fevUni)
 *     Evolve PDFs using the QCD evolution operators
          do inf=nfi,nff,sgn
             call EvolveUni(inf,fevUni)

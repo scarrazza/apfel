@@ -23,7 +23,7 @@
 *     Internal Variables
 *
       integer alpha
-      integer ifl
+      integer ifl,ilept
       integer Nrep
       double precision f0(-6:6),fp0,fext0(-6:7)
       logical has_photon
@@ -44,7 +44,9 @@
             do ifl=-6,6
                f0ph(ifl,alpha) = f0(ifl)
             enddo
-            f0bos(alpha) = 0d0
+            do ilept=-3,3
+               f0lep(ilept,alpha) = 0d0
+            enddo
          enddo
 *
 *     In case one wants to use a PDF set previously evolved by APFEL
@@ -56,8 +58,12 @@
                f0ph(ifl,alpha) = fph(igrid,ifl,alpha)
                if(dabs(f0ph(ifl,alpha)).lt.1d-14) f0ph(ifl,alpha) = 0d0
             enddo
-            f0bos(alpha) = fgamma(igrid,alpha)
-            if(dabs(f0bos(alpha)).lt.1d-14) f0bos(alpha) = 0d0
+            f0lep(0,alpha) = fgamma(igrid,alpha)
+            if(dabs(f0lep(0,alpha)).lt.1d-14) f0lep(0,alpha) = 0d0
+            do ilept=1,3
+               f0lep(ilept,alpha) = 0d0
+               f0lep(-ilept,alpha) = 0d0
+            enddo
          enddo
 *
 *     LHA Toy PDFs
@@ -68,7 +74,9 @@
             do ifl=-6,6
                f0ph(ifl,alpha) = f0(ifl)
             enddo
-            f0bos(alpha) = 0d0
+            do ilept=-3,3
+               f0lep(ilept,alpha) = 0d0
+            enddo
          enddo
 *
 *     External Set
@@ -79,7 +87,11 @@
             do ifl=-6,6
                f0ph(ifl,alpha) = fext0(ifl)
             enddo
-            f0bos(alpha) = fext0(7)
+            f0lep(0,alpha) = fext0(7)
+            do ilept=1,3
+               f0lep(ilept,alpha) = 0d0
+               f0lep(-ilept,alpha) = 0d0
+            enddo
          enddo
 *
 *     HKNS07 fragmentation functions
@@ -142,7 +154,9 @@
             enddo
             f0ph(6,alpha)  = 0d0
             f0ph(-6,alpha) = 0d0
-            f0bos(alpha)   = 0d0
+            do ilept=-3,3
+               f0lep(ilept,alpha) = 0d0
+            enddo
          enddo
 *
 *     DSS fragmentation functions
@@ -241,7 +255,9 @@
             enddo
             f0ph(6,alpha)  = 0d0
             f0ph(-6,alpha) = 0d0
-            f0bos(alpha)   = 0d0
+            do ilept=-3,3
+               f0lep(ilept,alpha) = 0d0
+            enddo
          enddo
 *
 *     Kretzer's parametrization at Q2 = 0.4 GeV^2 of the light partons
@@ -253,7 +269,9 @@
             do ifl=-6,6
                f0ph(ifl,alpha) = f0(ifl)
             enddo
-            f0bos(alpha) = 0d0
+            do ilept=-3,3
+               f0lep(ilept,alpha) = 0d0
+            enddo
          enddo
 *
 *     HKNS parametrization at Q2 = 1 GeV^2 of the light partons
@@ -265,7 +283,9 @@
             do ifl=-6,6
                f0ph(ifl,alpha) = f0(ifl)
             enddo
-            f0bos(alpha) = 0d0
+            do ilept=-3,3
+               f0lep(ilept,alpha) = 0d0
+            enddo
          enddo
 *
 *     LHAPDF set
@@ -288,7 +308,11 @@
                do ifl=-6,6
                   f0ph(ifl,alpha) = f0(ifl)
                enddo
-               f0bos(alpha) = fp0
+               do ilept=1,3
+                  f0lep(ilept,alpha) = 0d0
+                  f0lep(-ilept,alpha) = 0d0
+               enddo
+               f0lep(0,alpha) = fp0
             enddo
          else
             do alpha=0,nin(igrid)
@@ -297,7 +321,9 @@
                do ifl=-6,6
                   f0ph(ifl,alpha) = f0(ifl)
                enddo
-               f0bos(alpha) = fp0
+               do ilept=-3,3
+                  f0lep(ilept,alpha) = 0d0
+               enddo
             enddo
          endif
       endif

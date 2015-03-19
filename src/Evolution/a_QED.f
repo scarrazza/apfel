@@ -81,7 +81,7 @@ c      return
       endif
 *
  10   if(nff.eq.nfi) then
-         a_QED = alphaqedev(nfi,mur2,mur20,aqedr0)
+         a_QED = alphaqedev(nfi,0,mur2,mur20,aqedr0)
          return
       else
          if(nff.gt.nfi)then
@@ -92,7 +92,7 @@ c      return
             snf = 0
          endif
 *
-         aqedi = alphaqedev(nfi,mur2th(nfi+snf),mur20,aqedr0)
+         aqedi = alphaqedev(nfi,0,mur2th(nfi+snf),mur20,aqedr0)
 *
          aqedr0  = aqedi
          mur20 = mur2th(nfi+snf)
@@ -103,13 +103,13 @@ c      return
       end
 *
 ****************************************************************
-      FUNCTION ALPHAQEDEV(NF,Q2F,Q2I,ALPHAREF)
+      FUNCTION ALPHAQEDEV(NF,NL,Q2F,Q2I,ALPHAREF)
 *
       IMPLICIT NONE
 **
 *     Input Variables
 *
-      INTEGER NF
+      INTEGER NF,NL
       DOUBLE PRECISION Q2F,Q2I
       DOUBLE PRECISION ALPHAREF,BETA0QED
 **
@@ -122,7 +122,7 @@ c      return
 *
       DOUBLE PRECISION ALPHAQEDEV
 *
-      BETA0 = BETA0QED(NF)
+      BETA0 = BETA0QED(NF,NL)
       L = DLOG( Q2F / Q2I )
 *
       ALPHAQEDEV = ALPHAREF / ( 1D0 - ALPHAREF * BETA0 * L )
@@ -131,13 +131,13 @@ c      return
       END
 *
 ****************************************************************
-      function beta0qed(nf)
+      function beta0qed(nf,nl)
 *
       implicit none
 **
 *     Input Variables
 *
-      integer nf
+      integer nf,nl
 **
 *     Internal Variables
 *
@@ -159,7 +159,7 @@ c      return
       sumch2(5) = 11d0 / 9d0
       sumch2(6) = 5d0 / 3d0
 *
-      beta0qed = 8d0 / 3d0 * ( nc * sumch2(nf) )!+ 3d0 )
+      beta0qed = 8d0 / 3d0 * ( nc * sumch2(nf) + nl )
 *
       return
       end

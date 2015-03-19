@@ -35,6 +35,8 @@
       include "../commons/Smallx.h"
       include "../commons/FastEvol.h"
       include "../commons/MassRunning.h"
+      include "../commons/TauMass.h"
+      include "../commons/LeptEvol.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -56,12 +58,14 @@
       if(InKren.ne."done")        call SetRenFacRatio(1d0)
       if(InMasses.ne."done")      call SetPoleMasses(dsqrt(2d0),4.5d0,
      1                                               175d0)
+      if(InMTau.ne."done")        call SetTauMass(1.777d0)
       if(InMassRunning.ne."done") call EnableMassRunning(.true.)
       if(InMFP.ne."done")         call SetMaxFlavourPDFs(6)
       if(InMFA.ne."done")         call SetMaxFlavourAlpha(6)
       if(InPDFs.ne."done")        call SetPDFset("ToyLH")
       if(InRep.ne."done")         call SetReplica(0)
       if(InEvolOp.ne."done")      call EnableEvolutionOperator(.false.)
+      if(InLeptEvol.ne."done")    call EnableLeptonEvolution(.false.)
       if(InLock.ne."done")        call LockGrids(.false.)
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
@@ -277,6 +281,10 @@
             write(6,*) "Computation of the evolution operator enabled"
          endif
 *
+         if(LeptEvol.and.Th(1:3).ne."QCD")then
+            write(6,*) "Lepton evolution enabled"
+         endif
+*
          if(TimeLike)then
             write(6,*) "Time-like evolution (fragmentation functions)"
          else
@@ -341,6 +349,8 @@
             write(6,"(a,f6.2,a)") " - Mb = ",dsqrt(m2th(5))," GeV"
             write(6,"(a,f6.2,a)") " - Mt = ",dsqrt(m2th(6))," GeV"
          endif
+*
+         write(6,"(a,f6.3,a)") "Mass of the tau lepton =",MTau," GeV"
 *
          write(6,*) " "
       endif

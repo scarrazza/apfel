@@ -1259,7 +1259,8 @@ Now, let us consider the following combinations:
 \displaystyle  V_{8}^{\ell} = \ell_e^- + \ell_\mu^--2\ell_\tau^-
 \end{array}
 \end{equation}
-It is easy to see that above the $\tau$ mass threshold, they
+It is easy to see that above the $\tau$ mass threshold, $i.e.$ where
+$n_\ell = 3$, they
 evolve according to the following equations:
 \begin{equation}
 \begin{array}{l}
@@ -1513,6 +1514,20 @@ V\\
 \end{array}
 \end{equation}
 
+There is one last detail to be discussed. Contraty to electrons and
+muons, whose masses are well below $\Lambda_{\rm QCD}$, the $\tau$ has
+a mass equal to $m_\tau = 1.777$ GeV which is well above $\Lambda_{\rm
+  QCD}$ and even above the typical initial scale $Q_0 \simeq 1$ GeV
+from which PDFs are usually evolved. As a consequence, we need to
+account for the possibility to cross the $\tau$ mass threshold. To do
+so, we just need to realize that below the $\tau$ threshold, where
+$n_\ell = 2$, the $T_8^\ell$ and $V_8^\ell$ reduce to the lepton
+singlet $\Sigma_\ell$ and total valence $V_\ell$ distributions and and
+thus evolve as such.
+
+From the implementation point of view, the main problem is the fact
+that we need to introduce a new threshold between the charm and the
+bottom thresholds and this will complicate the structure of the code.
 
 \bibliographystyle{unsrt}
 \phantomsection\addcontentsline{toc}{section}{\refname}\nocite{*}

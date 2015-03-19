@@ -319,7 +319,7 @@
          do i=-6,6
             fph(igrid,i,alpha) = fpy(i,alpha)
          enddo
-         fgamma(igrid,alpha) = f0bos(alpha)
+         fgamma(igrid,alpha) = f0lep(0,alpha)
       enddo
 *
       return

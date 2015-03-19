@@ -19,9 +19,9 @@
       double precision fb(0:nint_max)
 *
       do alpha=0,nin(igrid)
-         fb(alpha)     = f0bos(alpha)
-         f0bos(alpha)  = f0ph(0,alpha)
-         f0ph(0,alpha) = fb(alpha)
+         fb(alpha)      = f0lep(0,alpha)
+         f0lep(0,alpha) = f0ph(0,alpha)
+         f0ph(0,alpha)  = fb(alpha)
       enddo
 *
       return

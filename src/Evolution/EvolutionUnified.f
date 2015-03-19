@@ -55,7 +55,7 @@
 *
 *     Rotate initial PDFs into the evolution basis
 *
-      call PDFphys2evUni(f0bos,f0ph,f0ev)
+      call PDFphys2evUni(f0lep,f0ph,f0ev)
 *
 *     Mass scheme
 *

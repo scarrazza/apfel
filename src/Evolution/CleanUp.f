@@ -48,6 +48,8 @@
       include "../commons/MassRunning.h"
       include "../commons/TMC.h"
       include "../commons/SelectedCharge.h"
+      include "../commons/TauMass.h"
+      include "../commons/LeptEvol.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -61,12 +63,14 @@
       InAlpQED          = "xxxx"
       InKren            = "xxxx"  
       InMasses          = "xxxx"
+      InMTau            = "xxxx"
       InMassRunning     = "xxxx"
       InMFP             = "xxxx"
       InMFA             = "xxxx"
       InPDFs            = "xxxx"
-      InRep             = "xxxx"   
+      InRep             = "xxxx"
       InEvolOp          = "xxxx"
+      InLeptEvol        = "xxxx"
       InLock            = "xxxx"
       InGrid            = "xxxx"
       InTimeLike        = "xxxx"

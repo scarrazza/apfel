@@ -14,7 +14,7 @@
 *     g   gm  Sig Dsg Tu1 Tu2 Td1 Td2 V   DV  Vu1 Vu2 Vd1 Vd2
 *
 ************************************************************************
-      subroutine PDFphys2evUni(gammain,pdfin,pdfout)
+      subroutine PDFphys2evUni(leptonin,pdfin,pdfout)
 *
       implicit none
 *
@@ -23,7 +23,7 @@
 **
 *     Input Variables
 *
-      double precision gammain(0:nint_max)
+      double precision leptonin(-3:3,0:nint_max)
       double precision pdfin(-6:6,0:nint_max)
 **
 *     Internal Variables
@@ -39,7 +39,7 @@
 *     Rotate PDFs
 *
       do a=0,nin(igrid)
-         pdfi(-7) = gammain(a)
+         pdfi(-7) = leptonin(0,a)
          do i=-6,6
             pdfi(i) = pdfin(i,a)
          enddo

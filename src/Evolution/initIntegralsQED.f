@@ -7,7 +7,7 @@
 *     in QCD.
 *
 ************************************************************************
-      subroutine initIntegralsQED(nf)
+      subroutine initIntegralsQED(nf,nl)
 *
       implicit none
 *
@@ -15,14 +15,14 @@
 **
 *     Input Variables
 *
-      integer nf
+      integer nf,nl
 **
 *     Internal Variables
 *
       integer alpha
 *
       do alpha=0,nin(igrid)-1
-         call RSLintegralsQED(nf,0,alpha)
+         call RSLintegralsQED(nf,nl,0,alpha)
       enddo
 *
       return

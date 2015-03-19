@@ -21,7 +21,7 @@
 *
 *     Variables
 *
-      integer inf,nfi,nff
+      integer inf,nfi,nff,inl
       double precision t1,t2
 *
       call cpu_time(t1)
@@ -80,7 +80,9 @@
             if(Smallx) call initIntegralsQCDRes
          elseif(Th.eq."QED")then
             do inf=nfi,nff
-               call initIntegralsQED(inf)
+               do inl=2,3
+                  call initIntegralsQED(inf,inl)
+               enddo
             enddo
          elseif(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
      1          Th.eq."QECDP".or.Th.eq."QECDS".or.
@@ -88,7 +90,9 @@
      3          Th.eq."QUniD")then
             do inf=nfi,nff
                call initIntegralsQCD(inf)
-               call initIntegralsQED(inf)
+               do inl=2,3
+                  call initIntegralsQED(inf,inl)
+               enddo
             enddo
             if(Smallx) call initIntegralsQCDRes
          endif

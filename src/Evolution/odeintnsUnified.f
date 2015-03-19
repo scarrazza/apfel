@@ -275,6 +275,10 @@
             integ(alpha) = integralsQCD(0,alpha,coupQCD,2)
      1                   + integralsQED(0,alpha,coupQED,2)
          enddo
+      elseif(i.eq.5)then
+         do alpha=0,nin(igrid)
+            integ(alpha) = integralsQED(0,alpha,coupQED,12)
+         enddo
       endif
 *
 *     Initialization

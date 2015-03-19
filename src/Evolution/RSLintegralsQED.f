@@ -9,11 +9,11 @@
 *     orders in QED.
 *     The index kk runs like that:
 *
-*     kk  =  1   2   3   4   5   6   7   8   9  10  11
-*            nsp nsm gg  gq  gD  qg  qq  qD  Dg  Dq  DD
+*     kk  =  1   2   3   4   5   6   7   8   9   10  11  12  13  14
+*            nsp nsm gg  gq  gD  qg  qq  qD  Dg  Dq  DD  LL  gL  Lg
 * 
 ************************************************************************
-      subroutine RSLintegralsQED(nf,beta,alpha)
+      subroutine RSLintegralsQED(nf,nl,beta,alpha)
 *
       implicit none
 *
@@ -23,18 +23,18 @@
 **
 *     Input Variables
 *
-      integer nf,beta,alpha
+      integer nf,nl,beta,alpha
 **
 *     Internal Variables
 *
       integer bound
       integer nfup,nfdn,nc
-      double precision PL(11),fL
+      double precision PL(14),fL
       double precision X0NSC
       double precision dgauss,a,b,eps
       double precision integrandsQED
       double precision e2u,e2d,e2sig,fnf,etap,etam,thetap,thetam,CF
-      double precision nsL,nsRL,qgR,gqR,integ,cp(11)
+      double precision nsL,nsRL,qgR,gqR,integ,cp(14)
       external integrandsQED
       parameter(nc=3)
       parameter(e2u=4d0/9d0)
@@ -44,8 +44,8 @@
 *
 *     Initialize Integrals
 *
-      do k=1,11
-         SQ(igrid,nf,k,beta,alpha) = 0d0
+      do k=1,14
+         SQ(igrid,nf,nl,k,beta,alpha) = 0d0
       enddo
 *
 *     Adjustment od the bounds of the integrals
@@ -102,7 +102,7 @@
       gqR  = dgauss(integrandsQED,a,b,eps)
       nsL  = X0NSC(a)
 *
-      do k=1,11
+      do k=1,14
 *
 *     Local contributions
 *
@@ -161,11 +161,26 @@
             cp(k) = etap
             PL(k) = nsL / CF
             integ = nsRL
+*     Lepton-Lepton
+         elseif(k.eq.12)then
+            cp(k) = 1d0
+            PL(k) = nsL / CF
+            integ = nsRL
+*    Gamma-Lepton
+         elseif(k.eq.13)then
+            cp(k) = 1d0
+            PL(k) = 0d0
+            integ = gqR
+*    Lepton-Gamma
+         elseif(k.eq.14)then
+            cp(k) = 1d0
+            PL(k) = 0d0
+            integ = 2d0 * nl * qgR
          endif
 *
 *     Integrals
 *
-         SQ(igrid,nf,k,beta,alpha) = cp(k) * ( integ + PL(k) * fL )
+         SQ(igrid,nf,nl,k,beta,alpha) = cp(k) * ( integ + PL(k) * fL )
       enddo
 *
       return

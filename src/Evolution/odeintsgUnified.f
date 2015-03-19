@@ -294,7 +294,7 @@
       double precision coupQCD,a_QCD
       double precision coupQED,a_QED
       double precision Deltaud
-      double precision integ(0:nint_max,4,4)
+      double precision integ(0:nint_max,5,5)
 **
 *     Output Variables
 *
@@ -317,22 +317,32 @@
          integ(alpha,1,2) = 0d0
          integ(alpha,1,3) = integralsQCD(0,alpha,coupQCD,6)
          integ(alpha,1,4) = 0d0
+         integ(alpha,1,5) = 0d0
 *
          integ(alpha,2,1) = 0d0
          integ(alpha,2,2) = 0d0
          integ(alpha,2,3) = 0d0
          integ(alpha,2,4) = 0d0
+         integ(alpha,2,5) = 0d0
 *
          integ(alpha,3,1) = integralsQCD(0,alpha,coupQCD,5)
          integ(alpha,3,2) = 0d0
          integ(alpha,3,3) = integralsQCD(0,alpha,coupQCD,4)
          integ(alpha,3,4) = 0d0
+         integ(alpha,3,5) = 0d0
 *
          integ(alpha,4,1) = Deltaud * integralsQCD(0,alpha,coupQCD,5)
          integ(alpha,4,2) = 0d0
          integ(alpha,4,3) = Deltaud * ( integralsQCD(0,alpha,coupQCD,4)
      1                    - integralsQCD(0,alpha,coupQCD,1) )
          integ(alpha,4,4) = integralsQCD(0,alpha,coupQCD,1)
+         integ(alpha,4,5) = 0d0
+*
+         integ(alpha,5,1) = 0d0
+         integ(alpha,5,2) = 0d0
+         integ(alpha,5,3) = 0d0
+         integ(alpha,5,4) = 0d0
+         integ(alpha,5,5) = 0d0
 *     QED
          integ(alpha,2,2) = integ(alpha,2,2)
      1                    + integralsQED(0,alpha,coupQED,3)
@@ -340,6 +350,8 @@
      1                    + integralsQED(0,alpha,coupQED,4)
          integ(alpha,2,4) = integ(alpha,2,4)
      1                    + integralsQED(0,alpha,coupQED,5)
+         integ(alpha,2,5) = integ(alpha,2,5)
+     1                    + integralsQED(0,alpha,coupQED,13)
 *
          integ(alpha,3,2) = integ(alpha,3,2)
      1                    + integralsQED(0,alpha,coupQED,6)
@@ -354,6 +366,11 @@
      1                    + integralsQED(0,alpha,coupQED,10)
          integ(alpha,4,4) = integ(alpha,4,4)
      1                    + integralsQED(0,alpha,coupQED,11)
+*
+         integ(alpha,5,2) = integ(alpha,5,2)
+     1                    + integralsQED(0,alpha,coupQED,14)
+         integ(alpha,5,5) = integ(alpha,5,5)
+     1                    + integralsQED(0,alpha,coupQED,12)
       enddo
 *     
 *     Initialization

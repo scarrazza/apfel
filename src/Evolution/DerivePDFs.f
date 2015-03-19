@@ -84,7 +84,7 @@
 *     Rotate initial PDFs from physical to QCD evolution basis
          call PDFphys2evQCD(f0ph,dfevQCD)
          do alpha=0,nin(igrid)
-            dfgm(alpha) = f0bos(alpha)
+            dfgm(alpha) = f0lep(0,alpha)
          enddo
 *     Derive PDFs
 *     QCD first
@@ -123,7 +123,7 @@
 *     Rotate initial PDFs from physical to QED evolution basis
          call PDFphys2evQED(f0ph,dfevQED)
          do alpha=0,nin(igrid)
-            dfgl(alpha) = f0bos(alpha)
+            dfgl(alpha) = f0lep(0,alpha)
          enddo
 *     Evolve PDFs
 *     QEDfirst
@@ -154,12 +154,12 @@
       elseif(Th.eq."QavDP".or.Th.eq."QavDS")then
          call PDFphys2evQCD(f0ph,dfevQCD)
          do alpha=0,nin(igrid)
-            dfgm(alpha) = f0bos(alpha)
+            dfgm(alpha) = f0lep(0,alpha)
          enddo
          call switchGluonPhoton
          call PDFphys2evQED(f0ph,dfevQED)
          do alpha=0,nin(igrid)
-            dfgl(alpha) = f0bos(alpha)
+            dfgl(alpha) = f0lep(0,alpha)
          enddo
 *        QCD x QED
          call DeriveQCD(dfevQCD)
