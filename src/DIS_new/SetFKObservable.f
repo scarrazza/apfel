@@ -329,6 +329,16 @@
          call SetProcessDIS("CC")
          call SetProjectileDIS("antineutrino")
          call SetTargetDIS("iron")
+*
+*     Semi-Inclusive electron-positron annihilation (SIA)
+*
+****  Proton structure function F2 (electromagnetic)
+*
+      elseif(obs(1:6).eq."SIA_F2")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
       else
          write(6,*) "In SetFKObservable.f:"
          write(6,*) "Invalid observable, obs = ",obs

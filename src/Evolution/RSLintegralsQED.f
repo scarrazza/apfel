@@ -20,6 +20,7 @@
       include "../commons/wrap.h"
       include "../commons/grid.h"
       include "../commons/integrals.h"
+      include "../commons/LeptEvol.h"
 **
 *     Input Variables
 *
@@ -28,7 +29,7 @@
 *     Internal Variables
 *
       integer bound
-      integer nfup,nfdn,nc
+      integer nfup,nfdn,nc,nk
       double precision PL(14),fL
       double precision X0NSC
       double precision dgauss,a,b,eps
@@ -102,7 +103,10 @@
       gqR  = dgauss(integrandsQED,a,b,eps)
       nsL  = X0NSC(a)
 *
-      do k=1,14
+      nk = 11
+      if(LeptEvol) nk = 14
+*
+      do k=1,nk
 *
 *     Local contributions
 *

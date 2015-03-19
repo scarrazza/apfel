@@ -378,6 +378,13 @@
      1                 -   y2  * FLcharm(x)
      2                 -   ym  * F3charm(x) )
          FKObservables = norm * FKObservables
+*
+*     Semi-Inclusive electron-positron annihilation (SIA)
+*
+****  Proton structure function F2 (electromagnetic)
+*
+      elseif(obs(1:6).eq."SIA_F2")then
+         FKObservables = F2total(x)
       else
          write(6,*) "In FKObservables.f:"
          write(6,*) "Invalid observable, obs = ",obs

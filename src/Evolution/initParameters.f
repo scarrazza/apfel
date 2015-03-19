@@ -281,7 +281,7 @@
             write(6,*) "Computation of the evolution operator enabled"
          endif
 *
-         if(LeptEvol.and.Th(1:3).ne."QCD")then
+         if(LeptEvol.and.FastEvol.and.Th.eq."QUniD")then
             write(6,*) "Lepton evolution enabled"
          endif
 *
@@ -350,7 +350,7 @@
             write(6,"(a,f6.2,a)") " - Mt = ",dsqrt(m2th(6))," GeV"
          endif
 *
-         write(6,"(a,f6.3,a)") "Mass of the tau lepton =",MTau," GeV"
+         write(6,"(a,f6.3,a)") " Mass of the tau lepton =",MTau," GeV"
 *
          write(6,*) " "
       endif

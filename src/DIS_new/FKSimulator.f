@@ -377,6 +377,13 @@
      1               -   y2  * ExternalDISOperator("FL",4,i,x,beta)
      2               -   ym  * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = norm * FKSimulator
+*
+*     Semi-Inclusive electron-positron annihilation (SIA)
+*
+****  Proton structure function F2 (electromagnetic)
+*
+      elseif(obs(1:6).eq."SIA_F2")then
+         FKSimulator = ExternalDISOperator("F2",7,i,x,beta)
       else
          write(6,*) "In FKSimulator.f:"
          write(6,*) "Invalid observable, obs = ",obs

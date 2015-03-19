@@ -131,7 +131,7 @@
       write(6,*) "    parameters (default false)."
       write(6,*) "- EnableLeptonEvolution(bool):"
       write(6,*) "    enables the evolution of the lepton PDFs when the"
-      write(6,*) "    QED corrections are also enabled (default false)."
+      write(6,*) "    fast QUniD is used (default false)."
       write(6,*) "- LockGrids(bool):"
       write(6,*) "    locks the subgrids (default false)."
       write(6,*) "- CleanUp():"

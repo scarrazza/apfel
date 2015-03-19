@@ -32,7 +32,7 @@
       integer sgn
       integer nfi,nff
       double precision mu2i(3:6),mu2f(4:7)
-      double precision f0ev(0:13,0:nint_max)
+      double precision f0ev(0:13,0:nint_max),f0lev(6,0:nint_max)
       double precision fev(0:13,0:nint_max)
       double precision fpy(-7:6,0:nint_max)
       double precision fevQCD(0:13,0:nint_max)
@@ -55,7 +55,7 @@
 *
 *     Rotate initial PDFs into the evolution basis
 *
-      call PDFphys2evUni(f0lep,f0ph,f0ev)
+      call PDFphys2evUni(f0lep,f0ph,f0lev,f0ev)
 *
 *     Mass scheme
 *

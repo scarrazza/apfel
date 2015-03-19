@@ -38,7 +38,7 @@
       double precision fphQED(-6:6,0:nint_max),fphQEDb(-6:6,0:nint_max)
       double precision fgm(0:nint_max),fgmb(0:nint_max)
       double precision fgl(0:nint_max),fglb(0:nint_max)
-      double precision fevUni(0:13,0:nint_max)
+      double precision fevUni(0:13,0:nint_max),flevUni(6,0:nint_max)
       double precision fphUni(-7:6,0:nint_max)
 *
 ************************************************************************
@@ -385,7 +385,7 @@
 ************************************************************************
       elseif(Th.eq."QUniD")then
 *     Rotate initial PDFs from physical to Unified evolution basis
-         call PDFphys2evUni(f0lep,f0ph,fevUni)
+         call PDFphys2evUni(f0lep,f0ph,flevUni,fevUni)
 *     Evolve PDFs using the QCD evolution operators
          do inf=nfi,nff,sgn
             call EvolveUni(inf,fevUni)

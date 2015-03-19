@@ -17,11 +17,13 @@
       include "../commons/alpha_ref_QED.h"
       include "../commons/kren.h"
       include "../commons/m2th.h"
+      include "../commons/TauMass.h"
       include "../commons/mass_scheme.h"
       include "../commons/Nf_FF.h"
       include "../commons/ipt.h"
       include "../commons/Evs.h"
       include "../commons/MaxFlavourAlpha.h"
+      include "../commons/LeptEvol.h"
 **
 *     Input Variables
 *
@@ -31,8 +33,9 @@
 *
       integer i
       integer nfi,nff
+      integer Nl_FF,nli,nlf
       integer dnf,snf
-      double precision mur2th(4:6)
+      double precision mur2th(4:6),MTau2ren
       double precision mur2,mur20
       double precision aqedi,aqedr0
       double precision alphaqedev
@@ -49,55 +52,134 @@ c      return
 *
       mur20 = q2_ref_QED
       mur2  = kren * mu2F
-      do i=4,6
-         mur2th(i) = kren * m2th(i)
-      enddo
 *
       if(Evs.eq."FF")then
-         nfi = Nf_FF
-         nff = Nf_FF
-      elseif(Evs.eq."VF")then
-         if(mur2.ge.mur2th(6))then
-            nff = 6
-         elseif(mur2.ge.mur2th(5))then
-            nff = 5
-         elseif(mur2.ge.mur2th(4))then
-            nff = 4
-         else
-            nff = 3
-         endif
-         if(nff.gt.nfMaxAlpha) nff = nfMaxAlpha
+*     In the FFNS assume that there is no tau contribution
+         Nl_FF = 0
+         if(LeptEvol) Nl_FF = 2
 *
-         if(mur20.gt.mur2th(6))then
-            nfi = 6
-         elseif(mur20.gt.mur2th(5))then
-            nfi = 5
-         elseif(mur20.gt.mur2th(4))then
-            nfi = 4
-         else
-            nfi = 3
-         endif
-         if(nfi.gt.nfMaxAlpha) nfi = nfMaxAlpha
-      endif
-*
- 10   if(nff.eq.nfi) then
-         a_QED = alphaqedev(nfi,0,mur2,mur20,aqedr0)
+         a_QED = alphaqedev(Nf_FF,Nl_FF,mur2,mur20,aqedr0)
          return
-      else
-         if(nff.gt.nfi)then
-            dnf = 1
-            snf = 1
-         else
-            dnf = -1
-            snf = 0
+      elseif(Evs.eq."VF")then
+         do i=4,6
+            mur2th(i) = kren * m2th(i)
+         enddo
+*
+         nli = 0
+         nlf = 0
+         Mtau2ren = kren * MTau * MTau
+         if(LeptEvol)then
+            nli = 2
+            if(mur20.gt.Mtau2ren) nli = 3
+            nlf = 2
+            if(mur2.ge.Mtau2ren) nlf = 3
          endif
 *
-         aqedi = alphaqedev(nfi,0,mur2th(nfi+snf),mur20,aqedr0)
+*     If the final and initial and numbers are equal ...
 *
-         aqedr0  = aqedi
-         mur20 = mur2th(nfi+snf)
-         nfi  = nfi + dnf
-         goto 10
+         if(nli.eq.nlf)then
+            if(mur2.ge.mur2th(6))then
+               nff = 6
+            elseif(mur2.ge.mur2th(5))then
+               nff = 5
+            elseif(mur2.ge.mur2th(4))then
+               nff = 4
+            else
+               nff = 3
+            endif
+            if(nff.gt.nfMaxAlpha) nff = nfMaxAlpha
+*
+            if(mur20.gt.mur2th(6))then
+               nfi = 6
+            elseif(mur20.gt.mur2th(5))then
+               nfi = 5
+            elseif(mur20.gt.mur2th(4))then
+               nfi = 4
+            else
+               nfi = 3
+            endif
+            if(nfi.gt.nfMaxAlpha) nfi = nfMaxAlpha
+*
+ 10         if(nff.eq.nfi)then
+               a_QED = alphaqedev(nfi,nli,mur2,mur20,aqedr0)
+               return
+            else
+               if(nff.gt.nfi)then
+                  dnf = 1
+                  snf = 1
+               else
+                  dnf = -1
+                  snf = 0
+               endif
+*
+               aqedi = alphaqedev(nfi,nli,mur2th(nfi+snf),mur20,aqedr0)
+*
+               aqedr0  = aqedi
+               mur20 = mur2th(nfi+snf)
+               nfi  = nfi + dnf
+               goto 10
+            endif
+*
+*     ... if else the final and initial and numbers are not equal ...
+*
+         else
+*
+*     ...first evolve from the initial scale to the tau scale with "nli"
+*     active leptons and the from the tau scale to the final scale with
+*     "nlf" active leptons.
+*
+            mur20 = q2_ref_QED
+            mur2  = Mtau2ren
+ 12         if(mur2.ge.mur2th(6))then
+               nff = 6
+            elseif(mur2.ge.mur2th(5))then
+               nff = 5
+            elseif(mur2.ge.mur2th(4))then
+               nff = 4
+            else
+               nff = 3
+            endif
+            if(nff.gt.nfMaxAlpha) nff = nfMaxAlpha
+*
+            if(mur20.gt.mur2th(6))then
+               nfi = 6
+            elseif(mur20.gt.mur2th(5))then
+               nfi = 5
+            elseif(mur20.gt.mur2th(4))then
+               nfi = 4
+            else
+               nfi = 3
+            endif
+            if(nfi.gt.nfMaxAlpha) nfi = nfMaxAlpha
+*
+ 11         if(nff.eq.nfi)then
+               a_QED = alphaqedev(nfi,nli,mur2,mur20,aqedr0)
+               if(nli.eq.nlf)then
+                  return
+               else
+                  nli    = nlf
+                  mur20  = Mtau2ren
+                  mur2   = kren * mu2F
+                  aqedr0 = a_QED
+                  goto 12
+               endif
+            else
+               if(nff.gt.nfi)then
+                  dnf = 1
+                  snf = 1
+               else
+                  dnf = -1
+                  snf = 0
+               endif
+*
+               aqedi = alphaqedev(nfi,nli,mur2th(nfi+snf),mur20,aqedr0)
+*
+               aqedr0 = aqedi
+               mur20  = mur2th(nfi+snf)
+               nfi    = nfi + dnf
+               goto 11
+            endif
+         endif
       endif
 *
       end
