@@ -14,7 +14,7 @@
 *     gm  tb  bb  cb  sb  ub  db   g   d   u   s   c   b   t
 *
 ************************************************************************
-      subroutine PDFevUni2phys(pdfin,pdfout)
+      subroutine PDFevUni2phys(leptonin,pdfin,leptonout,pdfout)
 *
       implicit none
 *
@@ -24,26 +24,60 @@
 *     Input Variables
 *
       double precision pdfin(0:13,0:nint_max)
+      double precision leptonin(6,0:nint_max)
 **
 *     Internal Variables
 *
       integer a
       integer i,j
+      double precision pdftmp(-7:6)
 **
 *     Output Variables
 *
-      double precision pdfout(-7:6,0:nint_max)
+      double precision pdfout(-6:6,0:nint_max)
+      double precision leptonout(-3:3,0:nint_max)
 *
 *     Rotate PDFs
 *
       do a=0,nin(igrid)
+c         do i=0,13
+c            pdfout(i-7,a) = 0d0
+c            do j=0,13
+c               pdfout(i-7,a) = pdfout(i-7,a)
+c     1                       + Tev2phUni(i,j) * pdfin(j,a)
+c            enddo
+c         enddo
+
+
          do i=0,13
-            pdfout(i-7,a) = 0d0
+            pdftmp(i-7) = 0d0
             do j=0,13
-               pdfout(i-7,a) = pdfout(i-7,a)
-     1                       + Tev2phUni(i,j) * pdfin(j,a)
+               pdftmp(i-7) = pdftmp(i-7)
+     1                     + Tev2phUni(i,j) * pdfin(j,a)
             enddo
          enddo
+*
+         do i=-6,6
+            pdfout(i,a) = pdftmp(i)
+         enddo
+*
+         leptonout(-3,a) = ( leptonin(1,a) - leptonin(4,a) 
+     1                   - leptonin(3,a) + leptonin(6,a) ) / 4d0 
+         leptonout(-2,a) = (  ( leptonin(1,a) - leptonin(4,a) ) 
+     1                   - 2d0 * ( leptonin(2,a) - leptonin(5,a) )
+     2                   + ( leptonin(3,a) - leptonin(6,a) ) ) / 8d0
+         leptonout(-1,a) = (  ( leptonin(1,a) - leptonin(4,a) ) 
+     1                   + 2d0 * ( leptonin(2,a) - leptonin(5,a) )
+     2                   + ( leptonin(3,a) - leptonin(6,a) ) ) / 8d0
+         leptonout(0,a)  = pdftmp(-7)
+         leptonout(1,a)  = (  ( leptonin(1,a) + leptonin(4,a) ) 
+     1                   + 2d0 * ( leptonin(2,a) + leptonin(5,a) )
+     2                   + ( leptonin(3,a) + leptonin(6,a) ) ) / 8d0
+         leptonout(2,a)  = (  ( leptonin(1,a) + leptonin(4,a) ) 
+     1                   - 2d0 * ( leptonin(2,a) + leptonin(5,a) )
+     2                   + ( leptonin(3,a) + leptonin(6,a) ) ) / 8d0
+         leptonout(3,a)  = ( leptonin(1,a) + leptonin(4,a) 
+     1                   - leptonin(3,a) - leptonin(6,a) ) / 4d0 
       enddo
 *
       return

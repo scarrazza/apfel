@@ -15,11 +15,13 @@
       include "../commons/Evs.h"
       include "../commons/Nf_FF.h"
       include "../commons/m2th.h"
+      include "../commons/TauMass.h"
       include "../commons/grid.h"
       include "../commons/wrap.h"
       include "../commons/MaxFlavourPDFs.h"
       include "../commons/f0ph.h"
       include "../commons/fph.h"
+      include "../commons/LeptEvol.h"
 **
 *     Input Variables
 *
@@ -27,16 +29,18 @@
 **
 *     Internal Variables
 *
-      integer inf
+      integer inf,inl
       integer i,alpha
       integer sgn
       integer nfi,nff
-      double precision mu2i(3:6),mu2f(4:7)
+      integer nli,nlf
+      double precision mu2i(3:7),mu2f(3:7)
+      double precision muF20l,muF2l
       double precision f0ev(0:13,0:nint_max),f0lev(6,0:nint_max)
-      double precision fev(0:13,0:nint_max)
-      double precision fpy(-7:6,0:nint_max)
+      double precision fev(0:13,0:nint_max),flev(6,0:nint_max)
+      double precision fpy(-6:6,0:nint_max),flpy(-3:3,0:nint_max)
       double precision fevQCD(0:13,0:nint_max)
-      double precision Sg1(4,0:nint_max),Sg10(4,0:nint_max)
+      double precision Sg1(5,0:nint_max),Sg10(5,0:nint_max)
       double precision Sg2(2,0:nint_max),Sg20(2,0:nint_max)
       double precision Tu1(0:nint_max),Tu10(0:nint_max)
       double precision Tu2(0:nint_max),Tu20(0:nint_max)
@@ -46,6 +50,11 @@
       double precision Vu2(0:nint_max),Vu20(0:nint_max)
       double precision Vd1(0:nint_max),Vd10(0:nint_max)
       double precision Vd2(0:nint_max),Vd20(0:nint_max)
+      double precision Tl3(0:nint_max),Tl30(0:nint_max)
+      double precision Tl8(0:nint_max),Tl80(0:nint_max)
+      double precision Vl(0:nint_max),Vl0(0:nint_max)
+      double precision Vl3(0:nint_max),Vl30(0:nint_max)
+      double precision Vl8(0:nint_max),Vl80(0:nint_max)
       double precision tiny
       parameter(tiny=1d-10)
 *
@@ -62,22 +71,28 @@
 *     Fixed Flavour Number Scheme
 *
       if(Evs.eq."FF")then
-         wnf = Nf_FF
 *     If initial and final energies are equal, return immediately the intial conditions
          if(muF2.eq.muF20)then
             do alpha=0,nin(igrid)
                do i=0,13
                   fev(i,alpha) = f0ev(i,alpha)
                enddo
+               do i=1,6
+                  flev(i,alpha) = f0lev(i,alpha)
+               enddo
             enddo
             goto 104
          endif
+*
+         wnf = Nf_FF
+         wnl = 2
 *
          do alpha=0,nin(igrid)
             Sg10(1,alpha) = f0ev(0,alpha)
             Sg10(2,alpha) = f0ev(1,alpha)
             Sg10(3,alpha) = f0ev(2,alpha)
             Sg10(4,alpha) = f0ev(3,alpha)
+            Sg10(5,alpha) = f0lev(1,alpha)
             Tu10(alpha)   = f0ev(4,alpha)
             Tu20(alpha)   = f0ev(5,alpha)
             Td10(alpha)   = f0ev(6,alpha)
@@ -88,14 +103,30 @@
             Vu20(alpha)   = f0ev(11,alpha)
             Vd10(alpha)   = f0ev(12,alpha)
             Vd20(alpha)   = f0ev(13,alpha)
+            Tl30(alpha)   = f0lev(2,alpha)
+            Tl80(alpha)   = f0lev(3,alpha)
+            Vl0(alpha)    = f0lev(4,alpha)
+            Vl30(alpha)   = f0lev(5,alpha)
+            Vl80(alpha)   = f0lev(6,alpha)
          enddo
 *     Singlet 1
          call odeintsgUnifiedfS1(muF20,muF2,Sg10,Sg1)
 *     Singlet 2
          call odeintsgUnifiedfS2(muF20,muF2,Sg20,Sg2)
-*     Non-Singlet
+*     Non-Singlet (quarks)
          call odeintnsUnifiedf(2,muF20,muF2,Td10,Td1)
          call odeintnsUnifiedf(4,muF20,muF2,Vd10,Vd1)
+*     Non-Singlet (leptons)
+         if(LeptEvol)then
+            call odeintnsUnifiedf(5,muF20,muF2,Vl0,Vl)
+            call odeintnsUnifiedf(5,muF20,muF2,Vl30,Vl3)
+            call odeintnsUnifiedf(5,muF20,muF2,Tl30,Tl3)
+*     In the FFNS assume that the tau is always massive
+            do alpha=0,nin(igrid)
+               Tl8(alpha) = Sg1(5,alpha)
+               Vl8(alpha) = Vl(alpha)
+            enddo
+         endif
          if(Nf_FF.eq.3)then
             do alpha=0,nin(igrid)
                Tu1(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
@@ -138,30 +169,6 @@
 *     Variable Flavour Number Scheme
 *
       elseif(Evs.eq."VF")then
-*
-*     Find initial and final number of flavours
-*
-         if(muF2.gt.m2th(6))then
-            nff = 6
-         elseif(muF2.gt.m2th(5))then
-            nff = 5
-         elseif(muF2.gt.m2th(4))then
-            nff = 4
-         else
-            nff = 3
-         endif
-         if(nff.gt.nfMaxPDFs) nff = nfMaxPDFs
-*
-         if(muF20.gt.m2th(6))then
-            nfi = 6
-         elseif(muF20.gt.m2th(5))then
-            nfi = 5
-         elseif(muF20.gt.m2th(4))then
-            nfi = 4
-         else
-            nfi = 3
-         endif
-         if(nfi.gt.nfMaxPDFs) nfi = nfMaxPDFs
 *     If initial and final energies are equal, return immediately the intial conditions
          if(muF2.eq.muF20)then
             do alpha=0,nin(igrid)
@@ -176,133 +183,206 @@
             sgn = - 1
          endif
 *
-         mu2i(nfi) = muF20
-         if(sgn.eq.1)then
-            do inf=nfi+1,nff
-               mu2i(inf) = m2th(inf)
-            enddo
-            do inf=nfi,nff-1
-               mu2f(inf) = m2th(inf+1) - tiny
-            enddo
-         elseif(sgn.eq.-1)then
-            do inf=nfi-1,nff,sgn
-               mu2i(inf) = m2th(inf+1) + tiny
-            enddo
-            do inf=nfi,nff+1,sgn
-               mu2f(inf) = m2th(inf)
-            enddo
-         endif
-         mu2f(nff) = muF2
+         nli = 2
+         if(muF20.gt.MTau**2d0) nli = 3
+         nlf = 2
+         if(muF2.gt.MTau**2d0)  nlf = 3
 *
-         do inf=nfi,nff,sgn
-            wnf = inf
+         if(nli.eq.nlf)then
+            muF20l = muF20
+            muF2l  = muF2
+         else
+            muF20l = muF20
+            muF2l  = MTau**2d0
+         endif
+*
+         do inl=nli,nlf,sgn
+            wnl = inl
+*
+*     Find initial and final number of flavours
+*
+            if(muF2l.gt.m2th(6))then
+               nff = 6
+            elseif(muF2l.gt.m2th(5))then
+               nff = 5
+            elseif(muF2l.gt.m2th(4))then
+               nff = 4
+            else
+               nff = 3
+            endif
+            if(nff.gt.nfMaxPDFs) nff = nfMaxPDFs
+*
+            if(muF20l.gt.m2th(6))then
+               nfi = 6
+            elseif(muF20l.gt.m2th(5))then
+               nfi = 5
+            elseif(muF20l.gt.m2th(4))then
+               nfi = 4
+            else
+               nfi = 3
+            endif
+            if(nfi.gt.nfMaxPDFs) nfi = nfMaxPDFs
+*
+            mu2i(nfi) = muF20l
+            if(sgn.eq.1)then
+               do inf=nfi+1,nff
+                  mu2i(inf) = m2th(inf)
+               enddo
+               do inf=nfi,nff-1
+                  mu2f(inf) = m2th(inf+1) - tiny
+               enddo
+            elseif(sgn.eq.-1)then
+               do inf=nfi-1,nff,sgn
+                  mu2i(inf) = m2th(inf+1) + tiny
+               enddo
+               do inf=nfi,nff+1,sgn
+                  mu2f(inf) = m2th(inf)
+               enddo
+            endif
+            mu2f(nff) = muF2l
+*
+            do inf=nfi,nff,sgn
+               wnf = inf
 *
 *     Apply matching conditions for the backward evolution
 *
-            if(sgn.eq.-1)then
-               if(inf.lt.nfi)then
+               if(sgn.eq.-1)then
+                  if(inf.lt.nfi)then
 *     Rotate to the QCD evolution basis
-                  call PDFevUni2evQCD(f0ev,fevQCD)
+                     call PDFevUni2evQCD(f0ev,fevQCD)
 *     Apply matching conditions
-                  call MatchPDFs(inf,fevQCD)
+                     call MatchPDFs(inf,fevQCD)
 *     Rotate back to the unified evolution basis
-                  call PDFevQCD2evUni(fevQCD,f0ev)
+                     call PDFevQCD2evUni(fevQCD,f0ev)
+                  endif
                endif
-            endif
 *
-            do alpha=0,nin(igrid)
-               Sg10(1,alpha) = f0ev(0,alpha)
-               Sg10(2,alpha) = f0ev(1,alpha)
-               Sg10(3,alpha) = f0ev(2,alpha)
-               Sg10(4,alpha) = f0ev(3,alpha)
-               Tu10(alpha)   = f0ev(4,alpha)
-               Tu20(alpha)   = f0ev(5,alpha)
-               Td10(alpha)   = f0ev(6,alpha)
-               Td20(alpha)   = f0ev(7,alpha)
-               Sg20(1,alpha) = f0ev(8,alpha)
-               Sg20(2,alpha) = f0ev(9,alpha)
-               Vu10(alpha)   = f0ev(10,alpha)
-               Vu20(alpha)   = f0ev(11,alpha)
-               Vd10(alpha)   = f0ev(12,alpha)
-               Vd20(alpha)   = f0ev(13,alpha)
-            enddo
+               do alpha=0,nin(igrid)
+                  Sg10(1,alpha) = f0ev(0,alpha)
+                  Sg10(2,alpha) = f0ev(1,alpha)
+                  Sg10(3,alpha) = f0ev(2,alpha)
+                  Sg10(4,alpha) = f0ev(3,alpha)
+                  Sg10(5,alpha) = f0lev(1,alpha)
+                  Tu10(alpha)   = f0ev(4,alpha)
+                  Tu20(alpha)   = f0ev(5,alpha)
+                  Td10(alpha)   = f0ev(6,alpha)
+                  Td20(alpha)   = f0ev(7,alpha)
+                  Sg20(1,alpha) = f0ev(8,alpha)
+                  Sg20(2,alpha) = f0ev(9,alpha)
+                  Vu10(alpha)   = f0ev(10,alpha)
+                  Vu20(alpha)   = f0ev(11,alpha)
+                  Vd10(alpha)   = f0ev(12,alpha)
+                  Vd20(alpha)   = f0ev(13,alpha)
+                  Tl30(alpha)   = f0lev(2,alpha)
+                  Tl80(alpha)   = f0lev(3,alpha)
+                  Vl0(alpha)    = f0lev(4,alpha)
+                  Vl30(alpha)   = f0lev(5,alpha)
+                  Vl80(alpha)   = f0lev(6,alpha)
+               enddo
 *     Singlet 1
-            call odeintsgUnifiedfS1(mu2i(inf),mu2f(inf),Sg10,Sg1)
+               call odeintsgUnifiedfS1(mu2i(inf),mu2f(inf),Sg10,Sg1)
 *     Singlet 2
-            call odeintsgUnifiedfS2(mu2i(inf),mu2f(inf),Sg20,Sg2)
-*     Non-Singlet
-            call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td10,Td1)
-            call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd10,Vd1)
-            if(inf.eq.3)then
-               do alpha=0,nin(igrid)
-                  Tu1(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
-                  Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
-                  Td2(alpha) = ( Sg1(3,alpha) - Sg1(4,alpha) ) / 2d0
-                  Vu1(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
-                  Vu2(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
-                  Vd2(alpha) = ( Sg2(1,alpha) - Sg2(2,alpha) ) / 2d0
-               enddo
-            endif
-            if(inf.eq.4)then
-               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
-               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
-               do alpha=0,nin(igrid)
-                  Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
-                  Td2(alpha) = ( Sg1(3,alpha) - Sg1(4,alpha) ) / 2d0
-                  Vu2(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
-                  Vd2(alpha) = ( Sg2(1,alpha) - Sg2(2,alpha) ) / 2d0
-               enddo
-            endif
-            if(inf.eq.5)then
-               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
-               call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td20,Td2)
-               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
-               call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd20,Vd2)
-               do alpha=0,nin(igrid)
-                  Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
-                  Vu2(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
-               enddo
-            endif
-            if(inf.eq.6)then
-               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
-               call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu20,Tu2)
-               call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td20,Td2)
-               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
-               call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu20,Vu2)
-               call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd20,Vd2)
-            endif
+               call odeintsgUnifiedfS2(mu2i(inf),mu2f(inf),Sg20,Sg2)
+*     Non-Singlet (quarks)
+               call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td10,Td1)
+               call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd10,Vd1)
+*     Non-Singlet (leptons)
+               if(LeptEvol)then
+                  call odeintnsUnifiedf(5,mu2i(inf),mu2f(inf),Vl0,Vl)
+                  call odeintnsUnifiedf(5,mu2i(inf),mu2f(inf),Vl30,Vl3)
+                  call odeintnsUnifiedf(5,mu2i(inf),mu2f(inf),Tl30,Tl3)
+                  if(wnl.eq.2)then
+                     do alpha=0,nin(igrid)
+                        Tl8(alpha) = Sg1(5,alpha)
+                        Vl8(alpha) = Vl(alpha)
+                     enddo
+                  endif
+                  if(wnl.eq.3)then
+                     call odeintnsUnifiedf(5,mu2i(inf),mu2f(inf),Vl80,
+     1                                                           Vl8)
+                     call odeintnsUnifiedf(5,mu2i(inf),mu2f(inf),Tl80,
+     1                                                           Tl8)
+                  endif
+               endif
+               if(inf.eq.3)then
+                  do alpha=0,nin(igrid)
+                     Tu1(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
+                     Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
+                     Td2(alpha) = ( Sg1(3,alpha) - Sg1(4,alpha) ) / 2d0
+                     Vu1(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
+                     Vu2(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
+                     Vd2(alpha) = ( Sg2(1,alpha) - Sg2(2,alpha) ) / 2d0
+                  enddo
+               endif
+               if(inf.eq.4)then
+                  call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
+                  call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
+                  do alpha=0,nin(igrid)
+                     Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
+                     Td2(alpha) = ( Sg1(3,alpha) - Sg1(4,alpha) ) / 2d0
+                     Vu2(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
+                     Vd2(alpha) = ( Sg2(1,alpha) - Sg2(2,alpha) ) / 2d0
+                  enddo
+               endif
+               if(inf.eq.5)then
+                  call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
+                  call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td20,Td2)
+                  call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
+                  call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd20,Vd2)
+                  do alpha=0,nin(igrid)
+                     Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
+                     Vu2(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
+                  enddo
+               endif
+               if(inf.eq.6)then
+                  call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
+                  call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu20,Tu2)
+                  call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td20,Td2)
+                  call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
+                  call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu20,Vu2)
+                  call odeintnsUnifiedf(4,mu2i(inf),mu2f(inf),Vd20,Vd2)
+               endif
 *
 *     Update initial coditions for the next step
 *
-            do alpha=0,nin(igrid)
-               f0ev(0,alpha)  = Sg1(1,alpha)
-               f0ev(1,alpha)  = Sg1(2,alpha)
-               f0ev(2,alpha)  = Sg1(3,alpha)
-               f0ev(3,alpha)  = Sg1(4,alpha)
-               f0ev(4,alpha)  = Tu1(alpha)
-               f0ev(5,alpha)  = Tu2(alpha)
-               f0ev(6,alpha)  = Td1(alpha)
-               f0ev(7,alpha)  = Td2(alpha)
-               f0ev(8,alpha)  = Sg2(1,alpha)
-               f0ev(9,alpha)  = Sg2(2,alpha)
-               f0ev(10,alpha) = Vu1(alpha)
-               f0ev(11,alpha) = Vu2(alpha)
-               f0ev(12,alpha) = Vd1(alpha)
-               f0ev(13,alpha) = Vd2(alpha)
-            enddo
+               do alpha=0,nin(igrid)
+                  f0ev(0,alpha)  = Sg1(1,alpha)
+                  f0ev(1,alpha)  = Sg1(2,alpha)
+                  f0ev(2,alpha)  = Sg1(3,alpha)
+                  f0ev(3,alpha)  = Sg1(4,alpha)
+                  f0lev(1,alpha) = Sg1(5,alpha)
+                  f0ev(4,alpha)  = Tu1(alpha)
+                  f0ev(5,alpha)  = Tu2(alpha)
+                  f0ev(6,alpha)  = Td1(alpha)
+                  f0ev(7,alpha)  = Td2(alpha)
+                  f0ev(8,alpha)  = Sg2(1,alpha)
+                  f0ev(9,alpha)  = Sg2(2,alpha)
+                  f0ev(10,alpha) = Vu1(alpha)
+                  f0ev(11,alpha) = Vu2(alpha)
+                  f0ev(12,alpha) = Vd1(alpha)
+                  f0ev(13,alpha) = Vd2(alpha)
+                  f0lev(2,alpha) = Tl3(alpha)
+                  f0lev(3,alpha) = Tl8(alpha)
+                  f0lev(4,alpha) = Vl(alpha)
+                  f0lev(5,alpha) = Vl3(alpha)
+                  f0lev(6,alpha) = Vl8(alpha)
+               enddo
 *
 *     Apply matching conditions for the forward evolution
 *
-            if(sgn.eq.1)then
-               if(inf.lt.nff)then
+               if(sgn.eq.1)then
+                  if(inf.lt.nff)then
 *     Rotate to the QCD evolution basis
-                  call PDFevUni2evQCD(f0ev,fevQCD)
+                     call PDFevUni2evQCD(f0ev,fevQCD)
 *     Apply matching conditions
-                  call MatchPDFs(inf+1,fevQCD)
+                     call MatchPDFs(inf+1,fevQCD)
 *     Rotate back to the unified evolution basis
-                  call PDFevQCD2evUni(fevQCD,f0ev)
+                     call PDFevQCD2evUni(fevQCD,f0ev)
+                  endif
                endif
-            endif
+            enddo
+            muF20l = MTau**2d0
+            muF2l  = muF2
          enddo
       endif
 *
@@ -313,6 +393,7 @@
          fev(1,alpha)  = Sg1(2,alpha)
          fev(2,alpha)  = Sg1(3,alpha)
          fev(3,alpha)  = Sg1(4,alpha)
+         flev(1,alpha) = Sg1(5,alpha)
          fev(4,alpha)  = Tu1(alpha)
          fev(5,alpha)  = Tu2(alpha)
          fev(6,alpha)  = Td1(alpha)
@@ -323,11 +404,16 @@
          fev(11,alpha) = Vu2(alpha)
          fev(12,alpha) = Vd1(alpha)
          fev(13,alpha) = Vd2(alpha)
+         flev(2,alpha) = Tl3(alpha)
+         flev(3,alpha) = Tl8(alpha)
+         flev(4,alpha) = Vl(alpha)
+         flev(5,alpha) = Vl3(alpha)
+         flev(6,alpha) = Vl8(alpha)   
       enddo
 *
 *     Rotate PDFs back into the physical basis
 *
- 104  call PDFevUni2phys(fev,fpy)
+ 104  call PDFevUni2phys(flev,fev,flpy,fpy)
 *
 *     Put evolved PDFs in the physical basis in the common used for the interpolation
 *
@@ -335,7 +421,10 @@
          do i=-6,6
             fph(igrid,i,alpha)  = fpy(i,alpha)
          enddo
-         fgamma(igrid,alpha) = fpy(-7,alpha)
+         do i=-3,3
+            flepton(igrid,i,alpha) = flpy(i,alpha)
+         enddo
+         fgamma(igrid,alpha) = flpy(0,alpha)
       enddo
 *
       return

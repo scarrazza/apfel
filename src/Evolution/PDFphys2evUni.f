@@ -40,8 +40,8 @@
 **
 *     Output Variables
 *
-      double precision pdfout(0:13,0:nint_max)
       double precision leptonout(6,0:nint_max)
+      double precision pdfout(0:13,0:nint_max)
 *
 *     Rotate PDFs
 *

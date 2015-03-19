@@ -39,7 +39,7 @@
       double precision fgm(0:nint_max),fgmb(0:nint_max)
       double precision fgl(0:nint_max),fglb(0:nint_max)
       double precision fevUni(0:13,0:nint_max),flevUni(6,0:nint_max)
-      double precision fphUni(-7:6,0:nint_max)
+      double precision fphUni(-6:6,0:nint_max),flphUni(-3:3,0:nint_max)
 *
 ************************************************************************
 *     QCD evolution
@@ -391,13 +391,16 @@
             call EvolveUni(inf,fevUni)
          enddo
 *     Rotate evolved PDFs from Unified evolution to physical basis
-         call PDFevUni2phys(fevUni,fphUni)
+         call PDFevUni2phys(flevUni,fevUni,flphUni,fphUni)
 *     Put Evolved PDF into the common "fph"
          do alpha=0,nin(igrid)
             do i=-6,6
                fph(jgrid,i,alpha) = fphUni(i,alpha)
             enddo
-            fgamma(jgrid,alpha) = fphUni(-7,alpha)
+            do i=-3,3
+               flepton(igrid,i,alpha) = fphUni(i,alpha)
+            enddo
+            fgamma(jgrid,alpha) = flphUni(0,alpha)
          enddo
       endif
 *

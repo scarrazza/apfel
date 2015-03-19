@@ -20,7 +20,7 @@
 *     Input Variables
 *
       double precision mu21,mu22
-      double precision ystart(4,0:nint_max)
+      double precision ystart(5,0:nint_max)
 **
 *     Internal Variables
 *
@@ -28,12 +28,12 @@
       integer alpha
       double precision x1,x2
       double precision h,hdid,hnext,x
-      double precision dydx(4,0:nint_max)
-      double precision yscal(4,0:nint_max)
+      double precision dydx(5,0:nint_max)
+      double precision yscal(5,0:nint_max)
 **
 *     Output Variables
 *
-      double precision y(4,0:nint_max)
+      double precision y(5,0:nint_max)
 *
       x1 = dlog(mu21)
       x2 = dlog(mu22)
@@ -41,7 +41,7 @@
       x = x1
       h = sign(h1,x2-x1)
 *
-      do i=1,4
+      do i=1,5
          do alpha=0,nin(igrid)
             y(i,alpha) = ystart(i,alpha)
          enddo
@@ -50,7 +50,7 @@
       do nstp=1,maxstp
          call derivssgUnifiedfS1(x,y,dydx)
 *
-         do i=1,4
+         do i=1,5
             do alpha=0,nin(igrid)
                yscal(i,alpha) = dabs(y(i,alpha)) 
      1                        + dabs(h*dydx(i,alpha)) 
@@ -87,19 +87,19 @@
       integer i
       integer alpha
       double precision eps,hdid,hnext,htry,x
-      double precision dydx(4,0:nint_max)
-      double precision y(4,0:nint_max)
-      double precision yscal(4,0:nint_max)
+      double precision dydx(5,0:nint_max)
+      double precision y(5,0:nint_max)
+      double precision yscal(5,0:nint_max)
       double precision errmax,h,htemp,xnew
-      double precision yerr(4,0:nint_max)
-      double precision ytemp(4,0:nint_max)
+      double precision yerr(5,0:nint_max)
+      double precision ytemp(5,0:nint_max)
 *
       h = htry
 *
  101  call rkcksgUnifiedfS1(y,dydx,x,h,ytemp,yerr)
 *
       errmax = 0d0
-      do i=1,4
+      do i=1,5
          do alpha=0,nin(igrid)
             errmax = max(errmax,dabs(yerr(i,alpha)
      1                  /yscal(i,alpha)))
@@ -126,7 +126,7 @@
          endif
          hdid = h
          x    = x + h
-         do i=1,4
+         do i=1,5
             do alpha=0,nin(igrid)
                y(i,alpha) = ytemp(i,alpha)
             enddo
@@ -149,25 +149,25 @@
       integer i
       integer alpha
       double precision h,x
-      double precision dydx(4,0:nint_max)
-      double precision y(4,0:nint_max)
-      double precision yerr(4,0:nint_max)
-      double precision yout(4,0:nint_max)
-      double precision ytemp(4,0:nint_max)
-      double precision ak2(4,0:nint_max)
-      double precision ak3(4,0:nint_max)
-      double precision ak4(4,0:nint_max)
-      double precision ak5(4,0:nint_max)
-      double precision ak6(4,0:nint_max)
+      double precision dydx(5,0:nint_max)
+      double precision y(5,0:nint_max)
+      double precision yerr(5,0:nint_max)
+      double precision yout(5,0:nint_max)
+      double precision ytemp(5,0:nint_max)
+      double precision ak2(5,0:nint_max)
+      double precision ak3(5,0:nint_max)
+      double precision ak4(5,0:nint_max)
+      double precision ak5(5,0:nint_max)
+      double precision ak6(5,0:nint_max)
 *
-      do i=1,4
+      do i=1,5
          do alpha=0,nin(igrid)
             ytemp(i,alpha) = y(i,alpha)
      1                     + B21 * h * dydx(i,alpha)
          enddo
       enddo
       call derivssgUnifiedfS1(x+A2*h,ytemp,ak2)
-      do i=1,4
+      do i=1,5
          do alpha=0,nin(igrid)
             ytemp(i,alpha) = y(i,alpha) 
      1                     + h * ( B31 * dydx(i,alpha)
@@ -175,7 +175,7 @@
          enddo
       enddo
       call derivssgUnifiedfS1(x+A3*h,ytemp,ak3)
-      do i=1,4
+      do i=1,5
          do alpha=0,nin(igrid)
             ytemp(i,alpha) = y(i,alpha) 
      1                     + h * ( B41 * dydx(i,alpha)
@@ -184,7 +184,7 @@
          enddo
       enddo
       call derivssgUnifiedfS1(x+A4*h,ytemp,ak4)
-      do i=1,4
+      do i=1,5
          do alpha=0,nin(igrid)
             ytemp(i,alpha) = y(i,alpha) 
      1                     + h * ( B51 * dydx(i,alpha)
@@ -194,7 +194,7 @@
          enddo
       enddo
       call derivssgUnifiedfS1(x+A5*h,ytemp,ak5)
-      do i=1,4
+      do i=1,5
          do alpha=0,nin(igrid)
             ytemp(i,alpha) = y(i,alpha)
      1                     + h * ( B61 * dydx(i,alpha)
@@ -205,7 +205,7 @@
          enddo
       enddo
       call derivssgUnifiedfS1(x+A6*h,ytemp,ak6)
-      do i=1,4
+      do i=1,5
          do alpha=0,nin(igrid)
             yout(i,alpha) = y(i,alpha)
      1                    + h * ( C1 * dydx(i,alpha)
@@ -214,7 +214,7 @@
      4                    +       C6 * ak6(i,alpha) )
          enddo
       enddo
-      do i=1,4
+      do i=1,5
          do alpha=0,nin(igrid)
             yerr(i,alpha) = h *( DC1 * dydx(i,alpha)
      1                    +      DC3 * ak3(i,alpha)
@@ -238,7 +238,7 @@
 *     Input Variables
 *
       double precision t
-      double precision f(4,0:nint_max)
+      double precision f(5,0:nint_max)
 **
 *     Internal Variables
 *
@@ -254,7 +254,7 @@
 **
 *     Output Variables
 *
-      double precision dfdt(4,0:nint_max)
+      double precision dfdt(5,0:nint_max)
 *
 *     Couplings
 *
@@ -331,10 +331,10 @@
 *     
 *     Initialization
 *
-      do i=1,4
+      do i=1,5
          do alpha=0,nin(igrid)
             dfdt(i,alpha) = 0d0
-            do l=1,4
+            do l=1,5
                do delta=0,nin(igrid)-alpha
                   dfdt(i,alpha) = dfdt(i,alpha)
      1                          + integ(delta,i,l) * f(l,alpha+delta)

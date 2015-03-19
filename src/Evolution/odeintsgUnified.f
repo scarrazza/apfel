@@ -20,7 +20,7 @@
 *     Input Variables
 *
       double precision mu21,mu22
-      double precision ystart(4,4,0:nint_max,0:nint_max)
+      double precision ystart(5,5,0:nint_max,0:nint_max)
 **
 *     Internal Variables
 *
@@ -28,12 +28,12 @@
       integer alpha,beta
       double precision x1,x2
       double precision h,hdid,hnext,x
-      double precision dydx(4,4,0:nint_max,0:nint_max)
-      double precision yscal(4,4,0:nint_max,0:nint_max)
+      double precision dydx(5,5,0:nint_max,0:nint_max)
+      double precision yscal(5,5,0:nint_max,0:nint_max)
 **
 *     Output Variables
 *
-      double precision y(4,4,0:nint_max,0:nint_max)
+      double precision y(5,5,0:nint_max,0:nint_max)
 *
       x1 = dlog(mu21)
       x2 = dlog(mu22)
@@ -41,8 +41,8 @@
       x = x1
       h = sign(h1,x2-x1)
 *
-      do i=1,4
-         do j=1,4
+      do i=1,5
+         do j=1,5
             do alpha=0,nin(igrid)
                do beta=0,nin(igrid)
                   y(i,j,alpha,beta) = ystart(i,j,alpha,beta)
@@ -54,8 +54,8 @@
       do nstp=1,maxstp
          call derivssgUnifiedS1(x,y,dydx)
 *
-         do i=1,4
-            do j=1,4
+         do i=1,5
+            do j=1,5
                do alpha=0,nin(igrid)
                   do beta=0,nin(igrid)
                      yscal(i,j,alpha,beta) = dabs(y(i,j,alpha,beta)) 
@@ -95,20 +95,20 @@
       integer i,j
       integer alpha,beta
       double precision eps,hdid,hnext,htry,x
-      double precision dydx(4,4,0:nint_max,0:nint_max)
-      double precision y(4,4,0:nint_max,0:nint_max)
-      double precision yscal(4,4,0:nint_max,0:nint_max)
+      double precision dydx(5,5,0:nint_max,0:nint_max)
+      double precision y(5,5,0:nint_max,0:nint_max)
+      double precision yscal(5,5,0:nint_max,0:nint_max)
       double precision errmax,h,htemp,xnew
-      double precision yerr(4,4,0:nint_max,0:nint_max)
-      double precision ytemp(4,4,0:nint_max,0:nint_max)
+      double precision yerr(5,5,0:nint_max,0:nint_max)
+      double precision ytemp(5,5,0:nint_max,0:nint_max)
 *
       h = htry
 *
  101  call rkcksgUnifiedS1(y,dydx,x,h,ytemp,yerr)
 *
       errmax = 0d0
-      do i=1,4
-         do j=1,4
+      do i=1,5
+         do j=1,5
             do alpha=0,nin(igrid)
                do beta=0,nin(igrid)
                   errmax = max(errmax,dabs(yerr(i,j,alpha,beta)
@@ -138,8 +138,8 @@
          endif
          hdid = h
          x    = x + h
-         do i=1,4
-            do j=1,4
+         do i=1,5
+            do j=1,5
                do alpha=0,nin(igrid)
                   do beta=0,nin(igrid)
                      y(i,j,alpha,beta) = ytemp(i,j,alpha,beta)
@@ -165,19 +165,19 @@
       integer i,j
       integer alpha,beta
       double precision h,x
-      double precision dydx(4,4,0:nint_max,0:nint_max)
-      double precision y(4,4,0:nint_max,0:nint_max)
-      double precision yerr(4,4,0:nint_max,0:nint_max)
-      double precision yout(4,4,0:nint_max,0:nint_max)
-      double precision ytemp(4,4,0:nint_max,0:nint_max)
-      double precision ak2(4,4,0:nint_max,0:nint_max)
-      double precision ak3(4,4,0:nint_max,0:nint_max)
-      double precision ak4(4,4,0:nint_max,0:nint_max)
-      double precision ak5(4,4,0:nint_max,0:nint_max)
-      double precision ak6(4,4,0:nint_max,0:nint_max)
+      double precision dydx(5,5,0:nint_max,0:nint_max)
+      double precision y(5,5,0:nint_max,0:nint_max)
+      double precision yerr(5,5,0:nint_max,0:nint_max)
+      double precision yout(5,5,0:nint_max,0:nint_max)
+      double precision ytemp(5,5,0:nint_max,0:nint_max)
+      double precision ak2(5,5,0:nint_max,0:nint_max)
+      double precision ak3(5,5,0:nint_max,0:nint_max)
+      double precision ak4(5,5,0:nint_max,0:nint_max)
+      double precision ak5(5,5,0:nint_max,0:nint_max)
+      double precision ak6(5,5,0:nint_max,0:nint_max)
 *
-      do i=1,4
-         do j=1,4
+      do i=1,5
+         do j=1,5
             do alpha=0,nin(igrid)
                do beta=0,nin(igrid)
                   ytemp(i,j,alpha,beta) = y(i,j,alpha,beta)
@@ -187,8 +187,8 @@
          enddo
       enddo
       call derivssgUnifiedS1(x+A2*h,ytemp,ak2)
-      do i=1,4
-         do j=1,4
+      do i=1,5
+         do j=1,5
             do alpha=0,nin(igrid)
                do beta=0,nin(igrid)
                   ytemp(i,j,alpha,beta) = y(i,j,alpha,beta) 
@@ -199,8 +199,8 @@
          enddo
       enddo
       call derivssgUnifiedS1(x+A3*h,ytemp,ak3)
-      do i=1,4
-         do j=1,4
+      do i=1,5
+         do j=1,5
             do alpha=0,nin(igrid)
                do beta=0,nin(igrid)
                   ytemp(i,j,alpha,beta) = y(i,j,alpha,beta) 
@@ -212,8 +212,8 @@
          enddo
       enddo
       call derivssgUnifiedS1(x+A4*h,ytemp,ak4)
-      do i=1,4
-         do j=1,4
+      do i=1,5
+         do j=1,5
             do alpha=0,nin(igrid)
                do beta=0,nin(igrid)
                   ytemp(i,j,alpha,beta) = y(i,j,alpha,beta) 
@@ -226,8 +226,8 @@
          enddo
       enddo
       call derivssgUnifiedS1(x+A5*h,ytemp,ak5)
-      do i=1,4
-         do j=1,4
+      do i=1,5
+         do j=1,5
             do alpha=0,nin(igrid)
                do beta=0,nin(igrid)
                   ytemp(i,j,alpha,beta) = y(i,j,alpha,beta)
@@ -241,8 +241,8 @@
          enddo
       enddo
       call derivssgUnifiedS1(x+A6*h,ytemp,ak6)
-      do i=1,4
-         do j=1,4
+      do i=1,5
+         do j=1,5
             do alpha=0,nin(igrid)
                do beta=0,nin(igrid)
                   yout(i,j,alpha,beta) = y(i,j,alpha,beta)
@@ -254,8 +254,8 @@
             enddo
          enddo
       enddo
-      do i=1,4
-         do j=1,4
+      do i=1,5
+         do j=1,5
             do alpha=0,nin(igrid)
                do beta=0,nin(igrid)
                   yerr(i,j,alpha,beta) = h *( DC1 * dydx(i,j,alpha,beta)
@@ -282,7 +282,7 @@
 *     Input Variables
 *
       double precision t
-      double precision M(4,4,0:nint_max,0:nint_max)
+      double precision M(5,5,0:nint_max,0:nint_max)
 **
 *     Internal Variables
 *
@@ -298,7 +298,7 @@
 **
 *     Output Variables
 *
-      double precision dMdt(4,4,0:nint_max,0:nint_max)
+      double precision dMdt(5,5,0:nint_max,0:nint_max)
 *
 *     Couplings
 *
@@ -375,12 +375,12 @@
 *     
 *     Initialization
 *
-      do i=1,4
-         do j=1,4
+      do i=1,5
+         do j=1,5
             do alpha=0,nin(igrid)
                do beta=alpha,nin(igrid)
                   dMdt(i,j,alpha,beta) = 0d0
-                  do l=1,4
+                  do l=1,5
                      do delta=0,nin(igrid)-alpha
                         dMdt(i,j,alpha,beta) = dMdt(i,j,alpha,beta)
      1                  + integ(delta,i,l) * M(l,j,alpha+delta,beta)

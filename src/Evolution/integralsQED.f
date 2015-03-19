@@ -38,7 +38,6 @@
 *
 *     Integrals
 *
-      wnl = 3
       if(PDFEvol.eq."exactmu")then
          integralsQED = coup * SQ(igrid,wnf,wnl,kk,alpha,beta)
       else
