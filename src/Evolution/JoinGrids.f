@@ -42,6 +42,9 @@
             do i=-6,6
                fph(0,i,nin(0)) = fph(jgrid,i,alpha)
             enddo
+            do i=-3,3
+               flepton(0,i,nin(0)) = flepton(jgrid,i,alpha)
+            enddo
             fgamma(0,nin(0)) = fgamma(jgrid,alpha)
          enddo
  101  enddo
@@ -63,6 +66,10 @@
          xg(0,nin(0)+alpha) = xg(ngrid,nin(ngrid)+alpha)
          do i=-6,6
             fph(0,i,nin(0)+alpha) = fph(ngrid,i,nin(ngrid)+alpha)
+         enddo
+         do i=-3,3
+            flepton(0,i,nin(0)+alpha) = 
+     1           flepton(ngrid,i,nin(ngrid)+alpha)
          enddo
          fgamma(0,nin(0)+alpha) = fgamma(ngrid,nin(ngrid)+alpha)
       enddo
