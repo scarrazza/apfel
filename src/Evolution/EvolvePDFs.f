@@ -29,7 +29,7 @@
 **
 *     Internal Variables
 *
-      integer inf
+      integer inf,inl
       integer i
       integer alpha
       double precision fevQCD(0:13,0:nint_max),fevQCDb(0:13,0:nint_max)
@@ -60,6 +60,9 @@
             do i=-6,6
                fph(jgrid,i,alpha) = fphQCD(i,alpha)
             enddo
+            do i=-3,3
+               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            enddo
             fgamma(jgrid,alpha) = f0lep(0,alpha)
          enddo
 *
@@ -84,6 +87,9 @@
                fph(jgrid,-i,alpha) = fphQED(-i,alpha)
             enddo
             fph(jgrid,0,alpha)  = f0lep(0,alpha)
+            do i=-3,3
+               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            enddo
             fgamma(jgrid,alpha) = fphQED(0,alpha)
          enddo
 *
@@ -127,6 +133,9 @@
             do i=-6,6
                fph(jgrid,i,alpha) = fphQCD(i,alpha)
             enddo
+            do i=-3,3
+               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            enddo
             fgamma(jgrid,alpha) = fgm(alpha)
          enddo
 *
@@ -162,6 +171,9 @@
                fph(jgrid,-i,alpha) = fphQED(-i,alpha)
             enddo
             fph(jgrid,0,alpha)  = fgl(alpha)
+            do i=-3,3
+               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            enddo
             fgamma(jgrid,alpha) = fphQED(0,alpha)
          enddo
 *
@@ -209,6 +221,9 @@
                fph(jgrid,-i,alpha) = fphQED(-i,alpha)
             enddo
             fph(jgrid,0,alpha)  = fgl(alpha)
+            do i=-3,3
+               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            enddo
             fgamma(jgrid,alpha) = fphQED(0,alpha)
          enddo
 *
@@ -243,6 +258,9 @@
          do alpha=0,nin(igrid)
             do i=-6,6
                fph(jgrid,i,alpha) = fphQCD(i,alpha)
+            enddo
+            do i=-3,3
+               flepton(igrid,i,alpha) = f0lep(i,alpha)
             enddo
             fgamma(jgrid,alpha) = fgm(alpha)
          enddo
@@ -315,6 +333,9 @@
             do i=-6,6
                fph(jgrid,i,alpha) = fphQCD(i,alpha)
             enddo
+            do i=-3,3
+               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            enddo
             fgamma(jgrid,alpha) = fgm(alpha)
          enddo
 *
@@ -377,6 +398,9 @@
      1                             + fphQED(-i,alpha) ) / 2d0
             enddo
             fph(jgrid,0,alpha)  = ( fgl(alpha) + fphQCD(0,alpha) ) / 2d0
+            do i=-3,3
+               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            enddo
             fgamma(jgrid,alpha) = ( fgm(alpha) + fphQED(0,alpha) ) / 2d0
          enddo
 *
@@ -387,8 +411,10 @@
 *     Rotate initial PDFs from physical to Unified evolution basis
          call PDFphys2evUni(f0lep,f0ph,flevUni,fevUni)
 *     Evolve PDFs using the QCD evolution operators
-         do inf=nfi,nff,sgn
-            call EvolveUni(inf,fevUni)
+         do inl=nli,nlf
+            do inf=nfli(inl),nflf(inl),sgn
+               call EvolveUni(inf,inl,flevUni,fevUni)
+            enddo
          enddo
 *     Rotate evolved PDFs from Unified evolution to physical basis
          call PDFevUni2phys(flevUni,fevUni,flphUni,fphUni)
@@ -398,7 +424,7 @@
                fph(jgrid,i,alpha) = fphUni(i,alpha)
             enddo
             do i=-3,3
-               flepton(igrid,i,alpha) = fphUni(i,alpha)
+               flepton(igrid,i,alpha) = flphUni(i,alpha)
             enddo
             fgamma(jgrid,alpha) = flphUni(0,alpha)
          enddo

@@ -21,7 +21,7 @@
 **
 *     Output Variables
 *
-      double precision M0sg1(4,4,0:nint_max,0:nint_max)
+      double precision M0sg1(5,5,0:nint_max,0:nint_max)
       double precision M0sg2(2,2,0:nint_max,0:nint_max)
       double precision M0nspu(0:nint_max,0:nint_max)
       double precision M0nspd(0:nint_max,0:nint_max)
@@ -30,8 +30,8 @@
 *
       do alpha=0,nin(igrid)
          do beta=0,nin(igrid)
-            do i=1,4
-               do j=1,4
+            do i=1,5
+               do j=1,5
                   if(alpha.eq.beta.and.i.eq.j)then
                      M0sg1(i,j,alpha,beta) = 1d0
                   else
