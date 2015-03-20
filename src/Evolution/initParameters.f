@@ -281,7 +281,7 @@
             write(6,*) "Computation of the evolution operator enabled"
          endif
 *
-         if(LeptEvol.and.FastEvol.and.Th.eq."QUniD")then
+         if(LeptEvol.and.Th.eq."QUniD")then
             write(6,*) "Lepton evolution enabled"
          endif
 *

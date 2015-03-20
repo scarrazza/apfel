@@ -58,7 +58,7 @@
       do alpha=0,nin(igrid)
          xPDF = xPDF + w_int(n,alpha,x) * fph(igrid,i,alpha)
       enddo
-      if(dabs(xPDF).le.1d-14) xPDF = 0d0
+      if(dabs(xPDF).le.1d-12) xPDF = 0d0
 *
       return
       end
@@ -111,7 +111,7 @@
       do alpha=0,nin(0)
          xPDFj = xPDFj + w_int_gen(n,alpha,x) * fph(0,i,alpha)
       enddo
-      if(dabs(xPDFj).le.1d-14) xPDFj = 0d0
+      if(dabs(xPDFj).le.1d-12) xPDFj = 0d0
 *
       return
       end
@@ -165,7 +165,7 @@
          do alpha=0,nin(0)
             xf(ipdf) = xf(ipdf) + wgt(alpha) * fph(0,ipdf,alpha)
          enddo
-         if(dabs(xf(ipdf)).le.1d-14) xf(ipdf) = 0d0
+         if(dabs(xf(ipdf)).le.1d-12) xf(ipdf) = 0d0
       enddo
 *
       return

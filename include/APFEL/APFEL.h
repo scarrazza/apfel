@@ -50,6 +50,12 @@ namespace APFEL {
   /// Returns all PDFs on the joint grid
   void xPDFall(double x, double *xf);
 
+  /// Returns x*Lepton PDFs
+  double xLepton(int i, double x);
+
+  /// Returns x*Lepton PDFs on the joint grid
+  double xLeptonj(int i, double x);
+
   /// External Evolution Operator
   double ExternalEvolutionOperator(const std::string& fname, int i, int j, double x, int beta);
 
@@ -100,6 +106,9 @@ namespace APFEL {
 
   /// Enables evolution operator computation
   void EnableEvolutionOperator(int);
+
+  /// Enables the evolution of leptons
+  void EnableLeptonevolution(int);
 
   /// Lock internal subgrids
   void LockGrids(int);
@@ -168,6 +177,9 @@ namespace APFEL {
 
   /// Sets as a default the heavy quark pole masses
   void SetPoleMasses(double mc, double mb, double mt);
+
+  /// Set the value of the tau mass in GeV
+  void SetTauMass(double masst);
 
   /// Sets the ratio between renormalization and factorization scales.
   void SetRenFacRatio(double ratio);

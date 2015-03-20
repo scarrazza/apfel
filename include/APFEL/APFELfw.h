@@ -37,6 +37,12 @@ extern "C" {
 #define fxpdfall FC_FUNC(xpdfall,XPDFALL)
   void fxpdfall(double*,double*);
 
+#define fxlepton FC_FUNC(xlepton,XLEPTON)
+  double fxlepton(int*, double*);
+
+#define fxleptonj FC_FUNC(xleptonj,XLEPTONJ)
+  double fxleptonj(int*, double*);
+
 #define fexternalevolutionoperator FC_FUNC(externalevolutionoperator,EXTERNALEVOLUTIONOPERATOR)
   double fexternalevolutionoperator(char*,int*,int*,double*,int*);
 
@@ -75,6 +81,9 @@ extern "C" {
 
 #define fenableevolutionoperator FC_FUNC(enableevolutionoperator,ENABLEEVOLUTIONOPERATOR)
   void fenableevolutionoperator(int*);
+
+#define fenableleptonevolution FC_FUNC(enableleptonevolution,ENABLELEPTONEVOLUTION)
+  void fenableleptonevolution(int*);
 
 #define flockgrids FC_FUNC(lockgrids,LOCKGRIDS)
   void flockgrids(int*);
@@ -144,6 +153,9 @@ extern "C" {
 
 #define fsetpolemasses FC_FUNC(setpolemasses,SETPOLEMASSES)
   void fsetpolemasses(double*,double*,double*);
+
+#define fsettaumass FC_FUNC(settaumass,SETTAUMASS)
+  void fsettaumass(double*);
 
 #define fsetrenfacratio FC_FUNC(setrenfacratio,SETRENFACRATIO)
   void fsetrenfacratio(double*);

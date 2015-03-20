@@ -195,6 +195,14 @@ def xPDFall(x, xf):
     return _apfel.xPDFall(x, xf)
 xPDFall = _apfel.xPDFall
 
+def xLepton(i, x):
+    return _apfel.xLepton(i, x)
+xLepton = _apfel.xLepton
+
+def xLeptonj(i, x):
+    return _apfel.xLeptonj(i, x)
+xLeptonj = _apfel.xLeptonj
+
 def ExternalEvolutionOperator(fname, i, j, x, beta):
     return _apfel.ExternalEvolutionOperator(fname, i, j, x, beta)
 ExternalEvolutionOperator = _apfel.ExternalEvolutionOperator
@@ -254,6 +262,10 @@ EnableWelcomeMessage = _apfel.EnableWelcomeMessage
 def EnableEvolutionOperator(arg1):
     return _apfel.EnableEvolutionOperator(arg1)
 EnableEvolutionOperator = _apfel.EnableEvolutionOperator
+
+def EnableLeptonevolution(arg1):
+    return _apfel.EnableLeptonevolution(arg1)
+EnableLeptonevolution = _apfel.EnableLeptonevolution
 
 def LockGrids(arg1):
     return _apfel.LockGrids(arg1)
@@ -342,6 +354,10 @@ GetPerturbativeOrder = _apfel.GetPerturbativeOrder
 def SetPoleMasses(mc, mb, mt):
     return _apfel.SetPoleMasses(mc, mb, mt)
 SetPoleMasses = _apfel.SetPoleMasses
+
+def SetTauMass(masst):
+    return _apfel.SetTauMass(masst)
+SetTauMass = _apfel.SetTauMass
 
 def SetRenFacRatio(ratio):
     return _apfel.SetRenFacRatio(ratio)

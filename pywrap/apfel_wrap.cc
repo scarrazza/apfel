@@ -4711,6 +4711,68 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_xLepton(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  double arg2 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:xLepton",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "xLepton" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "xLepton" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (double)APFEL::xLepton(arg1,arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_xLeptonj(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  double arg2 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:xLeptonj",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "xLeptonj" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "xLeptonj" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (double)APFEL::xLeptonj(arg1,arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_ExternalEvolutionOperator(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
@@ -5122,6 +5184,27 @@ SWIGINTERN PyObject *_wrap_EnableEvolutionOperator(PyObject *SWIGUNUSEDPARM(self
   } 
   arg1 = static_cast< int >(val1);
   APFEL::EnableEvolutionOperator(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_EnableLeptonevolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:EnableLeptonevolution",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "EnableLeptonevolution" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  APFEL::EnableLeptonevolution(arg1);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -5739,6 +5822,27 @@ SWIGINTERN PyObject *_wrap_SetPoleMasses(PyObject *SWIGUNUSEDPARM(self), PyObjec
   } 
   arg3 = static_cast< double >(val3);
   APFEL::SetPoleMasses(arg1,arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SetTauMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SetTauMass",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetTauMass" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  APFEL::SetTauMass(arg1);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -7112,6 +7216,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"xgammaj", _wrap_xgammaj, METH_VARARGS, NULL},
 	 { (char *)"dxgamma", _wrap_dxgamma, METH_VARARGS, NULL},
 	 { (char *)"xPDFall", _wrap_xPDFall, METH_VARARGS, NULL},
+	 { (char *)"xLepton", _wrap_xLepton, METH_VARARGS, NULL},
+	 { (char *)"xLeptonj", _wrap_xLeptonj, METH_VARARGS, NULL},
 	 { (char *)"ExternalEvolutionOperator", _wrap_ExternalEvolutionOperator, METH_VARARGS, NULL},
 	 { (char *)"LHAPDFgrid", _wrap_LHAPDFgrid, METH_VARARGS, NULL},
 	 { (char *)"LHAPDFgridDerivative", _wrap_LHAPDFgridDerivative, METH_VARARGS, NULL},
@@ -7127,6 +7233,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"CleanUp", _wrap_CleanUp, METH_VARARGS, NULL},
 	 { (char *)"EnableWelcomeMessage", _wrap_EnableWelcomeMessage, METH_VARARGS, NULL},
 	 { (char *)"EnableEvolutionOperator", _wrap_EnableEvolutionOperator, METH_VARARGS, NULL},
+	 { (char *)"EnableLeptonevolution", _wrap_EnableLeptonevolution, METH_VARARGS, NULL},
 	 { (char *)"LockGrids", _wrap_LockGrids, METH_VARARGS, NULL},
 	 { (char *)"SetTimeLikeEvolution", _wrap_SetTimeLikeEvolution, METH_VARARGS, NULL},
 	 { (char *)"SetFastEvolution", _wrap_SetFastEvolution, METH_VARARGS, NULL},
@@ -7149,6 +7256,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetPerturbativeOrder", _wrap_SetPerturbativeOrder, METH_VARARGS, NULL},
 	 { (char *)"GetPerturbativeOrder", _wrap_GetPerturbativeOrder, METH_VARARGS, NULL},
 	 { (char *)"SetPoleMasses", _wrap_SetPoleMasses, METH_VARARGS, NULL},
+	 { (char *)"SetTauMass", _wrap_SetTauMass, METH_VARARGS, NULL},
 	 { (char *)"SetRenFacRatio", _wrap_SetRenFacRatio, METH_VARARGS, NULL},
 	 { (char *)"SetReplica", _wrap_SetReplica, METH_VARARGS, NULL},
 	 { (char *)"SetTheory", _wrap_SetTheory, METH_VARARGS, NULL},

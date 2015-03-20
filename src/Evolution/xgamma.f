@@ -50,7 +50,7 @@
       do alpha=0,nin(igrid)
          xgamma = xgamma + w_int(n,alpha,x) * fgamma(igrid,alpha)
       enddo
-      if(dabs(xgamma).le.1d-14) xgamma = 0d0
+      if(dabs(xgamma).le.1d-12) xgamma = 0d0
 *
       return
       end
@@ -96,7 +96,7 @@
       do alpha=0,nin(0)
          xgammaj = xgammaj + w_int_gen(n,alpha,x) * fgamma(0,alpha)
       enddo
-      if(dabs(xgammaj).le.1d-14) xgammaj = 0d0
+      if(dabs(xgammaj).le.1d-12) xgammaj = 0d0
 *
       return
       end

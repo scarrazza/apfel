@@ -66,6 +66,16 @@ namespace APFEL {
     fxpdfall(&x,xf);
   }
 
+  double xLepton(int i, double x)
+  {
+    return fxlepton(&i, &x);
+  }
+
+  double xLeptonj(int i, double x)
+  {
+    return fxleptonj(&i, &x);
+  }
+
   double ExternalEvolutionOperator(const std::string& fname, int i, int j, double x, int beta)
   {
     char cfname[SIZE+1];
@@ -140,6 +150,11 @@ namespace APFEL {
   void EnableEvolutionOperator(int eo)
   {
     fenableevolutionoperator(&eo);
+  }
+
+  void EnableLeptonEvolution(int le)
+  {
+    fenableleptonevolution(&le);
   }
 
   void LockGrids(int lg)
@@ -263,6 +278,11 @@ namespace APFEL {
   void SetPoleMasses(double mc, double mb, double mt)
   {
     fsetpolemasses(&mc,&mb,&mt);
+  }
+
+  void SetTauMass(double masst)
+  {
+    fsetprotonmass(&masst);
   }
 
   void SetRenFacRatio(double ratio)

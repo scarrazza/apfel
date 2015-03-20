@@ -58,7 +58,7 @@
       do alpha=0,nin(igrid)
          xLepton = xLepton + w_int(n,alpha,x) * flepton(igrid,i,alpha)
       enddo
-      if(dabs(xLepton).le.1d-14) xLepton = 0d0
+      if(dabs(xLepton).le.1d-12) xLepton = 0d0
 *
       return
       end
@@ -111,7 +111,7 @@
       do alpha=0,nin(0)
          xLeptonj = xLeptonj + w_int_gen(n,alpha,x) * flepton(0,i,alpha)
       enddo
-      if(dabs(xLeptonj).le.1d-14) xLeptonj = 0d0
+      if(dabs(xLeptonj).le.1d-12) xLeptonj = 0d0
 *
       return
       end

@@ -21,6 +21,7 @@
       include "../commons/LHAgrid.h"
       include "../commons/Evs.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/LeptEvol.h"
 **
 *     Input Variables
 *
@@ -32,7 +33,7 @@
 *     Intenal Variables
 *
       integer ln
-      integer i,ix,iq2,iq2c,ipdf,krep,iq2in,iq2fi
+      integer i,ix,iq2,iq2c,ipdf,ilep,krep,iq2in,iq2fi
       integer nfin
       integer isg,nQ(3:7)
       double precision qref,mth(4:6)
@@ -42,7 +43,8 @@
       double precision eps,offset
       double precision xpdfLHA(-6:6,nxLHA,nq2LHA)
       double precision xgammaLHA(nxLHA,nq2LHA)
-      double precision xPDFj,xgammaj
+      double precision xlepLHA(-6:6,nxLHA,nq2LHA)
+      double precision xPDFj,xgammaj,xLeptonj
       double precision AlphaQCD
       character*30 str
       parameter(eps=1d-10)
@@ -299,11 +301,17 @@
          write(13,*) "NumMembers:", Nrep+1
          write(13,*) "Particle: 2212"
          if(Th.eq."QCD") then
-            write(13,*) "Flavors: [-6, -5, -4, -3, -1, -2,",
-     1                  "21, 2, 1, 3, 4, 5, 6]"
+            write(13,*) "Flavors: [-6, -5, -4, -3, -2, -1,",
+     1                  "21, 1, 2, 3, 4, 5, 6]"
          else
-            write(13,*) "Flavors: [-6, -5, -4, -3, -1, -2, 21, 2, 1,", 
-     1                  "3, 4, 5, 6, 22]"
+            if(LeptEvol)then
+               write(13,*) "Flavors: [-6, -5, -4, -3, -2, -1, 21,",
+     1                               " 1, 2, 3, 4, 5, 6, 22, ",
+     2                               "11, -11, 13, -13, 15, -15]"
+            else
+               write(13,*) "Flavors: [-6, -5, -4, -3, -2, -1, 21,",
+     1                               " 1, 2, 3, 4, 5, 6, 22]"
+            endif
          endif
          write(13,*) "OrderQCD:",ipt
          write(13,*) "FlavorScheme: variable"
@@ -371,7 +379,14 @@
                if(Th.eq."QCD") then
                   write(13,"(a)") "-6 -5 -4 -3 -2 -1 21 1 2 3 4 5 6"
                else
-                  write(13,"(a)") "-6 -5 -4 -3 -2 -1 21 1 2 3 4 5 6 22"
+                  if(LeptEvol)then
+                     write(13,"(a,a,a)") "-6, -5, -4, -3, -2, -1, 21,",
+     1                                   " 1, 2, 3, 4, 5, 6, 22, ",
+     2                                   "11, -11, 13, -13, 15, -15"
+                  else
+                     write(13,"(a,a)") "-6, -5, -4, -3, -2, -1, 21,",
+     1                               " 1, 2, 3, 4, 5, 6, 22"
+                  endif
                endif
 *
                do iq2=iq2in,iq2fi
@@ -385,6 +400,9 @@
                      do ipdf=-6,6
                         xpdfLHA(ipdf,ix,iq2) = xPDFj(ipdf,xbLHA(ix))
                      enddo
+                     do ilep=-3,3
+                        xlepLHA(ilep,ix,iq2) = xLeptonj(ilep,xbLHA(ix))
+                     enddo
                      xgammaLHA(ix,iq2) = xgammaj(xbLHA(ix))
                   enddo
                enddo
@@ -396,12 +414,27 @@
                      enddo
                   enddo
                else
-                  do ix=1,nxLHA
-                     do iq2=iq2in,iq2fi
-                        write(13,45) (xpdfLHA(ipdf,ix,iq2),ipdf=-6,6),
-     1                                xgammaLHA(ix,iq2)
+                  if(LeptEvol)then
+                     do ix=1,nxLHA
+                        do iq2=iq2in,iq2fi
+                           write(13,46)(xpdfLHA(ipdf,ix,iq2),ipdf=-6,6),
+     1                                  xgammaLHA(ix,iq2),
+     2                                  xlepLHA(1,ix,iq2),
+     3                                  xlepLHA(-1,ix,iq2),
+     4                                  xlepLHA(2,ix,iq2),
+     5                                  xlepLHA(-2,ix,iq2),
+     6                                  xlepLHA(3,ix,iq2),
+     7                                  xlepLHA(-3,ix,iq2)
+                        enddo
                      enddo
-                  enddo
+                  else
+                     do ix=1,nxLHA
+                        do iq2=iq2in,iq2fi
+                           write(13,45)(xpdfLHA(ipdf,ix,iq2),ipdf=-6,6),
+     1                                  xgammaLHA(ix,iq2)
+                        enddo
+                     enddo
+                  endif
                endif
                write(13,*) "---"
                iq2in = iq2in + nQ(isg)
@@ -416,6 +449,7 @@
 *
  44   format(13(1x,es14.7))
  45   format(14(1x,es14.7))
+ 46   format(20(1x,es14.7))
 *     
       return
       end

@@ -69,6 +69,22 @@ ccccccccccccc
       return
       end
 
+ccccccccccccc      
+      function fxlepton(i,x)
+      integer i
+      double precision x, fxlepton
+      fxlepton = xLepton(i,x)
+      return
+      end
+
+ccccccccccccc      
+      function fxleptonj(i,x)
+      integer i
+      double precision x, fxleptonj
+      fxleptonj = xLeptonj(i,x)
+      return
+      end
+
 ccccccccccccc
       function fexternalevolutionoperator(fname,i,j,x,beta)
       integer i,j,beta
@@ -163,6 +179,12 @@ ccccccccccccc
       logical eo
       call EnableEvolutionOperator(eo)
       end subroutine fenableevolutionoperator
+
+ccccccccccccc      
+      subroutine fenableleptonevolution(le)
+      logical le
+      call EnableLeptonEvolution(le)
+      end subroutine fenableleptonevolution
 
 ccccccccccccc      
       subroutine flockgrids(lg)
@@ -308,6 +330,12 @@ ccccccccccccc
       double precision mc, mb, mt
       call SetPoleMasses(mc,mb,mt)
       end subroutine fsetpolemasses
+
+ccccccccccccc
+      subroutine fsettaumass(masst)
+      double precision masst
+      call SetTauMass(masst)
+      end subroutine fsettaumass
 
 ccccccccccccc      
       subroutine fsetrenfacratio(ratio)
