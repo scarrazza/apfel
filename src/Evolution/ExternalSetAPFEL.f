@@ -27,3 +27,32 @@
 *
       return
       end
+*
+************************************************************************
+      subroutine ExternalSetAPFELLept(x,Q,xl,xf)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision x,Q
+**
+*     Internal Variables
+*
+      integer ipdf,ilep
+**
+*     Output Variables
+*
+      double precision xl(-3:3),xf(-6:7)
+*
+*     Set to zero
+*
+      do ipdf=-6,7
+         xf(ipdf) = 0d0
+      enddo
+      do ilep=-3,3
+         xf(ilep) = 0d0
+      enddo
+*
+      return
+      end

@@ -30,6 +30,8 @@ c      ln = index(name,char(0)) - 1
          ln = 5
       elseif(name(1:8).eq."external")then
          ln = 8
+      elseif(name(1:12).eq."leptexternal")then
+         ln = 12
 *
 *     Kretzer's parametrization at Q2 = 0.4 GeV^2 of the light partons
 *     for pi+ taken at NLO from hep-ph/0003177.

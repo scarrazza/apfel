@@ -25,9 +25,10 @@
       integer alpha
       integer ifl,ilept
       integer Nrep
-      double precision f0(-6:6),fp0,fext0(-6:7)
+      double precision f0(-6:6),fp0,fext0(-6:7),flext0(-3:3)
       logical has_photon
       external ExternalSetAPFEL
+      external ExternalSetAPFELLept
 *
 *     User defined PDFs
 *
@@ -84,6 +85,20 @@
             do ilept=1,3
                f0lep(ilept,alpha) = 0d0
                f0lep(-ilept,alpha) = 0d0
+            enddo
+         enddo
+*
+*     External Set with leptons
+*
+      elseif(pdfset(1:12).eq."leptexternal")then
+         do alpha=0,nin(igrid)
+            call ExternalSetAPFELLept(xg(igrid,alpha),dsqrt(Q20),
+     1                                flext0,fext0)
+            do ifl=-6,6
+               f0ph(ifl,alpha) = fext0(ifl)
+            enddo
+            do ilept=-3,3
+               f0lep(ilept,alpha) = flext0(ilept)
             enddo
          enddo
 *

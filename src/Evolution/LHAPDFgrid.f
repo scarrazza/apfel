@@ -28,7 +28,7 @@
       integer Nrep
       logical islhapdf6
       double precision Qin
-      character*30 fname
+      character*50 fname
 **
 *     Intenal Variables
 *
