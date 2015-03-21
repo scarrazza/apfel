@@ -51,7 +51,7 @@
          xf(ipdf) = 0d0
       enddo
       do ilep=-3,3
-         xf(ilep) = 0d0
+         xl(ilep) = 0d0
       enddo
 *
       return
