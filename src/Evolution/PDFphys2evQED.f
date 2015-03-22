@@ -221,6 +221,7 @@
 *     Rotate PDFs
 *
       do a=0,nin(igrid)
+         pdfout(0,a) = 0d0
          do i=-6,6
             pdfout(i+7,a) = 0d0
             do j=-6,6

@@ -86,11 +86,13 @@
                fph(jgrid,i,alpha)  = fphQED(i,alpha)
                fph(jgrid,-i,alpha) = fphQED(-i,alpha)
             enddo
-            fph(jgrid,0,alpha)  = f0lep(0,alpha)
-            do i=-3,3
-               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            fph(jgrid,0,alpha) = f0lep(0,alpha)
+            do i=1,3
+               flepton(igrid,i,alpha)  = f0lep(i,alpha)
+               flepton(igrid,-i,alpha) = f0lep(-i,alpha)
             enddo
-            fgamma(jgrid,alpha) = fphQED(0,alpha)
+            fgamma(jgrid,alpha)    = fphQED(0,alpha)
+            flepton(jgrid,0,alpha) = fphQED(0,alpha)
          enddo
 *
 ************************************************************************
@@ -133,10 +135,12 @@
             do i=-6,6
                fph(jgrid,i,alpha) = fphQCD(i,alpha)
             enddo
-            do i=-3,3
-               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            do i=1,3
+               flepton(igrid,i,alpha)  = f0lep(i,alpha)
+               flepton(igrid,-i,alpha) = f0lep(-i,alpha)
             enddo
-            fgamma(jgrid,alpha) = fgm(alpha)
+            fgamma(jgrid,alpha)    = fgm(alpha)
+            flepton(igrid,0,alpha) = fgm(alpha)
          enddo
 *
 ************************************************************************
@@ -171,10 +175,12 @@
                fph(jgrid,-i,alpha) = fphQED(-i,alpha)
             enddo
             fph(jgrid,0,alpha)  = fgl(alpha)
-            do i=-3,3
-               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            do i=1,3
+               flepton(igrid,i,alpha)  = f0lep(i,alpha)
+               flepton(igrid,-i,alpha) = f0lep(-i,alpha)
             enddo
-            fgamma(jgrid,alpha) = fphQED(0,alpha)
+            fgamma(jgrid,alpha)    = fphQED(0,alpha)
+            flepton(igrid,0,alpha) = fphQED(0,alpha)
          enddo
 *
 ************************************************************************
@@ -221,10 +227,12 @@
                fph(jgrid,-i,alpha) = fphQED(-i,alpha)
             enddo
             fph(jgrid,0,alpha)  = fgl(alpha)
-            do i=-3,3
-               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            do i=1,3
+               flepton(igrid,i,alpha)  = f0lep(i,alpha)
+               flepton(igrid,-i,alpha) = f0lep(-i,alpha)
             enddo
-            fgamma(jgrid,alpha) = fphQED(0,alpha)
+            fgamma(jgrid,alpha)    = fphQED(0,alpha)
+            flepton(igrid,0,alpha) = fphQED(0,alpha)
          enddo
 *
 ************************************************************************
@@ -259,10 +267,12 @@
             do i=-6,6
                fph(jgrid,i,alpha) = fphQCD(i,alpha)
             enddo
-            do i=-3,3
-               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            do i=1,3
+               flepton(igrid,i,alpha)  = f0lep(i,alpha)
+               flepton(igrid,-i,alpha) = f0lep(-i,alpha)
             enddo
-            fgamma(jgrid,alpha) = fgm(alpha)
+            fgamma(jgrid,alpha)    = fgm(alpha)
+            flepton(igrid,0,alpha) = fgm(alpha)
          enddo
 *
 ************************************************************************
@@ -333,10 +343,12 @@
             do i=-6,6
                fph(jgrid,i,alpha) = fphQCD(i,alpha)
             enddo
-            do i=-3,3
-               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            do i=1,3
+               flepton(igrid,i,alpha)  = f0lep(i,alpha)
+               flepton(igrid,-i,alpha) = f0lep(-i,alpha)
             enddo
-            fgamma(jgrid,alpha) = fgm(alpha)
+            fgamma(jgrid,alpha)    = fgm(alpha)
+            flepton(igrid,0,alpha) = fgm(alpha)
          enddo
 *
 ************************************************************************
@@ -398,10 +410,12 @@
      1                             + fphQED(-i,alpha) ) / 2d0
             enddo
             fph(jgrid,0,alpha)  = ( fgl(alpha) + fphQCD(0,alpha) ) / 2d0
-            do i=-3,3
-               flepton(igrid,i,alpha) = f0lep(i,alpha)
+            do i=1,3
+               flepton(igrid,i,alpha)  = f0lep(i,alpha)
+               flepton(igrid,-i,alpha) = f0lep(-i,alpha)
             enddo
             fgamma(jgrid,alpha) = ( fgm(alpha) + fphQED(0,alpha) ) / 2d0
+            flepton(igrid,0,alpha) = fgamma(jgrid,alpha)
          enddo
 *
 ************************************************************************

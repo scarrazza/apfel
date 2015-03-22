@@ -30,7 +30,7 @@
       integer i,alpha
       integer sgn
       integer nfi,nff
-      double precision mu2i(3:6),mu2f(4:7)
+      double precision mu2i(3:7),mu2f(3:7)
       double precision f0ev(0:13,0:nint_max)
       double precision fev(0:13,0:nint_max)
       double precision fpy(-6:6,0:nint_max)
@@ -59,6 +59,7 @@
 *
 *     Fixed Flavour Number Scheme
 *
+      wnl = 3
       if(Evs.eq."FF")then
          wnf = Nf_FF
 *     If initial and final energies are equal, return immediately the intial conditions
@@ -308,12 +309,17 @@
 *     Put evolved PDFs in the physical basis in the common used for the interpolation
 *
       do alpha=0,nin(igrid)
+         fph(igrid,0,alpha)     = f0lep(0,alpha) 
          do i=1,6
             fph(igrid,i,alpha)  = fpy(i,alpha)
             fph(igrid,-i,alpha) = fpy(-i,alpha)
          enddo
-         fph(igrid,0,alpha)  = f0lep(0,alpha) 
-         fgamma(igrid,alpha) = fpy(0,alpha)
+         fgamma(igrid,alpha)    = fpy(0,alpha)
+         flepton(igrid,0,alpha) = fpy(0,alpha)
+         do i=1,3
+            flepton(igrid,i,alpha)  = 0d0
+            flepton(igrid,-i,alpha) = 0d0
+         enddo
       enddo
 *
       return

@@ -52,11 +52,10 @@
                f0ph(ifl,alpha) = fph(igrid,ifl,alpha)
                if(dabs(f0ph(ifl,alpha)).lt.1d-14) f0ph(ifl,alpha) = 0d0
             enddo
-            f0lep(0,alpha) = fgamma(igrid,alpha)
-            if(dabs(f0lep(0,alpha)).lt.1d-14) f0lep(0,alpha) = 0d0
-            do ilept=1,3
-               f0lep(ilept,alpha) = 0d0
-               f0lep(-ilept,alpha) = 0d0
+            do ilept=-3,3
+               f0lep(ilept,alpha) = flepton(igrid,ilept,alpha)
+               if(dabs(f0lep(ilept,alpha)).lt.1d-14)
+     1              f0lep(ilept,alpha) = 0d0
             enddo
          enddo
 *
@@ -150,11 +149,11 @@
                do ifl=-6,6
                   f0ph(ifl,alpha) = f0(ifl)
                enddo
+               f0lep(0,alpha) = fp0
                do ilept=1,3
                   f0lep(ilept,alpha) = 0d0
                   f0lep(-ilept,alpha) = 0d0
                enddo
-               f0lep(0,alpha) = fp0
             enddo
          else
             do alpha=0,nin(igrid)

@@ -68,8 +68,8 @@
             elseif(Th.eq."QED")then
                call EvolutionOperatorsQED(Q20,Q2)
             elseif(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
-     1              Th.eq."QECDP".or.Th.eq."QECDS".or.
-     2              Th.eq."QavDP".or.Th.eq."QavDS")then
+     1             Th.eq."QECDP".or.Th.eq."QECDS".or.
+     2             Th.eq."QavDP".or.Th.eq."QavDS")then
                call EvolutionOperatorsQCD(Q20,Q2)
                call EvolutionOperatorsQED(Q20,Q2)
             elseif(Th.eq."QUniD")then

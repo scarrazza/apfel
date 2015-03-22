@@ -30,7 +30,7 @@
       integer i,alpha
       integer sgn
       integer nfi,nff
-      double precision mu2i(3:6),mu2f(4:7)
+      double precision mu2i(3:7),mu2f(3:7)
       double precision f0ev(0:13,0:nint_max)
       double precision fev(0:13,0:nint_max)
       double precision fpy(-6:6,0:nint_max)

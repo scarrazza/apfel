@@ -83,10 +83,12 @@
      1   Th.eq."QECDP".or.Th.eq."QECDS".or.
      2   Th.eq."QavDP".or.Th.eq."QavDS")then
          write(6,*) "   "
-         write(6,*) "WARNING: fast evolution not available with the ",
-     1              Th," solution"
-         write(6,*) "         ... disabling fast evolution"
-         call SetFastEvolution(.false.)
+         if(FastEvol)then
+            write(6,*) "WARNING: fast evolution not available with",
+     1                 " the ",Th," solution"
+            write(6,*) "         ... disabling fast evolution"
+            call SetFastEvolution(.false.)
+         endif
       endif
 *
 *     If the fast evolution is enabled, disable automatically

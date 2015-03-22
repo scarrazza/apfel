@@ -58,7 +58,8 @@
 *     (Indicative) interpolation degree of the joint grid
 *     just to be used in the check below.
 *
-      inter_degree(0) = inter_degree(1)
+      inter_degree(0) = inter_degree(ngrid)
+c      inter_degree(0) = inter_degree(1)
 *
 *     Grid and PDFs for x > 1 (Needed by the interpolation)
 *

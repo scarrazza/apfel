@@ -26,7 +26,7 @@
 *     Internal Variables
 *
       integer inf
-      double precision mu2i(3:6),mu2f(4:7)
+      double precision mu2i(3:7),mu2f(3:7)
       double precision M0sg(3,3,0:nint_max,0:nint_max)
       double precision M0nsp(0:nint_max,0:nint_max)
       double precision M0nsm(0:nint_max,0:nint_max)
@@ -42,6 +42,7 @@
 *
 *     Fixed Flavour Number Scheme
 *
+      wnl = 3
       if(Evs.eq."FF")then
          nfi = Nf_FF
          nff = Nf_FF

@@ -27,7 +27,7 @@
 *     Internal Variables
 *
       integer inf
-      double precision mu2i(3:6),mu2f(3:6)
+      double precision mu2i(3:7),mu2f(3:7)
       double precision M0sg(2,2,0:nint_max,0:nint_max)
       double precision M0nsp(0:nint_max,0:nint_max)
       double precision M0nsm(0:nint_max,0:nint_max)
