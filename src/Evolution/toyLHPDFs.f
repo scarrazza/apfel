@@ -95,30 +95,30 @@
 *
 *     Parameters of the User defined PDFs
 *
-c      N_uv = 35d0/16d0
-c      auv  = 0.5d0
-c      buv  = 3d0
-c      N_dv = 315d0/256d0
-c      adv  = 0.5d0
-c      bdv  = 4d0
-c      N_g  = 1.90836d0
-c      ag   = -0.2d0
-c      bg   = 5d0
-c      N_S  = 0.673345d0
-c      aS   = -0.2d0
-c      bS   = 7d0
-      N_uv = 2d0 * 3.69141d0 / 3d0
+      N_uv = 35d0/16d0
       auv  = 0.5d0
-      buv  = 4d0
-      N_dv = 3.69141d0 / 3d0
-      adv  = auv
-      bdv  = buv
-      N_g  = 2.04996d0
-      ag   = - 0.18d0
+      buv  = 3d0
+      N_dv = 315d0/256d0
+      adv  = 0.5d0
+      bdv  = 4d0
+      N_g  = 1.90836d0
+      ag   = -0.2d0
       bg   = 5d0
-      N_S  = N_g / 3d0
-      aS   = ag
-      bS   = bg
+      N_S  = 0.673345d0
+      aS   = -0.2d0
+      bS   = 7d0
+c      N_uv = 2d0 * 3.69141d0 / 3d0
+c      auv  = 0.5d0
+c      buv  = 4d0
+c      N_dv = 3.69141d0 / 3d0
+c      adv  = auv
+c      bdv  = buv
+c      N_g  = 2.04996d0
+c      ag   = - 0.18d0
+c      bg   = 5d0
+c      N_S  = N_g / 3d0
+c      aS   = ag
+c      bS   = bg
 *
 *     User defined PDFs
 *
