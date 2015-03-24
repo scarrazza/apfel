@@ -478,18 +478,18 @@
                               if(Q2.ge.m2th(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( - damp(ihq) * ( c0(ihq)
-     8                                * SC2m0NC(jgrid,ixi(ihq),
-     9                                3,2,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SC2m0NC(jgrid,ixi(ihq)+1,
-     3                                3,2,alpha,beta) ) )
+     2                                * SC2m0NC(jgrid,ixi(ihq),
+     3                                3,2,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2m0NC(jgrid,ixi(ihq)+1,
+     6                                3,2,alpha,beta) ) )
                                  CLnsp(3) = CLnsp(3) + as(2) *
      1                                ( - damp(ihq) * ( c0(ihq)
-     8                                * SCLm0NC(jgrid,ixi(ihq),
-     9                                3,2,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SCLm0NC(jgrid,ixi(ihq)+1,
-     3                                3,2,alpha,beta) ) )
+     2                                * SCLm0NC(jgrid,ixi(ihq),
+     3                                3,2,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLm0NC(jgrid,ixi(ihq)+1,
+     6                                3,2,alpha,beta) ) )
                               endif
                            enddo
                         endif

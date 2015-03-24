@@ -438,7 +438,6 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     Integrals
 *
-
                do wipt=1,ipt_FF
                   SC2mNC(igrid,ixi,k,wipt,beta,alpha) = integC2(wipt) 
      1                                                + C2L(k,wipt) * fL
