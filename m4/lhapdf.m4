@@ -3,7 +3,8 @@ AC_DEFUN([AC_SEARCH_LHAPDF], [
 
 AC_PATH_PROG(LHAPDFCONFIG, lhapdf-config, [], [$PATH])
 if test -f "$LHAPDFCONFIG"; then
-  LHAPDF_CPPFLAGS=`$LHAPDFCONFIG --cxxflags`
+  LHAPDF_CPPFLAGS=`$LHAPDFCONFIG --cppflags`
+  LHAPDF_CXXFLAGS=`$LHAPDFCONFIG --cxxflags`
   LHAPDF_LDFLAGS=`$LHAPDFCONFIG --ldflags`
 else
   AC_MSG_ERROR([LHAPDF cannot be found!])
