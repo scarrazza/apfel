@@ -28,6 +28,7 @@
       double precision f0(-6:6),fp0,fext0(-6:7),flext0(-3:3)
       logical has_photon
       external ExternalSetAPFEL
+      external ExternalSetAPFEL1
       external ExternalSetAPFELLept
 *
 *     User defined PDFs
@@ -75,17 +76,31 @@
 *     External Set
 *
       elseif(pdfset(1:8).eq."external")then
-         do alpha=0,nin(igrid)
-            call ExternalSetAPFEL(xg(igrid,alpha),dsqrt(Q20),fext0)
-            do ifl=-6,6
-               f0ph(ifl,alpha) = fext0(ifl)
+         if(pdfset(9:9).eq."1")then
+            do alpha=0,nin(igrid)
+               call ExternalSetAPFEL1(xg(igrid,alpha),dsqrt(Q20),fext0)
+               do ifl=-6,6
+                  f0ph(ifl,alpha) = fext0(ifl)
+               enddo
+               f0lep(0,alpha) = fext0(7)
+               do ilept=1,3
+                  f0lep(ilept,alpha) = 0d0
+                  f0lep(-ilept,alpha) = 0d0
+               enddo
             enddo
-            f0lep(0,alpha) = fext0(7)
-            do ilept=1,3
-               f0lep(ilept,alpha) = 0d0
-               f0lep(-ilept,alpha) = 0d0
+         else
+            do alpha=0,nin(igrid)
+               call ExternalSetAPFEL(xg(igrid,alpha),dsqrt(Q20),fext0)
+               do ifl=-6,6
+                  f0ph(ifl,alpha) = fext0(ifl)
+               enddo
+               f0lep(0,alpha) = fext0(7)
+               do ilept=1,3
+                  f0lep(ilept,alpha) = 0d0
+                  f0lep(-ilept,alpha) = 0d0
+               enddo
             enddo
-         enddo
+         endif
 *
 *     External Set with leptons
 *

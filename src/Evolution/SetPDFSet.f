@@ -18,8 +18,6 @@
       character*100 name
       logical islhapdf6
 *
-c      ln = index(name,char(0)) - 1
-*
 *     Internal PDFs
 *
       if(name(1:5).eq."ToyLH")then
@@ -29,7 +27,11 @@ c      ln = index(name,char(0)) - 1
       elseif(name(1:5).eq."apfel")then
          ln = 5
       elseif(name(1:8).eq."external")then
-         ln = 8
+         if(name(9:9).eq."1")then
+            ln = 9
+         else
+            ln = 8
+         endif
       elseif(name(1:12).eq."leptexternal")then
          ln = 12
 *
