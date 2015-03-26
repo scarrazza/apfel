@@ -407,7 +407,7 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
 *
 *     Numerical derivative (provisional).
 *
-      dw_int = ( w_int(k,beta,x+eps) + w_int(k,beta,x-eps) ) / 2d0 / eps
+      dw_int = ( w_int(k,beta,x+eps) - w_int(k,beta,x-eps) ) / 2d0 / eps
 *
       return
       end
