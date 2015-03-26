@@ -379,9 +379,9 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
 **
 *     Internal Variables
 *
-      integer i,j
-      integer delta,bound
-      double precision w,fact
+      double precision w_int
+      double precision eps
+      parameter(eps=1d-8)
 **
 *     Output Variables
 *
@@ -405,10 +405,9 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
          call exit(-10)
       endif
 *
-      dw_int = 0d0
-      write(6,*) "WARNING: derivative of the interpolation functions",
-     1           " returning zero"
-      write(6,*) "         A proper implementation is needed."
+*     Numerical derivative (provisional).
+*
+      dw_int = ( w_int(k,beta,x+eps) + w_int(k,beta,x-eps) ) / 2d0 / eps
 *
       return
       end

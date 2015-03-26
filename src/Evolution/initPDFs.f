@@ -107,7 +107,7 @@
       elseif(pdfset(1:12).eq."leptexternal")then
          do alpha=0,nin(igrid)
             call ExternalSetAPFELLept(xg(igrid,alpha),dsqrt(Q20),
-     1                                flext0,fext0)
+     1                                irep,flext0,fext0)
             do ifl=-6,6
                f0ph(ifl,alpha) = fext0(ifl)
             enddo

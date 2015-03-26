@@ -55,12 +55,13 @@
       end
 *
 ************************************************************************
-      subroutine ExternalSetAPFELLept(x,Q,xl,xf)
+      subroutine ExternalSetAPFELLept(x,Q,irep,xl,xf)
 *
       implicit none
 **
 *     Input Variables
 *
+      integer irep
       double precision x,Q
 **
 *     Internal Variables
