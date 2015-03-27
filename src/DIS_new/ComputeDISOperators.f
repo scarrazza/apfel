@@ -95,6 +95,7 @@
       else
          nf = 3
       endif
+      if(MassScheme(1:5).eq."FONLL".and.nf.lt.Nf_FF) nf = Nf_FF
 *
 *     Define the ratio # of protons / # of nucleons of the target
 *
@@ -1094,6 +1095,9 @@
                         enddo
                      endif
                   elseif(MassScheme(1:5).eq."FONLL")then
+                     do ihq=4,6
+                        damp(ihq) = 1d0
+                     enddo
                      do pt=0,ipt
                         C2g(3)   = C2g(3)
      1                       + as(pt) * SC2zm(jgrid,nf,1,pt,alpha,beta)
@@ -1168,7 +1172,7 @@
      2                                * SCLmCC(jgrid,ixi(ihq),
      3                                1,pt,alpha,beta)
      4                                + c1(ihq)
-     5                               * SCLmCC(jgrid,ixi(ihq)+1,
+     5                                * SCLmCC(jgrid,ixi(ihq)+1,
      6                                1,pt,alpha,beta) )
                                  CLnsp(ihq) = CLnsp(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -1211,67 +1215,67 @@
                               do pt=0,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SC2m0CC(jgrid,ixi(ihq),
-     9                                1,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SC2m0CC(jgrid,ixi(ihq)+1,
-     3                                1,pt,alpha,beta) ) )
+     2                                * SC2m0CC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2m0CC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) ) )
                                  C2nsp(ihq) = C2nsp(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SC2m0CC(jgrid,ixi(ihq),
-     9                                3,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SC2m0CC(jgrid,ixi(ihq)+1,
-     3                                3,pt,alpha,beta) ) )
+     2                                * SC2m0CC(jgrid,ixi(ihq),
+     3                                3,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2m0CC(jgrid,ixi(ihq)+1,
+     6                                3,pt,alpha,beta) ) )
                                  C2nsm(ihq) = C2nsm(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SC2m0CC(jgrid,ixi(ihq),
-     9                                3,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SC2m0CC(jgrid,ixi(ihq)+1,
-     3                                3,pt,alpha,beta) ) )
+     2                                * SC2m0CC(jgrid,ixi(ihq),
+     3                                3,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2m0CC(jgrid,ixi(ihq)+1,
+     6                                3,pt,alpha,beta) ) )
                                  CLg(ihq) = CLg(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SCLm0CC(jgrid,ixi(ihq),
-     9                                1,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                               * SCLm0CC(jgrid,ixi(ihq)+1,
-     3                                1,pt,alpha,beta) ) )
+     2                                * SCLm0CC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                               * SCLm0CC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) ) )
                                  CLnsp(ihq) = CLnsp(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SCLm0CC(jgrid,ixi(ihq),
-     9                                3,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SCLm0CC(jgrid,ixi(ihq)+1,
-     3                                3,pt,alpha,beta) ) )
+     2                                * SCLm0CC(jgrid,ixi(ihq),
+     3                                3,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLm0CC(jgrid,ixi(ihq)+1,
+     6                                3,pt,alpha,beta) ) )
                                  CLnsm(ihq) = CLnsm(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SCLm0CC(jgrid,ixi(ihq),
-     9                                3,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SCLm0CC(jgrid,ixi(ihq)+1,
-     3                                3,pt,alpha,beta) ) )
+     2                                * SCLm0CC(jgrid,ixi(ihq),
+     3                                3,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLm0CC(jgrid,ixi(ihq)+1,
+     6                                3,pt,alpha,beta) ) )
                                  C3g(ihq) = C3g(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SC3m0CC(jgrid,ixi(ihq),
-     9                                1,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SC3m0CC(jgrid,ixi(ihq)+1,
-     3                                1,pt,alpha,beta) ) )
+     2                                * SC3m0CC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC3m0CC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) ) )
                                  C3nsp(ihq) = C3nsp(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SC3m0CC(jgrid,ixi(ihq),
-     9                                3,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SC3m0CC(jgrid,ixi(ihq)+1,
-     3                                3,pt,alpha,beta) ) )
+     2                                * SC3m0CC(jgrid,ixi(ihq),
+     3                                3,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC3m0CC(jgrid,ixi(ihq)+1,
+     6                                3,pt,alpha,beta) ) )
                                  C3nsm(ihq) = C3nsm(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SC3m0CC(jgrid,ixi(ihq),
-     9                                3,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SC3m0CC(jgrid,ixi(ihq)+1,
-     3                                3,pt,alpha,beta) ) )
+     2                                * SC3m0CC(jgrid,ixi(ihq),
+     3                                3,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC3m0CC(jgrid,ixi(ihq)+1,
+     6                                3,pt,alpha,beta) ) )
                               enddo
                            endif
                         enddo

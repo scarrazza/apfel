@@ -368,8 +368,8 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
       function dw_int(n,k,beta,x)
 *
       implicit none
-*
-      include "../commons/grid.h"
+c*
+c      include "../commons/grid.h"
 **
 *     Input Variables
 *
