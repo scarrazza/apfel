@@ -1,0 +1,657 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{amsmath,amssymb,bm,makeidx,subfigure}
+\usepackage[italian,english]{babel}
+\usepackage[center,small]{caption}[2007/01/07]
+\usepackage{fancyhdr}
+\usepackage{color}
+
+\definecolor{blu}{rgb}{0,0,1}
+\definecolor{verde}{rgb}{0,1,0}
+\definecolor{rosso}{rgb}{1,0,0}
+\definecolor{viola}{rgb}{1,0,1}
+\definecolor{arancio}{rgb}{1,0.5,0}
+\definecolor{celeste}{rgb}{0,1,1}
+\definecolor{rosa}{rgb}{1,0.3,0.5}
+
+\oddsidemargin = 12pt
+\topmargin = 0pt
+\textwidth = 440pt
+\textheight = 650pt
+
+\makeindex
+
+\begin{document}
+
+\begin{center}
+\textbf{\Large Definition of CC Light and Heavy Structure Functions}
+\end{center}
+\tableofcontents
+\newpage
+
+\section{$F_2^{\nu(\overline{\nu})}$ and $F_L^{\nu(\overline{\nu})}$}
+Writing explicitely the CKM matrix elements, the proton stucture
+function $F_2^{\nu,p}$ in the Zero-Mass Variable Flavour Number Scheme
+looks like this:
+\begin{equation}\label{f2nup}
+\begin{array}{rcl}
+F_2^{\nu,p} &=& 2x\Big\{ C_{2,q}\otimes\Big[\left(|V_{ud}|^2+|V_{cd}|^2+|V_{td}|^2\right)d\\
+            &+& \left(|V_{ud}|^2+|V_{us}|^2+|V_{ub}|^2\right)\overline{u}\\
+            &+& \left(|V_{us}|^2+|V_{cs}|^2+|V_{ts}|^2\right)s\\
+            &+& \left(|V_{cd}|^2+|V_{cs}|^2+|V_{cb}|^2\right)\overline{c}\\
+            &+& \left(|V_{ub}|^2+|V_{cb}|^2+|V_{tb}|^2\right)b\\
+            &+& \left(|V_{td}|^2+|V_{ts}|^2+|V_{tb}|^2\right)\overline{t}\\
+            &+& c^{CC}_g(N_f)C_{2,q}\otimes g\Big\}
+\end{array}
+\end{equation}
+where:
+\begin{equation}
+c^{CC}_g(N_f) = 2\sum_{i=u,c,t}\sum_{j=d,s,b}|V_{ij}|^2
+\end{equation}
+Note that everything we will do in this Section applies also to
+$F_L^{\nu,p}$ just substuting $C_{2,q}$ and $C_{2,g}$ with $C_{L,q}$
+and $C_{L,g}$, respectively. Therefore, the stucture of the
+observables is exactly the same.
+
+Now, we want to split up the above structure function into its light
+part plus the stucture functions of the single heavy quarks, that is:
+\begin{equation}
+F_2^{\nu,p} = F_{2,l}^{\nu,p} + F_{2,c}^{\nu,p} + F_{2,b}^{\nu,p} + F_{2,t}^{\nu,p}
+\end{equation}
+without having any overlap between the single components.
+
+To this end, we use the CKM matrix elements and we say that:
+\begin{enumerate}
+\item the light part is composed by the terms of eq. (\ref{f2nup})
+  which are proportional to those CKM matrix elements containing
+  \textit{only} light flavours (i.e. $u$, $d$ and $s$)
+\item the heavy part due to the heavy flavour $h$ is instead given by
+  the terms proportional to $V_{hk}$ or $V_{kh}$, where $m_h^2 >
+  m_k^2$
+\end{enumerate}
+Actually, this means dividing the CKM matrix in the following way:
+\begin{equation}
+V_{CKM} =
+\begin{pmatrix}
+{\color{rosso}V_{ud}} & {\color{rosso}V_{us}} & {\color{verde}V_{ub}}\\
+{\color{blu}V_{cd}} & {\color{blu}V_{cs}} & {\color{verde}V_{cb}}\\
+{\color{viola}V_{td}} & {\color{viola}V_{ts}} & {\color{viola}V_{ub}}
+\end{pmatrix}
+\end{equation}
+where the {\color{rosso} red terms} are those which contribute to the
+{\color{rosso} light part} of the proton structure functions, the
+{\color{blu} blue terms} to the {\color{blu} charm part}, the
+{\color{verde} green terms} to the {\color{verde} bottom part} and the
+{\color{viola} violet terms} to the {\color{viola} top part}.
+
+Explicitely we have that:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,l}^{\nu,p} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ud}|^2 d +\left(|V_{ud}|^2+|V_{us}|^2\right)\overline{u} + |V_{us}|^2 s\Big]\\
+                &+& 2\left(|V_{ud}|^2+|V_{us}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,c}^{\nu,p} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{cd}|^2(d+\overline{c}) + |V_{cs}|^2 (s+\overline{c})\Big]\\
+                &+& 2\left(|V_{cd}|^2+|V_{cs}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,b}^{\nu,p} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ub}|^2 (\overline{u}+b) + |V_{cb}|^2 (\overline{c}+b)\Big]\\
+                &+& 2\left(|V_{ub}|^2+|V_{cb}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,t}^{\nu,p} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{td}|^2 (d +\overline{t})+ |V_{ts}|^2(s+\overline{t}) + |V_{tb}|^2(b+\overline{t})\Big]\\
+                &+& 2\left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{2,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+
+We can obtain $F_2^{\overline\nu,p}$ directly from $F_2^{\nu,p}$ just
+by exchanging each quark with the respective antiquark and
+viceversa. So, we get:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,l}^{\overline\nu,p} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ud}|^2\overline{d}+\left(|V_{ud}|^2+|V_{us}|^2\right)u + |V_{us}|^2 \overline{s}\Big]\\
+                &+& 2\left(|V_{ud}|^2+|V_{us}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,c}^{\overline\nu,p} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{cd}|^2(\overline{d}+c) + |V_{cs}|^2 (\overline{s}+c)\Big]\\
+                &+& 2\left(|V_{cd}|^2+|V_{cs}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,b}^{\overline\nu,p} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ub}|^2 (u+\overline{b}) + |V_{cb}|^2 (c+\overline{b})\Big]\\
+                &+& 2\left(|V_{ub}|^2+|V_{cb}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,t}^{\overline\nu,p} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{td}|^2 (\overline{d} +t)+ |V_{ts}|^2(\overline{s}+t) + |V_{tb}|^2(\overline{b}+t)\Big]\\
+                &+& 2\left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{2,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+
+And finally the neutron structure functions can be obtained from the
+proton ones just by exchanging $u(\overline{u})\leftrightarrow
+d(\overline{d})$. So:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,l}^{\nu,n} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ud}|^2 u +\left(|V_{ud}|^2+|V_{us}|^2\right)\overline{d} + |V_{us}|^2 s\Big]\\
+                &+& 2\left(|V_{ud}|^2+|V_{us}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,c}^{\nu,n} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{cd}|^2(u+\overline{c}) + |V_{cs}|^2 (s+\overline{c})\Big]\\
+                &+& 2\left(|V_{cd}|^2+|V_{cs}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,b}^{\nu,n} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ub}|^2 (\overline{d}+b) + |V_{cb}|^2 (\overline{c}+b)\Big]\\
+                &+& 2\left(|V_{ub}|^2+|V_{cb}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,t}^{\nu,n} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{td}|^2 (u +\overline{t})+ |V_{ts}|^2(s+\overline{t}) + |V_{tb}|^2(b+\overline{t})\Big]\\
+                &+& 2\left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{2,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,l}^{\overline\nu,n} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ud}|^2\overline{u}+\left(|V_{ud}|^2+|V_{us}|^2\right)d + |V_{us}|^2 \overline{s}\Big]\\
+                &+& 2\left(|V_{ud}|^2+|V_{us}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,c}^{\overline\nu,n} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{cd}|^2(\overline{u}+c) + |V_{cs}|^2 (\overline{s}+c)\Big]\\
+                &+& 2\left(|V_{cd}|^2+|V_{cs}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,b}^{\overline\nu,n} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ub}|^2 (d+\overline{b}) + |V_{cb}|^2 (c+\overline{b})\Big]\\
+                &+& 2\left(|V_{ub}|^2+|V_{cb}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,t}^{\overline\nu,n} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{td}|^2 (\overline{u} +t)+ |V_{ts}|^2(\overline{s}+t) + |V_{tb}|^2(\overline{b}+t)\Big]\\
+                &+& 2\left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{2,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+
+Now, since the average of a given structure function
+$F_2^{\nu(\overline{\nu})}$ is given by:
+\begin{equation}
+F_2^{\nu(\overline{\nu})} = fF_2^{\nu(\overline{\nu}),p}+(1-f)F_2^{\nu(\overline{\nu}),p}
+\end{equation}
+where:
+\begin{equation}
+f=\frac{N_p}{N_p+N_n}
+\end{equation}
+we have that:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,l}^{\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ud}|^2 (fd+(1-f)u) +\left(|V_{ud}|^2+|V_{us}|^2\right)(f\overline{u}+(1-f)\overline{d}) + |V_{us}|^2 s\Big]\\
+              &+& 2\left(|V_{ud}|^2+|V_{us}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,c}^{\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{cd}|^2(fd+(1-f)u+\overline{c}) + |V_{cs}|^2 (s+\overline{c})\Big]\\
+              &+& 2\left(|V_{cd}|^2+|V_{cs}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,b}^{\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ub}|^2 (f\overline{u}+(1-f)\overline{d}+b) + |V_{cb}|^2 (\overline{c}+b)\Big]\\
+              &+& 2\left(|V_{ub}|^2+|V_{cb}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,t}^{\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{td}|^2 (fd+(1-f)u +\overline{t})+ |V_{ts}|^2(s+\overline{t}) + |V_{tb}|^2(b+\overline{t})\Big]\\
+              &+& 2\left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{2,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,l}^{\overline\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ud}|^2 (f\overline{d}+(1-f)\overline{u}) +\left(|V_{ud}|^2+|V_{us}|^2\right)(fu+(1-f)d) + |V_{us}|^2 \overline{s}\Big]\\
+              &+& 2\left(|V_{ud}|^2+|V_{us}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,c}^{\overline\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{cd}|^2(f\overline{d}+(1-f)\overline{u}+c) + |V_{cs}|^2 (\overline{s}+c)\Big]\\
+              &+& 2\left(|V_{cd}|^2+|V_{cs}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,b}^{\overline\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ub}|^2 (fu+(1-f)d+\overline{b}) + |V_{cb}|^2 (c+\overline{b})\Big]\\
+              &+& 2\left(|V_{ub}|^2+|V_{cb}|^2\right)C_{2,g}\otimes g\Big\}\\
+\\
+F_{2,t}^{\overline\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{td}|^2 (f\overline{d}+(1-f)\overline{u} +t)+ |V_{ts}|^2(\overline{s}+t) + |V_{tb}|^2(\overline{b}+t)\Big]\\
+              &+& 2\left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{2,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+
+
+\subsection{Light Stucture Function}
+
+At first, let's deal with the light structure function
+$F_{2,l}^{\nu}$. We notice that it can be written as:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,l}^{\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ud}|^2 \left(f(d-u+\overline{u}-\overline{d})+(u+\overline{d})\right) +|V_{us}|^2\left(f(\overline{u}-\overline{d})+(\overline{d}+s)\right)\Big]\\
+              &+& \left(|V_{ud}|^2+|V_{us}|^2\right)C_{2,g}\otimes g\Big\}\\
+\end{array}
+\end{equation}
+
+As usual we have to rotate the basis
+$\{u,\overline{u},d,\overline{d},\dots\}$ into the basis
+$\{\Sigma,g,V,T_3,V_3,\dots\}$, but knowing that:
+\begin{equation}\label{ignmazio}
+\begin{pmatrix}
+u(\overline u)\\
+d(\overline d)\\
+s(\overline s)\\
+c(\overline c)\\
+b(\overline b)\\
+t(\overline t)
+\end{pmatrix}=\frac12\left[\begin{pmatrix}
+u^+\\
+d^+\\
+s^+\\
+c^+\\
+b^+\\
+t^+
+\end{pmatrix}\pm\begin{pmatrix}
+u^-\\
+d^-\\
+s^-\\
+c^-\\
+b^-\\
+t^-
+\end{pmatrix}\right]=
+\frac{1}{120}
+\begin{pmatrix}
+ 10 &  30 &  10 &   5 &   3 &   2 \\
+ 10 & -30 &  10 &   5 &   3 &   2 \\
+ 10 &   0 & -20 &   5 &   3 &   2 \\
+ 10 &   0 &   0 & -15 &   3 &   2 \\
+ 10 &   0 &   0 &   0 & -12 &   2 \\
+ 10 &   0 &   0 &   0 &   0 & -10
+\end{pmatrix}
+\begin{pmatrix}
+\Sigma\pm V \\ T_3\pm V_3 \\ T_8\pm V_8 \\ T_{15}\pm V_{15} \\ T_{24}\pm V_{24} \\ T_{35}\pm V_{35}
+\end{pmatrix}\,.
+\end{equation}
+we find that:
+\begin{equation}
+\begin{array}{l}
+\displaystyle d - u = -\frac12(T_3+V_3)\\
+\\
+\displaystyle \overline{u}-\overline{d} = \frac12(T_3-V_3)
+\end{array}
+\end{equation}
+so that:
+\begin{equation}
+d-u+\overline{u}-\overline{d} = - V_3
+\end{equation}
+while:
+\begin{equation}
+u+\overline{d} = \frac1{60}[10\Sigma+30V_3+10T_8+5T_{15}+3T_{24}+2T_{35}]
+\end{equation}
+and:
+\begin{equation}
+\overline{d}+s = \frac1{60}[10\Sigma-15(T_3-V_3)-5(T_8+3V_8)+5T_{15}+3T_{24}+2T_{35}]
+\end{equation}
+thus:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,l}^{\nu} &=& \displaystyle 2x\Bigg\{C_{2,q}\otimes\Bigg[\frac1{60}|V_{ud}|^2 \left(10\Sigma+30(1-2f)V_3+10T_8+5T_{15}+3T_{24}+2T_{35}\right)\\
+              &+& \displaystyle \frac1{60}|V_{us}|^2\left(10\Sigma-15(1-2f)(T_3-V_3)-5(T_8+3V_8)+5T_{15}+3T_{24}+2T_{35}\right)\Bigg]\\
+              &+& \left(|V_{ud}|^2+|V_{us}|^2\right)C_{2,g}\otimes g\Bigg\}\\
+\\
+              &=& \displaystyle 2x\Bigg\{\frac1{60}C_{2,q}\otimes\Bigg[10K_l\Sigma-15(1-2f)\left[|V_{us}|^2T_3-(2|V_{ud}|^2+|V_{us}|^2)V_3\right]\\
+              &+& \displaystyle 5(2|V_{ud}|^2-|V_{us}|^2)T_8-15|V_{us}|^2V_8+5K_lT_{15}+3K_lT_{24}+2K_lT_{35}\Bigg]\\
+              &+& K_lC_{2,g}\otimes g\Bigg\}
+\end{array}
+\end{equation}
+being:
+\begin{equation}
+K_l = 2\left(|V_{ud}|^2+|V_{us}|^2\right)
+\end{equation}
+
+Now let's consider $F_2^{\nu(\overline\nu)}$. First we notice that it
+can be written as:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,l}^{\overline\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ud}|^2 \left(f(\overline{d}-\overline{u}+u-d)+(\overline{u}+d)\right) +|V_{us}|^2\left(f(u-d)+(d+\overline{s})\right)\Big]\\
+              &+& \left(|V_{ud}|^2+|V_{us}|^2\right)C_{2,g}\otimes g\Big\}\\
+\end{array}
+\end{equation}
+but, from eq. (\ref{ignmazio}):
+\begin{equation}
+\begin{array}{l}
+\displaystyle \overline{d} - \overline{u} = -\frac12(T_3-V_3)\\
+\\
+\displaystyle u-d = \frac12(T_3+V_3)
+\end{array}
+\end{equation}
+so that:
+\begin{equation}
+\overline{d}-\overline{u}+u-d = V_3
+\end{equation}
+while:
+\begin{equation}
+\overline{u}+d = \frac1{60}[10\Sigma-30V_3+10T_8+5T_{15}+3T_{24}+2T_{35}]
+\end{equation}
+and:
+\begin{equation}
+d+\overline{s} = \frac1{60}[10\Sigma-15(T_3+V_3)-5(T_8-3V_8)+5T_{15}+3T_{24}+2T_{35}]
+\end{equation}
+thus:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,l}^{\overline\nu} &=& \displaystyle 2x\Bigg\{\frac1{60}C_{2,q}\otimes\Bigg[10K_l\Sigma-15(1-2f)\left[|V_{us}|^2T_3+(2|V_{ud}|^2+|V_{us}|^2)V_3\right]\\
+              &+& \displaystyle 5(2|V_{ud}|^2-|V_{us}|^2)T_8+15|V_{us}|^2V_8+5K_lT_{15}+3K_lT_{24}+2K_lT_{35}\Bigg]\\
+              &+& K_lC_{2,g}\otimes g\Bigg\}
+\end{array}
+\end{equation}
+
+\subsection{Charm Structure Function}
+
+Now we consider the charm structure function for the neutrino. We see that it can be written as:
+\begin{equation}
+\begin{array}{rcl}
+F_{2,c}^{\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{cd}|^2(f(d-u)+u+\overline{c}) + |V_{cs}|^2 (s+\overline{c})\Big]\\
+              &+& \left(|V_{cd}|^2+|V_{cs}|^2\right)C_{2,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+but:
+\begin{equation}
+\begin{array}{l}
+\displaystyle d - u = -\frac12(T_3+V_3)
+\end{array}
+\end{equation}
+while:
+\begin{equation}
+u+\overline{c} = \frac1{60}[10\Sigma+15(T_3+V_3)+5(T_8+V_8)-5(T_{15}-2V_{15})+3T_{24}+2T_{35}]
+\end{equation}
+and:
+\begin{equation}
+s+\overline{c} = \frac1{60}[10\Sigma-10(T_8+V_8)-5(T_{15}-2V_{15})+3T_{24}+2T_{35}]
+\end{equation}
+so that:
+\begin{equation}
+f(d - u)+u+\overline{c} = \frac1{60}[10\Sigma+15(1-2f)(T_3+V_3)+5(T_8+V_8)-5(T_{15}-2V_{15})+3T_{24}+2T_{35}]
+\end{equation}
+so we find that:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,c}^{\nu} &=& \displaystyle 2x\Bigg\{\frac1{60}C_{2,q}\otimes\Bigg[10K_c\Sigma+15(1-2f)|V_{cd}|^2(T_3 + V_3)\\
+              &+& \displaystyle  5(|V_{cd}|^2-2|V_{cs}|^2)(T_8+V_8) - 5K_c(T_{15}-2V_{15})+3K_cT_{24}+2K_cT_{35}\Bigg]\\
+              &+& K_cC_{2,g}\otimes g\Bigg\}
+\end{array}
+\end{equation}
+where we have defined:
+\begin{equation}
+K_c = |V_{cd}|^2+|V_{cs}|^2
+\end{equation}
+
+\subsection{Bottom Structure Function}
+
+Now we consider the bottom structure function for the neutrino. We see
+that it can be written as:
+\begin{equation}
+\begin{array}{rcl}
+F_{2,b}^{\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{ub}|^2 (f(\overline{u}-\overline{d})+\overline{d}+b) + |V_{cb}|^2 (\overline{c}+b)\Big]\\
+              &+& \left(|V_{ub}|^2+|V_{cb}|^2\right)C_{2,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+but:
+\begin{equation}
+\begin{array}{l}
+\displaystyle \overline{u} - \overline{d} = \frac12(T_3-V_3)
+\end{array}
+\end{equation}
+while:
+\begin{equation}
+\overline{d}+b = \frac1{120}[20\Sigma-30(T_3-V_3)+10(T_8-V_8)+5(T_{15}-V_{15})-3(3T_{24}+5V_{24})+4T_{35}]
+\end{equation}
+and:
+\begin{equation}
+\overline{c}+b = \frac1{120}[20\Sigma-15(T_{15}-V_{15})-3(3T_{24}+5V_{24})+4T_{35}]
+\end{equation}
+so that:
+\begin{equation}
+f(\overline{u}-\overline{d})+\overline{d}+b = \frac1{120}[20\Sigma-30(1-2f)(T_3-V_3)+10(T_8-V_8)+5(T_{15}-V_{15})-3(3T_{24}+5V_{24})+4T_{35}]
+\end{equation}
+so we find that:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,b}^{\nu} &=& \displaystyle 2x\Bigg\{\frac1{120}C_{2,q}\otimes\Bigg[20K_b\Sigma-30(1-2f)|V_{ub}|^2(T_3-V_3)+10|V_{ub}|^2(T_8-V_8)\\
+              &+& \displaystyle 5(|V_{ub}|^2-3|V_{cb}|^2)(T_{15}-V_{15})-3K_b(3T_{24}+5V_{24})+4K_bT_{35}\Bigg]\\
+              &+& K_cC_{2,g}\otimes g\Bigg\}
+\end{array}
+\end{equation}
+where we have defined:
+\begin{equation}
+K_b = |V_{ub}|^2+|V_{cb}|^2
+\end{equation}
+
+\subsection{Top Structure Function}
+
+Now we consider the top structure function for the neutrino. We see
+that it can be written as:
+\begin{equation}
+\begin{array}{rcl}
+F_{2,t}^{\nu} &=& 2x\Big\{C_{2,q}\otimes\Big[|V_{td}|^2 (f(d-u)+u +\overline{t})+ |V_{ts}|^2(s+\overline{t}) + |V_{tb}|^2(b+\overline{t})\Big]\\
+              &+& \left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{2,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+but:
+\begin{equation}
+\begin{array}{l}
+\displaystyle d-u = -\frac12(T_3+V_3)
+\end{array}
+\end{equation}
+while:
+\begin{equation}
+u+\overline{t} = \frac1{120}[20\Sigma+30(T_3+V_3)+10(T_8+V_8)+5(T_{15}+V_{15})+3(T_{24}+V_{24})-4(2T_{35}-3V_{35})]
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{l}
+\displaystyle s+\overline{t} = \frac1{120}[20\Sigma-20(T_8+V_8)+5(T_{15}+V_{15})+3(T_{24}+V_{24})-4(2T_{35}-3V_{35})]\\
+\\
+\displaystyle b+\overline{t} = \frac1{120}[20\Sigma-12(T_{24}+V_{24})-4(2T_{35}-3V_{35})]
+\end{array}
+\end{equation}
+so that:
+\begin{equation}
+f(d-u)+u +\overline{t} =\frac1{120}[20\Sigma+30(1-2f)(T_3+V_3)+10(T_8+V_8)+5(T_{15}+V_{15})+3(T_{24}+V_{24})-4(2T_{35}-3V_{35})]
+\end{equation}
+so we find that:
+\begin{equation}
+\begin{array}{rcl}  
+F_{2,t}^{\nu} &=& \displaystyle 2x\Bigg\{\frac1{120}C_{2,q}\otimes\Bigg[20\Sigma+30(1-2f)|V_{td}|^2(T_3+V_3)+10(|V_{td}|^2-2|V_{ts}|)(T_8+V_8)\\
+              &+& \displaystyle 5(|V_{td}|^2+|V_{ts}|^2)(T_{15}+V_{15})+3(|V_{td}|^2+|V_{ts}|^2-4|V_{tb}|^2)(T_{24}+V_{24})-4(2T_{35}-3V_{35})\Bigg]\\
+              &+& K_cC_{2,g}\otimes g\Bigg\}
+\end{array}
+\end{equation}
+where we have used the fact that:
+\begin{equation}
+|V_{td}|^2+|V_{ts}|^2+|V_{tb}|^2=1
+\end{equation}
+
+\section{$xF_3^{\nu(\overline{\nu})}$}
+
+Now, we consider $xF_3^{\nu,p}$ which is defined as:
+
+\begin{equation}\label{f3nup}
+\begin{array}{rcl}
+xF_3^{\nu,p} &=& 2x\Big\{ C_{3,q}\otimes\Big[\left(|V_{ud}|^2+|V_{cd}|^2+|V_{td}|^2\right)d\\
+            &-& \left(|V_{ud}|^2+|V_{us}|^2+|V_{ub}|^2\right)\overline{u}\\
+            &+& \left(|V_{us}|^2+|V_{cs}|^2+|V_{ts}|^2\right)s\\
+            &-& \left(|V_{cd}|^2+|V_{cs}|^2+|V_{cb}|^2\right)\overline{c}\\
+            &+& \left(|V_{ub}|^2+|V_{cb}|^2+|V_{tb}|^2\right)b\\
+            &-& \left(|V_{td}|^2+|V_{ts}|^2+|V_{tb}|^2\right)\overline{t}\\
+            &+& c^{CC}_g(N_f)C_{3,q}\otimes g\Big\}
+\end{array}
+\end{equation}
+Note that, we are keeping the gluon term which in the ZM-VFNS would be zero. On the other hand in the massive scheme it's not the case.
+
+Again, we want to split up this structure function into its light part
+plus the heavy parts, that is:
+\begin{equation}
+xF_3^{\nu,p} = xF_{3,l}^{\nu,p} + xF_{3,c}^{\nu,p} + xF_{3,b}^{\nu,p} + xF_{3,t}^{\nu,p}
+\end{equation}
+
+Using the same tricks of the previous Section, we get:
+\begin{equation}
+\begin{array}{rcl}  
+xF_{3,l}^{\nu,p} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{ud}|^2 d -\left(|V_{ud}|^2+|V_{us}|^2\right)\overline{u} + |V_{us}|^2 s\Big]\\
+                 &+& \left(|V_{ud}|^2+|V_{us}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,c}^{\nu,p} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{cd}|^2(d-\overline{c}) + |V_{cs}|^2 (s-\overline{c})\Big]\\
+                 &+& \left(|V_{cd}|^2+|V_{cs}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,b}^{\nu,p} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{ub}|^2(-\overline{u}+b) + |V_{cb}|^2 (-\overline{c}+b)\Big]\\
+                 &+& \left(|V_{ub}|^2+|V_{cb}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,t}^{\nu,p} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{td}|^2 (d -\overline{t})+ |V_{ts}|^2(s-\overline{t}) + |V_{tb}|^2(b-\overline{t})\Big]\\
+                 &+& \left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{3,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{rcl}  
+xF_{3,l}^{\overline\nu,p} &=& 2x\Big\{C_{3,q}\otimes\Big[-|V_{ud}|^2 \overline{d} +\left(|V_{ud}|^2+|V_{us}|^2\right)u - |V_{us}|^2 \overline{s}\Big]\\
+                 &+& \left(|V_{ud}|^2+|V_{us}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,c}^{\overline\nu,p} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{cd}|^2(-\overline{d}+c) + |V_{cs}|^2 (-\overline{s}+c)\Big]\\
+                 &+& \left(|V_{cd}|^2+|V_{cs}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,b}^{\overline\nu,p} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{ub}|^2(u-\overline{b}) + |V_{cb}|^2 (c-\overline{b})\Big]\\
+                 &+& \left(|V_{ub}|^2+|V_{cb}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,t}^{\overline\nu,p} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{td}|^2 (-\overline{d}+t)+ |V_{ts}|^2(-\overline{s}+t) + |V_{tb}|^2(\overline{b}+t)\Big]\\
+                 &+& \left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{3,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+
+While for the neutron we have:
+\begin{equation}
+\begin{array}{rcl}  
+xF_{3,l}^{\nu,n} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{ud}|^2 u -\left(|V_{ud}|^2+|V_{us}|^2\right)\overline{d} + |V_{us}|^2 s\Big]\\
+                 &+& \left(|V_{ud}|^2+|V_{us}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,c}^{\nu,n} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{cd}|^2(u-\overline{c}) + |V_{cs}|^2 (s-\overline{c})\Big]\\
+                 &+& \left(|V_{cd}|^2+|V_{cs}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,b}^{\nu,n} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{ub}|^2(-\overline{d}+b) + |V_{cb}|^2 (-\overline{c}+b)\Big]\\
+                 &+& \left(|V_{ub}|^2+|V_{cb}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,t}^{\nu,n} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{td}|^2 (u -\overline{t})+ |V_{ts}|^2(s-\overline{t}) + |V_{tb}|^2(b-\overline{t})\Big]\\
+                 &+& \left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{3,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{rcl}  
+xF_{3,l}^{\overline\nu,n} &=& 2x\Big\{C_{3,q}\otimes\Big[-|V_{ud}|^2 \overline{u} +\left(|V_{ud}|^2+|V_{us}|^2\right)d - |V_{us}|^2 \overline{s}\Big]\\
+                 &+& \left(|V_{ud}|^2+|V_{us}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,c}^{\overline\nu,n} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{cd}|^2(-\overline{u}+c) + |V_{cs}|^2 (-\overline{s}+c)\Big]\\
+                 &+& \left(|V_{cd}|^2+|V_{cs}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,b}^{\overline\nu,n} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{ub}|^2(d-\overline{b}) + |V_{cb}|^2 (c-\overline{b})\Big]\\
+                 &+& \left(|V_{ub}|^2+|V_{cb}|^2\right)C_{3,g}\otimes g\Big\}\Big\}\\
+\\
+xF_{3,t}^{\overline\nu,n} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{td}|^2 (-\overline{u}+t)+ |V_{ts}|^2(-\overline{s}+t) + |V_{tb}|^2(\overline{b}+t)\Big]\\
+                 &+& \left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{3,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+
+So, combining proton and neutron structure functions we get:
+\begin{equation}
+\begin{array}{rcl}  
+xF_{3,l}^{\nu} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{ud}|^2 (fd+(1-f)u) -\left(|V_{ud}|^2+|V_{us}|^2\right)(f\overline{u}+(1-f)\overline{d}) + |V_{us}|^2 s\Big]\\
+                 &+& \left(|V_{ud}|^2+|V_{us}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,c}^{\nu} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{cd}|^2(fd+(1-f)u-\overline{c}) + |V_{cs}|^2 (s-\overline{c})\Big]\\
+                 &+& \left(|V_{cd}|^2+|V_{cs}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,b}^{\nu} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{ub}|^2(-f\overline{u}-(1-f)\overline{d}+b) + |V_{cb}|^2 (-\overline{c}+b)\Big]\\
+                 &+& \left(|V_{ub}|^2+|V_{cb}|^2\right)C_{3,g}\otimes g\Big\}\Big\}\\
+\\
+xF_{3,t}^{\nu} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{td}|^2 (fd +(1-f)u -\overline{t})+ |V_{ts}|^2(s-\overline{t}) + |V_{tb}|^2(b-\overline{t})\Big]\\
+                 &+& \left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{3,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{rcl}  
+xF_{3,l}^{\overline\nu} &=& 2x\Big\{C_{3,q}\otimes\Big[-|V_{ud}|^2 (f\overline{d}+(1-f)\overline{u}) +\left(|V_{ud}|^2+|V_{us}|^2\right)(fu+(1-f)d) - |V_{us}|^2 \overline{s}\Big]\\
+                 &+& \left(|V_{ud}|^2+|V_{us}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,c}^{\overline\nu} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{cd}|^2(-f\overline{d}-(1-f)\overline{u}+c) + |V_{cs}|^2 (-\overline{s}+c)\Big]\\
+                 &+& \left(|V_{cd}|^2+|V_{cs}|^2\right)C_{3,g}\otimes g\Big\}\\
+\\
+xF_{3,b}^{\overline\nu} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{ub}|^2(fu+(1-f)d-\overline{b}) + |V_{cb}|^2 (c-\overline{b})\Big]\\
+                 &+& \left(|V_{ub}|^2+|V_{cb}|^2\right)C_{3,g}\otimes g\Big\}\Big\}\\
+\\
+xF_{3,t}^{\overline\nu} &=& 2x\Big\{C_{3,q}\otimes\Big[|V_{td}|^2 (-f\overline{d}-(1-f)\overline{u}+t)+ |V_{ts}|^2(-\overline{s}+t) + |V_{tb}|^2(\overline{b}+t)\Big]\\
+                 &+& \left(|V_{td}|^2 + |V_{ts}|^2 + |V_{tb}|^2\right)C_{3,g}\otimes g\Big\}
+\end{array}
+\end{equation}
+
+At this point we notice that $xF_3^{\nu(\overline\nu)}$, a part from
+the fact that there are $C_{3,q}$ and $C_{3,g}$ rather than $C_{2,q}$
+and $C_{2,g}$, is almost equal to $F_2^{\nu(\overline\nu)}$ but with
+every antiflavour having opposite sign. Now, starting from
+eq. (\ref{ignmazio}), we can write that:
+\begin{equation}\label{ignmazio1}
+\begin{pmatrix}
+u(-\overline u)\\
+d(-\overline d)\\
+s(-\overline s)\\
+c(-\overline c)\\
+b(-\overline b)\\
+t(-\overline t)
+\end{pmatrix}=
+\frac{1}{120}
+\begin{pmatrix}
+ 10 &  30 &  10 &   5 &   3 &   2 \\
+ 10 & -30 &  10 &   5 &   3 &   2 \\
+ 10 &   0 & -20 &   5 &   3 &   2 \\
+ 10 &   0 &   0 & -15 &   3 &   2 \\
+ 10 &   0 &   0 &   0 & -12 &   2 \\
+ 10 &   0 &   0 &   0 &   0 & -10
+\end{pmatrix}
+\begin{pmatrix}
+V\pm \Sigma \\ V_3\pm T_3 \\ V_8\pm T_8 \\ V_{15}\pm T_{15} \\ V_{24}\pm T_{24} \\ V_{35}\pm T_{35}
+\end{pmatrix}\,.
+\end{equation}
+So, we see that replacing $\overline{q}$ with $-\overline{q}$ in the
+basis $\{u,\overline{u},d,\overline{d},\dots\}$ is equivalent to
+exchange $\Sigma\leftrightarrow V$, $T_3\leftrightarrow V_3$,
+$T_8\leftrightarrow V_8$ and so on in the basis
+$\{\Sigma,g,V,T_3,V_3,\dots\}$. For this reason we can directly write
+down the expressions for $xF_3^{\nu(\overline{\nu})}$.
+
+\section{Heavy Quark Structure Functions in the Massive Scheme}
+
+In this sectio we will try to understand how the structure of the
+heavy quark structure functions change in the massive scheme where the
+heavy quark PDFs are absent. In principle, this step, if computing
+structure functions in the purely massive scheme, is not needed
+becuase the PDF evolution would automatically adjust the structure of
+the observables. However, when considering the FONLL scheme where
+massive and zero-mass schemes are combined and PDFs evolve in the
+ZM-VFNS, it is necessary to know how massive structure functions are
+written in terms of PDFs in the evolution basis to ensure a proper
+combination.
+
+It is possible to write a set of simple rules that allow us to write
+the massive structure functions starting from the expressions we found
+in the previous sections. The principle is simple: in the $N_f$
+massive scheme, all PDFs from $N_f+1$ to 6 are absent. In order to see
+what happens at the level of PDFs in the evolution basis, we need to
+consider all the cases from $N_f=3$ to $N_f=5$ ($N_f=6$ is equivalent
+to the massless scheme).
+
+In the $N_f=3$ massive scheme we have:
+\begin{equation}
+\begin{array}{l}
+T_{15}\rightarrow \Sigma\\
+T_{24}\rightarrow \Sigma\\
+T_{35}\rightarrow \Sigma\\
+V_{15}\rightarrow V\\
+V_{24}\rightarrow V\\
+V_{35}\rightarrow V
+\end{array}
+\end{equation}
+
+In the $N_f=4$ massive scheme:
+\begin{equation}
+\begin{array}{l}
+T_{24}\rightarrow \Sigma\\
+T_{35}\rightarrow \Sigma\\
+V_{24}\rightarrow V\\
+V_{35}\rightarrow V
+\end{array}
+\end{equation}
+
+Finally, in the $N_f=5$ massive scheme:
+\begin{equation}
+\begin{array}{l}
+T_{35}\rightarrow \Sigma\\
+V_{35}\rightarrow V
+\end{array}
+\end{equation}
+
+\end{document}
