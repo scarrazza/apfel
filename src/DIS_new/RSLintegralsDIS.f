@@ -38,7 +38,6 @@
       include "../commons/Nf_FF.h"
       include "../commons/mass_scheme.h"
       include "../commons/ColorFactors.h"
-      include "../commons/TMC.h"
 **
 *     Input Variables
 *
@@ -54,7 +53,6 @@
       double precision integrandsDISzm
       double precision integrandsDISNCm,integrandsDISNCm0
       double precision integrandsDISCCm,integrandsDISCCm0
-      double precision integrandsDISTMC
       double precision cm22q_adler
       double precision CGCOLM0,lnC2,lnC3,CGM0
       double precision integC2(0:2),integCL(0:2),integC3(0:2)
@@ -86,7 +84,6 @@
       external integrandsDISzm
       external integrandsDISNCm,integrandsDISNCm0
       external integrandsDISCCm,integrandsDISCCm0
-      external integrandsDISTMC
       external cm22q_adler
 c      data eps / 5d-8, 1d-3 /
 c      data eps / 5d-8, 1d-5 /
@@ -876,16 +873,47 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
          enddo
       endif
 *
-*     Integrals needed for the computation of the Target Mass Corrections
+      return
+      end
 *
-      if(TMC)then
-         c = max(xg(igrid,beta),xg(igrid,bound))
-         d = min(1d0,xg(igrid,alpha+1))
+************************************************************************
 *
-         walpha = alpha
+*     Integrals needed for the computation of the target mass
+*     corrections.
 *
-         J_TMC(igrid,beta,alpha) = dgauss(integrandsDISTMC,c,d,eps(1))
-      endif
+************************************************************************
+      subroutine RSLintegralsDISTMC(beta,alpha)
+*
+      implicit none
+*
+      include "../commons/wrapDIS.h"
+      include "../commons/grid.h"
+      include "../commons/coeffhqmellin.h"
+      include "../commons/integralsDIS.h"
+**
+*     Input Variables
+*
+      integer beta,alpha
+**
+*     Internal Variables
+*
+      integer bound
+      double precision dgauss,c,d,eps
+      double precision integrandsDISTMC
+      external integrandsDISTMC
+      data eps / 1d-6 /
+*
+      if(alpha.lt.beta) return
+*
+      bound = alpha-inter_degree(igrid)
+      if(alpha.lt.inter_degree(igrid)) bound = 0
+*
+      c = max(xg(igrid,beta),xg(igrid,bound))
+      d = min(1d0,xg(igrid,alpha+1))
+*
+      walpha = alpha
+*
+      J_TMC(igrid,beta,alpha) = dgauss(integrandsDISTMC,c,d,eps)
 *
       return
       end

@@ -48,5 +48,14 @@
          enddo
       endif
 *
+*     Integrals needed for the target mass corrections
+*     (Computed always over the full grid).
+*
+      do alpha=0,nin(igrid)
+         do beta=alpha,nin(igrid)
+            call RSLintegralsDISTMC(alpha,beta)
+         enddo
+      enddo
+*
       return
       end

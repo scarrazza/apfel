@@ -3157,53 +3157,28 @@
 *
          if(TMC)then
             do jgrid=1,ngrid
-               if(IsExt(jgrid))then
-                  do ihq=3,7
-                     do ipdf=0,13
-                        do alpha=0,nin(jgrid)
-                           do beta=alpha,nin(jgrid)
-                              OpI2(jgrid,ihq,ipdf,alpha,beta) = 0d0
-                              OpI3(jgrid,ihq,ipdf,alpha,beta) = 0d0
-                              do gamma=alpha,beta
-                                 OpI2(jgrid,ihq,ipdf,alpha,beta) =
-     1                                OpI2(jgrid,ihq,ipdf,alpha,beta)
-     2                                + J_TMC(jgrid,alpha,gamma)
-     3                                * OpF2(jgrid,ihq,ipdf,gamma,beta)
-     4                                / xg(jgrid,gamma)**2d0
-                                 OpI3(jgrid,ihq,ipdf,alpha,beta) =
-     1                                OpI3(jgrid,ihq,ipdf,alpha,beta)
-     2                                + J_TMC(jgrid,alpha,gamma)
-     3                                * OpF3(jgrid,ihq,ipdf,gamma,beta)
-     4                                / xg(jgrid,gamma)**2d0
-                              enddo
+               do ihq=3,7
+                  do ipdf=0,13
+                     do alpha=0,nin(jgrid)
+                        do beta=alpha,nin(jgrid)
+                           OpI2(jgrid,ihq,ipdf,alpha,beta) = 0d0
+                           OpI3(jgrid,ihq,ipdf,alpha,beta) = 0d0
+                           do gamma=alpha,beta
+                              OpI2(jgrid,ihq,ipdf,alpha,beta) =
+     1                             OpI2(jgrid,ihq,ipdf,alpha,beta)
+     2                             + J_TMC(jgrid,alpha,gamma)
+     3                             * OpF2(jgrid,ihq,ipdf,gamma,beta)
+     4                             / xg(jgrid,gamma)**2d0
+                              OpI3(jgrid,ihq,ipdf,alpha,beta) =
+     1                             OpI3(jgrid,ihq,ipdf,alpha,beta)
+     2                             + J_TMC(jgrid,alpha,gamma)
+     3                             * OpF3(jgrid,ihq,ipdf,gamma,beta)
+     4                             / xg(jgrid,gamma)**2d0
                            enddo
                         enddo
                      enddo
                   enddo
-               else
-                  do ihq=3,7
-                     do ipdf=0,13
-                        do alpha=0,nin(jgrid)
-                           do beta=alpha,nin(jgrid)
-                              OpI2(jgrid,ihq,ipdf,alpha,beta) = 0d0
-                              OpI3(jgrid,ihq,ipdf,alpha,beta) = 0d0
-                              do gamma=alpha,beta
-                                 OpI2(jgrid,ihq,ipdf,alpha,beta) =
-     1                                OpI2(jgrid,ihq,ipdf,alpha,beta)
-     2                         + J_TMC(jgrid,0,gamma-alpha)
-     3                         * OpF2(jgrid,ihq,ipdf,0,beta-gamma)
-     4                         / xg(jgrid,gamma)**2d0
-                                 OpI3(jgrid,ihq,ipdf,alpha,beta) =
-     1                                OpI3(jgrid,ihq,ipdf,alpha,beta)
-     2                         + J_TMC(jgrid,0,gamma-alpha)
-     3                         * OpF3(jgrid,ihq,ipdf,0,beta-gamma)
-     4                         / xg(jgrid,gamma)**2d0
-                              enddo
-                           enddo
-                        enddo
-                     enddo
-                  enddo
-               endif
+               enddo
             enddo
          endif
 *

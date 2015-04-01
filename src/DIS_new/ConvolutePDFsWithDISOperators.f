@@ -63,27 +63,6 @@
                   enddo
                enddo
             enddo
-*
-*     Terms needed for the target mass corrections
-*
-            if(TMC)then
-               do ihq=3,7
-                  do alpha=0,nin(igrid)
-                     I2(ihq,igrid,alpha) = 0d0
-                     I3(ihq,igrid,alpha) = 0d0
-                     do beta=alpha,nin(igrid)
-                        I2(ihq,igrid,alpha) = I2(ihq,igrid,alpha)
-     1                       + J_TMC(igrid,alpha,beta)
-     2                       * F2(ihq,igrid,beta)
-     3                       / xg(igrid,beta)**2d0 
-                        I3(ihq,igrid,alpha) = I3(ihq,igrid,alpha)
-     1                       + J_TMC(igrid,alpha,beta)
-     2                       * F3(ihq,igrid,beta)
-     3                       / xg(igrid,beta)**2d0 
-                     enddo
-                  enddo
-               enddo
-            endif
          else
             do ihq=3,7
                do alpha=0,nin(igrid)
@@ -105,27 +84,27 @@
                   enddo
                enddo
             enddo
+         endif
 *
 *     Terms needed for the target mass corrections
 *
-            if(TMC)then
-               do ihq=3,7
-                  do alpha=0,nin(igrid)
-                     I2(ihq,igrid,alpha) = 0d0
-                     I3(ihq,igrid,alpha) = 0d0
-                     do beta=0,nin(igrid)-alpha
-                        I2(ihq,igrid,alpha) = I2(ihq,igrid,alpha)
-     1                       + J_TMC(igrid,0,beta)
-     2                       * F2(ihq,igrid,alpha+beta)
-     3                       / xg(igrid,alpha+beta)**2d0 
-                        I3(ihq,igrid,alpha) = I3(ihq,igrid,alpha)
-     1                       + J_TMC(igrid,0,beta)
-     2                       * F3(ihq,igrid,alpha+beta)
-     3                       / xg(igrid,alpha+beta)**2d0 
-                     enddo
+         if(TMC)then
+            do ihq=3,7
+               do alpha=0,nin(igrid)
+                  I2(ihq,igrid,alpha) = 0d0
+                  I3(ihq,igrid,alpha) = 0d0
+                  do beta=alpha,nin(igrid)
+                     I2(ihq,igrid,alpha) = I2(ihq,igrid,alpha)
+     1                    + J_TMC(igrid,alpha,beta)
+     2                    * F2(ihq,igrid,beta)
+     3                    / xg(igrid,beta)**2d0 
+                     I3(ihq,igrid,alpha) = I3(ihq,igrid,alpha)
+     1                    + J_TMC(igrid,alpha,beta)
+     2                    * F3(ihq,igrid,beta)
+     3                    / xg(igrid,beta)**2d0 
                   enddo
                enddo
-            endif
+            enddo
          endif
       enddo
 *

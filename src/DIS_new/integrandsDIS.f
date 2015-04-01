@@ -772,7 +772,7 @@ c         integrandsDISNCm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *
 *     Contructing integrand
 *
-      integrandsDISTMC = w_int(inter_degree(igrid),walpha,y)
+      integrandsDISTMC = w_int(1,walpha,y)
 *
       return
       end
