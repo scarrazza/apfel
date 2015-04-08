@@ -1,85 +1,85 @@
-************************************************************************
-*
-*     Dummy subroutines for the external set to ensure the compilation
-*
-************************************************************************
-      subroutine ExternalSetAPFEL(x,Q,xf)
-*
-      implicit none
-**
-*     Input Variables
-*
-      double precision x,Q
-**
-*     Internal Variables
-*
-      integer ipdf
-**
-*     Output Variables
-*
-      double precision xf(-6:7)
-*
-*     Set to zero
-*
-      do ipdf=-6,7
-         xf(ipdf) = 0d0
-      enddo
-*
-      return
-      end
-*
-************************************************************************
-      subroutine ExternalSetAPFEL1(x,Q,xf)
-*
-      implicit none
-**
-*     Input Variables
-*
-      double precision x,Q
-**
-*     Internal Variables
-*
-      integer ipdf
-**
-*     Output Variables
-*
-      double precision xf(-6:7)
-*
-*     Set to zero
-*
-      do ipdf=-6,7
-         xf(ipdf) = 0d0
-      enddo
-*
-      return
-      end
-*
-************************************************************************
-      subroutine ExternalSetAPFELLept(x,Q,irep,xl,xf)
-*
-      implicit none
-**
-*     Input Variables
-*
-      integer irep
-      double precision x,Q
-**
-*     Internal Variables
-*
-      integer ipdf,ilep
-**
-*     Output Variables
-*
-      double precision xl(-3:3),xf(-6:7)
-*
-*     Set to zero
-*
-      do ipdf=-6,7
-         xf(ipdf) = 0d0
-      enddo
-      do ilep=-3,3
-         xl(ilep) = 0d0
-      enddo
-*
-      return
-      end
+c$$$************************************************************************
+c$$$*
+c$$$*     Dummy subroutines for the external set to ensure the compilation
+c$$$*
+c$$$************************************************************************
+c$$$      subroutine ExternalSetAPFEL(x,Q,xf)
+c$$$*
+c$$$      implicit none
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      double precision x,Q
+c$$$**
+c$$$*     Internal Variables
+c$$$*
+c$$$      integer ipdf
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      double precision xf(-6:7)
+c$$$*
+c$$$*     Set to zero
+c$$$*
+c$$$      do ipdf=-6,7
+c$$$         xf(ipdf) = 0d0
+c$$$      enddo
+c$$$*
+c$$$      return
+c$$$      end
+c$$$*
+c$$$************************************************************************
+c$$$      subroutine ExternalSetAPFEL1(x,Q,xf)
+c$$$*
+c$$$      implicit none
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      double precision x,Q
+c$$$**
+c$$$*     Internal Variables
+c$$$*
+c$$$      integer ipdf
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      double precision xf(-6:7)
+c$$$*
+c$$$*     Set to zero
+c$$$*
+c$$$      do ipdf=-6,7
+c$$$         xf(ipdf) = 0d0
+c$$$      enddo
+c$$$*
+c$$$      return
+c$$$      end
+c$$$*
+c$$$************************************************************************
+c$$$      subroutine ExternalSetAPFELLept(x,Q,irep,xl,xf)
+c$$$*
+c$$$      implicit none
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      integer irep
+c$$$      double precision x,Q
+c$$$**
+c$$$*     Internal Variables
+c$$$*
+c$$$      integer ipdf,ilep
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      double precision xl(-3:3),xf(-6:7)
+c$$$*
+c$$$*     Set to zero
+c$$$*
+c$$$      do ipdf=-6,7
+c$$$         xf(ipdf) = 0d0
+c$$$      enddo
+c$$$      do ilep=-3,3
+c$$$         xl(ilep) = 0d0
+c$$$      enddo
+c$$$*
+c$$$      return
+c$$$      end

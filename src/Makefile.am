@@ -61,7 +61,7 @@ DIS_NEW = DIS_new/InitializeAPFEL_DIS.f DIS_new/initParametersDIS.f DIS_new/SetM
 	DIS_new/EnableTargetMassCorrections.f DIS_new/GetCKM.f DIS_new/GetGFermi.f DIS_new/GetProtonMass.f DIS_new/GetSinThetaW.f \
 	DIS_new/GetWMass.f DIS_new/GetZMass.f DIS_new/RSLintegralsSIA.f DIS_new/integrandsSIA.f DIS_new/initIntegralsSIA.f DIS_new/SelectCharge.f
 
-FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src/gauleg.f FTDY/src/initDYcouplings.f FTDY/src/initxGridDY.f FTDY/src/readcDY.f FTDY/src/ReadDataFile.f FTDY/src/sigmafk_dy.f FTDY/src/wcDYlo.f FTDY/src/wcDYqg.f FTDY/src/wcDYqq.f FTDY/src/wcoeffDY.f FTDY/src/writecDY.f FTDY/src/writeFK.f FTDY/src/xlineigen.f
+FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src/gauleg.f FTDY/src/initDYcouplings.f FTDY/src/initxGridDY.f FTDY/src/readcDY.f FTDY/src/ReadDataFile.f FTDY/src/sigmafk_dy.f FTDY/src/wcDYlo.f FTDY/src/wcDYqg.f FTDY/src/wcDYqq.f FTDY/src/wcoeffDY.f FTDY/src/writecDY.f FTDY/src/writeFK.f FTDY/src/xlineigen.f FTDY/src/PDFphys2ev.f
 
 EXTRA_DIST = commons FTDY/commons
 

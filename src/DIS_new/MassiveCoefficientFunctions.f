@@ -103,11 +103,11 @@
 *
       if(mass_scheme.eq."MSbar")then
          if(icoef.eq.3)then
-            h1 = CF * ( 4d0 + dlog(xigrid(ixi)) )
-            MassiveCF = MassiveCF + h1 * dcm21g(xigrid(ixi),z)
+            h1 = CF * ( 4d0 + 3d0 * dlog(xigrid(ixi)) )
+            MassiveCF = MassiveCF + 2d0 * h1 * dcm21g(xigrid(ixi),z)
          elseif(icoef.eq.5)then
-            h1 = CF * ( 4d0 + dlog(xigrid(ixi)) )
-            MassiveCF = MassiveCF + h1 * dcml1g(xigrid(ixi),z)
+            h1 = CF * ( 4d0 + 3d0 * dlog(xigrid(ixi)) )
+            MassiveCF = MassiveCF + 2d0 * h1 * dcml1g(xigrid(ixi),z)
          endif
       endif
 *
@@ -158,7 +158,7 @@
 ************************************************************************
 *
 *     Logarithmic derivative with rescpect to the mass M of the function
-*     "cm21g": dcm21g = M * d(cm21g)/dM.
+*     "cm21g": dcm21g = M * d(cm21g)/dM = - 2 * xi * d(cm21g)/d(xi).
 *     (Needed for the MSbar mass implementation).
 *
 ************************************************************************
@@ -234,7 +234,7 @@
 ************************************************************************
 *
 *     Logarithmic derivative with rescpect to the mass M of the function
-*     "cml1g": dcml1g = M * d(cml1g)/dM.
+*     "cml1g": dcml1g = M * d(cml1g)/dM = - 2 * xi * d(cml1g)/d(xi).
 *     (Needed for the MSbar mass implementation).
 *
 ************************************************************************

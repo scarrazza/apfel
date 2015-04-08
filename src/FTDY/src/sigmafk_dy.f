@@ -451,7 +451,7 @@ c         norm  = 1d0
          call EvolveAPFEL(Q0,Q0)
          do jx=0,nx
             call xPDFall(xg(jx),xfph)
-            call PDFphys2evQCD(xfph,xfev)
+            call PDFphys2ev(xfph,xfev)
             do jpdf=1,13
                xfQ0(jpdf,jx) = xfev(jpdf)
             enddo
