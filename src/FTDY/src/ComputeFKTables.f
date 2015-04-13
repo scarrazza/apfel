@@ -60,9 +60,9 @@
 *
       ounit = 16
       ls = index(set," ") - 1
-c      open(unit=ounit,file="FK_"//set(1:ls)//".dat",status="unknown")
-      open(unit=ounit,file="FK_"//set(1:ls)//".dat",status="old",
-     1     access="append")
+      open(unit=ounit,file="FK_"//set(1:ls)//".dat",status="unknown")
+c      open(unit=ounit,file="FK_"//set(1:ls)//".dat",status="old",
+c     1     access="append")
       write(6,*) "Processing ",set(1:ls)," set ..."
       do idat=1,ndata
          write(6,"(a,i4,a,i4)") " Convoluting data number =",idat,

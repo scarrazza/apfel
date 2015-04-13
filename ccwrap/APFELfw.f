@@ -656,3 +656,18 @@ ccccccccccccc
       subroutine flistfunctions
       call ListFunctions
       end subroutine flistfunctions
+
+ccccccccccccc
+      subroutine fcomputefktables(inputfile,Q0,flmap)
+      double precision Q0
+      character  inputfile*(*)
+      integer flmap(0:13,0:13)
+      call ComputeFKTables(inputfile,Q0,flmap)
+      end subroutine fcomputefktables
+
+ccccccccccccc
+      subroutine fcomputehardcrosssectionsdy(inputfile,outputfile)      
+      character  inputfile*(*)
+      character  outputfile*(*)
+      call ComputeHardCrossSectionsDY(inputfile,outputfile)
+      end subroutine fcomputehardcrosssectionsdy

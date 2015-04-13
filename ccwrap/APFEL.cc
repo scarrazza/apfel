@@ -557,4 +557,22 @@ namespace APFEL {
     flistfunctions();
   }
 
+  void ComputeFKTables(const std::string& inputfile, double Q0,
+		       int* flmap)
+  {
+    char cinputfile[SIZE+1];
+    strncpy(cinputfile, inputfile.c_str(), SIZE);
+    fcomputefktables(cinputfile,&Q0,flmap);    
+  }
+
+  void ComputeHardCrossSectionsDY(const std::string& inputfile, 
+				  const std::string& outputfile)
+  {
+    char cinputfile[SIZE+1];
+    strncpy(cinputfile, inputfile.c_str(), SIZE);
+    char coutputfile[SIZE+1];
+    strncpy(coutputfile, outputfile.c_str(), SIZE);
+    
+    fcomputehardcrosssectionsdy(cinputfile,coutputfile);    
+  }
 }
