@@ -718,7 +718,8 @@ c               endif
             lnF  = lnkQF2 - lnQ
             lnQ2 = lnQ * lnQ
             lnQF = lnQ * lnF
-            h1   = CF * ( 4d0 + 3d0 * dlog(xigrid(ixi*xistep)) )
+c            h1   = CF * ( 4d0 + 3d0 * dlog(xigrid(ixi*xistep)) )
+            h1   = CF * ( 4d0 + 3d0 * lnQ )
             do k=1,3
                do wipt=1,ipt_FF
                   SC2m0NC(igrid,ixi,k,wipt,beta,alpha) = 0d0

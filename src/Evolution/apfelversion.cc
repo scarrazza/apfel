@@ -59,4 +59,19 @@ extern "C" {
   void numberpdf_(){ stop(); }
 #endif
 
+  void externalsetapfel_(double x, double Q, double* xf)
+  {
+    return;
+  }
+
+  void externalsetapfel1_(double x, double Q, double* xf)
+  {
+    return;
+  }
+
+  void externalsetapfellept_(double x, double Q, int irep, double* xl, double* xf)
+  {
+    return;
+  }
+
 }
