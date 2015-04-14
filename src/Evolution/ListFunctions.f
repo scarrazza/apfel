@@ -315,6 +315,10 @@
      1           " double q, double y, int i, int beta)"
       write(6,*) "- FKObservables(string obs, double x,",
      1           " double q, double y)"
+      write(6,*) "- ComputeHardCrossSectionsDY(string inputfile, ",
+     1           "string outputfile)"
+      write(6,*) "- ComputeFKTables(string inputfile, ",
+     1           "double Q0, int flmap[196])"
       write(6,*) "   "
 *
       return
