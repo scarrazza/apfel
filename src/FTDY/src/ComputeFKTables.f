@@ -6,7 +6,7 @@
 *     produced by the project EvolutionKernels for Drell-Yan.
 *
 ************************************************************************
-      subroutine ComputeFKTables(inputfile,Q0,flmap)
+      subroutine ComputeFKTables(inputfile,outputpath,Q0,flmap)
 *
       implicit none
 *
@@ -18,12 +18,13 @@
 *
       double precision Q0
       character*(*) inputfile
+      character*50 outputpath
 **
 *     Internal Variables
 *
       integer idat
       integer ounit
-      integer ls
+      integer ls,lp
       integer ipdf,jpdf
       double precision t1,t2
 **
@@ -60,9 +61,12 @@
 *
       ounit = 16
       ls = index(set," ") - 1
-      open(unit=ounit,file="FK_"//set(1:ls)//".dat",status="unknown")
-c      open(unit=ounit,file="FK_"//set(1:ls)//".dat",status="old",
-c     1     access="append")
+*     Find the length of the outputpath.
+*     (char(0) is the null char (for c++) while char(32) is space (for fortran))
+      lp = index(outputpath,char(0)) - 1
+      if(lp.eq.-1) lp = index(outputpath,char(32)) - 1
+      open(unit=ounit,file=outputpath(1:lp)//"/FK_"//set(1:ls)//".dat",
+     1     status="unknown")
       write(6,*) "Processing ",set(1:ls)," set ..."
       do idat=1,ndata
          write(6,"(a,i4,a,i4)") " Convoluting data number =",idat,

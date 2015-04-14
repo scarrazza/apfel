@@ -75,8 +75,8 @@
          enddo
       enddo
 *
-      do kx1=ixp(1),nx
-         do kx2=ixp(2),nx
+      do kx1=ixp(1),nx-1
+         do kx2=ixp(2),nx-1
             do ipdf=0,13
                do jpdf=0,13
                   if(flmap(ipdf,jpdf).eq.1)then 
@@ -89,7 +89,7 @@
                   endif
                enddo
             enddo
-            write(ounit,*) idat,kx1-1,kx2-1,
+            write(ounit,*) idat,kx1,kx2,
      1           ((buffer(ipdf,jpdf)(1:length(ipdf,jpdf)),
      2           jpdf=0,13),ipdf=0,13)
          enddo

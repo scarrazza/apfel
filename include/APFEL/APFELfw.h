@@ -303,7 +303,7 @@ extern "C" {
   void flistfunctions(void);
 
 #define fcomputefktables FC_FUNC(computefktables,COMPUTEFKTABLES)
-  void fcomputefktables(char*,double*,int*);    
+  void fcomputefktables(char*,char*,double*,int*);    
 
 #define fcomputehardcrosssectionsdy FC_FUNC(computehardcrosssectionsdy,COMPUTEHARDCROSSSECTIONDY)
   void fcomputehardcrosssectionsdy(char*,char*);    

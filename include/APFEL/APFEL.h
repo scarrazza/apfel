@@ -309,7 +309,8 @@ namespace APFEL {
   void ListFunctions(void);
 						
   /// Functions for FTDY
-  void ComputeFKTables(const std::string& inputfile, double Q0, int* flmap);
+  void ComputeFKTables(const std::string& inputfile, const std::string& outputpath,
+		       double Q0, int* flmap);
 
   void ComputeHardCrossSectionsDY(const std::string& datafile, 
 				  const std::string& outputfile);
