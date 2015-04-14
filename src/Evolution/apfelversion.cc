@@ -59,6 +59,8 @@ extern "C" {
   void numberpdf_(){ stop(); }
 #endif
 
+  // remove if mac
+#ifndef DARWIN
   void externalsetapfel_(double x, double Q, double* xf)
   {
     return;
@@ -69,8 +71,8 @@ extern "C" {
     return;
   }
 
-#ifndef DARWIN
-  void externalsetapfellept_(double x, double Q, int irep, double* xl, double* xf)
+  void externalsetapfellept_(double x, double Q, int irep, 
+			     double* xl, double* xf)
   {
     return;
   }
