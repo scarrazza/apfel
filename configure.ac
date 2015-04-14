@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([APFEL],[2.3.5],[stefano.carrazza@mi.infn.it],[apfel])
+AC_INIT([APFEL],[2.4.0],[stefano.carrazza@mi.infn.it],[apfel])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
@@ -56,6 +56,17 @@ AC_ARG_ENABLE([debug],
 if test x$enable_debug == xyes; then
   [AM_FCFLAGS="$AM_FCFLAGS -g"]
 fi
+
+# Check host
+AC_CANONICAL_HOST
+case $host_os in
+  darwin*)
+	AM_CPPFLAGS=["$AM_CPPFLAGS -DDARWIN"]
+        ;;
+  linux*)
+	#AM_CPPFLAGS=["$AM_CPPFLAGS -DLINUX"]
+	;;
+esac
 
 ## Build Doxygen if possible
 AC_ARG_ENABLE([lhapdf],

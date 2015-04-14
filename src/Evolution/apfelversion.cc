@@ -69,9 +69,11 @@ extern "C" {
     return;
   }
 
+#ifndef DARWIN
   void externalsetapfellept_(double x, double Q, int irep, double* xl, double* xf)
   {
     return;
   }
+#endif
 
 }

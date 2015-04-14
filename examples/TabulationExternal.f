@@ -100,13 +100,13 @@ c      call SetMaxFlavourAlpha(5)
 *      call SetPDFSet("external")     
 *
 ************************************************************************
-      subroutine ExternalSetAPFEL(x,xf)
+      subroutine ExternalSetAPFEL(x,Q,xf)
 *
       implicit none
 **
 *     Input Variables
 *
-      double precision x
+      double precision x, Q
 **
 *     Internal Variables
 *
