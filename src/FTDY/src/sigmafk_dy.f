@@ -45,6 +45,8 @@
       integer ix1,ix2,jx1,jx2
       integer nIntervals,nx
       integer ipt,GetPerturbativeOrder
+      integer i,kx
+      integer ixpfk(2)
       double precision norm
       double precision zarat
       double precision tau,shad,m2,Q,as
@@ -66,6 +68,8 @@
       double precision f1Q(-6:6,mxgridsizeDY),f2Q(-6:6,mxgridsizeDY)
       double precision xfev(13),xfph(-6:6),xfQ0(13,0:mxgridsize)
       double precision pred_me,pred_fk,rel_diff
+      double precision x0(2)
+      double precision dist(0:mxgridsize)
       logical ComputePerdictions
       character*15 obslbl
 
@@ -459,11 +463,24 @@ c         norm  = 1d0
 *
 *     Convolute with the FK tables
 *
+*     find ixp(1) and ixp(2)
+*
+         x0(1) = x1dat(idat)
+         x0(2) = x2dat(idat)
+         do i=1,2
+            ixpfk(i) = 0
+            dist(0)  = x0(i) - xg(0)
+            do kx=1,nx
+               dist(kx) = x0(i) - xg(kx)
+               if(dist(kx)*dist(kx-1).lt.0d0) goto 101
+            enddo
+ 101        ixpfk(i) = kx - 1
+         enddo
          pred_fk = 0
          do jpdf1=1,13
             do jpdf2=1,13
-               do jx1=0,nx
-                  do jx2=0,nx
+               do jx1=ixpfk(1)-1,nx-1
+                  do jx2=ixpfk(2)-1,nx-1
                      pred_fk = pred_fk
      1                    + sigmafkdy(jx1,jx2,jpdf1,jpdf2) 
      2                    * xfQ0(jpdf1,jx1) * xfQ0(jpdf2,jx2)

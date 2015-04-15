@@ -48,7 +48,7 @@
       x0(1) = x1dat(idat)
       x0(2) = x2dat(idat)
       do i=1,2
-         ixp(i)   = 0
+         ixp(i)  = 0
          dist(0) = x0(i) - xg(0)
          do kx=1,nx
             dist(kx) = x0(i) - xg(kx)
@@ -64,8 +64,8 @@
             flmap(jpdf1,jpdf2) = 0
          enddo
       enddo
-      do kx1=ixp(1),nx
-         do kx2=ixp(2),nx
+      do kx1=ixp(1)-1,nx-1
+         do kx2=ixp(2)-1,nx-1
             do jpdf1=0,13
                do jpdf2=0,13
                   if(abs(sigmafkdy(kx1,kx2,jpdf1,jpdf2)).gt.1d-10) 
@@ -75,8 +75,8 @@
          enddo
       enddo
 *
-      do kx1=ixp(1),nx-1
-         do kx2=ixp(2),nx-1
+      do kx1=ixp(1)-1,nx-1
+         do kx2=ixp(2)-1,nx-1
             do ipdf=0,13
                do jpdf=0,13
                   if(flmap(ipdf,jpdf).eq.1)then 
