@@ -55,6 +55,12 @@
             if(dist(kx)*dist(kx-1).lt.0d0) goto 101
          enddo
  101     ixp(i) = kx - 1
+         if(ixp(i).lt.1)then
+            write(6,*) "The x-space grid is not wide enough."
+            write(6,*) "Decrease the lower bound."
+            write(6,*) "   "
+            call exit(-10)
+         endif
       enddo
 *
 *     Determine flavour map
