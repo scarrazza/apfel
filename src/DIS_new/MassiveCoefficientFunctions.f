@@ -48,6 +48,7 @@
       include "../commons/coeffhqmellin.h"
       include "../commons/ColorFactors.h"
       include "../commons/mass_scheme.h"
+      include "../commons/MassRunning.h"
 **
 *     input variables
 *
@@ -103,10 +104,12 @@
 *
       if(mass_scheme.eq."MSbar")then
          if(icoef.eq.3)then
-            h1 = CF * ( 4d0 + 3d0 * dlog(xigrid(ixi)) )
+            h1 = CF * 4d0
+            if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xigrid(ixi))
             MassiveCF = MassiveCF + 2d0 * h1 * dcm21g(xigrid(ixi),z)
          elseif(icoef.eq.5)then
-            h1 = CF * ( 4d0 + 3d0 * dlog(xigrid(ixi)) )
+            h1 = CF * 4d0
+            if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xigrid(ixi))
             MassiveCF = MassiveCF + 2d0 * h1 * dcml1g(xigrid(ixi),z)
          endif
       endif

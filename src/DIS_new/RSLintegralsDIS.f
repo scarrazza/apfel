@@ -37,6 +37,7 @@
       include "../commons/MassScheme.h"
       include "../commons/Nf_FF.h"
       include "../commons/mass_scheme.h"
+      include "../commons/MassRunning.h"
       include "../commons/ColorFactors.h"
 **
 *     Input Variables
@@ -590,7 +591,8 @@ c               endif
 *     the NLO quark non-singlet coefficient functions.
 *
             if(mass_scheme.eq."MSbar")then
-               h1 = CF * ( 4d0 + 3d0 * dlog(xigrid(wixi)) )
+               h1 = CF * 4d0
+               if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xigrid(ixi))
                SC2mCC(igrid,ixi,3,1,beta,alpha) = 
      1              SC2mCC(igrid,ixi,3,1,beta,alpha)
      2              - 2d0 * h1 * ( 1d0 - lambda ) * dfL_CCm
@@ -718,8 +720,8 @@ c               endif
             lnF  = lnkQF2 - lnQ
             lnQ2 = lnQ * lnQ
             lnQF = lnQ * lnF
-c            h1   = CF * ( 4d0 + 3d0 * dlog(xigrid(ixi*xistep)) )
-            h1   = CF * ( 4d0 + 3d0 * lnQ )
+            h1 = CF * 4d0
+            if(MassRunning) h1 = h1 + CF * 3d0 * lnQ
             do k=1,3
                do wipt=1,ipt_FF
                   SC2m0NC(igrid,ixi,k,wipt,beta,alpha) = 0d0
