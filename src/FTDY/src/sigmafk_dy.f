@@ -101,8 +101,7 @@
 *     Normalization and conversion factors
 *
       if(obslbl.eq."DYP_E605")then
-c         zarat = 0.5d0      ! Isoscalar target (should be copper)
-         zarat = 0.4564054139125d0   ! Z / A = 29 / 63.54 (Copper: as give in the paper)
+         zarat = 0.5d0      ! Isoscalar target
          ich   = 1
          ibos  = 1          ! Photon production
          fact1 = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
