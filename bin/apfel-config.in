@@ -17,6 +17,7 @@ if [[ $# -eq 0 || -n $( echo $* | egrep -- "--help|-h" ) ]]; then
     echo "  --libdir       : show the path to the APFEL library directory"
     echo "  --cppflags     : get compiler flags for use with the C preprocessor stage of C++ compilation"
     echo "  --ldflags      : get compiler flags for use with the linker stage of any compilation"
+    echo "  --ldflagsevol  : get compiler flags for use with the linker stage only evolution"
     echo "  --list-funcs   : list functions available in the current version of APFEL with a short description"
     echo
     echo "  --version      : returns APFEL release version number"
@@ -38,6 +39,9 @@ test -n "$tmp" && OUT="$OUT @libdir@"
 
 tmp=$( echo "$*" | egrep -- '--\<ldflags\>')
 test -n "$tmp" && OUT="$OUT -L@libdir@ -lAPFEL"
+
+tmp=$( echo "$*" | egrep -- '--\<ldflagsevol\>')
+test -n "$tmp" && OUT="$OUT -L@libdir@ -lAPFELevol"
 
 tmp=$( echo "$*" | egrep -- '--\<list-funcs\>')
 test -n "$tmp" && ListFunctions

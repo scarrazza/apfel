@@ -1,3 +1,4 @@
+lib_LTLIBRARIES = libAPFELevol.la
 noinst_LTLIBRARIES = libAPFELCore.la
 
 INIT = 	Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
@@ -67,6 +68,9 @@ EXTRA_DIST = commons FTDY/commons
 
 HELL = HELL/src/hell.cc HELL/src/DGLAPevol.cc HELL/src/hell_wrapper.cc
 
-libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS) $(DIS_NEW) $(HELL) $(FTDY)
+libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES)  $(HELL) $(DIS) $(DIS_NEW) $(FTDY)
+
+libAPFELevol_la_LIBADD = $(FCLIBS) $(top_builddir)/ccwrap/libAPFELCCWrapEvol.la
+libAPFELevol_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES)  $(HELL)
 
 AM_CXXFLAGS += $(LHAPDF_CPPFLAGS) $(LHAPDF_CXXFLAGS)
