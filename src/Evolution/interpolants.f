@@ -368,8 +368,6 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
       function dw_int(n,k,beta,x)
 *
       implicit none
-c*
-c      include "../commons/grid.h"
 **
 *     Input Variables
 *
@@ -407,7 +405,8 @@ c      include "../commons/grid.h"
 *
 *     Numerical derivative (provisional).
 *
-      dw_int = ( w_int(k,beta,x+eps) - w_int(k,beta,x-eps) ) / 2d0 / eps
+      dw_int = ( w_int(k,beta,x*(1d0+eps)) - w_int(k,beta,x*(1d0-eps)) )
+     1       / 2d0 / eps / x
 *
       return
       end

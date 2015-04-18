@@ -702,8 +702,28 @@ s'\equiv 2|V_{cs}|^2s+2|V_{cd}|^2[f\,d+(1-f)u]\quad\mbox{with}\quad f=\frac{N_p}
 \end{equation}
 Therefore:
 \begin{equation}\label{pincopanco}
-mh^{(1)}\frac{dF^{(0)}_k}{dM}\bigg|_{M=m} = mh^{(1)}\frac{d\xi}{dM}\frac{dF^{(0)}_k}{d\xi}\bigg|_{M=m} = 2h^{(1)}(1-\lambda)\xi\left[\frac{db_k}{d\xi}s'(\xi)+b_k(\xi)\frac{ds'}{d\xi}\right]\bigg|_{M=m}\,.
+mh^{(1)}\frac{dF^{(0)}_k}{dM}\bigg|_{M=m} = mh^{(1)}\frac{d\xi}{dM}\frac{dF^{(0)}_k}{d\xi}\bigg|_{M=m} = 2h^{(1)}(1-\lambda)\xi\left[\frac{db_k}{d\xi}s'(\xi)+b_k(\xi)\frac{ds'}{d\xi}\right]\bigg|_{M=m}\,,
 \end{equation}
+that can be conveniently rewritten as:
+\begin{equation}
+mh^{(1)}\frac{dF^{(0)}_k}{dM}\bigg|_{M=m} = 2h^{(1)}(1-\lambda)\left[\left(\frac{db_k}{d\xi}-\frac{b_k}{\xi}\right)+b_k(\xi)\frac{d}{d\xi}\right]\xi s'(\xi)\bigg|_{M=m}\,,
+\end{equation}
+so that, using eq.~(\ref{definitions}), we have that:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle mh^{(1)}\frac{dF^{(0)}_2}{dM}\bigg|_{M=m} &=& \displaystyle
+2h^{(1)}(1-\lambda)\xi\frac{d}{d\xi} \xi s'(\xi)\bigg|_{M=m}\\
+\\
+\displaystyle mh^{(1)}\frac{dF^{(0)}_3}{dM}\bigg|_{M=m} &=& \displaystyle
+2h^{(1)}(1-\lambda)\frac{1}{\xi}\left[ \xi\frac{d}{d\xi}-1\right]\xi
+s'(\xi)\bigg|_{M=m}\\
+\\
+\displaystyle mh^{(1)}\frac{dF^{(0)}_L}{dM}\bigg|_{M=m} &=& \displaystyle
+2h^{(1)}(1-\lambda)^2\xi \frac{d}{d\xi}\xi s'(\xi)\bigg|_{M=m}
+\end{array}\,.
+\end{equation}
+
+
 Eqs. (\ref{pincopanco}), though apparently very easy, involve the derivative of the PDF $s'$ and this makes the implementation a little bit more troblesome.
 
 Using the same arguments of eq. (\ref{ignazio}), one can show that:

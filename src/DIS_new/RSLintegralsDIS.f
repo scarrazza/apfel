@@ -466,8 +466,9 @@ c            if(xg(igrid,alpha).ge.lambda) cycle
             fL_CCm = w_int(inter_degree(igrid),alpha,
      1                     xg(igrid,beta)/lambda)
             if(mass_scheme.eq."MSbar")
-     1           dfL_CCm = dw_int(1,inter_degree(igrid),alpha,
-     2                            xg(igrid,beta)/lambda)
+     1           dfL_CCm = xg(igrid,beta) * dw_int(1,
+     2           inter_degree(igrid),alpha,xg(igrid,beta)/lambda)
+     3           / lambda
             b_CCm = min(lambda,xg(igrid,beta)/xg(igrid,bound))
 *
 *     Variables needed for wrapping the integrand functions
@@ -595,13 +596,13 @@ c               endif
                if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xigrid(ixi))
                SC2mCC(igrid,ixi,3,1,beta,alpha) = 
      1              SC2mCC(igrid,ixi,3,1,beta,alpha)
-     2              - 2d0 * h1 * ( 1d0 - lambda ) * dfL_CCm
+     2              + 2d0 * h1 * ( 1d0 - lambda ) * dfL_CCm
                SCLmCC(igrid,ixi,3,1,beta,alpha) = 
      1              SCLmCC(igrid,ixi,3,1,beta,alpha)
-     2              - 2d0 * h1 * ( 1d0 - lambda )**2d0 * dfL_CCm
+     2              + 2d0 * h1 * ( 1d0 - lambda )**2d0 * dfL_CCm
                SC3mCC(igrid,ixi,3,1,beta,alpha) = 
      1              SC3mCC(igrid,ixi,3,1,beta,alpha)
-     2              - 2d0 * h1 * ( 1d0 - lambda ) * ( dfL_CCm + fL_CCm )
+     2              + 2d0 * h1 * ( 1d0 - lambda ) * ( dfL_CCm - fL_CCm )
             endif
          enddo
       endif
