@@ -4,7 +4,7 @@
 *
 *     This function returns the value of i-th (i=4,5,6) heavy quark mass
 *     at the given scale using the parameters of the evolution.
-*     Be careful because for the MSbar masse, if kren.ne.1, the matching
+*     Be careful because for the MSbar masses, if kren.ne.1, the matching
 *     is not done at the heavy quark thresholds.
 *
 ************************************************************************

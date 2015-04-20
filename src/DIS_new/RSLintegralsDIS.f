@@ -13,7 +13,6 @@
 *        1           C2
 *        2           CL
 *        3           C3
-
 *
 *     while the index kk runs like that:
 *

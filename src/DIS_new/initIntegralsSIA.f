@@ -28,15 +28,6 @@
          call exit(-10)
       endif
 *
-      if(ipt.gt.1)then
-         write(6,*) "In initIntegralsSIA.f:"
-         write(6,*) "SIA observables currently available up to NLO"
-         write(6,*) "Perturbative order =",ipt
-         write(6,*) "You should reduce it."
-         write(6,*) " "
-         call exit(-10)
-      endif
-*
 *     Initialize integrals
 *
       if(IsExt(igrid))then
