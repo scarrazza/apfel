@@ -163,6 +163,7 @@
 *     Open the output file
 *
          ln = index(fname,char(0)) - 1
+         if(ln.eq.-1) ln = index(fname,char(32)) - 1
          open(unit=13,status="unknown",file=fname(1:ln)//".LHgrid")
 *     
 *     Write header
@@ -285,6 +286,7 @@
 *     LHAPDF6 output
 *
          ln = index(fname,char(0)) - 1
+         if(ln.eq.-1) ln = index(fname,char(32)) - 1
 *     creating main folder
          call mkdir(fname(1:ln))
 *     creating info file
