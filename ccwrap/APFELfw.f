@@ -276,6 +276,15 @@ ccccccccccccc
       end subroutine fsetgridparameters
 
 ccccccccccccc
+      subroutine fsetlhgridparameters(nx,nxm,xmin,xm,xmax,
+     1                                nq2,q2min,q2max)
+      integer nx,nxm,nq2
+      double precision q2min,q2max
+      double precision xmin,xm,xmax
+      call SetLHgridParameters(nx,nxm,xmin,xm,xmax,nq2,q2min,q2max)
+      end fsetlhgridparameters
+
+ccccccccccccc
       subroutine fsetexternalgrid(i,np,deg,x)
       integer i, np, deg
       double precision x(0:np)

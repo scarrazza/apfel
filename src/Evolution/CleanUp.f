@@ -50,6 +50,7 @@
       include "../commons/SelectedCharge.h"
       include "../commons/TauMass.h"
       include "../commons/LeptEvol.h"
+      include "../commons/LHAgrid.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -79,6 +80,7 @@
       InLambdaQCD       = "xxxx"
       InPDFEvol         = "xxxx"
       InFastEvol        = "xxxx"
+      InLHgrid          = "xxxx"
 *
       InMassScheme      = "xxxx"
       inProcessDIS      = "xxxx"

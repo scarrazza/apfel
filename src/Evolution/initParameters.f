@@ -37,11 +37,12 @@
       include "../commons/MassRunning.h"
       include "../commons/TauMass.h"
       include "../commons/LeptEvol.h"
+      include "../commons/LHAgrid.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
       if(InWelcome.ne."done")     call EnableWelcomeMessage(.true.)
-      if(InScales.ne."done")      call SetQLimits(0.5d0,1000d0)
+      if(InScales.ne."done")      call SetQLimits(0.5d0,100000d0)
       if(InPt.ne."done")          call SetPerturbativeOrder(2)
       if(InEvs.ne."done")         call SetVFNS
       if(InTheory.ne."done")      call SetTheory("QCD")
@@ -67,6 +68,8 @@
       if(InEvolOp.ne."done")      call EnableEvolutionOperator(.false.)
       if(InLeptEvol.ne."done")    call EnableLeptonEvolution(.false.)
       if(InLock.ne."done")        call LockGrids(.false.)
+      if(InLHgrid.ne."done")      call SetLHgridParameters(100,50,1d-9,
+     1                                            1d-1,1d0,50,1d0,1d10)
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,80,3,1d-5)
@@ -302,7 +305,7 @@
      2                                 " active flavours at N",ipt,"LO"
          endif
 *
-         write(6,"(a,f7.2,a,f8.2,a)") " Evolution range [",
+         write(6,"(a,f7.2,a,f10.2,a)") " Evolution range [",
      1               dsqrt(Q2min)," :",dsqrt(Q2max)," ] GeV"
 *
          if(Smallx)then

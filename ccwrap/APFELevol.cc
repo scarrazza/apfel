@@ -233,6 +233,12 @@ namespace APFEL {
     fsetgridparameters(&i,&np,&deg,&x);
   }
 
+  void SetLHgridParameters(int nx, int nxm, double xmin, double xm, double xmax,
+			   int nq2, double q2min, double q2max)
+  {
+    fsetlhgridparameters(&nx,&nxm,&xmin,&xm,&xmax,&nq2,&q2min,&q2max);
+  }
+
   void SetExternalGrid(int i, int np, int deg, double *x)
   {
     fsetexternalgrid(&i,&np,&deg,x);

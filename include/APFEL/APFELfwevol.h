@@ -127,6 +127,9 @@ extern "C" {
 #define fsetgridparameters FC_FUNC(setgridparameters,SETGRIDPARAMETERS)
   void fsetgridparameters(int*,int*,int*,double*);
 
+#define fsetlhgridparameters FC_FUNC(setlhgridparameters,SETLHGRIDPARAMETERS)
+  void fsetlhgridparameters(int*,int*,double*,double*,double*,int*,double*,double*);
+
 #define fsetexternalgrid FC_FUNC(setexternalgrid,SETEXTERNALGRID)
   void fsetexternalgrid(int*,int*,int*,double*);
 
@@ -163,7 +166,7 @@ extern "C" {
 #define fsetreplica FC_FUNC(setreplica,SETREPLICA)
   void fsetreplica(int*);
 
-#define fsettheory FC_FUNC(settheory, SETTHEORY)
+#define fsettheory FC_FUNC(settheory,SETTHEORY)
   void fsettheory(char*);
 
 #define fsetvfns FC_FUNC(setvfns,SETVFNS)

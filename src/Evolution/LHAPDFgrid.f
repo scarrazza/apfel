@@ -38,12 +38,12 @@
       integer isg,nQ(3:7)
       double precision qref,mth(4:6)
       double precision lambda3,lambda4,lambda5,lambdaNF
-      double precision xbLHA(nxLHA),q2LHA(nq2LHA)
+      double precision xbLHA(nxmax),q2LHA(nq2max)
       double precision lnQmin,lnQmax
       double precision eps,offset
-      double precision xpdfLHA(-6:6,nxLHA,nq2LHA)
-      double precision xgammaLHA(nxLHA,nq2LHA)
-      double precision xlepLHA(-6:6,nxLHA,nq2LHA)
+      double precision xpdfLHA(-6:6,nxmax,nq2max)
+      double precision xgammaLHA(nxmax,nq2max)
+      double precision xlepLHA(-6:6,nxmax,nq2max)
       double precision xPDFj,xgammaj,xLeptonj
       double precision AlphaQCD
       character*30 str
@@ -52,6 +52,8 @@
 *
 *     Specify initialization for the LHgrid
 *
+      if(InLHgrid.ne."done") call SetLHgridParameters(100,50,1d-9,1d-1,
+     1                                                1d0,50,1d0,1d10)
       call SetQLimits(dsqrt(q2minLHA)-offset,dsqrt(q2maxLHA)+offset)
       call SetNumberOfGrids(3)
       call SetGridParameters(1,100,3,xminLHA)
@@ -59,6 +61,16 @@
       call SetGridParameters(3,20,5,8d-1)
 *
       call initializeAPFEL
+*
+*     Report grid parameters
+*
+      write(6,*) "Report of the LHAPDF grid parameters:"
+      write(6,"(a,i3,a,f11.9,a,f6.4,a)") " - x-space grid: ",nxLHA,
+     1     " points in [",xminLHA," :",xmaxLHA,"]"
+      write(6,"(a,f6.4)") "    transition from log to lin in x = ",xmLHA
+      write(6,"(a,i3,a,f5.2,a,f13.1,a)") " - Q2-space grid: ",nq2LHA,
+     1     " points in [",q2minLHA,":",q2maxLHA,"] GeV^2"
+      write(6,*) " "
 *
 *     Compute the values of lambdaQCD
 *
