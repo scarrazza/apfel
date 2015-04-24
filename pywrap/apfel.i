@@ -6,10 +6,12 @@
 
 %{
   #define SWIG_FILE_WITH_INIT
-  #include "APFEL/APFEL.h"
+  #include "APFEL/APFELevol.h"
+  #include "APFEL/APFELobs.h"
   #include <cstddef>
 %}
 
 namespace APFEL {}
 
-%include "APFEL/APFEL.h"
+%include "APFEL/APFELevol.h"
+%include "APFEL/APFELobs.h"

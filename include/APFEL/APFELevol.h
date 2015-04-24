@@ -108,7 +108,7 @@ namespace APFEL {
   void EnableEvolutionOperator(int);
 
   /// Enables the evolution of leptons
-  void EnableLeptonevolution(int);
+  void EnableLeptonEvolution(int);
 
   /// Lock internal subgrids
   void LockGrids(int);
