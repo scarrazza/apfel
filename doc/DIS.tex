@@ -1023,124 +1023,149 @@ Defining:
 \begin{equation}
 \xi_R\equiv\frac{\mu_R}{Q}\,,\quad\xi_F\equiv\frac{\mu_F}{Q}\quad\mbox{and}\quad a_s=\frac{\alpha_s}{4\pi}
 \end{equation}
-where $Q$ is constant, the equations above can be written as:
+where $Q$ is constant, and defining:
 \begin{equation}
-\frac{\partial f_{i}}{\partial\ln\xi_F^2} =
-a_s(\xi_FQ)\left[ P_{ij}^{(0)}(x) +
-  a_s(\xi_FQ) P_{ij}^{(1)}(x) + \dots\right]\otimes f_j(x,\xi_FQ)\,,
+t_R \equiv \ln\xi_R^2\quad\mbox{and}\quad t_F \equiv \ln\xi_F^2\,,
+\end{equation}
+the equations above can be written as:
+\begin{equation}\label{DGLAPsimp}
+\frac{\partial f_{i}}{\partial t_F} =
+a_s(t_F)\left[ P_{ij}^{(0)} +
+  a_s(t_F) P_{ij}^{(1)} + \dots\right]\otimes f_j(t_F)\,,
 \end{equation}
 and:
-\begin{equation}
-\frac{\partial a_s}{\partial\ln\xi_R^2} =
--a_s^2(\xi_RQ)\left[ \beta_0 +
-  a_s(\xi_RQ)\beta_1 + \dots\right]\,.
+\begin{equation}\label{BETAsimp}
+\frac{\partial a_s}{\partial t_R} =
+-a_s^2(t_R)\left[ \beta_0 +
+  a_s(t_R)\beta_1 + \dots\right]\,.
 \end{equation}
-
-Expanding around $\xi_R=\xi_F=1$, we have:
+Now, expanding $f_i(t)$ around $t=t_F$ we have:
+\begin{equation}\label{expDGLAP}
+f_i(t) = f_i(t_F)+\frac{\partial f_{i}}{\partial t}\bigg|_{t=t_F}
+(t-t_F) + \frac12 \frac{\partial^2 f_{i}}{\partial t^2}\bigg|_{t=t_F}
+(t-t_F)^2 + \dots
+\end{equation}
+Using eqs.~(\ref{DGLAPsimp}) and~(\ref{BETAsimp}), we have that:
 \begin{equation}
-\begin{array}{rcl}
-\displaystyle F(\xi_R,\xi_F)  &=& \displaystyle F(1,1) + \left(\frac{\partial F}{\partial
-  \ln\xi_R^2}\ln\xi_R^2 + \frac{\partial F}{\partial
-  \ln\xi_F^2}\ln\xi_F^2\right)\\
+\begin{array}{l}
+\displaystyle \frac{\partial f_{i}}{\partial t}\bigg|_{t=t_F} = \left[ a_s(t_F) P_{ij}^{(0)} +
+  a_s^2(t_F) P_{ij}^{(1)}\right]\otimes f_j(t_F) +
+\mathcal{O}(a_s^3)\\
 \\
-&+& \displaystyle \frac12\left(\frac{\partial^2 F}{(\partial
-  \ln\xi_R^2)^2}\ln^2\xi_R^2+ 
-\frac{\partial^2 F}{\partial
-  \ln\xi_R^2\partial\ln \xi_F^2}\ln\xi_R^2 \ln\xi_F^2
-+\frac{\partial^2 F}{(\partial
-  \ln\xi_F^2)^2}\ln^2\xi_F^2
-\right) +\dots
+\displaystyle \frac{\partial^2 f_{i}}{\partial t^2}\bigg|_{t=t_F} =
+a_s^2(t_F)\left[ P_{il}^{(0)}\otimes P_{lj}^{(0)} -
+ \beta_0 P_{ij}^{(0)} \right]\otimes f_j(t_F) +
+\mathcal{O}(a_s^3)
 \end{array}
 \end{equation}
+Chosing $t=0$ in eq.~(\ref{expDGLAP}), we finally have:
+\begin{equation}\label{expDGLAP1}
+f_i(0) = \left\{1-a_s(t_F) t_F P_{ij}^{(0)} + a_s^2(t_F)\left[-t_F P_{ij}^{(1)}+ t_F^2 \frac12\left( P_{il}^{(0)}\otimes P_{lj}^{(0)} -
+  \beta_0 P_{ij}^{(0)} \right)\right]\right\}\otimes f_j(t_F)
++ \mathcal{O}(a_s^3)\,.
+\end{equation}
+Now, using eq.~(\ref{BETAsimp}), we easily find:
+\begin{equation}\label{BETAexp}
+ a_s(t_F)= a_s(t_R)\left[1+a_s(t_R)\beta_{0}(t_R-t_F)+\mathcal{O}(a_s^2)\right]\,,
+\end{equation}
+which can be plugged into eq.~(\ref{expDGLAP1}) to give:
+\begin{equation}\label{expDGLAP2}
+f_i(0) = \left\{1-a_s(t_R) t_F P_{ij}^{(0)} + a_s^2(t_R)\left[-t_F P_{ij}^{(1)}+ t_F^2 \frac12\left( P_{il}^{(0)}\otimes P_{lj}^{(0)} +
+  \beta_0 P_{ij}^{(0)} \right)- t_Ft_R\beta_{0}P_{ij}^{(0)}\right]\right\}\otimes f_j(t_F)
++ \mathcal{O}(a_s^3)\,.
+\end{equation}
+Finally, setting $t_F=0$ in eq.~(\ref{BETAexp}), we find:
+\begin{equation}\label{BETAexp1}
+ a_s(0)= a_s(t_R)\left[1+a_s(t_R)\beta_{0}t_R+\mathcal{O}(a_s^2)\right]\,,
+\end{equation}
+
 Considering that and NNLO the ZM structure functions are written in
 terms of PDFs and coefficient functions as:
 \begin{equation}
-F(\xi_R,\xi_F) =
-\sum_{i}\left[\sum_{k=0}^{2} a_s^k(\xi_R Q) C_i^{(k)}\right]\otimes f_i(\xi_F Q)\,,
+F(t_R,t_F) =
+\left[\sum_{k=0}^{2} a_s^k(t_R) \widetilde{C}_i^{(k)}(t_R,t_F)\right]\otimes f_i(t_F) +\mathcal{O}(a_s^3)\,,
 \end{equation}
-and thus:
-\begin{equation}
-  \frac{\partial F}{\partial\ln\xi_R^2} =
-  \sum_{i}\left[\sum_{k=1}^{2}k a_s^{k-1}(\xi_R
-    Q) \frac{\partial a_s}{\partial\ln\xi_R^2}
-    C_i^{(k)}\right]\otimes f_i(\xi_F Q) = - 
-  a_s^2(\xi_RQ)\beta_0
-  \sum_{i} C_i^{(1)}\otimes f_i(\xi_F Q)
-+\mathcal{O}(a_s^3)\,,
+and that, up to subleading terms, the structure functions must be
+renormalization and factorization scale independent, this requires that:
+\begin{equation}\label{invariance}
+F(t_R,t_F) = F(0,0)\,.
 \end{equation}
-and:
-\begin{equation}
-\begin{array}{c}
-\displaystyle \frac{\partial F}{\partial\ln\xi_F^2} =
-\sum_{i}\left[\sum_{k=0}^{2}a_s^k(\xi_R Q) C_i^{(k)}\right]\otimes
-\frac{\partial f_i}{\partial\ln\xi_F^2} = a_s(\xi_F Q) \sum_{i,j}
-C_i^{(0)}\otimes P_{ij}^{(0)}\otimes f_i(\xi_F Q)\\
+But since:
+\begin{equation}\label{ZeroScales}
+F(0,0) =
+\left[\sum_{k=0}^{2} a_s^k(0) C_i^{(k)}\right]\otimes f_i(0)+\mathcal{O}(a_s^3)\,,
+\end{equation}
+where $C_i^{(k)}$ are the well-know ZM coefficient functions, using
+eqs.~(\ref{expDGLAP2}) and~(\ref{BETAexp1}) in eq.~(\ref{ZeroScales})
+and finally imposing the identity in eq.~(\ref{invariance}), we can
+find the explicit espression of the ``generalized'' coefficient
+functions $\widetilde{C}_i^{(k)}(t_R,t_F)$. In fact:
+\begin{equation}\label{ZeroScales}
+\begin{array}{rcl}
+F(0,0) &=&\bigg\{ C_j^{(0)} \\
 \\
-\displaystyle +a_s^2(\xi_F Q) \sum_{i,j}
-C_i^{(0)}\otimes P_{ij}^{(1)}\otimes f_i(\xi_F Q)+a_s(\xi_R Q) a_s(\xi_F Q) \sum_{i,j}
-C_i^{(1)}\otimes P_{ij}^{(0)}\otimes f_i(\xi_F Q) +\mathcal{O}(a_s^3)\,,
+&+&\displaystyle  a_s(t_R)\left[C_j^{(1)}-
+  t_F C_i^{(0)} \otimes P_{ij}^{(0)}\right]\\
+\\
+&+&\displaystyle  a_s^2(t_R)\bigg[C_j^{(2)} + t_R\beta_0 C_j^{(1)}
+-t_F \left(C_i^{(0)} \otimes P_{ij}^{(1)}+C_i^{(1)} \otimes P_{ij}^{(0)}\right)\\
+\\
+&+&\displaystyle \frac{t_F^2}2 C_i^{(0)} \otimes \left( P_{il}^{(0)}\otimes P_{lj}^{(0)} +
+  \beta_0 P_{ij}^{(0)} \right)-
+t_Ft_R\beta_{0}C_i^{(0)} \otimes P_{ij}^{(0)}\bigg]\bigg\}\otimes f_j(t_F)+\mathcal{O}(a_s^3)\,.
 \end{array}
 \end{equation}
-but:
-\begin{equation}
- a_s(\xi_F Q)= a_s(\xi_R Q)\left[1+a_s(\xi_R Q)\beta_{0}\ln\frac{\xi_R^2}{\xi_F^2}+\mathcal{O}(a_s^2)\right]\,,
-\end{equation}
-so that:
-\begin{equation}
-\begin{array}{c}
-  \displaystyle \frac{\partial F}{\partial\ln\xi_F^2}  = \sum_{i,j}
-  \bigg\{ a_s(\xi_R Q) 
-  C_i^{(0)}\otimes P_{ij}^{(0)}\\
-  \\
-  \displaystyle +a_s^2(\xi_R Q) \left[
-    \ln\frac{\xi_R^2}{\xi_F^2} \beta_{0}
-    C_i^{(0)}\otimes P_{ij}^{(0)}+
-    C_i^{(0)}\otimes P_{ij}^{(1)}+
-    C_i^{(1)}\otimes P_{ij}^{(0)}\right]\bigg\}\otimes f_j(\xi_F Q) +\mathcal{O}(a_s^3)\,.
+Finally, using the identity in eq.~(\ref{invariance}), it is easy to find
+that:
+\begin{equation}\label{generalizedCF}
+\begin{array}{rcl}
+\displaystyle \widetilde{C}_j^{(0)}(t_R,t_F) &=& \displaystyle C_j^{(0)} \\
+\\
+\displaystyle \widetilde{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)}-t_F C_i^{(0)} \otimes P_{ij}^{(0)} \\
+\\
+\displaystyle \widetilde{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
+-t_F \left(C_i^{(0)} \otimes P_{ij}^{(1)}+C_i^{(1)} \otimes
+  P_{ij}^{(0)}\right)\\
+\\
+&+&\displaystyle\frac{t_F^2}2 C_i^{(0)} \otimes \left( P_{il}^{(0)}\otimes P_{lj}^{(0)} +
+  \beta_0 P_{ij}^{(0)} \right)-
+t_Ft_R\beta_{0}C_i^{(0)} \otimes P_{ij}^{(0)}\,.
 \end{array}
 \end{equation}
-It follows that:
-\begin{equation}
-\frac{\partial^2 F}{(\partial\ln\xi_R^2)^2} = \mathcal{O}(\alpha_s^4)
-\end{equation}
-\begin{equation}
-\frac{\partial^2 F}{\partial\ln\xi_R^2 \partial\ln\xi_F^2} =
-\frac{\partial^2 F}{\partial\ln\xi_F^2 \partial\ln\xi_R^2} = \mathcal{O}(\alpha_s^3)
-\end{equation}
-\begin{equation}
-\frac{\partial^2 F}{(\partial\ln\xi_F^2)^2} = \sum_{i,j,l}
- a_s^2(\xi_R Q) 
-  C_i^{(0)}\otimes P_{il}^{(0)}\otimes P_{lj}^{(0)}\otimes f_j(\xi_F Q) + \mathcal{O}(\alpha_s^3)
-\end{equation}
+Therefore, in the ZM-VFNS, in order to perform scale variation we need
+to precompute the additional convolutions: $C_i^{(0)} \otimes
+P_{ij}^{(0)}$, $C_i^{(0)} \otimes P_{ij}^{(1)}$, $C_i^{(1)} \otimes
+P_{ij}^{(0)}$ and $C_i^{(0)} \otimes P_{il}^{(0)} \otimes P_{lj}^{(0)}$.
 
-Gathering all pieces together, suppressing all sums and defining
-$a_s\equiv a_s(\xi_R Q) $ and  $f_j\equiv f_j(\xi_F Q)$ we find that:
+Now let us consider the massive scheme. In the neutral-current sector
+the leading-order coefficient functions $C_i^{(0)}$ are identically
+equal to zero and this simplifies substantially the structure of the
+massive coeffiecient functions in the presence of scale variations:
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle F(\xi_R,\xi_F)  &=& \displaystyle F(1,1) +  \bigg\{ a_s 
-  C_i^{(0)}\otimes P_{ij}^{(0)} \ln\xi_F^2 \\
+\displaystyle \widetilde{C}_j^{(0)}(t_R,t_F) &=& \displaystyle 0 \\
 \\
-&+& \displaystyle 
-  a_s^2\bigg[ -\beta_0 C_j^{(1)} \ln\xi_R^2 + \left(
-    C_i^{(0)}\otimes P_{ij}^{(1)}+
-    C_i^{(1)}\otimes
-    P_{ij}^{(0)}\right)\ln\xi_F^2\\
+\displaystyle \widetilde{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)} \\
 \\
-&+&\displaystyle \beta_{0}
-    C_i^{(0)}\otimes P_{ij}^{(0)}\ln\xi_R^2 \ln\xi_F^2+\left( -\beta_{0}
-    C_i^{(0)}\otimes P_{ij}^{(0)} + \frac12 C_i^{(0)}\otimes
-P_{il}^{(0)}\otimes P_{lj}^{(0)}\right)\ln^2\xi_F^2 \bigg]\bigg\}\otimes
-f_j\\
-\\
-&+&\displaystyle \mathcal{O}(a_s^3)\,.
+\displaystyle \widetilde{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
+-t_F C_i^{(1)} \otimes
+  P_{ij}^{(0)}\,.
 \end{array}
 \end{equation}
+In addition, the factorization scale variation terms are already
+present in the implementation of the massive coefficient functions in
+{\tt APFEL}. As a consequence, only the renormalization variation
+terms need to be implemented. This is a great facilitation because the
+renormalization variation terms do not require any further convolution
+and thus no additional terms need to be computed during the
+initialization phase.
 
-
-
-
-
-
+As far as the massive charged-current sector is concerned, no
+$\mathcal{O}(a_s^2)$ are presently available and thus only the first
+two lines of eq.~(\ref{generalizedCF}) are actually needed. Also in
+this case the factorization scale variation terms are already present
+in the implementation and again this avoids the precomputation of
+additional terms.
 
 \section{Implementation of the Semi-Inclusive $e^+e^-$ Annihilation}
 
