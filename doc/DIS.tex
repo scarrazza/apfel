@@ -1000,6 +1000,147 @@ J_{\beta\alpha} \frac{F(x_\alpha,Q)}{x_\alpha^2} =
 \frac{J_{\beta\alpha}\Gamma_{i,\alpha\gamma}(Q) }{x_\alpha^2}\right] M_{ij,\gamma\delta}(Q,Q_0)\tilde{q}_j(x_{\delta},Q_0)\,,
 \end{equation}
 
+\section{Renormalization and Factorization Scale Variation}
+
+In the previous sections, when discussing the implementation of the
+structure functions in {\tt APFEL}, we assumed that the
+renormalization scale $\mu_R$ and the factorization scale $\mu_F$ were
+identified to the scale pf the process $Q$. In this section, we want
+to relax this assumption and to do so we the expansion of the DGLAP
+and RG equation for $\alpha_s$ up to NLO, that is:
+\begin{equation}
+\frac{\partial f_{i}}{\partial\ln\mu_F^2} =
+\frac{\alpha_s(\mu_F)}{4\pi}\left[ P_{ij}^{(0)}(x) +
+  \frac{\alpha_s(\mu_F)}{4\pi} P_{ij}^{(1)}(x) + \dots\right]\otimes f_j(x,\mu_F)\,,
+\end{equation}
+and:
+\begin{equation}
+\frac{\partial }{\partial\ln\mu_R^2}\left(\frac{\alpha_s}{4\pi}\right) =
+-\left(\frac{\alpha_s(\mu_R)}{4\pi}\right)^2\left[ \beta_0 +
+  \frac{\alpha_s(\mu_R)}{4\pi}\beta_1 + \dots\right]\,.
+\end{equation}
+Defining:
+\begin{equation}
+\xi_R\equiv\frac{\mu_R}{Q}\,,\quad\xi_F\equiv\frac{\mu_F}{Q}\quad\mbox{and}\quad a_s=\frac{\alpha_s}{4\pi}
+\end{equation}
+where $Q$ is constant, the equations above can be written as:
+\begin{equation}
+\frac{\partial f_{i}}{\partial\ln\xi_F^2} =
+a_s(\xi_FQ)\left[ P_{ij}^{(0)}(x) +
+  a_s(\xi_FQ) P_{ij}^{(1)}(x) + \dots\right]\otimes f_j(x,\xi_FQ)\,,
+\end{equation}
+and:
+\begin{equation}
+\frac{\partial a_s}{\partial\ln\xi_R^2} =
+-a_s^2(\xi_RQ)\left[ \beta_0 +
+  a_s(\xi_RQ)\beta_1 + \dots\right]\,.
+\end{equation}
+
+Expanding around $\xi_R=\xi_F=1$, we have:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle F(\xi_R,\xi_F)  &=& \displaystyle F(1,1) + \left(\frac{\partial F}{\partial
+  \ln\xi_R^2}\ln\xi_R^2 + \frac{\partial F}{\partial
+  \ln\xi_F^2}\ln\xi_F^2\right)\\
+\\
+&+& \displaystyle \frac12\left(\frac{\partial^2 F}{(\partial
+  \ln\xi_R^2)^2}\ln^2\xi_R^2+ 
+\frac{\partial^2 F}{\partial
+  \ln\xi_R^2\partial\ln \xi_F^2}\ln\xi_R^2 \ln\xi_F^2
++\frac{\partial^2 F}{(\partial
+  \ln\xi_F^2)^2}\ln^2\xi_F^2
+\right) +\dots
+\end{array}
+\end{equation}
+Considering that and NNLO the ZM structure functions are written in
+terms of PDFs and coefficient functions as:
+\begin{equation}
+F(\xi_R,\xi_F) =
+\sum_{i}\left[\sum_{k=0}^{2} a_s^k(\xi_R Q) C_i^{(k)}\right]\otimes f_i(\xi_F Q)\,,
+\end{equation}
+and thus:
+\begin{equation}
+  \frac{\partial F}{\partial\ln\xi_R^2} =
+  \sum_{i}\left[\sum_{k=1}^{2}k a_s^{k-1}(\xi_R
+    Q) \frac{\partial a_s}{\partial\ln\xi_R^2}
+    C_i^{(k)}\right]\otimes f_i(\xi_F Q) = - 
+  a_s^2(\xi_RQ)\beta_0
+  \sum_{i} C_i^{(1)}\otimes f_i(\xi_F Q)
++\mathcal{O}(a_s^3)\,,
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{c}
+\displaystyle \frac{\partial F}{\partial\ln\xi_F^2} =
+\sum_{i}\left[\sum_{k=0}^{2}a_s^k(\xi_R Q) C_i^{(k)}\right]\otimes
+\frac{\partial f_i}{\partial\ln\xi_F^2} = a_s(\xi_F Q) \sum_{i,j}
+C_i^{(0)}\otimes P_{ij}^{(0)}\otimes f_i(\xi_F Q)\\
+\\
+\displaystyle +a_s^2(\xi_F Q) \sum_{i,j}
+C_i^{(0)}\otimes P_{ij}^{(1)}\otimes f_i(\xi_F Q)+a_s(\xi_R Q) a_s(\xi_F Q) \sum_{i,j}
+C_i^{(1)}\otimes P_{ij}^{(0)}\otimes f_i(\xi_F Q) +\mathcal{O}(a_s^3)\,,
+\end{array}
+\end{equation}
+but:
+\begin{equation}
+ a_s(\xi_F Q)= a_s(\xi_R Q)\left[1+a_s(\xi_R Q)\beta_{0}\ln\frac{\xi_R^2}{\xi_F^2}+\mathcal{O}(a_s^2)\right]\,,
+\end{equation}
+so that:
+\begin{equation}
+\begin{array}{c}
+  \displaystyle \frac{\partial F}{\partial\ln\xi_F^2}  = \sum_{i,j}
+  \bigg\{ a_s(\xi_R Q) 
+  C_i^{(0)}\otimes P_{ij}^{(0)}\\
+  \\
+  \displaystyle +a_s^2(\xi_R Q) \left[
+    \ln\frac{\xi_R^2}{\xi_F^2} \beta_{0}
+    C_i^{(0)}\otimes P_{ij}^{(0)}+
+    C_i^{(0)}\otimes P_{ij}^{(1)}+
+    C_i^{(1)}\otimes P_{ij}^{(0)}\right]\bigg\}\otimes f_j(\xi_F Q) +\mathcal{O}(a_s^3)\,.
+\end{array}
+\end{equation}
+It follows that:
+\begin{equation}
+\frac{\partial^2 F}{(\partial\ln\xi_R^2)^2} = \mathcal{O}(\alpha_s^4)
+\end{equation}
+\begin{equation}
+\frac{\partial^2 F}{\partial\ln\xi_R^2 \partial\ln\xi_F^2} =
+\frac{\partial^2 F}{\partial\ln\xi_F^2 \partial\ln\xi_R^2} = \mathcal{O}(\alpha_s^3)
+\end{equation}
+\begin{equation}
+\frac{\partial^2 F}{(\partial\ln\xi_F^2)^2} = \sum_{i,j,l}
+ a_s^2(\xi_R Q) 
+  C_i^{(0)}\otimes P_{il}^{(0)}\otimes P_{lj}^{(0)}\otimes f_j(\xi_F Q) + \mathcal{O}(\alpha_s^3)
+\end{equation}
+
+Gathering all pieces together, suppressing all sums and defining
+$a_s\equiv a_s(\xi_R Q) $ and  $f_j\equiv f_j(\xi_F Q)$ we find that:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle F(\xi_R,\xi_F)  &=& \displaystyle F(1,1) +  \bigg\{ a_s 
+  C_i^{(0)}\otimes P_{ij}^{(0)} \ln\xi_F^2 \\
+\\
+&+& \displaystyle 
+  a_s^2\bigg[ -\beta_0 C_j^{(1)} \ln\xi_R^2 + \left(
+    C_i^{(0)}\otimes P_{ij}^{(1)}+
+    C_i^{(1)}\otimes
+    P_{ij}^{(0)}\right)\ln\xi_F^2\\
+\\
+&+&\displaystyle \beta_{0}
+    C_i^{(0)}\otimes P_{ij}^{(0)}\ln\xi_R^2 \ln\xi_F^2+\left( -\beta_{0}
+    C_i^{(0)}\otimes P_{ij}^{(0)} + \frac12 C_i^{(0)}\otimes
+P_{il}^{(0)}\otimes P_{lj}^{(0)}\right)\ln^2\xi_F^2 \bigg]\bigg\}\otimes
+f_j\\
+\\
+&+&\displaystyle \mathcal{O}(a_s^3)\,.
+\end{array}
+\end{equation}
+
+
+
+
+
+
 
 \section{Implementation of the Semi-Inclusive $e^+e^-$ Annihilation}
 
@@ -1097,6 +1238,8 @@ eq.~(\ref{SIAtoDIS}).
 It is interesting to notice that, as expected, the soft-singular part
 of the quark coefficient functions is exactly the same as in DIS and
 this allows us to reuse part of the DIS coefficient functions.
+
+
 
 \newpage
 
