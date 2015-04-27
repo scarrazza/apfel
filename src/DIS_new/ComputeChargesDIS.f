@@ -15,6 +15,7 @@
       include "../commons/SinThetaW.h"
       include "../commons/ZedMass.h"
       include "../commons/SelectedCharge.h"
+      include "../commons/TimeLike.h"
 **
 *     Input Variables
 *
@@ -29,7 +30,9 @@
       double precision eq(6),eq2(6)
       double precision vq(6),aq(6)
       double precision ve,ae
-      double precision pz
+      double precision pz,pz2
+      double precision GammaZ
+      parameter(GammaZ = 2.4952d0)
 **
 *     Double precision
 *
@@ -145,16 +148,25 @@
             dq(i) = 0d0
          enddo
       elseif(ProcessDIS.eq."NC")then
-         pz = Q2 / ( Q2 + MZ**2d0 ) 
-     1      / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) )
+         if(TimeLike)then
+            pz  = Q2 * ( Q2 -  MZ**2d0 )
+     1          / ( ( Q2 - MZ**2d0 )**2d0 + MZ * GammaZ ) 
+     2          / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) )
+            pz2 = ( Q2 / ( ( Q2 - MZ**2d0 )**2d0 + MZ * GammaZ ) 
+     1          / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) ) )**2d0
+         else
+            pz  = Q2 / ( Q2 + MZ**2d0 ) 
+     1          / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) )
+            pz2 = pz * pz
+         endif
          do i=nfi,nff
             bq(i) = eq2(i) 
      1            - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
      2            + ( ve**2d0 + ae**2d0 ) * ( vq(i)**2d0 + aq(i)**2d0 
-     3            + ie * pol * 2d0 * ve * ae ) * pz**2d0 
+     3            + ie * pol * 2d0 * ve * ae ) * pz2
             dq(i) = - 2d0 * eq(i) * aq(i) * ( ae + ie * pol * ve ) * pz
      1            + 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae 
-     2            + ie * pol * ( ve**2d0 + ae**2d0 ) ) * pz**2d0
+     2            + ie * pol * ( ve**2d0 + ae**2d0 ) ) * pz2
          enddo
       endif
 *

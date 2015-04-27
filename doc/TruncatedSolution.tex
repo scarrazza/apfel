@@ -1,0 +1,174 @@
+%% LyX 2.0.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[twoside,english]{article}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+%\numberwithin{equation}{section}
+
+\makeatother
+
+\begin{document}
+
+\title{Implementation of the Truncated Solution in {\tt APFEL}}
+
+\author{Richard D. Ball and Valerio Bertone}
+\maketitle
+\begin{abstract}
+In this document we describe how to implement the truncated (or
+linearized) solution of the DGLAP equation in {\tt APFEL}.
+\end{abstract}
+
+\section{The Algorithm}
+
+The DGLAP evolution equations, that govern the evolution with respect
+to the factorization scale $\mu$, of the vector of parton distribution
+functions $\mathbf{f}$ has the form:
+\begin{equation}\label{DGLAPmu}
+\mu^2\frac{\partial}{\partial \mu^2} \mathbf{f}(x,\mu) = \mathbf{P}(x,\alpha_s(\mu))\otimes \mathbf{f}(x,\mu)\,,
+\end{equation}
+where $\mathbf{P}$ is the matrix of splitting functions and where we
+have introduced the convolution operator $\otimes$ defined as:
+\begin{equation}
+f(x)\otimes g(x) = \int_0^1 dy \int_0^1 dz f(y)g(z)\delta(x-yz)\,.
+\end{equation}
+Now, considering the RG equation for the strong coupling $\alpha_s$:
+\begin{equation}\label{RGalpha}
+\mu_R^2\frac{\partial}{\partial \mu_R^2} \alpha_s(\mu_R) = \beta(\alpha_s(\mu_R))\,,
+\end{equation}
+which governes the evolution of $\alpha_s$ as a function of the
+renormalization scale $\mu_R$ and identifying $\mu_R$ with $\mu$, we
+can combine eqs.~(\ref{DGLAPmu}) and~(\ref{RGalpha}) obtaining:
+\begin{equation}\label{DGLAPalpha}
+\frac{\partial}{\partial \alpha_s} \mathbf{f}(x,\mu) = \mathbf{R}(x,\alpha_s(\mu))\otimes \mathbf{f}(x,\mu)\,.
+\end{equation}
+where we have defined:
+\begin{equation}\label{Rdef}
+\mathbf{R}(x,\alpha_s(\mu)) = \frac{\mathbf{P}(x,\alpha_s(\mu))}{\beta(\alpha_s(\mu))}\,.
+\end{equation}
+Of course, solving eq.~(\ref{DGLAPalpha}) is exactly equivalent to
+solving eq.~(\ref{DGLAPmu}) and they are referred to as \textbf{exact}
+solutions\footnote{{\tt APFEL} implements the solution
+to both eqs.~(\ref{DGLAPalpha}) and~(\ref{DGLAPmu}) and the result are
+actually identical.}.
+
+At N$^n$LO, the matrix of splitting functions $\mathbf{P}$ and the function
+$\beta$ have the following perturbative expansions:
+\begin{equation}
+\mathbf{P}(x,\alpha_s(\mu)) = \alpha_s(\mu) \sum_{k=0}^{n} \alpha_s^k(\mu) \mathbf{P}^{(k)}(x)
+\end{equation}
+and:
+\begin{equation}
+\beta(\alpha_s(\mu)) = - \alpha_s^2(\mu) \sum_{k=0}^{n} \alpha_s^k(\mu) \beta_k\,.
+\end{equation}
+and thus also the matrix $\mathbf{R}$ defined in eq.~(\ref{Rdef}) can
+be expanded as:
+\begin{equation}\label{Rexp}
+\mathbf{R}(x,\alpha_s(\mu)) = -\frac1{\alpha_s(\mu)} \sum_{k=0}^{n} \alpha_s^k(\mu) \mathbf{R}^{(k)}(x)
+\end{equation}
+where:
+\begin{equation}
+\begin{array}{l}
+\displaystyle \mathbf{R}^{(0)}(x) =
+\frac{\mathbf{P}^{(0)}(x)}{\beta_0}\\
+\\
+\displaystyle \mathbf{R}^{(1)}(x) =
+\frac{\mathbf{P}^{(1)}(x) - b_1\mathbf{P}^{(0)}(x)}{\beta_0}\\
+\\
+\displaystyle \mathbf{R}^{(2)}(x) =
+\frac{ \mathbf{P}^{(2)}(x) - b_1\mathbf{P}^{(1)}(x) + (
+b_1^2 - b_2) \mathbf{P}^{(0)}(x)}{\beta_0}
+\end{array}
+\end{equation}
+where we have defined:
+\begin{equation}
+b_k = \frac{\beta_k}{\beta_0}\,.
+\end{equation}
+We will call the solution of eq.~(\ref{DGLAPalpha}) using the expansion of the
+matrix $\mathbf{R}$ in eq.~(\ref{Rexp}) \textbf{expanded} solution.
+
+In order to compute the \textbf{truncated} or \textbf{linearized}
+solution, we introduce in the expansion in eq.~(\ref{Rexp}) the small
+positive parameter $\varepsilon$ in such a way that:
+\begin{equation}\label{Rexp}
+\mathbf{R}(x,\alpha_s(\mu))\rightarrow
+\mathbf{R}(x,\alpha_s(\mu),\varepsilon) = -\frac1{\alpha_s(\mu)} \left[
+\mathbf{R}^{(0)}(x) + \varepsilon \alpha_s(\mu) \mathbf{R}^{(1)}(x) +
+\varepsilon^2 \alpha_s^2(\mu) \mathbf{R}^{(2)}(x) + \dots\right]\,.
+\end{equation}
+This will clearly introduce a dependence on $\varepsilon$ in the
+evolved PDFs so that the solution of the DGLAP equation will be:
+\begin{equation}
+\mathbf{f} \equiv \mathbf{f}(x,\mu,\varepsilon)\,. 
+\end{equation}
+
+Now, in order to construct the linearized solution at the different
+orders we need to Taylor expand the solution around $\varepsilon = 0$
+and truncated the expansion at the desired order. Provided that
+$\varepsilon$ is small enough, this can easily be done numerically
+just by taking the following combinations:
+\begin{equation}\label{TruncPDFs}
+\begin{array}{l}
+\displaystyle \mathbf{f}^{\rm LO}(x,\mu) = \mathbf{f}(x,\mu,0)\\
+\\
+\displaystyle \mathbf{f}^{\rm NLO}(x,\mu) = \mathbf{f}(x,\mu,0)+\frac{\mathbf{f}(x,\mu,\varepsilon)-\mathbf{f}(x,\mu,-\varepsilon)}{2\varepsilon}+\mathcal{O}(\varepsilon^3)\\
+\\
+\displaystyle \mathbf{f}^{\rm NNLO}(x,\mu) = \mathbf{f}(x,\mu,0)+\frac{\mathbf{f}(x,\mu,\varepsilon)-\mathbf{f}(x,\mu,-\varepsilon)}{2\varepsilon}+\frac{\mathbf{f}(x,\mu,\varepsilon)-2 \mathbf{f}(x,\mu,0)+\mathbf{f}(x,\mu,-\varepsilon)}{2\varepsilon^2}+\mathcal{O}(\varepsilon^3)
+\end{array}
+\end{equation}
+It should be pointed out that the order of the perturbative evolution
+of $\alpha_s$ in each of the solutions above must be consistent with
+the order to which the solution has been truncated.
+
+Based on numerical tests, we observe that the procedure is quite
+stable over a wide range of values $\varepsilon$. In particular, the
+numerical results do not change significantly in the range
+$\varepsilon \in [10^{-3}:10^{-9}]$. As a consequence, we have chosen
+to set our default value of $\varepsilon$ to $10^{-5}$.
+
+One final remark regarding the implementation of the algorithm
+described above when evolving PDFs in the VFNS is necessary. As is
+well known, the evolution in the VFNS is performed by matching the
+evolutions with different numbers of active flavors at the heavy quark
+thresholds using a suitable set of perturbative matching
+conditions. In order to ensure that the matching is consistently done
+for all contributions, the prescriptions given in
+eq.~(\ref{TruncPDFs}) are applicable only if no heavy quark threshold
+is crossed during the evolution. To explain what it practically means,
+suppose to evolve PDFs between the scales $\mu_0$ and $\mu$ and that
+one heavy quark threshold $\mu_h$ is crossed during the evolution. In
+this case, starting from the initial scale PDFs $\mathbf{f}(x,\mu_0)$,
+the first step it to compute the contributions
+$\mathbf{f}(x,\mu_h,0)$, $\mathbf{f}(x,\mu_h,\varepsilon)$ and
+$\mathbf{f}(x,\mu_h,-\varepsilon)$. These contributions must then be
+combined using one of the prescriptions given in
+eq.~(\ref{TruncPDFs}), according to the perturbative order. Finally
+the result of the combination $\mathbf{f}^{\rm N^kLO}(x,\mu_h)$ can be
+used as an initial condition to compute the contributions
+$\mathbf{f}(x,\mu,0)$, $\mathbf{f}(x,\mu,\varepsilon)$ and
+$\mathbf{f}(x,\mu,-\varepsilon)$ that can finally be combined into the
+final scale PDFs $ \mathbf{f}^{\rm N^kLO}(x,\mu)$, again using
+eq.~(\ref{TruncPDFs}). The procedure can be easily generalized for a
+larger number of threshold crossings.
+
+
+\end{document}
