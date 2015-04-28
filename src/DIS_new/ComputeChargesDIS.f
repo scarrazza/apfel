@@ -150,10 +150,11 @@
       elseif(ProcessDIS.eq."NC")then
          if(TimeLike)then
             pz  = Q2 * ( Q2 -  MZ**2d0 )
-     1          / ( ( Q2 - MZ**2d0 )**2d0 + MZ * GammaZ ) 
+     1          / ( ( Q2 - MZ**2d0 )**2d0 + ( MZ * GammaZ )**2d0 ) 
      2          / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) )
-            pz2 = ( Q2 / ( ( Q2 - MZ**2d0 )**2d0 + MZ * GammaZ ) 
-     1          / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) ) )**2d0
+            pz2 = Q2**2d0 
+     1          / ( ( Q2 - MZ**2d0 )**2d0 + ( MZ * GammaZ )**2d0 ) 
+     2          / ( ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) ) )**2d0
          else
             pz  = Q2 / ( Q2 + MZ**2d0 ) 
      1          / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) )
