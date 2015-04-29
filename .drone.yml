@@ -12,3 +12,5 @@ notify:
       - valerio.bertone@cern.ch
     on_success: true
     on_failure: true
+branches:
+  - master
