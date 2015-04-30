@@ -15,6 +15,8 @@
       include "../commons/f0ph.h"
       include "../commons/fph.h"
       include "../commons/Replica.h"
+      include "../commons/Evs.h"
+      include "../commons/Nf_FF.h"
 **
 *     Input Variables
 *
@@ -182,6 +184,19 @@
                enddo
             enddo
          endif
+      endif
+*
+*     For the FFNS, erase the heavy flavour PDFs 
+*
+      if(Evs.eq."FF".and.Nf_FF.lt.6)then
+         do alpha=0,nin(igrid)
+            do ifl=Nf_FF+1,6
+               f0ph(ifl,alpha)  = 0d0
+               f0ph(-ifl,alpha) = 0d0
+            enddo
+            f0lep(3,alpha)  = 0d0
+            f0lep(-3,alpha) = 0d0
+         enddo
       endif
 *
       return
