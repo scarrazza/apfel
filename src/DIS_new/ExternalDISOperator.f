@@ -15,6 +15,7 @@
       include "../commons/grid.h"
       include "../commons/DISOperators.h"
       include "../commons/TMC.h"
+      include "../commons/TimeLike.h"
 **
 *     Input Variables
 *
@@ -168,6 +169,8 @@
             enddo
          endif
       endif
+*
+      if(TimeLike) ExternalDISOperator = ExternalDISOperator / x
 *
       return
       end

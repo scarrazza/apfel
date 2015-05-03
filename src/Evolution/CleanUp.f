@@ -51,6 +51,8 @@
       include "../commons/TauMass.h"
       include "../commons/LeptEvol.h"
       include "../commons/LHAgrid.h"
+      include "../commons/krenQ.h"
+      include "../commons/kfacQ.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -83,12 +85,14 @@
       InLHgrid          = "xxxx"
 *
       InMassScheme      = "xxxx"
-      inProcessDIS      = "xxxx"
-      inPolarizationDIS = "xxxx"
-      inProjectileDIS   = "xxxx"
-      inTargetDIS       = "xxxx"
-      inTMC             = "xxxx"
-      inSelectedCharge  = "xxxx"
+      InProcessDIS      = "xxxx"
+      InPolarizationDIS = "xxxx"
+      InProjectileDIS   = "xxxx"
+      InTargetDIS       = "xxxx"
+      InTMC             = "xxxx"
+      InSelectedCharge  = "xxxx"
+      InKrenQ           = "xxxx"
+      InKfacQ           = "xxxx"
 *
       InMZ              = "xxxx"
       InMW              = "xxxx"

@@ -38,6 +38,7 @@ c$$$*
 c$$$      include "../commons/grid.h"
 c$$$      include "../commons/StructureFunctions.h"
 c$$$      include "../commons/TMC.h"
+c$$$      include "../commons/TimeLike.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -94,6 +95,8 @@ c$$$            F3total = F3total + w_int_gen(n,alpha,x) * F3(7,0,alpha)
 c$$$         enddo
 c$$$         if(dabs(F3total).le.1d-14) F3total = 0d0
 c$$$      endif
+c$$$*
+c$$$      if(Timelike) F3total = F3total / x
 c$$$*
 c$$$      return
 c$$$      end

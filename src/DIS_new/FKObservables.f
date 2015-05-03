@@ -22,6 +22,7 @@
       double precision FLlight,FLcharm,FLbottom,FLtop,FLtotal
       double precision F3light,F3charm,F3bottom,F3top,F3total
       double precision GetWMass,GetZMass,GetGFermi,GetProtonMass
+      double precision GetSIATotalCrossSection
       double precision yp,ym,y2,ypc
       double precision Q2,MW,MW2,GF,GF2,MN
       double precision norm
@@ -379,12 +380,27 @@
      2                 -   ym  * F3charm(x) )
          FKObservables = norm * FKObservables
 *
-*     Semi-Inclusive electron-positron annihilation (SIA)
+*     Single-Inclusive electron-positron annihilation (SIA)
 *
-****  Proton structure function F2 (electromagnetic)
+****  SIA structure function F2 =  FT + FL
 *
       elseif(obs(1:6).eq."SIA_F2")then
          FKObservables = F2total(x)
+*
+****  SIA structure function FL
+*
+      elseif(obs(1:6).eq."SIA_FL")then
+         FKObservables = FLtotal(x)
+*
+****  SIA structure function FA
+*
+      elseif(obs(1:6).eq."SIA_FA")then
+         FKObservables = F3total(x)
+*
+****  SIA absolute cross section
+*
+      elseif(obs(1:8).eq."SIA_XSEC")then
+         FKObservables = GetSIATotalCrossSection(0,Q) * F2total(x)
       else
          write(6,*) "In FKObservables.f:"
          write(6,*) "Invalid observable, obs = ",obs

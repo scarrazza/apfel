@@ -13,6 +13,7 @@
       include "../commons/grid.h"
       include "../commons/StructureFunctions.h"
       include "../commons/TMC.h"
+      include "../commons/TimeLike.h"
 **
 *     Input Variables
 *
@@ -68,6 +69,8 @@
          enddo
          if(dabs(F3light).le.1d-14) F3light = 0d0
       endif
+*
+      if(Timelike) F3light = F3light / x
 *
       return
       end

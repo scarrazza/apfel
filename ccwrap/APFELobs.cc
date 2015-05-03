@@ -204,6 +204,16 @@ namespace APFEL {
     fsetgfermi(&gf);
   }
 
+  void SetRenQRatio(double ratioR)
+  {
+    fsetrenqratio(&ratioR);
+  }
+
+  void SetFacQRatio(double ratioF)
+  {
+    fsetfacqratio(&ratioF);
+  }
+
   double GetZMass()
   {
     return fgetzmass();
@@ -232,6 +242,11 @@ namespace APFEL {
   double GetGFermi()
   {
     return fgetgfermi();
+  }
+
+  double GetSIATotalCrossSection(int pto, double q)
+  {
+    return fgetsiatotalcrosssection(&pto,&q);
   }
 
   void EnableTargetMassCorrections(int tc)

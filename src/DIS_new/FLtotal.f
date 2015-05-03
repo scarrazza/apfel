@@ -38,6 +38,7 @@ c$$$*
 c$$$      include "../commons/grid.h"
 c$$$      include "../commons/StructureFunctions.h"
 c$$$      include "../commons/TMC.h"
+c$$$      include "../commons/TimeLike.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -94,6 +95,8 @@ c$$$            FLtotal = FLtotal + w_int_gen(n,alpha,x) * FL(7,0,alpha)
 c$$$         enddo
 c$$$         if(dabs(FLtotal).le.1d-14) FLtotal = 0d0
 c$$$      endif
+c$$$*
+c$$$      if(Timelike) FLtotal = FLtotal / x
 c$$$*
 c$$$      return
 c$$$      end

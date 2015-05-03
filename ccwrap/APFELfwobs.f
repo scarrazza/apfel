@@ -258,6 +258,15 @@ ccccccccccccc
       end
 
 ccccccccccccc
+      function fgetsiatotalcrosssection(pto,Q)
+      integer pto
+      double precision Q
+      double precision fgetsiatotalcrosssection
+      fgetsiatotalcrosssection = GetSIATotalCrossSection(pto,Q)
+      return
+      end
+
+ccccccccccccc
       subroutine fenabletargetmasscorrections(tc)
       logical tc
       call EnableTargetMassCorrections(tc)

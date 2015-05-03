@@ -95,6 +95,12 @@ namespace APFEL {
   /// Set the value of the Fermi constant
   void SetGFermi(double gf);
 
+  /// Sets the ratio between renormalization scale and Q
+  void SetRenQRatio(double ratioR);
+
+  /// Sets the ratio between factorization scale and Q
+  void SetFacQRatio(double ratioF);
+
   // Returns the mass of the Z
   double GetZMass();
 
@@ -112,6 +118,9 @@ namespace APFEL {
 
   // Returns G_{Fermi}
   double GetGFermi();
+
+  // Returns the SIA total cross section
+  double GetSIATotalCrossSection(int pto, double q);
 
   /// Enables the target mass corrections
   void EnableTargetMassCorrections(int);

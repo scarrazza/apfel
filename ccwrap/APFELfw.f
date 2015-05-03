@@ -583,6 +583,18 @@ ccccccccccccc
       call SetGFermi(gf)
       end subroutine fsetgfermi
 
+ccccccccccccc      
+      subroutine fsetrenqratio(ratior)
+      double precision ratior
+      call SetRenQRatio(ratior)
+      end subroutine fsetrenqratio
+
+ccccccccccccc      
+      subroutine fsetfacqratio(ratiof)
+      double precision ratiof
+      call SetFacQRatio(ratiof)
+      end subroutine fsetfacqratio
+
 ccccccccccccc
       function fgetzmass()
       double precision fgetzmass

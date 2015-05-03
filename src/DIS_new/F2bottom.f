@@ -13,6 +13,7 @@
       include "../commons/grid.h"
       include "../commons/StructureFunctions.h"
       include "../commons/TMC.h"
+      include "../commons/TimeLike.h"
 **
 *     Input Variables
 *
@@ -68,6 +69,8 @@
          enddo
          if(dabs(F2bottom).le.1d-14) F2bottom = 0d0
       endif
+*
+      if(Timelike) F2bottom = F2bottom / x
 *
       return
       end

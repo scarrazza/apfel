@@ -16,6 +16,7 @@
       include "../commons/ZedMass.h"
       include "../commons/SelectedCharge.h"
       include "../commons/TimeLike.h"
+      include "../commons/m2th.h"
 **
 *     Input Variables
 *
@@ -25,13 +26,14 @@
 *
       integer i
       integer ie
-      integer nfi,nff
+      integer nfi,nff,nf
       double precision pol
       double precision eq(6),eq2(6)
       double precision vq(6),aq(6)
       double precision ve,ae
       double precision pz,pz2
       double precision GammaZ
+      double precision sumbq,sumdq
       parameter(GammaZ = 2.4952d0)
 **
 *     Double precision
@@ -168,6 +170,32 @@
             dq(i) = - 2d0 * eq(i) * aq(i) * ( ae + ie * pol * ve ) * pz
      1            + 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae 
      2            + ie * pol * ( ve**2d0 + ae**2d0 ) ) * pz2
+         enddo
+      endif
+*
+*     Normalize charges for the SIA structure functions
+*
+      if(TimeLike)then
+         if(Q2.ge.m2th(6))then
+            nf = 6
+         elseif(Q2.ge.m2th(5))then
+            nf = 5
+         elseif(Q2.ge.m2th(4))then
+            nf = 4
+         else
+            nf = 3
+         endif
+*
+         sumbq = 0d0
+         sumdq = 0d0
+         do i=1,nf
+            sumbq = sumbq + bq(i)
+            sumdq = sumdq + dq(i)
+         enddo
+*
+         do i=1,6
+            bq(i) = bq(i) / sumbq
+            dq(i) = dq(i) / sumdq
          enddo
       endif
 *

@@ -330,11 +330,35 @@
          call SetProjectileDIS("antineutrino")
          call SetTargetDIS("iron")
 *
-*     Semi-Inclusive electron-positron annihilation (SIA)
+*     Single-Inclusive electron-positron annihilation (SIA)
 *
-****  Proton structure function F2 (electromagnetic)
+****  SIA structure function F2 =  FT + FL
 *
       elseif(obs(1:6).eq."SIA_F2")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA structure function FL
+*
+      elseif(obs(1:6).eq."SIA_FL")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA structure function FA
+*
+      elseif(obs(1:6).eq."SIA_FA")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA absolute cross section
+*
+      elseif(obs(1:8).eq."SIA_XSEC")then
          call SetTimeLikeEvolution(.true.)
          call SetProcessDIS("NC")
          call SetProjectileDIS("electron")

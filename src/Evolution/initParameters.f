@@ -354,6 +354,8 @@
             write(6,"(a,f6.2,a)") " - Mb = ",dsqrt(m2th(5))," GeV"
             write(6,"(a,f6.2,a)") " - Mt = ",dsqrt(m2th(6))," GeV"
          endif
+*     
+         write(6,"(a,f7.4)") " muR / muF = ",dsqrt(kren)
 *
          write(6,"(a,f6.3,a)") " Mass of the tau lepton =",MTau," GeV"
 *

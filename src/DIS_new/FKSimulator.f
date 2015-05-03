@@ -21,6 +21,7 @@
 *
       double precision ExternalDISOperator
       double precision GetWMass,GetZMass,GetGFermi,GetProtonMass
+      double precision GetSIATotalCrossSection
       double precision yp,ym,y2,ypc
       double precision Q2,MW,MW2,GF,GF2,MN
       double precision norm
@@ -378,12 +379,28 @@
      2               -   ym  * ExternalDISOperator("F3",4,i,x,beta) )
          FKSimulator = norm * FKSimulator
 *
-*     Semi-Inclusive electron-positron annihilation (SIA)
+*     Single-Inclusive electron-positron annihilation (SIA)
 *
-****  Proton structure function F2 (electromagnetic)
+****  SIA structure function F2 =  FT + FL
 *
       elseif(obs(1:6).eq."SIA_F2")then
          FKSimulator = ExternalDISOperator("F2",7,i,x,beta)
+*
+****  SIA structure function FL
+*
+      elseif(obs(1:6).eq."SIA_FL")then
+         FKSimulator = ExternalDISOperator("FL",7,i,x,beta)
+*
+****  SIA structure function FA
+*
+      elseif(obs(1:6).eq."SIA_FA")then
+         FKSimulator = ExternalDISOperator("F3",7,i,x,beta)
+*
+****  SIA absolute cross section
+*
+      elseif(obs(1:8).eq."SIA_XSEC")then
+         FKSimulator = GetSIATotalCrossSection(0,Q)
+     1               * ExternalDISOperator("F2",7,i,x,beta)
       else
          write(6,*) "In FKSimulator.f:"
          write(6,*) "Invalid observable, obs = ",obs

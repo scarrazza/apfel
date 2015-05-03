@@ -27,6 +27,8 @@
       include "../commons/TMC.h"
       include "../commons/TimeLike.h"
       include "../commons/SelectedCharge.h"
+      include "../commons/krenQ.h"
+      include "../commons/kfacQ.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -37,6 +39,8 @@
       if(InProjectileDIS.ne."done")   call SetProjectileDIS("electron")
       if(InTargetDIS.ne."done")       call SetTargetDIS("proton")
       if(InSelectedCharge.ne."done")  call SelectCharge("all")
+      if(InKrenQ.ne."done")           call SetRenQRatio(1d0)
+      if(InKfacQ.ne."done")           call SetFacQRatio(1d0)
       if(InTMC.ne."done")      call EnableTargetMassCorrections(.false.)
 *
       if(InMZ.ne."done")              call SetZMass(91.1876d0)
@@ -159,6 +163,10 @@
 *
 *     Additional settings
 *
+      if(krenQ.ne.1d0.or.kfacQ.ne.1d0)then
+         call SetRenFacRatio(dsqrt(krenQ/kfacQ))
+      endif
+*
       if(InTimeLike.eq."done".and.TimeLike.and.
      1   MassScheme.ne."ZM-VFNS")then
          write(6,*) "INFO: Computation of the SIA struncture functions"
@@ -192,7 +200,7 @@
          write(6,*) "INFO: Setting VFNS PDF evolution"
          if(MassScheme(1:5).eq."FONLL".and.ipt.eq.0)then
             write(6,*) "INFO: Any of the FONLL schemes at LO",
-     1                 " concides with the the ZM-VFNS"
+     1                 " concides with the ZM-VFNS"
             call SetMassScheme("ZM-VFNS")
          endif
          if(MassScheme.eq."FONLL-A".and.ipt.eq.2)then
@@ -202,12 +210,12 @@
          endif
          if(MassScheme.eq."FONLL-B".and.ipt.eq.2)then
             write(6,*) "INFO: The FONLL-B scheme at NNLO concides",
-     1                 " with the the FONLL-C scheme"
+     1                 " with the FONLL-C scheme"
             call SetMassScheme("FONLL-C")
          endif
          if(MassScheme.eq."FONLL-C".and.ipt.eq.1)then
             write(6,*) "INFO: The FONLL-C scheme at NLO concides",
-     1                 " with the the FONLL-A scheme"
+     1                 " with the FONLL-A scheme"
             call SetMassScheme("FONLL-A")
          endif
       endif
@@ -260,11 +268,15 @@ c$$$*
 c$$$         if(SelectedCharge(1:3).ne."all") "Selected Charge: ",
 c$$$     1                                    SelectedCharge
 c$$$*
+*
          if(TMC)then
             write(6,*) "Target Mass corrections enabled"
          else
             write(6,*) "Target Mass corrections disabled"
          endif
+*
+         write(6,"(a,f7.4)") " muR / Q = ",dsqrt(krenQ)
+         write(6,"(a,f7.4)") " muF / Q = ",dsqrt(kfacQ)
       endif
 *
       return

@@ -1137,6 +1137,57 @@ to precompute the additional convolutions: $C_i^{(0)} \otimes
 P_{ij}^{(0)}$, $C_i^{(0)} \otimes P_{ij}^{(1)}$, $C_i^{(1)} \otimes
 P_{ij}^{(0)}$ and $C_i^{(0)} \otimes P_{il}^{(0)} \otimes P_{lj}^{(0)}$.
 
+But considering that:
+\begin{equation}
+\begin{array}{l}
+\displaystyle C_q^{(0)}(x) = \delta(1-x)\\
+\displaystyle C_g^{(0)}(x) = 0
+\end{array}
+\end{equation}
+we can simplify the equations above as:
+\begin{equation}\label{generalizedCF1}
+\begin{array}{rcl}
+\displaystyle \widetilde{C}_j^{(0)}(t_R,t_F) &=& \displaystyle \delta_{qj}\delta(1-x) \\
+\\
+\displaystyle \widetilde{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)}-t_F P_{qj}^{(0)} \\
+\\
+\displaystyle \widetilde{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
+-t_F C_i^{(1)} \otimes P_{ij}^{(0)}\\
+\\
+&+&\displaystyle\frac{t_F^2}2 \left( P_{ql}^{(0)}\otimes P_{lj}^{(0)} -
+  \beta_0 P_{qj}^{(0)} \right)-
+t_F\left[P_{qj}^{(1)} - (t_F-t_R)\beta_{0} P_{qj}^{(0)}\right]\,.
+\end{array}
+\end{equation}
+The term in square brackets in the r.h.s. of the third line
+corresponds to what we would call $\widetilde{P}_{ij}^{(1)}(t_R,t_F)$,
+that is the NLO splitting function in the presence of scale
+variation. This quantity is already evaluated by {\tt APFEL} and thus
+does not need to be recomputed.
+
+Now let us write explicitly the epressions of the scale variation
+coefficient functions distinguishing between non-singlet and singlet
+sector. For the non-singlet sector things are easier:
+\begin{equation}\label{generalizedCFNS}
+\begin{array}{rcl}
+\displaystyle \widetilde{C}_{\rm NS}^{(0)}(t_R,t_F) &=& \displaystyle \delta(1-x) \\
+\\
+\displaystyle \widetilde{C}_{\rm NS}^{(1)}(t_R,t_F) &=& \displaystyle
+C_{\rm NS}^{(1)}-t_F P_{qq}^{(0)} \\
+\\
+\displaystyle \widetilde{C}_{\rm NS}^{(2)}(t_R,t_F) &=& \displaystyle C_{\rm NS}^{(2)} + t_R\beta_0 C_{\rm NS}^{(1)}
+-t_F C_{\rm NS}^{(1)} \otimes P_{qq}^{(0)}\\
+\\
+&+&\displaystyle\frac{t_F^2}2 \left( P_{qq}^{(0)}\otimes P_{qq}^{(0)} -
+  \beta_0 P_{qq}^{(0)} \right)-
+t_F\widetilde{P}_{\rm NS}^{(1)}(t_R,t_F)\,.
+\end{array}
+\end{equation}
+where NS $=\pm$.
+
+In the singlet sector we have exactly eq.~(\ref{generalizedCF1}) with $i,j=g,q(\Sigma)$.
+
+
 Now let us consider the massive scheme. In the neutral-current sector
 the leading-order coefficient functions $C_i^{(0)}$ are identically
 equal to zero and this simplifies substantially the structure of the

@@ -102,6 +102,12 @@ extern "C" {
 #define fsetgfermi FC_FUNC(setgfermi,SETGFERMI)
   void fsetgfermi(double*);
 
+#define fsetrenqratio FC_FUNC(setrenqratio,SETRENQRATIO)
+  void fsetrenqratio(double*);
+
+#define fsetfacqratio FC_FUNC(setfacqratio,SETFACQRATIO)
+  void fsetfacqratio(double*);
+
 #define fgetzmass FC_FUNC(getzmass,GETZMASS)
   double fgetzmass();
 
@@ -119,6 +125,9 @@ extern "C" {
 
 #define fgetgfermi FC_FUNC(fgetgfermi,FGETGFERMI)
   double fgetgfermi();
+
+#define fgetsiatotalcrosssection FC_FUNC(fgetsiatotalcrosssection,FGETSIATOTALCROSSSECTION)
+  double fgetsiatotalcrosssection(int*,double*);
 
 #define fenabletargetmasscorrections FC_FUNC(enabletargetmasscorrections,ENABLETARGETMASSCORRECTIONS)
   void fenabletargetmasscorrections(int*);
