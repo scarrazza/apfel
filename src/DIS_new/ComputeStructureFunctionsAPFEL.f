@@ -9,11 +9,25 @@
       subroutine ComputeStructureFunctionsAPFEL(Q0,Q)
 *
       implicit none
+*
+      include "../commons/InAPFELDIS.h"
 **
 *     Input Variables
 *
       double precision Q0,Q
       double precision t1,t2
+*
+*     Check that the APFEL DIS module has been initialized
+*
+      if(InAPFELDIS.ne."done")then
+         write(6,*) "ComputeStructureFunctionsAPFEL: impossible to",
+     1              " compute structure functions,",
+     2              " APFEL DIS has not been initialized."
+         write(6,*) "Call 'InitializeAPFEL_DIS' before calling",
+     1              " 'ComputeStructureFunctionsAPFEL'"
+         write(6,*) "   "
+         call exit(-10)
+      endif
 *
       call cpu_time(t1)
 *

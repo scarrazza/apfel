@@ -10,6 +10,8 @@
 *
       implicit none
 *
+      include "../commons/InAPFEL.h"
+      include "../commons/InAPFELDIS.h"
       include "../commons/Welcome.h"
       include "../commons/scales.h"
       include "../commons/Evs.h"
@@ -57,6 +59,8 @@
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
 *
+      InAPFEL           = "xxxx"
+*
       InWelcome         = "xxxx"
       InScales          = "xxxx"
       InPt              = "xxxx"
@@ -83,6 +87,8 @@
       InPDFEvol         = "xxxx"
       InFastEvol        = "xxxx"
       InLHgrid          = "xxxx"
+*
+      InAPFELDIS        = "xxxx"
 *
       InMassScheme      = "xxxx"
       InProcessDIS      = "xxxx"

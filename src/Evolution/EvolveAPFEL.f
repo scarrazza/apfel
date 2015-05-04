@@ -9,6 +9,7 @@
 *
       implicit none
 *
+      include "../commons/InAPFEL.h"
       include "../commons/scales.h"
       include "../commons/grid.h"
       include "../commons/Th.h"
@@ -22,6 +23,17 @@
 *
       double precision Q20,Q2
       double precision t1,t2
+*
+*     Check that the APFEL evolution has been initialized
+*
+      if(InAPFEL.ne."done")then
+         write(6,*) "EvolveAPFEL: impossible to perform the evolution,",
+     1              " APFEL has not been initialized."
+         write(6,*) "Call 'InitializeAPFEL' before calling",
+     1              " 'EvolveAPFEL'"
+         write(6,*) "   "
+         call exit(-10)
+      endif
 *
       Q20   = Q0 * Q0
       Q2    = Q * Q

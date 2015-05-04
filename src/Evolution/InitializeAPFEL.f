@@ -18,6 +18,7 @@
       include "../commons/Nf_FF.h"
       include "../commons/scales.h"
       include "../commons/Smallx.h"
+      include "../commons/InAPFEL.h"
 *
 *     Variables
 *
@@ -104,6 +105,10 @@
      1                           " completed in",t2-t1," s"
          write(6,*) " "
       endif
+*
+*     Initialization of the evolution complete
+*
+      InAPFEL = "done"
 *
       return
       end

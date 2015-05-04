@@ -13,6 +13,7 @@
       include "../commons/Welcome.h"
       include "../commons/grid.h"
       include "../commons/TimeLike.h"
+      include "../commons/InAPFELDIS.h"
 *
 *     Variables
 *
@@ -46,6 +47,10 @@
      1                           " completed in",t2-t1," s"
          write(6,*) " "
       endif
+*
+*     Initialization of the DIS module complete
+*
+      InAPFELDIS = "done"
 *
       return
       end
