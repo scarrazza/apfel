@@ -141,7 +141,8 @@ am__objects_1 = Evolution/apfelversion.lo Evolution/WelcomeMessage.lo \
 	Evolution/initIntegralsQCDRes.lo Evolution/initIntegralsQED.lo \
 	Evolution/initIntegralsMatching.lo Evolution/initPDFs.lo \
 	Evolution/InitializeAPFEL.lo Evolution/EvolveAPFEL.lo \
-	Evolution/DeriveAPFEL.lo Evolution/initHELL.lo
+	Evolution/DeriveAPFEL.lo Evolution/initHELL.lo \
+	Evolution/TruncatedEvolveAPFEL.lo
 am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetAlphaQEDRef.lo Evolution/SetQLimits.lo \
 	Evolution/SetPerturbativeOrder.lo Evolution/SetFFNS.lo \
@@ -163,7 +164,8 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetFastEvolution.lo Evolution/EnableMassRunning.lo \
 	Evolution/ListFunctions.lo Evolution/GetPerturbativeOrder.lo \
 	Evolution/SetTauMass.lo Evolution/EnableLeptonEvolution.lo \
-	Evolution/SetLHgridParameters.lo
+	Evolution/SetLHgridParameters.lo \
+	Evolution/SetEpsilonTruncation.lo
 am__objects_3 = Evolution/interpolants.lo
 am__objects_4 = Evolution/SplittingFunctions.lo Evolution/Hellx.lo
 am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
@@ -511,7 +513,7 @@ INIT = Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParame
 	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
 	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
-	Evolution/initHELL.f
+	Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f
 
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
 	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f Evolution/SetExternalGrid.f \
@@ -522,7 +524,8 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f Evolution/SetTimeLikeEvolution.f Evolution/SetAlphaEvolution.f \
 	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/LHAPDFgridDerivative.f \
 	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f Evolution/EnableMassRunning.f Evolution/ListFunctions.f \
-	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f Evolution/SetLHgridParameters.f
+	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f Evolution/SetLHgridParameters.f \
+	Evolution/SetEpsilonTruncation.f
 
 INTER = Evolution/interpolants.f
 SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f Evolution/Hellx.f
@@ -684,6 +687,8 @@ Evolution/DeriveAPFEL.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/initHELL.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/TruncatedEvolveAPFEL.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetAlphaQCDRef.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetAlphaQEDRef.lo: Evolution/$(am__dirstamp) \
@@ -761,6 +766,8 @@ Evolution/SetTauMass.lo: Evolution/$(am__dirstamp) \
 Evolution/EnableLeptonEvolution.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetLHgridParameters.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetEpsilonTruncation.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)

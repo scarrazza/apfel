@@ -5481,6 +5481,27 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_SetEpsilonTruncation(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SetEpsilonTruncation",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetEpsilonTruncation" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  APFEL::SetEpsilonTruncation(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_SetQLimits(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
@@ -7509,6 +7530,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetAlphaEvolution", _wrap_SetAlphaEvolution, METH_VARARGS, NULL},
 	 { (char *)"SetLambdaQCDRef", _wrap_SetLambdaQCDRef, METH_VARARGS, NULL},
 	 { (char *)"SetPDFEvolution", _wrap_SetPDFEvolution, METH_VARARGS, NULL},
+	 { (char *)"SetEpsilonTruncation", _wrap_SetEpsilonTruncation, METH_VARARGS, NULL},
 	 { (char *)"SetQLimits", _wrap_SetQLimits, METH_VARARGS, NULL},
 	 { (char *)"SetFFNS", _wrap_SetFFNS, METH_VARARGS, NULL},
 	 { (char *)"SetGridParameters", _wrap_SetGridParameters, METH_VARARGS, NULL},

@@ -140,6 +140,9 @@ namespace APFEL {
   /// Sets the solution of the DGLAP equation
   void SetPDFEvolution(const std::string& evolp);
 
+  /// Sets the epsilon parameter of the truncated DGLAP solution
+  void SetEpsilonTruncation(double eps);
+
   /// Sets the minimimum and the maximum energy allowed for the evolution
   void SetQLimits(double Qmin, double Qmax);
 

@@ -5,7 +5,7 @@ INIT = 	Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParam
 	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
 	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
-	Evolution/initHELL.f
+	Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f
 
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
 	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f Evolution/SetExternalGrid.f \
@@ -16,7 +16,8 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f Evolution/SetTimeLikeEvolution.f Evolution/SetAlphaEvolution.f \
 	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/LHAPDFgridDerivative.f \
 	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f Evolution/EnableMassRunning.f Evolution/ListFunctions.f \
-	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f Evolution/SetLHgridParameters.f
+	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f Evolution/SetLHgridParameters.f \
+	Evolution/SetEpsilonTruncation.f
 
 INTER = Evolution/interpolants.f
 

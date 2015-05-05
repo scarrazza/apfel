@@ -38,6 +38,7 @@
       include "../commons/TauMass.h"
       include "../commons/LeptEvol.h"
       include "../commons/LHAgrid.h"
+      include "../commons/EpsTrunc.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -53,9 +54,10 @@
       if(InAlpQCD.ne."done")      call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
       if(InAlpQED.ne."done")      call SetAlphaQEDRef(7.496252d-3,
      1                                                1.777d0)
+      if(InLambdaQCD.ne."done")   call SetLambdaQCDRef(0.220d0,5)
+      if(InEpsTrunc.ne."done")    call SetEpsilonTruncation(1d-5)
       if(InAlphaEvol.ne."done")   call SetAlphaEvolution("exact")
       if(InPDFEvol.ne."done")     call SetPDFEvolution("exactmu")
-      if(InLambdaQCD.ne."done")   call SetLambdaQCDRef(0.220d0,5)
       if(InKren.ne."done")        call SetRenFacRatio(1d0)
       if(InMasses.ne."done")      call SetPoleMasses(dsqrt(2d0),4.5d0,
      1                                               175d0)
@@ -217,7 +219,8 @@
 *
       if(PDFEvol(1:7).ne."exactmu".and.
      1   PDFEvol(1:10).ne."exactalpha".and.
-     2   PDFEvol(1:11).ne."expandalpha")then
+     2   PDFEvol(1:11).ne."expandalpha".and.
+     3   PDFEvol(1:9).ne."truncated")then
          write(6,*) "PDF evolution unknown:"
          write(6,*) "PDF evolution = ",PDFEvol
          write(6,*) "  "
@@ -225,12 +228,14 @@
          write(6,*) "- 'exactmu'"
          write(6,*) "- 'exactalpha'"
          write(6,*) "- 'expandalpha'"
+         write(6,*) "- 'truncated'"
          write(6,*) "  "
          call exit(-10)
       elseif((PDFEvol(1:10).eq."exactalpha".or.
-     2        PDFEvol(1:11).eq."expandalpha").and.Th.eq."QUniD")then
-         write(6,*) "The unified solution cannot be used with the"
-         write(6,*) "'alpha' solution of the DGLAP equation."
+     1        PDFEvol(1:11).eq."expandalpha".or.
+     2        PDFEvol(1:9).eq."truncated").and.Th.eq."QUniD")then
+         write(6,*) "The unified solution cannot be used with any of"
+         write(6,*) "the 'alpha' solution of the DGLAP equation."
          write(6,*) "  "
          call exit(-10)
       endif
@@ -248,10 +253,10 @@
             write(6,*) "  "
             call exit(-10)
          endif
-         if(PDFEvol.eq."expandalpha")then
-            write(6,*) "The 'expandalpha' solution of the DGLAP"
-            write(6,*) "equation cannot be used if the small-x "
-            write(6,*) "resummation is enabled."
+         if(PDFEvol.eq."expandalpha".or.PDFEvol(1:9).eq."truncated")then
+            write(6,*) "The 'expandalpha' and 'truncated' solutions"
+            write(6,*) "of the DGLAP equation cannot be used if the"
+            write(6,*) "small-x resummation is enabled."
             write(6,*) "  "
             call exit(-10)
          endif
@@ -296,6 +301,16 @@
             write(6,*) "Space-like evolution (PDFs)"
          endif
          write(6,*) "Solution of the DGLAP equation: ",PDFEvol
+         if(PDFevol(1:9).eq."truncated")then
+            write(6,"(a,a,es10.3)") " - absolute value of the",
+     1           " truncation parameter epsilon =",EpsTrunc
+            write(6,*) "(WARNING: In order to get the actual truncated",
+     1           " solution"
+            write(6,*) "you have to use the 'TruncatedEvolveAPFEL'",
+     1           " function."
+            write(6,*) "Otherwise the solution will coincide with the",
+     1           " 'expandalpha' solution.)"
+         endif
          if(Evs.eq."VF")then
             write(6,"(a,a,i1,a)") " Evolution scheme = ",
      1                            "VFNS at N",ipt,"LO"
@@ -340,9 +355,9 @@
 *
          if(mass_scheme.eq."MSbar")then
             write(6,*) "MSbar heavy quark thresholds:"
-            write(6,"(a,f6.2,a)") " - mc(mc) = ",dsqrt(m2th(4))," GeV"
-            write(6,"(a,f6.2,a)") " - mb(mb) = ",dsqrt(m2th(5))," GeV"
-            write(6,"(a,f6.2,a)") " - mt(mt) = ",dsqrt(m2th(6))," GeV"
+            write(6,"(a,f7.3,a)") " - mc(mc) = ",dsqrt(m2th(4))," GeV"
+            write(6,"(a,f7.3,a)") " - mb(mb) = ",dsqrt(m2th(5))," GeV"
+            write(6,"(a,f7.3,a)") " - mt(mt) = ",dsqrt(m2th(6))," GeV"
             if(MassRunning)then
                write(6,*) "Running of the masses enabled"
             else
@@ -350,9 +365,9 @@
             endif
          elseif(mass_scheme(1:4).eq."Pole")then
             write(6,*) "Pole heavy quark thresholds:"
-            write(6,"(a,f6.2,a)") " - Mc = ",dsqrt(m2th(4))," GeV"
-            write(6,"(a,f6.2,a)") " - Mb = ",dsqrt(m2th(5))," GeV"
-            write(6,"(a,f6.2,a)") " - Mt = ",dsqrt(m2th(6))," GeV"
+            write(6,"(a,f7.3,a)") " - Mc = ",dsqrt(m2th(4))," GeV"
+            write(6,"(a,f7.3,a)") " - Mb = ",dsqrt(m2th(5))," GeV"
+            write(6,"(a,f7.3,a)") " - Mt = ",dsqrt(m2th(6))," GeV"
          endif
 *     
          write(6,"(a,f7.4)") " muR / muF = ",dsqrt(kren)

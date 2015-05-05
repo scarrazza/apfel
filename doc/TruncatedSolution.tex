@@ -83,20 +83,20 @@ and:
 and thus also the matrix $\mathbf{R}$ defined in eq.~(\ref{Rdef}) can
 be expanded as:
 \begin{equation}\label{Rexp}
-\mathbf{R}(x,\alpha_s(\mu)) = -\frac1{\alpha_s(\mu)} \sum_{k=0}^{n} \alpha_s^k(\mu) \mathbf{R}^{(k)}(x)
+\mathbf{R}(x,\alpha_s(\mu)) = -\frac1{\alpha_s(\mu)\beta_0} \sum_{k=0}^{n} \alpha_s^k(\mu) \mathbf{R}^{(k)}(x)
 \end{equation}
 where:
 \begin{equation}
 \begin{array}{l}
 \displaystyle \mathbf{R}^{(0)}(x) =
-\frac{\mathbf{P}^{(0)}(x)}{\beta_0}\\
+\mathbf{P}^{(0)}(x)\\
 \\
 \displaystyle \mathbf{R}^{(1)}(x) =
-\frac{\mathbf{P}^{(1)}(x) - b_1\mathbf{P}^{(0)}(x)}{\beta_0}\\
+\mathbf{P}^{(1)}(x) - b_1\mathbf{P}^{(0)}(x)\\
 \\
 \displaystyle \mathbf{R}^{(2)}(x) =
-\frac{ \mathbf{P}^{(2)}(x) - b_1\mathbf{P}^{(1)}(x) + (
-b_1^2 - b_2) \mathbf{P}^{(0)}(x)}{\beta_0}
+\mathbf{P}^{(2)}(x) - b_1\mathbf{P}^{(1)}(x) + (
+b_1^2 - b_2) \mathbf{P}^{(0)}(x)
 \end{array}
 \end{equation}
 where we have defined:
@@ -111,7 +111,7 @@ solution, we introduce in the expansion in eq.~(\ref{Rexp}) the small
 positive parameter $\varepsilon$ in such a way that:
 \begin{equation}\label{Rexp}
 \mathbf{R}(x,\alpha_s(\mu))\rightarrow
-\mathbf{R}(x,\alpha_s(\mu),\varepsilon) = -\frac1{\alpha_s(\mu)} \left[
+\mathbf{R}(x,\alpha_s(\mu),\varepsilon) = -\frac1{\alpha_s(\mu)\beta_0} \left[
 \mathbf{R}^{(0)}(x) + \varepsilon \alpha_s(\mu) \mathbf{R}^{(1)}(x) +
 \varepsilon^2 \alpha_s^2(\mu) \mathbf{R}^{(2)}(x) + \dots\right]\,.
 \end{equation}

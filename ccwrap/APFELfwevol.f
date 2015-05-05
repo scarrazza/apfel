@@ -257,6 +257,12 @@ ccccccccccccc
       end subroutine fsetpdfevolution
 
 ccccccccccccc      
+      subroutine fsetepsilontruncation(eps)
+      double precision eps
+      call SetEpsilonTruncation(eps)
+      end subroutine fsetepsilontruncation
+
+ccccccccccccc      
       subroutine fsetqlimits(Qmin,Qmax)
       double precision Qmin,Qmax 
       call SetQLimits(Qmin,Qmax)

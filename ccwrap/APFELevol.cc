@@ -218,6 +218,11 @@ namespace APFEL {
     fsetpdfevolution(cevolp);
   }
 
+  void SetEpsilonTruncation(double eps)
+  {
+    fsetepsilontruncation(&eps);
+  }
+
   void SetQLimits(double Qmin, double Qmax)
   {
     fsetqlimits(&Qmin, &Qmax);

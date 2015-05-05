@@ -21,6 +21,8 @@
          PDFEvol = pe(1:10)
       elseif(pe(1:11).eq."expandalpha")then
          PDFEvol = pe(1:11)
+      elseif(pe(1:9).eq."truncated")then
+         PDFEvol = pe(1:9)
       endif
       InPDFEvol = "done"
 *

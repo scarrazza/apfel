@@ -23,6 +23,7 @@
       include "../commons/Smallx.h"
       include "../commons/gridAlpha.h"
       include "../commons/integralsRes.h"
+      include "../commons/EpsTrunc.h"
 **
 *     Input Variables
 *
@@ -101,6 +102,24 @@
      1           + coup**2d0 * ( SP(igrid,wnf,kk,2,alpha,beta) 
      2           - b1 * SP(igrid,wnf,kk,1,alpha,beta)
      3           + ( b1**2d0 - b2 ) * SP(igrid,wnf,kk,0,alpha,beta) )
+         endif
+         integralsQCD = - integralsQCD / beta0apf(wnf) / coup
+      elseif(PDFEvol.eq."truncated")then
+         integralsQCD = SP(igrid,wnf,kk,0,alpha,beta)
+         if(ipt.ge.1)then
+            b1 = beta1apf(wnf) / beta0apf(wnf)
+            integralsQCD = integralsQCD 
+     1                   + EpsEff * coup
+     2                   * ( SP(igrid,wnf,kk,1,alpha,beta) 
+     3                   - b1 * SP(igrid,wnf,kk,0,alpha,beta) )
+         endif
+         if(ipt.ge.2)then
+            b2 = beta2apf(wnf) / beta0apf(wnf)
+            integralsQCD = integralsQCD 
+     1           + ( EpsEff * coup )**2d0
+     2           * ( SP(igrid,wnf,kk,2,alpha,beta) 
+     3           - b1 * SP(igrid,wnf,kk,1,alpha,beta)
+     4           + ( b1**2d0 - b2 ) * SP(igrid,wnf,kk,0,alpha,beta) )
          endif
          integralsQCD = - integralsQCD / beta0apf(wnf) / coup
       endif

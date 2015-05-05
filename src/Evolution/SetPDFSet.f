@@ -47,6 +47,11 @@
       elseif(name(1:4).eq."MELA")then
          ln = 4
 *
+*     Pretabulated PDFs (for internal use).
+*
+      elseif(name(1:12).eq."pretabulated")then
+         ln = 12
+*
 *     External LHAPDF grids
 *
       else

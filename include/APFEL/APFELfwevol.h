@@ -118,6 +118,9 @@ extern "C" {
 #define fsetpdfevolution FC_FUNC(setpdfevolution,SETPDFEVOLUTION)
   void fsetpdfevolution(char*);
 
+#define fsetepsilontruncation FC_FUNC(setepsilontruncation,SETEPSILONTRUNCATION)
+  void fsetepsilontruncation(double*);
+
 #define fsetqlimits FC_FUNC(setqlimits,SETQLIMITS)
   void fsetqlimits(double*,double*);
 

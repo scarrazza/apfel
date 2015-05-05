@@ -307,6 +307,10 @@ def SetPDFEvolution(evolp):
     return _apfel.SetPDFEvolution(evolp)
 SetPDFEvolution = _apfel.SetPDFEvolution
 
+def SetEpsilonTruncation(eps):
+    return _apfel.SetEpsilonTruncation(eps)
+SetEpsilonTruncation = _apfel.SetEpsilonTruncation
+
 def SetQLimits(Qmin, Qmax):
     return _apfel.SetQLimits(Qmin, Qmax)
 SetQLimits = _apfel.SetQLimits

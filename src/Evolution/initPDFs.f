@@ -146,6 +146,21 @@
             enddo
          enddo
 *
+*     Use pretabulated PDFs on the same sugrids.
+*     (for internal use).
+*
+      elseif(pdfset(1:12).eq."pretabulated")then
+         do alpha=0,nin(igrid)
+            call pretabulatedPDFs(igrid,alpha,f0,flext0)
+            do ifl=-6,6
+               f0ph(ifl,alpha) = f0(ifl)
+            enddo
+            do ilept=-3,3
+               f0lep(ilept,alpha) = flext0(ilept)
+            enddo
+         enddo
+
+*
 *     LHAPDF set
 *
       else
