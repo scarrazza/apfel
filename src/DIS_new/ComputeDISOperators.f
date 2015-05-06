@@ -40,7 +40,7 @@
       integer i,ixi(4:6)
       double precision Q2,W2,M2(4:6),HeavyQuarkMass
       double precision as(0:2),a_QCD
-      double precision bq(6),dq(6)
+      double precision bq(0:6),dq(0:6)
       double precision frac,fr3
       double precision C2g(3:6),C2ps(3:6),C2nsp(3:6),C2nsm(3:6)
       double precision CLg(3:6),CLps(3:6),CLnsp(3:6),CLnsm(3:6)

@@ -38,7 +38,7 @@
 **
 *     Double precision
 *
-      double precision bq(6),dq(6)
+      double precision bq(0:6),dq(0:6)
 *
 *     Polarization fraction
 *
@@ -115,7 +115,7 @@
 *
 *     Initialize charges
 *
-      do i=1,6
+      do i=0,6
          bq(i) = 0d0
          dq(i) = 0d0
       enddo
@@ -193,6 +193,8 @@
             sumdq = sumdq + dq(i)
          enddo
 *
+         bq(0) = sumbq
+         dq(0) = sumdq
          do i=1,6
             bq(i) = bq(i) / sumbq
             dq(i) = dq(i) / sumdq

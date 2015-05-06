@@ -27,7 +27,7 @@
       integer i,nf
       integer NC
       double precision Q2,a_QCD,as(2),a_QED,alpha2
-      double precision bq(6),dq(6),sumq
+      double precision bq(0:6),dq(0:6),sumq
       double precision sigma0tot
       double precision lnQ2M2
       double precision Ree
@@ -69,7 +69,7 @@
 *
       sumq = 0d0
       do i=1,nf
-         sumq = sumq + bq(i)
+         sumq = sumq + bq(0) * bq(i)
       enddo
 *
       sigma0tot = 4d0 * pi * alpha2 * NC * sumq / 3d0 / Q2
