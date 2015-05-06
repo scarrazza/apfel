@@ -142,7 +142,8 @@ am__objects_1 = Evolution/apfelversion.lo Evolution/WelcomeMessage.lo \
 	Evolution/initIntegralsMatching.lo Evolution/initPDFs.lo \
 	Evolution/InitializeAPFEL.lo Evolution/EvolveAPFEL.lo \
 	Evolution/DeriveAPFEL.lo Evolution/initHELL.lo \
-	Evolution/TruncatedEvolveAPFEL.lo
+	Evolution/TruncatedEvolveAPFEL.lo \
+	Evolution/ExponentiatedEvolveAPFEL.lo
 am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetAlphaQEDRef.lo Evolution/SetQLimits.lo \
 	Evolution/SetPerturbativeOrder.lo Evolution/SetFFNS.lo \
@@ -513,7 +514,7 @@ INIT = Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParame
 	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
 	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
-	Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f
+	Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f Evolution/ExponentiatedEvolveAPFEL.f
 
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
 	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f Evolution/SetExternalGrid.f \
@@ -688,6 +689,8 @@ Evolution/DeriveAPFEL.lo: Evolution/$(am__dirstamp) \
 Evolution/initHELL.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/TruncatedEvolveAPFEL.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/ExponentiatedEvolveAPFEL.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetAlphaQCDRef.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)

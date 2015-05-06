@@ -302,14 +302,8 @@
          endif
          write(6,*) "Solution of the DGLAP equation: ",PDFEvol
          if(PDFevol(1:9).eq."truncated")then
-            write(6,"(a,a,es10.3)") " - absolute value of the",
+            write(6,"(a,a,es10.3)") " - value of the",
      1           " truncation parameter epsilon =",EpsTrunc
-            write(6,*) "(WARNING: In order to get the actual truncated",
-     1           " solution"
-            write(6,*) "you have to use the 'TruncatedEvolveAPFEL'",
-     1           " function."
-            write(6,*) "Otherwise the solution will coincide with the",
-     1           " 'expandalpha' solution.)"
          endif
          if(Evs.eq."VF")then
             write(6,"(a,a,i1,a)") " Evolution scheme = ",

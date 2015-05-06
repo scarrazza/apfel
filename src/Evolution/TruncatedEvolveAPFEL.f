@@ -5,14 +5,12 @@
 *     This ruotine computes the evolved PDFs on the grids.
 *
 ************************************************************************
-      subroutine TruncatedEvolveAPFEL(Q0,Q)
+      subroutine TruncatedEvolveAPFEL(Q20,Q2)
 *
       implicit none
 *
-      include "../commons/InAPFEL.h"
       include "../commons/PDFEvolution.h"
       include "../commons/ipt.h"
-      include "../commons/scales.h"
       include "../commons/grid.h"
       include "../commons/Th.h"
       include "../commons/FastEvol.h"
@@ -28,7 +26,7 @@
 **
 *     Input Variables
 *
-      double precision Q0,Q
+      double precision Q20,Q2
 **
 *     Internal Variables
 *
@@ -37,8 +35,6 @@
       integer sign
       integer ieps
       double precision mu2i(3:7),mu2f(3:7)
-      double precision Q20,Q2
-      double precision t1,t2
       double precision fpheps(-1:1,-6:6,0:nint_max)
       double precision fgammaeps(-1:1,0:nint_max)
       double precision fleptoneps(-1:1,-3:3,0:nint_max)
@@ -55,53 +51,12 @@
       character*100 pdfsetbkp
       logical EvolOpbkp
 *
-*     Check that the APFEL evolution has been initialized
-*
-      if(InAPFEL.ne."done")then
-         write(6,*) "EvolveAPFEL: impossible to perform the evolution,",
-     1              " APFEL has not been initialized."
-         write(6,*) "Call 'InitializeAPFEL' before calling",
-     1              " 'EvolveAPFEL'"
-         write(6,*) "   "
-         call exit(-10)
-      endif
-*
-*     Check that the truncated solution has been set
-*
-      if(PDFevol(1:9).ne."truncated")then
-         write(6,*) "TruncatedEvolveAPFEL: this function can be used",
-     1              " only if the 'truncated' solution has been set."
-         write(6,*) "call SetPDFEvolution('truncated') before calling",
-     1              " 'TruncatedEvolveAPFEL'"
-         write(6,*) "   "
-         call exit(-10)
-      endif
-*
 *     For the LO solution use the standard 'EvolveAPFEL'
 *
       if(ipt.eq.0)then
-         call EvolveAPFEL(Q0,Q)
+         call ExponentiatedEvolveAPFEL(Q20,Q2)
          return
       endif
-*
-      Q20 = Q0 * Q0
-      Q2  = Q * Q
-*
-      if(Q20.lt.Q2min.or.Q20.gt.Q2max)then
-         write(6,*) "Initial energy out of range:"
-         write(6,*) "- Q0   =",Q0
-         write(6,*) "- Qmin =",dsqrt(Q2min)
-         write(6,*) "- Qmax =",dsqrt(Q2max)
-         call exit(-10)
-      elseif(Q2.lt.Q2min.or.Q2.gt.Q2max)then
-         write(6,*) "Final energy out of range:"
-         write(6,*) "- Q    =",Q
-         write(6,*) "- Qmin =",dsqrt(Q2min)
-         write(6,*) "- Qmax =",dsqrt(Q2max)
-         call exit(-10)
-      endif
-*
-      call cpu_time(t1)
 *
 *     Find initial and final number of flavours
 *
@@ -435,11 +390,6 @@
 *     has been enabled (For the moment available only for QCD).
       EvolOp = EvolOpbkp
       call JoinGrids
-*
-      call cpu_time(t2)
-*
-c      write(6,"(a,f7.3,a)") " Evolution completed in",t2-t1," s"
-c      write(6,*) " "
 *
       return
       end
