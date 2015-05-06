@@ -177,9 +177,9 @@
                            Mnsp(ieps,alpha,beta) = 
      1                          MQCDnsp(inf,alpha,beta)
                            Mnsm(ieps,alpha,beta) =
-     1                          MQCDnsp(inf,alpha,beta)
+     1                          MQCDnsm(inf,alpha,beta)
                            Mnsv(ieps,alpha,beta) =
-     1                          MQCDnsp(inf,alpha,beta)
+     1                          MQCDnsv(inf,alpha,beta)
                         enddo
                      enddo
                   endif
@@ -323,12 +323,12 @@
      2                       + ( Mnsp(1,alpha,beta)
      3                       - Mnsp(-1,alpha,beta) )
      4                       / 2d0 / EpsTrunc 
-                        MQCDnsp(inf,alpha,beta) =
+                        MQCDnsm(inf,alpha,beta) =
      1                       Mnsm(0,alpha,beta)
      2                       + ( Mnsm(1,alpha,beta)
      3                       - Mnsm(-1,alpha,beta) )
      4                       / 2d0 / EpsTrunc 
-                        MQCDnsp(inf,alpha,beta) =
+                        MQCDnsv(inf,alpha,beta) =
      1                       Mnsv(0,alpha,beta)
      2                       + ( Mnsv(1,alpha,beta)
      3                       - Mnsv(-1,alpha,beta) )
@@ -358,13 +358,13 @@
      3                       - 2d0 * Mnsp(0,alpha,beta)
      4                       + Mnsp(-1,alpha,beta) )
      5                       / 2d0 / EpsTrunc / EpsTrunc 
-                        MQCDnsp(inf,alpha,beta) =
+                        MQCDnsm(inf,alpha,beta) =
      1                       MQCDnsm(inf,alpha,beta)
      2                       + ( Mnsm(1,alpha,beta)
      3                       - 2d0 * Mnsm(0,alpha,beta)
      4                       + Mnsm(-1,alpha,beta) )
      5                       / 2d0 / EpsTrunc / EpsTrunc 
-                        MQCDnsp(inf,alpha,beta) =
+                        MQCDnsv(inf,alpha,beta) =
      1                       MQCDnsv(inf,alpha,beta)
      2                       + ( Mnsv(1,alpha,beta)
      3                       - 2d0 *  Mnsv(0,alpha,beta)
