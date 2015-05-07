@@ -249,7 +249,8 @@ am__objects_12 = DIS_new/InitializeAPFEL_DIS.lo \
 	DIS_new/GetZMass.lo DIS_new/RSLintegralsSIA.lo \
 	DIS_new/integrandsSIA.lo DIS_new/initIntegralsSIA.lo \
 	DIS_new/SelectCharge.lo DIS_new/SetRenQRatio.lo \
-	DIS_new/SetFacQRatio.lo DIS_new/GetSIATotalCrossSection.lo
+	DIS_new/SetFacQRatio.lo DIS_new/GetSIATotalCrossSection.lo \
+	DIS_new/IncludeScaleVariation.lo
 am__objects_13 = FTDY/src/ComputeFKTables.lo \
 	FTDY/src/ComputeHardCrossSectionsDY.lo FTDY/src/gauleg.lo \
 	FTDY/src/initDYcouplings.lo FTDY/src/initxGridDY.lo \
@@ -567,7 +568,7 @@ DIS_NEW = DIS_new/InitializeAPFEL_DIS.f DIS_new/initParametersDIS.f DIS_new/SetM
 	DIS_new/SetWMass.f DIS_new/SetZMass.f DIS_new/FKSimulator.f DIS_new/SetFKObservable.f DIS_new/GetFKObservable.f DIS_new/FKObservables.f \
 	DIS_new/EnableTargetMassCorrections.f DIS_new/GetCKM.f DIS_new/GetGFermi.f DIS_new/GetProtonMass.f DIS_new/GetSinThetaW.f \
 	DIS_new/GetWMass.f DIS_new/GetZMass.f DIS_new/RSLintegralsSIA.f DIS_new/integrandsSIA.f DIS_new/initIntegralsSIA.f DIS_new/SelectCharge.f\
-	DIS_new/SetRenQRatio.f DIS_new/SetFacQRatio.f DIS_new/GetSIATotalCrossSection.f
+	DIS_new/SetRenQRatio.f DIS_new/SetFacQRatio.f DIS_new/GetSIATotalCrossSection.f DIS_new/IncludeScaleVariation.f
 
 FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src/gauleg.f FTDY/src/initDYcouplings.f FTDY/src/initxGridDY.f FTDY/src/readcDY.f FTDY/src/ReadDataFile.f FTDY/src/sigmafk_dy.f FTDY/src/wcDYlo.f FTDY/src/wcDYqg.f FTDY/src/wcDYqq.f FTDY/src/wcoeffDY.f FTDY/src/writecDY.f FTDY/src/writeFK.f FTDY/src/xlineigen.f FTDY/src/PDFphys2ev.f
 EXTRA_DIST = commons FTDY/commons
@@ -1088,6 +1089,8 @@ DIS_new/SetRenQRatio.lo: DIS_new/$(am__dirstamp) \
 DIS_new/SetFacQRatio.lo: DIS_new/$(am__dirstamp) \
 	DIS_new/$(DEPDIR)/$(am__dirstamp)
 DIS_new/GetSIATotalCrossSection.lo: DIS_new/$(am__dirstamp) \
+	DIS_new/$(DEPDIR)/$(am__dirstamp)
+DIS_new/IncludeScaleVariation.lo: DIS_new/$(am__dirstamp) \
 	DIS_new/$(DEPDIR)/$(am__dirstamp)
 FTDY/src/$(am__dirstamp):
 	@$(MKDIR_P) FTDY/src

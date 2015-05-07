@@ -11,7 +11,8 @@
       implicit none
 *
       include "../commons/grid.h"
-      include "../commons/ipt.h"
+      include "../commons/krenQ.h"
+      include "../commons/kfacQ.h"
 **
 *     Internal Variables
 *
@@ -40,6 +41,16 @@
                call RSLintegralsSIA(alpha,beta)
             enddo
          enddo
+*
+*     Scale variations
+*
+         if(krenQ.ne.1d0.or.kfacQ.ne.1d0)then
+            do alpha=0,nin(igrid)-1
+               do beta=alpha,nin(igrid)-1
+                  call IncludeScaleVariation(alpha,beta)
+               enddo
+            enddo
+         endif
       else
 *
 *     ... otherwise only for the first line
@@ -47,6 +58,14 @@
          do alpha=0,nin(igrid)-1
             call RSLintegralsSIA(0,alpha)
          enddo
+*
+*     Scale variations
+*
+         if(krenQ.ne.1d0.or.kfacQ.ne.1d0)then
+            do alpha=0,nin(igrid)-1
+               call IncludeScaleVariation(0,alpha)
+            enddo
+         endif
       endif
 *
       return

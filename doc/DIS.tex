@@ -1187,7 +1187,6 @@ where NS $=\pm$.
 
 In the singlet sector we have exactly eq.~(\ref{generalizedCF1}) with $i,j=g,q(\Sigma)$.
 
-
 Now let us consider the massive scheme. In the neutral-current sector
 the leading-order coefficient functions $C_i^{(0)}$ are identically
 equal to zero and this simplifies substantially the structure of the
@@ -1217,6 +1216,44 @@ two lines of eq.~(\ref{generalizedCF}) are actually needed. Also in
 this case the factorization scale variation terms are already present
 in the implementation and again this avoids the precomputation of
 additional terms.
+
+Now let us discuss how to implement in {\tt APFEL} the additional
+terms needed to perform scale variations. The only terms that are a
+bit more complicated to implement are those that require a convolution
+between two splitting functions of between a plitting functions and a
+coefficient functions. More in particular, we only need to compute the
+terms: $P_{ij}^{(0)}(x)\otimes P_{jk}^{(0)}(x)$ and
+$C_{i}^{(1)}(x)\otimes P_{ij}^{(0)}(x)$. In pricinple, these terms
+could be evaluated analitically by computing the explicit convolution
+between the know expressions that are involved. However, it seems
+easier in {\tt APFEL} to compute these terms numerically using the
+ingredients that have already been evaluated in the initialization
+stage. To show how to reduce these terms to known quantity, let us
+cosider the following convolution:
+\begin{equation}
+F(x_\alpha)=C(x_\alpha)\otimes Q(x_\alpha) = \int_{x_\alpha}^1\frac{dy}{y}C(y)Q\left(\frac{x_\alpha}{y}\right)\,,
+\end{equation}
+where $x_\alpha$ is node of the $x$-space grid of {\tt APFEL}. Now,
+using the well-known interpolation formula we can write:
+\begin{equation}
+\int_{x_\alpha}^1\frac{dy}{y}C(y)Q\left(\frac{x_\alpha}{y}\right) = \sum_{\beta}\underbrace{\left[\int_{x_\alpha}^1\frac{dy}{y}C(y)w_{\beta}^{(k)}\left(\frac{x_\alpha}{y}\right)\right]}_{\Gamma_{\alpha\beta}}Q(x_\beta)\,,
+\end{equation}
+where $w_{\beta}^{(k)}$ are the usual interpolation functions of
+degree $k$. Now suppose that in turn:
+\begin{equation}
+Q(x_\beta)=P(x_\beta)\otimes f(x_\beta) = \int_{x_\beta}^1\frac{dz}{z}P(z)f\left(\frac{x_\beta}{z}\right)=\sum_{\gamma}\underbrace{\left[\int_{x_\beta}^1\frac{dz}{z}P(z)w_{\gamma}^{(k)}\left(\frac{x_\beta}{z}\right)\right]}_{\Pi_{\beta\gamma}}f(x_\gamma)\,,
+\end{equation}
+it follows that:
+\begin{equation}
+F(x_\alpha)=C(x_\alpha)\otimes P(x_\alpha)\otimes f(x_\alpha) =
+\sum_{\beta,\gamma} \Gamma_{\alpha\beta}\Pi_{\beta\gamma}f(x_\gamma)\,.
+\end{equation}
+The formula above clearly shows that the missing pieces can be easily
+obtained by properly multimplying the precomputed splitting function
+matrices $\Pi_{ij,\alpha\beta}$ and the coefficient function matrices
+$\Gamma_{i,\alpha\beta}$ accordind to the scale variation formulas
+derived above.
+
 
 \section{Implementation of the Semi-Inclusive $e^+e^-$ Annihilation}
 

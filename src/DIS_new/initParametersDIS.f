@@ -53,6 +53,15 @@
      2                                0.22522d0, 0.97343d0, 0.04140d0,
      3                                0.00886d0, 0.04050d0, 0.99914d0)
 *
+*     Scale variation not available yet.
+*     Stop the code if the user tries to use it.
+*
+      if(krenQ.ne.1d0.or.kfacQ.ne.1d0)then
+         write(6,*) "Scale variation not available yet."
+         write(6,*) "Stopping the code."
+         call exit(-10)
+      endif
+*
 *     Check the consistency of the input parameters
 *
       write(6,*) "  "
@@ -167,12 +176,50 @@
          call SetRenFacRatio(dsqrt(krenQ/kfacQ))
       endif
 *
-      if(InTimeLike.eq."done".and.TimeLike.and.
-     1   MassScheme.ne."ZM-VFNS")then
-         write(6,*) "INFO: Computation of the SIA struncture functions"
-         write(6,*) "      available only in the ZM-VFNS."
-         write(6,*) "      Setting ZM-VFNS."
-         call SetMassScheme("ZM-VFNS")
+*     Ensure that for the time-like evolution only proper settings are used
+*
+      if(InTimeLike.eq."done".and.TimeLike)then
+         if(MassScheme.ne."ZM-VFNS")then
+            write(6,*) "INFO: The computation of the SIA structure"
+            write(6,*) "      functions available only in the ZM-VFNS."
+            write(6,*) "      Setting ZM-VFNS."
+            call SetMassScheme("ZM-VFNS")
+         endif
+         if(TMC)then
+            write(6,*) "INFO: The computation of the SIA structure"
+            write(6,*) "      functions does not allow the inclusion"
+            write(6,*) "      of the target mass corrections (TMCs)."
+            write(6,*) "      Switching off TMCs."
+            call EnableTargetMassCorrections(.false.)
+         endif
+         if(ProjectileDIS(1:8).ne."electron")then
+            write(6,*) "INFO: The computation of the SIA structure"
+            write(6,*) "      functions is possible only using"
+            write(6,*) "      electrons as projectiles."
+            write(6,*) "      Setting 'elelectron' projectile"
+            call SetProjectileDIS("electron")
+         endif
+         if(TargetDIS(1:6).ne."proton")then
+            write(6,*) "INFO: The computation of the SIA structure"
+            write(6,*) "      functions is possible only using protons"
+            write(6,*) "      as targets."
+            write(6,*) "      Setting 'proton' targets"
+            call SetTargetDIS("proton")
+         endif
+         if(PolarizationDIS.ne.0d0)then
+            write(6,*) "INFO: The computation of the SIA structure"
+            write(6,*) "      functions is possible only for"
+            write(6,*) "      unpolarized beams."
+            write(6,*) "      Setting polarization to zero."
+            call SetPolarizationDIS(0d0)
+         endif
+         if(ProcessDIS.eq."CC")then
+            write(6,*) "INFO: The computation of the SIA structure"
+            write(6,*) "      functions is not available for CC"
+            write(6,*) "      processes."
+            write(6,*) "      Setting EM process."
+            call SetProcessDIS("EM")
+         endif
       endif
       if(MassScheme(1:4).eq."FFNS".or.
      1   MassScheme(1:4).eq."FFN0")then

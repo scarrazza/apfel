@@ -215,6 +215,7 @@ c         integrandsDISzm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
       include "../commons/grid.h"
       include "../commons/wrapDIS.h"
       include "../commons/coeffhqmellin.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -299,26 +300,30 @@ c         integrandsDISzm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
 *     Gluon
             if(k.eq.1)then
                C2R(k,2) = MassiveCF(3,wixi,y) 
-     1                  + MassiveCF(9,wixi,y) * dlog(xigrid(wixi))
+     1                  + MassiveCF(9,wixi,y)
+     2                  * dlog( xigrid(wixi) * kfacQ )
 *     Pure-singlet
             elseif(k.eq.2)then
                C2R(k,2) = MassiveCF(4,wixi,y) 
-     1                  + MassiveCF(10,wixi,y) * dlog(xigrid(wixi))
+     1                  + MassiveCF(10,wixi,y)
+     2                  * dlog( xigrid(wixi) * kfacQ )
 *     Non-singlet
             elseif(k.eq.3)then
                C2R(k,2) = MassiveCF(7,wixi,y) 
-c     1                  + MassiveCF(13,wixi,y) * dlog(xigrid(wixi))
+c     1                  + MassiveCF(13,wixi,y)
             endif
 *     CL
          elseif(sf.eq.2)then
 *     Gluon
             if(k.eq.1)then
                CLR(k,2) = MassiveCF(5,wixi,y) 
-     1                  + MassiveCF(11,wixi,y) * dlog(xigrid(wixi))
+     1                  + MassiveCF(11,wixi,y)
+     2                  * dlog( xigrid(wixi) * kfacQ )
 *     Pure-singlet
             elseif(k.eq.2)then
                CLR(k,2) = MassiveCF(6,wixi,y) 
-     1                  + MassiveCF(12,wixi,y) * dlog(xigrid(wixi))
+     1                  + MassiveCF(12,wixi,y)
+     2                  * dlog( xigrid(wixi) * kfacQ )
 *     Non-singlet
             elseif(k.eq.3)then
                CLR(k,2) = MassiveCF(8,wixi,y)

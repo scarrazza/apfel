@@ -426,6 +426,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -440,7 +441,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision c2ns1cca
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$*
 c$$$      c2ns1cca = 2d0 * CF * ( - ( 1d0 + z**2d0 ) * dlog(z) / ( 1d0 - z )
@@ -457,6 +458,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -471,7 +473,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision c2ns1ccb
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$*
 c$$$      c2ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
@@ -490,6 +492,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$      include "../commons/consts.h"
 c$$$**
 c$$$*     Input Variables
@@ -506,7 +509,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision c2ns1ccc
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$      KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
 c$$$      ln1mz  = dlog( 1d0 - z )
@@ -530,6 +533,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -544,7 +548,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision c2g1cca
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$*
 c$$$      c2g1cca = 4d0 * TR * ( ( z**2d0 + ( 1d0 - z )**2d0 )
@@ -564,6 +568,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -578,7 +583,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision clns1cca
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$*
 c$$$      clns1cca = 2d0 * CF * ( ( - ( 1d0 + z**2d0 ) * dlog(z) 
@@ -596,6 +601,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -610,7 +616,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision clns1ccb
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$*
 c$$$      clns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
@@ -628,6 +634,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$      include "../commons/consts.h"
 c$$$**
 c$$$*     Input Variables
@@ -644,7 +651,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision clns1ccc
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$      KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
 c$$$      ln1mz  = dlog( 1d0 - z )
@@ -669,6 +676,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -683,7 +691,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision clg1cca
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$*
 c$$$      clg1cca = 4d0 * TR * ( ( 1d0 - lambda ) 
@@ -705,6 +713,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -719,7 +728,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision c3ns1cca
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$*
 c$$$      c3ns1cca = 2d0 * CF * ( - ( 1d0 + z**2d0 ) * dlog(z) / ( 1d0 - z ) 
@@ -736,6 +745,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -750,7 +760,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision c3ns1ccb
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$*
 c$$$      c3ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
@@ -769,6 +779,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$      include "../commons/consts.h"
 c$$$**
 c$$$*     Input Variables
@@ -785,7 +796,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision c3ns1ccc
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$      KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
 c$$$      ln1mz  = dlog( 1d0 - z )
@@ -809,6 +820,7 @@ c$$$*
 c$$$      implicit none
 c$$$*
 c$$$      include "../commons/ColorFactors.h"
+c$$$      include "../commons/kfacQ.h"
 c$$$**
 c$$$*     Input Variables
 c$$$*
@@ -823,7 +835,7 @@ c$$$*     Output Variables
 c$$$*
 c$$$      double precision c3g1cca
 c$$$*
-c$$$      kQF2 = 1d0                ! Q2 / muF2
+c$$$      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
 c$$$      lambda = xi / ( 1d0 + xi )
 c$$$*
 c$$$      c3g1cca = 4d0 * TR * ( ( z**2d0 + ( 1d0 - z )**2d0 ) 
@@ -901,6 +913,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -915,7 +928,7 @@ c$$$      end
 *
       double precision c2ns1cca
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
 *
       c2ns1cca = 2d0 * CF * ( - ( 1d0 + z**2d0 ) * dlog(z) / ( 1d0 - z )
@@ -934,6 +947,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -948,7 +962,7 @@ c$$$      end
 *
       double precision c2ns1ccb
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
 *
       c2ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
@@ -965,6 +979,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
       include "../commons/consts.h"
 **
 *     Input Variables
@@ -981,7 +996,7 @@ c$$$      end
 *
       double precision c2ns1ccc
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
       KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
       ln1mz  = dlog( 1d0 - z )
@@ -1005,6 +1020,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -1019,7 +1035,7 @@ c$$$      end
 *
       double precision c2g1cca
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
 *
       c2g1cca = 4d0 * TR * ( ( z**2d0 + ( 1d0 - z )**2d0 )
@@ -1039,6 +1055,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -1053,7 +1070,7 @@ c$$$      end
 *
       double precision clns1cca
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
 *
       clns1cca = 2d0 * CF * ( ( - ( 1d0 + z**2d0 ) * dlog(z) 
@@ -1071,6 +1088,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -1085,7 +1103,7 @@ c$$$      end
 *
       double precision clns1ccb
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
 *
       clns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
@@ -1103,6 +1121,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
       include "../commons/consts.h"
 **
 *     Input Variables
@@ -1119,7 +1138,7 @@ c$$$      end
 *
       double precision clns1ccc
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
       KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
       ln1mz  = dlog( 1d0 - z )
@@ -1144,6 +1163,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -1158,7 +1178,7 @@ c$$$      end
 *
       double precision clg1cca
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
 *
       clg1cca = 4d0 * TR * ( ( 1d0 - lambda ) 
@@ -1180,6 +1200,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -1194,7 +1215,7 @@ c$$$      end
 *
       double precision c3ns1cca
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
 *
       c3ns1cca = 2d0 * CF * ( - ( 1d0 + z**2d0 ) * dlog(z) / ( 1d0 - z ) 
@@ -1212,6 +1233,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -1226,7 +1248,7 @@ c$$$      end
 *
       double precision c3ns1ccb
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
 *
       c3ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
@@ -1244,6 +1266,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
       include "../commons/consts.h"
 **
 *     Input Variables
@@ -1260,7 +1283,7 @@ c$$$      end
 *
       double precision c3ns1ccc
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
       KA = ( 1d0 - lambda ) * dlog( 1d0 - lambda ) / lambda
       ln1mz  = dlog( 1d0 - z )
@@ -1284,6 +1307,7 @@ c$$$      end
       implicit none
 *
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -1298,7 +1322,7 @@ c$$$      end
 *
       double precision c3g1cca
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ                ! Q2 / muF2
       lambda = xi / ( 1d0 + xi )
 *
       c3g1cca = 4d0 * TR * ( ( z**2d0 + ( 1d0 - z )**2d0 ) 

@@ -774,7 +774,8 @@ c       COMMON / P1GSOFT / A2G
      ,    + 32D0/3D0*ca**2
      ,    + 12D0*z3*ca**2
 *
-* ...The soft (`+'-distribution) part of the splitting function                                                                                                                   *
+* ...The soft (`+'-distribution) part of the splitting function
+*
        A2G = - 40D0/9D0*ca*nf + 268D0/9D0*ca**2 - 8D0*z2*ca**2
 *
        X1GGC = DLOG (1D0-Y) * A2G + P1DELT

@@ -38,6 +38,7 @@
       include "../commons/mass_scheme.h"
       include "../commons/MassRunning.h"
       include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
@@ -104,7 +105,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     Ration between Scale and factorization scale squared (to be put in a common)
 *
-      kQF2 = 1d0                ! Q2 / muF2
+      kQF2 = 1d0 / kfacQ               ! Q2 / muF2
       lnkQF2 = dlog(kQF2)
 *
 *     Initialize Integrals
