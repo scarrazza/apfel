@@ -11,11 +11,16 @@
       implicit none
 *
       include "../commons/InAPFELDIS.h"
+      include "../commons/kfacQ.h"
 **
 *     Input Variables
 *
       double precision Q0,Q
       double precision t1,t2
+**
+*     Internal Variables
+*
+      double precision mu0,mu
 *
 *     Check that the APFEL DIS module has been initialized
 *
@@ -31,9 +36,11 @@
 *
       call cpu_time(t1)
 *
-*     Compute PDF evolution
+*     Compute PDF evolution in the factorization scales
 *
-      call EvolveAPFEL(Q0,Q)
+      mu0 = Q0
+      mu  = dsqrt(kfacQ) * Q
+      call EvolveAPFEL(mu0,mu)
 *
 *     Convolute evolved PDFs with the DIS coefficient functions
 *
