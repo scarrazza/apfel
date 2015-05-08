@@ -53,15 +53,6 @@
      2                                0.22522d0, 0.97343d0, 0.04140d0,
      3                                0.00886d0, 0.04050d0, 0.99914d0)
 *
-*     Scale variation not available yet.
-*     Stop the code if the user tries to use it.
-*
-      if(krenQ.ne.1d0.or.kfacQ.ne.1d0)then
-         write(6,*) "Scale variation not available yet."
-         write(6,*) "Stopping the code."
-         call exit(-10)
-      endif
-*
 *     Check the consistency of the input parameters
 *
       write(6,*) "  "
