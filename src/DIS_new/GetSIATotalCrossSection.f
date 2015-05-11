@@ -31,7 +31,9 @@
       double precision sigma0tot
       double precision lnQ2M2
       double precision Ree
+      double precision hbarc2
       parameter(NC=3)
+      parameter(hbarc2=0.389379338d9)
 **
 *     Output Variables
 *
@@ -88,6 +90,10 @@
       endif
 *
       GetSIATotalCrossSection = Ree * sigma0tot
+*
+*     Covert cross section in pbarn
+*
+      GetSIATotalCrossSection = hbarc2 * GetSIATotalCrossSection
 *
       return
       end
