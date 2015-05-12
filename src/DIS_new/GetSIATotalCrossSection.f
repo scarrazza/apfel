@@ -33,7 +33,7 @@
       double precision Ree
       double precision hbarc2
       parameter(NC=3)
-      parameter(hbarc2=0.389379338d9)
+      parameter(hbarc2=0.389379338d6)
 **
 *     Output Variables
 *
@@ -91,7 +91,7 @@
 *
       GetSIATotalCrossSection = Ree * sigma0tot
 *
-*     Covert cross section in pbarn
+*     Covert cross section in nbarn
 *
       GetSIATotalCrossSection = hbarc2 * GetSIATotalCrossSection
 *
