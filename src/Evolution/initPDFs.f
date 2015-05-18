@@ -103,6 +103,19 @@
                enddo
             enddo
          endif
+      elseif(pdfset(1:11).eq."repexternal")then
+         do alpha=0,nin(igrid)
+            call ExternalSetAPFELRep(xg(igrid,alpha),dsqrt(Q20),irep,
+     1                               fext0)
+            do ifl=-6,6
+               f0ph(ifl,alpha) = fext0(ifl)
+            enddo
+            f0lep(0,alpha) = fext0(7)
+            do ilept=1,3
+               f0lep(ilept,alpha) = 0d0
+               f0lep(-ilept,alpha) = 0d0
+            enddo
+         enddo
 *
 *     External Set with leptons
 *

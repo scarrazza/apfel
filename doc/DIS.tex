@@ -1082,8 +1082,8 @@ Finally, setting $t_F=0$ in eq.~(\ref{BETAexp}), we find:
 Considering that and NNLO the ZM structure functions are written in
 terms of PDFs and coefficient functions as:
 \begin{equation}
-F(t_R,t_F) =
-\left[\sum_{k=0}^{2} a_s^k(t_R) \widetilde{C}_i^{(k)}(t_R,t_F)\right]\otimes f_i(t_F) +\mathcal{O}(a_s^3)\,,
+F(t_R,t_F) / x =
+\left[\sum_{k=0}^{2} a_s^k(t_R) \mathcal{C}_i^{(k)}(t_R,t_F)\right]\otimes f_i(t_F) +\mathcal{O}(a_s^3)\,,
 \end{equation}
 and that, up to subleading terms, the structure functions must be
 renormalization and factorization scale independent, this requires that:
@@ -1092,17 +1092,17 @@ F(t_R,t_F) = F(0,0)\,.
 \end{equation}
 But since:
 \begin{equation}\label{ZeroScales}
-F(0,0) =
+F(0,0)  / x =
 \left[\sum_{k=0}^{2} a_s^k(0) C_i^{(k)}\right]\otimes f_i(0)+\mathcal{O}(a_s^3)\,,
 \end{equation}
 where $C_i^{(k)}$ are the well-know ZM coefficient functions, using
 eqs.~(\ref{expDGLAP2}) and~(\ref{BETAexp1}) in eq.~(\ref{ZeroScales})
 and finally imposing the identity in eq.~(\ref{invariance}), we can
 find the explicit espression of the ``generalized'' coefficient
-functions $\widetilde{C}_i^{(k)}(t_R,t_F)$. In fact:
+functions $\mathcal{C}_i^{(k)}(t_R,t_F)$. In fact:
 \begin{equation}\label{ZeroScales}
 \begin{array}{rcl}
-F(0,0) &=&\bigg\{ C_j^{(0)} \\
+F(0,0)/x &=&\bigg\{ C_j^{(0)} \\
 \\
 &+&\displaystyle  a_s(t_R)\left[C_j^{(1)}-
   t_F C_i^{(0)} \otimes P_{ij}^{(0)}\right]\\
@@ -1119,11 +1119,11 @@ Finally, using the identity in eq.~(\ref{invariance}), it is easy to find
 that:
 \begin{equation}\label{generalizedCF}
 \begin{array}{rcl}
-\displaystyle \widetilde{C}_j^{(0)}(t_R,t_F) &=& \displaystyle C_j^{(0)} \\
+\displaystyle \mathcal{C}_j^{(0)}(t_R,t_F) &=& \displaystyle C_j^{(0)} \\
 \\
-\displaystyle \widetilde{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)}-t_F C_i^{(0)} \otimes P_{ij}^{(0)} \\
+\displaystyle \mathcal{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)}-t_F C_i^{(0)} \otimes P_{ij}^{(0)} \\
 \\
-\displaystyle \widetilde{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
+\displaystyle \mathcal{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
 -t_F \left(C_i^{(0)} \otimes P_{ij}^{(1)}+C_i^{(1)} \otimes
   P_{ij}^{(0)}\right)\\
 \\
@@ -1137,7 +1137,7 @@ to precompute the additional convolutions: $C_i^{(0)} \otimes
 P_{ij}^{(0)}$, $C_i^{(0)} \otimes P_{ij}^{(1)}$, $C_i^{(1)} \otimes
 P_{ij}^{(0)}$ and $C_i^{(0)} \otimes P_{il}^{(0)} \otimes P_{lj}^{(0)}$.
 
-But considering that:
+But considering that for $F_2$ and $F_3$:
 \begin{equation}
 \begin{array}{l}
 \displaystyle C_q^{(0)}(x) = \delta(1-x)\\
@@ -1147,11 +1147,11 @@ But considering that:
 we can simplify the equations above as:
 \begin{equation}\label{generalizedCF1}
 \begin{array}{rcl}
-\displaystyle \widetilde{C}_j^{(0)}(t_R,t_F) &=& \displaystyle \delta_{qj}\delta(1-x) \\
+\displaystyle \mathcal{C}_j^{(0)}(t_R,t_F) &=& \displaystyle \delta_{qj}\delta(1-x) \\
 \\
-\displaystyle \widetilde{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)}-t_F P_{qj}^{(0)} \\
+\displaystyle \mathcal{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)}-t_F P_{qj}^{(0)} \\
 \\
-\displaystyle \widetilde{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
+\displaystyle \mathcal{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
 -t_F C_i^{(1)} \otimes P_{ij}^{(0)}\\
 \\
 &+&\displaystyle\frac{t_F^2}2 \left( P_{ql}^{(0)}\otimes P_{lj}^{(0)} -
@@ -1160,7 +1160,7 @@ t_F\left[P_{qj}^{(1)} - (t_F-t_R)\beta_{0} P_{qj}^{(0)}\right]\,.
 \end{array}
 \end{equation}
 The term in square brackets in the r.h.s. of the third line
-corresponds to what we would call $\widetilde{P}_{ij}^{(1)}(t_R,t_F)$,
+corresponds to what we would call $\mathcal{P}_{ij}^{(1)}(t_R,t_F)$,
 that is the NLO splitting function in the presence of scale
 variation. This quantity is already evaluated by {\tt APFEL} and thus
 does not need to be recomputed.
@@ -1170,12 +1170,12 @@ coefficient functions distinguishing between non-singlet and singlet
 sector. For the non-singlet sector things are easier:
 \begin{equation}\label{generalizedCFNS}
 \begin{array}{rcl}
-\displaystyle \widetilde{C}_{\rm NS}^{(0)}(t_R,t_F) &=& \displaystyle \delta(1-x) \\
+\displaystyle \mathcal{C}_{\rm NS}^{(0)}(t_R,t_F) &=& \displaystyle \delta(1-x) \\
 \\
-\displaystyle \widetilde{C}_{\rm NS}^{(1)}(t_R,t_F) &=& \displaystyle
+\displaystyle \mathcal{C}_{\rm NS}^{(1)}(t_R,t_F) &=& \displaystyle
 C_{\rm NS}^{(1)}-t_F P_{qq}^{(0)} \\
 \\
-\displaystyle \widetilde{C}_{\rm NS}^{(2)}(t_R,t_F) &=& \displaystyle C_{\rm NS}^{(2)} + t_R\beta_0 C_{\rm NS}^{(1)}
+\displaystyle \mathcal{C}_{\rm NS}^{(2)}(t_R,t_F) &=& \displaystyle C_{\rm NS}^{(2)} + t_R\beta_0 C_{\rm NS}^{(1)}
 -t_F C_{\rm NS}^{(1)} \otimes P_{qq}^{(0)}\\
 \\
 &+&\displaystyle\frac{t_F^2}2 \left( P_{qq}^{(0)}\otimes P_{qq}^{(0)} -
@@ -1183,9 +1183,25 @@ C_{\rm NS}^{(1)}-t_F P_{qq}^{(0)} \\
 t_F\widetilde{P}_{\rm NS}^{(1)}(t_R,t_F)\,.
 \end{array}
 \end{equation}
-where NS $=\pm$.
+where NS $=\pm$. In the singlet sector we have exactly eq.~(\ref{generalizedCF1}) with $i,j=g,q(\Sigma)$.
 
-In the singlet sector we have exactly eq.~(\ref{generalizedCF1}) with $i,j=g,q(\Sigma)$.
+Considering $F_L$, we have that:
+\begin{equation}
+C_q^{(0)}(x) = C_g^{(0)}(x) = 0
+\end{equation}
+so that:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \mathcal{C}_j^{(0)}(t_R,t_F) &=& \displaystyle 0 \\
+\\
+\displaystyle \mathcal{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)} \\
+\\
+\displaystyle \mathcal{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
+-t_F C_i^{(1)} \otimes P_{ij}^{(0)}\,.
+\end{array}
+\end{equation}
+
+
 
 Now let us consider the massive scheme. In the neutral-current sector
 the leading-order coefficient functions $C_i^{(0)}$ are identically
@@ -1193,11 +1209,11 @@ equal to zero and this simplifies substantially the structure of the
 massive coeffiecient functions in the presence of scale variations:
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle \widetilde{C}_j^{(0)}(t_R,t_F) &=& \displaystyle 0 \\
+\displaystyle \mathcal{C}_j^{(0)}(t_R,t_F) &=& \displaystyle 0 \\
 \\
-\displaystyle \widetilde{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)} \\
+\displaystyle \mathcal{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)} \\
 \\
-\displaystyle \widetilde{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
+\displaystyle \mathcal{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
 -t_F C_i^{(1)} \otimes
   P_{ij}^{(0)}\,.
 \end{array}
@@ -1231,22 +1247,26 @@ ingredients that have already been evaluated in the initialization
 stage. To show how to reduce these terms to known quantity, let us
 cosider the following convolution:
 \begin{equation}
-F(x_\alpha)=C(x_\alpha)\otimes Q(x_\alpha) = \int_{x_\alpha}^1\frac{dy}{y}C(y)Q\left(\frac{x_\alpha}{y}\right)\,,
+F(x_\alpha)=x_\alpha C(x_\alpha)\otimes Q(x_\alpha) =
+x_\alpha\int_{x_\alpha}^1\frac{dy}{y}C(y)Q\left(\frac{x_\alpha}{y}\right)
+=\int_{x_\alpha}^1\frac{dy}{y}yC(y)\frac{x_\alpha}{y}Q\left(\frac{x_\alpha}{y}\right) =
+\int_{x_\alpha}^1\frac{dy}{y}\widetilde{C}(y)\widetilde{Q}\left(\frac{x_\alpha}{y}\right)\,,
 \end{equation}
-where $x_\alpha$ is node of the $x$-space grid of {\tt APFEL}. Now,
-using the well-known interpolation formula we can write:
+where $x_\alpha$ is node of the $x$-space grid of {\tt APFEL} and
+$\widetilde{C}(y)=yC(y)$ and $\widetilde{Q}(y)=yQ(y)$. Now, using the
+well-known interpolation formula we can write:
 \begin{equation}
-\int_{x_\alpha}^1\frac{dy}{y}C(y)Q\left(\frac{x_\alpha}{y}\right) = \sum_{\beta}\underbrace{\left[\int_{x_\alpha}^1\frac{dy}{y}C(y)w_{\beta}^{(k)}\left(\frac{x_\alpha}{y}\right)\right]}_{\Gamma_{\alpha\beta}}Q(x_\beta)\,,
+\int_{x_\alpha}^1\frac{dy}{y}\widetilde{C}(y)\widetilde{Q}\left(\frac{x_\alpha}{y}\right) = \sum_{\beta}\underbrace{\left[\int_{x_\alpha}^1\frac{dy}{y}\widetilde{C}(y)w_{\beta}^{(k)}\left(\frac{x_\alpha}{y}\right)\right]}_{\Gamma_{\alpha\beta}}\widetilde{Q}(x_\beta)\,,
 \end{equation}
 where $w_{\beta}^{(k)}$ are the usual interpolation functions of
 degree $k$. Now suppose that in turn:
 \begin{equation}
-Q(x_\beta)=P(x_\beta)\otimes f(x_\beta) = \int_{x_\beta}^1\frac{dz}{z}P(z)f\left(\frac{x_\beta}{z}\right)=\sum_{\gamma}\underbrace{\left[\int_{x_\beta}^1\frac{dz}{z}P(z)w_{\gamma}^{(k)}\left(\frac{x_\beta}{z}\right)\right]}_{\Pi_{\beta\gamma}}f(x_\gamma)\,,
+\widetilde{Q}(x_\beta)=x_\beta P(x_\beta)\otimes f(x_\beta) = \int_{x_\beta}^1\frac{dz}{z}\widetilde{P}(z)\widetilde{f}\left(\frac{x_\beta}{z}\right)=\sum_{\gamma}\underbrace{\left[\int_{x_\beta}^1\frac{dz}{z}\widetilde{P}(z)w_{\gamma}^{(k)}\left(\frac{x_\beta}{z}\right)\right]}_{\Pi_{\beta\gamma}}\widetilde{f}(x_\gamma)\,,
 \end{equation}
 it follows that:
 \begin{equation}
-F(x_\alpha)=C(x_\alpha)\otimes P(x_\alpha)\otimes f(x_\alpha) =
-\sum_{\beta,\gamma} \Gamma_{\alpha\beta}\Pi_{\beta\gamma}f(x_\gamma)\,.
+F(x_\alpha)=\widetilde{C}(x_\alpha)\otimes \widetilde{P}(x_\alpha)\otimes \widetilde{f}(x_\alpha) =
+\sum_{\beta,\gamma} \Gamma_{\alpha\beta}\Pi_{\beta\gamma}\widetilde{f}(x_\gamma)\,.
 \end{equation}
 The formula above clearly shows that the missing pieces can be easily
 obtained by properly multimplying the precomputed splitting function

@@ -71,6 +71,11 @@ extern "C" {
     return;
   }
 
+  void externalsetapfelrep_(double x, double Q, int irep, double* xf)
+  {
+    return;
+  }
+
   void externalsetapfellept_(double x, double Q, int irep, 
 			     double* xl, double* xf)
   {

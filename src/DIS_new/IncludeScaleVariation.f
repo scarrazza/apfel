@@ -59,50 +59,7 @@
 *
       do inf=3,6
 *
-*     NLO
-*
-*     Gluon
-         SC2zm(igrid,inf,1,1,beta,alpha) = 
-     1        SC2zm(igrid,inf,1,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha)
-         SCLzm(igrid,inf,1,1,beta,alpha) = 
-     1        SCLzm(igrid,inf,1,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha)
-         SC3zm(igrid,inf,1,1,beta,alpha) = 
-     1        SC3zm(igrid,inf,1,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha)
-*     Singlet
-         SC2zm(igrid,inf,2,1,beta,alpha) = 
-     1        SC2zm(igrid,inf,2,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-         SCLzm(igrid,inf,2,1,beta,alpha) = 
-     1        SCLzm(igrid,inf,2,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-         SC3zm(igrid,inf,2,1,beta,alpha) = 
-     1        SC3zm(igrid,inf,2,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-*     Plus
-         SC2zm(igrid,inf,3,1,beta,alpha) = 
-     1        SC2zm(igrid,inf,3,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-         SCLzm(igrid,inf,3,1,beta,alpha) = 
-     1        SCLzm(igrid,inf,3,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-         SC3zm(igrid,inf,3,1,beta,alpha) = 
-     1        SC3zm(igrid,inf,3,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-*     Minus
-         SC2zm(igrid,inf,4,1,beta,alpha) = 
-     1        SC2zm(igrid,inf,4,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-         SCLzm(igrid,inf,4,1,beta,alpha) = 
-     1        SCLzm(igrid,inf,4,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-         SC3zm(igrid,inf,4,1,beta,alpha) = 
-     1        SC3zm(igrid,inf,4,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-*
-*     NNLO
+*     Precoumpute convolutions
 *
          if(ipt.ge.2)then
             do k=1,4
@@ -111,6 +68,8 @@
                C1LP0(k) = 0d0
                C13P0(k) = 0d0
             enddo
+*
+*     External grid
 *
             if(IsExt(igrid))then
                do gamma=beta,alpha
@@ -158,6 +117,9 @@
      1                 + SC3zm(igrid,inf,3,0,beta,gamma)
      2                 * SP(igrid,inf,1,0,gamma,alpha)
                enddo
+*
+*     Internal grid
+*
             else
                do gamma=beta,alpha
 *     Gluon
@@ -210,9 +172,44 @@
             C12P0(4) = C12P0(3)
             C1LP0(4) = C1LP0(3)
             C13P0(4) = C13P0(3)
+         endif
 *
-*     Add terms
+*     Now compute coefficient functions with scale variations
 *
+*     NLO
+*
+*     Gluon
+         SC2zm(igrid,inf,1,1,beta,alpha) = 
+     1        SC2zm(igrid,inf,1,1,beta,alpha)
+     2        - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha)
+         SC3zm(igrid,inf,1,1,beta,alpha) = 
+     1        SC3zm(igrid,inf,1,1,beta,alpha)
+     2        - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha)
+*     Singlet
+         SC2zm(igrid,inf,2,1,beta,alpha) = 
+     1        SC2zm(igrid,inf,2,1,beta,alpha)
+     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
+         SC3zm(igrid,inf,2,1,beta,alpha) = 
+     1        SC3zm(igrid,inf,2,1,beta,alpha)
+     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
+*     Plus
+         SC2zm(igrid,inf,3,1,beta,alpha) = 
+     1        SC2zm(igrid,inf,3,1,beta,alpha)
+     2        - tF * SP(igrid,inf,1,0,beta,alpha)
+         SC3zm(igrid,inf,3,1,beta,alpha) = 
+     1        SC3zm(igrid,inf,3,1,beta,alpha)
+     2        - tF * SP(igrid,inf,1,0,beta,alpha)
+*     Minus
+         SC2zm(igrid,inf,4,1,beta,alpha) = 
+     1        SC2zm(igrid,inf,4,1,beta,alpha)
+     2        - tF * SP(igrid,inf,2,0,beta,alpha)
+         SC3zm(igrid,inf,4,1,beta,alpha) = 
+     1        SC3zm(igrid,inf,4,1,beta,alpha)
+     2        - tF * SP(igrid,inf,2,0,beta,alpha)
+*
+*     NNLO
+*
+         if(ipt.ge.2)then
 *     Gluon
             SC2zm(igrid,inf,1,2,beta,alpha) = 
      1           SC2zm(igrid,inf,1,2,beta,alpha)
@@ -223,9 +220,7 @@
             SCLzm(igrid,inf,1,2,beta,alpha) = 
      1           SCLzm(igrid,inf,1,2,beta,alpha)
      2           + tR * beta0apf(inf) * SCLzm(igrid,inf,1,1,beta,alpha)
-     3           - tF * C1LP0(1) + tf2h * ( P0P0(1) + beta0apf(inf)
-     4           * SP(igrid,inf,mapP(1,2),0,beta,alpha) )
-     5           + tF * SP(igrid,inf,mapP(1,2),1,beta,alpha)
+     3           - tF * C1LP0(1)
             SC3zm(igrid,inf,1,2,beta,alpha) = 
      1           SC3zm(igrid,inf,1,2,beta,alpha)
      2           + tR * beta0apf(inf) * SC3zm(igrid,inf,1,1,beta,alpha)
@@ -242,9 +237,7 @@
             SCLzm(igrid,inf,2,2,beta,alpha) = 
      1           SCLzm(igrid,inf,2,2,beta,alpha)
      2           + tR * beta0apf(inf) * SCLzm(igrid,inf,2,1,beta,alpha)
-     3           - tF * C1LP0(2) + tf2h * ( P0P0(2) + beta0apf(inf)
-     4           * SP(igrid,inf,mapP(1,1),0,beta,alpha) )
-     5           + tF * SP(igrid,inf,mapP(1,1),1,beta,alpha)
+     3           - tF * C1LP0(2)
             SC3zm(igrid,inf,2,2,beta,alpha) = 
      1           SC3zm(igrid,inf,2,2,beta,alpha)
      2           + tR * beta0apf(inf) * SC3zm(igrid,inf,2,1,beta,alpha)
@@ -261,9 +254,7 @@
             SCLzm(igrid,inf,3,2,beta,alpha) = 
      1           SCLzm(igrid,inf,3,2,beta,alpha)
      2           + tR * beta0apf(inf) * SCLzm(igrid,inf,3,1,beta,alpha)
-     3           - tF * C1LP0(3) + tf2h * ( P0P0(3) + beta0apf(inf)
-     4           * SP(igrid,inf,1,0,beta,alpha) )
-     5           + tF * SP(igrid,inf,1,1,beta,alpha)
+     3           - tF * C1LP0(3)
             SC3zm(igrid,inf,3,2,beta,alpha) = 
      1           SC3zm(igrid,inf,3,2,beta,alpha)
      2           + tR * beta0apf(inf) * SC3zm(igrid,inf,3,1,beta,alpha)
@@ -280,16 +271,13 @@
             SCLzm(igrid,inf,4,2,beta,alpha) = 
      1           SCLzm(igrid,inf,4,2,beta,alpha)
      2           + tR * beta0apf(inf) * SCLzm(igrid,inf,4,1,beta,alpha)
-     3           - tF * C1LP0(4) + tf2h * ( P0P0(4) + beta0apf(inf)
-     4           * SP(igrid,inf,2,0,beta,alpha) )
-     5           + tF * SP(igrid,inf,2,1,beta,alpha)
+     3           - tF * C1LP0(4)
             SC3zm(igrid,inf,4,2,beta,alpha) = 
      1           SC3zm(igrid,inf,4,2,beta,alpha)
      2           + tR * beta0apf(inf) * SC3zm(igrid,inf,4,1,beta,alpha)
      3           - tF * C13P0(4) + tf2h * ( P0P0(4) + beta0apf(inf)
      4           * SP(igrid,inf,2,0,beta,alpha) )
      5           + tF * SP(igrid,inf,2,1,beta,alpha)
-
          endif
       enddo
 *
