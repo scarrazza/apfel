@@ -488,10 +488,10 @@ c         norm  = 1d0
             enddo
          enddo
          rel_diff = 100d0 * ( pred_me - pred_fk ) / pred_me
-         write(6,"(3(a,f10.6),a)") " ME prediction: ",pred_me,
-     1                             " FK prediction: ",pred_fk,
-     2                             " Relative difference: ",rel_diff,
-     3                             " %"
+         write(6,"(3(a,es24.12),a)") " ME prediction: ",pred_me,
+     1                               " FK prediction: ",pred_fk,
+     2                               " Relative difference: ",rel_diff,
+     3                               " %"
       endif
 *
       return
