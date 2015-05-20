@@ -74,7 +74,7 @@
          do kx2=ixp(2)-1,nx-1
             do jpdf1=0,13
                do jpdf2=0,13
-                  if(abs(sigmafkdy(kx1,kx2,jpdf1,jpdf2)).gt.1d-10) 
+                  if(abs(sigmafkdy(kx1,kx2,jpdf1,jpdf2)).gt.1d-15) 
      1                 flmap(jpdf1,jpdf2) = 1
                enddo
             enddo
