@@ -34,7 +34,7 @@
 *
 *     Initialize APFEL
 *
-      call EnableWelcomeMessage(.false.)
+c      call EnableWelcomeMessage(.false.)
       call SetFastEvolution(.false.)
       call EnableEvolutionOperator(.true.)
       call LockGrids(.true.)
