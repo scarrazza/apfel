@@ -498,7 +498,7 @@ c         norm  = 1d0
 *     Check that the FK prediction is much bigger than the cutoff
 *     used to determine the flavour map.
 *
-      if(dabs(pred_fk/cutoff).lt.1d-10)then
+      if(dabs(cutoff/pred_fk).gt.1d-10)then
          write(6,*) "In src/FTDY/src/sigmafk_dy.f:"
          write(6,*) "the prediction is not much larger than the cutoff."
          write(6,*) "FK prediction =",pred_fk

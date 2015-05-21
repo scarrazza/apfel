@@ -4,4 +4,4 @@
 *
       double precision cutoff
 *
-      parameter(cutoff = 1d-30)
+      parameter(cutoff = 0d0)
