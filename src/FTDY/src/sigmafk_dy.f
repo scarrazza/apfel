@@ -26,6 +26,7 @@
       include "../commons/cDY.h"
       include "../commons/sigmafk.h"
       include "../commons/xxDY.h"
+      include "../commons/cutoff.h"
 **
 *     Input Variables
 *
@@ -492,6 +493,18 @@ c         norm  = 1d0
      1                               " FK prediction: ",pred_fk,
      2                               " Relative difference: ",rel_diff,
      3                               " %"
+      endif
+*
+*     Check that the FK prediction is much bigger than the cutoff
+*     used to determine the flavour map.
+*
+      if(dabs(pred_fk/cutoff).lt.1d-10)then
+         write(6,*) "In src/FTDY/src/sigmafk_dy.f:"
+         write(6,*) "the prediction is not much larger than the cutoff."
+         write(6,*) "FK prediction =",pred_fk
+         write(6,*) "cutoff =",cutoff
+         write(6,*) "Reduce the cutoff in src/FTDY/commons/cutoff.h."
+         call exit(-10)
       endif
 *
       return

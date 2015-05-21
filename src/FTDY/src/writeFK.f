@@ -15,6 +15,7 @@
       include "../commons/xgridDY.h"
       include "../commons/kinematics.h"
       include "../commons/set.h"
+      include "../commons/cutoff.h"
 **
 *     Input Variables
 *
@@ -74,7 +75,7 @@
          do kx2=ixp(2)-1,nx-1
             do jpdf1=0,13
                do jpdf2=0,13
-                  if(abs(sigmafkdy(kx1,kx2,jpdf1,jpdf2)).gt.1d-30) 
+                  if(abs(sigmafkdy(kx1,kx2,jpdf1,jpdf2)).gt.cutoff) 
      1                 flmap(jpdf1,jpdf2) = 1
                enddo
             enddo
