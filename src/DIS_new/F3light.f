@@ -26,6 +26,8 @@
       double precision w_int_gen
       double precision tau,xi
       double precision c1,c2
+      double precision tol
+      parameter(tol=1d-10)
 **
 *     Output Variables
 *
@@ -38,7 +40,7 @@
          c1 = x**2d0 / xi**2d0 / tau
          c2 = 4d0 * rhop * x**3d0 / tau**1.5d0
 *
-         if(xi.lt.xmin(1).or.xi.gt.xmax)then
+         if(xi.lt.xmin(1).or.xi.gt.xmax+tol)then
             write(6,*) "In F3light.f:"
             write(6,*) "Invalid value of x =",xi
             call exit(-10)
@@ -54,7 +56,7 @@
          enddo
          if(dabs(F3light).le.1d-14) F3light = 0d0
       else
-         if(x.lt.xmin(1).or.x.gt.xmax)then
+         if(x.lt.xmin(1).or.x.gt.xmax+tol)then
             write(6,*) "In F3light.f:"
             write(6,*) "Invalid value of x =",x
             call exit(-10)

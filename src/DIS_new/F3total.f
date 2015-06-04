@@ -51,6 +51,8 @@ c$$$      integer alpha
 c$$$      double precision w_int_gen
 c$$$      double precision tau,xi
 c$$$      double precision c1,c2
+c$$$      double precision tol
+c$$$      parameter(tol=1d-10)
 c$$$**
 c$$$*     Output Variables
 c$$$*
@@ -64,7 +66,7 @@ c$$$*
 c$$$         c1 = x**2d0 / xi**2d0 / tau
 c$$$         c2 = 4d0 * rhop * x**3d0 / tau**1.5d0
 c$$$*
-c$$$         if(xi.lt.xmin(1).or.xi.gt.xmax)then
+c$$$         if(xi.lt.xmin(1).or.xi.gt.xmax+tol)then
 c$$$            write(6,*) "In F3total.f:"
 c$$$            write(6,*) "Invalid value of x =",xi
 c$$$            call exit(-10)
@@ -80,7 +82,7 @@ c$$$     1           * ( c1 * F3(7,0,alpha) + c2 * I3(7,0,alpha) )
 c$$$         enddo
 c$$$         if(dabs(F3total).le.1d-14) F3total = 0d0
 c$$$      else
-c$$$         if(x.lt.xmin(1).or.x.gt.xmax)then
+c$$$         if(x.lt.xmin(1).or.x.gt.xmax+tol)then
 c$$$            write(6,*) "In F3total.f:"
 c$$$            write(6,*) "Invalid value of x =",x
 c$$$            call exit(-10)

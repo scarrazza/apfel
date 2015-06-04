@@ -24,6 +24,8 @@
       integer n
       integer alpha
       double precision w_int
+      double precision tol
+      parameter(tol=1d-10)
 **
 *     Output Variables
 *
@@ -37,7 +39,7 @@
          call exit(-10)
       endif
 *
-      if(x.lt.xmin(1).or.x.gt.xmax)then
+      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
          write(6,*) "In xPDF.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)
@@ -85,6 +87,8 @@
       integer n
       integer alpha!,jgrid
       double precision w_int_gen
+      double precision tol
+      parameter(tol=1d-10)
 **
 *     Output Variables
 *
@@ -98,7 +102,7 @@
          call exit(-10)
       endif
 *
-      if(x.lt.xmin(1).or.x.gt.xmax)then
+      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
          write(6,*) "In xPDF.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)
@@ -140,6 +144,8 @@
       integer alpha
       integer ipdf
       double precision w_int_gen,wgt(0:nint_max)
+      double precision tol
+      parameter(tol=1d-10)
 **
 *     Output Variables
 *
@@ -147,7 +153,7 @@
 *
 *     Check consistency of the input variables
 *
-      if(x.lt.xmin(1).or.x.gt.xmax)then
+      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
          write(6,*) "In xPDF.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)

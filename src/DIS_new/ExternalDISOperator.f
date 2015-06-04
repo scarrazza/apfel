@@ -31,6 +31,8 @@
       double precision w_int_gen
       double precision tau,xi
       double precision c1,c2
+      double precision tol
+      parameter(tol=1d-10)
 **
 *     Output Variables
 *
@@ -75,12 +77,6 @@
          call exit(-10)
       endif
 *
-      if(x.lt.xmin(1).or.x.gt.xmax)then
-         write(6,*) "In FKSimulator.f:"
-         write(6,*) "Invalid value of x =",x
-         call exit(-10)
-      endif
-*
       if(beta.lt.0.or.beta.gt.nin(0))then
          write(6,*) "In ExternalDISOperator.f:"
          write(6,*) "Invalid index, beta =",beta
@@ -96,7 +92,7 @@
          tau = 1d0 + 4d0 * rhop * x**2d0
          xi  = 2d0 * x / ( 1d0 + dsqrt(tau) )
 *
-         if(xi.lt.xmin(1).or.xi.gt.xmax)then
+         if(xi.lt.xmin(1).or.xi.gt.xmax+tol)then
             write(6,*) "In ExternalDISOperator.f:"
             write(6,*) "Invalid value of x =",xi
             call exit(-10)
@@ -137,11 +133,8 @@
      3                             +   c2 * EvOpI3(ihq,i,alpha,beta) )
             enddo
          endif
-
-
-
       else
-         if(x.lt.xmin(1).or.x.gt.xmax)then
+         if(x.lt.xmin(1).or.x.gt.xmax+tol)then
             write(6,*) "In ExternalDISOperator.f:"
             write(6,*) "Invalid value of x =",x
             call exit(-10)

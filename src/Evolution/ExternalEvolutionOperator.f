@@ -27,6 +27,8 @@
       integer n
       integer alpha
       double precision w_int_gen
+      double precision tol
+      parameter(tol=1d-10)
 **
 *     Output Variables
 *
@@ -93,7 +95,7 @@
          endif
       endif
 *
-      if(x.lt.xmin(1).or.x.gt.xmax)then
+      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
          write(6,*) "In ExternalEvolutionOperator.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)

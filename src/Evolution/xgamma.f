@@ -22,6 +22,8 @@
       integer n
       integer alpha
       double precision w_int
+      double precision tol
+      parameter(tol=1d-10)
 **
 *     Output Variables
 *
@@ -29,7 +31,7 @@
 *
 *     Check consistency of the input variable
 *
-      if(x.lt.xmin(1).or.x.gt.xmax)then
+      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
          write(6,*) "In xgamma.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)
@@ -76,6 +78,8 @@
       integer n
       integer alpha!,jgrid
       double precision w_int_gen
+      double precision tol
+      parameter(tol=1d-10)
 **
 *     Output Variables
 *
@@ -83,7 +87,7 @@
 *
 *     Check consistency of the input variable
 *
-      if(x.lt.xmin(1).or.x.gt.xmax)then
+      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
          write(6,*) "In xgamma.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)
