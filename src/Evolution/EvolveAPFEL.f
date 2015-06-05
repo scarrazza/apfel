@@ -21,6 +21,8 @@
 *
       double precision Q20,Q2
       double precision t1,t2
+      double precision tol
+      parameter(tol=1d-8)
 *
 *     Check that the APFEL evolution has been initialized
 *
@@ -38,13 +40,13 @@
       Q2ini = Q20
       Q2fin = Q2
 *
-      if(Q20.lt.Q2min.or.Q20.gt.Q2max)then
+      if(Q20.lt.Q2min-tol.or.Q20.gt.Q2max+tol)then
          write(6,*) "Initial energy out of range:"
          write(6,*) "- Q0   =",Q0
          write(6,*) "- Qmin =",dsqrt(Q2min)
          write(6,*) "- Qmax =",dsqrt(Q2max)
          call exit(-10)
-      elseif(Q2.lt.Q2min.or.Q2.gt.Q2max)then
+      elseif(Q2.lt.Q2min-tol.or.Q2.gt.Q2max+tol)then
          write(6,*) "Final energy out of range:"
          write(6,*) "- Q    =",Q
          write(6,*) "- Qmin =",dsqrt(Q2min)

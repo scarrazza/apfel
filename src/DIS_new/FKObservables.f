@@ -11,6 +11,7 @@
 *
       include "../commons/consts.h"
       include "../commons/FKObservable.h"
+      include "../commons/ipt.h"
 **
 *     Input Variables
 *
@@ -401,6 +402,12 @@
 *
       elseif(obs(1:8).eq."SIA_XSEC")then
          FKObservables = GetSIATotalCrossSection(0,Q) * F2total(x)
+*
+****  SIA normalized cross section
+*
+      elseif(obs(1:13).eq."SIA_NORM_XSEC")then
+         FKObservables = GetSIATotalCrossSection(0,Q) * F2total(x)
+     1                 / GetSIATotalCrossSection(ipt,Q)
       else
          write(6,*) "In FKObservables.f:"
          write(6,*) "Invalid observable, obs = ",obs

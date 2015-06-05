@@ -363,6 +363,14 @@
          call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
+*
+****  SIA normalized cross section
+*
+      elseif(obs(1:13).eq."SIA_NORM_XSEC")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
       else
          write(6,*) "In SetFKObservable.f:"
          write(6,*) "Invalid observable, obs = ",obs
