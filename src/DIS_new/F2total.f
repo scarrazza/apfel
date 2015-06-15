@@ -70,6 +70,7 @@ c$$$            write(6,*) "In F2total.f:"
 c$$$            write(6,*) "Invalid value of x =",xi
 c$$$            call exit(-10)
 c$$$         endif
+c$$$         if (xi.gt.xmax) xi = 1d0
 c$$$*
 c$$$*     Interpolation
 c$$$*
@@ -86,6 +87,7 @@ c$$$            write(6,*) "In F2total.f:"
 c$$$            write(6,*) "Invalid value of x =",x
 c$$$            call exit(-10)
 c$$$         endif
+c$$$         if (x.gt.xmax) x = 1d0
 c$$$*
 c$$$*     Interpolation
 c$$$*

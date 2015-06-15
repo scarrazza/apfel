@@ -108,6 +108,7 @@
          do ix=1,nin(igrid)+inter_degree(igrid)
             xg(igrid,ix) = xg(igrid,ix-1) * exp( step(igrid) )
          enddo
+         xg(igrid, nin(igrid)) = 1d0
       endif
 *
       return

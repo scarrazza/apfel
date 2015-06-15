@@ -100,6 +100,7 @@
          write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
+      if (x.gt.xmax) x = 1d0
       if(beta.lt.0.or.beta.gt.nin(0))then
          write(6,*) "In ExternalEvolutionOperator.f:"
          write(6,*) "Invalid index, beta =",beta

@@ -44,6 +44,7 @@
          write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
+      if (x.gt.xmax) x = 1d0
 *
 *     Select the grid
 *
@@ -107,6 +108,7 @@
          write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
+      if (x.gt.xmax) x = 1d0
 *
 *     Interpolation
 *
@@ -158,6 +160,7 @@
          write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
+      if (x.gt.xmax) x = 1d0
 *
 *     Interpolation
 *
