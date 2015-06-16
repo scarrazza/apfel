@@ -39,11 +39,12 @@
          call exit(-10)
       endif
 *
-      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
+      if(x.lt.xmin(1)-tol.or.x.gt.xmax+tol)then
          write(6,*) "In xPDF.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
+      if (x.lt.xmin(1)) x = xmin(1)
       if (x.gt.xmax) x = 1d0
 *
 *     Select the grid
@@ -103,11 +104,12 @@
          call exit(-10)
       endif
 *
-      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
+      if(x.lt.xmin(1)-tol.or.x.gt.xmax+tol)then
          write(6,*) "In xPDF.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
+      if (x.lt.xmin(1)) x = xmin(1)
       if (x.gt.xmax) x = 1d0
 *
 *     Interpolation
@@ -155,11 +157,12 @@
 *
 *     Check consistency of the input variables
 *
-      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
+      if(x.lt.xmin(1)-tol.or.x.gt.xmax+tol)then
          write(6,*) "In xPDF.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
+      if (x.lt.xmin(1)) x = xmin(1)
       if (x.gt.xmax) x = 1d0
 *
 *     Interpolation

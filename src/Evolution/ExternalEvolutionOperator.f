@@ -95,11 +95,12 @@
          endif
       endif
 *
-      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
+      if(x.lt.xmin(1)-tol.or.x.gt.xmax+tol)then
          write(6,*) "In ExternalEvolutionOperator.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
+      if (x.lt.xmin(1)) x = xmin(1)
       if (x.gt.xmax) x = 1d0
       if(beta.lt.0.or.beta.gt.nin(0))then
          write(6,*) "In ExternalEvolutionOperator.f:"

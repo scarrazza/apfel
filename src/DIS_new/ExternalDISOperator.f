@@ -92,11 +92,12 @@
          tau = 1d0 + 4d0 * rhop * x**2d0
          xi  = 2d0 * x / ( 1d0 + dsqrt(tau) )
 *
-         if(xi.lt.xmin(1).or.xi.gt.xmax+tol)then
+         if(xi.lt.xmin(1)-tol.or.xi.gt.xmax+tol)then
             write(6,*) "In ExternalDISOperator.f:"
             write(6,*) "Invalid value of x =",xi
             call exit(-10)
          endif
+         if (xi.lt.xmin(1)) xi = xmin(1)
          if (xi.gt.xmax) xi = 1d0
 *
 *     interpolate
@@ -135,11 +136,12 @@
             enddo
          endif
       else
-         if(x.lt.xmin(1).or.x.gt.xmax+tol)then
+         if(x.lt.xmin(1)-tol.or.x.gt.xmax+tol)then
             write(6,*) "In ExternalDISOperator.f:"
             write(6,*) "Invalid value of x =",x
             call exit(-10)
          endif
+         if (x.lt.xmin(1)) x = xmin(1)
          if (x.gt.xmax) x = 1d0
 *
 *     interpolate

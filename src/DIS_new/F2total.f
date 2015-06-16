@@ -65,11 +65,12 @@ c$$$*
 c$$$         c1 = x**2d0 / xi**2d0 / tau**1.5d0
 c$$$         c2 = 6d0 * rhop * x**3d0 / tau**2d0
 c$$$*
-c$$$         if(xi.lt.xmin(1).or.xi.gt.xmax+tol)then
+c$$$         if(xi.lt.xmin(1)-tol.or.xi.gt.xmax+tol)then
 c$$$            write(6,*) "In F2total.f:"
 c$$$            write(6,*) "Invalid value of x =",xi
 c$$$            call exit(-10)
 c$$$         endif
+c$$$         if (xi.lt.xmin(1)) xi = xmin(1)
 c$$$         if (xi.gt.xmax) xi = 1d0
 c$$$*
 c$$$*     Interpolation
@@ -82,11 +83,12 @@ c$$$     1           * ( c1 * F2(7,0,alpha) + c2 * I2(7,0,alpha) )
 c$$$         enddo
 c$$$         if(dabs(F2total).le.1d-14) F2total = 0d0
 c$$$      else
-c$$$         if(x.lt.xmin(1).or.x.gt.xmax+tol)then
+c$$$         if(x.lt.xmin(1)-tol.or.x.gt.xmax+tol)then
 c$$$            write(6,*) "In F2total.f:"
 c$$$            write(6,*) "Invalid value of x =",x
 c$$$            call exit(-10)
 c$$$         endif
+c$$$         if (x.lt.xmin(1)) x = xmin(1)
 c$$$         if (x.gt.xmax) x = 1d0
 c$$$*
 c$$$*     Interpolation

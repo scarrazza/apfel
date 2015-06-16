@@ -31,11 +31,12 @@
 *
 *     Check consistency of the input variable
 *
-      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
+      if(x.lt.xmin(1)-tol.or.x.gt.xmax+tol)then
          write(6,*) "In xgamma.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
+      if (x.lt.xmin(1)) x = xmin(1)
       if (x.gt.xmax) x = 1d0
 *
 *     Select the grid
@@ -88,11 +89,12 @@
 *
 *     Check consistency of the input variable
 *
-      if(x.lt.xmin(1).or.x.gt.xmax+tol)then
+      if(x.lt.xmin(1)-tol.or.x.gt.xmax+tol)then
          write(6,*) "In xgamma.f:"
          write(6,*) "Invalid value of x =",x
          call exit(-10)
       endif
+      if (x.lt.xmin(1)) x = xmin(1)
       if (x.gt.xmax) x = 1d0
 *
 *     Interpolation

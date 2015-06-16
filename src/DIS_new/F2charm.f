@@ -40,11 +40,12 @@
          c1 = x**2d0 / xi**2d0 / tau**1.5d0
          c2 = 6d0 * rhop * x**3d0 / tau**2d0
 *
-         if(xi.lt.xmin(1).or.xi.gt.xmax+tol)then
+         if(xi.lt.xmin(1)-tol.or.xi.gt.xmax+tol)then
             write(6,*) "In F2charm.f:"
             write(6,*) "Invalid value of x =",xi
             call exit(-10)
          endif
+         if (xi.lt.xmin(1)) xi = xmin(1)
          if (xi.gt.xmax) xi = 1d0
 *
 *     Interpolation
@@ -57,11 +58,12 @@
          enddo
          if(dabs(F2charm).le.1d-14) F2charm = 0d0
       else
-         if(x.lt.xmin(1).or.x.gt.xmax+tol)then
+         if(x.lt.xmin(1)-tol.or.x.gt.xmax+tol)then
             write(6,*) "In F2charm.f:"
             write(6,*) "Invalid value of x =",x
             call exit(-10)
          endif
+         if (x.lt.xmin(1)) x = xmin(1)
          if (x.gt.xmax) x = 1d0
 *
 *     Interpolation
