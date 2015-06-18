@@ -272,6 +272,32 @@
          endif
       endif
 *
+*     Check that there are no identical masses and that
+*     masses are correctly ordered
+*
+      if(m2th(4).eq.m2th(5).or.
+     1   m2th(4).eq.m2th(6).or.
+     2   m2th(5).eq.m2th(6))then
+         write(6,*) "There cannot be equal heavy quark masses:"
+         write(6,"(a,f13.3,a)") "Mc = ",dsqrt(m2th(4))," GeV"
+         write(6,"(a,f13.3,a)") "Mb = ",dsqrt(m2th(5))," GeV"
+         write(6,"(a,f13.3,a)") "Mt = ",dsqrt(m2th(6))," GeV"
+         write(6,*) " "
+         call exit(-10)
+      endif
+*
+      if(m2th(4).gt.m2th(5).or.
+     1   m2th(4).gt.m2th(6).or.
+     2   m2th(5).gt.m2th(6))then
+         write(6,*) "The heavy quark masses are not correctly",
+     1              " ordered:"
+         write(6,"(a,f13.3,a)") "Mc = ",dsqrt(m2th(4))," GeV"
+         write(6,"(a,f13.3,a)") "Mb = ",dsqrt(m2th(5))," GeV"
+         write(6,"(a,f13.3,a)") "Mt = ",dsqrt(m2th(6))," GeV"
+         write(6,*) " "
+         call exit(-10)
+      endif
+*
 *     Print welcome message and report of the parameters (if enabled)
 *
       if(Welcome)then

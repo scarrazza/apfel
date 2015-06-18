@@ -22,6 +22,7 @@
       include "../commons/Evs.h"
       include "../commons/MaxFlavourPDFs.h"
       include "../commons/LeptEvol.h"
+      include "../commons/Nf_FF.h"
 **
 *     Input Variables
 *
@@ -34,7 +35,7 @@
 *
       integer ln
       integer i,ix,iq2,iq2c,ipdf,ilep,krep,iq2in,iq2fi
-      integer nfin
+      integer nfin,nffi
       integer isg,nQ(3:7)
       double precision qref,mth(4:6)
       double precision lambda3,lambda4,lambda5,lambdaNF
@@ -47,7 +48,7 @@
       double precision xPDFj,xgammaj,xLeptonj
       double precision AlphaQCD
       character*30 str
-      parameter(eps=1d-10)
+      parameter(eps=1d-4)
       parameter(offset=1d-2)
 *
 *     Specify initialization for the LHgrid
@@ -56,9 +57,9 @@
      1                                                1d0,50,1d0,1d10)
       call SetQLimits(dsqrt(q2minLHA)-offset,dsqrt(q2maxLHA)+offset)
       call SetNumberOfGrids(3)
-      call SetGridParameters(1,100,3,xminLHA)
-      call SetGridParameters(2,50,5,xmLHA)
-      call SetGridParameters(3,20,5,8d-1)
+      call SetGridParameters(1,150,3,xminLHA)
+      call SetGridParameters(2,60,5,xmLHA)
+      call SetGridParameters(3,40,5,8d-1)
 *
       call initializeAPFEL
 *
@@ -110,6 +111,17 @@
          endif
          if(nfin.gt.nfMaxPDFs) nfin = nfMaxPDFs
 *
+         if(q2maxLHA.gt.m2th(6))then
+            nffi = 6
+         elseif(q2maxLHA.gt.m2th(5))then
+            nffi = 5
+         elseif(q2maxLHA.gt.m2th(4))then
+            nffi = 4
+         else
+            nffi = 3
+         endif
+         if(nffi.gt.nfMaxPDFs) nffi = nfMaxPDFs
+*
 *     Number of points per subgrid
 *
          do isg=3,7
@@ -121,7 +133,7 @@
             q2LHA(iq2) = Lambda2 * dexp( lnQmin 
      1                 * dexp( dble( iq2 - 1 ) / dble( nq2LHA - 1 )
      2                 * dlog( lnQmax / lnQmin ) ) )
-            if(q2LHA(iq2).lt.m2th(isg+1))then
+            if(q2LHA(iq2).lt.m2th(isg+1)+eps)then
                nQ(isg) = nQ(isg) + 1
             else
                isg = isg + 1
@@ -130,37 +142,45 @@
             endif
          enddo
 *
-         lnQmin = dlog( ( q2minLHA + eps ) / Lambda2 )
-         if(nfin.eq.nfMaxPDFs)then
-            lnQmax = dlog( q2maxLHA / Lambda2 )
-         else
-            lnQmax = dlog( ( m2th(nfin+1) - eps ) / Lambda2 )
-         endif
+*     If the LHAPDF6 format is to be used redefine the grid with the subgrids
 *
-         iq2c = 0
-         do isg=nfin,nfMaxPDFs
-            do iq2=1,nQ(isg)
-               iq2c = iq2c + 1
-               q2LHA(iq2c) = Lambda2 * dexp( lnQmin 
-     1                     * dexp( dble( iq2 - 1 ) / dble( nQ(isg) - 1 )
-     2                     * dlog( lnQmax / lnQmin ) ) )
-            enddo
-            lnQmin = dlog( ( m2th(isg+1) + eps ) / Lambda2 )
-            if(isg.eq.nfMaxPDFs-1)then
+         if(islhapdf6())then
+            lnQmin = dlog( ( q2minLHA ) / Lambda2 )
+            if(nfin.eq.nffi)then
                lnQmax = dlog( q2maxLHA / Lambda2 )
             else
-               lnQmax = dlog( ( m2th(isg+2) - eps ) / Lambda2 )
+               lnQmax = dlog( ( m2th(nfin+1) ) / Lambda2 )
             endif
-         enddo
 *
-         if(iq2c.ne.nq2LHA)then
-            write(6,*) "In LHAPDFgrid.f:"
-            write(6,*) "Mismatch in the Number of Q2 nodes"
-            write(6,*) "- Expected = ",nq2LHA
-            write(6,*) "- Found = ",iq2c
-            call exit(-10)
+            iq2c = 0
+            do isg=nfin,nffi
+               do iq2=1,nQ(isg)
+                  iq2c = iq2c + 1
+                  q2LHA(iq2c) = Lambda2 * dexp( lnQmin 
+     1                        * dexp( dble( iq2 - 1 )
+     2                        / dble( nQ(isg) - 1 )
+     3                        * dlog( lnQmax / lnQmin ) ) )
+               enddo
+               lnQmin = dlog( ( q2LHA(iq2c) ) / Lambda2 )
+               if(isg.eq.nffi-1)then
+                  lnQmax = dlog( q2maxLHA / Lambda2 )
+               else
+                  lnQmax = dlog( ( m2th(isg+2) ) / Lambda2 )
+               endif
+            enddo
+*
+            if(iq2c.ne.nq2LHA)then
+               write(6,*) "In LHAPDFgrid.f:"
+               write(6,*) "Mismatch in the Number of Q2 nodes"
+               write(6,*) "- Expected = ",nq2LHA
+               write(6,*) "- Found = ",iq2c
+               call exit(-10)
+            endif
          endif
       else
+         nQ(Nf_FF) = nq2LHA
+         nfin      = Nf_FF
+         nffi      = Nf_FF
          do iq2=1,nq2LHA
             q2LHA(iq2) = Lambda2 * dexp( lnQmin 
      1                 * dexp( dble( iq2 - 1 ) / dble( nq2LHA - 1 )
@@ -170,7 +190,7 @@
 *
 *     LHAPDF5 output
 *
-      if (islhapdf6().eqv..false.) then
+      if(.not.islhapdf6())then
 *     
 *     Open the output file
 *
@@ -386,7 +406,7 @@
             call SetReplica(krep)
             iq2in = 1
             iq2fi = nQ(nfin)
-            do isg=nfin,nfMaxPDFs
+            do isg=nfin,nffi
                write(13,*) (xbLHA(ix),ix=1,nxLHA)
                write(13,*) (dsqrt(q2LHA(iq2)), iq2=iq2in,iq2fi)
 *
