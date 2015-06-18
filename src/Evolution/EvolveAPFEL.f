@@ -22,7 +22,7 @@
       double precision Q20,Q2
       double precision t1,t2
       double precision tol
-      parameter(tol=1d-8)
+      parameter(tol=1d-2)
 *
 *     Check that the APFEL evolution has been initialized
 *
