@@ -35,19 +35,19 @@
       integer sign
       integer ieps
       double precision mu2i(3:7),mu2f(3:7)
-      double precision fpheps(-1:1,-6:6,0:nint_max)
-      double precision fgammaeps(-1:1,0:nint_max)
-      double precision fleptoneps(-1:1,-3:3,0:nint_max)
+      double precision fpheps(-2:2,-6:6,0:nint_max)
+      double precision fgammaeps(-2:2,0:nint_max)
+      double precision fleptoneps(-2:2,-3:3,0:nint_max)
       double precision tiny
-      double precision eps(-1:1)
+      double precision eps(-2:2)
       parameter(tiny=1d-10)
       double precision fqpre(0:ngrid_max,-6:6,0:nint_max)
       double precision flpre(0:ngrid_max,-3:3,0:nint_max)
       common / pretabAPFEL / fqpre,flpre
-      double precision Msg(-1:1,2,2,0:nint_max,0:nint_max)
-      double precision Mnsp(-1:1,0:nint_max,0:nint_max)
-      double precision Mnsm(-1:1,0:nint_max,0:nint_max)
-      double precision Mnsv(-1:1,0:nint_max,0:nint_max)
+      double precision Msg(-2:2,2,2,0:nint_max,0:nint_max)
+      double precision Mnsp(-2:2,0:nint_max,0:nint_max)
+      double precision Mnsm(-2:2,0:nint_max,0:nint_max)
+      double precision Mnsv(-2:2,0:nint_max,0:nint_max)
       character*100 pdfsetbkp
       logical EvolOpbkp
 *
@@ -119,9 +119,11 @@
 *
 *     put epsilon in an array
 *
+      eps(-2) = - 2d0 * EpsTrunc
       eps(-1) = - EpsTrunc
       eps(0)  = 0d0
       eps(1)  = EpsTrunc
+      eps(2)  = 2d0 * EpsTrunc
 *
 *     Compute Evolution
 *
@@ -129,7 +131,7 @@
 *     Back up PDF name
          pdfsetbkp = pdfset
          do inf=mfi,mff,sign
-            do ieps=-1,1
+            do ieps=-2,2
                EpsEff = eps(ieps)
                if(FastEvol)then
 *     Evolve directly PDFs on the grid
@@ -211,21 +213,40 @@
             if(ipt.ge.1)then
                do alpha=0,nin(igrid)
                   do ipdf=-6,6
+c                     fph(igrid,ipdf,alpha) = fpheps(0,ipdf,alpha)
+c     1                    + ( fpheps(1,ipdf,alpha)
+c     2                    - fpheps(-1,ipdf,alpha) )
+c     3                    / 2d0 / EpsTrunc
                      fph(igrid,ipdf,alpha) = fpheps(0,ipdf,alpha)
-     1                    + ( fpheps(1,ipdf,alpha)
-     2                    - fpheps(-1,ipdf,alpha) )
-     3                    / 2d0 / EpsTrunc
+     1                    + ( - fpheps(2,ipdf,alpha)
+     2                    + 8d0 * fpheps(1,ipdf,alpha)
+     3                    - 8d0 * fpheps(-1,ipdf,alpha)
+     4                    + fpheps(-2,ipdf,alpha) )
+     5                    / 12d0 / EpsTrunc
                   enddo
+c                  fgamma(igrid,alpha) = fgammaeps(0,alpha)
+c     1                 + ( fgammaeps(1,alpha)
+c     2                 - fgammaeps(-1,alpha) )
+c     3                 / 2d0 / EpsTrunc
                   fgamma(igrid,alpha) = fgammaeps(0,alpha)
-     1                 + ( fgammaeps(1,alpha)
-     2                 - fgammaeps(-1,alpha) )
-     3                 / 2d0 / EpsTrunc
+     1                 + ( - fgammaeps(2,alpha)
+     2                 + 8d0 * fgammaeps(1,alpha)
+     3                 - 8d0 * fgammaeps(-1,alpha)
+     4                 + fgammaeps(-2,alpha) )
+     5                 / 12d0 / EpsTrunc
                   do ipdf=-3,3
+c                     flepton(igrid,ipdf,alpha) = 
+c     1                    fleptoneps(0,ipdf,alpha)
+c     2                    + ( fleptoneps(1,ipdf,alpha)
+c     3                    - fleptoneps(-1,ipdf,alpha) )
+c     4                    / 2d0 / EpsTrunc
                      flepton(igrid,ipdf,alpha) = 
      1                    fleptoneps(0,ipdf,alpha)
-     2                    + ( fleptoneps(1,ipdf,alpha)
-     3                    - fleptoneps(-1,ipdf,alpha) )
-     4                    / 2d0 / EpsTrunc
+     2                    + ( - fleptoneps(2,ipdf,alpha)
+     3                    + 8d0 * fleptoneps(1,ipdf,alpha)
+     4                    - 8d0 * fleptoneps(-1,ipdf,alpha)
+     5                    + fleptoneps(-2,ipdf,alpha))
+     6                    / 12d0 / EpsTrunc
                   enddo
                enddo
             endif
@@ -235,24 +256,46 @@
             if(ipt.ge.2)then
                do alpha=0,nin(igrid)
                   do ipdf=-6,6
+c                     fph(igrid,ipdf,alpha) = fph(igrid,ipdf,alpha)
+c     1                    + ( fpheps(1,ipdf,alpha)
+c     2                    - 2d0 * fpheps(0,ipdf,alpha)
+c     3                    + fpheps(-1,ipdf,alpha) )
+c     4                    / 2d0 / EpsTrunc / EpsTrunc
                      fph(igrid,ipdf,alpha) = fph(igrid,ipdf,alpha)
-     1                    + ( fpheps(1,ipdf,alpha)
-     2                    - 2d0 * fpheps(0,ipdf,alpha)
-     3                    + fpheps(-1,ipdf,alpha) )
-     4                    / 2d0 / EpsTrunc / EpsTrunc
+     1                    + ( - fpheps(2,ipdf,alpha)
+     2                    + 16d0 * fpheps(1,ipdf,alpha)
+     3                    - 30d0 * fpheps(0,ipdf,alpha)
+     4                    + 16d0 * fpheps(-1,ipdf,alpha)
+     5                    - fpheps(-2,ipdf,alpha))
+     6                    / 24d0 / EpsTrunc / EpsTrunc
                   enddo
+c                  fgamma(igrid,alpha) = fgamma(igrid,alpha)
+c     1                 + ( fgammaeps(1,alpha)
+c     2                 - 2d0 * fgammaeps(0,alpha)
+c     2                 + fgammaeps(-1,alpha) )
+c     3                 / 2d0 / EpsTrunc / EpsTrunc
                   fgamma(igrid,alpha) = fgamma(igrid,alpha)
-     1                 + ( fgammaeps(1,alpha)
-     2                 - 2d0 * fgammaeps(0,alpha)
-     2                 + fgammaeps(-1,alpha) )
-     3                 / 2d0 / EpsTrunc / EpsTrunc
+     1                 + ( - fgammaeps(2,alpha)
+     2                 + 16d0 * fgammaeps(1,alpha)
+     3                 - 30d0 * fgammaeps(0,alpha)
+     4                 + 16d0 * fgammaeps(-1,alpha)
+     5                 - fgammaeps(-2,alpha) )
+     6                 / 24d0 / EpsTrunc / EpsTrunc
                   do ipdf=-3,3
+c                     flepton(igrid,ipdf,alpha) = 
+c     1                    flepton(igrid,ipdf,alpha)
+c     2                    + ( fleptoneps(1,ipdf,alpha)
+c     3                    - 2d0 * fleptoneps(0,ipdf,alpha)
+c     3                    + fleptoneps(-1,ipdf,alpha) )
+c     4                    / 2d0 / EpsTrunc / EpsTrunc
                      flepton(igrid,ipdf,alpha) = 
      1                    flepton(igrid,ipdf,alpha)
-     2                    + ( fleptoneps(1,ipdf,alpha)
-     3                    - 2d0 * fleptoneps(0,ipdf,alpha)
-     3                    + fleptoneps(-1,ipdf,alpha) )
-     4                    / 2d0 / EpsTrunc / EpsTrunc
+     2                    + ( - fleptoneps(2,ipdf,alpha)
+     3                    + 16d0 * fleptoneps(1,ipdf,alpha)
+     4                    - 30d0 * fleptoneps(0,ipdf,alpha)
+     5                    + 16d0 * fleptoneps(-1,ipdf,alpha) 
+     6                    - fleptoneps(-2,ipdf,alpha) )
+     7                    / 24d0 / EpsTrunc / EpsTrunc
                   enddo
                enddo
             endif
@@ -311,28 +354,56 @@
                      do beta=0,nin(igrid)
                         do ipdf=1,2
                            do jpdf=1,2
+c                              MQCDsg(inf,ipdf,jpdf,alpha,beta) =
+c     1                             Msg(0,ipdf,jpdf,alpha,beta)
+c     2                             + ( Msg(1,ipdf,jpdf,alpha,beta)
+c     3                             - Msg(-1,ipdf,jpdf,alpha,beta) )
+c     4                             / 2d0 / EpsTrunc 
                               MQCDsg(inf,ipdf,jpdf,alpha,beta) =
      1                             Msg(0,ipdf,jpdf,alpha,beta)
-     2                             + ( Msg(1,ipdf,jpdf,alpha,beta)
-     3                             - Msg(-1,ipdf,jpdf,alpha,beta) )
-     4                             / 2d0 / EpsTrunc 
+     2                             + ( - Msg(2,ipdf,jpdf,alpha,beta)
+     3                             + 8d0 * Msg(1,ipdf,jpdf,alpha,beta)
+     4                             - 8d0 * Msg(-1,ipdf,jpdf,alpha,beta)
+     5                             + Msg(-2,ipdf,jpdf,alpha,beta) )
+     6                             / 12d0 / EpsTrunc 
                            enddo
                         enddo
+c                        MQCDnsp(inf,alpha,beta) =
+c     1                       Mnsp(0,alpha,beta)
+c     2                       + ( Mnsp(1,alpha,beta)
+c     3                       - Mnsp(-1,alpha,beta) )
+c     4                       / 2d0 / EpsTrunc 
+c                        MQCDnsm(inf,alpha,beta) =
+c     1                       Mnsm(0,alpha,beta)
+c     2                       + ( Mnsm(1,alpha,beta)
+c     3                       - Mnsm(-1,alpha,beta) )
+c     4                       / 2d0 / EpsTrunc 
+c                        MQCDnsv(inf,alpha,beta) =
+c     1                       Mnsv(0,alpha,beta)
+c     2                       + ( Mnsv(1,alpha,beta)
+c     3                       - Mnsv(-1,alpha,beta) )
+c     4                       / 2d0 / EpsTrunc 
                         MQCDnsp(inf,alpha,beta) =
      1                       Mnsp(0,alpha,beta)
-     2                       + ( Mnsp(1,alpha,beta)
-     3                       - Mnsp(-1,alpha,beta) )
-     4                       / 2d0 / EpsTrunc 
+     2                       + ( - Mnsp(2,alpha,beta)
+     3                       + 8d0 * Mnsp(1,alpha,beta)
+     4                       - 8d0 * Mnsp(-1,alpha,beta)
+     5                       + Mnsp(-2,alpha,beta) )
+     6                       / 12d0 / EpsTrunc 
                         MQCDnsm(inf,alpha,beta) =
      1                       Mnsm(0,alpha,beta)
-     2                       + ( Mnsm(1,alpha,beta)
-     3                       - Mnsm(-1,alpha,beta) )
-     4                       / 2d0 / EpsTrunc 
+     2                       + ( - Mnsm(2,alpha,beta)
+     3                       + 8d0 * Mnsm(1,alpha,beta)
+     4                       - 8d0 * Mnsm(-1,alpha,beta)
+     5                       + Mnsm(-2,alpha,beta) )
+     6                       / 12d0 / EpsTrunc 
                         MQCDnsv(inf,alpha,beta) =
      1                       Mnsv(0,alpha,beta)
-     2                       + ( Mnsv(1,alpha,beta)
-     3                       - Mnsv(-1,alpha,beta) )
-     4                       / 2d0 / EpsTrunc 
+     2                       + ( - Mnsv(2,alpha,beta)
+     3                       + 8d0 * Mnsv(1,alpha,beta)
+     4                       - 8d0 * Mnsv(-1,alpha,beta)
+     5                       + Mnsv(-2,alpha,beta) )
+     6                       / 12d0 / EpsTrunc 
                      enddo
                   enddo
                endif
@@ -344,32 +415,64 @@
                      do beta=0,nin(igrid)
                         do ipdf=1,2
                            do jpdf=1,2
+c                              MQCDsg(inf,ipdf,jpdf,alpha,beta) =
+c     1                             MQCDsg(inf,ipdf,jpdf,alpha,beta)
+c     2                             + ( Msg(1,ipdf,jpdf,alpha,beta)
+c     3                             - 2d0 * Msg(0,ipdf,jpdf,alpha,beta)
+c     4                             + Msg(-1,ipdf,jpdf,alpha,beta) )
+c     5                             / 2d0 / EpsTrunc / EpsTrunc 
                               MQCDsg(inf,ipdf,jpdf,alpha,beta) =
      1                             MQCDsg(inf,ipdf,jpdf,alpha,beta)
-     2                             + ( Msg(1,ipdf,jpdf,alpha,beta)
-     3                             - 2d0 * Msg(0,ipdf,jpdf,alpha,beta)
-     4                             + Msg(-1,ipdf,jpdf,alpha,beta) )
-     5                             / 2d0 / EpsTrunc / EpsTrunc 
+     2                             + ( - Msg(2,ipdf,jpdf,alpha,beta)
+     3                             + 16d0 * Msg(1,ipdf,jpdf,alpha,beta)
+     4                             - 30d0 * Msg(0,ipdf,jpdf,alpha,beta)
+     5                             + 16d0 * Msg(-1,ipdf,jpdf,alpha,beta)
+     6                             - Msg(-2,ipdf,jpdf,alpha,beta) )
+     7                             / 24d0 / EpsTrunc / EpsTrunc 
                            enddo
                         enddo
+c                        MQCDnsp(inf,alpha,beta) =
+c     1                       MQCDnsp(inf,alpha,beta)
+c     2                       + ( Mnsp(1,alpha,beta)
+c     3                       - 2d0 * Mnsp(0,alpha,beta)
+c     4                       + Mnsp(-1,alpha,beta) )
+c     5                       / 2d0 / EpsTrunc / EpsTrunc 
+c                        MQCDnsm(inf,alpha,beta) =
+c     1                       MQCDnsm(inf,alpha,beta)
+c     2                       + ( Mnsm(1,alpha,beta)
+c     3                       - 2d0 * Mnsm(0,alpha,beta)
+c     4                       + Mnsm(-1,alpha,beta) )
+c     5                       / 2d0 / EpsTrunc / EpsTrunc 
+c                        MQCDnsv(inf,alpha,beta) =
+c     1                       MQCDnsv(inf,alpha,beta)
+c     2                       + ( Mnsv(1,alpha,beta)
+c     3                       - 2d0 *  Mnsv(0,alpha,beta)
+c     4                       + Mnsv(-1,alpha,beta) )
+c     5                       / 2d0 / EpsTrunc / EpsTrunc 
                         MQCDnsp(inf,alpha,beta) =
      1                       MQCDnsp(inf,alpha,beta)
-     2                       + ( Mnsp(1,alpha,beta)
-     3                       - 2d0 * Mnsp(0,alpha,beta)
-     4                       + Mnsp(-1,alpha,beta) )
-     5                       / 2d0 / EpsTrunc / EpsTrunc 
+     2                       + ( - Mnsp(2,alpha,beta)
+     3                       + 16d0 * Mnsp(1,alpha,beta)
+     4                       - 30d0 * Mnsp(0,alpha,beta)
+     5                       + 16d0 * Mnsp(-1,alpha,beta) 
+     6                       - Mnsp(-2,alpha,beta))
+     7                       / 24d0 / EpsTrunc / EpsTrunc 
                         MQCDnsm(inf,alpha,beta) =
      1                       MQCDnsm(inf,alpha,beta)
-     2                       + ( Mnsm(1,alpha,beta)
-     3                       - 2d0 * Mnsm(0,alpha,beta)
-     4                       + Mnsm(-1,alpha,beta) )
-     5                       / 2d0 / EpsTrunc / EpsTrunc 
+     2                       + ( - Mnsm(2,alpha,beta)
+     3                       + 16d0 * Mnsm(1,alpha,beta)
+     4                       - 30d0 * Mnsm(0,alpha,beta)
+     5                       + 16d0 * Mnsm(-1,alpha,beta) 
+     6                       - Mnsm(-2,alpha,beta))
+     7                       / 24d0 / EpsTrunc / EpsTrunc 
                         MQCDnsv(inf,alpha,beta) =
      1                       MQCDnsv(inf,alpha,beta)
-     2                       + ( Mnsv(1,alpha,beta)
-     3                       - 2d0 *  Mnsv(0,alpha,beta)
-     4                       + Mnsv(-1,alpha,beta) )
-     5                       / 2d0 / EpsTrunc / EpsTrunc 
+     2                       + ( - Mnsv(2,alpha,beta)
+     3                       + 16d0 * Mnsv(1,alpha,beta)
+     4                       - 30d0 * Mnsv(0,alpha,beta)
+     5                       + 16d0 * Mnsv(-1,alpha,beta) 
+     6                       - Mnsv(-2,alpha,beta))
+     7                       / 24d0 / EpsTrunc / EpsTrunc 
                      enddo
                   enddo
                endif
