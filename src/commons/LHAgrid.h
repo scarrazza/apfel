@@ -18,8 +18,8 @@ c      parameter(xminLHA  = 1d-9)
 c      parameter(xmLHA    = 1d-1)
 c      parameter(xmaxLHA  = 1d0)
       parameter(Lambda2  = 0.0625d0)
-      parameter(nxmax    = 150)
-      parameter(nq2max   = 100)
+      parameter(nxmax    = 300)
+      parameter(nq2max   = 200)
 *
       common / LHgridParamAPFEL / xminLHA,xmLHA,xmaxLHA,q2minLHA,
      1                            q2maxLHA,nxLHA,nxmLHA,nq2LHA,

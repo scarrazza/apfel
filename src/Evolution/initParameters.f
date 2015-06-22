@@ -298,6 +298,26 @@
          call exit(-10)
       endif
 *
+*     Check that the parameters of the LHA grid are within the maximum allowed.
+*
+      if(nq2LHA.gt.nq2max)then
+         write(6,*) "The number of points of the LHA Q2 grid exceeds",
+     1              " the maximum"
+         write(6,*) "- input number =",nq2LHA
+         write(6,*) "- maximun number =",nq2max
+         write(6,*) " "
+         call exit(-10)
+      endif
+*
+      if(nxLHA.gt.nxmax)then
+         write(6,*) "The number of points of the LHA x grid exceeds",
+     1              " the maximum"
+         write(6,*) "- input number =",nxLHA
+         write(6,*) "- maximun number =",nxmax
+         write(6,*) " "
+         call exit(-10)
+      endif
+*
 *     Print welcome message and report of the parameters (if enabled)
 *
       if(Welcome)then

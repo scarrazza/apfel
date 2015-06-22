@@ -140,7 +140,7 @@
       write(6,*) "- CleanUp():"
       write(6,*) "    resets all the evolution parameters to the"
       write(6,*) "    default settings."
-      write(6,*) "- SetLHgridParameters(int nx, double nxm,",
+      write(6,*) "- SetLHgridParameters(int nx, int nxm,",
      1           " double xmin, double xm, double xmax, int nq2,",
      2           " double q2min, double q2max)"
       write(6,*) "    sets the parameters of the grid over which PDFs"
