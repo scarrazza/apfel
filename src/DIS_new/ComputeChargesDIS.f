@@ -17,6 +17,7 @@
       include "../commons/SelectedCharge.h"
       include "../commons/TimeLike.h"
       include "../commons/m2th.h"
+      include "../commons/MaxFlavourPDFs.h"
 **
 *     Input Variables
 *
@@ -185,6 +186,7 @@
          else
             nf = 3
          endif
+         if(nf.gt.nfMaxPDFs) nf = nfMaxPDFs
 *
          sumbq = 0d0
          sumdq = 0d0

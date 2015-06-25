@@ -17,6 +17,7 @@
       include "../commons/Replica.h"
       include "../commons/Evs.h"
       include "../commons/Nf_FF.h"
+      include "../commons/MaxFlavourPDFs.h"
 **
 *     Input Variables
 *
@@ -224,6 +225,16 @@
             enddo
             f0lep(3,alpha)  = 0d0
             f0lep(-3,alpha) = 0d0
+         enddo
+*
+*     For the VFNS, erase the heavy flavour beyond nfMaxPDFs
+*
+      elseif(Evs.eq."VF".and.nfMaxPDFs.lt.6)then
+         do alpha=0,nin(igrid)
+            do ifl=nfMaxPDFs+1,6
+               f0ph(ifl,alpha)  = 0d0
+               f0ph(-ifl,alpha) = 0d0
+            enddo
          enddo
       endif
 *

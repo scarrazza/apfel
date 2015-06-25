@@ -16,6 +16,7 @@
       include "../commons/consts.h"
       include "../commons/kfacQ.h"
       include "../commons/ColorFactors.h"
+      include "../commons/MaxFlavourPDFs.h"
 **
 *     Input Variables
 *
@@ -68,6 +69,7 @@
       else
          nf = 3
       endif
+      if(nf.gt.nfMaxPDFs) nf = nfMaxPDFs
 *
       sumq = 0d0
       do i=1,nf
