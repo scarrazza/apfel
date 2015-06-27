@@ -28,6 +28,10 @@
 *
       call InitializeAPFEL
 *
+*     Report DIS parameters
+*
+      call ReportParametersDIS
+*
 *     Evaluate DIS or SIA integrals on the grid
 *
       call cpu_time(t1)

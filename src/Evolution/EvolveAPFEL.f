@@ -42,15 +42,17 @@
 *
       if(Q20.lt.Q2min-tol.or.Q20.gt.Q2max+tol)then
          write(6,*) "Initial energy out of range:"
-         write(6,*) "- Q0   =",Q0
-         write(6,*) "- Qmin =",dsqrt(Q2min)
-         write(6,*) "- Qmax =",dsqrt(Q2max)
+         write(6,*) "- Q0   =",Q0," GeV"
+         write(6,*) "- Qmin =",dsqrt(Q2min)," GeV"
+         write(6,*) "- Qmax =",dsqrt(Q2max)," GeV"
+         write(6,*) "  "
          call exit(-10)
       elseif(Q2.lt.Q2min-tol.or.Q2.gt.Q2max+tol)then
          write(6,*) "Final energy out of range:"
-         write(6,*) "- Q    =",Q
-         write(6,*) "- Qmin =",dsqrt(Q2min)
-         write(6,*) "- Qmax =",dsqrt(Q2max)
+         write(6,*) "- Q    =",Q," GeV"
+         write(6,*) "- Qmin =",dsqrt(Q2min)," GeV"
+         write(6,*) "- Qmax =",dsqrt(Q2max)," GeV"
+         write(6,*) "  "
          call exit(-10)
       endif
 *

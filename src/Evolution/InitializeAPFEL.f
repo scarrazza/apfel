@@ -31,6 +31,10 @@
 *
       call initParameters
 *
+*     Report evolution parameters
+*
+      call ReportParameters
+*
 *     Initialize alphas grid if needed
 *
       if(Smallx) call initGridAlpha

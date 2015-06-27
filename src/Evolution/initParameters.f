@@ -79,61 +79,6 @@
          call SetGridParameters(3,40,5,8d-1)
       endif
 *
-*     Security switchs
-*
-*     If one of the combined solutions QCD x QED is chose
-*     switch of the fast evolution.
-*
-      if(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
-     1   Th.eq."QECDP".or.Th.eq."QECDS".or.
-     2   Th.eq."QavDP".or.Th.eq."QavDS")then
-         write(6,*) "   "
-         if(FastEvol)then
-            write(6,*) "WARNING: fast evolution not available with",
-     1                 " the ",Th," solution"
-            write(6,*) "         ... disabling fast evolution"
-            call SetFastEvolution(.false.)
-         endif
-      endif
-*
-*     If the fast evolution is enabled, disable automatically
-*     the computation of the evolution operator
-*
-      if(EvolOp.and.FastEvol)then
-         write(6,*) "   "
-         write(6,*) "WARNING: Computation of the evolution operator",
-     1              " not possible if the fast evolution is enabled"
-         write(6,*) "         ... disabling fast evolution"
-         call SetFastEvolution(.false.)
-      endif
-*
-*     If there is more than one subgrid and one of them is an external grid
-*     the external evolution operator cannot be computed
-*
-      if(ngrid.gt.1.and.ThereAreExtGrids)then
-         write(6,*) "   "
-         write(6,*) "WARNING: Computation of the evolution operator",
-     1              " not possible if there is more than one subgrid"
-         write(6,*) "         ... disabling evolution operator",
-     1              " computation"
-         call EnableEvolutionOperator(.false.)
-      endif
-*
-*     When the computation of the Evolution Operator is enabled
-*     lock the grids by default.
-*
-      if(EvolOp.and..not.lock)then
-         write(6,*) "   "
-         write(6,*) "WARNING: computation of the evolution operator",
-     1              " possible only on locked subgrids"
-         write(6,*) "         ... locking subgrids"
-         call LockGrids(.true.)
-      endif
-*
-*     If there are external grids the grids cannot be locked
-*
-      if(ThereAreExtGrids) call LockGrids(.false.)
-*
 *     Check the consistency of the input parameters
 *
       if(Th.ne."QCD".and.Th.ne."QED".and.
@@ -141,6 +86,7 @@
      2   Th.ne."QECDP".and.Th.ne."QECDS".and.
      3   Th.ne."QavDP".and.Th.ne."QavDS".and.
      4   Th.ne."QUniD")then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "Theory unknown:"
          write(6,*) "Theory = ",Th
          write(6,*) "  "
@@ -154,53 +100,58 @@
          write(6,*) "- 'QavDP'"
          write(6,*) "- 'QavDS'"
          write(6,*) "- 'QUniD'"
-         write(6,*) "  "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
       if(Evs.ne."FF".and.Evs.ne."VF")then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "Evolution scheme unknown:"
          write(6,*) "Evolution scheme = ",Evs
          write(6,*) "  "
          write(6,*) "The options are:"
          write(6,*) "- 'FF'"
          write(6,*) "- 'VF'"
-         write(6,*) "  "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       elseif(Evs.eq."FF")then
          if(Nf_FF.lt.3.or.Nf_FF.gt.6)then
+            write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Number of active flavours not allowed:"
             write(6,*) "Number of active =",Nf_FF
             write(6,*) "  "
             write(6,*) "The allowed range is [3:6]"
-            write(6,*) "  "
+            write(6,*) achar(27)//"[0m"
             call exit(-10)
          endif
       endif
 *
       if(ipt.lt.0.or.ipt.gt.2)then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "Perturbative order not allowed:"
          write(6,*) "Perturbative order =",ipt
          write(6,*) "  "
          write(6,*) "The allowed range is [0:2]"
-         write(6,*) "  "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
       if(mass_scheme.ne."Pole".and.mass_scheme.ne."MSbar")then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "Mass scheme unknown:"
          write(6,*) "Mass scheme = ",mass_scheme
          write(6,*) "  "
          write(6,*) "The options are:"
          write(6,*) "- 'Pole'"
          write(6,*) "- 'MSbar'"
-         write(6,*) "  "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
       if(AlphaEvol(1:5).ne."exact".and.
      1   AlphaEvol(1:8).ne."expanded".and.
      2   AlphaEvol(1:6).ne."lambda")then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "Alpha evolution unknown:"
          write(6,*) "Alpha evolution = ",AlphaEvol
          write(6,*) "  "
@@ -208,7 +159,7 @@
          write(6,*) "- 'exact'"
          write(6,*) "- 'expanded'"
          write(6,*) "- 'lambda'"
-         write(6,*) "  "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
@@ -221,6 +172,7 @@
      1   PDFEvol(1:10).ne."exactalpha".and.
      2   PDFEvol(1:11).ne."expandalpha".and.
      3   PDFEvol(1:9).ne."truncated")then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "PDF evolution unknown:"
          write(6,*) "PDF evolution = ",PDFEvol
          write(6,*) "  "
@@ -229,45 +181,50 @@
          write(6,*) "- 'exactalpha'"
          write(6,*) "- 'expandalpha'"
          write(6,*) "- 'truncated'"
-         write(6,*) "  "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       elseif((PDFEvol(1:10).eq."exactalpha".or.
      1        PDFEvol(1:11).eq."expandalpha".or.
      2        PDFEvol(1:9).eq."truncated").and.Th.eq."QUniD")then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "The unified solution cannot be used with any of"
          write(6,*) "the 'alpha' solution of the DGLAP equation."
-         write(6,*) "  "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
       if(Smallx)then
          if(TimeLike)then
+            write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Timelike evolution and Small-x resummation"
             write(6,*) "cannot be combined, switch off one of them."
-            write(6,*) "  "
+            write(6,*) achar(27)//"[0m"
             call exit(-10)
          endif
          if(kren.ne.1d0)then
+            write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Renormalization scale variation not allowed"
             write(6,*) "if the small-x resummation is enabled."
-            write(6,*) "  "
+            write(6,*) achar(27)//"[0m"
             call exit(-10)
          endif
          if(PDFEvol.eq."expandalpha".or.PDFEvol(1:9).eq."truncated")then
+            write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "The 'expandalpha' and 'truncated' solutions"
             write(6,*) "of the DGLAP equation cannot be used if the"
             write(6,*) "small-x resummation is enabled."
-            write(6,*) "  "
+            write(6,*) achar(27)//"[0m"
             call exit(-10)
          endif
          if(LogAcc.ne.0.and.LogAcc.ne.1)then
+            write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Logarithmic accuracy not allowed:"
             write(6,*) "LogAcc =",LogAcc
             write(6,*) " "
             write(6,*) "The options are:"
             write(6,*) "- 'LL'"
             write(6,*) "- 'NLL'"
-            write(6,*) "  "
+            write(6,*) achar(27)//"[0m"
             call exit(-10)
          endif
       endif
@@ -278,144 +235,107 @@
       if(m2th(4).eq.m2th(5).or.
      1   m2th(4).eq.m2th(6).or.
      2   m2th(5).eq.m2th(6))then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "There cannot be equal heavy quark masses:"
          write(6,"(a,f13.3,a)") "Mc = ",dsqrt(m2th(4))," GeV"
          write(6,"(a,f13.3,a)") "Mb = ",dsqrt(m2th(5))," GeV"
          write(6,"(a,f13.3,a)") "Mt = ",dsqrt(m2th(6))," GeV"
-         write(6,*) " "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
       if(m2th(4).gt.m2th(5).or.
      1   m2th(4).gt.m2th(6).or.
      2   m2th(5).gt.m2th(6))then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "The heavy quark masses are not correctly",
      1              " ordered:"
          write(6,"(a,f13.3,a)") "Mc = ",dsqrt(m2th(4))," GeV"
          write(6,"(a,f13.3,a)") "Mb = ",dsqrt(m2th(5))," GeV"
          write(6,"(a,f13.3,a)") "Mt = ",dsqrt(m2th(6))," GeV"
-         write(6,*) " "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
 *     Check that the parameters of the LHA grid are within the maximum allowed.
 *
       if(nq2LHA.gt.nq2max)then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "The number of points of the LHA Q2 grid exceeds",
      1              " the maximum"
          write(6,*) "- input number =",nq2LHA
          write(6,*) "- maximun number =",nq2max
-         write(6,*) " "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
       if(nxLHA.gt.nxmax)then
+         write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "The number of points of the LHA x grid exceeds",
      1              " the maximum"
          write(6,*) "- input number =",nxLHA
          write(6,*) "- maximun number =",nxmax
-         write(6,*) " "
+         write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
-*     Print welcome message and report of the parameters (if enabled)
+*     Security switchs
 *
-      if(Welcome)then
+*     If one of the combined solutions QCD x QED is chose
+*     switch of the fast evolution.
 *
-         call WelcomeMessage
-*
-         write(6,*) "Report of the evolution parameters:"
-         write(6,*) "  "
-*
-         write(6,"(a,a,a)") " ",Th," evolution"
-*
+      write(6,*) achar(27)//"[33m"
+      if(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
+     1   Th.eq."QECDP".or.Th.eq."QECDS".or.
+     2   Th.eq."QavDP".or.Th.eq."QavDS")then
          if(FastEvol)then
-            write(6,*) "Fast evolution enabled"
+            write(6,*) "WARNING: fast evolution not available with",
+     1                 " the ",Th," solution"
+            write(6,*) "         ... disabling fast evolution"
+            call SetFastEvolution(.false.)
          endif
-*
-         if(EvolOp)then
-            write(6,*) "Computation of the evolution operator enabled"
-         endif
-*
-         if(LeptEvol.and.Th.eq."QUniD")then
-            write(6,*) "Lepton evolution enabled"
-         endif
-*
-         if(TimeLike)then
-            write(6,*) "Time-like evolution (fragmentation functions)"
-         else
-            write(6,*) "Space-like evolution (PDFs)"
-         endif
-         write(6,*) "Solution of the DGLAP equation: ",PDFEvol
-         if(PDFevol(1:9).eq."truncated")then
-            write(6,"(a,a,es10.3)") " - value of the",
-     1           " truncation parameter epsilon =",EpsTrunc
-         endif
-         if(Evs.eq."VF")then
-            write(6,"(a,a,i1,a)") " Evolution scheme = ",
-     1                            "VFNS at N",ipt,"LO"
-         elseif(Evs.eq."FF")then
-            write(6,"(a,a,i1,a,i1,a)") " Evolution scheme = ",
-     1                                 "FFNS with ",Nf_FF,
-     2                                 " active flavours at N",ipt,"LO"
-         endif
-*
-         write(6,"(a,f7.2,a,f10.2,a)") " Evolution range [",
-     1               dsqrt(Q2min)," :",dsqrt(Q2max)," ] GeV"
-*
-         if(Smallx)then
-            if(LogAcc.eq.0) 
-     1           write(6,*) "Small-x resummation at LL enabled"
-            if(LogAcc.eq.1) 
-     1           write(6,*) "Small-x resummation at NLL enabled"
-         endif
-*
-         write(6,*) "Solution of the coupling equations: ",AlphaEvol
-         if(AlphaEvol(1:6).eq."lambda")then
-            write(6,*) "Lambda reference value:"
-            write(6,"(a,i1,a,f10.6,a)")" - LambdaQCD(",n_ref_qcd,
-     1                                 ") = ",lambda_ref_qcd," GeV"
-         else
-            if(Th.eq."QCD")then
-               write(6,*) "Coupling reference value:"
-               write(6,"(a,f8.4,a,f9.6)")" - AlphaQCD(",
-     1              dsqrt(q2_ref_qcd)," GeV) = ",alpha_ref_qcd
-            elseif(Th.eq."QED")then
-               write(6,*) "Coupling reference value:"
-               write(6,"(a,f8.4,a,f9.6)")" - AlphaQED(",
-     1              dsqrt(q2_ref_qed)," GeV) = ",alpha_ref_qed
-            else
-               write(6,*) "Coupling reference values:"
-               write(6,"(a,f8.4,a,f9.6)")" - AlphaQCD(",
-     1              dsqrt(q2_ref_qcd)," GeV) = ",alpha_ref_qcd
-               write(6,"(a,f8.4,a,f9.6)")" - AlphaQED(",
-     1              dsqrt(q2_ref_qed)," GeV) = ",alpha_ref_qed
-            endif
-         endif
-*
-         if(mass_scheme.eq."MSbar")then
-            write(6,*) "MSbar heavy quark thresholds:"
-            write(6,"(a,f7.3,a)") " - mc(mc) = ",dsqrt(m2th(4))," GeV"
-            write(6,"(a,f7.3,a)") " - mb(mb) = ",dsqrt(m2th(5))," GeV"
-            write(6,"(a,f7.3,a)") " - mt(mt) = ",dsqrt(m2th(6))," GeV"
-            if(MassRunning)then
-               write(6,*) "Running of the masses enabled"
-            else
-               write(6,*) "Running of the masses disabled"
-            endif
-         elseif(mass_scheme(1:4).eq."Pole")then
-            write(6,*) "Pole heavy quark thresholds:"
-            write(6,"(a,f7.3,a)") " - Mc = ",dsqrt(m2th(4))," GeV"
-            write(6,"(a,f7.3,a)") " - Mb = ",dsqrt(m2th(5))," GeV"
-            write(6,"(a,f7.3,a)") " - Mt = ",dsqrt(m2th(6))," GeV"
-         endif
-*     
-         write(6,"(a,f7.4)") " muR / muF = ",dsqrt(kren)
-*
-         write(6,"(a,f6.3,a)") " Mass of the tau lepton =",MTau," GeV"
-*
-         write(6,*) " "
       endif
+*
+*     If the fast evolution is enabled, disable automatically
+*     the computation of the evolution operator
+*
+      if(EvolOp.and.FastEvol)then
+         write(6,*) "WARNING: Computation of the evolution operator",
+     1              " not possible if the fast evolution is enabled"
+         write(6,*) "         ... disabling fast evolution"
+         call SetFastEvolution(.false.)
+      endif
+*
+*     If there is more than one subgrid and one of them is an external grid
+*     the external evolution operator cannot be computed
+*
+      if(ngrid.gt.1.and.ThereAreExtGrids)then
+         write(6,*) "WARNING: Computation of the evolution operator",
+     1              " not possible if there is more than one subgrid"
+         write(6,*) "         ... disabling evolution operator",
+     1              " computation"
+         call EnableEvolutionOperator(.false.)
+      endif
+*
+*     When the computation of the Evolution Operator is enabled
+*     lock the grids by default.
+*
+      if(EvolOp.and..not.lock)then
+         write(6,*) "WARNING: computation of the evolution operator",
+     1              " possible only on locked subgrids"
+         write(6,*) "         ... locking subgrids"
+         call LockGrids(.true.)
+      endif
+*
+*     If there are external grids the grids cannot be locked
+*
+      if(ThereAreExtGrids.and.lock)then
+         write(6,*) "WARNING: if there are external grids they cannot",
+     1              "be locked"
+         write(6,*) "         ... unlocking subgrids"
+         call LockGrids(.false.)
+      endif
+      write(6,*) achar(27)//"[0m"
 *
       return
       end
