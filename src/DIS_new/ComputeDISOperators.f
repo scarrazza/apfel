@@ -24,6 +24,7 @@
       include "../commons/Nf_FF.h"
       include "../commons/EvolOp.h"
       include "../commons/TMC.h"
+      include "../commons/DampingFONLL.h"
       include "../commons/ProtonMass.h"
 **
 *     Internal Variables
@@ -150,11 +151,15 @@
 *
 *     Damping factors needed for the FONLL structure functions
 *
-         if(ihq.gt.Nf_FF)then
-            if(Q2.gt.m2th(ihq))then
-               damp(ihq) = ( 1d0 - m2th(ihq) / Q2 )**2d0
+         if(DampingFONLL)then
+            if(ihq.gt.Nf_FF)then
+               if(Q2.gt.m2th(ihq))then
+                  damp(ihq) = ( 1d0 - m2th(ihq) / Q2 )**2d0
+               else
+                  damp(ihq) = 0d0
+               endif
             else
-               damp(ihq) = 0d0
+               damp(ihq) = 1d0
             endif
          else
             damp(ihq) = 1d0

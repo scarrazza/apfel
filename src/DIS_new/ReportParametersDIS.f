@@ -22,6 +22,7 @@
       include "../commons/GFermi.h"
       include "../commons/CKM.h"
       include "../commons/TMC.h"
+      include "../commons/DampingFONLL.h"
       include "../commons/SelectedCharge.h"
       include "../commons/krenQ.h"
       include "../commons/kfacQ.h"
@@ -72,6 +73,12 @@
             write(6,*) "Target Mass corrections enabled"
          else
             write(6,*) "Target Mass corrections disabled"
+         endif
+*
+         if(DampingFONLL)then
+            write(6,*) "FONLL damping factor enabled"
+         else
+            write(6,*) "FONLL damping factor disabled"
          endif
          write(6,*) achar(27)//"[0m"
       endif

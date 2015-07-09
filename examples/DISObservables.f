@@ -11,98 +11,104 @@
 **
 *     Variables
 *
-      integer pto
-      integer ip,np,irep
-      double precision x,q2,q,q20,q0,y,pol
-      double precision xin,xfi
-      double precision F2(3:7),F3(3:7),FL(3:7),sigma(3:7)
-      double precision t2,t1
-      character*2  proc
-      character*5  scheme
-      character*53 pdfset
-      character*9  target
-      character*12 proj
+      integer ilha
+      double precision Q0,Q
+      double precision Q02,Q2
+      double precision AlphaQCD,AlphaQED
+      double precision F2light,F2charm,F2bottom,F2total
+      double precision FLlight,FLcharm,FLbottom,FLtotal
+      double precision F3light,F3charm,F3bottom,F3total
+      double precision eps
+      double precision xlha(11)
+
+      parameter(eps=1d-10)
+      data xlha / 1d-7, 1d-6, 1d-5, 1d-4, 1d-3, 1d-2,
+     1            1d-1, 3d-1, 5d-1, 7d-1, 9d-1 /
 *
-      call cpu_time(t1)
+*     Settings
 *
-*     Define kinematics
+c      call SetMassScheme("ZM-VFNS")
+      call SetProcessDIS("NC")
+c      call SetPolarizationDIS(0d0)
+c      call SetProjectileDIS("electron")
+c      call SetTargetDIS("proton")
+c      call EnableTargetMassCorrections(.false.)
+c      call EnableDampingFONLL(.true.)
+c      call SetFastEvolution(.true.)
+c      call LockGrids(.true.)
+c      call EnableEvolutionOperator(.true.)
+c      call SetFFNS(3)
+c      call SetTheory("QavDS")
+c      call SetTheory("QED")
+c      call SetTheory("QUniD")
+c      call EnableLeptonEvolution(.true.)
+c      call SetTauMass(1d10)
+c      call SetPerturbativeOrder(0)
+c      call SetPDFEvolution("exactalpha")
+c      call SetPDFSet("NNPDF23_nlo_as_0119_qed.LHgrid")
+c      call SetPDFSet("MRST2004qed.LHgrid")
+c      call SetNumberOfGrids(1)
+c      call SetGridParameters(1,30,3,1d-5)
+c      call SetGridParameters(2,30,3,2d-1)
+c      call SetGridParameters(3,30,3,8d-1)
+c      call SetPDFSet("NNPDF30_nnlo_as_0118.LHgrid")
+c      call SetAlphaQCDRef(0.118d0,91.2d0)
+c      call SetAlphaEvolution("expanded")
+c      call SetPDFEvolution("expandalpha")
+c      call SetPoleMasses(1.275d0,4.18d0,173.03d0)
+c      call SetMaxFlavourPDFs(5)
+c      call SetMaxFlavourAlpha(5)
 *
-      q20 = 2d0
-      q2  = 10d0
-      y   = 0.5d0
-      pol = 0d0
-      xin = 1d-5
-      xfi = 1d-1
-      np  = 5
-      q0  = dsqrt(q20)
-      q   = dsqrt(q2)
+*     Initializes integrals on the grids
 *
-*     Define parameters of the computation
+      call InitializeAPFEL_DIS
 *
-      proj   = "ELECTRON"
-      target = "PROTON"
-      pto    = 2
-      scheme = "FONLL"
-      irep   = 0
-      if(pto.eq.0)then
-         pdfset = "toyLH_LO.LHgrid"
-      elseif(pto.eq.1)then
-         pdfset = "toyLH_NLO.LHgrid"
-      elseif(pto.eq.2)then
-         pdfset = "toyLH_NNLO.LHgrid"
-      endif
-c      pdfset = "APFEL"
-c      call SetPoleMasses(dsqrt(2d0),1d5,1d5)
+*     Evolve PDFs on the grids
 *
-*     Electro-magnetic Observables
+      write(6,*) "Enter initial and final scale in GeV^2"
+      read(5,*) Q02,Q2
 *
-      proc   = "EM"
+      Q0 = dsqrt(Q02) - eps
+      Q  = dsqrt(Q2)
+      call ComputeStructureFunctionsAPFEL(Q0,Q)
 *
-      write(6,*) "   x    ",
-     1           "   Q2   ",
-     2           "   y    ",
-     3           "    F2l   ",
-     4           "    F2c   "
-      write(6,*) "   "
+*     Tabulate PDFs for the LHA x values
 *
-      x = xin
-      do ip=1,np
-         call DIS_xsec(x,q0,q,y,pol,proc,scheme,pto,pdfset,irep,target,
-     1                 proj,F2,F3,FL,sigma)
+      write(6,*) "alpha_QCD(mu2F) =",AlphaQCD(Q)
+      write(6,*) "alpha_QED(mu2F) =",AlphaQED(Q)
+      write(6,*) "  "
 *
-         write(*,44) x,q2,y,F2(3),F2(4)
-         x = x * dexp( 1d0 / ( np - 1d0 ) * dlog( xfi / xin ) )
+      write(6,'(a5,4a12)') "x","F2light","F2charm","F2bottom","F2total"
+      do ilha=3,11
+         write(6,'(es7.1,9es12.4)') 
+     1         xlha(ilha),
+     2         F2light(xlha(ilha)),
+     3         F2charm(xlha(ilha)),
+     4         F2bottom(xlha(ilha)),
+     5         F2total(xlha(ilha))
       enddo
-      write(6,*) "   "
+      write(*,*) "  "
 *
-*     Charge-current Obserables
-*
-      proc   = "CC"
-*
-      write(6,*) "   x    ",
-     1           "   Q2    ",
-     2           "   y    ",
-     3           "      F2c     ",
-     4           "      FLc     ",
-     5           "      F3c     ",     
-     6           "    sigmac    "
-      write(6,*) "   "
-*
-      x = xin
-      do ip=1,np
-         call DIS_xsec(x,q0,q,y,pol,proc,scheme,pto,pdfset,irep,target,
-     1                 proj,F2,F3,FL,sigma)
-*
-         write(*,45) x,q2,y,F2(4),FL(4),F3(4),sigma(4)
-         x = x * dexp( 1d0 / ( np - 1d0 ) * dlog( xfi / xin ) )
+      write(6,'(a5,4a12)') "x","FLlight","FLcharm","FLbottom","FLtotal"
+      do ilha=3,11
+         write(6,'(es7.1,9es12.4)') 
+     1         xlha(ilha),
+     2         FLlight(xlha(ilha)),
+     3         FLcharm(xlha(ilha)),
+     4         FLbottom(xlha(ilha)),
+     5         FLtotal(xlha(ilha))
       enddo
-      write(6,*) "   "
+      write(*,*) "  "
 *
-      call cpu_time(t2)
-      write(6,*) "time elapsed:",t2-t1," s"
-      write(6,*) "   "
-*
- 44   format(f7.5,1x,f8.4,1x,f7.5,1x,7(f9.6,1x))
- 45   format(f7.5,1x,f8.4,1x,f7.5,1x,4(f13.8,1x))
+      write(6,'(a5,4a12)') "x","F3light","F3charm","F3bottom","F3total"
+      do ilha=3,11
+         write(6,'(es7.1,9es12.4)') 
+     1         xlha(ilha),
+     2         F3light(xlha(ilha)),
+     3         F3charm(xlha(ilha)),
+     4         F3bottom(xlha(ilha)),
+     5         F3total(xlha(ilha))
+      enddo
+      write(*,*) "  "
 *
       end

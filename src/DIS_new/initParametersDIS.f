@@ -25,6 +25,7 @@
       include "../commons/GFermi.h"
       include "../commons/CKM.h"
       include "../commons/TMC.h"
+      include "../commons/DampingFONLL.h"
       include "../commons/TimeLike.h"
       include "../commons/SelectedCharge.h"
       include "../commons/krenQ.h"
@@ -42,6 +43,7 @@
       if(InKrenQ.ne."done")           call SetRenQRatio(1d0)
       if(InKfacQ.ne."done")           call SetFacQRatio(1d0)
       if(InTMC.ne."done")      call EnableTargetMassCorrections(.false.)
+      if(InDampingFONLL.ne."done")    call EnableDampingFONLL(.true.)
 *
       if(InMZ.ne."done")              call SetZMass(91.1876d0)
       if(InMW.ne."done")              call SetWMass(80.385d0)
@@ -175,101 +177,131 @@
 *
 *     Ensure that for the time-like evolution only proper settings are used
 *
-      write(6,*) achar(27)//"[33m"
       if(InTimeLike.eq."done".and.TimeLike)then
          if(MassScheme.ne."ZM-VFNS")then
-            write(6,*) "WARNING: The computation of the SIA structure ",
-     1                 "functions available only in the ZM-VFNS."
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: The computation of the SIA structure ",
+     2                 "functions available only in the ZM-VFNS."
             write(6,*) "         ... setting ZM-VFNS."
+     1                 //achar(27)//"[0m"
             call SetMassScheme("ZM-VFNS")
          endif
          if(TMC)then
-            write(6,*) "WARNING: The computation of the SIA structure ",
-     1                 "functions does not allow the inclusion"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: The computation of the SIA structure ",
+     2                 "functions does not allow the inclusion"
             write(6,*) "         of the target mass corrections (TMCs)."
             write(6,*) "         ... switching off TMCs."
+     1                 //achar(27)//"[0m"
             call EnableTargetMassCorrections(.false.)
          endif
          if(ProjectileDIS(1:8).ne."electron")then
-            write(6,*) "WARNING: The computation of the SIA structure ",
-     1                 "functions is possible only using"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: The computation of the SIA structure ",
+     2                 "functions is possible only using"
             write(6,*) "         electrons as projectiles."
             write(6,*) "         ... setting 'elelectron' projectile"
+     1                 //achar(27)//"[0m"
             call SetProjectileDIS("electron")
          endif
          if(TargetDIS(1:6).ne."proton")then
-            write(6,*) "WARNING: The computation of the SIA structure ",
-     1                 "functions is possible only using protons"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: The computation of the SIA structure ",
+     2                 "functions is possible only using protons"
             write(6,*) "         as targets."
             write(6,*) "         ... setting 'proton' targets"
+     1                 //achar(27)//"[0m"
             call SetTargetDIS("proton")
          endif
          if(PolarizationDIS.ne.0d0)then
-            write(6,*) "WARNING: The computation of the SIA structure ",
-     1                 "functions is possible only for"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: The computation of the SIA structure ",
+     2                 "functions is possible only for"
             write(6,*) "         unpolarized beams."
             write(6,*) "         ... setting polarization to zero."
+     1                 //achar(27)//"[0m"
             call SetPolarizationDIS(0d0)
          endif
          if(ProcessDIS.eq."CC")then
-            write(6,*) "WARNING: The computation of the SIA structure ",
-     1                 "functions is not available for CC"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: The computation of the SIA structure ",
+     2                 "functions is not available for CC"
             write(6,*) "         processes."
             write(6,*) "         ... setting EM process."
+     1                 //achar(27)//"[0m"
             call SetProcessDIS("EM")
          endif
       endif
       if(MassScheme(1:4).eq."FFNS".or.
      1   MassScheme(1:4).eq."FFN0")then
          if(MassScheme(5:5).eq."3")then
-            write(6,*) "WARNING: ... setting NF = 3 FFNS PDF evolution"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: ... setting NF = 3 FFNS PDF evolution"
+     2                 //achar(27)//"[0m"
             call SetFFNS(3)
          elseif(MassScheme(5:5).eq."4")then
-            write(6,*) "WARNING: ... setting NF = 4 FFNS PDF evolution"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: ... setting NF = 4 FFNS PDF evolution"
+     2                 //achar(27)//"[0m"
             call SetFFNS(4)
          elseif(MassScheme(5:5).eq."5")then
-            write(6,*) "WARNING: ... setting NF = 5 FFNS PDF evolution"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: ... setting NF = 5 FFNS PDF evolution"
+     2                 //achar(27)//"[0m"
             call SetFFNS(5)
          elseif(MassScheme(5:5).eq."6")then
-            write(6,*) "WARNING: ... setting NF = 6 FFNS PDF evolution"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: ... setting NF = 6 FFNS PDF evolution"
+     2                 //achar(27)//"[0m"
             call SetFFNS(6)
          else
-            write(6,*) "WARNING: ... setting NF = 3 FFNS PDF evolution"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: ... setting NF = 3 FFNS PDF evolution"
+     2                 //achar(27)//"[0m"
             call SetFFNS(3)
          endif
       else
 *     If the number of active flavours has not been specified (by means of SetFFNS)
 *     set it automatically to 3.
          if(Nf_FF.lt.3.or.Nf_FF.gt.6) Nf_FF = 3
-         write(6,*) "WARNING: ... setting VFNS PDF evolution"
+         write(6,*) achar(27)//"[33m"//
+     1              "WARNING: ... setting VFNS PDF evolution"
+     2              //achar(27)//"[0m"
          call SetVFNS
          if(MassScheme(1:5).eq."FONLL".and.ipt.eq.0)then
-            write(6,*) "WARNING: Any of the FONLL schemes at LO",
-     1                 " concides with the ZM-VFNS"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: Any of the FONLL schemes at LO",
+     2                 " concides with the ZM-VFNS"
             write(6,*) "         ... setting ZM-VFNS"
+     1                 //achar(27)//"[0m"
             call SetMassScheme("ZM-VFNS")
          endif
          if(MassScheme.eq."FONLL-A".and.ipt.eq.2)then
-            write(6,*) "WARNING: For the FONLL-A scheme the",
-     1                 " perturbative order will be automatically",
-     2                 " set to NLO"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: For the FONLL-A scheme the",
+     2                 " perturbative order will be automatically",
+     3                 " set to NLO"
             write(6,*) "         ... setting NLO perturbative order"
+     1                 //achar(27)//"[0m"
             call SetPerturbativeOrder(1)
          endif
          if(MassScheme.eq."FONLL-B".and.ipt.eq.2)then
-            write(6,*) "WARNING: The FONLL-B scheme at NNLO concides",
-     1                 " with the FONLL-C scheme"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: The FONLL-B scheme at NNLO concides",
+     2                 " with the FONLL-C scheme"
             write(6,*) "         ... setting FONLL-C scheme"
+     1                 //achar(27)//"[0m"
             call SetMassScheme("FONLL-C")
          endif
          if(MassScheme.eq."FONLL-C".and.ipt.eq.1)then
-            write(6,*) "WARNING: The FONLL-C scheme at NLO concides",
-     1                 " with the FONLL-A scheme"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: The FONLL-C scheme at NLO concides",
+     2                 " with the FONLL-A scheme"
             write(6,*) "         ... setting FONLL-A scheme"
+     1                 //achar(27)//"[0m"
             call SetMassScheme("FONLL-A")
          endif
       endif
-      write(6,*) achar(27)//"[0m"
 *
       return
       end

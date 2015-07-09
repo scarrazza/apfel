@@ -1,76 +1,114 @@
 #include <iostream>
-#include <string>
 #include <iomanip>
 #include <cmath>
+#include <fstream>
 #include "APFEL/APFEL.h"
 using namespace std;
 
 int main()
 {
-
-  double q20 = 2.0;
-  double q2  = 10;
-  double y   = 0.5;
-  double pol = 0.0;
-  double xin = 1e-5;
-  double xfi = 1e-1;
-  int np  = 5;
-  double q0  = sqrt(q20);
-  double q   = sqrt(q2);
-  string proj   = "ELECTRON";
-  string target = "PROTON";
-  int pto    = 2;
-  string scheme = "FONLL";
-  const int irep   = 0;
-  string pdfset = "toyLH_NNLO.LHgrid";
-  double F2[5],F3[5],FL[5],sigma[5];
-
-  string proc = "EM";
-  cout << "   x   " 
-       << setw(11) << "  Q2    " 
-       << setw(11) << "   y    " 
-       << setw(11) << "   F2l  " 
-       << setw(11) << "   F2c  " << endl;
-  cout << scientific;
-
-
-  double x = xin;
-  for (int ip=1; ip <=np ;ip++)
-    {
-      APFEL::DIS_xsec(x,q0,q,y,pol,proc,scheme,pto,pdfset,irep,target,
-                      proj,F2,F3,FL,sigma);
-
-      cout << x << "\t" << q2 << "\t" << y << "\t" 
-	   << F2[0] << "\t" << F2[1] << endl;
-
-      x = x * exp( 1.0 / ( np - 1.0 ) * log( xfi / xin ) );
-    }
-
-  proc = "CC";
-cout << "\n   x   " 
-       << setw(11) << "  Q2    " 
-       << setw(11) << "   y    " 
-       << setw(11) << "   F2c  " 
-       << setw(11) << "   FLc  " 
-       << setw(11) << "   F3c  "
-       << setw(11) << " sigmac " << endl;
-  cout << scientific;
-
-
-  x = xin;
-  for (int ip=1; ip <=np ;ip++)
-    {
-      APFEL::DIS_xsec(x,q0,q,y,pol,proc,scheme,pto,pdfset,irep,target,
-                      proj,F2,F3,FL,sigma);
-
-      cout << x << "\t" << q2 << "\t" << y << "\t" 
-	   << F2[1] << "\t" << FL[1] << "\t" << F3[1] << "\t" 
-	   << sigma[1] << endl;
-
-      x = x * exp( 1.0 / ( np - 1.0 ) * log( xfi / xin ) );
-    }
-
+  double xlha[] = {1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 
+		1e-1, 3e-1, 5e-1, 7e-1, 9e-1};
   
+  // Activate some options
+
+  //
+  // Settings
+  //
+  //APFEL::SetMassScheme("ZM-VFNS");
+  APFEL::SetProcessDIS("NC");
+  //APFEL::SetPolarizationDIS(0);
+  //APFEL::SetProjectileDIS("electron");
+  //APFEL::SetTargetDIS("proton");
+  //APFEL::EnableTargetMassCorrections(false);
+  //APFEL::EnableDampingFONLL(true);
+  //APFEL::SetFastEvolution(true);
+  //APFEL::LockGrids(true);
+  //APFEL::EnableEvolutionOperator(true);
+  //APFEL::SetFFNS(3);
+  //APFEL::SetTheory("QavDS");
+  //APFEL::SetTheory("QED");
+  //APFEL::SetTheory("QUniD");
+  //APFEL::EnableLeptonEvolution(true);
+  //APFEL::SetTauMass(1e10);
+  //APFEL::SetPerturbativeOrder(0);
+  //APFEL::SetPDFEvolution("exactalpha");
+  //APFEL::SetPDFSet("NNPDF23_nlo_as_0119_qed.LHgrid");
+  //APFEL::SetPDFSet("MRST2004qed.LHgrid");
+  //APFEL::SetNumberOfGrids(1);
+  //APFEL::SetGridParameters(1,30,3,1e-5);
+  //APFEL::SetGridParameters(2,30,3,2e-1);
+  //APFEL::SetGridParameters(3,30,3,8e-1);
+  //APFEL::SetPDFSet("NNPDF30_nnlo_as_0118.LHgrid");
+  //APFEL::SetAlphaQCDRef(0.118,91.2);
+  //APFEL::SetAlphaEvolution("expanded");
+  //APFEL::SetPDFEvolution("expandalpha");
+  //APFEL::SetPoleMasses(1.275,4.18,173.03);
+  //APFEL::SetMaxFlavourPDFs(5);
+  //APFEL::SetMaxFlavourAlpha(5);
+
+  // Initializes integrals on the grids
+  APFEL::InitializeAPFEL_DIS();
+
+  double Q02, Q2, eps = 1e-10;
+  cout << "Enter initial and final scale in GeV^2" << endl;
+  cin >> Q02 >> Q2;
+
+  // Load evolution
+  double Q0 = sqrt(Q02) - eps;
+  double Q  = sqrt(Q2);
+  APFEL::ComputeStructureFunctionsAPFEL(Q0,Q);
+
+  cout << scientific << setprecision(5) << endl;
+  // Tabulate PDFs for the LHA x values
+  cout << "alpha_QCD(mu2F) = " << APFEL::AlphaQCD(Q) << endl;
+  cout << "alpha_QED(mu2F) = " << APFEL::AlphaQED(Q) << endl;
+  cout << endl;
+
+  cout << "   x   " 
+       << setw(11) << "   F2light   " 
+       << setw(11) << "   F2charm   " 
+       << setw(11) << "   F2bottom  " 
+       << setw(11) << "   F2total   " << endl;
+
+  cout << scientific;
+  for (int i = 2; i < 11; i++)
+    cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
+	 << setw(11) <<APFEL::F2light(xlha[i])  << "  "
+      	 << setw(11) <<APFEL::F2charm(xlha[i])  << "  "
+      	 << setw(11) <<APFEL::F2bottom(xlha[i]) << "  "
+      	 << setw(11) <<APFEL::F2total(xlha[i])	<< endl;
+  cout << "      " << endl;
+
+  cout << "   x   " 
+       << setw(11) << "   FLlight   " 
+       << setw(11) << "   FLcharm   " 
+       << setw(11) << "   FLbottom  " 
+       << setw(11) << "   FLtotal   " << endl;
+
+  cout << scientific;
+  for (int i = 2; i < 11; i++)
+    cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
+	 << setw(11) <<APFEL::FLlight(xlha[i])  << "  "
+      	 << setw(11) <<APFEL::FLcharm(xlha[i])  << "  "
+      	 << setw(11) <<APFEL::FLbottom(xlha[i]) << "  "
+      	 << setw(11) <<APFEL::FLtotal(xlha[i])	<< endl;
+  cout << "      " << endl;
+
+  cout << "   x   " 
+       << setw(11) << "   F3light   " 
+       << setw(11) << "   F3charm   " 
+       << setw(11) << "   F3bottom  " 
+       << setw(11) << "   F3total   " << endl;
+
+  cout << scientific;
+  for (int i = 2; i < 11; i++)
+    cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
+	 << setw(11) <<APFEL::F3light(xlha[i])  << "  "
+      	 << setw(11) <<APFEL::F3charm(xlha[i])  << "  "
+      	 << setw(11) <<APFEL::F3bottom(xlha[i]) << "  "
+      	 << setw(11) <<APFEL::F3total(xlha[i])	<< endl;
+  cout << "      " << endl;
 
   return 0;
 }

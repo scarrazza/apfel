@@ -284,14 +284,15 @@
 *     If one of the combined solutions QCD x QED is chose
 *     switch of the fast evolution.
 *
-      write(6,*) achar(27)//"[33m"
       if(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
      1   Th.eq."QECDP".or.Th.eq."QECDS".or.
      2   Th.eq."QavDP".or.Th.eq."QavDS")then
          if(FastEvol)then
-            write(6,*) "WARNING: fast evolution not available with",
-     1                 " the ",Th," solution"
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: fast evolution not available with",
+     2                 " the ",Th," solution"
             write(6,*) "         ... disabling fast evolution"
+     1                 //achar(27)//"[0m"
             call SetFastEvolution(.false.)
          endif
       endif
@@ -300,9 +301,11 @@
 *     the computation of the evolution operator
 *
       if(EvolOp.and.FastEvol)then
-         write(6,*) "WARNING: Computation of the evolution operator",
-     1              " not possible if the fast evolution is enabled"
+         write(6,*) achar(27)//"[33m"//
+     1              "WARNING: Computation of the evolution operator",
+     2              " not possible if the fast evolution is enabled"
          write(6,*) "         ... disabling fast evolution"
+     1              //achar(27)//"[0m"
          call SetFastEvolution(.false.)
       endif
 *
@@ -310,10 +313,12 @@
 *     the external evolution operator cannot be computed
 *
       if(ngrid.gt.1.and.ThereAreExtGrids)then
-         write(6,*) "WARNING: Computation of the evolution operator",
-     1              " not possible if there is more than one subgrid"
+         write(6,*) achar(27)//"[33m"//
+     1              "WARNING: Computation of the evolution operator",
+     2              " not possible if there is more than one subgrid"
          write(6,*) "         ... disabling evolution operator",
      1              " computation"
+     2              //achar(27)//"[0m"
          call EnableEvolutionOperator(.false.)
       endif
 *
@@ -321,21 +326,24 @@
 *     lock the grids by default.
 *
       if(EvolOp.and..not.lock)then
-         write(6,*) "WARNING: computation of the evolution operator",
-     1              " possible only on locked subgrids"
+         write(6,*) achar(27)//"[33m"//
+     1              "WARNING: computation of the evolution operator",
+     2              " possible only on locked subgrids"
          write(6,*) "         ... locking subgrids"
+     1              //achar(27)//"[0m"
          call LockGrids(.true.)
       endif
 *
 *     If there are external grids the grids cannot be locked
 *
       if(ThereAreExtGrids.and.lock)then
-         write(6,*) "WARNING: if there are external grids they cannot",
-     1              "be locked"
+         write(6,*) achar(27)//"[33m"//
+     1              "WARNING: if there are external grids they cannot",
+     2              "be locked"
          write(6,*) "         ... unlocking subgrids"
+     1              //achar(27)//"[0m"
          call LockGrids(.false.)
       endif
-      write(6,*) achar(27)//"[0m"
 *
       return
       end

@@ -273,6 +273,12 @@ ccccccccccccc
       end subroutine fenabletargetmasscorrections
 
 ccccccccccccc
+      subroutine fenabledampingfonll(df)
+      logical df
+      call EnableDampingfonll(df)
+      end subroutine fenabledampingfonll
+
+ccccccccccccc
       function ffksimulator(x,q,y,i,beta)
       integer i,beta
       double precision x,q,y

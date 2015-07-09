@@ -132,6 +132,9 @@ extern "C" {
 #define fenabletargetmasscorrections FC_FUNC(enabletargetmasscorrections,ENABLETARGETMASSCORRECTIONS)
   void fenabletargetmasscorrections(int*);
 
+#define fenabledampingfonll FC_FUNC(enabledampingfonll,ENABLEDAMPINGFONLL)
+  void fenabledampingfonll(int*);
+
 #define ffksimulator FC_FUNC(fksimulator,FKSIMULATOR)
   double ffksimulator(double*,double*,double*,int*,int*);
 

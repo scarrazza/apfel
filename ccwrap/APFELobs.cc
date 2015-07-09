@@ -254,6 +254,11 @@ namespace APFEL {
     fenabletargetmasscorrections(&tc);
   }
 
+  void EnableDampingFONLL(int df)
+  {
+    fenabledampingfonll(&df);
+  }
+
   double FKSimulator(double x,double q,double y,int i,int beta)
   {
     return ffksimulator(&x,&q,&y,&i,&beta);

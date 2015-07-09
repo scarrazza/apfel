@@ -20,7 +20,6 @@
       include "../commons/TauMass.h"
       include "../commons/mass_scheme.h"
       include "../commons/Nf_FF.h"
-      include "../commons/ipt.h"
       include "../commons/Evs.h"
       include "../commons/MaxFlavourAlpha.h"
       include "../commons/LeptEvol.h"
@@ -242,6 +241,78 @@ c      return
       sumch2(6) = 5d0 / 3d0
 *
       beta0qed = 8d0 / 3d0 * ( nc * sumch2(nf) + nl )
+*
+      return
+      end
+*
+****************************************************************************
+      function a_as_exact(nf,nl,as0,a0,as,ipt)
+*
+      implicit none
+**
+*     input variables
+*
+      integer nf,nl,ipt
+      double precision a0,as0
+      double precision as
+**
+*     inernal variables
+*
+      integer nstep,n
+      double precision a
+      double precision h
+      double precision k1,k2,k3,k4
+      double precision fbetaQED,fbeta
+
+      parameter(nstep=50)
+**
+*     output variables
+*
+      double precision a_as_exact
+*
+      a = a0
+      h = ( as - as0 ) / nstep
+*
+*     Fourth-order runge-kutta beyond the leading order
+*
+      do n=1,nstep
+         k1 = h * fbetaQED(a,nf,nl) / fbeta(as,nf,ipt)
+         k2 = h * fbetaQED(a+k1/2d0,nf,nl) / fbeta(as+h/2d0,nf,ipt)
+         k3 = h * fbetaQED(a+k2/2d0,nf,nl) / fbeta(as+h/2d0,nf,ipt)
+         k4 = h * fbetaQED(a+k3,nf,nl) / fbeta(as+h,nf,ipt)
+*
+         a  = a + ( k1 + 2d0 * k2 + 2d0 * k3 + k4 ) / 6d0
+         as = as + h
+      enddo
+*
+      a_as_exact = a
+*
+      return
+      end
+*
+****************************************************************************
+*
+*     QED beta function.
+*
+****************************************************************************
+      function fbetaQED(a,nf,nl)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision a
+      integer nf,nl
+**
+*     Internal Variables
+*
+      double precision beta0qed
+**
+*     Output Variables
+*
+      double precision fbetaQED
+*
+      fbetaQED = a**2d0 * beta0qed(nf,nl)
 *
       return
       end

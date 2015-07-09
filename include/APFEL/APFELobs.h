@@ -125,6 +125,9 @@ namespace APFEL {
   /// Enables the target mass corrections
   void EnableTargetMassCorrections(int);
 
+  /// Enables the FONLL damping factor
+  void EnableDampingFONLL(int);
+
   /// Emulator of the FKgenerator
   double FKSimulator(double x,double q,double y,int i,int beta);
 
