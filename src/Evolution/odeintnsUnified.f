@@ -10,6 +10,7 @@
 *
       implicit none
 *
+      include "../commons/PDFEvolution.h"
       include "../commons/grid.h"
       include "../commons/odeint1.h"
 **
@@ -24,6 +25,7 @@
       integer nstp
       integer alpha,beta
       double precision x1,x2
+      double precision a_QCD
       double precision h,hdid,hnext,x
       double precision dydx(0:nint_max,0:nint_max)
       double precision yscal(0:nint_max,0:nint_max)
@@ -32,8 +34,13 @@
 *
       double precision y(0:nint_max,0:nint_max)
 *
-      x1 = dlog(mu21)
-      x2 = dlog(mu22)
+      if(PDFEvol.eq."exactmu")then
+         x1 = dlog(mu21)
+         x2 = dlog(mu22)
+      else
+         x1 = a_QCD(mu21)
+         x2 = a_QCD(mu22)
+      endif
 *
       x = x1
       h = sign(h1,x2-x1)
@@ -229,7 +236,10 @@
 *
       implicit none
 *
+      include "../commons/PDFEvolution.h"
       include "../commons/grid.h"
+      include "../commons/wrap.h"
+      include "../commons/ipt.h"
 **
 *     Input Variables
 *
@@ -243,7 +253,7 @@
       double precision mu2
       double precision integralsQCD
       double precision integralsQED
-      double precision coupQCD,a_QCD
+      double precision coupQCD,a_QCD,muR2,bts,fbeta
       double precision coupQED,a_QED
       double precision integ(0:nint_max)
 **
@@ -251,33 +261,41 @@
 *
       double precision dMdt(0:nint_max,0:nint_max)
 *
-      mu2     = dexp(t)
-      coupQCD = a_QCD(mu2)
-      coupQED = a_QED(mu2)
+      if(PDFEvol.eq."exactmu")then
+         mu2     = dexp(t)
+         coupQCD = a_QCD(mu2)
+         coupQED = a_QED(mu2)
+         bts     = 1d0
+      else
+         mu2     = muR2(t)
+         coupQCD = t
+         coupQED = a_QED(mu2)
+         bts     = 1d0 / fbeta(t,wnf,ipt)
+      endif
 *
       if(i.eq.1)then
          do alpha=0,nin(igrid)
             integ(alpha) = integralsQCD(0,alpha,coupQCD,1)
-     1                   + integralsQED(0,alpha,coupQED,1)
+     1                   + bts * integralsQED(0,alpha,coupQED,1)
          enddo
       elseif(i.eq.2)then
          do alpha=0,nin(igrid)
             integ(alpha) = integralsQCD(0,alpha,coupQCD,1)
-     1                   + integralsQED(0,alpha,coupQED,2)
+     1                   + bts * integralsQED(0,alpha,coupQED,2)
          enddo
       elseif(i.eq.3)then
          do alpha=0,nin(igrid)
             integ(alpha) = integralsQCD(0,alpha,coupQCD,2)
-     1                   + integralsQED(0,alpha,coupQED,1)
+     1                   + bts * integralsQED(0,alpha,coupQED,1)
          enddo
       elseif(i.eq.4)then
          do alpha=0,nin(igrid)
             integ(alpha) = integralsQCD(0,alpha,coupQCD,2)
-     1                   + integralsQED(0,alpha,coupQED,2)
+     1                   + bts * integralsQED(0,alpha,coupQED,2)
          enddo
       elseif(i.eq.5)then
          do alpha=0,nin(igrid)
-            integ(alpha) = integralsQED(0,alpha,coupQED,12)
+            integ(alpha) = bts * integralsQED(0,alpha,coupQED,12)
          enddo
       endif
 *

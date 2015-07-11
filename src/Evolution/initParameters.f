@@ -2,7 +2,7 @@
 *
 *     initParameters.f:
 *
-*     It sets all the evoution parameters if they were not set exernally
+*     It sets all the evoution parameters if they were not set externally
 *     before by the user.
 *
 ************************************************************************
@@ -161,12 +161,14 @@
          write(6,*) "- 'lambda'"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
+      elseif((AlphaEvol(1:8).eq."expanded".or.
+     2        AlphaEvol(1:5).eq."lambda").and.Th.eq."QUniD")then
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "The unified solution can be used only with the"
+         write(6,*) "'exact' solution of the coupling equations."
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
       endif
-*
-*     If the alpha solution is "lambda", compute values of LambdaQCD
-*     for all the number of flavours.     
-*
-      if(AlphaEvol(1:6).eq."lambda") call LambdaQCDnf
 *
       if(PDFEvol(1:7).ne."exactmu".and.
      1   PDFEvol(1:10).ne."exactalpha".and.
@@ -181,14 +183,6 @@
          write(6,*) "- 'exactalpha'"
          write(6,*) "- 'expandalpha'"
          write(6,*) "- 'truncated'"
-         write(6,*) achar(27)//"[0m"
-         call exit(-10)
-      elseif((PDFEvol(1:10).eq."exactalpha".or.
-     1        PDFEvol(1:11).eq."expandalpha".or.
-     2        PDFEvol(1:9).eq."truncated").and.Th.eq."QUniD")then
-         write(6,*) achar(27)//"[31mERROR:"
-         write(6,*) "The unified solution cannot be used with any of"
-         write(6,*) "the 'alpha' solution of the DGLAP equation."
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
@@ -279,7 +273,7 @@
          call exit(-10)
       endif
 *
-*     Security switchs
+*     Security switches
 *
 *     If one of the combined solutions QCD x QED is chose
 *     switch of the fast evolution.
@@ -344,6 +338,17 @@
      1              //achar(27)//"[0m"
          call LockGrids(.false.)
       endif
+*
+*     If the alpha solution is "lambda", compute values of LambdaQCD
+*     for all the number of flavours.     
+*
+      if(AlphaEvol(1:6).eq."lambda") call LambdaQCDnf
+*
+*     Compute alphas at the thresholds.
+*     (Needed if the unified solution has been chosen with solution of
+*     the DGLAP equation different from 'exactmu').
+*
+      call ThresholdAlphaQCD
 *
       return
       end

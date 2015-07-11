@@ -264,7 +264,7 @@ c      return
       double precision k1,k2,k3,k4
       double precision fbetaQED,fbeta
 
-      parameter(nstep=50)
+      parameter(nstep=10)
 **
 *     output variables
 *

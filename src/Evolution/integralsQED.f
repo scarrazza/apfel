@@ -19,6 +19,7 @@
       include "../commons/PDFEvolution.h"
       include "../commons/integrals.h"
       include "../commons/wrap.h"
+      include "../commons/Th.h"
 **
 *     Input Variables
 *
@@ -38,7 +39,7 @@
 *
 *     Integrals
 *
-      if(PDFEvol.eq."exactmu")then
+      if(PDFEvol.eq."exactmu".or.Th.eq."QUniD")then
          integralsQED = coup * SQ(igrid,wnf,wnl,kk,alpha,beta)
       else
          integralsQED = SQ(igrid,wnf,wnl,kk,alpha,beta) 

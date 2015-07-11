@@ -237,41 +237,33 @@ c      kappa = 1d0          ! mu_R / mu_F
       DOUBLE PRECISION BETA0APF,FBETA
       DOUBLE PRECISION DLR,LRRAT,SXTH
       DOUBLE PRECISION XK0,XK1,XK2,XK3
-
-      PARAMETER(NSTEP=50)
-      PARAMETER(SXTH=0.166666666666666D0 )
+      PARAMETER(NSTEP=10)
+      PARAMETER(SXTH=0.166666666666666D0)
 **
 *     Output Variables
 *
       DOUBLE PRECISION AS_EXACT
 *
-*     ..The beta functions FBETAn at N^nLO for n = 1, 2, and 3
+      AS    = AS0
+      LRRAT = DLOG( MU2 / MU20 )
+      DLR   = LRRAT / NSTEP
 *
-      AS = AS0
-      LRRAT = DLOG (MU2/MU20)
-      DLR = LRRAT / NSTEP
-*     
-*     ..Solution of the evolution equation depending on  NAORD
-*   (fourth-order Runge-Kutta beyond the leading order)
-*     
+*     Analytical solution at leading order
+*
       IF(IPT.EQ.0)THEN
          AS = AS0 / ( 1D0 + BETA0APF(NF) * AS0 * LRRAT )
-      ELSEIF(IPT.EQ.1)THEN
-         DO 2 K1=1,NSTEP
-            XK0 = DLR * FBETA(AS,NF,IPT)
-            XK1 = DLR * FBETA(AS + 0.5d0 * XK0,NF,IPT)
-            XK2 = DLR * FBETA(AS + 0.5d0 * XK1,NF,IPT)
-            XK3 = DLR * FBETA(AS + XK2,NF,IPT)
-            AS = AS + SXTH * ( XK0 + 2D0 * XK1 + 2d0 * XK2 + XK3 )
- 2        CONTINUE
-      ELSEIF(IPT.EQ.2)THEN
-         DO 3 K1 = 1, NSTEP
-            XK0 = DLR * FBETA(AS,NF,IPT)
-            XK1 = DLR * FBETA(AS + 0.5d0 * XK0,NF,IPT)
-            XK2 = DLR * FBETA(AS + 0.5d0 * XK1,NF,IPT)
-            XK3 = DLR * FBETA(AS + XK2,NF,IPT)
-            AS = AS + SXTH * ( XK0 + 2D0 * XK1 + 2D0 * XK2 + XK3 )
- 3       CONTINUE
+*
+*     Numerical solution of the evolution equation
+*     with fourth-order Runge-Kutta beyond leading order
+*
+      ELSE
+         DO K1=1,NSTEP
+            XK0 = DLR * FBETA(AS              ,NF,IPT)
+            XK1 = DLR * FBETA(AS + 0.5D0 * XK0,NF,IPT)
+            XK2 = DLR * FBETA(AS + 0.5D0 * XK1,NF,IPT)
+            XK3 = DLR * FBETA(AS +         XK2,NF,IPT)
+            AS  = AS + SXTH * ( XK0 + 2D0 * XK1 + 2D0 * XK2 + XK3 )
+         ENDDO
       ENDIF
 *
       AS_EXACT = AS
@@ -655,4 +647,186 @@ c      kappa = 1d0          ! mu_R / mu_F
       endif
       return
       END
+*
+****************************************************************************
+*
+*     Compute and store the values of alphas right below and right below
+*     the heavy quark thresholds.
+*
+****************************************************************************
+      subroutine ThresholdAlphaQCD
+*
+      implicit none
+*
+      include "../commons/ThresholdAlphaQCD.h"
+      include "../commons/kren.h"
+      include "../commons/m2th.h"
+**
+*     Internal Variables
+*
+      integer inf
+      double precision a_QCD
+      double precision eps
+      parameter(eps=1d-10)
+*
+      do inf=4,6
+         asthUp(inf)   = a_QCD(kren * m2th(inf) * ( 1d0 + eps ) )
+         asthDown(inf) = a_QCD(kren * m2th(inf) * ( 1d0 - eps ) )
+      enddo
+*
+      return
+      end
+*
+************************************************************************
+      function muR2(as)
+*
+      implicit none
+*
+      include "../commons/consts.h"
+      include "../commons/alpha_ref_QCD.h"
+      include "../commons/AlphaEvolution.h"
+      include "../commons/kren.h"
+      include "../commons/m2th.h"
+      include "../commons/ThresholdAlphaQCD.h"
+      include "../commons/Nf_FF.h"
+      include "../commons/ipt.h"
+      include "../commons/Evs.h"
+      include "../commons/MaxFlavourAlpha.h"
+**
+*     Input Variables
+*
+      double precision as
+**
+*     Internal Variables
+*
+      integer i
+      integer nfi,nff
+      integer dnf,snf
+      double precision as0,muR20
+      double precision integral,intBeta
+      double precision eps
+      parameter(eps=1d-9)
+**
+*     Output Variables
+*
+      double precision muR2
+*
+      as0 = ( 1d0 + eps ) * alpha_ref_QCD / 4d0 / pi
+*
+      muR20 = q2_ref_QCD
+*
+      if(Evs.eq."FF")then
+         nfi = Nf_FF
+         nff = Nf_FF
+      elseif(Evs.eq."VF")then
+         if(as.le.asthUp(6))then
+            nff = 6
+         elseif(as.le.asthUp(5))then
+            nff = 5
+         elseif(as.le.asthUp(4))then
+            nff = 4
+         else
+            nff = 3
+         endif
+         if(nff.gt.nfMaxAlpha) nff = nfMaxAlpha
+*
+         if(as0.le.asthDown(6))then
+            nfi = 6
+         elseif(as0.le.asthDown(5))then
+            nfi = 5
+         elseif(as0.le.asthDown(4))then
+            nfi = 4
+         else
+            nfi = 3
+         endif
+         if(nfi.gt.nfMaxAlpha) nfi = nfMaxAlpha
+      endif
+*
+      integral = 0d0
+ 10   if(nff.eq.nfi) then
+         integral = integral + intBeta(nfi,ipt,as0,as)
+         muR2 = muR20 * dexp( integral )
+         return
+      else
+         if(nff.gt.nfi)then
+            dnf = 1
+            snf = 1
+         else
+            dnf = -1
+            snf = 0
+         endif
+*
+         integral = integral + intBeta(nfi,ipt,as0,asthDown(nfi+snf))
+*
+         as0 = asthUp(nfi+snf)
+         nfi  = nfi + dnf
+         goto 10
+      endif
+*
+      end
+*
+************************************************************************
+*
+*     Integral of the inverse of the QCD beta function.
+*
+************************************************************************
+      function intBeta(nf,ipt,as0,as)
+*
+      implicit none
+**
+*     Input Variables
+*
+      integer nf,ipt
+      double precision as0,as
+**
+*     Internal Variables
+*
+      double precision dgauss,eps
+      double precision invBeta
+      external invBeta
+      parameter(eps=1d-7)
 
+      integer nf_beta,ipt_beta
+      common / BetaPar / nf_beta,ipt_beta
+**
+*     Output Variables
+*
+      double precision intBeta
+*
+      nf_beta  = nf
+      ipt_beta = ipt
+*
+      intBeta = dgauss(invBeta,as0,as,eps)
+*
+      return
+      end
+*
+************************************************************************
+*
+*     Inverse of the QCD beta function wrapped to be integrated with
+*     dgauss.
+*
+************************************************************************
+      function invBeta(as)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision as
+**
+*     Internal Variables
+*
+      double precision fbeta
+
+      integer nf_beta,ipt_beta
+      common / BetaPar / nf_beta,ipt_beta
+**
+*     Output Variables
+*
+      double precision invBeta
+*
+      invBeta = 1d0 / fbeta(as,nf_beta,ipt_beta)
+*
+      return
+      end
