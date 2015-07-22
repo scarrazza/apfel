@@ -58,8 +58,8 @@
       call SetQLimits(dsqrt(q2minLHA)-offset,dsqrt(q2maxLHA)+offset)
       call SetNumberOfGrids(3)
       call SetGridParameters(1,150,3,xminLHA)
-      call SetGridParameters(2,60,5,xmLHA)
-      call SetGridParameters(3,40,5,8d-1)
+      call SetGridParameters(2,50,5,xmLHA)
+      call SetGridParameters(3,50,5,0.65d0)
 *
       call initializeAPFEL
 *

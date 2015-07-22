@@ -114,16 +114,16 @@
          write(6,*) "- 'VF'"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
-      elseif(Evs.eq."FF")then
-         if(Nf_FF.lt.3.or.Nf_FF.gt.6)then
-            write(6,*) achar(27)//"[31mERROR:"
-            write(6,*) "Number of active flavours not allowed:"
-            write(6,*) "Number of active =",Nf_FF
-            write(6,*) "  "
-            write(6,*) "The allowed range is [3:6]"
-            write(6,*) achar(27)//"[0m"
-            call exit(-10)
-         endif
+      endif
+*     
+      if(Evs.eq."FF".and.(Nf_FF.lt.3.or.Nf_FF.gt.6))then
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "Number of active flavours not allowed:"
+         write(6,*) "Number of active =",Nf_FF
+         write(6,*) "  "
+         write(6,*) "The allowed range is [3:6]"
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
       endif
 *
       if(ipt.lt.0.or.ipt.gt.2)then
@@ -162,7 +162,7 @@
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       elseif((AlphaEvol(1:8).eq."expanded".or.
-     2        AlphaEvol(1:5).eq."lambda").and.Th.eq."QUniD")then
+     1        AlphaEvol(1:5).eq."lambda").and.Th.eq."QUniD")then
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "The unified solution can be used only with the"
          write(6,*) "'exact' solution of the coupling equations."
@@ -183,6 +183,14 @@
          write(6,*) "- 'exactalpha'"
          write(6,*) "- 'expandalpha'"
          write(6,*) "- 'truncated'"
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
+      elseif((PDFEvol(1:11).eq."expandalpha".or.
+     1        PDFEvol(1:9).eq."truncated").and.Th.eq."QUniD")then
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "The unified solution can be used only with the"
+         write(6,*) "'exactmu' and 'exactalpha' solution of the DGLAP"
+         write(6,*) "equation."
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
@@ -326,6 +334,19 @@
          write(6,*) "         ... locking subgrids"
      1              //achar(27)//"[0m"
          call LockGrids(.true.)
+      endif
+*
+*     When the computation of the Evolution Operator is enabled
+*     lock the grids by default.
+*
+      if(EvolOp.and.Th.ne."QCD")then
+         write(6,*) achar(27)//"[33m"//
+     1              "WARNING: computation of the evolution operator",
+     2        " possible only for the 'QCD' theory"
+         write(6,*) "         ... disabling evolution operator",
+     1              " computation"
+     2              //achar(27)//"[0m"
+         call EnableEvolutionOperator(.false.)
       endif
 *
 *     If there are external grids the grids cannot be locked
