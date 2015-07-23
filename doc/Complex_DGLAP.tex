@@ -1,0 +1,375 @@
+%% LyX 2.0.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[twoside,english]{article}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+%\numberwithin{equation}{section}
+
+\makeatother
+
+\begin{document}
+
+\title{DGLAP Evolution Equation on the Complex Plane}
+
+\author{Valerio Bertone}
+\maketitle
+\begin{abstract}
+In this document I describe the extension of the DGLAP equation for
+complex values of the factorization scale $\mu$ and the relative
+implementation in {\tt APFEL}.
+\end{abstract}
+
+\section{DGLAP on the Complex Plane}
+
+Let us start from the usual DGLAP evolution equation for the
+non-singlet distribution $f$(\footnote{We will consider the singlet
+  case later once the formalism has been settled.}):
+\begin{equation}\label{DGLAPStandard}
+\mu^2\frac{\partial f}{\partial \mu^2} =
+P\left(x,\alpha_s(\mu)\right)\otimes f(x,\mu)\,
+\end{equation}
+where $\otimes$ represents the usual Mellin convolution such that:
+\begin{equation}
+A(x)\otimes B(x) \equiv \int_0^1dz \int_0^1dy A(y)B(z)\delta(x-yz)=
+\int^1_x\frac{dy}{y}
+A(x)B\left(\frac{y}{x}\right) = \int^1_x\frac{dy}{y}
+A\left(\frac{y}{x}\right)B(x)\,.
+\end{equation}
+Now we consider the RGE for the strong coupling $\alpha_s$, that reads:
+\begin{equation}\label{RGEalphas}
+\mu^2\frac{\partial \alpha_s}{\partial \mu^2} = \beta(\alpha_s)\,,
+\end{equation}
+and combine it with the DGLAP equation in eq.~(\ref{DGLAPStandard}),
+obtaining the DGLAP equation differential in $\alpha_s$:
+\begin{equation}\label{DGLAPalphas}
+\frac{\partial f}{\partial \alpha_s} =
+R\left(x,\alpha_s\right)\otimes f(x,\alpha_s)\,
+\end{equation}
+where:
+\begin{equation}
+R\left(x,\alpha_s\right) = \frac{P\left(x,\alpha_s\right)}{\beta(\alpha_s)}\,.
+\end{equation}
+
+The next fundamental step is the promotion of the factorization scale
+$\mu$ from a real to a complex variable:
+\begin{equation}
+\mu \rightarrow \eta = \mu + i\nu\,.
+\end{equation}
+As a consequence, we need to promote also the strong the PDF $f$ and
+the strong coupling $\alpha_s$ to being complex functions, that is:
+\begin{equation}
+\begin{array}{rcl}
+f &\rightarrow& F = f + ig\,,\\
+\alpha_s &\rightarrow& \zeta_s = \alpha_s + i\xi_s\,.
+\end{array}
+\end{equation}
+This has as a further consequence that the DGLAP and the $\alpha_s$
+evolution equations in eqs.~(\ref{DGLAPStandard})
+and~(\ref{RGEalphas}) become complex differential equations:
+\begin{equation}
+\eta^2\frac{\partial F}{\partial \eta^2} =
+P\left(x,\zeta_s(\eta)\right)\otimes F(x,\eta)\,,
+\end{equation}
+and:
+\begin{equation}
+\eta^2\frac{\partial \zeta_s}{\partial \eta^2} = \beta(\zeta_s)\,,
+\end{equation}
+that can be again combined in:
+\begin{equation}\label{DGLAPalphasComplex}
+\frac{\partial F}{\partial \zeta_s} =
+R\left(x,\zeta_s\right)\otimes F(x,\zeta_s)\,.
+\end{equation}
+
+The main goal is the solution of eq.~(\ref{DGLAPalphasComplex}). The
+starting observation is the fact that the complex function $F$ must be
+an analytical function of the complex variable $\zeta_s$. This implies
+that the real and the complex parts of $F$ must obey the
+Cauchy-Riemann equations, that is:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \frac{\partial f}{\partial \alpha_s} & = & \displaystyle
+                                                         \frac{\partial
+                                                         g}{\partial
+                                                         \xi_s} \\
+\\
+\displaystyle \frac{\partial f}{\partial \xi_s} & = & \displaystyle
+                                                         -\frac{\partial
+                                                         g}{\partial
+                                                         \alpha_s}
+\end{array}\,,
+\end{equation}
+so that the derivative of $F$ with respect to $\eta_s$ can be expanded
+as:
+\begin{equation}\label{ComplexDerivative}
+\frac{\partial F}{\partial \zeta_s} = \frac{\partial f}{\partial
+  \alpha_s} + i \frac{\partial g}{\partial \alpha_s} =\frac{\partial f}{\partial
+  \xi_s} - i \frac{\partial g}{\partial \xi_s}\,.
+\end{equation}
+Now let us consider the function $R$. Being it a complex function, it
+can be split into a real and a complex part:
+\begin{equation}
+R = S + i T\,,
+\end{equation}
+and thus:
+\begin{equation}\label{Rexp}
+R\otimes F = ( S + i T )\otimes ( f+i g ) = ( S \otimes f - T \otimes g )
++ i ( T \otimes f + S \otimes g )\,.
+\end{equation}
+
+We can now combine eqs.~(\ref{ComplexDerivative}) and~(\ref{Rexp})
+into eq.~(\ref{DGLAPalphasComplex}). This allows us to obtain two sets
+of coupled real differential equations that can be written in the following
+matricial form:
+\begin{equation}\label{DGLAPcomplex1}
+\frac{\partial }{\partial \alpha_s}{f \choose g} = 
+\begin{pmatrix}
+S & T \\
+T & -S
+\end{pmatrix}
+\otimes {f \choose g}\,,
+\end{equation}
+and:
+\begin{equation}\label{DGLAPcomplex2}
+\frac{\partial }{\partial \xi_s}{f \choose g} = 
+\begin{pmatrix}
+-T & -S \\
+S & -T
+\end{pmatrix}
+\otimes {f \choose g}\,.
+\end{equation}
+The solution of eqs.~(\ref{DGLAPcomplex1}) and~(\ref{DGLAPcomplex2})
+allows one to obtain the dependence of the real functions $f$ and $g$
+($i.e.$ the real and the complex part of the ``complex'' PDF $F$) on
+the real variables $\alpha_s$ and $\xi_s$ ($i.e.$ the real and the
+complex part of the ``complex'' strong coupling $\zeta_s$) which in turn
+are functions of the complex factorization scale $\eta$. 
+
+Now we need to extract the functions $S$ and $T$ from $R$ and in the
+next section we will show their form at leading order (LO) in QCD.
+
+\subsection{Solution at LO}
+
+At LO in QCD we have that:
+\begin{equation}
+R\left(x,\zeta_s\right) =
+\frac{P\left(x,\zeta_s\right)}{\beta(\zeta_s)} =
+-\frac{P^{(0)}(x)}{\beta_0} \frac{1}{\zeta_s} = -\frac{P^{(0)}(x)}{\beta_0} \frac{\alpha_s-i\xi_s}{\alpha^2_s+\xi_s^2}
+\end{equation}
+and thus:
+\begin{equation}\label{LOKernels}
+S(x,\alpha_s,\xi_s) = -\frac{P^{(0)}(x)}{\beta_0}
+\frac{\alpha_s}{\alpha^2_s+\xi_s^2}\quad\mbox{and}\quad T(x,\alpha_s,\xi_s) = \frac{P^{(0)}(x)}{\beta_0} \frac{\xi_s}{\alpha^2_s+\xi_s^2}\,.
+\end{equation}
+Using eq.~(\ref{LOKernels}), eqs.~(\ref{DGLAPcomplex1})
+and~(\ref{DGLAPcomplex2}) become:
+\begin{equation}\label{DGLAPcomplex1LO}
+\frac{\partial }{\partial \alpha_s}{f \choose g} = 
+-\frac{P^{(0)}(x)}{\beta_0}
+\frac{1}{\alpha^2_s+\xi_s^2} \begin{pmatrix}
+\alpha_s & -\xi_s \\
+-\xi_s & -\alpha_s
+\end{pmatrix}
+\otimes {f \choose g}\,,
+\end{equation}
+and:
+\begin{equation}\label{DGLAPcomplex2LO}
+\frac{\partial }{\partial \xi_s}{f \choose g} = 
+-\frac{P^{(0)}(x)}{\beta_0}
+\frac{1}{\alpha^2_s+\xi_s^2} \begin{pmatrix}
+\xi_s & -\alpha_s \\
+\alpha_s & \xi_s
+\end{pmatrix}
+\otimes {f \choose g}\,.
+\end{equation}
+In Mellin space, the Mellin convolution of the equations above becomes
+a simple product and can then be solved more easily. In fact, the
+equations above in Mellin space become:
+\begin{equation}\label{DGLAPcomplex1LOMellin}
+\frac{\partial }{\partial \alpha_s}{f \choose g} = 
+-\frac{\gamma^{(0)}(N)}{\beta_0}
+\frac{1}{\alpha^2_s+\xi_s^2} \begin{pmatrix}
+\alpha_s & -\xi_s \\
+-\xi_s & -\alpha_s
+\end{pmatrix}
+{f \choose g}\,,
+\end{equation}
+and:
+\begin{equation}\label{DGLAPcomplex2LOMellin}
+\frac{\partial }{\partial \xi_s}{f \choose g} = 
+-\frac{\gamma^{(0)}(N)}{\beta_0}
+\frac{1}{\alpha^2_s+\xi_s^2} \begin{pmatrix}
+\xi_s & -\alpha_s \\
+\alpha_s & \xi_s
+\end{pmatrix}
+{f \choose g}\,.
+\end{equation}
+Defining:
+\begin{equation}
+\mathbf{F} \equiv {f \choose g}\quad\mbox{and}\quad R_0 = \frac{\gamma^{(0)}(N)}{\beta_0}\,,
+\end{equation}
+and conidering that:
+\begin{equation}
+\int dx\frac{x}{x^2+y^2} = \frac12\ln(x^2+y^2) \quad\mbox{and}\quad
+\int dx\frac{y}{x^2+y^2} = \mbox{atan}\left(\frac{x}{y}\right)\,,
+\end{equation}
+the solution of eqs.~(\ref{DGLAPcomplex1LOMellin})
+and~(\ref{DGLAPcomplex2LOMellin}) is:
+\begin{equation}\label{SolutionLO1}
+\mathbf{F}(N,\alpha_s,\xi_s) = \mathbf{F}(N,\alpha_{s,0},\xi_s)\exp\left[-R_0\Gamma_\alpha\right]\,,
+\end{equation}
+and:
+\begin{equation}\label{SolutionLO2}
+\mathbf{F}(N,\alpha_s,\xi_s) = \mathbf{F}(N,\alpha_{s},\xi_{s,0})\exp\left[-R_0\Gamma_\xi\right]\,,
+\end{equation}
+with:
+\begin{equation}
+\Gamma_\alpha=
+\begin{pmatrix}
+\frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s,0}^2+\xi_s^2}\right) &
+-\mbox{atan}\left(\frac{\alpha_s}{\xi_s}\right) +
+\mbox{atan}\left(\frac{\alpha_{s,0}}{\xi_s}\right) \\
+-\mbox{atan}\left(\frac{\alpha_s}{\xi_s}\right) +
+\mbox{atan}\left(\frac{\alpha_{s,0}}{\xi_s}\right) & -\frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s,0}^2+\xi_s^2}\right)
+\end{pmatrix}\,,
+\end{equation}
+and:
+\begin{equation}
+\Gamma_\xi=
+\begin{pmatrix}
+\frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s}^2+\xi_{s,0}^2}\right) &
+-\mbox{atan}\left(\frac {\xi_s}{\alpha_s}\right) +
+\mbox{atan}\left(\frac {\xi_{s,0}}{\alpha_{s}}\right) \\
+\mbox{atan}\left(\frac{\xi_s}{\alpha_s}\right) -
+\mbox{atan}\left(\frac{\xi_{s,0}}{\alpha_{s}}\right) & \frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s}^2+\xi_{s,0}^2}\right)
+\end{pmatrix}\,.
+\end{equation}
+It is interesting to observe that, if the complex strong coupling
+$\zeta_s$ becomes real, $i.e.$ $\xi_s\rightarrow0$, the matrices above become:
+\begin{equation}
+\lim_{\xi_s\rightarrow0}\Gamma_\alpha= \ln\left(\frac{\alpha_s}{\alpha_{s,0}}\right)
+\begin{pmatrix}
+1 & 0 \\
+0 & -1
+\end{pmatrix}\,,
+\end{equation}
+and:
+\begin{equation}
+\lim_{\xi_s\rightarrow0} \Gamma_\xi= 0\,,
+\end{equation}
+and thus the evolution in $\alpha_s$ of the real part of the PDF $f$
+reduces to the expected one while no evolution in $\xi_s$ is left. As
+for the evolution in $\alpha_s$ of the imaginary part of the PDF $g$,
+there is an evolution factor but it is decoupled from the real part
+and thus it has an effect only if the imaginary part of the initial
+scale PDF is different from zero.
+
+The solutions in eqs.~(\ref{SolutionLO1}) and~(\ref{SolutionLO2}) are
+written in a pretty formal way because they imply the exponential of
+matrices. However, since $\Gamma_\alpha$ and $\Gamma_\xi$ are 2 by 2
+matrices, their exponential in known a simple closed form. In
+particular:
+\begin{equation}
+\exp\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix} = \frac{\exp\left[(a+d)/2\right]}{\Delta}
+\begin{pmatrix}
+m_{11} & m_{12} \\
+m_{21} & m_{22}
+\end{pmatrix}
+\end{equation}
+where:
+\begin{equation}
+\Delta = \sqrt{(a-d)^2+4bc}
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{rcl}
+m_{11} & = & \displaystyle \Delta\mbox{cosh}\left(\frac{\Delta}2\right)+(a-d)\mbox{sinh}\left(\frac{\Delta}2\right)\\
+\\
+m_{12} & = & \displaystyle 2 b\,\mbox{sinh}\left(\frac{\Delta}2\right)\\
+\\
+m_{21} & = & \displaystyle 2 c\,\mbox{sinh}\left(\frac{\Delta}2\right)\\
+\\
+m_{22} & = & \displaystyle \Delta\mbox{cosh}\left(\frac{\Delta}2\right)-(a-d)\mbox{sinh}\left(\frac{\Delta}2\right)
+\end{array}
+\end{equation}
+Given the structure of $\Gamma_\alpha$ and $\Gamma_\xi$, we can
+simplify the formulas above. In the case of $\Gamma_\alpha$ the
+structure is:
+\begin{equation}
+\Gamma_\alpha = \begin{pmatrix}
+a & -b \\
+-b & -a
+\end{pmatrix}
+\end{equation}
+with:
+\begin{equation}
+\begin{array}{rcl}
+a &=&\displaystyle
+\frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s,0}^2+\xi_s^2}\right)\\
+\\
+b &=&\displaystyle \mbox{atan}\left(\frac{\alpha_s}{\xi_s}\right) -
+\mbox{atan}\left(\frac{\alpha_{s,0}}{\xi_s}\right)\,,
+\end{array}
+\end{equation}
+and thus:
+\begin{equation}
+\begin{array}{l}
+\displaystyle \exp\left[-R_0\Gamma_\alpha\right] = \\
+\\
+\displaystyle
+\begin{pmatrix}
+\displaystyle \mbox{cosh}\left(R_0\sqrt{a^2+b^2}\right)+\frac{a}{\sqrt{a^2+b^2}}\,\mbox{sinh}\left(R_0\sqrt{a^2+b^2}\right) & \displaystyle\frac{b}{\sqrt{a^2+b^2}}\,\mbox{sinh}\left(R_0\sqrt{a^2+b^2}\right) \\
+\displaystyle\frac{b}{\sqrt{a^2+b^2}}\,\mbox{sinh}\left(R_0\sqrt{a^2+b^2}\right) & \displaystyle\mbox{cosh}\left(R_0\sqrt{a^2+b^2}\right)-\frac{a}{\sqrt{a^2+b^2}}\,\mbox{sinh}\left(R_0\sqrt{a^2+b^2}\right)
+\end{pmatrix}\,.
+\end{array}
+\end{equation}
+
+For $\Gamma_\xi$, instead, the structure is:
+\begin{equation}
+\Gamma_\alpha = \begin{pmatrix}
+a & -b \\
+b & a
+\end{pmatrix}
+\end{equation}
+with:
+\begin{equation}
+\begin{array}{rcl}
+a &=&\displaystyle
+      \frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s}^2+\xi_{s,0}^2}\right)\\
+\\
+b &=&\displaystyle \mbox{atan}\left(\frac{\xi_s}{\alpha_s}\right) -
+\mbox{atan}\left(\frac{\xi_{s,0}}{\alpha_{s}}\right)\,,
+\end{array}
+\end{equation}
+and thus, after some simplifications, we find:
+\begin{equation}
+\exp\left[-R_0\Gamma_\xi\right] = \exp[-R_0a]
+\begin{pmatrix}
+\cos\left(R_0b\right) & -\sin\left(R_0b\right) \\
+\sin\left(R_0b\right) & \cos\left(R_0b\right)
+\end{pmatrix}\,.
+\end{equation}
+
+\end{document}
