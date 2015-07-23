@@ -42,8 +42,10 @@ implementation in {\tt APFEL}.
 \section{DGLAP on the Complex Plane}
 
 Let us start from the usual DGLAP evolution equation for the
-non-singlet distribution $f$(\footnote{We will consider the singlet
-  case later once the formalism has been settled.}):
+distribution $f$(\footnote{At this stage it is not necessary to
+  distinguish between singlet or non-singlet distributions. We will
+  consider these cases separately later once the formalism has been
+  settled.}):
 \begin{equation}\label{DGLAPStandard}
 \mu^2\frac{\partial f}{\partial \mu^2} =
 P\left(x,\alpha_s(\mu)\right)\otimes f(x,\mu)\,
@@ -288,7 +290,7 @@ written in a pretty formal way because they imply the exponential of
 matrices. However, since $\Gamma_\alpha$ and $\Gamma_\xi$ are 2 by 2
 matrices, their exponential in known a simple closed form. In
 particular:
-\begin{equation}
+\begin{equation}\label{ExpMatrix}
 \exp\begin{pmatrix}
 a & b \\
 c & d
@@ -303,7 +305,7 @@ where:
 \Delta = \sqrt{(a-d)^2+4bc}
 \end{equation}
 and:
-\begin{equation}
+\begin{equation}\label{ExpMatrixEntries}
 \begin{array}{rcl}
 m_{11} & = & \displaystyle \Delta\mbox{cosh}\left(\frac{\Delta}2\right)+(a-d)\mbox{sinh}\left(\frac{\Delta}2\right)\\
 \\
@@ -334,7 +336,7 @@ b &=&\displaystyle \mbox{atan}\left(\frac{\alpha_s}{\xi_s}\right) -
 \end{array}
 \end{equation}
 and thus:
-\begin{equation}
+\begin{equation}\label{AlphaEvolutionLO}
 \begin{array}{l}
 \displaystyle \exp\left[-R_0\Gamma_\alpha\right] = \\
 \\
@@ -349,27 +351,101 @@ and thus:
 For $\Gamma_\xi$, instead, the structure is:
 \begin{equation}
 \Gamma_\alpha = \begin{pmatrix}
-a & -b \\
-b & a
+c & -d \\
+d & c
 \end{pmatrix}
 \end{equation}
 with:
 \begin{equation}
 \begin{array}{rcl}
-a &=&\displaystyle
+c &=&\displaystyle
       \frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s}^2+\xi_{s,0}^2}\right)\\
 \\
-b &=&\displaystyle \mbox{atan}\left(\frac{\xi_s}{\alpha_s}\right) -
+d &=&\displaystyle \mbox{atan}\left(\frac{\xi_s}{\alpha_s}\right) -
 \mbox{atan}\left(\frac{\xi_{s,0}}{\alpha_{s}}\right)\,,
 \end{array}
 \end{equation}
 and thus, after some simplifications, we find:
-\begin{equation}
-\exp\left[-R_0\Gamma_\xi\right] = \exp[-R_0a]
+\begin{equation}\label{XiEvolutionLO}
+\exp\left[-R_0\Gamma_\xi\right] = \exp[-R_0c]
 \begin{pmatrix}
-\cos\left(R_0b\right) & -\sin\left(R_0b\right) \\
-\sin\left(R_0b\right) & \cos\left(R_0b\right)
+\cos\left(R_0d\right) & -\sin\left(R_0d\right) \\
+\sin\left(R_0d\right) & \cos\left(R_0d\right)
 \end{pmatrix}\,.
 \end{equation}
+Eqs.~(\ref{AlphaEvolutionLO}) and~(\ref{XiEvolutionLO}) are the main
+result of this section because they are the evolution factors in the
+real and imaginary direction to be applied to the initial scale PDF.
+
+At this point, in order to be able to implement in numerical code, it
+is necessary to distinguish between non-slinglet and singlet
+distributions. In the case of the non-singlet distributions
+eqs.~(\ref{AlphaEvolutionLO}) and~(\ref{XiEvolutionLO}) can be
+implemented exactly as they are written because the anomalous
+dimension $\gamma^{(0)}$ appearing in
+eqs.~(\ref{DGLAPcomplex1LOMellin}) and~(\ref{DGLAPcomplex2LOMellin})
+is a singled-valued function. In the singlet case instead
+$\gamma^{(0)}$ (and thus $R_0$) is actually a 2 by 2 matrix of functions and thus,
+since it appears in the trigonometric functions,
+eqs.~(\ref{AlphaEvolutionLO}) and~(\ref{XiEvolutionLO}) need to be
+treated in a suitable way.
+
+Given the definitions:
+\begin{equation}
+\begin{array}{rcl}
+\mbox{sinh}(A) &=& \displaystyle\frac{\exp(A)-\exp(-A)}{2}\,,\\
+\\
+\mbox{cosh}(A) &=& \displaystyle\frac{\exp(A)+\exp(-A)}{2}\,,
+\end{array}
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{rcl}
+\sin(A) &=& \displaystyle\frac{\exp(iA)-\exp(-iA)}{2i}\,,\\
+\\ 
+\cos(A) &=& \displaystyle\frac{\exp(iA)+\exp(-iA)}{2}\,,
+\end{array}
+\end{equation}
+it is useful to rewrite eqs.~(\ref{AlphaEvolutionLO})
+and~(\ref{XiEvolutionLO}) as follows:
+\begin{equation}\label{AlphaEvolutionLOexp}
+\begin{array}{l}
+\displaystyle \exp\left[-R_0\Gamma_\alpha\right] = \\
+\\
+\displaystyle \frac{1}{2}\left[
+\exp\left[R_0\sqrt{a^2+b^2}\right]\begin{pmatrix}
+1 + \frac{a}{\sqrt{a^2+b^2}} & \frac{b}{\sqrt{a^2+b^2}} \\
+\frac{b}{\sqrt{a^2+b^2}} & 1 + \frac{a}{\sqrt{a^2+b^2}}
+\end{pmatrix}+
+\exp\left[-R_0\sqrt{a^2+b^2}\right]
+\begin{pmatrix}
+1 - \frac{a}{\sqrt{a^2+b^2}} & -\frac{b}{\sqrt{a^2+b^2}} \\
+-\frac{b}{\sqrt{a^2+b^2}} & 1 - \frac{a}{\sqrt{a^2+b^2}}
+\end{pmatrix}
+\right]\,,
+\end{array}
+\end{equation}
+and:
+\begin{equation}\label{XiEvolutionLOexp}
+\exp\left[-R_0\Gamma_\xi\right] = \frac{\exp\left[-R_0c\right]}{2}\left[
+\exp\left[iR_0d\right]\begin{pmatrix}
+1 & i \\
+-i & 1
+\end{pmatrix}+
+\exp\left[-iR_0d\right]\begin{pmatrix}
+1 & -i \\
+i & 1
+\end{pmatrix}
+\right]\,.
+\end{equation}
+This way one only needs to evaluate
+$\exp\left[R_0\sqrt{a^2+b^2}\right]$ and $\exp\left[iR_0d\right]$ by
+means of eqs.~(\ref{ExpMatrix})-(\ref{ExpMatrixEntries}) and take
+their inverse (which an easy task) and evaluate
+$\exp\left[-R_0c\right]$ by means of the same formulas. Finally, It
+should be noticed that the matrices in the r.h.s. of
+eqs.~(\ref{AlphaEvolutionLOexp}) and~(\ref{XiEvolutionLOexp}) are not
+2 by 2 matrices but rather 4 by 4 because $R_0$ is a matrix in a
+different space of the vector $\mathbf{F}$.
 
 \end{document}
