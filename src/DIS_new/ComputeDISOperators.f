@@ -26,6 +26,7 @@
       include "../commons/TMC.h"
       include "../commons/DampingFONLL.h"
       include "../commons/ProtonMass.h"
+      include "../commons/kfacQ.h"
 **
 *     Internal Variables
 *
@@ -85,7 +86,7 @@
 *     Compute alphas
 *
       as(0) = 1d0
-      as(1) = a_QCD(Q2)
+      as(1) = a_QCD(kfacQ*Q2)
       as(2) = as(1) * as(1)
 *
 *     Find number of active flavours at the scale Q2

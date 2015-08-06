@@ -124,8 +124,8 @@ so that the derivative of $F$ with respect to $\eta_s$ can be expanded
 as:
 \begin{equation}\label{ComplexDerivative}
 \frac{\partial F}{\partial \zeta_s} = \frac{\partial f}{\partial
-  \alpha_s} + i \frac{\partial g}{\partial \alpha_s} =\frac{\partial f}{\partial
-  \xi_s} - i \frac{\partial g}{\partial \xi_s}\,.
+  \alpha_s} + i \frac{\partial g}{\partial \alpha_s} =\frac{\partial g}{\partial
+  \xi_s} - i \frac{\partial f}{\partial \xi_s}\,.
 \end{equation}
 Now let us consider the function $R$. Being it a complex function, it
 can be split into a real and a complex part:
@@ -145,8 +145,8 @@ matricial form:
 \begin{equation}\label{DGLAPcomplex1}
 \frac{\partial }{\partial \alpha_s}{f \choose g} = 
 \begin{pmatrix}
-S & T \\
-T & -S
+S & -T \\
+T & S
 \end{pmatrix}
 \otimes {f \choose g}\,,
 \end{equation}
@@ -163,8 +163,28 @@ The solution of eqs.~(\ref{DGLAPcomplex1}) and~(\ref{DGLAPcomplex2})
 allows one to obtain the dependence of the real functions $f$ and $g$
 ($i.e.$ the real and the complex part of the ``complex'' PDF $F$) on
 the real variables $\alpha_s$ and $\xi_s$ ($i.e.$ the real and the
-complex part of the ``complex'' strong coupling $\zeta_s$) which in turn
-are functions of the complex factorization scale $\eta$. 
+complex part of the ``complex'' strong coupling $\zeta_s$) which in
+turn are functions of the complex factorization scale $\eta$. It
+should be noticed that while solving eq.~(\ref{DGLAPcomplex1}) the
+value of $\xi_s$ should be kept constant and conversely while solving
+eq.~(\ref{DGLAPcomplex2}) the value of $\alpha_s$ should be kept
+constant. Geometrically, this means that eq.~(\ref{DGLAPcomplex1})
+allows one to compute the PDF evolution along the real axis in the
+complex plane of $\zeta_s$ while eq.~(\ref{DGLAPcomplex2}) allows one
+to compute the PDF evolution along the immaginary axis.  Of course, a
+suitable combination of these evolution allows to reach any point of
+the complex plane of $\zeta_s$ starting from any other point. This is
+strictly true only if no branch cut is crossed during the
+evolution. Finally, it is interesting to notice that the splitting
+function matices in the r.h.s. of eqs.~(\ref{DGLAPcomplex1})
+and~(\ref{DGLAPcomplex2}) commute. This has the consequence that the
+order in which the derivarives with respect of $\alpha_s$ and $\xi_s$
+does not affect the result. Of course, this feature must be reflected
+in the solutions of eqs.~(\ref{DGLAPcomplex1})
+and~(\ref{DGLAPcomplex2}). In oder words, this means that, aslo on the
+complex plane, the evolution factor to be applied to the initial state
+PDF only depends on the initial and the final point and not on the
+path followed to connect the two points.
 
 Now we need to extract the functions $S$ and $T$ from $R$ and in the
 next section we will show their form at leading order (LO) in QCD.
@@ -180,7 +200,7 @@ R\left(x,\zeta_s\right) =
 and thus:
 \begin{equation}\label{LOKernels}
 S(x,\alpha_s,\xi_s) = -\frac{P^{(0)}(x)}{\beta_0}
-\frac{\alpha_s}{\alpha^2_s+\xi_s^2}\quad\mbox{and}\quad T(x,\alpha_s,\xi_s) = \frac{P^{(0)}(x)}{\beta_0} \frac{\xi_s}{\alpha^2_s+\xi_s^2}\,.
+\frac{\alpha_s}{\alpha^2_s+\xi_s^2}\quad\mbox{and}\quad T(x,\alpha_s,\xi_s) = -\frac{P^{(0)}(x)}{\beta_0} \frac{-\xi_s}{\alpha^2_s+\xi_s^2}\,.
 \end{equation}
 Using eq.~(\ref{LOKernels}), eqs.~(\ref{DGLAPcomplex1})
 and~(\ref{DGLAPcomplex2}) become:
@@ -188,8 +208,8 @@ and~(\ref{DGLAPcomplex2}) become:
 \frac{\partial }{\partial \alpha_s}{f \choose g} = 
 -\frac{P^{(0)}(x)}{\beta_0}
 \frac{1}{\alpha^2_s+\xi_s^2} \begin{pmatrix}
-\alpha_s & -\xi_s \\
--\xi_s & -\alpha_s
+\alpha_s & \xi_s \\
+-\xi_s & \alpha_s
 \end{pmatrix}
 \otimes {f \choose g}\,,
 \end{equation}
@@ -210,8 +230,8 @@ equations above in Mellin space become:
 \frac{\partial }{\partial \alpha_s}{f \choose g} = 
 -\frac{\gamma^{(0)}(N)}{\beta_0}
 \frac{1}{\alpha^2_s+\xi_s^2} \begin{pmatrix}
-\alpha_s & -\xi_s \\
--\xi_s & -\alpha_s
+\alpha_s & \xi_s \\
+-\xi_s & \alpha_s
 \end{pmatrix}
 {f \choose g}\,,
 \end{equation}
@@ -229,10 +249,10 @@ Defining:
 \begin{equation}
 \mathbf{F} \equiv {f \choose g}\quad\mbox{and}\quad R_0 = \frac{\gamma^{(0)}(N)}{\beta_0}\,,
 \end{equation}
-and conidering that:
+and considering that:
 \begin{equation}
 \int dx\frac{x}{x^2+y^2} = \frac12\ln(x^2+y^2) \quad\mbox{and}\quad
-\int dx\frac{y}{x^2+y^2} = \mbox{atan}\left(\frac{x}{y}\right)\,,
+\int dx\frac{y}{x^2+y^2} = \mbox{atan}\left(\frac{x}{y}\right)=\frac{\pi}2-\mbox{atan}\left(\frac{y}{x}\right)\,,
 \end{equation}
 the solution of eqs.~(\ref{DGLAPcomplex1LOMellin})
 and~(\ref{DGLAPcomplex2LOMellin}) is:
@@ -248,10 +268,11 @@ with:
 \Gamma_\alpha=
 \begin{pmatrix}
 \frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s,0}^2+\xi_s^2}\right) &
--\mbox{atan}\left(\frac{\alpha_s}{\xi_s}\right) +
-\mbox{atan}\left(\frac{\alpha_{s,0}}{\xi_s}\right) \\
--\mbox{atan}\left(\frac{\alpha_s}{\xi_s}\right) +
-\mbox{atan}\left(\frac{\alpha_{s,0}}{\xi_s}\right) & -\frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s,0}^2+\xi_s^2}\right)
+-\mbox{atan}\left(\frac{\xi_s}{\alpha_s}\right) +
+\mbox{atan}\left(\frac{\xi_s}{\alpha_{s,0}}\right) \\
+\mbox{atan}\left(\frac{\xi_s}{\alpha_s}\right) -
+\mbox{atan}\left(\frac{\xi_s}{\alpha_{s,0}}\right)
+& \frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s,0}^2+\xi_s^2}\right)
 \end{pmatrix}\,,
 \end{equation}
 and:
@@ -271,7 +292,7 @@ $\zeta_s$ becomes real, $i.e.$ $\xi_s\rightarrow0$, the matrices above become:
 \lim_{\xi_s\rightarrow0}\Gamma_\alpha= \ln\left(\frac{\alpha_s}{\alpha_{s,0}}\right)
 \begin{pmatrix}
 1 & 0 \\
-0 & -1
+0 & 1
 \end{pmatrix}\,,
 \end{equation}
 and:
@@ -322,33 +343,40 @@ structure is:
 \begin{equation}
 \Gamma_\alpha = \begin{pmatrix}
 a & -b \\
--b & -a
+b & a
 \end{pmatrix}
 \end{equation}
 with:
 \begin{equation}
 \begin{array}{rcl}
 a &=&\displaystyle
-\frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s,0}^2+\xi_s^2}\right)\\
+\frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s,0}^2+\xi_s^2}\right)
+      = \ln\left(\frac{|\zeta_s|}{|\zeta_{s,0}|}\right)\\
 \\
-b &=&\displaystyle \mbox{atan}\left(\frac{\alpha_s}{\xi_s}\right) -
-\mbox{atan}\left(\frac{\alpha_{s,0}}{\xi_s}\right)\,,
+b &=&\displaystyle \mbox{atan}\left(\frac {\xi_s}{\alpha_s}\right) -
+\mbox{atan}\left(\frac {\xi_s}{\alpha_{s,0}}\right) = \theta -
+      \theta_0 = \Delta\theta\,,
 \end{array}
 \end{equation}
-and thus:
+and thus, after some simplifications, we find:(\footnote{Notice that:
+$$
+a+ib=\ln\left(\frac{\zeta_s}{\zeta_{s,0}}\right)\,.
+$$
+}):
 \begin{equation}\label{AlphaEvolutionLO}
-\begin{array}{l}
-\displaystyle \exp\left[-R_0\Gamma_\alpha\right] = \\
-\\
-\displaystyle
+\exp\left[-R_0\Gamma_\alpha\right] = \exp[-R_0a]
 \begin{pmatrix}
-\displaystyle \mbox{cosh}\left(R_0\sqrt{a^2+b^2}\right)+\frac{a}{\sqrt{a^2+b^2}}\,\mbox{sinh}\left(R_0\sqrt{a^2+b^2}\right) & \displaystyle\frac{b}{\sqrt{a^2+b^2}}\,\mbox{sinh}\left(R_0\sqrt{a^2+b^2}\right) \\
-\displaystyle\frac{b}{\sqrt{a^2+b^2}}\,\mbox{sinh}\left(R_0\sqrt{a^2+b^2}\right) & \displaystyle\mbox{cosh}\left(R_0\sqrt{a^2+b^2}\right)-\frac{a}{\sqrt{a^2+b^2}}\,\mbox{sinh}\left(R_0\sqrt{a^2+b^2}\right)
+\cos\left(-R_0b\right) & -\sin\left(-R_0b\right) \\
+\sin\left(-R_0b\right) & \cos\left(-R_0b\right)
+\end{pmatrix}
+=\left(\frac{|\zeta_s|}{|\zeta_{s,0}|}\right)^{-R_0}
+\begin{pmatrix}
+\cos\left(-R_0\Delta\theta\right) & -\sin\left(-R_0\Delta\theta\right) \\
+\sin\left(-R_0\Delta\theta\right) & \cos\left(-R_0\Delta\theta\right)
 \end{pmatrix}\,.
-\end{array}
 \end{equation}
 
-For $\Gamma_\xi$, instead, the structure is:
+For $\Gamma_\xi$,the structure is exactly the same:
 \begin{equation}
 \Gamma_\alpha = \begin{pmatrix}
 c & -d \\
@@ -359,23 +387,146 @@ with:
 \begin{equation}
 \begin{array}{rcl}
 c &=&\displaystyle
-      \frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s}^2+\xi_{s,0}^2}\right)\\
+      \frac12\ln\left(\frac{\alpha_s^2+\xi_s^2}{\alpha_{s}^2+\xi_{s,0}^2}\right)
+      = \ln\left(\frac{|\zeta_s|}{|\zeta_{s,0}|}\right)\\
 \\
 d &=&\displaystyle \mbox{atan}\left(\frac{\xi_s}{\alpha_s}\right) -
-\mbox{atan}\left(\frac{\xi_{s,0}}{\alpha_{s}}\right)\,,
+\mbox{atan}\left(\frac{\xi_{s,0}}{\alpha_{s}}\right) = \theta -
+      \theta_0 = \Delta\theta\,,
 \end{array}
 \end{equation}
-and thus, after some simplifications, we find:
+and thus also here we find:
 \begin{equation}\label{XiEvolutionLO}
 \exp\left[-R_0\Gamma_\xi\right] = \exp[-R_0c]
 \begin{pmatrix}
-\cos\left(R_0d\right) & -\sin\left(R_0d\right) \\
-\sin\left(R_0d\right) & \cos\left(R_0d\right)
+\cos\left(-R_0d\right) & -\sin\left(-R_0d\right) \\
+\sin\left(-R_0d\right) & \cos\left(-R_0d\right)
+\end{pmatrix}
+=\left(\frac{|\zeta_s|}{|\zeta_{s,0}|}\right)^{-R_0}
+\begin{pmatrix}
+\cos\left(-R_0\Delta\theta\right) & -\sin\left(-R_0\Delta\theta\right) \\
+\sin\left(-R_0\Delta\theta\right) & \cos\left(-R_0\Delta\theta\right)
 \end{pmatrix}\,.
 \end{equation}
 Eqs.~(\ref{AlphaEvolutionLO}) and~(\ref{XiEvolutionLO}) are the main
 result of this section because they are the evolution factors in the
 real and imaginary direction to be applied to the initial scale PDF.
+Considering that eqs.~(\ref{AlphaEvolutionLO})
+and~(\ref{XiEvolutionLO}) have exactly the same form they can combined
+in one single evolution factor with the following compact result:
+\begin{equation}\label{SolutionLOGlobal}
+\mathbf{F}(N,\zeta_s) = \mathbf{F}(N,\zeta_{s,0})
+\left(\frac{|\zeta_s|}{|\zeta_{s,0}|}\right)^{-R_0}
+\begin{pmatrix}
+\cos\left[-R_0(\theta-\theta_0)\right] & -\sin\left[-R_0(\theta-\theta_0)\right] \\
+\sin\left[-R_0(\theta-\theta_0)\right] & \cos\left[-R_0(\theta-\theta_0)\right]
+\end{pmatrix}\,,
+\end{equation}
+where $|\zeta_s|$ and $|\zeta_{s,0}|$ are the absolute value of the
+initial and final values of the complex coupling while $\theta$ and
+$\theta_0$ are the respective phases such that:
+\begin{equation}
+\zeta_s=|\zeta_s|\exp(i\theta)\quad\mbox{and}\quad \zeta_{s,0}=|\zeta_{s,0}|\exp(i\theta_0)\,,
+\end{equation}
+which is equivalent to:
+\begin{equation}\label{SolutionLOGlobal}
+{F}(N,\zeta_s) = {F}(N,\zeta_{s,0})
+\left(\frac{|\zeta_s|}{|\zeta_{s,0}|}\right)^{-R_0}e^{-iR_0(\theta-\theta_0)}={F}(N,\zeta_{s,0})\left[-R_0\ln\left(\frac{\zeta_s}{\zeta_{s,0}}\right)\right]
+= \left(\frac{\zeta_s}{\zeta_{s,0}}\right)^{-R_0}\,,
+\end{equation}
+which is the straight LO solution of the Mellin version of
+eq.~(\ref{DGLAPalphasComplex}). We can thus deduce that, also beyond
+LO, eq.~(\ref{DGLAPalphasComplex}) can be solved using the standard
+techniques.
+
+Since the best way to solve eq.~(\ref{DGLAPalphasComplex}) is in $N$
+(Mellin) space, under the condition that the $x$-space PDF is also
+complex the numerical inversion algorithm from $N$ to $x$ space needs
+to be adapted. 
+
+The inverse Mellin transformationis defined as:
+\begin{equation}\label{MellinInverse}
+F(x) = \frac{1}{2\pi i}\int_{c-i\infty}^{c+i\infty} dN\,x^{-N}F(N)\,,
+\end{equation}
+where the real number $c$ has to be such that the integral
+$\int_0^1dx\,x^{c-1}F(x)$ is absolutely convergent. Hence $c$ has to
+lie to the right of the rightmost singularity of $F(N)$ in the complex
+plane.
+
+Under the assumption that $F(N)$ is an analytical (or holomorphic)
+function, the Cauchy theorem states that one can deform the
+integration path in a continuous way without changing the result of
+the integral, provided that no pole of the function $F(N)$ is crossed
+during the deformation. This allows us to cleverly choose a different
+path that makes the solution of the integral in
+eq.~(\ref{MellinInverse}) easy to implement in a numerical code. A
+possible choice is the so-called Talbot path $\mathcal{C}_T$, such
+that eq.~(\ref{MellinInverse}) is equivalent to:
+\begin{equation}\label{MellinInverseTalbot}
+F(x) = \frac{1}{2\pi i}\int_{\mathcal{C}_T} dN\,x^{-N}F(N)\,,
+\end{equation}
+where:
+\begin{equation}\label{TalbotPathPar}
+\mathcal{C}_T:\left\lbrace N(\theta)=r\theta(\cot\theta+i);\,\theta\in(-\pi,+\pi) \right\rbrace
+\end{equation}
+being $r$ a parameter possibly depending only on $x$. Performing a
+variable substitution in eq.~(\ref{MellinInverseTalbot}) using
+eq.~(\ref{TalbotPathPar}) and defining $t\equiv-\ln x$, one gets:
+\begin{equation}\label{TalbotPathParDer1}
+\begin{array}{rcl}
+ F(x) &=& \displaystyle \frac{1}{2\pi i}\int_{-\pi}^{+\pi}d\theta\,\frac{dN(\theta)}{d\theta}\,e^{t\,N(\theta)}{F}(N(\theta))\\
+\\
+      &=& \displaystyle \frac{r}{2\pi}\int_{-\pi}^{+\pi}d\theta\left[1+i\sigma(\theta)\right]e^{t\,N(\theta)}{F}(N(\theta))\,,
+\end{array}
+\end{equation}
+with:
+\begin{equation}\label{TalbotPathParDer}
+\sigma(\theta) = \theta + \cot\theta(\theta\cot\theta-1)\,.
+\end{equation}
+Usually the computation of the integral in the r.h.s. of
+eq.~(\ref{TalbotPathParDer1}) is usually performed numerically using
+the fact that $F(N)$ is the Mellin tranform of a real function and
+thus, under this assumption, $F(N^*)=F^*(N)$. In the case we are
+considering here, $i.e.$ also the $x$-space PDF $F(x)$ is a complex
+function, this assumption can no longer be used. Defining:
+\begin{equation}
+G(\theta) = \frac{r}{2\pi}\left[1+i\sigma(\theta)\right]e^{t\,N(\theta)}{F}(N(\theta))\,,
+\end{equation}
+and using the trapezoidal method to solve the integral in
+eq.~(\ref{TalbotPathParDer1}) one gets:
+\begin{equation}\label{trapez}
+ F(x) = \delta \left[\sum_{k=1}^{M-1}G(-\pi+k\delta)+\frac{G(-\pi)+G(\pi)}2\right]\,,
+\end{equation}
+where $M$ is the number of equal intervals in which the integration
+range is divided and:
+\begin{equation}
+\delta =\frac{2\pi}{M}
+\end{equation}
+is essentially the width of the single interval. One can show that the
+boundary terms $G(-\pi$) and $G(\pi)$ in eq.~(\ref{trapez}) vanish and
+thus, defining $\theta_k=-\pi+k\delta$, it becomes:
+\begin{equation}\label{trapez1}
+ F(x) = \frac{r}{M}\sum_{k=1}^{M-1}\left[1+i\sigma(\theta_k)\right]e^{t\,N(\theta_k)}{F}(N(\theta_k))\,.
+\end{equation}
+
+
+From eq.~(\ref{TalbotPathPar}) one can easily see that
+$N(-\theta) = N^*(\theta)$, while from eq.~(\ref{TalbotPathParDer}) it
+is evident that $\sigma(\theta)$ is an odd function of
+$\theta$. Moreover, $F(N)$ being the Mellin transform of a real
+function, one automatically has that $F(N^*)=F^*(N)$. Using this
+information, one gets:
+\begin{equation}\label{TalbotFinalIntegral}
+\begin{array}{rcl}
+ F(x) &=& \displaystyle \frac{r}{\pi}\int_{0}^{+\pi}d\theta\,\mbox{Re}\left\{\left[1+i\sigma(\theta)\right]e^{t\,N(\theta)}{F}(N(\theta))\right\}\,,
+\end{array}
+\end{equation}
+where $\mbox{Re}\{\,\dots\}$ is the real part of its
+argument. Finally, eq.~(\ref{TalbotFinalIntegral}) can be solved
+numerically using, for instance, the trapezoidal approximation.
+
+
+
 
 At this point, in order to be able to implement in numerical code, it
 is necessary to distinguish between non-slinglet and singlet
@@ -385,67 +536,15 @@ implemented exactly as they are written because the anomalous
 dimension $\gamma^{(0)}$ appearing in
 eqs.~(\ref{DGLAPcomplex1LOMellin}) and~(\ref{DGLAPcomplex2LOMellin})
 is a singled-valued function. In the singlet case instead
-$\gamma^{(0)}$ (and thus $R_0$) is actually a 2 by 2 matrix of functions and thus,
-since it appears in the trigonometric functions,
-eqs.~(\ref{AlphaEvolutionLO}) and~(\ref{XiEvolutionLO}) need to be
-treated in a suitable way.
+$\gamma^{(0)}$ (and thus $R_0$) is actually a 2 by 2 matrix of
+functions and thus, since it appears in the exponential and in the
+trigonometric functions, eqs.~(\ref{AlphaEvolutionLO})
+and~(\ref{XiEvolutionLO}) need to be treated in a suitable way.
 
-Given the definitions:
-\begin{equation}
-\begin{array}{rcl}
-\mbox{sinh}(A) &=& \displaystyle\frac{\exp(A)-\exp(-A)}{2}\,,\\
-\\
-\mbox{cosh}(A) &=& \displaystyle\frac{\exp(A)+\exp(-A)}{2}\,,
-\end{array}
-\end{equation}
-and:
-\begin{equation}
-\begin{array}{rcl}
-\sin(A) &=& \displaystyle\frac{\exp(iA)-\exp(-iA)}{2i}\,,\\
-\\ 
-\cos(A) &=& \displaystyle\frac{\exp(iA)+\exp(-iA)}{2}\,,
-\end{array}
-\end{equation}
-it is useful to rewrite eqs.~(\ref{AlphaEvolutionLO})
-and~(\ref{XiEvolutionLO}) as follows:
-\begin{equation}\label{AlphaEvolutionLOexp}
-\begin{array}{l}
-\displaystyle \exp\left[-R_0\Gamma_\alpha\right] = \\
-\\
-\displaystyle \frac{1}{2}\left[
-\exp\left[R_0\sqrt{a^2+b^2}\right]\begin{pmatrix}
-1 + \frac{a}{\sqrt{a^2+b^2}} & \frac{b}{\sqrt{a^2+b^2}} \\
-\frac{b}{\sqrt{a^2+b^2}} & 1 + \frac{a}{\sqrt{a^2+b^2}}
-\end{pmatrix}+
-\exp\left[-R_0\sqrt{a^2+b^2}\right]
-\begin{pmatrix}
-1 - \frac{a}{\sqrt{a^2+b^2}} & -\frac{b}{\sqrt{a^2+b^2}} \\
--\frac{b}{\sqrt{a^2+b^2}} & 1 - \frac{a}{\sqrt{a^2+b^2}}
-\end{pmatrix}
-\right]\,,
-\end{array}
-\end{equation}
-and:
-\begin{equation}\label{XiEvolutionLOexp}
-\exp\left[-R_0\Gamma_\xi\right] = \frac{\exp\left[-R_0c\right]}{2}\left[
-\exp\left[iR_0d\right]\begin{pmatrix}
-1 & i \\
--i & 1
-\end{pmatrix}+
-\exp\left[-iR_0d\right]\begin{pmatrix}
-1 & -i \\
-i & 1
-\end{pmatrix}
-\right]\,.
-\end{equation}
-This way one only needs to evaluate
-$\exp\left[R_0\sqrt{a^2+b^2}\right]$ and $\exp\left[iR_0d\right]$ by
-means of eqs.~(\ref{ExpMatrix})-(\ref{ExpMatrixEntries}) and take
-their inverse (which an easy task) and evaluate
-$\exp\left[-R_0c\right]$ by means of the same formulas. Finally, It
-should be noticed that the matrices in the r.h.s. of
-eqs.~(\ref{AlphaEvolutionLOexp}) and~(\ref{XiEvolutionLOexp}) are not
-2 by 2 matrices but rather 4 by 4 because $R_0$ is a matrix in a
-different space of the vector $\mathbf{F}$.
+
+
+
+
+
 
 \end{document}
