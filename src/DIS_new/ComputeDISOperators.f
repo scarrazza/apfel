@@ -84,6 +84,8 @@
       rhop = MProton**2d0 / Q2
 *
 *     Compute alphas
+*     (Remember that a_QCD takes as argument the factorization scale
+*     and convert it internally into the renomalization scale).
 *
       as(0) = 1d0
       as(1) = a_QCD(kfacQ*Q2)
