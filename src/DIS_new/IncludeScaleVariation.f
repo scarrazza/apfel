@@ -52,7 +52,7 @@
       mapP(2,1) = 6
       mapP(2,2) = 7
 *
-      mapC(1) = 2
+      mapC(1) = 3
       mapC(2) = 1
 *
 *     ZM-VFNS (Compute it always)
@@ -88,21 +88,6 @@
      1                    + SC3zm(igrid,inf,mapC(i),0,beta,gamma)
      2                    * SP(igrid,inf,mapP(i,2),0,gamma,alpha)
                   enddo
-*     Singlet
-                  do i=1,2
-                     P0P0(2) = P0P0(2)
-     1                    + SP(igrid,inf,mapP(1,i),0,beta,gamma)
-     2                    * SP(igrid,inf,mapP(i,1),0,gamma,alpha)
-                     C12P0(2) = C12P0(2)
-     1                    + SC2zm(igrid,inf,mapC(i),0,beta,gamma)
-     2                    * SP(igrid,inf,mapP(i,1),0,gamma,alpha)
-                     C1LP0(2) = C1LP0(2)
-     1                    + SCLzm(igrid,inf,mapC(i),0,beta,gamma)
-     2                    * SP(igrid,inf,mapP(i,1),0,gamma,alpha)
-                     C13P0(2) = C13P0(2)
-     1                    + SC3zm(igrid,inf,mapC(i),0,beta,gamma)
-     2                    * SP(igrid,inf,mapP(i,1),0,gamma,alpha)
-                  enddo
 *     Plus
                   P0P0(3) = P0P0(3)
      1                 + SP(igrid,inf,1,0,beta,gamma)
@@ -137,21 +122,6 @@
      1                    + SC3zm(igrid,inf,mapC(i),0,0,gamma-beta)
      2                    * SP(igrid,inf,mapP(i,2),0,0,alpha-gamma)
                   enddo
-*     Singlet
-                  do i=1,2
-                     P0P0(2) = P0P0(2)
-     1                    + SP(igrid,inf,mapP(1,i),0,0,gamma-beta)
-     2                    * SP(igrid,inf,mapP(i,1),0,0,alpha-gamma)
-                     C12P0(2) = C12P0(2)
-     1                    + SC2zm(igrid,inf,mapC(i),0,0,gamma-beta)
-     2                    * SP(igrid,inf,mapP(i,1),0,0,alpha-gamma)
-                     C1LP0(2) = C1LP0(2)
-     1                    + SCLzm(igrid,inf,mapC(i),0,0,gamma-beta)
-     2                    * SP(igrid,inf,mapP(i,1),0,0,alpha-gamma)
-                     C13P0(2) = C13P0(2)
-     1                    + SC3zm(igrid,inf,mapC(i),0,0,gamma-beta)
-     2                    * SP(igrid,inf,mapP(i,1),0,0,alpha-gamma)
-                  enddo
 *     Plus
                   P0P0(3) = P0P0(3)
      1                 + SP(igrid,inf,1,0,0,gamma-beta)
@@ -185,14 +155,6 @@
          SC3zm(igrid,inf,1,1,beta,alpha) = 
      1        SC3zm(igrid,inf,1,1,beta,alpha)
      2        - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha)
-*     Singlet
-         SC2zm(igrid,inf,2,1,beta,alpha) = 
-     1        SC2zm(igrid,inf,2,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-         SC3zm(igrid,inf,2,1,beta,alpha) = 
-     1        SC3zm(igrid,inf,2,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,1),0,beta,alpha)
-*     Plus
          SC2zm(igrid,inf,3,1,beta,alpha) = 
      1        SC2zm(igrid,inf,3,1,beta,alpha)
      2        - tF * SP(igrid,inf,1,0,beta,alpha)
@@ -227,23 +189,6 @@
      3           - tF * C13P0(1) + tf2h * ( P0P0(1) + beta0apf(inf)
      4           * SP(igrid,inf,mapP(1,2),0,beta,alpha) )
      5           + tF * SP(igrid,inf,mapP(1,2),1,beta,alpha)
-*     Singlet
-            SC2zm(igrid,inf,2,2,beta,alpha) = 
-     1           SC2zm(igrid,inf,2,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SC2zm(igrid,inf,2,1,beta,alpha)
-     3           - tF * C12P0(2) + tf2h * ( P0P0(2) + beta0apf(inf)
-     4           * SP(igrid,inf,mapP(1,1),0,beta,alpha) )
-     5           + tF * SP(igrid,inf,mapP(1,1),1,beta,alpha)
-            SCLzm(igrid,inf,2,2,beta,alpha) = 
-     1           SCLzm(igrid,inf,2,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SCLzm(igrid,inf,2,1,beta,alpha)
-     3           - tF * C1LP0(2)
-            SC3zm(igrid,inf,2,2,beta,alpha) = 
-     1           SC3zm(igrid,inf,2,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SC3zm(igrid,inf,2,1,beta,alpha)
-     3           - tF * C13P0(2) + tf2h * ( P0P0(2) + beta0apf(inf)
-     4           * SP(igrid,inf,mapP(1,1),0,beta,alpha) )
-     5           + tF * SP(igrid,inf,mapP(1,1),1,beta,alpha)
 *     Plus
             SC2zm(igrid,inf,3,2,beta,alpha) = 
      1           SC2zm(igrid,inf,3,2,beta,alpha)

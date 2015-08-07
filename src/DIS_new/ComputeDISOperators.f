@@ -84,8 +84,8 @@
       rhop = MProton**2d0 / Q2
 *
 *     Compute alphas
-*     (Remember that a_QCD takes as argument the factorization scale
-*     and convert it internally into the renomalization scale).
+*     (Remember that a_QCD takes as an argument the factorization scale
+*     and converts it internally into the renormalization scale).
 *
       as(0) = 1d0
       as(1) = a_QCD(kfacQ*Q2)
@@ -125,7 +125,7 @@
       do ihq=4,6
          ixi(ihq) = 0
          M2(ihq) = HeavyQuarkMass(ihq,Q)**2d0
-         xi(ihq)  = Q2 / M2(ihq)
+         xi(ihq) = Q2 / M2(ihq)
          if(xi(ihq).le.xigrid(xistep))then
             ixi(ihq) = 0
          elseif(xi(ihq).ge.ximax)then
@@ -547,32 +547,32 @@
                               do pt=1,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SC2m0NC(jgrid,ixi(ihq),
-     9                                1,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SC2m0NC(jgrid,ixi(ihq)+1,
-     3                                1,pt,alpha,beta) ) )
+     2                                * SC2m0NC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2m0NC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) ) )
                                  C2ps(ihq) = C2ps(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SC2m0NC(jgrid,ixi(ihq),
-     9                                2,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SC2m0NC(jgrid,ixi(ihq)+1,
-     3                                2,pt,alpha,beta) ) )
+     2                                * SC2m0NC(jgrid,ixi(ihq),
+     3                                2,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SC2m0NC(jgrid,ixi(ihq)+1,
+     6                                2,pt,alpha,beta) ) )
                                  CLg(ihq) = CLg(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SCLm0NC(jgrid,ixi(ihq),
-     9                                1,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SCLm0NC(jgrid,ixi(ihq)+1,
-     3                                1,pt,alpha,beta) ) )
+     2                                * SCLm0NC(jgrid,ixi(ihq),
+     3                                1,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLm0NC(jgrid,ixi(ihq)+1,
+     6                                1,pt,alpha,beta) ) )
                                  CLps(ihq) = CLps(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
-     8                                * SCLm0NC(jgrid,ixi(ihq),
-     9                                2,pt,alpha,beta)
-     1                                + c1(ihq)
-     2                                * SCLm0NC(jgrid,ixi(ihq)+1,
-     3                                2,pt,alpha,beta) ) )
+     2                                * SCLm0NC(jgrid,ixi(ihq),
+     3                                2,pt,alpha,beta)
+     4                                + c1(ihq)
+     5                                * SCLm0NC(jgrid,ixi(ihq)+1,
+     6                                2,pt,alpha,beta) ) )
                               enddo
                            endif
                         enddo

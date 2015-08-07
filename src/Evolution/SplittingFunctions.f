@@ -793,7 +793,7 @@ c       COMMON / P1GSOFT / A2G
        IMPLICIT REAL*8 (A - Z)
        INTEGER NF
 *
-       X0QGA = 2D0* NF * ( 1. - 2. * X + 2. * X**2 )
+       X0QGA = 2D0 * NF * ( 1. - 2. * X + 2. * X**2 )
 *
        RETURN
        END
@@ -808,7 +808,7 @@ c       COMMON / P1GSOFT / A2G
        IMPLICIT REAL*8 (A - Z)
 *
        CF = 4D0/3D0
-       X0GQA = 4D0*CF * ( - 1. + 0.5 * X + 1D0/X )
+       X0GQA = 4D0 * CF * ( - 1. + 0.5 * X + 1D0 / X )
 *
        RETURN
        END
@@ -836,7 +836,7 @@ c       COMMON / P1GSOFT / A2G
        IMPLICIT REAL*8 (A - Z)
 *
        CA = 3D0
-       X0GGB = 4D0*CA / (1D0-X)
+       X0GGB = 4D0 * CA / ( 1D0 - X )
 *
        RETURN
        END

@@ -1083,7 +1083,7 @@ Considering that and NNLO the ZM structure functions are written in
 terms of PDFs and coefficient functions as:
 \begin{equation}
 F(t_R,t_F) / x =
-\left[\sum_{k=0}^{2} a_s^k(t_R) \mathcal{C}_i^{(k)}(t_R,t_F)\right]\otimes f_i(t_F) +\mathcal{O}(a_s^3)\,,
+\left[\sum_{k=0}^{2} a_s^k(t_R) \widetilde{\mathcal{C}}_i^{(k)}(t_R,t_F)\right]\otimes f_i(t_F) +\mathcal{O}(a_s^3)\,,
 \end{equation}
 and that, up to subleading terms, the structure functions must be
 renormalization and factorization scale independent, this requires that:
@@ -1093,117 +1093,201 @@ F(t_R,t_F) = F(0,0)\,.
 But since:
 \begin{equation}\label{ZeroScales}
 F(0,0)  / x =
-\left[\sum_{k=0}^{2} a_s^k(0) C_i^{(k)}\right]\otimes f_i(0)+\mathcal{O}(a_s^3)\,,
+\left[\sum_{k=0}^{2} a_s^k(0) \widetilde{C}_i^{(k)}\right]\otimes f_i(0)+\mathcal{O}(a_s^3)\,,
 \end{equation}
-where $C_i^{(k)}$ are the well-know ZM coefficient functions, using
+where $\widetilde{C}_i^{(k)}$ are the well-know ZM coefficient functions, using
 eqs.~(\ref{expDGLAP2}) and~(\ref{BETAexp1}) in eq.~(\ref{ZeroScales})
 and finally imposing the identity in eq.~(\ref{invariance}), we can
 find the explicit espression of the ``generalized'' coefficient
-functions $\mathcal{C}_i^{(k)}(t_R,t_F)$. In fact:
+functions $\widetilde{\mathcal{C}}_i^{(k)}(t_R,t_F)$. In fact:
 \begin{equation}\label{ZeroScales}
 \begin{array}{rcl}
-F(0,0)/x &=&\bigg\{ C_j^{(0)} \\
+F(0,0)/x &=&\bigg\{ \widetilde{C}_j^{(0)} \\
 \\
-&+&\displaystyle  a_s(t_R)\left[C_j^{(1)}-
-  t_F C_i^{(0)} \otimes P_{ij}^{(0)}\right]\\
+&+&\displaystyle  a_s(t_R)\left[\widetilde{C}_j^{(1)}-
+  t_F \widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)}\right]\\
 \\
-&+&\displaystyle  a_s^2(t_R)\bigg[C_j^{(2)} + t_R\beta_0 C_j^{(1)}
--t_F \left(C_i^{(0)} \otimes P_{ij}^{(1)}+C_i^{(1)} \otimes P_{ij}^{(0)}\right)\\
+&+&\displaystyle  a_s^2(t_R)\bigg[\widetilde{C}_j^{(2)} + t_R\beta_0 \widetilde{C}_j^{(1)}
+-t_F \left(\widetilde{C}_i^{(0)} \otimes P_{ij}^{(1)}+\widetilde{C}_i^{(1)} \otimes P_{ij}^{(0)}\right)\\
 \\
-&+&\displaystyle \frac{t_F^2}2 C_i^{(0)} \otimes \left( P_{il}^{(0)}\otimes P_{lj}^{(0)} +
+&+&\displaystyle \frac{t_F^2}2 \widetilde{C}_i^{(0)} \otimes \left( P_{il}^{(0)}\otimes P_{lj}^{(0)} +
   \beta_0 P_{ij}^{(0)} \right)-
-t_Ft_R\beta_{0}C_i^{(0)} \otimes P_{ij}^{(0)}\bigg]\bigg\}\otimes f_j(t_F)+\mathcal{O}(a_s^3)\,.
+t_Ft_R\beta_{0}\widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)}\bigg]\bigg\}\otimes f_j(t_F)+\mathcal{O}(a_s^3)\,.
 \end{array}
 \end{equation}
 Finally, using the identity in eq.~(\ref{invariance}), it is easy to find
 that:
 \begin{equation}\label{generalizedCF}
 \begin{array}{rcl}
-\displaystyle \mathcal{C}_j^{(0)}(t_R,t_F) &=& \displaystyle C_j^{(0)} \\
+\displaystyle \widetilde{\mathcal{C}}_j^{(0)}(t_R,t_F) &=& \displaystyle \widetilde{C}_j^{(0)} \\
 \\
-\displaystyle \mathcal{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)}-t_F C_i^{(0)} \otimes P_{ij}^{(0)} \\
+\displaystyle \widetilde{\mathcal{C}}_j^{(1)}(t_R,t_F) &=& \displaystyle \widetilde{C}_j^{(1)}-t_F \widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)} \\
 \\
-\displaystyle \mathcal{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
--t_F \left(C_i^{(0)} \otimes P_{ij}^{(1)}+C_i^{(1)} \otimes
+\displaystyle \widetilde{\mathcal{C}}_j^{(2)}(t_R,t_F) &=& \displaystyle \widetilde{C}_j^{(2)} + t_R\beta_0 \widetilde{C}_j^{(1)}
+-t_F \left(\widetilde{C}_i^{(0)} \otimes P_{ij}^{(1)}+\widetilde{C}_i^{(1)} \otimes
   P_{ij}^{(0)}\right)\\
 \\
-&+&\displaystyle\frac{t_F^2}2 C_i^{(0)} \otimes \left( P_{il}^{(0)}\otimes P_{lj}^{(0)} +
+&+&\displaystyle\frac{t_F^2}2 \widetilde{C}_i^{(0)} \otimes \left( P_{il}^{(0)}\otimes P_{lj}^{(0)} +
   \beta_0 P_{ij}^{(0)} \right)-
-t_Ft_R\beta_{0}C_i^{(0)} \otimes P_{ij}^{(0)}\,.
+t_Ft_R\beta_{0}\widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)}\,.
 \end{array}
 \end{equation}
 Therefore, in the ZM-VFNS, in order to perform scale variation we need
-to precompute the additional convolutions: $C_i^{(0)} \otimes
-P_{ij}^{(0)}$, $C_i^{(0)} \otimes P_{ij}^{(1)}$, $C_i^{(1)} \otimes
-P_{ij}^{(0)}$ and $C_i^{(0)} \otimes P_{il}^{(0)} \otimes P_{lj}^{(0)}$.
+to precompute the additional convolutions: $\widetilde{C}_i^{(0)} \otimes
+P_{ij}^{(0)}$, $\widetilde{C}_i^{(0)} \otimes P_{ij}^{(1)}$, $\widetilde{C}_i^{(1)} \otimes
+P_{ij}^{(0)}$ and $\widetilde{C}_i^{(0)} \otimes P_{il}^{(0)} \otimes P_{lj}^{(0)}$.
 
-But considering that for $F_2$ and $F_3$:
+In order to proceed, it is opportune to specify the basis in which
+PDFs are expressed. As usual, the most natural choice is the QCD
+evolution basis
+$\{\Sigma,g,V,V_{3},V_{8},V_{15},V_{24},V_{35},T_{3},T_{8},V_{15},T_{24},T_{35}\}$
+and thus the indices $i$, $j$ and $l$ in eq.~(\ref{generalizedCF}) run
+between 1 and 13 over this basis. The advantage of this basis is the
+fact that the splitting function matrix $P_{ij}$ is almost completely
+diagonalized so that, up to $\mathcal{O}(\alpha_s^2)$, we have:
 \begin{equation}
-\begin{array}{l}
-\displaystyle C_q^{(0)}(x) = \delta(1-x)\\
-\displaystyle C_g^{(0)}(x) = 0
+\begin{array}{ll}
+P_{ij}^{(k)} \rightarrow P_{ij}^{(k)} &\quad j=g,q(\Sigma)\\
+P_{ij}^{(k)} \rightarrow \delta_{ij}P_-^{(k)} &\quad
+                                     j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\
+P_{ij}^{(k)} \rightarrow \delta_{ij}P_+^{(k)} &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
 \end{array}
 \end{equation}
-we can simplify the equations above as:
-\begin{equation}\label{generalizedCF1}
+and:
+\begin{equation}
+\begin{array}{ll}
+\widetilde{C}_j^{(k)} \rightarrow d_jC_j^{(k)} &\quad j=g,q(\Sigma)\\
+\widetilde{C}_j^{(k)} \rightarrow d_jC_-^{(k)} &\quad
+                                     j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\
+\widetilde{C}_j^{(k)} \rightarrow d_jC_+^{(k)} &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
+\end{array}
+\end{equation}
+as well as:
+\begin{equation}
+\begin{array}{ll}
+\widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_j^{(k)} &\quad j=g,q(\Sigma)\\
+\widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_-^{(k)} &\quad
+                                     j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\
+\widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_+^{(k)} &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
+\end{array}
+\end{equation}
+where the $d_j$ are just numerical coefficients. In addition:
+\begin{equation}
+P_-^{(0)}=P_+^{(0)}=P_{qq}^{(0)}\,,
+\end{equation}
+and:
+\begin{equation}
+\begin{array}{l}
+\displaystyle C_-^{(0)}(x) = C_+^{(0)}(x) = \Delta_{\rm SF}\delta(1-x)\\
+\displaystyle C_j^{(0)} = \Delta_{\rm SF}\delta_{qj}\delta(1-x) \quad
+  \mbox{for } j=q,g
+\end{array}
+\end{equation}
+where $\Delta_{\rm SF}=1$ for $F_2$ and $F_3$ and $\Delta_{\rm SF} = 0$ for $F_L$.
+From eq.~(\ref{generalizedCF}) it follows that:
+\begin{equation}\label{NonSingletCF}
 \begin{array}{rcl}
-\displaystyle \mathcal{C}_j^{(0)}(t_R,t_F) &=& \displaystyle \delta_{qj}\delta(1-x) \\
+\displaystyle \mathcal{C}_\pm^{(0)}(t_R,t_F) &=& \displaystyle \Delta_{\rm SF}\delta(1-x) \\
 \\
-\displaystyle \mathcal{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)}-t_F P_{qj}^{(0)} \\
+\displaystyle \mathcal{C}_\pm^{(1)}(t_R,t_F) &=& \displaystyle C_\pm^{(1)}-\Delta_{\rm SF} t_F P_{qq}^{(0)} \\
 \\
-\displaystyle \mathcal{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
--t_F C_i^{(1)} \otimes P_{ij}^{(0)}\\
+\displaystyle \mathcal{C}_\pm^{(2)}(t_R,t_F) &=& \displaystyle C_\pm^{(2)} + t_R\beta_0 C_\pm^{(1)}
+-t_F \left(\Delta_{\rm SF} P_\pm^{(1)}+C_\pm^{(1)} \otimes
+  P_{qq}^{(0)}\right)\\
 \\
-&+&\displaystyle\frac{t_F^2}2 \left( P_{ql}^{(0)}\otimes P_{lj}^{(0)} -
-  \beta_0 P_{qj}^{(0)} \right)-
-t_F\left[P_{qj}^{(1)} - (t_F-t_R)\beta_{0} P_{qj}^{(0)}\right]\,.
+&+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left( P_{qq}^{(0)}\otimes P_{qq}^{(0)} +
+  \beta_0 P_{qq}^{(0)} \right)-
+\Delta_{\rm SF} t_Ft_R\beta_{0}P_{qq}^{(0)}\,.
+\end{array}
+\end{equation}
+that can be rearranged as:
+\begin{equation}\label{NonSingletCF1}
+\begin{array}{rcl}
+\displaystyle \mathcal{C}_\pm^{(0)}(t_R,t_F) &=& \displaystyle \Delta_{\rm SF}\delta(1-x) \\
+\\
+\displaystyle \mathcal{C}_\pm^{(1)}(t_R,t_F) &=& \displaystyle
+                                                 C_\pm^{(1)}-\Delta_{\rm SF} t_F P_{qq}^{(0)} \\
+\\
+\displaystyle \mathcal{C}_\pm^{(2)}(t_R,t_F) &=& \displaystyle C_\pm^{(2)} + t_R\beta_0 C_\pm^{(1)}
+-t_F C_\pm^{(1)} \otimes P_{qq}^{(0)}\\
+\\
+&+&\displaystyle\Delta_{\rm SF}\frac{t_F^2}2 \left( P_{qq}^{(0)}\otimes P_{qq}^{(0)} -
+  \beta_0 P_{qq}^{(0)} \right)-
+\Delta_{\rm SF} t_F\left[P_\pm^{(1)} - (t_F-t_R)\beta_{0} P_{qq}^{(0)}\right]\,.
 \end{array}
 \end{equation}
 The term in square brackets in the r.h.s. of the third line
-corresponds to what we would call $\mathcal{P}_{ij}^{(1)}(t_R,t_F)$,
+corresponds to what we would call $\mathcal{P}_\pm^{(1)}(t_R,t_F)$,
 that is the NLO splitting function in the presence of scale
 variation. This quantity is already evaluated by {\tt APFEL} and thus
 does not need to be recomputed.
 
-Now let us write explicitly the epressions of the scale variation
-coefficient functions distinguishing between non-singlet and singlet
-sector. For the non-singlet sector things are easier:
-\begin{equation}\label{generalizedCFNS}
+Now, let us consider the singlet sector that, cosidering the fact that
+$d_q=d_g$, becomes:
+\begin{equation}\label{SingletCF}
 \begin{array}{rcl}
-\displaystyle \mathcal{C}_{\rm NS}^{(0)}(t_R,t_F) &=& \displaystyle \delta(1-x) \\
+\displaystyle {\mathcal{C}}_j^{(0)}(t_R,t_F) &=& \displaystyle \Delta_{\rm SF}\delta_{qj}\delta(1-x)  \\
 \\
-\displaystyle \mathcal{C}_{\rm NS}^{(1)}(t_R,t_F) &=& \displaystyle
-C_{\rm NS}^{(1)}-t_F P_{qq}^{(0)} \\
+\displaystyle {\mathcal{C}}_j^{(1)}(t_R,t_F) &=& \displaystyle
+                                                 {C}_j^{(1)}- \Delta_{\rm SF} t_F P_{qj}^{(0)} \\
 \\
-\displaystyle \mathcal{C}_{\rm NS}^{(2)}(t_R,t_F) &=& \displaystyle C_{\rm NS}^{(2)} + t_R\beta_0 C_{\rm NS}^{(1)}
--t_F C_{\rm NS}^{(1)} \otimes P_{qq}^{(0)}\\
+\displaystyle {\mathcal{C}}_j^{(2)}(t_R,t_F) &=& \displaystyle {C}_j^{(2)} + t_R\beta_0 {C}_j^{(1)}
+-t_F {C}_i^{(1)} \otimes P_{ij}^{(0)}\\
 \\
-&+&\displaystyle\frac{t_F^2}2 \left( P_{qq}^{(0)}\otimes P_{qq}^{(0)} -
-  \beta_0 P_{qq}^{(0)} \right)-
-t_F\widetilde{P}_{\rm NS}^{(1)}(t_R,t_F)\,.
+&+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left( P_{qi}^{(0)}\otimes P_{ij}^{(0)} -
+  \beta_0 P_{qj}^{(0)} \right)-
+\Delta_{\rm SF} t_F\widetilde{P}_{qj}^{(1)}\,.
 \end{array}
 \end{equation}
-where NS $=\pm$. In the singlet sector we have exactly eq.~(\ref{generalizedCF1}) with $i,j=g,q(\Sigma)$.
-
-Considering $F_L$, we have that:
+for $j=g,q$. In eq.~(\ref{SingletCF}), by $j=q$ it is meant the (full)
+singlet contribution. However, $\mathcal{C}_q^{(k)}$ and $C_q^{(k)}$
+are usually given by:
 \begin{equation}
-C_q^{(0)}(x) = C_g^{(0)}(x) = 0
+\mathcal{C}_q^{(k)} = \mathcal{C}_{\rm PS}^{(k)} + \mathcal{C}_+^{(k)}
 \end{equation}
-so that:
+and:
 \begin{equation}
+C_q^{(k)} = C_{\rm PS}^{(k)} + C_+^{(k)}
+\end{equation}
+where $\mathcal{C}_{\rm PS}^{(k)}$ and $C_{\rm PS}^{(k)}$ are the so
+called pure-singlet contributions. Taking into account
+eq.~(\ref{NonSingletCF1}) and considering also the fact that
+$C_{\rm PS}^{(2)}=C_{\rm PS}^{(1)}=0$ ($i.e.$ $C_{\rm PS}$ is
+$\mathcal{O}(\alpha_s^2)$), it is easy to see that:
+\begin{equation}\label{PureSingletCF}
 \begin{array}{rcl}
-\displaystyle \mathcal{C}_j^{(0)}(t_R,t_F) &=& \displaystyle 0 \\
+\displaystyle {\mathcal{C}}_{\rm PS}^{(0)}(t_R,t_F) &=& \displaystyle 0  \\
 \\
-\displaystyle \mathcal{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)} \\
+\displaystyle {\mathcal{C}}_{\rm PS}^{(1)}(t_R,t_F) &=& \displaystyle 0 \\
 \\
-\displaystyle \mathcal{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
--t_F C_i^{(1)} \otimes P_{ij}^{(0)}\,.
+\displaystyle {\mathcal{C}}_{\rm PS}^{(2)}(t_R,t_F) &=& \displaystyle {C}_{\rm PS}^{(2)}\\
 \end{array}
 \end{equation}
+and also that:
+\begin{equation}\label{SingletCFg}
+\begin{array}{rcl}
+\displaystyle {\mathcal{C}}_g^{(0)}(t_R,t_F) &=& \displaystyle 0 \\
+\\
+\displaystyle {\mathcal{C}}_g^{(1)}(t_R,t_F) &=& \displaystyle
+                                                 {C}_g^{(1)}- \Delta_{\rm SF} t_F P_{qg}^{(0)} \\
+\\
+\displaystyle {\mathcal{C}}_g^{(2)}(t_R,t_F) &=& \displaystyle {C}_g^{(2)} + t_R\beta_0 {C}_g^{(1)}
+-t_F {C}_i^{(1)} \otimes P_{ig}^{(0)}\\
+\\
+&+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left( P_{qi}^{(0)}\otimes P_{ig}^{(0)} -
+  \beta_0 P_{qg}^{(0)} \right)-
+\Delta_{\rm SF} t_F\widetilde{P}_{qg}^{(1)}\,.
+\end{array}
+\end{equation}
+It should be noticed that the term ${C}_i^{(1)} \otimes P_{ig}^{(0)}$
+in the r.h.s. of the third line of eq.~(\ref{SingletCFg}) should be
+interpreted as:
+\begin{equation}
+{C}_i^{(1)} \otimes P_{ig}^{(0)} =  {C}_{+}^{(1)}\otimes P_{qg}^{(0)} +
+{C}_g^{(1)} \otimes P_{gg}^{(0)}
+\end{equation}
 
-
-
-Now let us consider the massive scheme. In the neutral-current sector
+Now we consider the massive scheme. In the neutral-current sector
 the leading-order coefficient functions $C_i^{(0)}$ are identically
 equal to zero and this simplifies substantially the structure of the
 massive coeffiecient functions in the presence of scale variations:
