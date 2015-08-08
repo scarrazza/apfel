@@ -28,7 +28,7 @@
 *     Internal Variables
 *
       integer inf,ixi
-      integer i,k
+      integer k
       integer gamma
       integer mapP(2,2),mapC(2)
       integer ipt_FF
@@ -59,9 +59,36 @@
 *
       do inf=3,6
 *
-*     Precoumpute convolutions
+*     NLO
+*
+*     Gluon
+         SC2zm(igrid,inf,1,1,beta,alpha) = 
+     1        SC2zm(igrid,inf,1,1,beta,alpha)
+     2        - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf
+         SC3zm(igrid,inf,1,1,beta,alpha) = 
+     1        SC3zm(igrid,inf,1,1,beta,alpha)
+     2        - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf
+*     Plus
+         SC2zm(igrid,inf,3,1,beta,alpha) = 
+     1        SC2zm(igrid,inf,3,1,beta,alpha)
+     2        - tF * SP(igrid,inf,1,0,beta,alpha)
+         SC3zm(igrid,inf,3,1,beta,alpha) = 
+     1        SC3zm(igrid,inf,3,1,beta,alpha)
+     2        - tF * SP(igrid,inf,1,0,beta,alpha)
+*     Minus
+         SC2zm(igrid,inf,4,1,beta,alpha) = 
+     1        SC2zm(igrid,inf,4,1,beta,alpha)
+     2        - tF * SP(igrid,inf,2,0,beta,alpha)
+         SC3zm(igrid,inf,4,1,beta,alpha) = 
+     1        SC3zm(igrid,inf,4,1,beta,alpha)
+     2        - tF * SP(igrid,inf,2,0,beta,alpha)
+*
+*     NNLO
 *
          if(ipt.ge.2)then
+*
+*     Precoumpute needed convolutions
+*
             do k=1,4
                P0P0(k)  = 0d0
                C12P0(k) = 0d0
@@ -74,20 +101,27 @@
             if(IsExt(igrid))then
                do gamma=beta,alpha
 *     Gluon
-                  do i=1,2
-                     P0P0(1) = P0P0(1)
-     1                    + SP(igrid,inf,mapP(1,i),0,beta,gamma)
-     2                    * SP(igrid,inf,mapP(i,2),0,gamma,alpha)
-                     C12P0(1) = C12P0(1)
-     1                    + SC2zm(igrid,inf,mapC(i),0,beta,gamma)
-     2                    * SP(igrid,inf,mapP(i,2),0,gamma,alpha)
-                     C1LP0(1) = C1LP0(1)
-     1                    + SCLzm(igrid,inf,mapC(i),0,beta,gamma)
-     2                    * SP(igrid,inf,mapP(i,2),0,gamma,alpha)
-                     C13P0(1) = C13P0(1)
-     1                    + SC3zm(igrid,inf,mapC(i),0,beta,gamma)
-     2                    * SP(igrid,inf,mapP(i,2),0,gamma,alpha)
-                  enddo
+
+                  P0P0(1) = P0P0(1)
+     1                 + SP(igrid,inf,mapP(1,1),0,beta,gamma)
+     2                 * SP(igrid,inf,mapP(1,2),0,gamma,alpha) / inf
+     3                 + SP(igrid,inf,mapP(1,2),0,beta,gamma)
+     4                 * SP(igrid,inf,mapP(2,2),0,gamma,alpha) / inf
+                  C12P0(1) = C12P0(1)
+     1                 + SC2zm(igrid,inf,mapC(1),0,beta,gamma)
+     2                 * SP(igrid,inf,mapP(1,2),0,gamma,alpha) / inf
+     3                 + SC2zm(igrid,inf,mapC(2),0,beta,gamma)
+     4                 * SP(igrid,inf,mapP(2,2),0,gamma,alpha)
+                  C1LP0(1) = C1LP0(1)
+     1                 + SCLzm(igrid,inf,mapC(1),0,beta,gamma)
+     2                 * SP(igrid,inf,mapP(1,2),0,gamma,alpha) / inf
+     3                 + SCLzm(igrid,inf,mapC(2),0,beta,gamma)
+     4                 * SP(igrid,inf,mapP(2,2),0,gamma,alpha)
+                  C13P0(1) = C13P0(1)
+     1                 + SC3zm(igrid,inf,mapC(1),0,beta,gamma)
+     2                 * SP(igrid,inf,mapP(1,2),0,gamma,alpha) / inf
+     3                 + SC3zm(igrid,inf,mapC(2),0,beta,gamma)
+     4                 * SP(igrid,inf,mapP(2,2),0,gamma,alpha)
 *     Plus
                   P0P0(3) = P0P0(3)
      1                 + SP(igrid,inf,1,0,beta,gamma)
@@ -108,20 +142,26 @@
             else
                do gamma=beta,alpha
 *     Gluon
-                  do i=1,2
-                     P0P0(1) = P0P0(1)
-     1                    + SP(igrid,inf,mapP(1,i),0,0,gamma-beta)
-     2                    * SP(igrid,inf,mapP(i,2),0,0,alpha-gamma)
-                     C12P0(1) = C12P0(1)
-     1                    + SC2zm(igrid,inf,mapC(i),0,0,gamma-beta)
-     2                    * SP(igrid,inf,mapP(i,2),0,0,alpha-gamma)
-                     C1LP0(1) = C1LP0(1)
-     1                    + SCLzm(igrid,inf,mapC(i),0,0,gamma-beta)
-     2                    * SP(igrid,inf,mapP(i,2),0,0,alpha-gamma)
-                     C13P0(1) = C13P0(1)
-     1                    + SC3zm(igrid,inf,mapC(i),0,0,gamma-beta)
-     2                    * SP(igrid,inf,mapP(i,2),0,0,alpha-gamma)
-                  enddo
+                  P0P0(1) = P0P0(1)
+     1                 + SP(igrid,inf,mapP(1,1),0,0,gamma-beta)
+     2                 * SP(igrid,inf,mapP(1,2),0,0,alpha-gamma) / inf
+     3                 + SP(igrid,inf,mapP(1,2),0,0,gamma-beta)
+     4                 * SP(igrid,inf,mapP(2,2),0,0,alpha-gamma) / inf
+                  C12P0(1) = C12P0(1)
+     1                 + SC2zm(igrid,inf,mapC(1),0,0,gamma-beta)
+     2                 * SP(igrid,inf,mapP(1,2),0,0,alpha-gamma) / inf
+     3                 + SC2zm(igrid,inf,mapC(2),0,0,gamma-beta)
+     4                 * SP(igrid,inf,mapP(2,2),0,0,alpha-gamma)
+                  C1LP0(1) = C1LP0(1)
+     1                 + SCLzm(igrid,inf,mapC(1),0,0,gamma-beta)
+     2                 * SP(igrid,inf,mapP(1,2),0,0,alpha-gamma) / inf
+     3                 + SCLzm(igrid,inf,mapC(2),0,0,gamma-beta)
+     4                 * SP(igrid,inf,mapP(2,2),0,0,alpha-gamma)
+                  C13P0(1) = C13P0(1)
+     1                 + SC3zm(igrid,inf,mapC(1),0,0,gamma-beta)
+     2                 * SP(igrid,inf,mapP(1,2),0,0,alpha-gamma) / inf
+     3                 + SC3zm(igrid,inf,mapC(2),0,0,gamma-beta)
+     4                 * SP(igrid,inf,mapP(2,2),0,0,alpha-gamma)
 *     Plus
                   P0P0(3) = P0P0(3)
      1                 + SP(igrid,inf,1,0,0,gamma-beta)
@@ -142,43 +182,16 @@
             C12P0(4) = C12P0(3)
             C1LP0(4) = C1LP0(3)
             C13P0(4) = C13P0(3)
-         endif
 *
-*     Now compute coefficient functions with scale variations
+*     Now adjust the NNLO coefficient functions
 *
-*     NLO
-*
-*     Gluon
-         SC2zm(igrid,inf,1,1,beta,alpha) = 
-     1        SC2zm(igrid,inf,1,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha)
-         SC3zm(igrid,inf,1,1,beta,alpha) = 
-     1        SC3zm(igrid,inf,1,1,beta,alpha)
-     2        - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha)
-         SC2zm(igrid,inf,3,1,beta,alpha) = 
-     1        SC2zm(igrid,inf,3,1,beta,alpha)
-     2        - tF * SP(igrid,inf,1,0,beta,alpha)
-         SC3zm(igrid,inf,3,1,beta,alpha) = 
-     1        SC3zm(igrid,inf,3,1,beta,alpha)
-     2        - tF * SP(igrid,inf,1,0,beta,alpha)
-*     Minus
-         SC2zm(igrid,inf,4,1,beta,alpha) = 
-     1        SC2zm(igrid,inf,4,1,beta,alpha)
-     2        - tF * SP(igrid,inf,2,0,beta,alpha)
-         SC3zm(igrid,inf,4,1,beta,alpha) = 
-     1        SC3zm(igrid,inf,4,1,beta,alpha)
-     2        - tF * SP(igrid,inf,2,0,beta,alpha)
-*
-*     NNLO
-*
-         if(ipt.ge.2)then
 *     Gluon
             SC2zm(igrid,inf,1,2,beta,alpha) = 
      1           SC2zm(igrid,inf,1,2,beta,alpha)
      2           + tR * beta0apf(inf) * SC2zm(igrid,inf,1,1,beta,alpha)
      3           - tF * C12P0(1) + tf2h * ( P0P0(1) + beta0apf(inf)
-     4           * SP(igrid,inf,mapP(1,2),0,beta,alpha) )
-     5           + tF * SP(igrid,inf,mapP(1,2),1,beta,alpha)
+     4           * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf )
+     5           + tF * SP(igrid,inf,mapP(1,2),1,beta,alpha) / inf
             SCLzm(igrid,inf,1,2,beta,alpha) = 
      1           SCLzm(igrid,inf,1,2,beta,alpha)
      2           + tR * beta0apf(inf) * SCLzm(igrid,inf,1,1,beta,alpha)
@@ -187,8 +200,8 @@
      1           SC3zm(igrid,inf,1,2,beta,alpha)
      2           + tR * beta0apf(inf) * SC3zm(igrid,inf,1,1,beta,alpha)
      3           - tF * C13P0(1) + tf2h * ( P0P0(1) + beta0apf(inf)
-     4           * SP(igrid,inf,mapP(1,2),0,beta,alpha) )
-     5           + tF * SP(igrid,inf,mapP(1,2),1,beta,alpha)
+     4           * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf )
+     5           + tF * SP(igrid,inf,mapP(1,2),1,beta,alpha) / inf
 *     Plus
             SC2zm(igrid,inf,3,2,beta,alpha) = 
      1           SC2zm(igrid,inf,3,2,beta,alpha)
@@ -250,7 +263,7 @@
 *
 *     FFN0
 *
-      if(MassScheme(1:4).eq."FFNS".or.MassScheme(1:5).eq."FONLL")then
+      if(MassScheme(1:4).eq."FFN0".or.MassScheme(1:5).eq."FONLL")then
          if(ipt_FF.ge.2)then
             do ixi=1,nxir
                do k=1,3
