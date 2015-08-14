@@ -2948,16 +2948,9 @@
 *     T35
                   OpF3(jgrid,6,13,alpha,beta) =
      1                 ipr * Kt * C3nsp(6) / 5d0
-
-
-
-
-
 *
                   if(MassScheme(1:5).eq."FONLL")then
                      if(Nf_FF.eq.3)then
-
-
 *     Singlet
                         OpF3(jgrid,6,1,alpha,beta) =
      1                       OpF3(jgrid,6,1,alpha,beta)

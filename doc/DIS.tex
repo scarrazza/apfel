@@ -52,9 +52,8 @@
 \institution{$^{a}$PH Department, TH Unit, CERN, CH-1211 Geneva 23, Switzerland}
 \maketitle
 
-\begin{abstract}
-In this document I will descrive the old and the new DIS module
-embedded in APFEL.
+\begin{abstract} In this document I will descrive the old and the new
+DIS module embedded in APFEL.
 \end{abstract}
 \tableofcontents{}
 
@@ -63,9 +62,9 @@ embedded in APFEL.
 \section{Usage of the DIS code in APFEL}
 
 Starting from release 2.0.0, APFEL implements a new module that
-computes DIS neutral and charged current structure functions and 
-cross sections up to order $\alpha_s^2$ (when possible) in the FONLL,
-FFN and ZM-VFN schemes. In this short document we provide a short user
+computes DIS neutral and charged current structure functions and cross
+sections up to order $\alpha_s^2$ (when possible) in the FONLL, FFN
+and ZM-VFN schemes. In this short document we provide a short user
 manual to use the new DIS module in APFEL.
 
 The new DIS module can be used either in conjunction with the PDF
@@ -74,73 +73,72 @@ To obtain any DIS observables it is enough to call one single
 function, $i.e.$ {\tt DIS\_xsec}, providing a set of input parameters
 that are needed to specify the computation to be performed.
 
-Here follows the list of input/output parameters taken by the function {\tt DIS\_xsec}:
+Here follows the list of input/output parameters taken by the function
+{\tt DIS\_xsec}:
 \begin{lstlisting}
 APFEL::DIS_xsec(x,q0,q,y,proc,scheme,pto,pdfset,irep,target,proj,
-                          F2,F3,FL,sigma);
+F2,F3,FL,sigma);
 \end{lstlisting}
 where the input parameters are:
 \begin{itemize}
-\item the real variable {\tt x} that is the value of the Bjorken variable where the DIS
- obsevables are computed.
-\item the real variable {\tt q0} that is the value of the initial scale (in GeV) used in the
- PDF evolution. This entry is used only if the APFEL internal
- evolution is used.
-\item the real variable {\tt q} that is the value of the scale (in GeV) where the DIS
- observable is computed.
-\item the real variable {\tt y} that is the value of the inelasticity where the DIS
-observables are computed.
-\item The string variable {\tt proc} that can take the values {\tt "EM"} for the
-  electro-magnetic DIS computation (photon only exchange), {\tt "NC"}
-  for the neutral current computation and {\tt CC"} for a charged
-  current computation.
-\item The string variable {\tt scheme} that can take the values {\tt "FONLL"} for FONLL, {\tt "FFNS"}
-  for the FFN scheme and {\tt ZMVN"} for the ZM-VFN scheme. There is a
-  further possibility, that is {\tt FFN0}, which refers to the
-  zero-mass limit of the FFN scheme.
+\item the real variable {\tt x} that is the value of the Bjorken
+  variable where the DIS observables are computed.
+\item the real variable {\tt q0} that is the value of the initial
+  scale (in GeV) used in the PDF evolution. This entry is used only if
+  the APFEL internal evolution is used.
+\item the real variable {\tt q} that is the value of the scale (in
+  GeV) where the DIS observable is computed.
+\item the real variable {\tt y} that is the value of the inelasticity
+  where the DIS observables are computed.
+\item The string variable {\tt proc} that can take the values {\tt
+    "EM"} for the electro-magnetic DIS computation (photon only exchange),
+  {\tt "NC"} for the neutral current computation and {\tt CC"} for a
+  charged current computation.
+\item The string variable {\tt scheme} that can take the values {\tt
+    "FONLL"} for FONLL, {\tt "FFNS"} for the FFN scheme and {\tt ZMVN"}
+  for the ZM-VFN scheme. There is a further possibility, that is {\tt
+    FFN0}, which refers to the zero-mass limit of the FFN scheme.
 \item The integer variable {\tt pto} that can take the values 0, 1 or
-  2. The user should be aware of the fact that when chosing {\tt
-    pto=1} with {\tt scheme="FONLL"} the code automatically uses the
-  FONLL-A scheme while when chosing {\tt
-    pto=2} with {\tt scheme="FONLL"} the code automatically uses the
-  FONLL-C scheme. As for the FONLL-B scheme, we
-  plan to implement it in one of the next releases.
-\item The string variable {\tt pdfset} that can take any of the PDF set
-  names included in LHAPDF (including the {\tt .LHgrid} extension,
-  $e.g$ {\tt pdfset ="NNPDF23\_nnlo\_as\_0118.LHgrid"}). This way APFEL will use
-  the selected PDF set to compute the DIS observables using the evolution
-  given in the grid itself. As an alternative, the user can choose {\tt
-    pdfset="APFEL"}. This way the DIS observables will be computed
-  using the evolution provided by APFEL bewteen the scales {\tt q0} and {\tt
-    q}. For the setting of the PDF evolution, the user can refer to
-  the APFEL manual.
-\item The integer value {\tt irep} that specifies the replica of the PDF
-  set to be used in the computation.
+  2. The user should be aware of the fact that when choosing {\tt pto=1}
+  with {\tt scheme="FONLL"} the code automatically uses the FONLL-A
+  scheme while when chosing {\tt pto=2} with {\tt scheme="FONLL"} the
+  code automatically uses the FONLL-C scheme. As for the FONLL-B scheme,
+  we plan to implement it in one of the next releases.
+\item The string variable {\tt pdfset} that can take any of the PDF
+  set names included in LHAPDF (including the {\tt .LHgrid} extension,
+  $e.g$ {\tt pdfset ="NNPDF23\_nnlo\_as\_0118.LHgrid"}). This way APFEL
+  will use the selected PDF set to compute the DIS observables using the
+  evolution given in the grid itself. As an alternative, the user can
+  choose {\tt pdfset="APFEL"}. This way the DIS observables will be
+  computed using the evolution provided by APFEL bewteen the scales {\tt
+    q0} and {\tt q}. For the setting of the PDF evolution, the user can
+  refer to the APFEL manual.
+\item The integer value {\tt irep} that specifies the replica of the
+  PDF set to be used in the computation.
 \item The string variable {\tt target} that takes the value {\tt
-    "PROTON"} in case the target is a proton, {\tt "NEUTRON"} in case
-  the target is a netron (assuming the isospin symmetry) or {\tt
-    "ISOSCALAR"} if the target is an isoscalar, $e.g.$ a
-  deuteron (also this option assumes isospin asymmetry). There is a
-  further option which is {\tt "IRON"} which in addition uses the cross-section
+    "PROTON"} in case the target is a proton, {\tt "NEUTRON"} in case the
+  target is a netron (assuming the isospin symmetry) or {\tt
+    "ISOSCALAR"} if the target is an isoscalar, $e.g.$ a deuteron (also
+  this option assumes isospin asymmetry). There is a further option
+  which is {\tt "IRON"} which in addition uses the cross-section
   normalization used in the NeTeV experiment which is on iron nuclei.
 \item The string variable {\tt proj} that takes the values {\tt
-    "ELECTRON"} and {\tt "POSITRON"} if {\tt proc="EM"} or {\tt "NC"}
-  in case the projectile is either an electron or a positron. If
-  instead {\tt proc="CC"} the variable {\tt proj} can also take the
-  values {\tt "NEUTRINO"} or {\tt "ANTINEUTRINO"} with obviuos meaning.
+    "ELECTRON"} and {\tt "POSITRON"} if {\tt proc="EM"} or {\tt "NC"} in
+  case the projectile is either an electron or a positron. If instead
+  {\tt proc="CC"} the variable {\tt proj} can also take the values {\tt
+    "NEUTRINO"} or {\tt "ANTINEUTRINO"} with obvious meaning.
 \end{itemize}
 
-Once all these input parameters have been provided, the output
-array variables are {\tt F2, F3, FL} and {\tt sigma}. Each of them has
-5 entries corresponding to light, charm, bottom, top and total
-components of the corresponding quantity.
-The user should be careful because in the FORTRAN interface the arrays
-are numerated from 3 to 7 ($e.g.$ {\tt F2(3)} = $F_2^l$, {\tt F2(4)} =
-$F_2^c$, {\tt F2(5)} = $F_2^b$, {\tt F2(6)} = $F_2^t$, {\tt F2(7)} =
-$F_2^p$) while in the C++ version they are numerated from 0 to 4 ($e.g.$ {\tt F2(0)} = $F_2^l$, {\tt F2(1)} =
-$F_2^c$, {\tt F2(2)} = $F_2^b$, {\tt F2(3)} = $F_2^t$, {\tt F2(4)} =
-$F_2^p$)
-
+Once all these input parameters have been provided, the output array
+variables are {\tt F2, F3, FL} and {\tt sigma}. Each of them has 5
+entries corresponding to light, charm, bottom, top and total
+components of the corresponding quantity.  The user should be careful
+because in the FORTRAN interface the arrays are numerated from 3 to 7
+($e.g.$ {\tt F2(3)} = $F_2^l$, {\tt F2(4)} = $F_2^c$, {\tt F2(5)} =
+$F_2^b$, {\tt F2(6)} = $F_2^t$, {\tt F2(7)} = $F_2^p$) while in the
+C++ version they are numerated from 0 to 4 ($e.g.$ {\tt F2(0)} =
+$F_2^l$, {\tt F2(1)} = $F_2^c$, {\tt F2(2)} = $F_2^b$, {\tt F2(3)} =
+$F_2^t$, {\tt F2(4)} = $F_2^p$)
 
 \section{Computing DIS Structure Functions on a Grid: the New DIS Module}
 
@@ -148,8 +146,8 @@ In order to speed up and optimize the compution of the DIS structure
 functions in {\tt APFEL} we decided to use the same technology used
 for the PDF evolution. In fact, up to version 2.0.0, the computation
 of such observables in {\tt APFEL} was perfomed by directly
-convoluting PDFs with the coefficient functions by mean of a
-numerical integration.
+convoluting PDFs with the coefficient functions by mean of a numerical
+integration.
 
 Now the aim is that of precomputing on a grid the convolution of the
 coefficient functions with a set of interpolating polynomials. This
@@ -159,104 +157,125 @@ with any PDF set is instead very fast. In addition, as we will see
 below, this approach provides a very natural framework to combine
 precomputed coefficient functions and evolution operators, so that any
 prediction of structure functions at any scale $Q$ can be obtained
-very quickly by convolution with PDFs at some initial scale $Q_0$. 
+very quickly by convolution with PDFs at some initial scale $Q_0$.
 Ultimately, this is particularly suitable for PDF fits.
-
 
 \subsection{Zero Mass Structure Functions}
 
 A structure function in the Zero-Mass (ZM) scheme is given by the
 following convolution:
 \begin{equation}
-F(x,Q) = \sum_{i=g,q}x\int_x^1\frac{dy}y C_i\left(\frac{x}{y},\alpha_s(Q)\right)q_i(y,Q)\,,
+  F(x,Q) = \sum_{i=g,q}x\int_x^1\frac{dy}y
+  C_i\left(\frac{x}{y},\alpha_s(Q)\right)q_i(y,Q)\,,
 \end{equation}
-Now, defining $t = \ln (Q^2)$, $\widetilde{C}_i^{(n)}(y,t) = yC_i^{(n)}(y,\alpha_s(Q))$
-and $\widetilde{q}_i(y,t) = y q_i(y,Q)$, the integral above can be
-written as:
+Now, defining $t = \ln (Q^2)$,
+$\widetilde{C}_i^{(n)}(y,t) = yC_i^{(n)}(y,\alpha_s(Q))$ and
+$\widetilde{q}_i(y,t) = y q_i(y,Q)$, the integral above can be written
+as:
 \begin{equation}\label{exact}
-F(x,t) = \sum_{i=g,q}\int_x^1\frac{dy}y \widetilde{C}_i\left(\frac{x}{y},t\right)\widetilde{q}_i(y,t)\,.
+  F(x,t) = \sum_{i=g,q}\int_x^1\frac{dy}y
+  \widetilde{C}_i\left(\frac{x}{y},t\right)\widetilde{q}_i(y,t)\,.
 \end{equation}
 But, using a suitable interpolation basis, we can write:
 \begin{equation}
-\tilde{q}_i(y,t)=\sum^{N_{x}}_{\alpha=0}w_{\alpha}^{(k)}(y)\tilde{q}_i(x_{\alpha},t)\,,
+  \tilde{q}_i(y,t)=\sum^{N_{x}}_{\alpha=0}w_{\alpha}^{(k)}(y)\tilde{q}_i(x_{\alpha},t)\,,
 \end{equation}
 so that eq. (\ref{exact}) becomes:
 \begin{equation}
-F(x,t) = \sum_{i=g,q}\sum^{N_{x}}_{\alpha=0}\left[\int_x^1\frac{dy}y \widetilde{C}_i\left(\frac{x}{y},t\right) w_{\alpha}^{(k)}(y)\right]\tilde{q}_i(x_{\alpha},t)\,.
+  F(x,t) =
+  \sum_{i=g,q}\sum^{N_{x}}_{\alpha=0}\left[\int_x^1\frac{dy}y
+    \widetilde{C}_i\left(\frac{x}{y},t\right)
+    w_{\alpha}^{(k)}(y)\right]\tilde{q}_i(x_{\alpha},t)\,.
 \end{equation}
 Now let's assume that $x$ is on the grid, so that $x = x_\beta$. This
 way we have:
 \begin{equation}
-F(x_\beta,t) = \sum_{i=g,q}\sum^{N_{x}}_{\alpha=0}\underbrace{\left[\int_{x_\beta}^1\frac{dy}y \widetilde{C}_i\left(\frac{x_\beta}{y},t\right) w_{\alpha}^{(k)}(y)\right]}_{\Gamma_{i,\beta\alpha}(t)}\tilde{q}(x_{\alpha},t)\,.
+  F(x_\beta,t) =
+  \sum_{i=g,q}\sum^{N_{x}}_{\alpha=0}\underbrace{\left[\int_{x_\beta}^1\frac{dy}y
+      \widetilde{C}_i\left(\frac{x_\beta}{y},t\right)
+      w_{\alpha}^{(k)}(y)\right]}_{\Gamma_{i,\beta\alpha}(t)}\tilde{q}(x_{\alpha},t)\,.
 \end{equation}
 
 Using the same arguments presented in the evolution code notes, we
 have that:
-\begin{equation}
-\Gamma_{i,\beta\alpha}(t) \neq 0 \quad\mbox{for}\quad\beta\leq\alpha\,,
+\begin{equation} 
+  \Gamma_{i,\beta\alpha}(t) \neq 0
+  \quad\mbox{for}\quad\beta\leq\alpha\,,
 \end{equation}
 and:
 \begin{equation}
-\Gamma_{i,\beta\alpha}(t) = \int_{c}^d\frac{dy}y \widetilde{C}_i\left(y,t\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)
+  \Gamma_{i,\beta\alpha}(t) = \int_{c}^d\frac{dy}y
+  \widetilde{C}_i\left(y,t\right)
+  w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)
 \end{equation}
 with:
 \begin{equation}\label{bounds2}
-c =  \mbox{max}(x_\beta,x_\beta/x_{\alpha+1}) \quad\mbox{and}\quad d = \mbox{min}(1,x_\beta/x_{\alpha-k}) \,.
+  c =
+  \mbox{max}(x_\beta,x_\beta/x_{\alpha+1}) \quad\mbox{and}\quad d =
+  \mbox{min}(1,x_\beta/x_{\alpha-k}) \,.
 \end{equation}
-The same symmetries holding for the splitting function case hold also here.
+The same symmetries holding for the splitting function case hold also
+here.
 
 \subsubsection{Coefficient Functions Treatment}
 
-The struncture of the DIS coefficient functions is very similar to
+The structure of the DIS coefficient functions is very similar to
 that of splitting functions with only one small complication, that is
 the presence of a more divergent singular term. In practice the
 structure of the DIS coefficient functions is the following:
 \begin{equation}\label{CFstructure}
-\widetilde{C}_{i}(x,t) = xC_{i}^{R}(x,t) +
-xC_{i}^{S1}(t)\left[\frac{1}{1-x}\right]_+ +
-xC_{i}^{S2}(t)\left[\frac{\ln(1-x)}{1-x}\right]_+ + xC_{i}^{L}(t)\delta(1-x)\,.
-\end{equation}
-The term proportional to $C_{i}^{S2}$ can be treated, considering that:
+  \widetilde{C}_{i}(x,t) =
+  xC_{i}^{R}(x,t) + xC_{i}^{S1}(t)\left[\frac{1}{1-x}\right]_+ +
+  xC_{i}^{S2}(t)\left[\frac{\ln(1-x)}{1-x}\right]_+ +
+  xC_{i}^{L}(t)\delta(1-x)\,.
+\end{equation} 
+The term proportional to $C_{i}^{S2}$ can be treated, considering
+that:
 \begin{equation}
-\begin{array}{rcl}
-\displaystyle \int_c^ddy\left[\frac{\ln(1-y)}{1-y}\right]_+f(y)
-&=&\displaystyle \int_c^ddy\frac{\ln(1-y)}{1-y}\left[f(y)-f(1)\theta(d-1)\right]\\
-\\
-&+&\displaystyle \frac12 f(1) \ln^2(1-c)\theta(d-1)
+  \begin{array}{rcl} \displaystyle
+    \int_c^ddy\left[\frac{\ln(1-y)}{1-y}\right]_+f(y) &=&\displaystyle
+                                                          \int_c^ddy\frac{\ln(1-y)}{1-y}\left[f(y)-f(1)\theta(d-1)\right]\\ \\
+                                                      &+&\displaystyle \frac12 f(1) \ln^2(1-c)\theta(d-1)
 \end{array}
 \end{equation}
 On the same line of splitting functions, we know that the coefficient
 functions ha the following perturbative expansion:
 \begin{equation}
-C_{i}^{J}(x,t) = \sum_{n=0}^{N}a_s^{n}(t)C_{i}^{J,(n)}(x)\qquad\mbox{with}\qquad J=R,S1,S2,L
+  C_{i}^{J}(x,t) =
+  \sum_{n=0}^{N}a_s^{n}(t)C_{i}^{J,(n)}(x)\qquad\mbox{with}\qquad
+  J=R,S1,S2,L
 \end{equation}
 
 Therefore one has that:
 \begin{equation}\label{Kernels}
 \begin{array}{c}
-\displaystyle \Gamma_{j,\beta\alpha}(t) = \\
-\\
-\displaystyle \sum_{n=0}^{N} a_s^{n}(t) \bigg\{\int^{d}_{c}dy\left[{C}_{i}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{C}_{i}^{S1,(n)}+{C}_{i}^{S2,(n)}\ln(1-y)}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\theta(d-1)\right)\right]\\
-\\
-\displaystyle +\left[{C}_{i}^{S1,(n)}\ln(1-c)\theta(d-1)+\frac12{C}_{i}^{S2,(n)}\ln^2(1-c)\theta(d-1)+{C}_{i}^{L,(n)}\right]\delta_{\beta\alpha}\bigg\}\,.
+  \displaystyle \Gamma_{j,\beta\alpha}(t) = \\ \\
+  \displaystyle \sum_{n=0}^{N} a_s^{n}(t)
+  \bigg\{\int^{d}_{c}dy\left[{C}_{i}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{C}_{i}^{S1,(n)}+{C}_{i}^{S2,(n)}\ln(1-y)}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\theta(d-1)\right)\right]\\
+  \\ \displaystyle
+  +\left[{C}_{i}^{S1,(n)}\ln(1-c)\theta(d-1)+\frac12{C}_{i}^{S2,(n)}\ln^2(1-c)\theta(d-1)+{C}_{i}^{L,(n)}\right]\delta_{\beta\alpha}\bigg\}\,.
 \end{array}
 \end{equation}
 
 Calling:
 \begin{equation}
-\begin{array}{c}
-\displaystyle \Gamma_{i,\beta\alpha}^{(n)}(t) = \\
-\\
-\displaystyle \int^{d}_{c}dy\left[{C}_{i}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{C}_{i}^{S1,(n)}+{C}_{i}^{S2,(n)}\ln(1-y)}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\theta(d-1)\right)\right]\\
-\\
-\displaystyle +\left[{C}_{i}^{S1,(n)}\ln(1-c)\theta(d-1)+\frac12{C}_{i}^{S2,(n)}\ln^2(1-c)\theta(d-1)+{C}_{i}^{L,(n)}\right]\delta_{\beta\alpha}\,,
+\begin{array}{c} 
+  \displaystyle \Gamma_{i,\beta\alpha}^{(n)}(t) = \\ \\
+  \displaystyle
+  \int^{d}_{c}dy\left[{C}_{i}^{R,(n)}(y)w_{\alpha}\left(\frac{x_\beta}{y}\right)+\frac{{C}_{i}^{S1,(n)}+{C}_{i}^{S2,(n)}\ln(1-y)}{1-y}\left(w_{\alpha}\left(\frac{x_\beta}{y}\right)-\delta_{\beta\alpha}\theta(d-1)\right)\right]\\
+  \\ \displaystyle
+  +\left[{C}_{i}^{S1,(n)}\ln(1-c)\theta(d-1)+\frac12{C}_{i}^{S2,(n)}\ln^2(1-c)\theta(d-1)+{C}_{i}^{L,(n)}\right]\delta_{\beta\alpha}\,,
 \end{array}
 \end{equation}
-we have that:
-\begin{equation}\label{splittingexp}
-\Gamma_{i,\beta\alpha}(t) = \sum_{n=0}^{N} a_s^{n}(t) \Gamma_{i,\beta\alpha}^{(n)}\,,
-\end{equation}
-and the integrals $\Gamma_{i,\beta\alpha}^{(n)}$ do not depend on the energy therefore, once the grid (and the number of active flavours) has been fixed, they can be evaluate once and for all at the beginning and used for the convolution at any scale.
+ we have that:
+\begin{equation}\label{splittingexp} 
+  \Gamma_{i,\beta\alpha}(t) =
+  \sum_{n=0}^{N} a_s^{n}(t) \Gamma_{i,\beta\alpha}^{(n)}\,,
+\end{equation} 
+and the integrals $\Gamma_{i,\beta\alpha}^{(n)}$ do not depend on the
+energy therefore, once the grid (and the number of active flavours)
+has been fixed, they can be evaluate once and for all at the beginning
+and used for the convolution at any scale.
 
 Now, assuming to have computed the evolution operator
 $M_{ij,\alpha\beta}(t,t_0)$ between the scales $t=\ln(Q^2)$ and
@@ -266,8 +285,10 @@ the prediction for the structure function $F$ on the grid in terms of
 PDFs at the initial scale $Q_0$ just by performing the following
 convolution:
 \begin{equation}\label{CFtimesEvolution}
-F(x_\alpha,t) = \Gamma_{i,\alpha\beta}(t) M_{ij,\beta\gamma}(t,t_0) \tilde{q}_j(x_{\gamma},t_0)
-\end{equation}
+  F(x_\alpha,t) =
+  \Gamma_{i,\alpha\beta}(t) M_{ij,\beta\gamma}(t,t_0)
+  \tilde{q}_j(x_{\gamma},t_0)
+\end{equation} 
 where a sum of the repeated indeces is understood.
 
 Before proceeding to treatment of the massive coefficient functions,
@@ -282,67 +303,62 @@ and the $W^\pm$ in the charged-current case.
 
 It is opportune at this point to mention that, when considering
 charged-current observables at NLO in the massive scheme, there is a
-further contribution to be added to eq.~(\ref{CFstructure}) that has the form:
-\begin{equation}
-C_{i}^{SL}(t)\frac{d}{dx}\delta(1-x)\,.
-\end{equation}
-Starting from the relation:
-\begin{equation}
-x\frac{d}{dx}\delta(x) = -\delta(x)\,,
-\end{equation}
-one can easily show that:
-\begin{equation}\label{KeyIdentity}
-\frac{d}{dx}\delta(1-x) = \left[\frac{\delta(1-x)}{1-x}\right]_+\,.
-\end{equation}
-To make sure that this identity is correct, we try to convolute both
-the r.h.s. and the l.h.s. of eq.~(\ref{KeyIdentity}) with the test
-function $f(x)$, such that $f(1) = 0$, to see what is the result and
-whether the results are equal. Using the l.h.s. we have:
-\begin{equation}
-\int_x^1dy\,f(y)\,\frac{d}{dx}\delta(1-y) =
+further contribution to be added to eq.~(\ref{CFstructure}) that has
+the form:
+\begin{equation} C_{i}^{SL}(t)\frac{d}{dx}\delta(1-x)\,.
+\end{equation} Starting from the relation:
+\begin{equation} x\frac{d}{dx}\delta(x) = -\delta(x)\,,
+\end{equation} one can easily show that:
+\begin{equation}\label{KeyIdentity} \frac{d}{dx}\delta(1-x) =
+\left[\frac{\delta(1-x)}{1-x}\right]_+\,.
+\end{equation} To make sure that this identity is correct, we try to
+convolute both the r.h.s. and the l.h.s. of eq.~(\ref{KeyIdentity})
+with the test function $f(x)$, such that $f(1) = 0$, to see what is
+the result and whether the results are equal. Using the l.h.s. we
+have:
+\begin{equation} \int_x^1dy\,f(y)\,\frac{d}{dx}\delta(1-y) =
 \underbrace{f(y)\delta(1-y)\Big{|}_{x}^1}_{=0} -
-\int_x^1dy\frac{df(y)}{dy}\delta(1-y) = -\frac{df(y)}{dy}\bigg{|}_{y=1}\,,
-\end{equation}
-while using the r.h.s.(\footnote{Since the delta function selects the
-  point $y=1$ in the following integral, the ``incomplete'' integral of
-  plus-prescripted function does not give rise to any residual
-  logarithm of the form $\ln(1-x)$.}):
+\int_x^1dy\frac{df(y)}{dy}\delta(1-y) =
+-\frac{df(y)}{dy}\bigg{|}_{y=1}\,,
+\end{equation} while using the r.h.s.(\footnote{Since the delta
+function selects the point $y=1$ in the following integral, the
+``incomplete'' integral of plus-prescripted function does not give
+rise to any residual logarithm of the form $\ln(1-x)$.}):
 \begin{equation}
 \begin{array}{c}
-\displaystyle \int_x^1dy\,f(y)\,\left[\frac{\delta(1-y)}{1-y}\right]_+ =
-\int_x^1dy\frac{f(y)-f(1)}{1-y}\delta(1-y) = \lim_{\epsilon\rightarrow
-  0^+} \int_x^1dy\frac{f(y)-f(1)}{1-y}\delta(1-\epsilon-y) =\\
-\\
-\displaystyle - \lim_{\epsilon\rightarrow
-  0^+} \frac{f(1)-f(1-\epsilon)}{\epsilon} =
--\frac{df(y)}{dy}\bigg{|}_{y=1}\,.
+  \displaystyle
+  \int_x^1dy\,f(y)\,\left[\frac{\delta(1-y)}{1-y}\right]_+ =
+  \int_x^1dy\frac{f(y)-f(1)}{1-y}\delta(1-y) = \lim_{\epsilon\rightarrow
+  0^+} \int_x^1dy\frac{f(y)-f(1)}{1-y}\delta(1-\epsilon-y) =\\ \\
+  \displaystyle - \lim_{\epsilon\rightarrow 0^+}
+  \frac{f(1)-f(1-\epsilon)}{\epsilon} =
+  -\frac{df(y)}{dy}\bigg{|}_{y=1}\,.
 \end{array}
-\end{equation}
+\end{equation} 
 So the results are equal and the distributions in
 eq.~(\ref{KeyIdentity}) when convoluted with a test function extract
 its derivative in $y=1$, up to a minus sign.
 
-At the end of the day one has to include inside the curly brackets of eq.~(\ref{Kernels}) the term:
+At the end of the day one has to include inside the curly brackets of
+eq.~(\ref{Kernels}) the term:
 \begin{equation}
-- C_{i}^{SL,(n)}\frac{dw_\alpha^{(k)}(x_\beta)}{dx}
+  - C_{i}^{SL,(n)}\frac{dw_\alpha^{(k)}(x_\beta)}{dx}
 \end{equation}
 
 In addition, when using a Lagrange interpolation, one can show that
 the first derivative of the Lagrange polynomials have the form:
 \begin{equation}\label{LagrangFirstDerivative}
-\frac{d w_\alpha^{(k)}(x_\rho)}{dx} =
-\left\{
-\begin{array}{ll}
-\displaystyle \sum_{\sigma=0\atop \sigma\neq\alpha}^k\frac{1}{x_\alpha-x_\sigma}  & \quad \rho = \alpha \\
-\\
-\displaystyle \frac{1}{x_\alpha-x_\rho}
-\prod_{\sigma=0\atop\sigma\neq\alpha,\rho}^k\frac{x_\rho - x_\sigma}{x_\alpha-x_\sigma} & \quad \rho \neq \alpha
-\end{array}
-\right.
+  \frac{d
+    w_\alpha^{(k)}(x_\rho)}{dx} = \left\{
+    \begin{array}{ll} \displaystyle \sum_{\sigma=0\atop
+      \sigma\neq\alpha}^k\frac{1}{x_\alpha-x_\sigma} & \quad \rho = \alpha
+      \\ \\ \displaystyle \frac{1}{x_\alpha-x_\rho}
+      \prod_{\sigma=0\atop\sigma\neq\alpha,\rho}^k\frac{x_\rho -
+      x_\sigma}{x_\alpha-x_\sigma} & \quad \rho \neq \alpha
+    \end{array} \right.
 \end{equation}
 The relation in eq.~(\ref{LagrangFirstDerivative}) is proved in the
 ``Lagrange\_derivative.pdf'' notes.
-
 
 \subsection{Massive Structure Functions}
 
@@ -350,7 +366,7 @@ Now we can proceed considering the massive structure functions. When
 computing structure functions in the massive scheme, there is a
 further complication that complicates a fast precomputation of the
 cefficient functions on the $x$-space grid and it is the fact that the
-coefficients of the perturbative expansion of the massive coeffient
+coefficients of the perturbative expansion of the massive coefficient
 functions carry an intrinsic dependence on the scale of the process.
 This prevents a scale independent pre-tabulation of the coefficient
 functions on on $x$-space grid.
@@ -361,7 +377,7 @@ the scale at which the structure functions are evaluated. Actually the
 most efficient way of precomputing the massive coefficient functions
 is on $\xi$-space grid, where $\xi$ is defined as:
 \begin{equation}
-\xi = \frac{Q^2}{m_H^2}\,.
+  \xi = \frac{Q^2}{m_H^2}\,.
 \end{equation}
 where $m_H$ is the mass of the heavy quark under consideration.  In
 fact, for dimentional reasons, massive coefficient functions depend on
@@ -369,31 +385,35 @@ the scale $Q$ through $\xi$. Neglecting for the moment the dependence
 on the renormalization and on the factorization scales, the massive
 coefficient functions allow for the following expansion:
 \begin{equation}
-C_i(x,Q,m_H) = \sum_n a_s^n(t)C_i^{(n)}(x,\xi)\,.
+  C_i(x,Q,m_H) = \sum_n a_s^n(t)C_i^{(n)}(x,\xi)\,.
 \end{equation}
 Given this relation, the massive analogous of the
 eq.~(\ref{splittingexp}) is:
 \begin{equation}\label{splittingexp}
-\Gamma_{i,\beta\alpha}(Q,m_H) = \sum_n a_s^{n}(t) \Gamma_{i,\beta\alpha}^{(n)}(\xi)\,.
+  \Gamma_{i,\beta\alpha}(Q,m_H) =
+  \sum_n a_s^{n}(t) \Gamma_{i,\beta\alpha}^{(n)}(\xi)\,.
 \end{equation}
 In order not to recompute the operator
 $\Gamma_{i,\beta\alpha}^{(n)}(\xi)$ any time that $\xi$ changes, we
 can tabulate the on a grid in $\xi$,
-$\{\xi_1,\dots,\xi_\tau,\dots,\xi_{N_\xi}\}$, definining:
+$\{\xi_1,\dots,\xi_\tau,\dots,\xi_{N_\xi}\}$, defining:
 \begin{equation}
-\Gamma_{i,\beta\alpha,\tau}^{(n)} = \Gamma_{i,\beta\alpha}^{(n)}(\xi_\tau),.
+  \Gamma_{i,\beta\alpha,\tau}^{(n)} =
+  \Gamma_{i,\beta\alpha}^{(n)}(\xi_\tau),.
 \end{equation}
 and then interpolate to obtain the operator for a generic value of
 $\xi$. We have chosen to use a linear interpolation so that:
 \begin{equation}
-\Gamma_{i,\beta\alpha}^{(n)}(\xi) =
-c^{(0)}(\xi)\Gamma_{i,\beta\alpha,\tau}^{(n)} + c^{(1)}(\xi)\Gamma_{i,\beta\alpha,\tau+1}^{(n)}\,,
+  \Gamma_{i,\beta\alpha}^{(n)}(\xi) =
+  c^{(0)}(\xi)\Gamma_{i,\beta\alpha,\tau}^{(n)} +
+  c^{(1)}(\xi)\Gamma_{i,\beta\alpha,\tau+1}^{(n)}\,,
 \end{equation}
 with:
 \begin{equation}
-c^{(0)}(\xi) = \frac{\ln\xi_{\tau+1} - \ln\xi}{\ln\xi_{\tau+1} -
-  \ln\xi_\tau}\quad\mbox{and}\quad c^{(1)}(\xi) =
-\frac{\ln\xi - \ln\xi_\tau}{\ln\xi_{\tau+1} - \ln\xi_\tau} \,,
+  c^{(0)}(\xi) = \frac{\ln\xi_{\tau+1} -
+    \ln\xi}{\ln\xi_{\tau+1} - \ln\xi_\tau}\quad\mbox{and}\quad
+  c^{(1)}(\xi) = \frac{\ln\xi - \ln\xi_\tau}{\ln\xi_{\tau+1} -
+    \ln\xi_\tau} \,,
 \end{equation}
 provided that $\xi_\tau \leq \xi < \xi_{\tau+1}$.
 
@@ -405,7 +425,7 @@ be quickly computed by interpolation.
 
 As far as the neutral current coefficient functions are concerned,
 beyond LO(\footnote{We remind that, in the neutral current case, the
-  LO is order $\alpha_s$.}), a close analytical form is not available
+LO is order $\alpha_s$.}), a close analytical form is not available
 and only a semi-analitical form~\cite{Laenen:1992xs} which is not
 suitable for a fast numerical implementation. The authors of
 Ref.~\cite{Alekhin:2003ev} have used a simple parametrization to fit
@@ -415,16 +435,17 @@ $x$ space providing a fast and accurate enough alternative to the
 original implemetation. The parametrization of
 Ref.~\cite{Alekhin:2003ev} has the form:
 \begin{equation}
-C(x,\xi) = \theta(\rho-x)(\rho-x)^{-\kappa}\sum_{k=0}^K
-a_k(\rho)x^k\quad\mbox{with}\quad\rho = \frac{\xi}{\xi+4}\,,
+  C(x,\xi) =
+  \theta(\rho-x)(\rho-x)^{-\kappa}\sum_{k=0}^K
+  a_k(\rho)x^k\quad\mbox{with}\quad\rho = \frac{\xi}{\xi+4}\,,
 \end{equation}
 and the authors provide the numerical values of $\kappa$, $K$ and
 $a_k(\rho)$ for all the relevant coefficient functions at LO
-($\mathcal{O}(\alpha_s)$) and NLO ($\mathcal{O}(\alpha_s^2)$) 
-tabulated on a $\xi$-space grid for large enough range in $\xi$.
-Note the presence of the $\theta$-function that has the scope of
-reducing the phase scace available for the process due the production
-of two heavy quarks in the final state.
+($\mathcal{O}(\alpha_s)$) and NLO ($\mathcal{O}(\alpha_s^2)$)
+tabulated on a $\xi$-space grid for large enough range in $\xi$.  Note
+the presence of the $\theta$-function that has the scope of reducing
+the phase scace available for the process due the production of two
+heavy quarks in the final state.
 
 In {\tt APFEL} we make use of the parametrization above only for the
 NLO coefficient functions as the exact form of the LO ones is
@@ -456,64 +477,67 @@ coeffincient functions are know only up to $\mathcal{O}(\alpha_s)$
 (NLO), therefore a proper computation of charged-current structure
 functions the NNLO version of the FONLL scheme (called FONLL-C) is
 impossible. However, the best we can do when computing charged-current
-structure functions in the FONLL-C scheme is to set the NNLO contributions to
-zero in the massive sectors but keeping those in the massless sector, as
-well as using NNLO evolution for PDFs and $\alpha_s$.
+structure functions in the FONLL-C scheme is to set the NNLO
+contributions to zero in the massive sectors but keeping those in the
+massless sector, as well as using NNLO evolution for PDFs and
+$\alpha_s$.
 
 The charged-current massive structure functions, like the other
 structure functions, are given by the convolution of PDFs with
-coefficient functions. Considering the heavy-quark $H$ structure functions in the
-approximation of diagonal CKM matrix, the definitions are:
+coefficient functions. Considering the heavy-quark $H$ structure
+functions in the approximation of diagonal CKM matrix, the definitions
+are:
 \begin{equation}\label{F1}
-F_1^H(x,Q,m_H)=\frac12\int_{\chi}^{1}\frac{dy}{y}\left[C_{1,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{1,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]
+  F_1^H(x,Q,m_H)=\frac12\int_{\chi}^{1}\frac{dy}{y}\left[C_{1,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{1,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]
 \end{equation}
 \begin{equation}\label{F2}
-F_2^H(x,Q,m_H)=\chi\int_{\chi}^{1}\frac{dy}{y}\left[C_{2,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{2,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]
+  F_2^H(x,Q,m_H)=\chi\int_{\chi}^{1}\frac{dy}{y}\left[C_{2,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{2,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]
 \end{equation}
 \begin{equation}\label{F3}
-F_3^H(x,Q,m_H)=\int_{\chi}^{1}\frac{dy}{y}\left[C_{3,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{3,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]
+  F_3^H(x,Q,m_H)=\int_{\chi}^{1}\frac{dy}{y}\left[C_{3,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{3,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]
 \end{equation}
 with:
 \begin{equation}
-\chi = x\left(1+\frac{m_H^2}{Q^2}\right) = \frac{x}{\lambda}\,,
+  \chi = x\left(1+\frac{m_H^2}{Q^2}\right) =
+  \frac{x}{\lambda}\,,
 \end{equation}
 where:
 \begin{equation}
-\lambda = \frac{Q^2}{Q^2+m_H^2} = \frac{\xi}{1+\xi}\,.
+  \lambda = \frac{Q^2}{Q^2+m_H^2} =
+  \frac{\xi}{1+\xi}\,.
 \end{equation}
 Now, defining:
 \begin{equation}
-F_L^H(x,Q,m_H) = F_2^H(x,Q,m_H) - 2xF_1^H(x,Q,m_H)\,,
+  F_L^H(x,Q,m_H) = F_2^H(x,Q,m_H) - 2xF_1^H(x,Q,m_H)\,,
 \end{equation}
 we have that:
 \begin{equation}\label{FL}
-F_L^H(x,Q,m_H)=\chi\int_{\chi}^{1}\frac{dy}{y}\left[C_{L,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{L,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]\,,
+  F_L^H(x,Q,m_H)=\chi\int_{\chi}^{1}\frac{dy}{y}\left[C_{L,q}(y,\xi)s\left(\frac{\chi}{y},Q\right)+C_{L,g}(y,\xi)g\left(\frac{\chi}{y},Q\right)\right]\,,
 \end{equation}
 where we have defined:
 \begin{equation}\label{clll}
-C_{L,q(g)}(y,\xi) = C_{2,q(g)}(y,\xi)-\lambda C_{1,q(g)}(y,\xi)
+  C_{L,q(g)}(y,\xi) =
+  C_{2,q(g)}(y,\xi)-\lambda C_{1,q(g)}(y,\xi)
 \end{equation}
 
 All the coefficient functions entering the structure functions above
 admit a perturbative expansion that at N$^N$LO reads:
 \begin{equation}
-C_{k,q(g)}(y,\xi) = \sum_{n=0}^N a_s^n(Q)
-C_{k,q(g)}^{(n)}(y,\xi)\,,\quad k = 1,2,3,L\,.
+  C_{k,q(g)}(y,\xi) = \sum_{n=0}^N a_s^n(Q)
+  C_{k,q(g)}^{(n)}(y,\xi)\,,\quad k = 1,2,3,L\,.
 \end{equation}
 In the following we will truncate the expansion at NLO.
 
 After the definitions above we can write down, first the LO
 coefficient functions. While at LO the gluon coefficient functions are
-all zero ($C_{k,g}^{(0)}(y,\xi)=0$), the quark coefficient functions are:
+all zero ($C_{k,g}^{(0)}(y,\xi)=0$), the quark coefficient functions
+are:
 \begin{equation}
 \begin{array}{l}
-\displaystyle C^{(0)}_{1,q}(x,\xi) = \delta(1-x)\,,\\
-\\
-\displaystyle C^{(0)}_{2,q}(x,\xi) = \delta(1-x) \,,\\
-\\
-\displaystyle C^{(0)}_{3,q}(x,\xi) = \delta(1-x) \,,\\
-\\
-\displaystyle C^{(0)}_{L,q}(x,\xi) = (1-\lambda)\delta(1-x) \,.
+  \displaystyle C^{(0)}_{1,q}(x,\xi) = \delta(1-x)\,,\\
+  \\ \displaystyle C^{(0)}_{2,q}(x,\xi) = \delta(1-x) \,,\\ \\
+  \displaystyle C^{(0)}_{3,q}(x,\xi) = \delta(1-x) \,,\\ \\
+  \displaystyle C^{(0)}_{L,q}(x,\xi) = (1-\lambda)\delta(1-x) \,.
 \end{array}
 \end{equation}
 
@@ -522,93 +546,84 @@ reported in Appendix A of Ref.~\cite{Gluck:1996ve}. However, before
 being implemented in {\tt APFEL} they need some manipulation. We start
 defining:
 \begin{equation}
-K_A=\frac{1}{\lambda}(1-\lambda)\ln(1-\lambda)\,.
+  K_A=\frac{1}{\lambda}(1-\lambda)\ln(1-\lambda)\,.
 \end{equation}
-In addition, in order to consider factorization scale variations, we also need to
-consider the splitting function:
+In addition, in order to consider factorization scale variations, we
+also need to consider the splitting function:
 \begin{equation}
-P_{qq}^{(0)}(z) = C_F\left[\frac{1+z^2}{(1-z)_+}+\frac32\delta(1-z)\right]=C_F\left[\frac{2}{(1-z)_+}-(1+z)+\frac32\delta(1-z)\right]\,,
+  P_{qq}^{(0)}(z) =
+  C_F\left[\frac{1+z^2}{(1-z)_+}+\frac32\delta(1-z)\right]=C_F\left[\frac{2}{(1-z)_+}-(1+z)+\frac32\delta(1-z)\right]\,,
 \end{equation}
 and we also define:
 \begin{equation}
-K_F^2 =\frac{Q^2}{\mu_F^2}\,.
+  K_F^2 =\frac{Q^2}{\mu_F^2}\,.
 \end{equation}
 
 The explicit expressions of the NLO quark coefficient functions read:
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{1,q}&=&\displaystyle 2C_F \bigg\{
-\bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
-\ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
-\\
-&-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
-\left(-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
-  z)\right)(1+z)+(3-z)+\frac{1}{\lambda^2}+\frac{z-1}{\lambda}\\
-\\
-&+&\displaystyle 2
-\left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
-2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
-\\
-&+& \displaystyle \frac{\lambda-1}{\lambda^2}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
-      z)^2}\right]_+\bigg\}
+  C^{(1)}_{1,q}&=&\displaystyle 2C_F \bigg\{
+                   \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
+                   \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\ \\ &-&\displaystyle
+                                                                      \frac{(1+z^2)\ln z}{1-z} +
+                                                                      \left(-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+                                                                      z)\right)(1+z)+(3-z)+\frac{1}{\lambda^2}+\frac{z-1}{\lambda}\\ \\
+               &+&\displaystyle 2 \left[\frac{2\ln(1-z)-\ln(1-\lambda
+                   z)}{1-z}\right]_++
+                   2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+  \\ &+& \displaystyle
+         \frac{\lambda-1}{\lambda^2}\left[\frac{1}{1-\lambda z}\right]_+
+         +\frac{1}{2}\left[\frac{1-z}{(1-\lambda z)^2}\right]_+\bigg\}
 \end{array}\,,
 \end{equation}
 
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{2,q}&=&\displaystyle 2C_F \bigg\{
-\bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
-\ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
-\\
-&-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
-\left(2-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
-  z)\right)(1+z)+\frac{1}{\lambda}\\
-\\
-&+&\displaystyle 2
-\left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
-2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
-\\
-&+& \displaystyle \frac{2\lambda^2-\lambda-1}{\lambda}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
-      z)^2}\right]_+\bigg\}
+  C^{(1)}_{2,q}&=&\displaystyle 2C_F \bigg\{
+                   \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
+                   \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\ \\ &-&\displaystyle
+                                                                      \frac{(1+z^2)\ln z}{1-z} +
+                                                                      \left(2-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+                                                                      z)\right)(1+z)+\frac{1}{\lambda}\\ \\ &+&\displaystyle 2
+                                                                                                                \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
+                                                                                                                2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+  \\ &+& \displaystyle
+         \frac{2\lambda^2-\lambda-1}{\lambda}\left[\frac{1}{1-\lambda
+         z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+         z)^2}\right]_+\bigg\}
 \end{array}\,,
 \end{equation}
 
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{3,q}&=&\displaystyle 2C_F \bigg\{
-\bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
-\ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
-\\
-&-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
-\left(1-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
-  z)\right)(1+z)+\frac{1}{\lambda}\\
-\\
-&+&\displaystyle 2
-\left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
-2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
-\\
-&+& \displaystyle \frac{\lambda-1}{\lambda}\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
-      z)^2}\right]_+\bigg\}
+  C^{(1)}_{3,q}&=&\displaystyle 2C_F \bigg\{
+                   \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+3\lambda}{2\lambda}K_A+\frac32
+                   \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\ \\ &-&\displaystyle
+                                                                      \frac{(1+z^2)\ln z}{1-z} +
+                                                                      \left(1-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+                                                                      z)\right)(1+z)+\frac{1}{\lambda}\\ \\ &+&\displaystyle 2
+                                                                                                                \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
+                                                                                                                2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+  \\ &+& \displaystyle \frac{\lambda-1}{\lambda}\left[\frac{1}{1-\lambda
+         z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+         z)^2}\right]_+\bigg\}
 \end{array}\,,
 \end{equation}
 
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{L,q}
-&=&\displaystyle 2C_F (1-\lambda)\bigg\{
-\bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
-\ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\
-\\
-&-&\displaystyle \frac{(1+z^2)\ln z}{1-z} +
-\left(-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
-  z)\right)(1+z)+3\\
-\\
-&+&\displaystyle 2 
-\left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
-2 \left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
-\\
-&-& \displaystyle 2\left[\frac{1}{1-\lambda z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
-      z)^2}\right]_+\bigg\} + 2C_F \left[\lambda K_A \delta(1-z) + (1+\lambda)z\right]
+  C^{(1)}_{L,q} &=&\displaystyle 2C_F
+                    (1-\lambda)\bigg\{
+                    \bigg(-4-\frac{1}{2\lambda}-2\zeta_2-\frac{1+\lambda}{2\lambda}K_A+\frac32
+                    \ln\frac{K_F^2}{\lambda}\bigg)\delta(1-z)\\ \\ &-&\displaystyle
+                                                                       \frac{(1+z^2)\ln z}{1-z} +
+                                                                       \left(-\ln\frac{K_F^2}{\lambda}-2\ln(1-z)+\ln(1-\lambda
+                                                                       z)\right)(1+z)+3\\ \\ &+&\displaystyle 2
+                                                                                                 \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++ 2
+                                                                                                 \left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
+  \\ &-& \displaystyle 2\left[\frac{1}{1-\lambda z}\right]_+
+         +\frac{1}{2}\left[\frac{1-z}{(1-\lambda z)^2}\right]_+\bigg\} + 2C_F
+         \left[\lambda K_A \delta(1-z) + (1+\lambda)z\right]
 \end{array}\,.
 \end{equation}
 
@@ -616,12 +631,13 @@ In order to proceed with our manipulations we need to define the
 generalized or incomplete +-prescription:
 \begin{equation}
 \begin{array}{c}
-\displaystyle \int_x^1 dz\left[f(z)\right]_+g(z) = \int_x^1
-dz\,f(z)\left[g(z)-g(1)\right]-g(1)\underbrace{\int_0^xdz\,f(z)}_{-R_f(x)}=\\
-\\
-\displaystyle \int_x^1 dz\left\{\left[f(z)\right]_++R_f(x)\delta(1-z)\right\}g(z)\,.
+  \displaystyle \int_x^1 dz\left[f(z)\right]_+g(z) =
+  \int_x^1
+  dz\,f(z)\left[g(z)-g(1)\right]-g(1)\underbrace{\int_0^xdz\,f(z)}_{-R_f(x)}=\\
+  \\ \displaystyle \int_x^1
+  dz\left\{\left[f(z)\right]_++R_f(x)\delta(1-z)\right\}g(z)\,.
 \end{array}
-\end{equation}
+\end{equation} 
 where the +-prescription in the r.h.s of the equation above should be
 understood in the usual way independently of the integration bounds.
 
@@ -629,24 +645,27 @@ Often the residual $R_f(x)$ function can be evaluated analytically by
 performing the integral, however sometimes it need to be evaluated
 numerically performing the integral in a numerical way. In particular
 the $+$-prescripted functions that enter the expressions above give
-rise to the following residual functions that can be computed analytically:
+rise to the following residual functions that can be computed
+analytically:
 \begin{equation}
--\int_0^x\frac{dz}{1-z} = \ln(1-x)\,,
+  -\int_0^x\frac{dz}{1-z} = \ln(1-x)\,,
 \end{equation}
 \begin{equation}
--\int_0^xdz\frac{\ln(1-z)}{1-z} = \frac12 \ln^2(1-x)\,,
+  -\int_0^xdz\frac{\ln(1-z)}{1-z} = \frac12
+  \ln^2(1-x)\,,
 \end{equation}
 \begin{equation}
--\int_0^x\frac{dz}{1-\lambda z} = \frac{1}{\lambda}\ln(1-\lambda x)\,,
+  -\int_0^x\frac{dz}{1-\lambda z} =
+  \frac{1}{\lambda}\ln(1-\lambda x)\,,
 \end{equation}
 \begin{equation}
--\int_0^xdz\frac{1-z}{(1-\lambda z)^2} =
-\frac{1}{\lambda^2}\ln(1-\lambda
-x)+\frac{1-\lambda}{\lambda}\frac{x}{1-\lambda x}\,,
+  -\int_0^xdz\frac{1-z}{(1-\lambda z)^2} =
+  \frac{1}{\lambda^2}\ln(1-\lambda
+  x)+\frac{1-\lambda}{\lambda}\frac{x}{1-\lambda x}\,,
 \end{equation}
 while we do not know how to solve analytically the integral:
 \begin{equation}
-R(x)=-\int_0^xdz\frac{\ln(1-\lambda z)}{1-z}
+  R(x)=-\int_0^xdz\frac{\ln(1-\lambda z)}{1-z}
 \end{equation}
 therefore we will compute it numerically.
 
@@ -656,191 +675,191 @@ using the standard definition at the price of adding to the local
 terms the following functions:
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{1,q}&\rightarrow& \displaystyle C^{(1)}_{1,q} +
-2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
-\\
-&&\displaystyle +\frac{\lambda-1}{\lambda^3}\ln(1-\lambda
-  x)+\frac{1}{2\lambda^2}\ln(1-\lambda
-x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
+  C^{(1)}_{1,q}&\rightarrow& \displaystyle
+                             C^{(1)}_{1,q} +
+                             2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
+  \\ &&\displaystyle +\frac{\lambda-1}{\lambda^3}\ln(1-\lambda
+        x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+        x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
 \end{array}\,,
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{2,q}&\rightarrow& \displaystyle C^{(1)}_{2,q} +
-2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
-\\
-&&\displaystyle +\frac{2\lambda^2-\lambda-1}{\lambda^2}\ln(1-\lambda
-  x)+\frac{1}{2\lambda^2}\ln(1-\lambda
-x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
+  C^{(1)}_{2,q}&\rightarrow& \displaystyle
+                             C^{(1)}_{2,q} +
+                             2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
+  \\ &&\displaystyle
+        +\frac{2\lambda^2-\lambda-1}{\lambda^2}\ln(1-\lambda
+        x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+        x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
 \end{array}\,,
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{3,q}&\rightarrow& \displaystyle C^{(1)}_{3,q} +
-2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
-\\
-&&\displaystyle +\frac{\lambda-1}{\lambda^2}\ln(1-\lambda
-  x)+\frac{1}{2\lambda^2}\ln(1-\lambda
-x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
+  C^{(1)}_{3,q}&\rightarrow& \displaystyle
+                             C^{(1)}_{3,q} +
+                             2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
+  \\ &&\displaystyle +\frac{\lambda-1}{\lambda^2}\ln(1-\lambda
+        x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+        x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
 \end{array}\,,
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{L,q}&\rightarrow& \displaystyle C^{(1)}_{L,q} +
-2C_F(1-\lambda)\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
-\\
-&&\displaystyle -\frac{2}{\lambda}\ln(1-\lambda
-  x)+\frac{1}{2\lambda^2}\ln(1-\lambda
-x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
+  C^{(1)}_{L,q}&\rightarrow& \displaystyle
+                             C^{(1)}_{L,q} +
+                             2C_F(1-\lambda)\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
+  \\ &&\displaystyle -\frac{2}{\lambda}\ln(1-\lambda
+        x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+        x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
 \end{array}\,.
 \end{equation}
 
 Now let us consider the gluon coefficient functions, that read:
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{1,g}&=&\displaystyle 2T_R\bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
-    -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}
-\right]+\\
-\\
-&&\displaystyle 4z(1-z) - 1+\\
- \\
-&&\displaystyle (1-\lambda)\left[-4z(1-z) + \frac{z}{1-\lambda z}
-  +2z(1-2\lambda z)\ln\frac{1-\lambda
-      z}{(1-\lambda)z}\right]\bigg\}\\
+  C^{(1)}_{1,g}&=&\displaystyle
+                   2T_R\bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+                   -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda} \right]+\\ \\
+               &&\displaystyle 4z(1-z) - 1+\\ \\ &&\displaystyle
+                                                    (1-\lambda)\left[-4z(1-z) + \frac{z}{1-\lambda z} +2z(1-2\lambda
+                                                    z)\ln\frac{1-\lambda z}{(1-\lambda)z}\right]\bigg\}\\
 \end{array}\,,
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{2,g}&=&\displaystyle 2T_R \bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
-    -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}
-\right]+\\
-\\
-&&\displaystyle 8z(1-z)- 1+\\
-\\
-&&\displaystyle (1-\lambda)\left[-6(1+2\lambda) z(1-z)+\frac{1}{1-\lambda z} + 6\lambda z(1-2\lambda z)\ln\frac{1-\lambda
-      z}{(1-\lambda)z}\right]\bigg\}\\
+  C^{(1)}_{2,g}&=&\displaystyle 2T_R
+                   \bigg\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+                   -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda} \right]+\\ \\
+               &&\displaystyle 8z(1-z)- 1+\\ \\ &&\displaystyle
+                                                   (1-\lambda)\left[-6(1+2\lambda) z(1-z)+\frac{1}{1-\lambda z} +
+                                                   6\lambda z(1-2\lambda z)\ln\frac{1-\lambda
+                                                   z}{(1-\lambda)z}\right]\bigg\}\\
 \end{array}\,,
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{3,g}&=&\displaystyle 2T_R \bigg\{[z^2+(1-z)^2]\left[
-  2\ln\left(\frac{1-z}{1-\lambda z}\right)+\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}\right]+\\
-\\
-&&\displaystyle (1-\lambda)\left[2 z(1-z) - 2z[1-(1+\lambda
-  )z]\ln\frac{1-\lambda z}{(1-\lambda)z}\right]\bigg\}\,,
+  C^{(1)}_{3,g}&=&\displaystyle 2T_R
+                   \bigg\{[z^2+(1-z)^2]\left[ 2\ln\left(\frac{1-z}{1-\lambda
+                   z}\right)+\frac12\ln(1-\lambda)
+                   +\frac12\ln\frac{K_F^2}{\lambda}\right]+\\ \\ &&\displaystyle
+                                                                    (1-\lambda)\left[2 z(1-z) - 2z[1-(1+\lambda )z]\ln\frac{1-\lambda
+                                                                    z}{(1-\lambda)z}\right]\bigg\}\,,
 \end{array}
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{L,g}&=&\displaystyle 2T_R \bigg\{(1-\lambda)[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
-    -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda}
-\right]+\\
-\\
-&&\displaystyle 4(2-\lambda)z(1-z)+\\
-\\
-&&\displaystyle (1-\lambda)\left[-2(3+4\lambda) z(1-z)+ 4\lambda z(1-2\lambda z)\ln\frac{1-\lambda
-      z}{(1-\lambda)z}\right]\bigg\}\,.
+  C^{(1)}_{L,g}&=&\displaystyle 2T_R
+                   \bigg\{(1-\lambda)[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
+                   -\frac12\ln(1-\lambda) +\frac12\ln\frac{K_F^2}{\lambda} \right]+\\ \\
+               &&\displaystyle 4(2-\lambda)z(1-z)+\\ \\ &&\displaystyle
+                                                           (1-\lambda)\left[-2(3+4\lambda) z(1-z)+ 4\lambda z(1-2\lambda
+                                                           z)\ln\frac{1-\lambda z}{(1-\lambda)z}\right]\bigg\}\,.
 \end{array}
 \end{equation}
 Since these functions do not contain any $+$-prescripted functions,
 they can be implemented as they are.
 
 We now consider the massless limit of the above massive coefficient
-functions.  We start considering that:
+functions. We start considering that:
 \begin{equation}
-\begin{array}{l}
-\lambda \rightarrow 1\\
-K_A \rightarrow 0
+\begin{array}{l} 
+  \lambda \rightarrow 1\\ K_A \rightarrow 0
 \end{array}\,,
 \end{equation}
-as consequence we find that the quarl coefficient functions tend to:
+as consequence we find that the quark coefficient functions tend to:
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{1,q} \displaystyle\mathop{\longrightarrow}_{m_H\rightarrow 0}
-C^{0,(1)}_{1,q} &=&\displaystyle 2C_F \bigg\{
--\left(\frac{9}{2}+2\zeta_2-\frac32
-\ln K_F^2\right)\delta(1-z)\\
-\\
-&-&\displaystyle \frac{(1+z^2)\ln z}{1-z}
--\left(\ln(1-z)+\ln K_F^2\right)(1+z)+3\\
-\\
-&+&\displaystyle 2
-\left[\frac{\ln(1-z)}{1-z}\right]_+
--\left(\frac{3}{2}-2\ln K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
+  C^{(1)}_{1,q}
+  \displaystyle\mathop{\longrightarrow}_{m_H\rightarrow 0}
+  C^{0,(1)}_{1,q} &=&\displaystyle 2C_F \bigg\{
+                      -\left(\frac{9}{2}+2\zeta_2-\frac32 \ln K_F^2\right)\delta(1-z)\\ \\
+                  &-&\displaystyle \frac{(1+z^2)\ln z}{1-z} -\left(\ln(1-z)+\ln
+                      K_F^2\right)(1+z)+3\\ \\ &+&\displaystyle 2
+                                                   \left[\frac{\ln(1-z)}{1-z}\right]_+ -\left(\frac{3}{2}-2\ln
+                                                   K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
 \end{array}
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{2,q}\displaystyle\mathop{\longrightarrow}_{m_H\rightarrow 0}C^{0,(1)}_{2,q}&=&\displaystyle 2C_F \bigg\{
--\left(\frac{9}{2}+2\zeta_2-\frac32
-\ln K_F^2\right)\delta(1-z)\\
-\\
-&-&\displaystyle \frac{(1+z^2)\ln z}{1-z}
--\left(\ln(1-z)+\ln K_F^2\right)(1+z)+2z+3\\
-\\
-&+&\displaystyle 2
-\left[\frac{\ln(1-z)}{1-z}\right]_+
--\left(\frac{3}{2}-2\ln K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
+  C^{(1)}_{2,q}\displaystyle\mathop{\longrightarrow}_{m_H\rightarrow
+  0}C^{0,(1)}_{2,q}&=&\displaystyle 2C_F \bigg\{
+                       -\left(\frac{9}{2}+2\zeta_2-\frac32 \ln K_F^2\right)\delta(1-z)\\ \\
+                   &-&\displaystyle \frac{(1+z^2)\ln z}{1-z} -\left(\ln(1-z)+\ln
+                       K_F^2\right)(1+z)+2z+3\\ \\ &+&\displaystyle 2
+                                                       \left[\frac{\ln(1-z)}{1-z}\right]_+ -\left(\frac{3}{2}-2\ln
+                                                       K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
 \end{array}
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-C^{(1)}_{3,q}\displaystyle\mathop{\longrightarrow}_{m_H\rightarrow 0 C^{0,(1)}_{3,q}}&=&\displaystyle 2C_F \bigg\{
--\left(\frac{9}{2}+2\zeta_2-\frac32
-\ln K_F^2\right)\delta(1-z)\\
-\\
-&-&\displaystyle \frac{(1+z^2)\ln z}{1-z}
--\left(\ln(1-z)+\ln K_F^2\right)(1+z)+z+2\\
-\\
-&+&\displaystyle 2
-\left[\frac{\ln(1-z)}{1-z}\right]_+
--\left(\frac{3}{2}-2\ln K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
+  C^{(1)}_{3,q}\displaystyle\mathop{\longrightarrow}_{m_H\rightarrow 0
+  C^{0,(1)}_{3,q}}&=&\displaystyle 2C_F \bigg\{
+                      -\left(\frac{9}{2}+2\zeta_2-\frac32 \ln K_F^2\right)\delta(1-z)\\ \\
+                  &-&\displaystyle \frac{(1+z^2)\ln z}{1-z} -\left(\ln(1-z)+\ln
+                      K_F^2\right)(1+z)+z+2\\ \\ &+&\displaystyle 2
+                                                     \left[\frac{\ln(1-z)}{1-z}\right]_+ -\left(\frac{3}{2}-2\ln
+                                                     K_F^2\right)\left[\frac{1}{1-z}\right]_+\bigg\}
 \end{array}
 \end{equation}
-\begin{equation}
-C^{(1)}_{L,q}\mathop{\longrightarrow}_{m_H\rightarrow 0}
-C^{0,(1)}_{L,q} = 4C_F z
+\begin{equation} C^{(1)}_{L,q}\mathop{\longrightarrow}_{m_H\rightarrow
+0} C^{0,(1)}_{L,q} = 4C_F z
 \end{equation}
 
 The local term to be added to the quark coefficient functions,
 considering that:
 \begin{equation}
-R(x) \mathop{\longrightarrow}_{m_H\rightarrow 0} \frac12\ln(1-x)^2\,,
+  R(x) \mathop{\longrightarrow}_{m_H\rightarrow 0}
+  \frac12\ln(1-x)^2\,,
 \end{equation}
 are:
 \begin{equation}
-C^{0,(1)}_{1,q}\rightarrow C^{0, (1)}_{1,q} +
-2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)\,,
+  C^{0,(1)}_{1,q}\rightarrow C^{0, (1)}_{1,q} +
+  2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln
+      K_F^2\right)\ln(1-x)\right]\delta(1-z)\,,
 \end{equation}
 \begin{equation}
-C^{0, (1)}_{2,q}\rightarrow C^{0, (1)}_{2,q} +
-2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)\,,
+  C^{0, (1)}_{2,q}\rightarrow C^{0, (1)}_{2,q} +
+  2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln
+      K_F^2\right)\ln(1-x)\right]\delta(1-z)\,,
 \end{equation}
 \begin{equation}
-C^{0, (1)}_{3,q}\rightarrow C^{0, (1)}_{3,q} +
-2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln K_F^2\right)\ln(1-x)\right]\delta(1-z)\,,
+  C^{0, (1)}_{3,q}\rightarrow C^{0, (1)}_{3,q} +
+  2C_F\left[\ln^2(1-x)-\left(\frac32-2\ln
+      K_F^2\right)\ln(1-x)\right]\delta(1-z)\,,
 \end{equation}
 while no local term needs to be added to $C^{0, (1)}_{L,q}$.
 
-Now we turn to the gluon coefficient functions where we need to
-know that:
-\begin{equation}
-\ln(1-\lambda) \mathop{\longrightarrow}_{m_H\rightarrow 0} -\ln\left(\frac{Q^2}{m_H^2}\right)
+Now we turn to the gluon coefficient functions where we need to know
+that:
+\begin{equation} 
+  \ln(1-\lambda)
+  \mathop{\longrightarrow}_{m_H\rightarrow 0}
+  -\ln\left(\frac{Q^2}{m_H^2}\right)
 \end{equation}
 so that:
 \begin{equation}
-C^{(1)}_{1,g}\mathop{\longrightarrow}_{m_H\rightarrow 0} C^{0, (1)}_{1,g} = 2T_R\left\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
-    +\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]+ 4z(1-z) - 1\right\}\,,
+  C^{(1)}_{1,g}\mathop{\longrightarrow}_{m_H\rightarrow
+    0} C^{0, (1)}_{1,g} =
+  2T_R\left\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right) +\frac12
+      \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]+ 4z(1-z) -
+    1\right\}\,,
 \end{equation}
 \begin{equation}
-C^{(1)}_{2,g}\mathop{\longrightarrow}_{m_H\rightarrow 0} C^{0, (1)}_{2,g} = 2T_R\left\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right)
-    +\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]+ 8z(1-z) - 1\right\}\,,
+  C^{(1)}_{2,g}\mathop{\longrightarrow}_{m_H\rightarrow
+    0} C^{0, (1)}_{2,g} =
+  2T_R\left\{[z^2+(1-z)^2]\left[\ln\left(\frac{1-z}{z}\right) +\frac12
+      \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]+ 8z(1-z) -
+    1\right\}\,,
 \end{equation}
 \begin{equation}
-C^{(1)}_{3,g}\mathop{\longrightarrow}_{m_H\rightarrow 0} C^{0, (1)}_{3,g} = 2T_R[z^2+(1-z)^2]\left[-\frac12 \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]\,,
+  C^{(1)}_{3,g}\mathop{\longrightarrow}_{m_H\rightarrow
+    0} C^{0, (1)}_{3,g} = 2T_R[z^2+(1-z)^2]\left[-\frac12
+    \ln\left(\frac{Q^2}{m_H^2}\right) +\frac12\ln K_F^2\right]\,,
 \end{equation}
 \begin{equation}
-C^{(1)}_{L,g}\mathop{\longrightarrow}_{m_H\rightarrow 0} C^{0,(1)}_{L,g} = 2T_R\left[4z(1-z)\right]\,.
+  C^{(1)}_{L,g}\mathop{\longrightarrow}_{m_H\rightarrow
+    0} C^{0,(1)}_{L,g} = 2T_R\left[4z(1-z)\right]\,.
 \end{equation}
 We also note that in the limit $m_H\rightarrow 0$, the covolution
 integrals in eqs.~(\ref{F1}), (\ref{F2}), (\ref{F3}) and~(\ref{FL})
@@ -852,100 +871,116 @@ functions for some given value of $x$, one needs to convolute the
 coefficient functions that we have written above with PDFs in the
 rescaled point $\chi=x/\lambda > x$, so in particular the convolution
 integral extends from $\chi$ to 1. This is a kinematical consequence
-of the mass of the heavy quark involved that reduces
-the phase space available for the process.
+of the mass of the heavy quark involved that reduces the phase space
+available for the process.
 
 From the point of view of the implementation of the FONLL scheme in
 {\tt APFEL}, given that the massive scheme needs to be combined with
 the massless and the massive-zero schemes whose convolution integrals
-extend from $x$ to 1, it would be convinient to rewrite eqs.~(\ref{F1}), (\ref{F2}),
-(\ref{F3}) and~(\ref{FL}) in such a way that the lower interagration bound
-is $x$ rather than $\chi$. To this end, let us consider the integral:
+extend from $x$ to 1, it would be convinient to rewrite
+eqs.~(\ref{F1}), (\ref{F2}), (\ref{F3}) and~(\ref{FL}) in such a way
+that the lower interagration bound is $x$ rather than $\chi$. To this
+end, let us consider the integral:
 \begin{equation}
-I=\int_\chi^1\frac{dy}{y} C(y)f\left(\frac{\chi}{y}\right)\,,
+  I=\int_\chi^1\frac{dy}{y}
+  C(y)f\left(\frac{\chi}{y}\right)\,,
 \end{equation}
-where $\chi=x/\lambda$. By the change of integration variable $z =
-\lambda y$, we can rewrite the integral above as:
+where $\chi=x/\lambda$. By the change of integration variable
+$z = \lambda y$, we can rewrite the integral above as:
 \begin{equation}
-I=\int_x^\lambda\frac{dz}{z} C\left(\frac{z}{\lambda}\right)f\left(\frac{x}{y}\right) = \int_x^1\frac{dz}{z} \widetilde{C}(z,\lambda)f\left(\frac{x}{y}\right)\,,
+  I=\int_x^\lambda\frac{dz}{z}
+  C\left(\frac{z}{\lambda}\right)f\left(\frac{x}{y}\right) =
+  \int_x^1\frac{dz}{z}
+  \widetilde{C}(z,\lambda)f\left(\frac{x}{y}\right)\,,
 \end{equation}
 where:
 \begin{equation}
-\widetilde{C}(z,\lambda)=\theta(\lambda-z)C\left(\frac{z}{\lambda}\right)\,.
+  \widetilde{C}(z,\lambda)=\theta(\lambda-z)C\left(\frac{z}{\lambda}\right)\,.
 \end{equation}
 In this way we have achived the goal of expressing the ``reduced''
 convolution in eqs.~(\ref{F1}), (\ref{F2}), (\ref{F3}) and~(\ref{FL})
 as a ``standard'' convolution between $x$ and 1. The price to pay is
 to consider the massive coefficient functions during the integration
 as explicit functions of the variable $z/\lambda$ and to cut off the
-region $z>\lambda$ by means of the heaviside $\theta$-function.  Of
+region $z>\lambda$ by means of the Heaviside $\theta$-function.  Of
 course, this does not neet to be done in the massive-zero case as the
 convolution already extends between $x$ and $1$.
 
 \section{Target Mass Corrections}
 
 Kinematic corrections due to the finite mass of the target proton
- $M_p$ which recoils against the photon might be relevant in the small-energy
-region. The leading contributions to such corrections have been
-computed long time ago in Ref.~\cite{Georgi:1976ve} and, denoting the target-mass
-corrected struture functions with $\widetilde{\quad}$, they take the form:
+$M_p$ which recoils against the photon might be relevant in the
+small-energy region. The leading contributions to such corrections
+have been computed long time ago in Ref.~\cite{Georgi:1976ve} and,
+denoting the target-mass corrected struture functions with
+$\widetilde{\quad}$, they take the form:
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle \widetilde{F}_2(x,Q) &=& \displaystyle \frac{x^2}{\xi^2
-  \tau^{3/2}} F_2(\xi,Q) + \frac{6\rho x^3}{\tau^2} I_2(\xi,Q)\,,\\
-\\
-\displaystyle \widetilde{F}_L(x,Q) &=& \displaystyle F_L(\xi,Q)+\frac{x^2(1-\tau)}{\xi^2
-  \tau^{3/2}} F_2(\xi,Q) + \frac{\rho x^3(6-2\tau)}{\tau^2} I_2(\xi,Q)\,,\\
-\\
-\displaystyle x\widetilde{F}_3(x,Q) &=& \displaystyle \frac{x^2}{\xi^2
-  \tau} \xi F_3(\xi,Q) + \frac{4\rho x^3}{\tau^{3/2}} I_3(\xi,Q)\,,
+  \displaystyle \widetilde{F}_2(x,Q) &=&
+                                         \displaystyle \frac{x^2}{\xi^2 \tau^{3/2}} F_2(\xi,Q) + \frac{6\rho
+                                         x^3}{\tau^2} I_2(\xi,Q)\,,\\ \\ \displaystyle \widetilde{F}_L(x,Q) &=&
+                                                                                                                \displaystyle F_L(\xi,Q)+\frac{x^2(1-\tau)}{\xi^2 \tau^{3/2}}
+                                                                                                                F_2(\xi,Q) + \frac{\rho x^3(6-2\tau)}{\tau^2} I_2(\xi,Q)\,,\\ \\
+  \displaystyle x\widetilde{F}_3(x,Q) &=& \displaystyle \frac{x^2}{\xi^2
+                                          \tau} \xi F_3(\xi,Q) + \frac{4\rho x^3}{\tau^{3/2}} I_3(\xi,Q)\,,
 \end{array}
 \end{equation}
 where:
 \begin{equation}
-\rho = \frac{M_p^2}{Q^2}\,,\qquad \tau = 1 + 4\rho x^2\,,\qquad \xi = \frac{2x}{1+\sqrt{\tau}}\,,
+  \rho = \frac{M_p^2}{Q^2}\,,\qquad \tau = 1 + 4\rho
+  x^2\,,\qquad \xi = \frac{2x}{1+\sqrt{\tau}}\,,
 \end{equation}
 and:
 \begin{equation}
-I_2(\xi,Q) = \int_\xi^1dy \frac{F_2(y,Q)}{y^2}\,, \qquad I_3(\xi,Q) = \int_\xi^1dy \frac{yF_3(y,Q)}{y^2}\,.
+  I_2(\xi,Q) = \int_\xi^1dy \frac{F_2(y,Q)}{y^2}\,,
+  \qquad I_3(\xi,Q) = \int_\xi^1dy \frac{yF_3(y,Q)}{y^2}\,.
 \end{equation}
 Using the interpolation formula, we have that:
 \begin{equation}
-\frac{F_2(y,Q)}{y^2} = \sum_{\alpha} \frac{F_2(x_\alpha,Q)}{x_\alpha^2} w_\alpha^{(k)}(y)\,,
+  \frac{F_2(y,Q)}{y^2} = \sum_{\alpha}
+  \frac{F_2(x_\alpha,Q)}{x_\alpha^2} w_\alpha^{(k)}(y)\,,
 \end{equation}
 therefore:
 \begin{equation}
-I_2(\xi,Q) = \sum_{\alpha} \frac{F_2(x_\alpha,Q)}{x_\alpha^2} \int_\xi^1dy\,w_\alpha^{(k)}(y)\,,
+  I_2(\xi,Q) = \sum_{\alpha}
+  \frac{F_2(x_\alpha,Q)}{x_\alpha^2} \int_\xi^1dy\,w_\alpha^{(k)}(y)\,,
 \end{equation}
 while:
 \begin{equation}
-I_3(\xi,Q) = \sum_{\alpha} \frac{x_\alpha F_3(x_\alpha,Q)}{x_\alpha^2} \int_\xi^1dy\,w_\alpha^{(k)}(y)\,.
-\end{equation}
-In turn, again using the interpolation formula, we can write:
+  I_3(\xi,Q) = \sum_{\alpha} \frac{x_\alpha
+    F_3(x_\alpha,Q)}{x_\alpha^2} \int_\xi^1dy\,w_\alpha^{(k)}(y)\,.
+\end{equation} In turn, again using the interpolation formula, we can
+write:
 \begin{equation}
-J_\alpha(\xi)\equiv\int_\xi^1dy\,w_\alpha^{(k)}(y) = \sum_{\beta=0}^{N_x}
-\underbrace{\left[\int_{x_\beta}^1dy\,w_\alpha^{(k)}(y)\right]}_{J_{\beta\alpha}} w_\beta^{(k)}(\xi)\,.
+  J_\alpha(\xi)\equiv\int_\xi^1dy\,w_\alpha^{(k)}(y) =
+  \sum_{\beta=0}^{N_x}
+  \underbrace{\left[\int_{x_\beta}^1dy\,w_\alpha^{(k)}(y)\right]}_{J_{\beta\alpha}}
+  w_\beta^{(k)}(\xi)\,.
 \end{equation}
 Considering the fact that:
 \begin{equation}\label{nonzero}
-w_{\alpha}^{(k)}(y) \neq 0 \quad\mbox{for}\quad x_{\alpha-k} < y < x_{\alpha+1}\,,
+  w_{\alpha}^{(k)}(y) \neq 0
+  \quad\mbox{for}\quad x_{\alpha-k} < y < x_{\alpha+1}\,,
 \end{equation}
 it follows that:
 \begin{equation}
-J_{\beta\alpha} = 0\quad\mbox{for}\quad \beta > \alpha
+  J_{\beta\alpha} = 0\quad\mbox{for}\quad \beta >
+  \alpha
 \end{equation}
 and thus:
 \begin{equation}
-J_\alpha(\xi)=\sum_{\beta=0}^\alpha 
-J_{\beta\alpha} w_\beta^{(k)}(\xi)\,.
+  J_\alpha(\xi)=\sum_{\beta=0}^\alpha J_{\beta\alpha}
+  w_\beta^{(k)}(\xi)\,.
 \end{equation}
 In addition, we can simplify the integral as follows:
 \begin{equation}
-J_{\beta\alpha}  = \int_c^d dy\,w_\alpha^{(k)}(y)\,,
+  J_{\beta\alpha} = \int_c^d dy\,w_\alpha^{(k)}(y)\,,
 \end{equation}
 where:
 \begin{equation}
-c =  \mbox{max}(x_\beta,x_{\alpha-k})\quad\mbox{and}\quad d = \mbox{min}(1,x_{\alpha+1})\,.
+  c =
+  \mbox{max}(x_\beta,x_{\alpha-k})\quad\mbox{and}\quad d =
+  \mbox{min}(1,x_{\alpha+1})\,.
 \end{equation}
 In conclusion, we can treat $J_{\beta\alpha}$ exactly in the same
 manner as the regular part of a massless coefficient function or a
@@ -953,32 +988,38 @@ splitting function and thus it can be precomputed and stored.
 
 At the end of the day we have that:
 \begin{equation}
-I_2(\xi,Q) = \sum_{\alpha=0}^{N_x} \sum_{\beta=0}^\alpha 
-w_\beta^{(k)}(\xi) J_{\beta\alpha} \frac{F_2(x_\alpha,Q)}{x_\alpha^2} \,,
+  I_2(\xi,Q) = \sum_{\alpha=0}^{N_x}
+  \sum_{\beta=0}^\alpha w_\beta^{(k)}(\xi) J_{\beta\alpha}
+  \frac{F_2(x_\alpha,Q)}{x_\alpha^2} \,,
 \end{equation}
 that can also be written as:
 \begin{equation}
-I_2(\xi,Q) = \sum_{\beta=0}^{N_x} \underbrace{\left[\sum_{\alpha=\beta}^{N_x} 
-J_{\beta\alpha} \frac{F_2(x_\alpha,Q)}{x_\alpha^2}\right]}_{I_2(x_\beta,Q)} w_\beta^{(k)}(\xi) \,.
+  I_2(\xi,Q) = \sum_{\beta=0}^{N_x}
+  \underbrace{\left[\sum_{\alpha=\beta}^{N_x} J_{\beta\alpha}
+      \frac{F_2(x_\alpha,Q)}{x_\alpha^2}\right]}_{I_2(x_\beta,Q)}
+  w_\beta^{(k)}(\xi) \,.
 \end{equation}
 Similarly:
 \begin{equation}
-I_3(\xi,Q) = \sum_{\beta=0}^{N_x} \underbrace{\left[\sum_{\alpha=\beta}^{N_x} 
-J_{\beta\alpha} \frac{x_\alpha F_3(x_\alpha,Q)}{x_\alpha^2}\right]}_{I_3(x_\beta,Q)} w_\beta^{(k)}(\xi) \,.
+  I_3(\xi,Q) = \sum_{\beta=0}^{N_x}
+  \underbrace{\left[\sum_{\alpha=\beta}^{N_x} J_{\beta\alpha}
+      \frac{x_\alpha F_3(x_\alpha,Q)}{x_\alpha^2}\right]}_{I_3(x_\beta,Q)}
+  w_\beta^{(k)}(\xi) \,.
 \end{equation}
 Gathering all pieces we finally find:
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle \widetilde{F}_2(x,Q) &=& \displaystyle
-\sum_{\beta=0}^{N_x} \left[\frac{x^2}{\xi^2
-  \tau^{3/2}} F_2(x_\beta,Q) + \frac{6\rho x^3}{\tau^2} I_2(x_\beta,Q)\right]w_\beta^{(k)}(\xi)\,,\\
-\\
-\displaystyle \widetilde{F}_L(x,Q) &=& \displaystyle \sum_{\beta=0}^{N_x} \left[ F_L(x_\beta,Q)+\frac{x^2(1-\tau)}{\xi^2
-  \tau^{3/2}} F_2(x_\beta,Q) + \frac{\rho x^3(6-2\tau)}{\tau^2} I_2(x_\beta,Q) \right]w_\beta^{(k)}(\xi)\,,\\
-\\
-\displaystyle x\widetilde{F}_3(x,Q) &=& \displaystyle
-\sum_{\beta=0}^{N_x} \left[ \frac{x^2}{\xi^2
-  \tau} x_\beta F_3(x_\beta,Q) + \frac{4\rho x^3}{\tau^{3/2}} I_3(x_\beta,Q) \right]w_\beta^{(k)}(\xi)\,.
+  \displaystyle \widetilde{F}_2(x,Q) &=&
+                                         \displaystyle \sum_{\beta=0}^{N_x} \left[\frac{x^2}{\xi^2 \tau^{3/2}}
+                                         F_2(x_\beta,Q) + \frac{6\rho x^3}{\tau^2}
+                                         I_2(x_\beta,Q)\right]w_\beta^{(k)}(\xi)\,,\\ \\ \displaystyle
+  \widetilde{F}_L(x,Q) &=& \displaystyle \sum_{\beta=0}^{N_x} \left[
+                           F_L(x_\beta,Q)+\frac{x^2(1-\tau)}{\xi^2 \tau^{3/2}} F_2(x_\beta,Q) +
+                           \frac{\rho x^3(6-2\tau)}{\tau^2} I_2(x_\beta,Q)
+                           \right]w_\beta^{(k)}(\xi)\,,\\ \\ \displaystyle x\widetilde{F}_3(x,Q)
+                                     &=& \displaystyle \sum_{\beta=0}^{N_x} \left[ \frac{x^2}{\xi^2 \tau}
+                                         x_\beta F_3(x_\beta,Q) + \frac{4\rho x^3}{\tau^{3/2}} I_3(x_\beta,Q)
+                                         \right]w_\beta^{(k)}(\xi)\,.
 \end{array}
 \end{equation}
 
@@ -990,14 +1031,17 @@ When considering the extraction of the DIS operator times the
 evolution operator like in eq.~(\ref{CFtimesEvolution}), one shold be
 careful with $I_2$ and $I_3$. Condidering that:
 \begin{equation}
-F(x_\alpha,Q) = \sum_{\gamma,\delta}\sum_{i,j}\Gamma_{i,\alpha\gamma}(Q) M_{ij,\gamma\delta}(Q,Q_0) \tilde{q}_j(x_{\delta},Q_0)
+  F(x_\alpha,Q) =
+  \sum_{\gamma,\delta}\sum_{i,j}\Gamma_{i,\alpha\gamma}(Q)
+  M_{ij,\gamma\delta}(Q,Q_0) \tilde{q}_j(x_{\delta},Q_0)
 \end{equation}
 we have that:
 \begin{equation}
-I(x_\beta,Q) = \sum_{\alpha=\beta}^{N_x} 
-J_{\beta\alpha} \frac{F(x_\alpha,Q)}{x_\alpha^2} =
-\sum_{\gamma,\delta}\sum_{i,j} \left[\sum_{\alpha=\beta}^{N_x} 
-\frac{J_{\beta\alpha}\Gamma_{i,\alpha\gamma}(Q) }{x_\alpha^2}\right] M_{ij,\gamma\delta}(Q,Q_0)\tilde{q}_j(x_{\delta},Q_0)\,,
+  I(x_\beta,Q) = \sum_{\alpha=\beta}^{N_x}
+  J_{\beta\alpha} \frac{F(x_\alpha,Q)}{x_\alpha^2} =
+  \sum_{\gamma,\delta}\sum_{i,j} \left[\sum_{\alpha=\beta}^{N_x}
+    \frac{J_{\beta\alpha}\Gamma_{i,\alpha\gamma}(Q) }{x_\alpha^2}\right]
+  M_{ij,\gamma\delta}(Q,Q_0)\tilde{q}_j(x_{\delta},Q_0)\,,
 \end{equation}
 
 \section{Renormalization and Factorization Scale Variation}
@@ -1009,133 +1053,145 @@ identified to the scale pf the process $Q$. In this section, we want
 to relax this assumption and to do so we the expansion of the DGLAP
 and RG equation for $\alpha_s$ up to NLO, that is:
 \begin{equation}
-\frac{\partial f_{i}}{\partial\ln\mu_F^2} =
-\frac{\alpha_s(\mu_F)}{4\pi}\left[ P_{ij}^{(0)}(x) +
-  \frac{\alpha_s(\mu_F)}{4\pi} P_{ij}^{(1)}(x) + \dots\right]\otimes f_j(x,\mu_F)\,,
+  \frac{\partial f_{i}}{\partial\ln\mu_F^2} =
+  \frac{\alpha_s(\mu_F)}{4\pi}\left[ P_{ij}^{(0)}(x) +
+    \frac{\alpha_s(\mu_F)}{4\pi} P_{ij}^{(1)}(x) + \dots\right]\otimes
+  f_j(x,\mu_F)\,,
 \end{equation}
 and:
 \begin{equation}
-\frac{\partial }{\partial\ln\mu_R^2}\left(\frac{\alpha_s}{4\pi}\right) =
--\left(\frac{\alpha_s(\mu_R)}{4\pi}\right)^2\left[ \beta_0 +
-  \frac{\alpha_s(\mu_R)}{4\pi}\beta_1 + \dots\right]\,.
+  \frac{\partial
+  }{\partial\ln\mu_R^2}\left(\frac{\alpha_s}{4\pi}\right) =
+  -\left(\frac{\alpha_s(\mu_R)}{4\pi}\right)^2\left[ \beta_0 +
+    \frac{\alpha_s(\mu_R)}{4\pi}\beta_1 + \dots\right]\,.
 \end{equation}
 Defining:
 \begin{equation}
-\xi_R\equiv\frac{\mu_R}{Q}\,,\quad\xi_F\equiv\frac{\mu_F}{Q}\quad\mbox{and}\quad a_s=\frac{\alpha_s}{4\pi}
+  \xi_R\equiv\frac{\mu_R}{Q}\,,\quad\xi_F\equiv\frac{\mu_F}{Q}\quad\mbox{and}\quad
+  a_s=\frac{\alpha_s}{4\pi}
 \end{equation}
 where $Q$ is constant, and defining:
 \begin{equation}
-t_R \equiv \ln\xi_R^2\quad\mbox{and}\quad t_F \equiv \ln\xi_F^2\,,
+  t_R \equiv \ln\xi_R^2\quad\mbox{and}\quad t_F \equiv
+  \ln\xi_F^2\,,
 \end{equation}
 the equations above can be written as:
 \begin{equation}\label{DGLAPsimp}
-\frac{\partial f_{i}}{\partial t_F} =
-a_s(t_F)\left[ P_{ij}^{(0)} +
-  a_s(t_F) P_{ij}^{(1)} + \dots\right]\otimes f_j(t_F)\,,
+  \frac{\partial f_{i}}{\partial t_F}
+  = a_s(t_F)\left[ P_{ij}^{(0)} + a_s(t_F) P_{ij}^{(1)} +
+    \dots\right]\otimes f_j(t_F)\,,
 \end{equation}
 and:
 \begin{equation}\label{BETAsimp}
-\frac{\partial a_s}{\partial t_R} =
--a_s^2(t_R)\left[ \beta_0 +
-  a_s(t_R)\beta_1 + \dots\right]\,.
+  \frac{\partial a_s}{\partial t_R} =
+  -a_s^2(t_R)\left[ \beta_0 + a_s(t_R)\beta_1 + \dots\right]\,.
 \end{equation}
 Now, expanding $f_i(t)$ around $t=t_F$ we have:
 \begin{equation}\label{expDGLAP}
-f_i(t) = f_i(t_F)+\frac{\partial f_{i}}{\partial t}\bigg|_{t=t_F}
-(t-t_F) + \frac12 \frac{\partial^2 f_{i}}{\partial t^2}\bigg|_{t=t_F}
-(t-t_F)^2 + \dots
+  f_i(t) = f_i(t_F)+\frac{\partial
+    f_{i}}{\partial t}\bigg|_{t=t_F} (t-t_F) + \frac12 \frac{\partial^2
+    f_{i}}{\partial t^2}\bigg|_{t=t_F} (t-t_F)^2 + \dots
 \end{equation}
 Using eqs.~(\ref{DGLAPsimp}) and~(\ref{BETAsimp}), we have that:
 \begin{equation}
-\begin{array}{l}
-\displaystyle \frac{\partial f_{i}}{\partial t}\bigg|_{t=t_F} = \left[ a_s(t_F) P_{ij}^{(0)} +
-  a_s^2(t_F) P_{ij}^{(1)}\right]\otimes f_j(t_F) +
-\mathcal{O}(a_s^3)\\
-\\
-\displaystyle \frac{\partial^2 f_{i}}{\partial t^2}\bigg|_{t=t_F} =
-a_s^2(t_F)\left[ P_{il}^{(0)}\otimes P_{lj}^{(0)} -
- \beta_0 P_{ij}^{(0)} \right]\otimes f_j(t_F) +
-\mathcal{O}(a_s^3)
+\begin{array}{l} 
+  \displaystyle \frac{\partial f_{i}}{\partial
+  t}\bigg|_{t=t_F} = \left[ a_s(t_F) P_{ij}^{(0)} + a_s^2(t_F)
+  P_{ij}^{(1)}\right]\otimes f_j(t_F) + \mathcal{O}(a_s^3)\\ \\
+  \displaystyle \frac{\partial^2 f_{i}}{\partial t^2}\bigg|_{t=t_F} =
+  a_s^2(t_F)\left[ P_{il}^{(0)}\otimes P_{lj}^{(0)} - \beta_0
+  P_{ij}^{(0)} \right]\otimes f_j(t_F) + \mathcal{O}(a_s^3)
 \end{array}
 \end{equation}
 Chosing $t=0$ in eq.~(\ref{expDGLAP}), we finally have:
 \begin{equation}\label{expDGLAP1}
-f_i(0) = \left\{1-a_s(t_F) t_F P_{ij}^{(0)} + a_s^2(t_F)\left[-t_F P_{ij}^{(1)}+ t_F^2 \frac12\left( P_{il}^{(0)}\otimes P_{lj}^{(0)} -
-  \beta_0 P_{ij}^{(0)} \right)\right]\right\}\otimes f_j(t_F)
-+ \mathcal{O}(a_s^3)\,.
+  f_i(0) = \left\{1-a_s(t_F) t_F
+    P_{ij}^{(0)} + a_s^2(t_F)\left[-t_F P_{ij}^{(1)}+ t_F^2 \frac12\left(
+        P_{il}^{(0)}\otimes P_{lj}^{(0)} - \beta_0 P_{ij}^{(0)}
+      \right)\right]\right\}\otimes f_j(t_F) + \mathcal{O}(a_s^3)\,.
 \end{equation}
 Now, using eq.~(\ref{BETAsimp}), we easily find:
-\begin{equation}\label{BETAexp}
- a_s(t_F)= a_s(t_R)\left[1+a_s(t_R)\beta_{0}(t_R-t_F)+\mathcal{O}(a_s^2)\right]\,,
+\begin{equation}\label{BETAexp} 
+  a_s(t_F)=
+  a_s(t_R)\left[1+a_s(t_R)\beta_{0}(t_R-t_F)+\mathcal{O}(a_s^2)\right]\,,
 \end{equation}
 which can be plugged into eq.~(\ref{expDGLAP1}) to give:
 \begin{equation}\label{expDGLAP2}
-f_i(0) = \left\{1-a_s(t_R) t_F P_{ij}^{(0)} + a_s^2(t_R)\left[-t_F P_{ij}^{(1)}+ t_F^2 \frac12\left( P_{il}^{(0)}\otimes P_{lj}^{(0)} +
-  \beta_0 P_{ij}^{(0)} \right)- t_Ft_R\beta_{0}P_{ij}^{(0)}\right]\right\}\otimes f_j(t_F)
-+ \mathcal{O}(a_s^3)\,.
+  f_i(0) = \left\{1-a_s(t_R) t_F
+    P_{ij}^{(0)} + a_s^2(t_R)\left[-t_F P_{ij}^{(1)}+ t_F^2 \frac12\left(
+        P_{il}^{(0)}\otimes P_{lj}^{(0)} + \beta_0 P_{ij}^{(0)} \right)-
+      t_Ft_R\beta_{0}P_{ij}^{(0)}\right]\right\}\otimes f_j(t_F) +
+  \mathcal{O}(a_s^3)\,.
 \end{equation}
 Finally, setting $t_F=0$ in eq.~(\ref{BETAexp}), we find:
-\begin{equation}\label{BETAexp1}
- a_s(0)= a_s(t_R)\left[1+a_s(t_R)\beta_{0}t_R+\mathcal{O}(a_s^2)\right]\,,
+\begin{equation}\label{BETAexp1} 
+  a_s(0)=
+  a_s(t_R)\left[1+a_s(t_R)\beta_{0}t_R+\mathcal{O}(a_s^2)\right]\,,
 \end{equation}
 
 Considering that and NNLO the ZM structure functions are written in
 terms of PDFs and coefficient functions as:
 \begin{equation}
-F(t_R,t_F) / x =
-\left[\sum_{k=0}^{2} a_s^k(t_R) \widetilde{\mathcal{C}}_i^{(k)}(t_R,t_F)\right]\otimes f_i(t_F) +\mathcal{O}(a_s^3)\,,
+  F(t_R,t_F) / x = \left[\sum_{k=0}^{2} a_s^k(t_R)
+    \widetilde{\mathcal{C}}_i^{(k)}(t_R,t_F)\right]\otimes f_i(t_F)
+  +\mathcal{O}(a_s^3)\,,
 \end{equation}
 and that, up to subleading terms, the structure functions must be
-renormalization and factorization scale independent, this requires that:
+renormalization and factorization scale independent, this requires
+that:
 \begin{equation}\label{invariance}
-F(t_R,t_F) = F(0,0)\,.
-\end{equation}
+  F(t_R,t_F) = F(0,0)\,.
+\end{equation} 
 But since:
 \begin{equation}\label{ZeroScales}
-F(0,0)  / x =
-\left[\sum_{k=0}^{2} a_s^k(0) \widetilde{C}_i^{(k)}\right]\otimes f_i(0)+\mathcal{O}(a_s^3)\,,
-\end{equation}
-where $\widetilde{C}_i^{(k)}$ are the well-know ZM coefficient functions, using
-eqs.~(\ref{expDGLAP2}) and~(\ref{BETAexp1}) in eq.~(\ref{ZeroScales})
-and finally imposing the identity in eq.~(\ref{invariance}), we can
-find the explicit espression of the ``generalized'' coefficient
-functions $\widetilde{\mathcal{C}}_i^{(k)}(t_R,t_F)$. In fact:
+  F(0,0) / x = \left[\sum_{k=0}^{2}
+    a_s^k(0) \widetilde{C}_i^{(k)}\right]\otimes
+  f_i(0)+\mathcal{O}(a_s^3)\,,
+\end{equation} 
+where $\widetilde{C}_i^{(k)}$ are the well-know ZM coefficient
+functions, using eqs.~(\ref{expDGLAP2}) and~(\ref{BETAexp1}) in
+eq.~(\ref{ZeroScales}) and finally imposing the identity in
+eq.~(\ref{invariance}), we can find the explicit espression of the
+``generalized'' coefficient functions
+$\widetilde{\mathcal{C}}_i^{(k)}(t_R,t_F)$. In fact:
 \begin{equation}\label{ZeroScales}
-\begin{array}{rcl}
-F(0,0)/x &=&\bigg\{ \widetilde{C}_j^{(0)} \\
-\\
-&+&\displaystyle  a_s(t_R)\left[\widetilde{C}_j^{(1)}-
-  t_F \widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)}\right]\\
-\\
-&+&\displaystyle  a_s^2(t_R)\bigg[\widetilde{C}_j^{(2)} + t_R\beta_0 \widetilde{C}_j^{(1)}
--t_F \left(\widetilde{C}_i^{(0)} \otimes P_{ij}^{(1)}+\widetilde{C}_i^{(1)} \otimes P_{ij}^{(0)}\right)\\
-\\
-&+&\displaystyle \frac{t_F^2}2 \widetilde{C}_i^{(0)} \otimes \left( P_{il}^{(0)}\otimes P_{lj}^{(0)} +
-  \beta_0 P_{ij}^{(0)} \right)-
-t_Ft_R\beta_{0}\widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)}\bigg]\bigg\}\otimes f_j(t_F)+\mathcal{O}(a_s^3)\,.
+  \begin{array}{rcl}
+    F(0,0)/x &=&\bigg\{ \widetilde{C}_j^{(0)} \\ \\
+             &+&\displaystyle a_s(t_R)\left[\widetilde{C}_j^{(1)}- t_F
+                 \widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)}\right]\\ \\
+             &+&\displaystyle a_s^2(t_R)\bigg[\widetilde{C}_j^{(2)} + t_R\beta_0
+                 \widetilde{C}_j^{(1)} -t_F \left(\widetilde{C}_i^{(0)} \otimes
+                 P_{ij}^{(1)}+\widetilde{C}_i^{(1)} \otimes P_{ij}^{(0)}\right)\\ \\
+             &+&\displaystyle \frac{t_F^2}2 \widetilde{C}_i^{(0)} \otimes \left(
+                 P_{il}^{(0)}\otimes P_{lj}^{(0)} + \beta_0 P_{ij}^{(0)} \right)-
+                 t_Ft_R\beta_{0}\widetilde{C}_i^{(0)} \otimes
+                 P_{ij}^{(0)}\bigg]\bigg\}\otimes f_j(t_F)+\mathcal{O}(a_s^3)\,.
 \end{array}
 \end{equation}
-Finally, using the identity in eq.~(\ref{invariance}), it is easy to find
-that:
+Finally, using the identity in eq.~(\ref{invariance}), it is easy to
+find that:
 \begin{equation}\label{generalizedCF}
 \begin{array}{rcl}
-\displaystyle \widetilde{\mathcal{C}}_j^{(0)}(t_R,t_F) &=& \displaystyle \widetilde{C}_j^{(0)} \\
-\\
-\displaystyle \widetilde{\mathcal{C}}_j^{(1)}(t_R,t_F) &=& \displaystyle \widetilde{C}_j^{(1)}-t_F \widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)} \\
-\\
-\displaystyle \widetilde{\mathcal{C}}_j^{(2)}(t_R,t_F) &=& \displaystyle \widetilde{C}_j^{(2)} + t_R\beta_0 \widetilde{C}_j^{(1)}
--t_F \left(\widetilde{C}_i^{(0)} \otimes P_{ij}^{(1)}+\widetilde{C}_i^{(1)} \otimes
-  P_{ij}^{(0)}\right)\\
-\\
-&+&\displaystyle\frac{t_F^2}2 \widetilde{C}_i^{(0)} \otimes \left( P_{il}^{(0)}\otimes P_{lj}^{(0)} +
-  \beta_0 P_{ij}^{(0)} \right)-
-t_Ft_R\beta_{0}\widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)}\,.
+  \displaystyle
+  \widetilde{\mathcal{C}}_j^{(0)}(t_R,t_F) &=& \displaystyle
+                                               \widetilde{C}_j^{(0)} \\ \\ \displaystyle
+  \widetilde{\mathcal{C}}_j^{(1)}(t_R,t_F) &=& \displaystyle
+                                               \widetilde{C}_j^{(1)}-t_F \widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)}
+  \\ \\ \displaystyle \widetilde{\mathcal{C}}_j^{(2)}(t_R,t_F) &=&
+                                                                   \displaystyle \widetilde{C}_j^{(2)} + t_R\beta_0 \widetilde{C}_j^{(1)}
+                                                                   -t_F \left(\widetilde{C}_i^{(0)} \otimes
+                                                                   P_{ij}^{(1)}+\widetilde{C}_i^{(1)} \otimes P_{ij}^{(0)}\right)\\ \\
+                                           &+&\displaystyle\frac{t_F^2}2 \widetilde{C}_i^{(0)} \otimes \left(
+                                               P_{il}^{(0)}\otimes P_{lj}^{(0)} + \beta_0 P_{ij}^{(0)} \right)-
+                                               t_Ft_R\beta_{0}\widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)}\,.
 \end{array}
 \end{equation}
 Therefore, in the ZM-VFNS, in order to perform scale variation we need
-to precompute the additional convolutions: $\widetilde{C}_i^{(0)} \otimes
-P_{ij}^{(0)}$, $\widetilde{C}_i^{(0)} \otimes P_{ij}^{(1)}$, $\widetilde{C}_i^{(1)} \otimes
-P_{ij}^{(0)}$ and $\widetilde{C}_i^{(0)} \otimes P_{il}^{(0)} \otimes P_{lj}^{(0)}$.
+to precompute the additional convolutions:
+$\widetilde{C}_i^{(0)} \otimes P_{ij}^{(0)}$,
+$\widetilde{C}_i^{(0)} \otimes P_{ij}^{(1)}$,
+$\widetilde{C}_i^{(1)} \otimes P_{ij}^{(0)}$ and
+$\widetilde{C}_i^{(0)} \otimes P_{il}^{(0)} \otimes P_{lj}^{(0)}$.
 
 In order to proceed, it is opportune to specify the basis in which
 PDFs are expressed. As usual, the most natural choice is the QCD
@@ -1147,73 +1203,74 @@ fact that the splitting function matrix $P_{ij}$ is almost completely
 diagonalized so that, up to $\mathcal{O}(\alpha_s^2)$, we have:
 \begin{equation}
 \begin{array}{ll}
-P_{ij}^{(k)} \rightarrow P_{ij}^{(k)} &\quad j=g,q(\Sigma)\\
-P_{ij}^{(k)} \rightarrow \delta_{ij}P_-^{(k)} &\quad
-                                     j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\
-P_{ij}^{(k)} \rightarrow \delta_{ij}P_+^{(k)} &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
+  P_{ij}^{(k)} \rightarrow P_{ij}^{(k)} &\quad
+                                          j=g,q(\Sigma)\\ P_{ij}^{(k)} \rightarrow \delta_{ij}P_-^{(k)} &\quad
+                                                                                                          j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\ P_{ij}^{(k)} \rightarrow
+  \delta_{ij}P_+^{(k)} &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
 \end{array}
 \end{equation}
 and:
 \begin{equation}
-\begin{array}{ll}
-\widetilde{C}_j^{(k)} \rightarrow d_jC_j^{(k)} &\quad j=g,q(\Sigma)\\
-\widetilde{C}_j^{(k)} \rightarrow d_jC_-^{(k)} &\quad
-                                     j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\
-\widetilde{C}_j^{(k)} \rightarrow d_jC_+^{(k)} &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
+\begin{array}{ll} 
+  \widetilde{C}_j^{(k)} \rightarrow d_jC_j^{(k)}
+  &\quad j=g,q(\Sigma)\\ \widetilde{C}_j^{(k)} \rightarrow d_jC_-^{(k)}
+  &\quad j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\ \widetilde{C}_j^{(k)}
+  \rightarrow d_jC_+^{(k)} &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
 \end{array}
 \end{equation}
 as well as:
 \begin{equation}
 \begin{array}{ll}
-\widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_j^{(k)} &\quad j=g,q(\Sigma)\\
-\widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_-^{(k)} &\quad
-                                     j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\
-\widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_+^{(k)} &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
+  \widetilde{\mathcal{C}}_j^{(k)} \rightarrow
+  d_j\mathcal{C}_j^{(k)} &\quad j=g,q(\Sigma)\\
+  \widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_-^{(k)}
+                         &\quad j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\
+  \widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_+^{(k)}
+                         &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
 \end{array}
 \end{equation}
 where the $d_j$ are just numerical coefficients. In addition:
 \begin{equation}
-P_-^{(0)}=P_+^{(0)}=P_{qq}^{(0)}\,,
+  P_-^{(0)}=P_+^{(0)}=P_{qq}^{(0)}\,,
 \end{equation}
 and:
 \begin{equation}
 \begin{array}{l}
-\displaystyle C_-^{(0)}(x) = C_+^{(0)}(x) = \Delta_{\rm SF}\delta(1-x)\\
-\displaystyle C_j^{(0)} = \Delta_{\rm SF}\delta_{qj}\delta(1-x) \quad
-  \mbox{for } j=q,g
+  \displaystyle C_-^{(0)}(x) = C_+^{(0)}(x) =
+  \Delta_{\rm SF}\delta(1-x)\\ \displaystyle C_j^{(0)} = \Delta_{\rm
+  SF}\delta_{qj}\delta(1-x) \quad \mbox{for } j=q,g
 \end{array}
 \end{equation}
-where $\Delta_{\rm SF}=1$ for $F_2$ and $F_3$ and $\Delta_{\rm SF} = 0$ for $F_L$.
-From eq.~(\ref{generalizedCF}) it follows that:
+where $\Delta_{\rm SF}=1$ for $F_2$ and $F_3$ and
+$\Delta_{\rm SF} = 0$ for $F_L$.  From eq.~(\ref{generalizedCF}) it
+follows that:
 \begin{equation}\label{NonSingletCF}
 \begin{array}{rcl}
-\displaystyle \mathcal{C}_\pm^{(0)}(t_R,t_F) &=& \displaystyle \Delta_{\rm SF}\delta(1-x) \\
-\\
-\displaystyle \mathcal{C}_\pm^{(1)}(t_R,t_F) &=& \displaystyle C_\pm^{(1)}-\Delta_{\rm SF} t_F P_{qq}^{(0)} \\
-\\
-\displaystyle \mathcal{C}_\pm^{(2)}(t_R,t_F) &=& \displaystyle C_\pm^{(2)} + t_R\beta_0 C_\pm^{(1)}
--t_F \left(\Delta_{\rm SF} P_\pm^{(1)}+C_\pm^{(1)} \otimes
-  P_{qq}^{(0)}\right)\\
-\\
-&+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left( P_{qq}^{(0)}\otimes P_{qq}^{(0)} +
-  \beta_0 P_{qq}^{(0)} \right)-
-\Delta_{\rm SF} t_Ft_R\beta_{0}P_{qq}^{(0)}\,.
+  \displaystyle \mathcal{C}_\pm^{(0)}(t_R,t_F) &=&
+                                                   \displaystyle \Delta_{\rm SF}\delta(1-x) \\ \\ \displaystyle
+  \mathcal{C}_\pm^{(1)}(t_R,t_F) &=& \displaystyle
+                                     C_\pm^{(1)}-\Delta_{\rm SF} t_F P_{qq}^{(0)} \\ \\ \displaystyle
+  \mathcal{C}_\pm^{(2)}(t_R,t_F) &=& \displaystyle C_\pm^{(2)} +
+                                     t_R\beta_0 C_\pm^{(1)} -t_F \left(\Delta_{\rm SF}
+                                     P_\pm^{(1)}+C_\pm^{(1)} \otimes P_{qq}^{(0)}\right)\\ \\
+                                               &+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left(
+                                                   P_{qq}^{(0)}\otimes P_{qq}^{(0)} + \beta_0 P_{qq}^{(0)} \right)-
+                                                   \Delta_{\rm SF} t_Ft_R\beta_{0}P_{qq}^{(0)}\,.
 \end{array}
 \end{equation}
 that can be rearranged as:
 \begin{equation}\label{NonSingletCF1}
 \begin{array}{rcl}
-\displaystyle \mathcal{C}_\pm^{(0)}(t_R,t_F) &=& \displaystyle \Delta_{\rm SF}\delta(1-x) \\
-\\
-\displaystyle \mathcal{C}_\pm^{(1)}(t_R,t_F) &=& \displaystyle
-                                                 C_\pm^{(1)}-\Delta_{\rm SF} t_F P_{qq}^{(0)} \\
-\\
-\displaystyle \mathcal{C}_\pm^{(2)}(t_R,t_F) &=& \displaystyle C_\pm^{(2)} + t_R\beta_0 C_\pm^{(1)}
--t_F C_\pm^{(1)} \otimes P_{qq}^{(0)}\\
-\\
-&+&\displaystyle\Delta_{\rm SF}\frac{t_F^2}2 \left( P_{qq}^{(0)}\otimes P_{qq}^{(0)} -
-  \beta_0 P_{qq}^{(0)} \right)-
-\Delta_{\rm SF} t_F\left[P_\pm^{(1)} - (t_F-t_R)\beta_{0} P_{qq}^{(0)}\right]\,.
+  \displaystyle \mathcal{C}_\pm^{(0)}(t_R,t_F) &=&
+                                                   \displaystyle \Delta_{\rm SF}\delta(1-x) \\ \\ \displaystyle
+  \mathcal{C}_\pm^{(1)}(t_R,t_F) &=& \displaystyle
+                                     C_\pm^{(1)}-\Delta_{\rm SF} t_F P_{qq}^{(0)} \\ \\ \displaystyle
+  \mathcal{C}_\pm^{(2)}(t_R,t_F) &=& \displaystyle C_\pm^{(2)} +
+                                     t_R\beta_0 C_\pm^{(1)} -t_F C_\pm^{(1)} \otimes P_{qq}^{(0)}\\ \\
+                                               &+&\displaystyle\Delta_{\rm SF}\frac{t_F^2}2 \left(
+                                                   P_{qq}^{(0)}\otimes P_{qq}^{(0)} - \beta_0 P_{qq}^{(0)} \right)-
+                                                   \Delta_{\rm SF} t_F\left[P_\pm^{(1)} - (t_F-t_R)\beta_{0}
+                                                   P_{qq}^{(0)}\right]\,.
 \end{array}
 \end{equation}
 The term in square brackets in the r.h.s. of the third line
@@ -1226,29 +1283,28 @@ Now, let us consider the singlet sector that, cosidering the fact that
 $d_q=d_g$, becomes:
 \begin{equation}\label{SingletCF}
 \begin{array}{rcl}
-\displaystyle {\mathcal{C}}_j^{(0)}(t_R,t_F) &=& \displaystyle \Delta_{\rm SF}\delta_{qj}\delta(1-x)  \\
-\\
-\displaystyle {\mathcal{C}}_j^{(1)}(t_R,t_F) &=& \displaystyle
-                                                 {C}_j^{(1)}- \Delta_{\rm SF} t_F P_{qj}^{(0)} \\
-\\
-\displaystyle {\mathcal{C}}_j^{(2)}(t_R,t_F) &=& \displaystyle {C}_j^{(2)} + t_R\beta_0 {C}_j^{(1)}
--t_F {C}_i^{(1)} \otimes P_{ij}^{(0)}\\
-\\
-&+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left( P_{qi}^{(0)}\otimes P_{ij}^{(0)} -
-  \beta_0 P_{qj}^{(0)} \right)-
-\Delta_{\rm SF} t_F\widetilde{P}_{qj}^{(1)}\,.
+  \displaystyle {\mathcal{C}}_j^{(0)}(t_R,t_F) &=&
+                                                   \displaystyle \Delta_{\rm SF}\delta_{qj}\delta(1-x) \\ \\
+  \displaystyle {\mathcal{C}}_j^{(1)}(t_R,t_F) &=& \displaystyle
+                                                   {C}_j^{(1)}- \Delta_{\rm SF} t_F P_{qj}^{(0)} \\ \\ \displaystyle
+  {\mathcal{C}}_j^{(2)}(t_R,t_F) &=& \displaystyle {C}_j^{(2)} +
+                                     t_R\beta_0 {C}_j^{(1)} -t_F {C}_i^{(1)} \otimes P_{ij}^{(0)}\\ \\
+                                               &+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left(
+                                                   P_{qi}^{(0)}\otimes P_{ij}^{(0)} - \beta_0 P_{qj}^{(0)} \right)-
+                                                   \Delta_{\rm SF} t_F\widetilde{P}_{qj}^{(1)}\,.
 \end{array}
 \end{equation}
 for $j=g,q$. In eq.~(\ref{SingletCF}), by $j=q$ it is meant the (full)
 singlet contribution. However, $\mathcal{C}_q^{(k)}$ and $C_q^{(k)}$
-are usually given by:
-\begin{equation}
-\mathcal{C}_q^{(k)} = \mathcal{C}_{\rm PS}^{(k)} + \mathcal{C}_+^{(k)}
-\end{equation}
+in the {\tt APFEL} farmalism are given by:
+\begin{equation} 
+  \mathcal{C}_q^{(k)} = \mathcal{C}_{\rm PS}^{(k)} +
+  \mathcal{C}_+^{(k)}
+\end{equation} 
 and:
-\begin{equation}
-C_q^{(k)} = C_{\rm PS}^{(k)} + C_+^{(k)}
-\end{equation}
+\begin{equation} 
+  C_q^{(k)} = C_{\rm PS}^{(k)} + C_+^{(k)}
+\end{equation} 
 where $\mathcal{C}_{\rm PS}^{(k)}$ and $C_{\rm PS}^{(k)}$ are the so
 called pure-singlet contributions. Taking into account
 eq.~(\ref{NonSingletCF1}) and considering also the fact that
@@ -1256,50 +1312,47 @@ $C_{\rm PS}^{(2)}=C_{\rm PS}^{(1)}=0$ ($i.e.$ $C_{\rm PS}$ is
 $\mathcal{O}(\alpha_s^2)$), it is easy to see that:
 \begin{equation}\label{PureSingletCF}
 \begin{array}{rcl}
-\displaystyle {\mathcal{C}}_{\rm PS}^{(0)}(t_R,t_F) &=& \displaystyle 0  \\
-\\
-\displaystyle {\mathcal{C}}_{\rm PS}^{(1)}(t_R,t_F) &=& \displaystyle 0 \\
-\\
-\displaystyle {\mathcal{C}}_{\rm PS}^{(2)}(t_R,t_F) &=& \displaystyle {C}_{\rm PS}^{(2)}\\
+  \displaystyle {\mathcal{C}}_{\rm PS}^{(0)}(t_R,t_F)
+  &=& \displaystyle 0 \\ \\ \displaystyle {\mathcal{C}}_{\rm
+  PS}^{(1)}(t_R,t_F) &=& \displaystyle 0 \\ \\ \displaystyle
+  {\mathcal{C}}_{\rm PS}^{(2)}(t_R,t_F) &=& \displaystyle {C}_{\rm
+                                            PS}^{(2)}-t_FC_g^{(1)}\otimes
+  P_{gq}^{(0)}+\Delta_{\rm SF}\frac{t_F^2}{2}P_{qg}^{(0)}\otimes P_{gq}^{(0)}-\Delta_{\rm SF}t_F\left[\widetilde{P}_{qq}^{(1)}-\widetilde{P}_{+}^{(1)}\right]\\
 \end{array}
 \end{equation}
 and also that:
 \begin{equation}\label{SingletCFg}
 \begin{array}{rcl}
-\displaystyle {\mathcal{C}}_g^{(0)}(t_R,t_F) &=& \displaystyle 0 \\
-\\
-\displaystyle {\mathcal{C}}_g^{(1)}(t_R,t_F) &=& \displaystyle
-                                                 {C}_g^{(1)}- \Delta_{\rm SF} t_F P_{qg}^{(0)} \\
-\\
-\displaystyle {\mathcal{C}}_g^{(2)}(t_R,t_F) &=& \displaystyle {C}_g^{(2)} + t_R\beta_0 {C}_g^{(1)}
--t_F {C}_i^{(1)} \otimes P_{ig}^{(0)}\\
-\\
-&+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left( P_{qi}^{(0)}\otimes P_{ig}^{(0)} -
-  \beta_0 P_{qg}^{(0)} \right)-
-\Delta_{\rm SF} t_F\widetilde{P}_{qg}^{(1)}\,.
+  \displaystyle {\mathcal{C}}_g^{(0)}(t_R,t_F) &=&
+                                                   \displaystyle 0 \\ \\ \displaystyle {\mathcal{C}}_g^{(1)}(t_R,t_F) &=&
+                                                                                                                          \displaystyle {C}_g^{(1)}- \Delta_{\rm SF} t_F P_{qg}^{(0)} \\ \\
+  \displaystyle {\mathcal{C}}_g^{(2)}(t_R,t_F) &=& \displaystyle
+                                                   {C}_g^{(2)} + t_R\beta_0 {C}_g^{(1)} -t_F {C}_i^{(1)} \otimes
+                                                   P_{ig}^{(0)}\\ \\ &+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left(
+                                                                         P_{qi}^{(0)}\otimes P_{ig}^{(0)} - \beta_0 P_{qg}^{(0)} \right)-
+                                                                         \Delta_{\rm SF} t_F\widetilde{P}_{qg}^{(1)}\,.
 \end{array}
 \end{equation}
 It should be noticed that the term ${C}_i^{(1)} \otimes P_{ig}^{(0)}$
 in the r.h.s. of the third line of eq.~(\ref{SingletCFg}) should be
 interpreted as:
-\begin{equation}
-{C}_i^{(1)} \otimes P_{ig}^{(0)} =  {C}_{+}^{(1)}\otimes P_{qg}^{(0)} +
-{C}_g^{(1)} \otimes P_{gg}^{(0)}\,.
+\begin{equation} 
+  {C}_i^{(1)} \otimes P_{ig}^{(0)} =
+  {C}_{+}^{(1)}\otimes P_{qg}^{(0)} + {C}_g^{(1)} \otimes
+  P_{gg}^{(0)}\,.
 \end{equation}
 
-Now we consider the massive scheme. In the neutral-current sector
-the leading-order coefficient functions $C_i^{(0)}$ are identically
-equal to zero and this simplifies substantially the structure of the
-massive coeffiecient functions in the presence of scale variations:
+Now we consider the massive scheme. In the neutral-current sector the
+leading-order coefficient functions $C_i^{(0)}$ are identically equal
+to zero and this simplifies substantially the structure of the massive
+coefficient functions in the presence of scale variations:
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle \mathcal{C}_j^{(0)}(t_R,t_F) &=& \displaystyle 0 \\
-\\
-\displaystyle \mathcal{C}_j^{(1)}(t_R,t_F) &=& \displaystyle C_j^{(1)} \\
-\\
-\displaystyle \mathcal{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0 C_j^{(1)}
--t_F C_i^{(1)} \otimes
-  P_{ij}^{(0)}\,.
+  \displaystyle \mathcal{C}_j^{(0)}(t_R,t_F) &=&
+                                                 \displaystyle 0 \\ \\ \displaystyle \mathcal{C}_j^{(1)}(t_R,t_F) &=&
+                                                                                                                      \displaystyle C_j^{(1)} \\ \\ \displaystyle
+  \mathcal{C}_j^{(2)}(t_R,t_F) &=& \displaystyle C_j^{(2)} + t_R\beta_0
+                                   C_j^{(1)} -t_F C_i^{(1)} \otimes P_{ij}^{(0)}\,.
 \end{array}
 \end{equation}
 In addition, the factorization scale variation terms are already
@@ -1331,33 +1384,196 @@ ingredients that have already been evaluated in the initialization
 stage. To show how to reduce these terms to known quantity, let us
 cosider the following convolution:
 \begin{equation}
-F(x_\alpha)=x_\alpha C(x_\alpha)\otimes Q(x_\alpha) =
-x_\alpha\int_{x_\alpha}^1\frac{dy}{y}C(y)Q\left(\frac{x_\alpha}{y}\right)
-=\int_{x_\alpha}^1\frac{dy}{y}yC(y)\frac{x_\alpha}{y}Q\left(\frac{x_\alpha}{y}\right) =
-\int_{x_\alpha}^1\frac{dy}{y}\widetilde{C}(y)\widetilde{Q}\left(\frac{x_\alpha}{y}\right)\,,
+  F(x_\alpha)=x_\alpha C(x_\alpha)\otimes Q(x_\alpha) =
+  x_\alpha\int_{x_\alpha}^1\frac{dy}{y}C(y)Q\left(\frac{x_\alpha}{y}\right)
+  =\int_{x_\alpha}^1\frac{dy}{y}yC(y)\frac{x_\alpha}{y}Q\left(\frac{x_\alpha}{y}\right)
+  =
+  \int_{x_\alpha}^1\frac{dy}{y}\widetilde{C}(y)\widetilde{Q}\left(\frac{x_\alpha}{y}\right)\,,
 \end{equation}
 where $x_\alpha$ is node of the $x$-space grid of {\tt APFEL} and
 $\widetilde{C}(y)=yC(y)$ and $\widetilde{Q}(y)=yQ(y)$. Now, using the
 well-known interpolation formula we can write:
 \begin{equation}
-\int_{x_\alpha}^1\frac{dy}{y}\widetilde{C}(y)\widetilde{Q}\left(\frac{x_\alpha}{y}\right) = \sum_{\beta}\underbrace{\left[\int_{x_\alpha}^1\frac{dy}{y}\widetilde{C}(y)w_{\beta}^{(k)}\left(\frac{x_\alpha}{y}\right)\right]}_{\Gamma_{\alpha\beta}}\widetilde{Q}(x_\beta)\,,
+  \int_{x_\alpha}^1\frac{dy}{y}\widetilde{C}(y)\widetilde{Q}\left(\frac{x_\alpha}{y}\right)
+  =
+  \sum_{\beta}\underbrace{\left[\int_{x_\alpha}^1\frac{dy}{y}\widetilde{C}(y)w_{\beta}^{(k)}\left(\frac{x_\alpha}{y}\right)\right]}_{\Gamma_{\alpha\beta}}\widetilde{Q}(x_\beta)\,,
 \end{equation}
 where $w_{\beta}^{(k)}$ are the usual interpolation functions of
 degree $k$. Now suppose that in turn:
-\begin{equation}
-\widetilde{Q}(x_\beta)=x_\beta P(x_\beta)\otimes f(x_\beta) = \int_{x_\beta}^1\frac{dz}{z}\widetilde{P}(z)\widetilde{f}\left(\frac{x_\beta}{z}\right)=\sum_{\gamma}\underbrace{\left[\int_{x_\beta}^1\frac{dz}{z}\widetilde{P}(z)w_{\gamma}^{(k)}\left(\frac{x_\beta}{z}\right)\right]}_{\Pi_{\beta\gamma}}\widetilde{f}(x_\gamma)\,,
+\begin{equation} 
+  \widetilde{Q}(x_\beta)=x_\beta P(x_\beta)\otimes
+  f(x_\beta) =
+  \int_{x_\beta}^1\frac{dz}{z}\widetilde{P}(z)\widetilde{f}\left(\frac{x_\beta}{z}\right)=\sum_{\gamma}\underbrace{\left[\int_{x_\beta}^1\frac{dz}{z}\widetilde{P}(z)w_{\gamma}^{(k)}\left(\frac{x_\beta}{z}\right)\right]}_{\Pi_{\beta\gamma}}\widetilde{f}(x_\gamma)\,,
 \end{equation}
 it follows that:
 \begin{equation}
-F(x_\alpha)=\widetilde{C}(x_\alpha)\otimes \widetilde{P}(x_\alpha)\otimes \widetilde{f}(x_\alpha) =
-\sum_{\beta,\gamma} \Gamma_{\alpha\beta}\Pi_{\beta\gamma}\widetilde{f}(x_\gamma)\,.
-\end{equation}
+  F(x_\alpha)=\widetilde{C}(x_\alpha)\otimes
+  \widetilde{P}(x_\alpha)\otimes \widetilde{f}(x_\alpha) =
+  \sum_{\beta,\gamma}
+  \Gamma_{\alpha\beta}\Pi_{\beta\gamma}\widetilde{f}(x_\gamma)\,.
+\end{equation} 
 The formula above clearly shows that the missing pieces can be easily
 obtained by properly multimplying the precomputed splitting function
 matrices $\Pi_{ij,\alpha\beta}$ and the coefficient function matrices
 $\Gamma_{i,\alpha\beta}$ accordind to the scale variation formulas
 derived above.
 
+As an alternative to the numerical convolution of the new pieces
+arising when including renormalization- and factorization-scale
+variations, one can try to compute the analytically the convolutions
+above. In fact, all the terms involved in the new convolutions are
+usually simple enough to make the analytic computation possible using,
+for instance, {\tt Mathematica}. This is advantageous because it
+avoids any inaccuracy of numerical origin coming from the numerical
+convolution of the operators involved. In order to do so, we only need
+to know how to treat some particular term that appear in the
+combinations. In particular, we need to be able to treat terms in
+which Dirac $\delta$-functions and $+$-prescripted functions are
+present at the same time. The most trivial convolutions are those
+involving one or two $\delta$-functions, that is:
+\begin{equation}\label{ConvolutionDelta}
+\begin{array}{l}
+\displaystyle \delta(1-x)\otimes\delta(1-x) = \delta(1-x)\,,\\
+\\
+\displaystyle \left(\frac{\ln^n(1-x)}{1-x}\right)_+\otimes\delta(1-x)
+  = \left(\frac{\ln^n(1-x)}{1-x}\right)_+\quad n\geq0\,,
+\end{array}
+\end{equation}
+that can be easily proven in Mellin space where the convolution
+$\otimes$ becomes a simple product and the $\delta$-function
+corresponds to the unity. The Mellin-space method can be used also in
+the cases where two $+$-prescripted functions are involved. Up to
+$\mathcal{O}(\alpha_s^2)$ there are only two possible combinations,
+that are:
+\begin{equation}\label{ConvolutionPlus}
+\begin{array}{l}
+\displaystyle \left(\frac{1}{1-x}\right)_+\otimes
+  \left(\frac{1}{1-x}\right)_+= 2
+  \left(\frac{\ln(1-x)}{1-x}\right)_+-\frac{\ln(x)}{1-x}-\zeta(2)\delta(1-x)\,,\\
+\\
+\displaystyle \left(\frac{1}{1-x}\right)_+\otimes
+  \left(\frac{\ln(1-x)}{1-x}\right)_+= \frac32\left(\frac{\ln^2(1-x)}{1-x}\right)_+-\zeta(2) \left(\frac{1}{1-x}\right)_+-\frac{\ln(x)\ln(1-x)}{1-x}+\zeta(3)\delta(1-x)\,.
+\end{array}
+\end{equation}
+The relations in eq.~(\ref{ConvolutionPlus}) can be obtained
+rearranging, in Mellin space, the terms is such a way to reconstruct
+the Mellin-transform of well-known terms.
+
+Now, given the LO splitting functions (with expansion parameter
+$\alpha_s/4\pi$ and such that they can be used to evolve the singlet
+combination $\{q^+,g\}$):
+\begin{equation}
+\begin{array}{l}
+\displaystyle P_{qq}^{(0)}(x) = 2 C_F \left[2
+  \left(\frac{1}{1-x}\right)_+ - (1 + x) +\frac{3}{2} \delta(1 -
+  x)\right]\,,\\
+\\
+\displaystyle P_{qg}^{(0)}(x) = 4 T_R \left[x^2 + (1 - x)^2\right]\,,\\
+\\
+\displaystyle P_{gq}^{(0)}(x) = 2 C_F \left[\frac{1+ (1 -
+  x)^2}{x}\right]\,,\\
+\\
+\displaystyle P_{gg}^{(0)}(x) = 4 C_A \left[\left(\frac{1}{1-x}\right)_+
+  - 2 + x - x^2 + \frac{1}{x}\right] + \frac{11 C_A - 4 N_F T_R}{3}
+  \delta(1 - x)\,,
+\end{array}
+\end{equation}
+we can compute the additional terms involving only combinations of
+splitting functions. In particular, we need to compute:
+\begin{equation}\label{NSP0P0}
+P_{qq}^{(0)}(x) \otimes P_{qq}^{(0)}(x)\,,
+\end{equation}
+involved in the $\mathcal{O}(\alpha_s^2)$ non-singlet coefficient
+functions, and:
+\begin{equation}\label{SGP0P0}
+P_{qi}^{(0)}(x) \otimes P_{ig}^{(0)}(x)=P_{qq}^{(0)}(x) \otimes P_{qg}^{(0)}(x)+P_{qg}^{(0)}(x) \otimes P_{gg}^{(0)}(x)\,.
+\end{equation}
+present in the respective gluon coefficient functions.
+
+The convolution in eq.~(\ref{NSP0P0}) can be easily computed by hand
+using eqs.~(\ref{ConvolutionDelta}) and~(\ref{ConvolutionPlus}) and
+the result is:
+\begin{equation}
+\begin{array}{rcl}
+P_{qq}^{(0)}(x) \otimes P_{qq}^{(0)}(x) &=&\displaystyle 4
+                                            C_F^2\bigg[8\left(\frac{\ln(1-x)}{1-x}\right)_++6\left(\frac{1}{1-x}\right)_+-4\frac{\ln(x)}{1-x}-4(1+x)\ln(1-x)\\
+\\
+&+&\displaystyle 3(1+x)\ln(x)-(x+5)+\left(\frac{9}{4}-4\zeta(2)\right)\delta(1-x)\bigg]\,.
+\end{array}
+\end{equation}
+As for eq.~(\ref{SGP0P0}), where no convolutions of the kinds given in
+eqs.~(\ref{ConvolutionDelta}) and~(\ref{ConvolutionPlus}) are present,
+we can safely use {\tt Mathematica}, obtaining:
+\begin{equation}
+\begin{array}{rcl}
+P_{qi}^{(0)}(x) \otimes P_{ig}^{(0)}(x)&=&\displaystyle C_A T_R
+                                           \left[16 \left(2 x^2-2
+                                           x+1\right) \ln
+                                           (1-x)+16(4 x+1) \ln
+                                           (x)+\frac{4}{3} \left(-40
+                                           x^2+26 x+17+\frac{8}{x}\right)
+                                           \right]\\
+\\
+&+&\displaystyle C_F T_R \left[16 \left(2 x^2-2 x+1\right) \ln
+    (1-x)-8 \left(4 x^2-2 x+1\right) \ln (x)+4\left(4 x-1\right)\right]\\
+\\
+&+&\displaystyle N_F T_R^2 \left[-\frac{16}{3} (2 x^2-2 x+1)\right]
+\end{array}
+\end{equation}
+
+Now we need to consider the additional terms involving combinations of
+splitting functions and coefficient functions. Let us start
+considering $F_L$ and it is the easiest case. Here we have:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle C_{L,\pm}^{(1)}(x) &=& \displaystyle 4 C_F x\,,\\
+\\
+\displaystyle C_{L,q}^{(1)}(x) &=& \displaystyle  \frac16 C_{L,\pm}^{(1)}(x) =
+  C_F\frac{2x}{3}\,,\\
+\\
+\displaystyle C_{L,g}^{(1)}(x) &=& \displaystyle  4 T_Rx(1-x)\,,
+\end{array}
+\end{equation}
+and for the non-singlet case we need to compute:
+\begin{equation}
+C_{L,\pm}^{(1)}(x)\otimes P_{qq}^{(0)}(x) = 4C_F^2 \left[ (x+2)+4 x \ln (1-x)-2 x \ln(x)\right]\,.
+\end{equation}
+For the gluon coefficient function, instead, we need to compute:
+\begin{equation}
+\begin{array}{rcl}
+C_{L,i}^{(1)}(x)\otimes P_{ig}^{(0)}(x) &=& \displaystyle  C_A T_R
+                                            \left[64 (1-x) x \ln
+                                            (1-x)-128 x \ln
+                                            (x)+\frac{16}{3} \left(23
+                                            x^2-19 x-6 + \frac{2}{x}\right)\right]\\
+\\
+&+&\displaystyle C_F T_R \left[\frac{16}{3} x \ln
+                                            (x)-\frac{8}{3} \left(2
+                                            x^2-x-1\right)\right]\\
+\\
+&+&\displaystyle N_FT_R^2\left[-\frac{64}{3}x(1-x)\right]\,.
+\end{array}
+\end{equation}
+
+Now we consider $F_2$, for which we have:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle C_{2,\pm}^{(1)}(x) &=& \displaystyle 
+                                     2C_F \bigg[2 \left(\frac{\ln(1-x)}{1-x}\right)_+-\frac{3}{2}\left(\frac{1}{1-x}\right)_+
+                                     -2\frac{\ln
+                                     (x)}{1-x}-(x+1) \left[\ln (1-x)-\ln
+                                     (x)\right] \\
+\\
+&+&\displaystyle 2 x+3 - \left(2 \zeta(2)+\frac{9}{2}\right) \delta(1-x)\bigg] \,,\\
+\\
+\displaystyle C_{2,q}^{(1)}(x) &=& \displaystyle  \frac16 C_{\pm,2}^{(1)}(x) \,,\\
+\\
+\displaystyle C_{2,g}^{(1)}(x) &=& \displaystyle  4 T_R \left[\left(x^2+(1-x)^2\right) [\ln
+                                   (1-x)-\ln (x)]-8x^2+8 x-1\right] \,.
+\end{array}
+\end{equation}
+Also in this case we need to compute $C_{2,\pm}^{(1)}(x)\otimes
+P_{qq}^{(0)}(x)$ and $C_{2,i}^{(1)}(x)\otimes P_{ig}^{(0)}(x)$.
 
 \section{Implementation of the Semi-Inclusive $e^+e^-$ Annihilation}
 
@@ -1366,7 +1582,7 @@ in {\tt APFEL} is not very complicated. The reason for that is the
 fact that SIA is structurally identical to DIS. In fact, we can regard
 SIA as the time-like counterpart of DIS and the differences are only
 at the level of coefficient functions and splitting functions.
-Condidering that {\tt APFEL} already implement the time-like
+Considering that {\tt APFEL} already implement the time-like
 evolution~\cite{Bertone:2015cwa} ($i.e.$ the time-like splitting
 functions), the only thing to do is implement the respective
 coefficient functions. Presently the coefficient functions for SIA are
@@ -1385,35 +1601,32 @@ functions: $F_T$, $F_L$ and $F_A$. However, comparing the SIA cross
 section with the DIS cross sections it is easy to realize that
 defining:
 \begin{equation}\label{SIAtoDIS}
-\begin{array}{l}
-F_2(x,Q) = F_T(x,Q) + F_L(x,Q)\,,\\
-F_L(x,Q) = F_L(x,Q)\,,\\
-F_A(x,Q) = xF_3(x,Q)\,,
+\begin{array}{l} F_2(x,Q) = F_T(x,Q) + F_L(x,Q)\,,\\ F_L(x,Q) =
+F_L(x,Q)\,,\\ F_A(x,Q) = xF_3(x,Q)\,,
 \end{array}
-\end{equation}
-the SIA cross section reduces to the same structure of the DIS cross section.
+\end{equation} the SIA cross section reduces to the same structure of
+the DIS cross section.
 
 Assuming that:
 \begin{equation}
-F_k(x,Q) = \sum_{j=q,g} x\int_x^1\frac{dy}{y}
-c_{k,j}(\alpha_s(Q),x)\mathcal{D}_j\left(\frac{x}{y},Q\right)\,,\quad\mbox{with}\quad
-k = 2,L,3\,,
-\end{equation}
+  F_k(x,Q) = \sum_{j=q,g} x\int_x^1\frac{dy}{y}
+  c_{k,j}(\alpha_s(Q),x)\mathcal{D}_j\left(\frac{x}{y},Q\right)\,,\quad\mbox{with}\quad
+  k = 2,L,3\,,
+\end{equation} 
 (note that, to uniform the notation, we understood the factor $x$ in
 front of $F_3$) where $\mathcal{D}_j$ is the fragmentation function of
 the flavour $j$ and where the coefficient functions $c_{k,j}$ allow
 for the perturbative expansion:
 \begin{equation}
-c_{k,j}(\alpha_s(Q),x) = \sum_{n=0}^N \alpha_s^n(Q) c_{k,j}^{(n)}(x)\,,
+  c_{k,j}(\alpha_s(Q),x) = \sum_{n=0}^N \alpha_s^n(Q)
+  c_{k,j}^{(n)}(x)\,,
 \end{equation}
 we have that the leading-order cofficient functions are trivially:
 \begin{equation}
 \begin{array}{l}
-c_{k,g}^{(0)}(x) = 0 \,,\quad k = 2,L,3\,,\\
-\\
-c_{L,q}^{(0)}(x) = 0\,, \\ 
-\\
-c_{2,q}^{(0)}(x) = c_{3,q}^{(0)}(x) = \delta(1-x)\,. \\ 
+  c_{k,g}^{(0)}(x) = 0 \,,\quad k = 2,L,3\,,\\ \\
+  c_{L,q}^{(0)}(x) = 0\,, \\ \\ c_{2,q}^{(0)}(x) = c_{3,q}^{(0)}(x) =
+  \delta(1-x)\,.
 \end{array}
 \end{equation}
 
@@ -1426,37 +1639,28 @@ eq.~(\ref{SIAtoDIS}).
 
 \begin{equation}
 \begin{array}{lcl}
-\displaystyle c_{L,q}^{(1)}(x) = 2C_F & &\\
-\\
-\displaystyle c_{L,g}^{(1)}(x) = 2C_F\frac{4(1-x)}{x} & &\\
-\\
-\displaystyle c_{2,q}^{(1)}(x) = c_{T,q}^{(1)}(x) + c_{L,q}^{(1)}(x)
-&=& \displaystyle
-2C_F\bigg[2\left(\frac{\ln(1-x)}{1-x}\right)_+-\frac{3}{2}\left(\frac{1}{1-x}\right)_+
-- (1+x)\ln(1-x)\\
-\\
-& &\displaystyle +2\frac{1+x^2}{1-x}\ln x +\frac{5}{2} -\frac{3}{2} x 
-+\left(4\zeta_2-\frac{9}{2}\right)\delta(1-x)\bigg]\\
-\\
-\displaystyle c_{2,g}^{(1)}(x) = c_{T,g}^{(1)}(x) + c_{L,g}^{(1)}(x)
-&=& \displaystyle 4C_F\frac{1+(1-x)^2}{x} \ln[x^2(1-x)]\\
-\\
-\displaystyle c_{3,q}^{(1)}(x) &=& \displaystyle
-2C_F\bigg[2\left(\frac{\ln(1-x)}{1-x}\right)_+-\frac{3}{2}\left(\frac{1}{1-x}\right)_+
-- (1+x)\ln(1-x)\\
-\\
-& &\displaystyle +2\frac{1+x^2}{1-x}\ln x +\frac{1}{2} -\frac{1}{2} x 
-+\left(4\zeta_2-\frac{9}{2}\right)\delta(1-x)\bigg]\\
-\\
-\displaystyle c_{3,g}^{(1)}(x) = 0
+  \displaystyle c_{L,q}^{(1)}(x) = 2C_F & &\\ \\
+  \displaystyle c_{L,g}^{(1)}(x) = 2C_F\frac{4(1-x)}{x} & &\\ \\
+  \displaystyle c_{2,q}^{(1)}(x) = c_{T,q}^{(1)}(x) + c_{L,q}^{(1)}(x)
+                                        &=& \displaystyle
+                                            2C_F\bigg[2\left(\frac{\ln(1-x)}{1-x}\right)_+-\frac{3}{2}\left(\frac{1}{1-x}\right)_+
+                                            - (1+x)\ln(1-x)\\ \\ & &\displaystyle +2\frac{1+x^2}{1-x}\ln x
+                                                                     +\frac{5}{2} -\frac{3}{2} x
+                                                                     +\left(4\zeta_2-\frac{9}{2}\right)\delta(1-x)\bigg]\\ \\ \displaystyle
+  c_{2,g}^{(1)}(x) = c_{T,g}^{(1)}(x) + c_{L,g}^{(1)}(x) &=&
+                                                             \displaystyle 4C_F\frac{1+(1-x)^2}{x} \ln[x^2(1-x)]\\ \\ \displaystyle
+  c_{3,q}^{(1)}(x) &=& \displaystyle
+                       2C_F\bigg[2\left(\frac{\ln(1-x)}{1-x}\right)_+-\frac{3}{2}\left(\frac{1}{1-x}\right)_+
+                       - (1+x)\ln(1-x)\\ \\ & &\displaystyle +2\frac{1+x^2}{1-x}\ln x
+                                                +\frac{1}{2} -\frac{1}{2} x
+                                                +\left(4\zeta_2-\frac{9}{2}\right)\delta(1-x)\bigg]\\ \\ \displaystyle
+  c_{3,g}^{(1)}(x) = 0
 \end{array}
 \end{equation}
 
 It is interesting to notice that, as expected, the soft-singular part
 of the quark coefficient functions is exactly the same as in DIS and
 this allows us to reuse part of the DIS coefficient functions.
-
-
 
 \newpage
 

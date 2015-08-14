@@ -826,29 +826,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
 *
       RETURN
       END
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*
 ************************************************************************
 *
 *     Order alphas coefficient functions (NNLO) for the semi-inclusive
@@ -1583,3 +1561,148 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
 *
        RETURN
        END
+*
+c$$$************************************************************************
+c$$$*
+c$$$*     Analytical terms neededed for the scale variations
+c$$$*
+c$$$************************************************************************
+c$$$      FUNCTION P0P0NSA(X)
+c$$$*
+c$$$      IMPLICIT NONE
+c$$$*
+c$$$      INCLUDE "../commons/ColorFactors.h"
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      DOUBLE PRECISION X
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      DOUBLE PRECISION P0P0NSA
+c$$$*
+c$$$      P0P0NSA = 4D0 * CF**2D0 * ( - 4D0 * DLOG(X) / ( 1D0 - X )
+c$$$     1     - 4D0 * ( 1D0 + X ) * DLOG( 1D0 - X )
+c$$$     2     + 3D0 * ( 1D0 + X ) * DLOG(X) - ( X + 5D0 ) )
+c$$$*
+c$$$      RETURN
+c$$$      END
+c$$$*
+c$$$************************************************************************
+c$$$      FUNCTION P0P0NSB(X)
+c$$$*
+c$$$      IMPLICIT NONE
+c$$$*
+c$$$      INCLUDE "../commons/ColorFactors.h"
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      DOUBLE PRECISION X
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      DOUBLE PRECISION P0P0NSB
+c$$$*
+c$$$      P0P0NSB = 4D0 * CF**2D0 * ( 8D0 * DLOG( 1D0 - X ) + 6D0 ) 
+c$$$     1     / ( 1D0 - X )
+c$$$*
+c$$$      RETURN
+c$$$      END
+c$$$*
+c$$$************************************************************************
+c$$$      FUNCTION P0P0NSC(X)
+c$$$*
+c$$$      IMPLICIT NONE
+c$$$*
+c$$$      INCLUDE "../commons/ColorFactors.h"
+c$$$      INCLUDE "../commons/consts.h"
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      DOUBLE PRECISION X
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      DOUBLE PRECISION P0P0NSC
+c$$$*
+c$$$      P0P0NSC = 4D0 * CF**2D0 * ( 4D0 * DLOG( 1D0 - X )**2D0 
+c$$$     1     + 6D0 * DLOG( 1D0 - X ) + ( 9D0 / 4D0 - 4D0 * ZETA2 ) )
+c$$$*
+c$$$      RETURN
+c$$$      END
+c$$$*
+c$$$************************************************************************
+c$$$      FUNCTION P0P0GA(X,NF)
+c$$$*
+c$$$      IMPLICIT NONE
+c$$$*
+c$$$      INCLUDE "../commons/ColorFactors.h"
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      INTEGER NF
+c$$$      DOUBLE PRECISION X
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      DOUBLE PRECISION P0P0GA
+c$$$*
+c$$$      P0P0GA = CA * TR * ( 16D0 * ( 2D0 * X**2D0 - 2D0 * X + 1D0 )
+c$$$     1     * DLOG( 1D0 - X ) + 16D0 * ( 4D0 * X + 1 D0 ) * DLOG(X)
+c$$$     2     + 4D0 * ( - 40D0 * X**2D0 + 26D0 * X + 17D0 + 8D0 / X )
+c$$$     3     / 3D0 )
+c$$$     4     + CF * TR * ( ( 2D0 * X**2D0 - 2D0 * X + 1D0 )
+c$$$     5     * DLOG( 1D0 - X ) - 8D0 * ( 4D0 *X**2D0 - 2D0 * X + 1D0 )
+c$$$     6     * DLOG(X) + 4D0 * ( 4D0 * X - 1D0 ) )
+c$$$     7     + NF * TR**2D0 * ( - 16D0 * ( 2D0 * X**2D0 - 2D0 * X + 1D0 )
+c$$$     8     )
+c$$$*
+c$$$      RETURN
+c$$$      END
+c$$$*
+c$$$************************************************************************
+c$$$      FUNCTION CL1P0NSA(X)
+c$$$*
+c$$$      IMPLICIT NONE
+c$$$*
+c$$$      INCLUDE "../commons/ColorFactors.h"
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      DOUBLE PRECISION X
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      DOUBLE PRECISION CL1P0NSA
+c$$$*
+c$$$      CL1P0NSA = 4D0 * CF**2D0 * ( ( X + 2D0 ) + 4D0 * X
+c$$$     1     * DLOG( 1D0 - X ) - 2D0 * X * DLOG(X) )
+c$$$*
+c$$$      RETURN
+c$$$      END
+c$$$*
+c$$$************************************************************************
+c$$$      FUNCTION CL1P0GA(X,NF)
+c$$$*
+c$$$      IMPLICIT NONE
+c$$$*
+c$$$      INCLUDE "../commons/ColorFactors.h"
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      INTEGER NF
+c$$$      DOUBLE PRECISION X
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      DOUBLE PRECISION CL1P0GA
+c$$$*
+c$$$      CL1P0GA = CA * TR * ( 64D0 * ( 1D0 - X ) * X * DLOG( 1D0 - X )
+c$$$     1     - 128D0 * X * DLOG(X) + 16D0 * ( 23D0 * X**2D0 - 19D0 * X
+c$$$     2     - 6D0 + 2D0 / X ) / 3D0)
+c$$$     3     + CF * TR * ( 16D0 * X * DLOG(X) / 3D0 - 8D0 * ( 2D0 * X**2D0 
+c$$$     4     - X - 1D0 ) / 3D0 )
+c$$$     5     + NF * TR**2D0 * ( - 64D0 * X * ( 1D0 - X ) / 3D0 )
+c$$$*
+c$$$      RETURN
+c$$$      END
