@@ -37,7 +37,7 @@
       double precision C13P0(4)
       double precision P0P0(4)
       double precision tR,tF,tF2h
-      double precision beta0apf
+      double precision beta0apf,b0
 *
       if(ipt.eq.0) return
 *
@@ -59,6 +59,8 @@
 *
       do inf=3,6
 *
+         b0 = beta0apf(inf)
+*
 *     NNLO
 *
          if(ipt.ge.2)then
@@ -79,9 +81,9 @@
 *     Gluon
                   P0P0(1) = P0P0(1)
      1                 + SP(igrid,inf,mapP(1,1),0,beta,gamma)
-     2                 * SP(igrid,inf,mapP(1,2),0,gamma,alpha) / inf
+     2                 * SP(igrid,inf,mapP(1,2),0,gamma,alpha)
      3                 + SP(igrid,inf,mapP(1,2),0,beta,gamma)
-     4                 * SP(igrid,inf,mapP(2,2),0,gamma,alpha) / inf
+     4                 * SP(igrid,inf,mapP(2,2),0,gamma,alpha)
                   C12P0(1) = C12P0(1)
      1                 + SC2zm(igrid,inf,mapC(1),1,beta,gamma)
      2                 * SP(igrid,inf,mapP(1,2),0,gamma,alpha) / inf
@@ -100,7 +102,7 @@
 *     Pure-singlet
                   P0P0(2) = P0P0(2)
      1                 + SP(igrid,inf,mapP(1,2),0,beta,gamma)
-     2                 * SP(igrid,inf,mapP(2,1),0,gamma,alpha) / inf
+     2                 * SP(igrid,inf,mapP(2,1),0,gamma,alpha)
                   C12P0(2) = C12P0(2)
      1                 + SC2zm(igrid,inf,mapC(2),1,beta,gamma)
      2                 * SP(igrid,inf,mapP(2,1),0,gamma,alpha)
@@ -132,9 +134,9 @@
 *     Gluon
                   P0P0(1) = P0P0(1)
      1                 + SP(igrid,inf,mapP(1,1),0,0,gamma-beta)
-     2                 * SP(igrid,inf,mapP(1,2),0,0,alpha-gamma) / inf
+     2                 * SP(igrid,inf,mapP(1,2),0,0,alpha-gamma)
      3                 + SP(igrid,inf,mapP(1,2),0,0,gamma-beta)
-     4                 * SP(igrid,inf,mapP(2,2),0,0,alpha-gamma) / inf
+     4                 * SP(igrid,inf,mapP(2,2),0,0,alpha-gamma)
                   C12P0(1) = C12P0(1)
      1                 + SC2zm(igrid,inf,mapC(1),1,0,gamma-beta)
      2                 * SP(igrid,inf,mapP(1,2),0,0,alpha-gamma) / inf
@@ -153,7 +155,7 @@
 *     Pure-singlet
                   P0P0(2) = P0P0(2)
      1                 + SP(igrid,inf,mapP(1,2),0,0,gamma-beta)
-     2                 * SP(igrid,inf,mapP(2,1),0,0,alpha-gamma) / inf
+     2                 * SP(igrid,inf,mapP(2,1),0,0,alpha-gamma)
                   C12P0(2) = C12P0(2)
      1                 + SC2zm(igrid,inf,mapC(2),1,0,gamma-beta)
      2                 * SP(igrid,inf,mapP(2,1),0,0,alpha-gamma)
@@ -189,66 +191,66 @@
 *     Gluon
             SC2zm(igrid,inf,1,2,beta,alpha) = 
      1           SC2zm(igrid,inf,1,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SC2zm(igrid,inf,1,1,beta,alpha)
-     3           - tF * C12P0(1) + tF2h * ( P0P0(1) - beta0apf(inf)
-     4           * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf )
+     2           + tR * b0 * SC2zm(igrid,inf,1,1,beta,alpha)
+     3           - tF * C12P0(1) + tF2h * ( P0P0(1) - b0
+     4           * SP(igrid,inf,mapP(1,2),0,beta,alpha) ) / inf
      5           - tF * SP(igrid,inf,mapP(1,2),1,beta,alpha) / inf
             SCLzm(igrid,inf,1,2,beta,alpha) = 
      1           SCLzm(igrid,inf,1,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SCLzm(igrid,inf,1,1,beta,alpha)
+     2           + tR * b0 * SCLzm(igrid,inf,1,1,beta,alpha)
      3           - tF * C1LP0(1)
             SC3zm(igrid,inf,1,2,beta,alpha) = 
      1           SC3zm(igrid,inf,1,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SC3zm(igrid,inf,1,1,beta,alpha)
-     3           - tF * C13P0(1) + tF2h * ( P0P0(1) - beta0apf(inf)
-     4           * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf )
+     2           + tR * b0 * SC3zm(igrid,inf,1,1,beta,alpha)
+     3           - tF * C13P0(1) + tF2h * ( P0P0(1) - b0
+     4           * SP(igrid,inf,mapP(1,2),0,beta,alpha) ) / inf
      5           - tF * SP(igrid,inf,mapP(1,2),1,beta,alpha) / inf
 *     Pure-singlet
             SC2zm(igrid,inf,2,2,beta,alpha) =
      1           SC2zm(igrid,inf,2,2,beta,alpha)
-     2           - tF * C12P0(2) + tF2h * P0P0(2)
-     3           - tF * ( SP(igrid,inf,mapP(1,1),0,beta,alpha)
-     4           - SP(igrid,inf,1,0,beta,alpha) )
+     2           - tF * C12P0(2) + tF2h * P0P0(2) / inf
+     3           - tF * ( SP(igrid,inf,mapP(1,1),1,beta,alpha)
+     4           - SP(igrid,inf,1,1,beta,alpha) ) / inf
             SCLzm(igrid,inf,2,2,beta,alpha) =
      1           SCLzm(igrid,inf,2,2,beta,alpha)
      2           - tF * C1LP0(2)
             SC3zm(igrid,inf,2,2,beta,alpha) =
      1           SC3zm(igrid,inf,2,2,beta,alpha)
-     2           - tF * C13P0(2) + tF2h * P0P0(2)
-     3           - tF * ( SP(igrid,inf,mapP(1,1),0,beta,alpha)
-     4           - SP(igrid,inf,1,0,beta,alpha) )
+     2           - tF * C13P0(2) + tF2h * P0P0(2) / inf
+     3           - tF * ( SP(igrid,inf,mapP(1,1),1,beta,alpha)
+     4           - SP(igrid,inf,1,1,beta,alpha) ) / inf
 *     Plus
             SC2zm(igrid,inf,3,2,beta,alpha) = 
      1           SC2zm(igrid,inf,3,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SC2zm(igrid,inf,3,1,beta,alpha)
-     3           - tF * C12P0(3) + tF2h * ( P0P0(3) - beta0apf(inf)
+     2           + tR * b0 * SC2zm(igrid,inf,3,1,beta,alpha)
+     3           - tF * C12P0(3) + tF2h * ( P0P0(3) - b0
      4           * SP(igrid,inf,1,0,beta,alpha) )
      5           - tF * SP(igrid,inf,1,1,beta,alpha)
             SCLzm(igrid,inf,3,2,beta,alpha) = 
      1           SCLzm(igrid,inf,3,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SCLzm(igrid,inf,3,1,beta,alpha)
+     2           + tR * b0 * SCLzm(igrid,inf,3,1,beta,alpha)
      3           - tF * C1LP0(3)
             SC3zm(igrid,inf,3,2,beta,alpha) = 
      1           SC3zm(igrid,inf,3,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SC3zm(igrid,inf,3,1,beta,alpha)
-     3           - tF * C13P0(3) + tF2h * ( P0P0(3) - beta0apf(inf)
+     2           + tR * b0 * SC3zm(igrid,inf,3,1,beta,alpha)
+     3           - tF * C13P0(3) + tF2h * ( P0P0(3) - b0
      4           * SP(igrid,inf,1,0,beta,alpha) )
      5           - tF * SP(igrid,inf,1,1,beta,alpha)
 *     Minus
             SC2zm(igrid,inf,4,2,beta,alpha) = 
      1           SC2zm(igrid,inf,4,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SC2zm(igrid,inf,4,1,beta,alpha)
-     3           - tF * C12P0(4) + tF2h * ( P0P0(4) - beta0apf(inf)
+     2           + tR * b0 * SC2zm(igrid,inf,4,1,beta,alpha)
+     3           - tF * C12P0(4) + tF2h * ( P0P0(4) - b0
      4           * SP(igrid,inf,2,0,beta,alpha) )
      5           - tF * SP(igrid,inf,2,1,beta,alpha)
             SCLzm(igrid,inf,4,2,beta,alpha) = 
      1           SCLzm(igrid,inf,4,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SCLzm(igrid,inf,4,1,beta,alpha)
+     2           + tR * b0 * SCLzm(igrid,inf,4,1,beta,alpha)
      3           - tF * C1LP0(4)
             SC3zm(igrid,inf,4,2,beta,alpha) = 
      1           SC3zm(igrid,inf,4,2,beta,alpha)
-     2           + tR * beta0apf(inf) * SC3zm(igrid,inf,4,1,beta,alpha)
-     3           - tF * C13P0(4) + tF2h * ( P0P0(4) - beta0apf(inf)
+     2           + tR * b0 * SC3zm(igrid,inf,4,1,beta,alpha)
+     3           - tF * C13P0(4) + tF2h * ( P0P0(4) - b0
      4           * SP(igrid,inf,2,0,beta,alpha) )
      5           - tF * SP(igrid,inf,2,1,beta,alpha)
          endif
@@ -285,16 +287,15 @@
 *
       if(MassScheme(1:4).eq."FFNS".or.MassScheme(1:5).eq."FONLL")then
          if(ipt_FF.ge.2)then
+            b0 = beta0apf(Nf_FF)
             do ixi=1,nxir
                do k=1,3
                   SC2mNC(igrid,ixi,k,2,beta,alpha) = 
      1                 SC2mNC(igrid,ixi,k,2,beta,alpha)
-     2                 + tR * beta0apf(Nf_FF)
-     3                 * SC2mNC(igrid,ixi,k,1,beta,alpha)
+     2                 + tR * b0 * SC2mNC(igrid,ixi,k,1,beta,alpha)
                   SCLmNC(igrid,ixi,k,2,beta,alpha) = 
      1                 SCLmNC(igrid,ixi,k,2,beta,alpha)
-     2                 + tR * beta0apf(Nf_FF)
-     3                 * SCLmNC(igrid,ixi,k,1,beta,alpha)
+     2                 + tR * b0 * SCLmNC(igrid,ixi,k,1,beta,alpha)
                enddo
             enddo
          endif
@@ -304,16 +305,15 @@
 *
       if(MassScheme(1:4).eq."FFN0".or.MassScheme(1:5).eq."FONLL")then
          if(ipt_FF.ge.2)then
+            b0 = beta0apf(Nf_FF)
             do ixi=1,nxir
                do k=1,3
                   SC2m0NC(igrid,ixi,k,2,beta,alpha) = 
      1                 SC2m0NC(igrid,ixi,k,2,beta,alpha)
-     2                 + tR * beta0apf(Nf_FF)
-     3                 * SC2m0NC(igrid,ixi,k,1,beta,alpha)
+     2                 + tR * b0 * SC2m0NC(igrid,ixi,k,1,beta,alpha)
                   SCLm0NC(igrid,ixi,k,2,beta,alpha) = 
      1                 SCLm0NC(igrid,ixi,k,2,beta,alpha)
-     2                 + tR * beta0apf(Nf_FF)
-     3                 * SCLm0NC(igrid,ixi,k,1,beta,alpha)
+     2                 + tR * b0 * SCLm0NC(igrid,ixi,k,1,beta,alpha)
                enddo
             enddo
          endif

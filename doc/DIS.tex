@@ -1200,13 +1200,117 @@ $\{\Sigma,g,V,V_{3},V_{8},V_{15},V_{24},V_{35},T_{3},T_{8},V_{15},T_{24},T_{35}\
 and thus the indices $i$, $j$ and $l$ in eq.~(\ref{generalizedCF}) run
 between 1 and 13 over this basis. The advantage of this basis is the
 fact that the splitting function matrix $P_{ij}$ is almost completely
-diagonalized so that, up to $\mathcal{O}(\alpha_s^2)$, we have:
+diagonalized. The starting point, is the usual definition that, up to
+a factor $x$ and omitting the convolution symbol $\otimes$, can be
+written as:
+\begin{equation}\label{StructFuncDef}
+F=\langle e_q^2 \rangle \left\{C_gg +\sum_{i=u}^{t}\underbrace{\theta(Q^2-m_i^2)\left[C_{\rm PS}+\frac{e_i^2}{\langle e_q^2
+      \rangle}C_+\right]}_{\hat{C}_i}q_i^+\right\}\,,
+\end{equation}
+where:
+\begin{equation}
+\langle e_q^2 \rangle = \sum_{i=u}^t e_i^2\theta(Q^2-m_i^2)\,.
+\end{equation}
+Now, in order to express the structunre function in
+eq.~(\ref{StructFuncDef}) in the evolution basis, we need to find the
+tranformation such that:
+\begin{equation}\label{Rotation}
+q_i^+ = \sum_{j=1}^6T_{ij}f_j\,,
+\end{equation}
+where $f_j$ belongs to the evolution basis, that is: $f_1=\Sigma$,
+$f_2=T_3$, $f_3=T_8$ and so on. One can show that the
+trasformation matrix $T_{ij}$ can be written as:
+\begin{equation}\label{TransDef}
+\begin{array}{l}
+\displaystyle T_{ij}=\theta(j-i)\frac{1-\delta_{ij}j}{j(j-1)}\quad j\geq 2\,,\\
+\\
+\displaystyle T_{i1} = \frac{1}{6}\,,
+\end{array}
+\end{equation}
+with $\theta(j-i)=1$ for $j\geq i$ and zero otherwise.
+In addition, one can show that:
+\begin{equation}
+\sum_{j=1}^6T_{ij} = 0\,,\quad\mbox{and}\quad \sum_{i=1}^6T_{ij} = \delta_{1j}\,.
+\end{equation}
+Now, we can plug eq.~(\ref{Rotation}) into eq.~(\ref{StructFuncDef})
+and, using eq.~(\ref{TransDef}), we get:
+\begin{equation}\label{StructFuncDefEvol}
+F=\langle e_q^2 \rangle \left\{C_gg +\frac16\left(C_++n_f C_{\rm PS}\right)\Sigma+\sum_{j=2}^{6}\frac{1}{j(j-1)}\left[\sum_{i=1}^j\hat{C}_i-j\hat{C}_j\right]f_j\right\}\,,
+\end{equation}
+where we have transmuted the sum over $u$, $d$ and so on into a sum
+between 1 and 6 and where we have defined:
+\begin{equation}
+n_f = \sum_{i=1}^6\theta(Q^2-m_i^2)\,.
+\end{equation}
+Now we need to express the term in sqauer brackets in terms of the
+usual coefficient functions $C_+$ and $C_{\rm PS}$, in particular:
+\begin{equation}
+\sum_{i=1}^j\hat{C}_i-j\hat{C}_j = \sum_{i=1}^j \theta(Q^2-m_i^2)\left(C_{\rm PS}+\frac{e_i^2}{\langle e_q^2
+      \rangle}C_+\right) - j \theta(Q^2-m_j^2)\left(C_{\rm PS}+\frac{e_j^2}{\langle e_q^2
+      \rangle}C_+\right)\,.
+\end{equation}
+Here we can distinguish two case, the first is $Q^2<m_j^2$ and under
+this assumption we have:
+\begin{equation}
+\sum_{i=1}^j\hat{C}_i-j\hat{C}_j = C_++n_fC_{\rm PS}\,.
+\end{equation}
+If instead $Q^2 \geq m_j^2$, then:
+\begin{equation}
+\sum_{i=1}^j\hat{C}_i-j\hat{C}_j = K_j C_+\,,
+\end{equation}
+with:
+\begin{equation}
+K_j=\frac{1}{\langle e_q^2\rangle}\left(\sum_{i=1}^{j}e_i^2-je_j^2\right)=\frac{1}{\langle e_q^2\rangle}\left(\sum_{i=1}^{j-1}e_i^2-(j-1)e_j^2\right)\,.
+\end{equation}
+We can express both cases in one single formula as:
+\begin{equation}\label{SumCoef}
+\sum_{i=1}^j\hat{C}_i-j\hat{C}_j = \theta(m_j^2-Q^2-\epsilon)\left[ C_++n_f C_{\rm PS}\right]
++\theta(Q^2-m_j^2)\left[K_jC_+\right]\,.
+\end{equation}
+where $\epsilon$ is a small parameter that ensures that the case
+$Q^2=m_j^2$ is included in the second term of the r.h.s. of
+eq.~(\ref{SumCoef}). Eq.~(\ref{SumCoef}) can aslo be written as:
+\begin{equation}\label{SumCoef}
+\sum_{i=1}^j\hat{C}_i-j\hat{C}_j = \theta(n_f-j)\left[K_jC_+\right]+\theta(j-n_f-1)\left[ C_++n_f C_{\rm PS}\right]\,.
+\end{equation}
+In addition, one can easily see that:
+\begin{equation}\label{SingletReduction}
+f_j = \theta(n_f-j)f_j+\theta(j-n_f-1)\Sigma\,,
+\end{equation}
+and thus:
+\begin{equation}
+\sum_{j=2}^{6}\frac{1}{j(j-1)}\left[\sum_{i=1}^j\hat{C}_i-j\hat{C}_j\right]f_j
+= C_+\left[\sum_{j=2}^{nf}\frac{K_j}{j(j-1)}f_j\right]+\left[\sum_{j=n_f+1}^{6}\frac{1}{j(j-1)}\right] \left[ C_++n_f C_{\rm PS}\right]\Sigma\,,
+\end{equation}
+but:
+\begin{equation}
+\sum_{j=n_f+1}^{6}\frac{1}{j(j-1)}=\frac{1}{n_f}-\frac{1}{6},.
+\end{equation}
+Moreover, one can show that:
+\begin{equation}
+\frac{K_j}{j(j-1)} = \frac{1}{\langle e_q^2\rangle}\underbrace{\left(\frac{1}{j(j-1)}\sum_{i=1}^je_i^2-\frac{1}{j-1}e_j^2\right)}_{d_j}\,.
+\end{equation}
+Finally, putting all pieces together, we find:
+\begin{equation}
+F=\langle e_q^2 \rangle \left[C_g g +\left(C_{\rm PS} +\frac1{n_f}C_+
+  \right) \Sigma\right]+C_+\sum_{j=2}^{n_f} d_j f_j\,.
+\end{equation}
+
+
+
+
+
+
+
+ so that, up to $\mathcal{O}(\alpha_s^2)$, we have:
 \begin{equation}
 \begin{array}{ll}
   P_{ij}^{(k)} \rightarrow P_{ij}^{(k)} &\quad
-                                          j=g,q(\Sigma)\\ P_{ij}^{(k)} \rightarrow \delta_{ij}P_-^{(k)} &\quad
-                                                                                                          j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\ P_{ij}^{(k)} \rightarrow
-  \delta_{ij}P_+^{(k)} &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
+                                          i,j=g,q(\Sigma)\\
+  P_{ij}^{(k)} \rightarrow \delta_{ij}P_-^{(k)} &\quad
+                                                  i,j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\
+  P_{ij}^{(k)} \rightarrow
+  \delta_{ij}P_+^{(k)} &\quad i,j=T_{3},T_{8},V_{15},T_{24},T_{35}
 \end{array}
 \end{equation}
 and:
@@ -1229,7 +1333,8 @@ as well as:
                          &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
 \end{array}
 \end{equation}
-where the $d_j$ are just numerical coefficients. In addition:
+where the $d_j$ are just numerical coefficients that in general can
+depend on the number of active flavours $n_f$. In addition:
 \begin{equation}
   P_-^{(0)}=P_+^{(0)}=P_{qq}^{(0)}\,,
 \end{equation}
@@ -1237,8 +1342,9 @@ and:
 \begin{equation}
 \begin{array}{l}
   \displaystyle C_-^{(0)}(x) = C_+^{(0)}(x) =
-  \Delta_{\rm SF}\delta(1-x)\\ \displaystyle C_j^{(0)} = \Delta_{\rm
-  SF}\delta_{qj}\delta(1-x) \quad \mbox{for } j=q,g
+  \Delta_{\rm SF}\delta(1-x)\\
+  \displaystyle C_j^{(0)}(x) = \left(\Delta_{\rm
+  SF}/n_f\right)\delta_{qj}\delta(1-x) \quad \mbox{for } j=q,g
 \end{array}
 \end{equation}
 where $\Delta_{\rm SF}=1$ for $F_2$ and $F_3$ and
@@ -1284,14 +1390,14 @@ $d_q=d_g$, becomes:
 \begin{equation}\label{SingletCF}
 \begin{array}{rcl}
   \displaystyle {\mathcal{C}}_j^{(0)}(t_R,t_F) &=&
-                                                   \displaystyle \Delta_{\rm SF}\delta_{qj}\delta(1-x) \\ \\
+                                                   \displaystyle \frac{\Delta_{\rm SF}}{n_f}\delta_{qj}\delta(1-x) \\ \\
   \displaystyle {\mathcal{C}}_j^{(1)}(t_R,t_F) &=& \displaystyle
-                                                   {C}_j^{(1)}- \Delta_{\rm SF} t_F P_{qj}^{(0)} \\ \\ \displaystyle
+                                                   {C}_j^{(1)}- \frac{\Delta_{\rm SF}}{n_f} t_F P_{qj}^{(0)} \\ \\ \displaystyle
   {\mathcal{C}}_j^{(2)}(t_R,t_F) &=& \displaystyle {C}_j^{(2)} +
                                      t_R\beta_0 {C}_j^{(1)} -t_F {C}_i^{(1)} \otimes P_{ij}^{(0)}\\ \\
-                                               &+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left(
+                                               &+&\displaystyle\frac{\Delta_{\rm SF}}{n_f} \frac{t_F^2}2 \left(
                                                    P_{qi}^{(0)}\otimes P_{ij}^{(0)} - \beta_0 P_{qj}^{(0)} \right)-
-                                                   \Delta_{\rm SF} t_F\widetilde{P}_{qj}^{(1)}\,.
+                                                   \frac{\Delta_{\rm SF}}{n_f} t_F\widetilde{P}_{qj}^{(1)}\,.
 \end{array}
 \end{equation}
 for $j=g,q$. In eq.~(\ref{SingletCF}), by $j=q$ it is meant the (full)
@@ -1299,11 +1405,11 @@ singlet contribution. However, $\mathcal{C}_q^{(k)}$ and $C_q^{(k)}$
 in the {\tt APFEL} farmalism are given by:
 \begin{equation} 
   \mathcal{C}_q^{(k)} = \mathcal{C}_{\rm PS}^{(k)} +
-  \mathcal{C}_+^{(k)}
+  \frac{1}{n_f}\mathcal{C}_+^{(k)}
 \end{equation} 
 and:
 \begin{equation} 
-  C_q^{(k)} = C_{\rm PS}^{(k)} + C_+^{(k)}
+  C_q^{(k)} = C_{\rm PS}^{(k)} + \frac{1}{n_f} C_+^{(k)}
 \end{equation} 
 where $\mathcal{C}_{\rm PS}^{(k)}$ and $C_{\rm PS}^{(k)}$ are the so
 called pure-singlet contributions. Taking into account
@@ -1317,7 +1423,7 @@ $\mathcal{O}(\alpha_s^2)$), it is easy to see that:
   PS}^{(1)}(t_R,t_F) &=& \displaystyle 0 \\ \\ \displaystyle
   {\mathcal{C}}_{\rm PS}^{(2)}(t_R,t_F) &=& \displaystyle {C}_{\rm
                                             PS}^{(2)}-t_FC_g^{(1)}\otimes
-  P_{gq}^{(0)}+\Delta_{\rm SF}\frac{t_F^2}{2}P_{qg}^{(0)}\otimes P_{gq}^{(0)}-\Delta_{\rm SF}t_F\left[\widetilde{P}_{qq}^{(1)}-\widetilde{P}_{+}^{(1)}\right]\\
+  P_{gq}^{(0)}+\frac{\Delta_{\rm SF}}{n_f}\frac{t_F^2}{2}P_{qg}^{(0)}\otimes P_{gq}^{(0)}-\frac{\Delta_{\rm SF}}{n_f}t_F\left[\widetilde{P}_{qq}^{(1)}-\widetilde{P}_{+}^{(1)}\right]\\
 \end{array}
 \end{equation}
 and also that:
@@ -1325,12 +1431,12 @@ and also that:
 \begin{array}{rcl}
   \displaystyle {\mathcal{C}}_g^{(0)}(t_R,t_F) &=&
                                                    \displaystyle 0 \\ \\ \displaystyle {\mathcal{C}}_g^{(1)}(t_R,t_F) &=&
-                                                                                                                          \displaystyle {C}_g^{(1)}- \Delta_{\rm SF} t_F P_{qg}^{(0)} \\ \\
+                                                                                                                          \displaystyle {C}_g^{(1)}- \frac{\Delta_{\rm SF}}{n_f} t_F P_{qg}^{(0)} \\ \\
   \displaystyle {\mathcal{C}}_g^{(2)}(t_R,t_F) &=& \displaystyle
                                                    {C}_g^{(2)} + t_R\beta_0 {C}_g^{(1)} -t_F {C}_i^{(1)} \otimes
-                                                   P_{ig}^{(0)}\\ \\ &+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left(
+                                                   P_{ig}^{(0)}\\ \\ &+&\displaystyle\frac{\Delta_{\rm SF}}{n_f} \frac{t_F^2}2 \left(
                                                                          P_{qi}^{(0)}\otimes P_{ig}^{(0)} - \beta_0 P_{qg}^{(0)} \right)-
-                                                                         \Delta_{\rm SF} t_F\widetilde{P}_{qg}^{(1)}\,.
+                                                                         \frac{\Delta_{\rm SF}}{n_f} t_F\widetilde{P}_{qg}^{(1)}\,.
 \end{array}
 \end{equation}
 It should be noticed that the term ${C}_i^{(1)} \otimes P_{ig}^{(0)}$
@@ -1338,7 +1444,7 @@ in the r.h.s. of the third line of eq.~(\ref{SingletCFg}) should be
 interpreted as:
 \begin{equation} 
   {C}_i^{(1)} \otimes P_{ig}^{(0)} =
-  {C}_{+}^{(1)}\otimes P_{qg}^{(0)} + {C}_g^{(1)} \otimes
+ \frac{1}{n_f}{C}_{+}^{(1)}\otimes P_{qg}^{(0)} + {C}_g^{(1)} \otimes
   P_{gg}^{(0)}\,.
 \end{equation}
 
