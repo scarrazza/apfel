@@ -1028,7 +1028,7 @@ implies $\rho = 0$, $\tau = 1$ and $\xi = x$, all structure functions
 reduce to the uncorrected formulas.
 
 When considering the extraction of the DIS operator times the
-evolution operator like in eq.~(\ref{CFtimesEvolution}), one shold be
+evolution operator like in eq.~(\ref{CFtimesEvolution}), one should be
 careful with $I_2$ and $I_3$. Condidering that:
 \begin{equation}
   F(x_\alpha,Q) =
@@ -1131,7 +1131,7 @@ Finally, setting $t_F=0$ in eq.~(\ref{BETAexp}), we find:
 
 Considering that and NNLO the ZM structure functions are written in
 terms of PDFs and coefficient functions as:
-\begin{equation}
+\begin{equation}\label{NonZeroScales}
   F(t_R,t_F) / x = \left[\sum_{k=0}^{2} a_s^k(t_R)
     \widetilde{\mathcal{C}}_i^{(k)}(t_R,t_F)\right]\otimes f_i(t_F)
   +\mathcal{O}(a_s^3)\,,
@@ -1154,7 +1154,7 @@ eq.~(\ref{ZeroScales}) and finally imposing the identity in
 eq.~(\ref{invariance}), we can find the explicit espression of the
 ``generalized'' coefficient functions
 $\widetilde{\mathcal{C}}_i^{(k)}(t_R,t_F)$. In fact:
-\begin{equation}\label{ZeroScales}
+\begin{equation}
   \begin{array}{rcl}
     F(0,0)/x &=&\bigg\{ \widetilde{C}_j^{(0)} \\ \\
              &+&\displaystyle a_s(t_R)\left[\widetilde{C}_j^{(1)}- t_F
@@ -1286,59 +1286,167 @@ but:
 \begin{equation}
 \sum_{j=n_f+1}^{6}\frac{1}{j(j-1)}=\frac{1}{n_f}-\frac{1}{6},.
 \end{equation}
-Moreover, one can show that:
+Moreover:
 \begin{equation}
-\frac{K_j}{j(j-1)} = \frac{1}{\langle e_q^2\rangle}\underbrace{\left(\frac{1}{j(j-1)}\sum_{i=1}^je_i^2-\frac{1}{j-1}e_j^2\right)}_{d_j}\,.
+\frac{K_j}{j(j-1)} = \frac{1}{\langle e_q^2\rangle}\frac{1}{j(j-1)}\left(\sum_{i=1}^je_i^2-je_j^2\right)=\frac{1}{\langle e_q^2\rangle}\underbrace{\frac{1}{j(j-1)}\sum_{i=1}^6e_i^2\left[\theta(j-i)-j\delta_{ij}\right]}_{d_j}\,.
 \end{equation}
 Finally, putting all pieces together, we find:
-\begin{equation}
+\begin{equation}\label{StructureFunctionEvol}
 F=\langle e_q^2 \rangle \left[C_g g +\left(C_{\rm PS} +\frac1{n_f}C_+
   \right) \Sigma\right]+C_+\sum_{j=2}^{n_f} d_j f_j\,.
 \end{equation}
-
-
-
-
-
-
-
- so that, up to $\mathcal{O}(\alpha_s^2)$, we have:
+It is interesting to separate the contributions coming from the
+different flavors. To do so, we just need to separate the
+contributions coming from, say the $k$-th charge $e_k^2$ and this is
+easily done applying the following replacement:
 \begin{equation}
-\begin{array}{ll}
-  P_{ij}^{(k)} \rightarrow P_{ij}^{(k)} &\quad
-                                          i,j=g,q(\Sigma)\\
-  P_{ij}^{(k)} \rightarrow \delta_{ij}P_-^{(k)} &\quad
-                                                  i,j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\
-  P_{ij}^{(k)} \rightarrow
-  \delta_{ij}P_+^{(k)} &\quad i,j=T_{3},T_{8},V_{15},T_{24},T_{35}
-\end{array}
+e_i^2\rightarrow \delta_{ik}e_i^2\,.
+\end{equation}
+In this way we have that:
+\begin{equation}
+\langle e_q^2 \rangle \rightarrow \theta(Q^2-m_k^2) e_k^2\,,
 \end{equation}
 and:
 \begin{equation}
-\begin{array}{ll} 
-  \widetilde{C}_j^{(k)} \rightarrow d_jC_j^{(k)}
-  &\quad j=g,q(\Sigma)\\ \widetilde{C}_j^{(k)} \rightarrow d_jC_-^{(k)}
-  &\quad j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\ \widetilde{C}_j^{(k)}
-  \rightarrow d_jC_+^{(k)} &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
+d_j \rightarrow \frac{e_k^2\left[\theta(j-k)-j\delta_{kj}\right]}{j(j-1)}=\theta(Q^2-m_k^2) e_k^2\frac{\left[\theta(j-k)-j\delta_{kj}\right]}{j(j-1)}\,,
+\end{equation}
+so that the $k$-th component of the structure function $F$ is:
+\begin{equation}
+\begin{array}{rcl}
+F^{(k)} &=&\displaystyle  \theta(Q^2-m_k^2) e_k^2\left\{\left[C_g g +\left(C_{\rm PS} +\frac1{n_f}C_+
+  \right) \Sigma\right]+C_+\sum_{j=2}^{n_f}
+            \frac{\left[\theta(j-k)-j\delta_{kj}\right]}{j(j-1)} f_j
+            \right\}\\
+\\
+&=& \displaystyle \theta(Q^2-m_k^2) e_k^2\left\{\left[C_g g +\left(C_{\rm PS} +\frac1{n_f}C_+
+  \right) \Sigma\right]-\frac{1}{k}C_+f_k+C_+\sum_{j=k+1}^{n_f}
+            \frac{1}{j(j-1)} f_j
+            \right\}
 \end{array}
 \end{equation}
-as well as:
+and it is such that:
+\begin{equation}
+F = \sum_{k=1}^6 F^{(k)}\,.
+\end{equation}
+
+In {\tt APFEL} we split the total structure functions into a light
+component and three heavy quark components. The light components is
+defined as:
+\begin{equation}
+F^l = \sum_{k=1}^3 F^{(k)}= \langle e_l^2 \rangle \left[C_g g +\left(C_{\rm PS} +\frac1{n_f}C_+
+  \right) \Sigma\right]+C_+\sum_{j=2}^{n_f} d_j^{(l)} f_j\,.
+\end{equation}
+where:
+\begin{equation}
+\langle e_l^2\rangle = \sum_{i=1}^3e_i^2\,,
+\end{equation}
+and:
+\begin{equation}
+d_j^{(l)}=
+\frac{1}{j(j-1)}\sum_{i=1}^3e_i^2\left[\theta(j-i)-j\delta_{ij}\right]=
+\left\{
+\begin{array}{ll}
+\frac{1}{2}(e_u^2-e_d^2)\,,\quad& j= 2 \\
+\\
+\frac{1}{6}(e_u^2+e_d^2-2e_s^2)\,,\quad& j= 3 \\
+\\
+\frac{\langle e_l^2\rangle}{j(j-1)}\,,\quad & j\geq 4
+\end{array}
+\right.\,,
+\end{equation}
+no need of the $\theta$-functions as the scale $Q$ will always be above
+the strange threshold. This way the explicit form of $F^l$ is:
+\begin{equation}\label{LightSF}
+F^l = \langle e_l^2 \rangle \left[C_g g +\left(C_{\rm PS} +\frac1{n_f}C_+
+  \right) \Sigma\right]+\frac{1}{2}(e_u^2-e_d^2)C_+T_3+\frac{1}{6}(e_u^2+e_d^2-2e_s^2)C_+T_8+\langle e_l^2 \rangle C_+\sum_{j=4}^{n_f} \frac{1}{j(j-1)} f_j\,.
+\end{equation}
+
+The heavy-quark components are instead defined as:
+\begin{equation}\label{HeavySF}
+\begin{array}{rcl}
+F^c &=& \displaystyle \theta(Q^2-m_c^2) e_c^2\left\{\left[C_g g +\left(C_{\rm PS} +\frac1{n_f}C_+
+  \right) \Sigma\right]-\frac{1}{4}C_+T_{14}+C_+\sum_{j=5}^{n_f}
+            \frac{1}{j(j-1)} f_j
+            \right\}\,,\\
+\\
+F^b &=& \displaystyle \theta(Q^2-m_b^2) e_b^2\left\{\left[C_g g +\left(C_{\rm PS} +\frac1{n_f}C_+
+  \right) \Sigma\right]-\frac{1}{5}C_+T_{24}+C_+\sum_{j=6}^{n_f}
+            \frac{1}{j(j-1)} f_j
+            \right\}\,,\\
+\\
+F^t &=& \displaystyle \theta(Q^2-m_t^2) e_t^2\left\{\left[C_g g +\left(C_{\rm PS} +\frac1{n_f}C_+
+  \right) \Sigma\right]-\frac{1}{6}C_+T_{35}\right\}\,.
+\end{array}
+\end{equation}
+
+To conclude the treatment of all the structure functions, we should
+adda that eq.~(\ref{StructureFunctionEvol}) is valid only for $F_2$
+and $F_L$. However, $F_3$ can be easily derived following the very
+same steps with the only differences are that: the distributions
+$\{\Sigma,T_3,T_8,T_{15},T_{24},T_{35}\}$ must be replaced with
+$\{V,V_3,V_8,V_{15},V_{24},V_{35}\}$, $C_+$ must be replaced with
+$C_-$, the gluon and the pure-singlet coefficient functions are
+identically zero and the squared electric charges replaced with the
+appropriate electroweak charges $c_i$. Following this recipe, we find:
+\begin{equation}\label{StructureFunctionEvolF3}
+F_3=\langle c_q^2 \rangle \frac1{n_f}C_- V+C_-\sum_{j=2}^{n_f} d_j g_j\,,
+\end{equation}
+where $g_j$ belongs to $\{V,V_3,V_8,V_{15},V_{24},V_{35}\}$.
+
+Eq.~(\ref{StructureFunctionEvol}), explicitly written in
+eqs.~(\ref{LightSF}) and~(\ref{HeavySF}), is the final result that
+allows us to implement the scale variation formulae given in
+eq.~(\ref{generalizedCF}) in {\tt APFEL}. The good aspect of
+eq.~(\ref{StructureFunctionEvol}) if the fact that it is written in
+terms of the fundamental coefficient functions $C_g$, $C_+$ and
+$C_{\rm PS}$ and PDFs appear in the evolution basis where the
+splitting-function matrix diagonalizes. In particular, up to
+$\mathcal{O}(\alpha_s^2)$, we have that:
+\begin{equation}
+\begin{array}{ll}
+  P_{ij}^{(k)} \rightarrow P_{ij}^{(k)} &\quad i,j=g,q(\Sigma)\\
+  P_{ij}^{(k)} \rightarrow \delta_{ij}P_+^{(k)} &\quad i,j=T_{3},T_{8},V_{15},T_{24},T_{35}\\
+  P_{ij}^{(k)} \rightarrow \delta_{ij}P_-^{(k)} &\quad i,j=V,V_{3},V_{8},V_{15},V_{24},V_{35}
+\end{array}
+\end{equation}
+Also, defining:
+\begin{equation}
+C_q=C_{\rm PS} +\frac{1}{n_f}C_+\,,
+\end{equation}
+we can connect eq.~(\ref{ZeroScales}) and
+eq.~(\ref{StructureFunctionEvol}) by observing that:
+\begin{equation}
+\begin{array}{ll} 
+  \widetilde{C}_j^{(k)} \rightarrow \langle e_q^2\rangle C_j^{(k)}
+  &\quad j=g,q(\Sigma)\\
+  \widetilde{C}_j^{(k)}
+  \rightarrow d_jC_+^{(k)} &\quad j=T_{3},T_{8},T_{15},T_{24},T_{35}\\
+  \widetilde{C}_j^{(k)}\rightarrow d_jC_-^{(k)} &\quad j=V_{3},V_{8},V_{15},V_{24},V_{35}
+\end{array}
+\end{equation}
+where we have also considered the ``minus'' distributions that appear
+in the $F_3$ structure function. Of course, the same relations must
+hold also for eq.~(\ref{NonZeroScales}):
 \begin{equation}
 \begin{array}{ll}
   \widetilde{\mathcal{C}}_j^{(k)} \rightarrow
-  d_j\mathcal{C}_j^{(k)} &\quad j=g,q(\Sigma)\\
-  \widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_-^{(k)}
-                         &\quad j=V,V_{3},V_{8},V_{15},V_{24},V_{35}\\
+  \langle e_q^2\rangle \mathcal{C}_j^{(k)} &\quad j=g,q(\Sigma)\\
   \widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_+^{(k)}
-                         &\quad j=T_{3},T_{8},V_{15},T_{24},T_{35}
+                         &\quad j=T_{3},T_{8},T_{15},T_{24},T_{35}\\
+  \widetilde{\mathcal{C}}_j^{(k)} \rightarrow d_j\mathcal{C}_-^{(k)}
+                         &\quad j=V_{3},V_{8},V_{15},V_{24},V_{35}
 \end{array}
 \end{equation}
-where the $d_j$ are just numerical coefficients that in general can
-depend on the number of active flavours $n_f$. In addition:
+with
 \begin{equation}
-  P_-^{(0)}=P_+^{(0)}=P_{qq}^{(0)}\,,
+\mathcal{C}_q=\mathcal{C}_{\rm PS} +\frac{1}{n_f}\mathcal{C}_+\,.
 \end{equation}
-and:
+In addition, in the following, we will make use of the following identity:
+\begin{equation}
+  P_-^{(0)}=P_+^{(0)}=P_{qq}^{(0)}\,.
+\end{equation}
+Now, considering that $C_{\rm PS}$ starts at
+$\mathcal{O}(\alpha_s^2)$, we can write:
 \begin{equation}
 \begin{array}{l}
   \displaystyle C_-^{(0)}(x) = C_+^{(0)}(x) =
@@ -1361,7 +1469,7 @@ follows that:
                                      P_\pm^{(1)}+C_\pm^{(1)} \otimes P_{qq}^{(0)}\right)\\ \\
                                                &+&\displaystyle\Delta_{\rm SF} \frac{t_F^2}2 \left(
                                                    P_{qq}^{(0)}\otimes P_{qq}^{(0)} + \beta_0 P_{qq}^{(0)} \right)-
-                                                   \Delta_{\rm SF} t_Ft_R\beta_{0}P_{qq}^{(0)}\,.
+                                                   \Delta_{\rm SF} t_Ft_R\beta_{0}P_{qq}^{(0)}\,,
 \end{array}
 \end{equation}
 that can be rearranged as:
@@ -1381,12 +1489,12 @@ that can be rearranged as:
 \end{equation}
 The term in square brackets in the r.h.s. of the third line
 corresponds to what we would call $\mathcal{P}_\pm^{(1)}(t_R,t_F)$,
-that is the NLO splitting function in the presence of scale
-variation. This quantity is already evaluated by {\tt APFEL} and thus
-does not need to be recomputed.
+that is the NLO splitting function in the presence of scale variations
+($\mu_R\neq\mu_F$). This quantity is already evaluated by {\tt APFEL}
+and thus does not need to be recomputed.
 
-Now, let us consider the singlet sector that, cosidering the fact that
-$d_q=d_g$, becomes:
+Now, let us consider the singlet sector that, cosidering the fact
+that becomes:
 \begin{equation}\label{SingletCF}
 \begin{array}{rcl}
   \displaystyle {\mathcal{C}}_j^{(0)}(t_R,t_F) &=&
@@ -1400,22 +1508,10 @@ $d_q=d_g$, becomes:
                                                    \frac{\Delta_{\rm SF}}{n_f} t_F\widetilde{P}_{qj}^{(1)}\,.
 \end{array}
 \end{equation}
-for $j=g,q$. In eq.~(\ref{SingletCF}), by $j=q$ it is meant the (full)
-singlet contribution. However, $\mathcal{C}_q^{(k)}$ and $C_q^{(k)}$
-in the {\tt APFEL} farmalism are given by:
-\begin{equation} 
-  \mathcal{C}_q^{(k)} = \mathcal{C}_{\rm PS}^{(k)} +
-  \frac{1}{n_f}\mathcal{C}_+^{(k)}
-\end{equation} 
-and:
-\begin{equation} 
-  C_q^{(k)} = C_{\rm PS}^{(k)} + \frac{1}{n_f} C_+^{(k)}
-\end{equation} 
-where $\mathcal{C}_{\rm PS}^{(k)}$ and $C_{\rm PS}^{(k)}$ are the so
-called pure-singlet contributions. Taking into account
-eq.~(\ref{NonSingletCF1}) and considering also the fact that
-$C_{\rm PS}^{(2)}=C_{\rm PS}^{(1)}=0$ ($i.e.$ $C_{\rm PS}$ is
-$\mathcal{O}(\alpha_s^2)$), it is easy to see that:
+for $j=g,q$. Taking into account eq.~(\ref{NonSingletCF1}) and
+considering also the fact that $C_{\rm PS}^{(0)}=C_{\rm PS}^{(1)}=0$
+($i.e.$ $C_{\rm PS}$ is $\mathcal{O}(\alpha_s^2)$), it is easy to see
+that:
 \begin{equation}\label{PureSingletCF}
 \begin{array}{rcl}
   \displaystyle {\mathcal{C}}_{\rm PS}^{(0)}(t_R,t_F)
@@ -1436,12 +1532,11 @@ and also that:
                                                    {C}_g^{(2)} + t_R\beta_0 {C}_g^{(1)} -t_F {C}_i^{(1)} \otimes
                                                    P_{ig}^{(0)}\\ \\ &+&\displaystyle\frac{\Delta_{\rm SF}}{n_f} \frac{t_F^2}2 \left(
                                                                          P_{qi}^{(0)}\otimes P_{ig}^{(0)} - \beta_0 P_{qg}^{(0)} \right)-
-                                                                         \frac{\Delta_{\rm SF}}{n_f} t_F\widetilde{P}_{qg}^{(1)}\,.
+                                                                         \frac{\Delta_{\rm SF}}{n_f} t_F\widetilde{P}_{qg}^{(1)}\,,
 \end{array}
 \end{equation}
-It should be noticed that the term ${C}_i^{(1)} \otimes P_{ig}^{(0)}$
-in the r.h.s. of the third line of eq.~(\ref{SingletCFg}) should be
-interpreted as:
+where the term ${C}_i^{(1)} \otimes P_{ig}^{(0)}$ in the r.h.s. of the
+third line of eq.~(\ref{SingletCFg}) should be interpreted as:
 \begin{equation} 
   {C}_i^{(1)} \otimes P_{ig}^{(0)} =
  \frac{1}{n_f}{C}_{+}^{(1)}\otimes P_{qg}^{(0)} + {C}_g^{(1)} \otimes
@@ -1574,13 +1669,13 @@ combination $\{q^+,g\}$):
   \left(\frac{1}{1-x}\right)_+ - (1 + x) +\frac{3}{2} \delta(1 -
   x)\right]\,,\\
 \\
-\displaystyle P_{qg}^{(0)}(x) = 4 T_R \left[x^2 + (1 - x)^2\right]\,,\\
+\displaystyle P_{qg}^{(0)}(x) = 4 n_f T_R \left[x^2 + (1 - x)^2\right]\,,\\
 \\
 \displaystyle P_{gq}^{(0)}(x) = 2 C_F \left[\frac{1+ (1 -
   x)^2}{x}\right]\,,\\
 \\
 \displaystyle P_{gg}^{(0)}(x) = 4 C_A \left[\left(\frac{1}{1-x}\right)_+
-  - 2 + x - x^2 + \frac{1}{x}\right] + \frac{11 C_A - 4 N_F T_R}{3}
+  - 2 + x - x^2 + \frac{1}{x}\right] + \frac{11 C_A - 4 n_f T_R}{3}
   \delta(1 - x)\,,
 \end{array}
 \end{equation}
@@ -1592,9 +1687,15 @@ P_{qq}^{(0)}(x) \otimes P_{qq}^{(0)}(x)\,,
 involved in the $\mathcal{O}(\alpha_s^2)$ non-singlet coefficient
 functions, and:
 \begin{equation}\label{SGP0P0}
-P_{qi}^{(0)}(x) \otimes P_{ig}^{(0)}(x)=P_{qq}^{(0)}(x) \otimes P_{qg}^{(0)}(x)+P_{qg}^{(0)}(x) \otimes P_{gg}^{(0)}(x)\,.
+\begin{array}{l}
+P_{qg}^{(0)}(x) \otimes P_{gq}^{(0)}(x)\,,\\
+\\
+\displaystyle P_{qi}^{(0)}(x) \otimes P_{ig}^{(0)}(x)=P_{qq}^{(0)}(x) \otimes
+  P_{qg}^{(0)}(x)+P_{qg}^{(0)}(x) \otimes P_{gg}^{(0)}(x)\,.
+\end{array}
 \end{equation}
-present in the respective gluon coefficient functions.
+present in the pure-singlet and in the gluon coefficient functions,
+respectively.
 
 The convolution in eq.~(\ref{NSP0P0}) can be easily computed by hand
 using eqs.~(\ref{ConvolutionDelta}) and~(\ref{ConvolutionPlus}) and
@@ -1612,7 +1713,10 @@ eqs.~(\ref{ConvolutionDelta}) and~(\ref{ConvolutionPlus}) are present,
 we can safely use {\tt Mathematica}, obtaining:
 \begin{equation}
 \begin{array}{rcl}
-P_{qi}^{(0)}(x) \otimes P_{ig}^{(0)}(x)&=&\displaystyle C_A T_R
+P_{qg}^{(0)}(x) \otimes P_{gq}^{(0)}(x)&=&\displaystyle C_F n_f
+                                           T_R\left[\frac{8}{3} \left(-4 x^2-3 x+\frac{4}{x}+3\right)+16 (x+1) \ln(x)\right]\,,\\
+\\
+P_{qi}^{(0)}(x) \otimes P_{ig}^{(0)}(x)&=&\displaystyle n_f T_R C_A
                                            \left[16 \left(2 x^2-2
                                            x+1\right) \ln
                                            (1-x)+16(4 x+1) \ln
@@ -1620,10 +1724,10 @@ P_{qi}^{(0)}(x) \otimes P_{ig}^{(0)}(x)&=&\displaystyle C_A T_R
                                            x^2+26 x+17+\frac{8}{x}\right)
                                            \right]\\
 \\
-&+&\displaystyle C_F T_R \left[16 \left(2 x^2-2 x+1\right) \ln
+&+&\displaystyle n_f T_R C_F \left[16 \left(2 x^2-2 x+1\right) \ln
     (1-x)-8 \left(4 x^2-2 x+1\right) \ln (x)+4\left(4 x-1\right)\right]\\
 \\
-&+&\displaystyle N_F T_R^2 \left[-\frac{16}{3} (2 x^2-2 x+1)\right]
+&+&\displaystyle n_f^2 T_R^2 \left[-\frac{16}{3} (2 x^2-2 x+1)\right]
 \end{array}
 \end{equation}
 
@@ -1634,8 +1738,7 @@ considering $F_L$ and it is the easiest case. Here we have:
 \begin{array}{rcl}
 \displaystyle C_{L,\pm}^{(1)}(x) &=& \displaystyle 4 C_F x\,,\\
 \\
-\displaystyle C_{L,q}^{(1)}(x) &=& \displaystyle  \frac16 C_{L,\pm}^{(1)}(x) =
-  C_F\frac{2x}{3}\,,\\
+\displaystyle C_{L,q}^{(1)}(x) &=& \displaystyle  \frac1{n_f} C_{L,\pm}^{(1)}(x)\,,\\
 \\
 \displaystyle C_{L,g}^{(1)}(x) &=& \displaystyle  4 T_Rx(1-x)\,,
 \end{array}
@@ -1644,11 +1747,14 @@ and for the non-singlet case we need to compute:
 \begin{equation}
 C_{L,\pm}^{(1)}(x)\otimes P_{qq}^{(0)}(x) = 4C_F^2 \left[ (x+2)+4 x \ln (1-x)-2 x \ln(x)\right]\,.
 \end{equation}
-For the gluon coefficient function, instead, we need to compute:
+For the pure-singlet and the gluon coefficient functions, instead, we
+need to compute:
 \begin{equation}
 \begin{array}{rcl}
+C_{L,g}^{(1)}(x)\otimes P_{gq}^{(0)}(x) &=& \displaystyle C_F T_R \left[\frac{32}{3} \left(2 x^2-3+\frac{1}{x}\right)-32 x \ln (x)\right]\,,\\
+\\
 C_{L,i}^{(1)}(x)\otimes P_{ig}^{(0)}(x) &=& \displaystyle  C_A T_R
-                                            \left[64 (1-x) x \ln
+                                            \left[64 x (1-x) \ln
                                             (1-x)-128 x \ln
                                             (x)+\frac{16}{3} \left(23
                                             x^2-19 x-6 + \frac{2}{x}\right)\right]\\
@@ -1657,7 +1763,7 @@ C_{L,i}^{(1)}(x)\otimes P_{ig}^{(0)}(x) &=& \displaystyle  C_A T_R
                                             (x)-\frac{8}{3} \left(2
                                             x^2-x-1\right)\right]\\
 \\
-&+&\displaystyle N_FT_R^2\left[-\frac{64}{3}x(1-x)\right]\,.
+&+&\displaystyle n_fT_R^2\left[-\frac{64}{3}x(1-x)\right]\,.
 \end{array}
 \end{equation}
 
@@ -1672,7 +1778,7 @@ Now we consider $F_2$, for which we have:
 \\
 &+&\displaystyle 2 x+3 - \left(2 \zeta(2)+\frac{9}{2}\right) \delta(1-x)\bigg] \,,\\
 \\
-\displaystyle C_{2,q}^{(1)}(x) &=& \displaystyle  \frac16 C_{\pm,2}^{(1)}(x) \,,\\
+\displaystyle C_{2,q}^{(1)}(x) &=& \displaystyle  \frac1{n_f} C_{\pm,2}^{(1)}(x) \,,\\
 \\
 \displaystyle C_{2,g}^{(1)}(x) &=& \displaystyle  4 T_R \left[\left(x^2+(1-x)^2\right) [\ln
                                    (1-x)-\ln (x)]-8x^2+8 x-1\right] \,.
