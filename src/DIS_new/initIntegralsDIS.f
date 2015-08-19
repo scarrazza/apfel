@@ -41,16 +41,6 @@
                call RSLintegralsDIS(alpha,beta)
             enddo
          enddo
-*
-*     Scale variations
-*
-         if(krenQ.ne.1d0.or.kfacQ.ne.1d0)then
-            do alpha=0,nin(igrid)-1
-               do beta=alpha,nin(igrid)-1
-                  call IncludeScaleVariation(alpha,beta)
-               enddo
-            enddo
-         endif
       else
 *
 *     ... otherwise only for the first line
@@ -58,15 +48,11 @@
          do alpha=0,nin(igrid)-1
             call RSLintegralsDIS(0,alpha)
          enddo
+      endif
 *
 *     Scale variations
 *
-         if(krenQ.ne.1d0.or.kfacQ.ne.1d0)then
-            do alpha=0,nin(igrid)-1
-               call IncludeScaleVariation(0,alpha)
-            enddo
-         endif
-      endif
+      if(krenQ.ne.1d0.or.kfacQ.ne.1d0) call IncludeScaleVariation
 *
 *     Integrals needed for the target mass corrections
 *     (Computed always over the full grid).

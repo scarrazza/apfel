@@ -1632,6 +1632,28 @@ c$$$      RETURN
 c$$$      END
 c$$$*
 c$$$************************************************************************
+c$$$      FUNCTION P0P0PSA(X,NF)
+c$$$*
+c$$$      IMPLICIT NONE
+c$$$*
+c$$$      INCLUDE "../commons/ColorFactors.h"
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      INTEGER NF
+c$$$      DOUBLE PRECISION X
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      DOUBLE PRECISION P0P0PSA
+c$$$*
+c$$$      P0P0PSA = NF * CF * TR * ( 8D0 * ( 3D0 + 4D0 / X - 3D0 * X 
+c$$$     1     - 4D0 * X**2D0 ) / 3D0 + 16D0 * ( 1D0 + X ) * DLOG(X) ) 
+c$$$*
+c$$$      RETURN
+c$$$      END
+c$$$*
+c$$$************************************************************************
 c$$$      FUNCTION P0P0GA(X,NF)
 c$$$*
 c$$$      IMPLICIT NONE
@@ -1647,15 +1669,15 @@ c$$$*     Output Variables
 c$$$*
 c$$$      DOUBLE PRECISION P0P0GA
 c$$$*
-c$$$      P0P0GA = CA * TR * ( 16D0 * ( 2D0 * X**2D0 - 2D0 * X + 1D0 )
+c$$$      P0P0GA = CA * TR * NF * ( 16D0 * ( 2D0 * X**2D0 - 2D0 * X + 1D0 )
 c$$$     1     * DLOG( 1D0 - X ) + 16D0 * ( 4D0 * X + 1 D0 ) * DLOG(X)
 c$$$     2     + 4D0 * ( - 40D0 * X**2D0 + 26D0 * X + 17D0 + 8D0 / X )
 c$$$     3     / 3D0 )
-c$$$     4     + CF * TR * ( ( 2D0 * X**2D0 - 2D0 * X + 1D0 )
+c$$$     4     + CF * TR * NF * ( ( 2D0 * X**2D0 - 2D0 * X + 1D0 )
 c$$$     5     * DLOG( 1D0 - X ) - 8D0 * ( 4D0 *X**2D0 - 2D0 * X + 1D0 )
 c$$$     6     * DLOG(X) + 4D0 * ( 4D0 * X - 1D0 ) )
-c$$$     7     + NF * TR**2D0 * ( - 16D0 * ( 2D0 * X**2D0 - 2D0 * X + 1D0 )
-c$$$     8     )
+c$$$     7     + NF**2D0 * TR**2D0 * ( - 16D0 * ( 2D0 * X**2D0 - 2D0 * X
+c$$$     8     + 1D0 ) )
 c$$$*
 c$$$      RETURN
 c$$$      END
@@ -1682,6 +1704,27 @@ c$$$      RETURN
 c$$$      END
 c$$$*
 c$$$************************************************************************
+c$$$      FUNCTION CL1P0PSA(X)
+c$$$*
+c$$$      IMPLICIT NONE
+c$$$*
+c$$$      INCLUDE "../commons/ColorFactors.h"
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      DOUBLE PRECISION X
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      DOUBLE PRECISION CL1P0PSA
+c$$$*
+c$$$      CL1P0PSA = CF * TR * ( 32D0 * ( 1D0 / X - 3D0 + 2D0 * X**2D0 ) 
+c$$$     1     / 3D0 - 32D0 * X * DLOG(X) )
+c$$$*
+c$$$      RETURN
+c$$$      END
+c$$$*
+c$$$************************************************************************
 c$$$      FUNCTION CL1P0GA(X,NF)
 c$$$*
 c$$$      IMPLICIT NONE
@@ -1697,9 +1740,9 @@ c$$$*     Output Variables
 c$$$*
 c$$$      DOUBLE PRECISION CL1P0GA
 c$$$*
-c$$$      CL1P0GA = CA * TR * ( 64D0 * ( 1D0 - X ) * X * DLOG( 1D0 - X )
+c$$$      CL1P0GA = CA * TR * ( 64D0 * X * ( 1D0 - X ) * DLOG( 1D0 - X )
 c$$$     1     - 128D0 * X * DLOG(X) + 16D0 * ( 23D0 * X**2D0 - 19D0 * X
-c$$$     2     - 6D0 + 2D0 / X ) / 3D0)
+c$$$     2     - 6D0 + 2D0 / X ) / 3D0 )
 c$$$     3     + CF * TR * ( 16D0 * X * DLOG(X) / 3D0 - 8D0 * ( 2D0 * X**2D0 
 c$$$     4     - X - 1D0 ) / 3D0 )
 c$$$     5     + NF * TR**2D0 * ( - 64D0 * X * ( 1D0 - X ) / 3D0 )
