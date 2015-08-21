@@ -34,14 +34,14 @@
 **
 *     Internal Variables
 *
-      integer jgrid,ipdf,ihq,pt,ipt_FF
+      integer jgrid,ipdf,ihq,pt,ipt_FF,iptbkp
       integer alpha,beta,gamma
       integer nf
       integer gbound
       integer ipr
       integer i,ixi(4:6)
       integer ik
-      double precision Q2,W2,M2(4:6),HeavyQuarkMass
+      double precision Q2,muF,W2,M2(4:6),HeavyQuarkMass
       double precision as(0:2),a_QCD
       double precision bq(0:6),dq(0:6)
       double precision frac,fr3
@@ -88,8 +88,20 @@
 *     (Remember that a_QCD takes as an argument the factorization scale
 *     and converts it internally into the renormalization scale).
 *
+      muF = kfacQ*Q2
+*
+*     Scale down the perturbative order of the alphas evolution if one
+*     of the FFNSs has been chosen
+*
       as(0) = 1d0
-      as(1) = a_QCD(kfacQ*Q2)
+      if(MassScheme(1:3).eq."FFN")then
+         iptbkp = ipt
+         call SetPerturbativeOrder(min(0,ipt-1))
+         as(1) = a_QCD(muF)
+         call SetPerturbativeOrder(iptbkp)
+      else
+         as(1) = a_QCD(muF)
+      endif
       as(2) = as(1) * as(1)
 *
 *     Find number of active flavours at the scale Q2

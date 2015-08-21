@@ -75,10 +75,12 @@
             write(6,*) "Target Mass corrections disabled"
          endif
 *
-         if(DampingFONLL)then
-            write(6,*) "FONLL damping factor enabled"
-         else
-            write(6,*) "FONLL damping factor disabled"
+         if(MassScheme(1:5).eq."FONLL")then
+            if(DampingFONLL)then
+               write(6,*) "FONLL damping factor enabled"
+            else
+               write(6,*) "FONLL damping factor disabled"
+            endif
          endif
          write(6,*) achar(27)//"[0m"
       endif

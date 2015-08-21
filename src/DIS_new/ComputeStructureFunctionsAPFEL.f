@@ -12,6 +12,8 @@
 *
       include "../commons/InAPFELDIS.h"
       include "../commons/kfacQ.h"
+      include "../commons/MassScheme.h"
+      include "../commons/ipt.h"
 **
 *     Input Variables
 *
@@ -20,7 +22,8 @@
 **
 *     Internal Variables
 *
-      double precision mu0,mu
+      integer iptbkp
+      double precision muF0,muF
 *
 *     Check that the APFEL DIS module has been initialized
 *
@@ -38,9 +41,20 @@
 *
 *     Compute PDF evolution in the factorization scales
 *
-      mu0 = Q0
-      mu  = dsqrt(kfacQ) * Q
-      call EvolveAPFEL(mu0,mu)
+      muF0 = Q0
+      muF  = dsqrt(kfacQ) * Q
+*
+*     Scale down the perturbative order of the PDF evolution if one
+*     of the FFNSs has been chosen
+*
+      if(MassScheme(1:3).eq."FFN")then
+         iptbkp = ipt
+         call SetPerturbativeOrder(min(0,ipt-1))
+         call EvolveAPFEL(muF0,muF)
+         call SetPerturbativeOrder(iptbkp)
+      else
+         call EvolveAPFEL(muF0,muF)
+      endif
 *
 *     Convolute evolved PDFs with the DIS coefficient functions
 *

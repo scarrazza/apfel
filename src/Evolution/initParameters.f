@@ -239,9 +239,9 @@
      2   m2th(5).eq.m2th(6))then
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "There cannot be equal heavy quark masses:"
-         write(6,"(a,f13.3,a)") "Mc = ",dsqrt(m2th(4))," GeV"
-         write(6,"(a,f13.3,a)") "Mb = ",dsqrt(m2th(5))," GeV"
-         write(6,"(a,f13.3,a)") "Mt = ",dsqrt(m2th(6))," GeV"
+         write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2th(4))," GeV"
+         write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2th(5))," GeV"
+         write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2th(6))," GeV"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
@@ -252,9 +252,9 @@
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "The heavy quark masses are not correctly",
      1              " ordered:"
-         write(6,"(a,f13.3,a)") "Mc = ",dsqrt(m2th(4))," GeV"
-         write(6,"(a,f13.3,a)") "Mb = ",dsqrt(m2th(5))," GeV"
-         write(6,"(a,f13.3,a)") "Mt = ",dsqrt(m2th(6))," GeV"
+         write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2th(4))," GeV"
+         write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2th(5))," GeV"
+         write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2th(6))," GeV"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
