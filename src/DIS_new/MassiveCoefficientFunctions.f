@@ -49,6 +49,7 @@
       include "../commons/ColorFactors.h"
       include "../commons/mass_scheme.h"
       include "../commons/MassRunning.h"
+c      include "../commons/Nf_FF.h"
 **
 *     input variables
 *
@@ -63,6 +64,7 @@
       double precision cm22q,cml2q
       double precision dcm21g,dcml1g
       double precision h1
+c      double precision beta0apf
 **
 *     output variables
 *
@@ -107,10 +109,18 @@
             h1 = CF * 4d0
             if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xigrid(ixi))
             MassiveCF = MassiveCF + 2d0 * h1 * dcm21g(xigrid(ixi),z)
+c            if(.not.MassRunning)then
+c               MassiveCF = MassiveCF + 2d0 * beta0apf(Nf_FF)
+c     1                   * cm21g(xigrid(ixi),z) * dlog(xigrid(ixi))
+c            endif
          elseif(icoef.eq.5)then
             h1 = CF * 4d0
             if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xigrid(ixi))
             MassiveCF = MassiveCF + 2d0 * h1 * dcml1g(xigrid(ixi),z)
+c            if(.not.MassRunning)then
+c               MassiveCF = MassiveCF + 2d0 * beta0apf(Nf_FF)
+c     1                   * cml1g(xigrid(ixi),z) * dlog(xigrid(ixi))
+c            endif
          endif
       endif
 *
