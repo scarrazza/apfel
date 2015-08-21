@@ -16,7 +16,6 @@
       include "../commons/PolarizationDIS.h"
       include "../commons/ProjectileDIS.h"
       include "../commons/TargetDIS.h"
-      include "../commons/ipt.h"
       include "../commons/Nf_FF.h"
       include "../commons/ZedMass.h"
       include "../commons/WMass.h"
@@ -42,8 +41,9 @@
       if(InSelectedCharge.ne."done")  call SelectCharge("all")
       if(InKrenQ.ne."done")           call SetRenQRatio(1d0)
       if(InKfacQ.ne."done")           call SetFacQRatio(1d0)
-      if(InTMC.ne."done")      call EnableTargetMassCorrections(.false.)
       if(InDampingFONLL.ne."done")    call EnableDampingFONLL(.true.)
+      if(InTMC.ne."done")             call EnableTargetMassCorrections
+     1                                     (.false.)
 *
       if(InMZ.ne."done")              call SetZMass(91.1876d0)
       if(InMW.ne."done")              call SetWMass(80.385d0)
@@ -234,29 +234,31 @@
       endif
       if(MassScheme(1:4).eq."FFNS".or.
      1   MassScheme(1:4).eq."FFN0")then
+         write(6,*) achar(27)//"[33m"//
+     1              "WARNING: ",MassScheme(1:4)," is a FFN scheme"
          if(MassScheme(5:5).eq."3")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: ... setting NF = 3 FFNS PDF evolution"
+     1                 "         ... setting NF = 3 FFNS PDF evolution"
      2                 //achar(27)//"[0m"
             call SetFFNS(3)
          elseif(MassScheme(5:5).eq."4")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: ... setting NF = 4 FFNS PDF evolution"
+     1                 "         ... setting NF = 4 FFNS PDF evolution"
      2                 //achar(27)//"[0m"
             call SetFFNS(4)
          elseif(MassScheme(5:5).eq."5")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: ... setting NF = 5 FFNS PDF evolution"
+     1                 "         ... setting NF = 5 FFNS PDF evolution"
      2                 //achar(27)//"[0m"
             call SetFFNS(5)
          elseif(MassScheme(5:5).eq."6")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: ... setting NF = 6 FFNS PDF evolution"
+     1                 "         ... setting NF = 6 FFNS PDF evolution"
      2                 //achar(27)//"[0m"
             call SetFFNS(6)
          else
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: ... setting NF = 3 FFNS PDF evolution"
+     1                 "         ... setting NF = 3 FFNS PDF evolution"
      2                 //achar(27)//"[0m"
             call SetFFNS(3)
          endif
@@ -265,41 +267,36 @@
 *     set it automatically to 3.
          if(Nf_FF.lt.3.or.Nf_FF.gt.6) Nf_FF = 3
          write(6,*) achar(27)//"[33m"//
-     1              "WARNING: ... setting VFNS PDF evolution"
-     2              //achar(27)//"[0m"
+     1              "WARNING: ",MassScheme," is a VFN scheme"
+         write(6,*) "         ... setting VFNS PDF evolution"
+     1              //achar(27)//"[0m"
          call SetVFNS
-         if(MassScheme(1:5).eq."FONLL".and.ipt.eq.0)then
-            write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: Any of the FONLL schemes at LO",
-     2                 " concides with the ZM-VFNS"
-            write(6,*) "         ... setting ZM-VFNS"
-     1                 //achar(27)//"[0m"
-            call SetMassScheme("ZM-VFNS")
-         endif
-         if(MassScheme.eq."FONLL-A".and.ipt.eq.2)then
+         if(MassScheme.eq."FONLL-A")then
             write(6,*) achar(27)//"[33m"//
      1                 "WARNING: For the FONLL-A scheme the",
-     2                 " perturbative order will be automatically",
+     2                 " perturbative order will automatically be",
      3                 " set to NLO"
             write(6,*) "         ... setting NLO perturbative order"
      1                 //achar(27)//"[0m"
             call SetPerturbativeOrder(1)
          endif
-         if(MassScheme.eq."FONLL-B".and.ipt.eq.2)then
+         if(MassScheme.eq."FONLL-B")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: The FONLL-B scheme at NNLO concides",
-     2                 " with the FONLL-C scheme"
-            write(6,*) "         ... setting FONLL-C scheme"
+     1                 "WARNING: For the FONLL-B scheme the",
+     2                 " perturbative order will automatically be",
+     3                 " set to NLO"
+            write(6,*) "         ... setting NLO perturbative order"
      1                 //achar(27)//"[0m"
-            call SetMassScheme("FONLL-C")
+            call SetPerturbativeOrder(1)
          endif
-         if(MassScheme.eq."FONLL-C".and.ipt.eq.1)then
+         if(MassScheme.eq."FONLL-C")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: The FONLL-C scheme at NLO concides",
-     2                 " with the FONLL-A scheme"
-            write(6,*) "         ... setting FONLL-A scheme"
+     1                 "WARNING: For the FONLL-C scheme the",
+     2                 " perturbative order will automatically be",
+     3                 " set to NNLO"
+            write(6,*) "         ... setting NNLO perturbative order"
      1                 //achar(27)//"[0m"
-            call SetMassScheme("FONLL-A")
+            call SetPerturbativeOrder(2)
          endif
       endif
 *

@@ -685,57 +685,51 @@ c$$$                  enddo
 *     
 *     Charm Component
 *     
-                  if(nf.ge.4)then
 *     Singlet
-                     OpF2(jgrid,4,1,alpha,beta)  = bq(4)
-     1                    * ( C2ps(4) + C2nsp(4) / nf )
+                  OpF2(jgrid,4,1,alpha,beta)  = bq(4)
+     1                 * ( C2ps(4) + C2nsp(4) / nf )
 *     Gluon
-                     OpF2(jgrid,4,2,alpha,beta)  = bq(4) * C2g(4)
+                  OpF2(jgrid,4,2,alpha,beta)  = bq(4) * C2g(4)
 *     T15
-                     OpF2(jgrid,4,11,alpha,beta) = - bq(4) * C2nsp(4)
-     1                    / 4d0
+                  OpF2(jgrid,4,11,alpha,beta) = - bq(4) * C2nsp(4)
+     1                 / 4d0
 *     T24, T35
-                     do ik=5,nf
-                        OpF2(jgrid,4,7+ik,alpha,beta) = bq(4) * C2nsp(4)
-     2                       / ik / ( ik -1 )
-                     enddo
-                  endif
+                  do ik=5,nf
+                     OpF2(jgrid,4,7+ik,alpha,beta) = bq(4) * C2nsp(4)
+     2                    / ik / ( ik -1 )
+                  enddo
 *     
 *     Bottom Component
 *     
-                  if(nf.ge.5)then
 *     Singlet
-                     OpF2(jgrid,5,1,alpha,beta)  = bq(5)
-     1                    * ( C2ps(5) + C2nsp(5) / nf )
+                  OpF2(jgrid,5,1,alpha,beta)  = bq(5)
+     1                 * ( C2ps(5) + C2nsp(5) / nf )
 *     Gluon
-                     OpF2(jgrid,5,2,alpha,beta)  = bq(5) * C2g(5)
+                  OpF2(jgrid,5,2,alpha,beta)  = bq(5) * C2g(5)
 *     T24
-                     OpF2(jgrid,5,12,alpha,beta) = - bq(5) * C2nsp(5)
-     1                    / 5d0
+                  OpF2(jgrid,5,12,alpha,beta) = - bq(5) * C2nsp(5)
+     1                 / 5d0
 *     T35
-                     do ik=6,nf
-                        OpF2(jgrid,5,7+ik,alpha,beta) = bq(5) * C2nsp(5)
-     1                       / ik / ( ik - 1 )
-                     enddo
-                  endif
+                  do ik=6,nf
+                     OpF2(jgrid,5,7+ik,alpha,beta) = bq(5) * C2nsp(5)
+     1                    / ik / ( ik - 1 )
+                  enddo
 *     
 *     Top Component
 *     
-                  if(nf.ge.6)then
 *     Singlet
-                     OpF2(jgrid,6,1,alpha,beta)  = bq(6)
-     1                    * ( C2ps(6) + C2nsp(6) / nf )
+                  OpF2(jgrid,6,1,alpha,beta)  = bq(6)
+     1                 * ( C2ps(6) + C2nsp(6) / nf )
 *     Gluon
-                     OpF2(jgrid,6,2,alpha,beta)  = bq(6) * C2g(6)
+                  OpF2(jgrid,6,2,alpha,beta)  = bq(6) * C2g(6)
 *     T35
-                     OpF2(jgrid,6,13,alpha,beta) = - bq(6) * C2nsp(6)
-     1                    / 6d0
-                  endif
+                  OpF2(jgrid,6,13,alpha,beta) = - bq(6) * C2nsp(6)
+     1                 / 6d0
 *
 *     Total
 *
                   do ipdf=0,13
-                     do ihq=3,nf
+                     do ihq=3,6
                         OpF2(jgrid,7,ipdf,alpha,beta) = 
      1                       OpF2(jgrid,7,ipdf,alpha,beta)
      2                       + OpF2(jgrid,ihq,ipdf,alpha,beta)
@@ -847,57 +841,51 @@ c$$$                  enddo
 *     
 *     Charm Component
 *     
-                  if(nf.ge.4)then
 *     Singlet
-                     OpFL(jgrid,4,1,alpha,beta)  = bq(4)
-     1                    * ( CLps(4) + CLnsp(4) / nf )
+                  OpFL(jgrid,4,1,alpha,beta)  = bq(4)
+     1                 * ( CLps(4) + CLnsp(4) / nf )
 *     Gluon
-                     OpFL(jgrid,4,2,alpha,beta)  = bq(4) * CLg(4)
+                  OpFL(jgrid,4,2,alpha,beta)  = bq(4) * CLg(4)
 *     T15
-                     OpFL(jgrid,4,11,alpha,beta) = - bq(4) * CLnsp(4)
-     1                    / 4d0
+                  OpFL(jgrid,4,11,alpha,beta) = - bq(4) * CLnsp(4)
+     1                 / 4d0
 *     T24, T35
-                     do ik=5,nf
-                        OpFL(jgrid,4,7+ik,alpha,beta) = bq(4) * CLnsp(4)
-     2                       / ik / ( ik -1 )
-                     enddo
-                  endif
+                  do ik=5,nf
+                     OpFL(jgrid,4,7+ik,alpha,beta) = bq(4) * CLnsp(4)
+     2                    / ik / ( ik -1 )
+                  enddo
 *     
 *     Bottom Component
 *     
-                  if(nf.ge.5)then
 *     Singlet
-                     OpFL(jgrid,5,1,alpha,beta)  = bq(5)
-     1                    * ( CLps(5) + CLnsp(5) / nf )
+                  OpFL(jgrid,5,1,alpha,beta)  = bq(5)
+     1                 * ( CLps(5) + CLnsp(5) / nf )
 *     Gluon
-                     OpFL(jgrid,5,2,alpha,beta)  = bq(5) * CLg(5)
+                  OpFL(jgrid,5,2,alpha,beta)  = bq(5) * CLg(5)
 *     T24
-                     OpFL(jgrid,5,12,alpha,beta) = - bq(5) * CLnsp(5)
-     1                    / 5d0
+                  OpFL(jgrid,5,12,alpha,beta) = - bq(5) * CLnsp(5)
+     1                 / 5d0
 *     T35
-                     do ik=6,nf
-                        OpFL(jgrid,5,7+ik,alpha,beta) = bq(5) * CLnsp(5)
-     1                       / ik / ( ik - 1 )
-                     enddo
-                  endif
+                  do ik=6,nf
+                     OpFL(jgrid,5,7+ik,alpha,beta) = bq(5) * CLnsp(5)
+     1                    / ik / ( ik - 1 )
+                  enddo
 *     
 *     Top Component
 *     
-                  if(nf.ge.6)then
 *     Singlet
-                     OpFL(jgrid,6,1,alpha,beta)  = bq(6)
-     1                    * ( CLps(6) + CLnsp(6) / nf )
+                  OpFL(jgrid,6,1,alpha,beta)  = bq(6)
+     1                 * ( CLps(6) + CLnsp(6) / nf )
 *     Gluon
-                     OpFL(jgrid,6,2,alpha,beta)  = bq(6) * CLg(6)
+                  OpFL(jgrid,6,2,alpha,beta)  = bq(6) * CLg(6)
 *     T35
-                     OpFL(jgrid,6,13,alpha,beta) = - bq(6) * CLnsp(6)
-     1                    / 6d0
-                  endif
+                  OpFL(jgrid,6,13,alpha,beta) = - bq(6) * CLnsp(6)
+     1                 / 6d0
 *
 *     Total
 *
                   do ipdf=0,13
-                     do ihq=3,nf
+                     do ihq=3,6
                         OpFL(jgrid,7,ipdf,alpha,beta) = 
      1                       OpFL(jgrid,7,ipdf,alpha,beta)
      2                       + OpFL(jgrid,ihq,ipdf,alpha,beta)
