@@ -832,26 +832,26 @@ c               endif
             enddo
          enddo
 *
-*     In order to improve the predictions of the FFNS in the large-Q region,
-*     the code smoothly switches to the FFN0 scheme by means of a sigma
-*     function centered in 'xi0' (Not needed for FL).
+*     In order to improve the NNLO predictions of the FFNS in the large-Q region,
+*     the code smoothly switches to the FFN0 scheme by means of a sigma function
+*     centered in 'xi0' (Not needed for FL).
 *
          if(MassScheme(1:4).eq."FFNS")then
-            do ixi=1,nxir
-               xi   = xigrid(ixi*xistep)
-               sig2 = 1d0 / ( 1d0 + dexp( - ( xi - xi0 ) / spread ) )
-               sig1 = 1d0 - sig2
-               do k=1,3
-                  do wipt=1,ipt_FF
-                     SC2mNC(igrid,ixi,k,wipt,beta,alpha) =
-     1                    sig1 * SC2mNC(igrid,ixi,k,wipt,beta,alpha)
-     2                    + sig2 * SC2m0NC(igrid,ixi,k,wipt,beta,alpha)
-c                     SCLmNC(igrid,ixi,k,wipt,beta,alpha) =
-c     1                    sig1 * SCLmNC(igrid,ixi,k,wipt,beta,alpha)
-c     2                    + sig2 * SCLm0NC(igrid,ixi,k,wipt,beta,alpha)
+            if(ipt_FF.ge.2)then
+               do ixi=1,nxir
+                  xi   = xigrid(ixi*xistep)
+                  sig2 = 1d0 / ( 1d0 + dexp( - ( xi - xi0 ) / spread ) )
+                  sig1 = 1d0 - sig2
+                  do k=1,3
+                     SC2mNC(igrid,ixi,k,2,beta,alpha) =
+     1                    sig1 * SC2mNC(igrid,ixi,k,2,beta,alpha)
+     2                    + sig2 * SC2m0NC(igrid,ixi,k,2,beta,alpha)
+c                      CLmNC(igrid,ixi,k,2,beta,alpha) =
+c     1                    sig1 * SCLmNC(igrid,ixi,k,2,beta,alpha)
+c     2                    + sig2 * SCLm0NC(igrid,ixi,k,2,beta,alpha)
                   enddo
                enddo
-            enddo
+            endif
          endif
 *
 *     Charged Current
