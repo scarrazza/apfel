@@ -49,7 +49,7 @@
 *
       if(MassScheme(1:3).eq."FFN")then
          iptbkp = ipt
-         call SetPerturbativeOrder(min(0,ipt-1))
+         call SetPerturbativeOrder(max(0,ipt-1))
          call EvolveAPFEL(muF0,muF)
          call SetPerturbativeOrder(iptbkp)
       else

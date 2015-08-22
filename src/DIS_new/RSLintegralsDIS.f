@@ -842,7 +842,7 @@ c               endif
                   xi   = xigrid(ixi*xistep)
                   sig2 = 1d0 / ( 1d0 + dexp( - ( xi - xi0 ) / spread ) )
                   sig1 = 1d0 - sig2
-                  do k=1,3
+                  do k=1,2
                      SC2mNC(igrid,ixi,k,2,beta,alpha) =
      1                    sig1 * SC2mNC(igrid,ixi,k,2,beta,alpha)
      2                    + sig2 * SC2m0NC(igrid,ixi,k,2,beta,alpha)
