@@ -33,7 +33,7 @@
 
 \section{Introduction}
 
-In these notes we will present the strategy for implementing the $\overline{\mbox{MS}}$ running mass for the heavy flavours in the NNPDF code. We recall that in the present code the heavy quark masses enter as pole masses, therefore our goal is to consistently replace them with the $\overline{\mbox{MS}}$ masses.
+In these notes we will present the strategy for implementing the $\overline{\mbox{MS}}$ running masses for the heavy flavours. We recall that in the present code the heavy quark masses enter as pole masses, therefore our goal is to consistently replace them with the $\overline{\mbox{MS}}$ masses.
 
 The reason for this is that in a recent paper \cite{Alekhin:2010sv} it has been claimed that the implementation of the $\overline{\mbox{MS}}$ masses results in an improvement of the perturbative stability and in a reduction of the theoretical uncertainty do to variations of the renormalization and factorization scales.
 
@@ -560,7 +560,7 @@ Now we need to evaluate explicitly the derivative of $C_g^{(0)}$ in eq. (\ref{ma
 
 \subsubsection{$F_2$}
 
-We consider first $F_2$. Since the NNPDF code works in the Mellin space, it is better to calculate directly the derivative of the Mellin transform of $C_{2,g}^{(0)}$, which in the massive case is:
+We consider first $F_2$. In Mellin space, it is better to calculate directly the derivative of the Mellin transform of $C_{2,g}^{(0)}$, which in the massive case is:
 \begin{equation}
 \begin{array}{rl}
 \displaystyle C_{2,g}^{(0)}(N,Q^2,M^2)=&\displaystyle T_R\Big\{2(1-6\epsilon-4\epsilon^2)I_2(a,N)-2(1-2\epsilon)I_1(a,N)+I_0(a,N)+\\
@@ -631,7 +631,7 @@ and:
 \end{array}
 \end{equation}
 
-Looking at these expressions, one can see that in these derivatives, a part from hypergeometric functions of the form ${_2F_1(a,b,a+b;x)}$ which were already present in $C_{2,g}^{(0)}$ itself, also hypergeometric functions of the form ${_2F_1(a,b,a+b-1;x)}$ appear. This raises a technical problem because the NNPDF code uses a fast routine for the hypergeometric function which is accurate both around $x=0$ and $x=1$, but with the limitation $c=a+b$. Now, instead, we need also the case ${c=a+b-1}$, therefore we need to extend our routine including this possibility. We can do this using the expansion around $x=1$ reported in eq. (15.3.12) of \cite{AbramowitzStegun}.
+Looking at these expressions, one can see that in these derivatives, a part from hypergeometric functions of the form ${_2F_1(a,b,a+b;x)}$ which were already present in $C_{2,g}^{(0)}$ itself, also hypergeometric functions of the form ${_2F_1(a,b,a+b-1;x)}$ appear. This raises a technical problem because the code uses a fast routine for the hypergeometric function which is accurate both around $x=0$ and $x=1$, but with the limitation $c=a+b$. Now, instead, we need also the case ${c=a+b-1}$, therefore we need to extend our routine including this possibility. We can do this using the expansion around $x=1$ reported in eq. (15.3.12) of \cite{AbramowitzStegun}.
 
 Now we consider the NC massive0 structure function $F_2^0$. In this limit the gluon coefficient function takes the form:
 \begin{equation}

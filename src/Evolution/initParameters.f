@@ -342,7 +342,7 @@
       if(EvolOp.and.Th.ne."QCD")then
          write(6,*) achar(27)//"[33m"//
      1              "WARNING: computation of the evolution operator",
-     2        " possible only for the 'QCD' theory"
+     2              " possible only for the 'QCD' theory"
          write(6,*) "         ... disabling evolution operator",
      1              " computation"
      2              //achar(27)//"[0m"

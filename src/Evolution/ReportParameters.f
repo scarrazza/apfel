@@ -71,8 +71,8 @@
      1           " Solution of the DGLAP equation: '",trim(PDFEvol),
      2           "' with maximum ",nfMaxPDFs," active flavours"
          elseif(Evs.eq."FF")then
-            write(6,"(a,a,a,i1,a)")
-     1           " Solution of the DGLAP equation: '",trim(PDFEvol)
+            write(6,"(a,a,a)")
+     1           " Solution of the DGLAP equation: '",trim(PDFEvol),"'"
          endif
          if(PDFevol(1:9).eq."truncated")then
             write(6,"(a,a,es10.3)") " - value of the",
@@ -84,8 +84,8 @@
      1           " equations: '",trim(AlphaEvol),"' with maximum ",
      2           nfMaxAlpha," active flavours"
          elseif(Evs.eq."FF")then
-            write(6,"(a,a,a,a,i1,a)") " Solution of the coupling",
-     1           " equations: '",trim(AlphaEvol)
+            write(6,"(a,a,a,a)") " Solution of the coupling",
+     1           " equations: '",trim(AlphaEvol),"'"
          endif
          if(AlphaEvol(1:6).eq."lambda")then
             write(6,*) "Lambda reference value:"
