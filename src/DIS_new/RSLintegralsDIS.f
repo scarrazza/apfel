@@ -836,23 +836,23 @@ c               endif
 *     the code smoothly switches to the FFN0 scheme by means of a sigma function
 *     centered in 'xi0' (Not needed for FL).
 *
-c         if(MassScheme(1:4).eq."FFNS")then
-c            if(ipt_FF.ge.2)then
-c               do ixi=1,nxir
-c                  xi   = xigrid(ixi*xistep)
-c                  sig2 = 1d0 / ( 1d0 + dexp( - ( xi - xi0 ) / spread ) )
-c                  sig1 = 1d0 - sig2
-c                  do k=1,2
-c                     SC2mNC(igrid,ixi,k,2,beta,alpha) =
-c     1                    sig1 * SC2mNC(igrid,ixi,k,2,beta,alpha)
-c     2                    + sig2 * SC2m0NC(igrid,ixi,k,2,beta,alpha)
-cc                      CLmNC(igrid,ixi,k,2,beta,alpha) =
-cc     1                    sig1 * SCLmNC(igrid,ixi,k,2,beta,alpha)
-cc     2                    + sig2 * SCLm0NC(igrid,ixi,k,2,beta,alpha)
-c                  enddo
-c               enddo
-c            endif
-c         endif
+         if(MassScheme(1:4).eq."FFNS")then
+            if(ipt_FF.ge.2)then
+               do ixi=1,nxir
+                  xi   = xigrid(ixi*xistep)
+                  sig2 = 1d0 / ( 1d0 + dexp( - ( xi - xi0 ) / spread ) )
+                  sig1 = 1d0 - sig2
+                  do k=1,2
+                     SC2mNC(igrid,ixi,k,2,beta,alpha) =
+     1                    sig1 * SC2mNC(igrid,ixi,k,2,beta,alpha)
+     2                    + sig2 * SC2m0NC(igrid,ixi,k,2,beta,alpha)
+c                      CLmNC(igrid,ixi,k,2,beta,alpha) =
+c     1                    sig1 * SCLmNC(igrid,ixi,k,2,beta,alpha)
+c     2                    + sig2 * SCLm0NC(igrid,ixi,k,2,beta,alpha)
+                  enddo
+               enddo
+            endif
+         endif
 *
 *     Charged Current
 *
