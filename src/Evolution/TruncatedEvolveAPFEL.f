@@ -19,6 +19,7 @@
       include "../commons/fph.h"
       include "../commons/EpsTrunc.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/MaxFlavourAlpha.h"
       include "../commons/pdfset.h"
       include "../commons/EvolOp.h"
       include "../commons/EvolutionMatrices.h"
@@ -29,7 +30,7 @@
 **
 *     Internal Variables
 *
-      integer inf,mfi,mff
+      integer inf,mfi,mff,mfmax
       integer ipdf,jpdf,alpha,beta
       integer sign
       integer ieps
@@ -67,6 +68,11 @@
          mu2i(mfi) = Q20
          mu2f(mff) = Q2
       elseif(Evs.eq."VF")then
+*
+*     Define maximun number of flavours
+*
+         mfmax = max(nfMaxPDFs,nfMaxAlpha)
+*
          if(Q2.gt.m2th(6))then
             mff = 6
          elseif(Q2.gt.m2th(5))then
@@ -76,7 +82,7 @@
          else
             mff = 3
          endif
-         if(mff.gt.nfMaxPDFs) mff = nfMaxPDFs
+         if(mff.gt.mfmax) mff = mfmax
 *
          if(Q20.gt.m2th(6))then
             mfi = 6
@@ -87,7 +93,7 @@
          else
             mfi = 3
          endif
-         if(mfi.gt.nfMaxPDFs) mfi = nfMaxPDFs
+         if(mfi.gt.mfmax) mfi = mfmax
 *
          sign = 1
          if(Q2.lt.Q20) sign = - 1

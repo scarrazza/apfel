@@ -17,7 +17,7 @@
       include "../commons/EvolutionMatrices.h"
       include "../commons/wrap.h"
       include "../commons/MaxFlavourPDFs.h"
-      include "../commons/consts.h"
+      include "../commons/MaxFlavourAlpha.h"
 **
 *     Input Variables
 *
@@ -25,9 +25,12 @@
 **
 *     Internal Variables
 *
-      integer inf
-      double precision coup,alphasPDF!,a_QCD
-      double precision mc,mb,mt
+      integer inf,nfmax
+      double precision coup,a_QCD
+*
+*     Define maximun number of flavours
+*
+      nfmax = max(nfMaxPDFs,nfMaxAlpha)
 *
 *     Mass scheme
 *
@@ -37,32 +40,19 @@
 *     Variable Flavour Number Scheme
       elseif(Evs.eq."VF")then
 *     Find number of flavours
-         call GetQmass(4,mc)
-         call GetQmass(5,mb)
-         call GetQmass(6,mt)
-         if(muF2.gt.mt*mt)then
+         if(muF2.gt.m2th(6))then
             inf = 6
-         elseif(muF2.gt.mb*mb)then
+         elseif(muF2.gt.m2th(5))then
             inf = 5
-         elseif(muF2.gt.mc*mc)then
+         elseif(muF2.gt.m2th(4))then
             inf = 4
          else
             inf = 3
          endif
-c         if(muF2.gt.m2th(6))then
-c            inf = 6
-c         elseif(muF2.gt.m2th(5))then
-c            inf = 5
-c         elseif(muF2.gt.m2th(4))then
-c            inf = 4
-c         else
-c            inf = 3
-c         endif
-c         if(inf.gt.nfMaxPDFs) inf = nfMaxPDFs
+         if(inf.gt.nfmax) inf = nfmax
       endif
 *
-c      coup = a_QCD(muF2)
-      coup = alphasPDF(dsqrt(muF2)) / 4d0 / pi
+      coup = a_QCD(muF2)
 *
 *     Compute operators
 *

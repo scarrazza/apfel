@@ -17,6 +17,7 @@
       include "../commons/grid.h"
       include "../commons/wrap.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/MaxFlavourAlpha.h"
       include "../commons/f0ph.h"
       include "../commons/fph.h"
 **
@@ -26,10 +27,10 @@
 **
 *     Internal Variables
 *
-      integer inf
+      integer inf,jnf
       integer i,alpha
       integer sgn
-      integer nfi,nff
+      integer nfi,nff,nfmax
       double precision mu2i(3:7),mu2f(3:7)
       double precision f0ev(0:13,0:nint_max)
       double precision fev(0:13,0:nint_max)
@@ -54,6 +55,10 @@
 *
       call switchGluonPhoton
       call PDFphys2evQED(f0ph,f0ev)
+*
+*     Define maximun number of flavours
+*
+      nfmax = max(nfMaxPDFs,nfMaxAlpha)
 *
 *     Mass scheme
 *
@@ -152,7 +157,7 @@
          else
             nff = 3
          endif
-         if(nff.gt.nfMaxPDFs) nff = nfMaxPDFs
+         if(nff.gt.nfmax) nff = nfmax
 *
          if(muF20.gt.m2th(6))then
             nfi = 6
@@ -163,7 +168,7 @@
          else
             nfi = 3
          endif
-         if(nfi.gt.nfMaxPDFs) nfi = nfMaxPDFs
+         if(nfi.gt.nfmax) nfi = nfmax
 *     If initial and final energies are equal, return immediately the intial conditions
          if(muF2.eq.muF20)then
             do alpha=0,nin(igrid)
@@ -197,6 +202,7 @@
          mu2f(nff) = muF2
 *
          do inf=nfi,nff,sgn
+            jnf = min(inf,nfMaxPDFs)
             wnf = inf
 *
             do alpha=0,nin(igrid)
@@ -221,7 +227,7 @@
             call odeintnsQEDf(1,mu2i(inf),mu2f(inf),um0,um)
             call odeintnsQEDf(2,mu2i(inf),mu2f(inf),dm0,dm)
             call odeintnsQEDf(2,mu2i(inf),mu2f(inf),sm0,sm)
-            if(inf.eq.3)then
+            if(jnf.eq.3)then
                do alpha=0,nin(igrid)
                   Duc(alpha) = ( Sg(2,alpha) + Sg(3,alpha) ) / 2d0
                   Dsb(alpha) = ( Sg(2,alpha) - Sg(3,alpha) 
@@ -232,7 +238,7 @@
                   tm(alpha)  = 0d0
                enddo
             endif
-            if(inf.eq.4)then
+            if(jnf.eq.4)then
                call odeintnsQEDf(1,mu2i(inf),mu2f(inf),Duc0,Duc)
                call odeintnsQEDf(1,mu2i(inf),mu2f(inf),cm0,cm)
                do alpha=0,nin(igrid)
@@ -244,7 +250,7 @@
                   tm(alpha)  = 0d0
                enddo
             endif
-            if(inf.eq.5)then
+            if(jnf.eq.5)then
                call odeintnsQEDf(1,mu2i(inf),mu2f(inf),Duc0,Duc)
                call odeintnsQEDf(2,mu2i(inf),mu2f(inf),Dsb0,Dsb)
                call odeintnsQEDf(1,mu2i(inf),mu2f(inf),cm0,cm)
@@ -255,7 +261,7 @@
                   tm(alpha)  = 0d0
                enddo
             endif
-            if(inf.eq.6)then
+            if(jnf.eq.6)then
                call odeintnsQEDf(1,mu2i(inf),mu2f(inf),Duc0,Duc)
                call odeintnsQEDf(2,mu2i(inf),mu2f(inf),Dsb0,Dsb)
                call odeintnsQEDf(1,mu2i(inf),mu2f(inf),Dct0,Dct)

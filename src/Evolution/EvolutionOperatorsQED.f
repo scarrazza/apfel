@@ -18,6 +18,7 @@
       include "../commons/EvolutionMatrices.h"
       include "../commons/wrap.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/MaxFlavourAlpha.h"
 **
 *     Input Variables
 *
@@ -25,7 +26,7 @@
 **
 *     Internal Variables
 *
-      integer inf
+      integer inf,nfmax
       double precision mu2i(3:7),mu2f(3:7)
       double precision M0sg(3,3,0:nint_max,0:nint_max)
       double precision M0nsp(0:nint_max,0:nint_max)
@@ -37,6 +38,10 @@
 *     Initial Conditions (Unity matrices)
 *
       call IdentityOperatorsQED(M0sg,M0nsp,M0nsm)
+*
+*     Define maximun number of flavours
+*
+      nfmax = max(nfMaxPDFs,nfMaxAlpha)
 *
 *     Mass scheme
 *
@@ -81,7 +86,7 @@
          else
             nff = 3
          endif
-         if(nff.gt.nfMaxPDFs) nff = nfMaxPDFs
+         if(nff.gt.nfmax) nff = nfmax
 *
          if(muF20.gt.m2th(6))then
             nfi = 6
@@ -92,7 +97,7 @@
          else
             nfi = 3
          endif
-         if(nfi.gt.nfMaxPDFs) nfi = nfMaxPDFs
+         if(nfi.gt.nfmax) nfi = nfmax
 *     If initial and final energies are equal return immediately the intial conditions
          if(muF2.eq.muF20)then
             call EqualOperatorsQEDnf(nfi,M0sg,M0nsp,M0nsm,

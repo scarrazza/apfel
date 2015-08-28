@@ -19,6 +19,7 @@
       include "../commons/grid.h"
       include "../commons/wrap.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/MaxFlavourAlpha.h"
       include "../commons/f0ph.h"
       include "../commons/fph.h"
       include "../commons/LeptEvol.h"
@@ -29,10 +30,10 @@
 **
 *     Internal Variables
 *
-      integer inf,inl
+      integer inf,inl,jnf
       integer i,alpha
       integer sgn
-      integer nfi,nff
+      integer nfi,nff,nfmax
       integer nli,nlf
       double precision mu2i(3:7),mu2f(3:7)
       double precision muF20l,muF2l
@@ -65,6 +66,10 @@
 *     Rotate initial PDFs into the evolution basis
 *
       call PDFphys2evUni(f0lep,f0ph,f0lev,f0ev)
+*
+*     Define maximun number of flavours
+*
+      nfmax = max(nfMaxPDFs,nfMaxAlpha)
 *
 *     Mass scheme
 *
@@ -210,7 +215,7 @@
             else
                nff = 3
             endif
-            if(nff.gt.nfMaxPDFs) nff = nfMaxPDFs
+            if(nff.gt.nfmax) nff = nfmax
 *
             if(muF20l.gt.m2th(6))then
                nfi = 6
@@ -221,7 +226,7 @@
             else
                nfi = 3
             endif
-            if(nfi.gt.nfMaxPDFs) nfi = nfMaxPDFs
+            if(nfi.gt.nfmax) nfi = nfmax
 *
             mu2i(nfi) = muF20l
             if(sgn.eq.1)then
@@ -242,19 +247,18 @@
             mu2f(nff) = muF2l
 *
             do inf=nfi,nff,sgn
+               jnf = min(inf,nfMaxPDFs)
                wnf = inf
 *
 *     Apply matching conditions for the backward evolution
 *
-               if(sgn.eq.-1)then
-                  if(inf.lt.nfi)then
+               if(sgn.eq.-1.and.inf.lt.nfi.and.inf.lt.nfMaxPDFs)then
 *     Rotate to the QCD evolution basis
-                     call PDFevUni2evQCD(f0ev,fevQCD)
+                  call PDFevUni2evQCD(f0ev,fevQCD)
 *     Apply matching conditions
-                     call MatchPDFs(inf,fevQCD)
+                  call MatchPDFs(inf,fevQCD)
 *     Rotate back to the unified evolution basis
-                     call PDFevQCD2evUni(fevQCD,f0ev)
-                  endif
+                  call PDFevQCD2evUni(fevQCD,f0ev)
                endif
 *
                do alpha=0,nin(igrid)
@@ -304,7 +308,7 @@
      1                                                           Tl8)
                   endif
                endif
-               if(inf.eq.3)then
+               if(jnf.eq.3)then
                   do alpha=0,nin(igrid)
                      Tu1(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
                      Tu2(alpha) = ( Sg1(3,alpha) + Sg1(4,alpha) ) / 2d0
@@ -314,7 +318,7 @@
                      Vd2(alpha) = ( Sg2(1,alpha) - Sg2(2,alpha) ) / 2d0
                   enddo
                endif
-               if(inf.eq.4)then
+               if(jnf.eq.4)then
                   call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
                   call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
                   do alpha=0,nin(igrid)
@@ -324,7 +328,7 @@
                      Vd2(alpha) = ( Sg2(1,alpha) - Sg2(2,alpha) ) / 2d0
                   enddo
                endif
-               if(inf.eq.5)then
+               if(jnf.eq.5)then
                   call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
                   call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td20,Td2)
                   call odeintnsUnifiedf(3,mu2i(inf),mu2f(inf),Vu10,Vu1)
@@ -334,7 +338,7 @@
                      Vu2(alpha) = ( Sg2(1,alpha) + Sg2(2,alpha) ) / 2d0
                   enddo
                endif
-               if(inf.eq.6)then
+               if(jnf.eq.6)then
                   call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu10,Tu1)
                   call odeintnsUnifiedf(1,mu2i(inf),mu2f(inf),Tu20,Tu2)
                   call odeintnsUnifiedf(2,mu2i(inf),mu2f(inf),Td20,Td2)
@@ -370,15 +374,13 @@
 *
 *     Apply matching conditions for the forward evolution
 *
-               if(sgn.eq.1)then
-                  if(inf.lt.nff)then
+               if(sgn.eq.1.and.inf.lt.nff.and.inf.lt.nfMaxPDFs)then
 *     Rotate to the QCD evolution basis
-                     call PDFevUni2evQCD(f0ev,fevQCD)
+                  call PDFevUni2evQCD(f0ev,fevQCD)
 *     Apply matching conditions
-                     call MatchPDFs(inf+1,fevQCD)
+                  call MatchPDFs(inf+1,fevQCD)
 *     Rotate back to the unified evolution basis
-                     call PDFevQCD2evUni(fevQCD,f0ev)
-                  endif
+                  call PDFevQCD2evUni(fevQCD,f0ev)
                endif
             enddo
             muF20l = MTau**2d0

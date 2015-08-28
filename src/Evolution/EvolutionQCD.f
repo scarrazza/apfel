@@ -17,6 +17,7 @@
       include "../commons/grid.h"
       include "../commons/wrap.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/MaxFlavourAlpha.h"
       include "../commons/f0ph.h"
       include "../commons/fph.h"
 **
@@ -26,10 +27,10 @@
 **
 *     Internal Variables
 *
-      integer inf
+      integer inf,jnf
       integer i,alpha
       integer sgn
-      integer nfi,nff
+      integer nfi,nff,nfmax
       double precision mu2i(3:7),mu2f(3:7)
       double precision f0ev(0:13,0:nint_max)
       double precision fev(0:13,0:nint_max)
@@ -56,6 +57,10 @@
 *     Rotate initial PDFs into the evolution basis
 *
       call PDFphys2evQCD(f0ph,f0ev)
+*
+*     Define maximun number of flavours
+*
+      nfmax = max(nfMaxPDFs,nfMaxAlpha)
 *
 *     Mass scheme
 *
@@ -150,7 +155,7 @@
          else
             nff = 3
          endif
-         if(nff.gt.nfMaxPDFs) nff = nfMaxPDFs
+         if(nff.gt.nfmax) nff = nfmax
 *
          if(muF20.gt.m2th(6))then
             nfi = 6
@@ -161,7 +166,7 @@
          else
             nfi = 3
          endif
-         if(nfi.gt.nfMaxPDFs) nfi = nfMaxPDFs
+         if(nfi.gt.nfmax) nfi = nfmax
 *     If initial and final energies are equal, return immediately the intial conditions
          if(muF2.eq.muF20)then
             do alpha=0,nin(igrid)
@@ -195,12 +200,13 @@
          mu2f(nff) = muF2
 *
          do inf=nfi,nff,sgn
+            jnf = min(inf,nfMaxPDFs)
             wnf = inf
 *
 *     Apply matching conditions for the backward evolution
 *
-            if(sgn.eq.-1)then
-               if(inf.lt.nfi) call MatchPDFs(inf,f0ev)
+            if(sgn.eq.-1.and.inf.lt.nfi.and.inf.lt.nfMaxPDFs)then
+               call MatchPDFs(inf,f0ev)
             endif
 *
             do alpha=0,nin(igrid)
@@ -226,7 +232,7 @@
             call odeintnsQCDf(2,mu2i(inf),mu2f(inf),V80,V8)
             call odeintnsQCDf(1,mu2i(inf),mu2f(inf),T30,T3)
             call odeintnsQCDf(1,mu2i(inf),mu2f(inf),T80,T8)
-            if(inf.eq.3)then
+            if(jnf.eq.3)then
                do alpha=0,nin(igrid)
                   V15(alpha) = V(alpha)
                   V24(alpha) = V(alpha)
@@ -236,7 +242,7 @@
                   T35(alpha) = Sg(1,alpha)
                enddo
             endif
-            if(inf.eq.4)then
+            if(jnf.eq.4)then
                call odeintnsQCDf(2,mu2i(inf),mu2f(inf),V150,V15)
                call odeintnsQCDf(1,mu2i(inf),mu2f(inf),T150,T15)
                do alpha=0,nin(igrid)
@@ -246,7 +252,7 @@
                   T35(alpha) = Sg(1,alpha)
                enddo
             endif
-            if(inf.eq.5)then
+            if(jnf.eq.5)then
                call odeintnsQCDf(2,mu2i(inf),mu2f(inf),V150,V15)
                call odeintnsQCDf(2,mu2i(inf),mu2f(inf),V240,V24)
                call odeintnsQCDf(1,mu2i(inf),mu2f(inf),T150,T15)
@@ -256,7 +262,7 @@
                   T35(alpha) = Sg(1,alpha)
                enddo
             endif
-            if(inf.eq.6)then
+            if(jnf.eq.6)then
                call odeintnsQCDf(2,mu2i(inf),mu2f(inf),V150,V15)
                call odeintnsQCDf(2,mu2i(inf),mu2f(inf),V240,V24)
                call odeintnsQCDf(2,mu2i(inf),mu2f(inf),V350,V35)
@@ -285,8 +291,8 @@
 *
 *     Apply matching conditions for the forward evolution
 *
-            if(sgn.eq.1)then
-               if(inf.lt.nff) call MatchPDFs(inf+1,f0ev)
+            if(sgn.eq.1.and.inf.lt.nff.and.inf.lt.nfMaxPDFs)then
+               call MatchPDFs(inf+1,f0ev)
             endif
          enddo
       endif

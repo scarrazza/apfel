@@ -13,6 +13,7 @@
 *
       include "../commons/grid.h"
       include "../commons/EvolutionMatrices.h"
+      include "../commons/MaxFlavourPDFs.h"
 **
 *     Input Variables
 *
@@ -20,6 +21,7 @@
 **
 *     Internal Variables
 *
+      integer jnf
       integer i,j
       integer alpha,beta
       double precision fevQCDb(0:13,0:nint_max)
@@ -28,10 +30,14 @@
 *
       double precision fevQCD(0:13,0:nint_max)
 *
+*     Limit the number of flavour PDFs
+*
+      jnf = min(nf,nfMaxPDFs)
+*
 *     Apply matching conditions for the backward evolution
 *
-      if(sgn.eq.-1)then
-         if(nf.lt.nfi) call MatchPDFs(nf,fevQCD)
+      if(sgn.eq.-1.and.nf.lt.nfi.and.nf.lt.nfMaxPDFs)then
+         call MatchPDFs(nf,fevQCD)
       endif
 *
       do alpha=0,nin(igrid)
@@ -57,7 +63,7 @@
             fevQCDb(5,alpha) = fevQCDb(5,alpha) 
      1      + MQCDnsm(nf,alpha,beta) * fevQCD(5,beta)
 *     V15
-            if(nf.lt.4)then
+            if(jnf.lt.4)then
                fevQCDb(6,alpha) = fevQCDb(6,alpha) 
      1         + MQCDnsv(nf,alpha,beta) * fevQCD(3,beta)
             else
@@ -65,7 +71,7 @@
      1         + MQCDnsm(nf,alpha,beta) * fevQCD(6,beta)
             endif
 *     V24
-            if(nf.lt.5)then
+            if(jnf.lt.5)then
                fevQCDb(7,alpha) = fevQCDb(7,alpha) 
      1         + MQCDnsv(nf,alpha,beta) * fevQCD(3,beta)
             else
@@ -73,7 +79,7 @@
      1         + MQCDnsm(nf,alpha,beta) * fevQCD(7,beta)
             endif
 *     V35
-            if(nf.lt.6)then
+            if(jnf.lt.6)then
                fevQCDb(8,alpha) = fevQCDb(8,alpha) 
      1         + MQCDnsv(nf,alpha,beta) * fevQCD(3,beta)
             else
@@ -87,7 +93,7 @@
             fevQCDb(10,alpha) = fevQCDb(10,alpha) 
      1      + MQCDnsp(nf,alpha,beta) * fevQCD(10,beta)
 *     T15
-            if(nf.lt.4)then
+            if(jnf.lt.4)then
                do j=1,2
                   fevQCDb(11,alpha) = fevQCDb(11,alpha) 
      1            + MQCDsg(nf,1,j,alpha,beta) * fevQCD(j,beta)
@@ -97,7 +103,7 @@
      1         + MQCDnsp(nf,alpha,beta) * fevQCD(11,beta)
             endif
 *     T24
-            if(nf.lt.5)then
+            if(jnf.lt.5)then
                do j=1,2
                   fevQCDb(12,alpha) = fevQCDb(12,alpha) 
      1            + MQCDsg(nf,1,j,alpha,beta) * fevQCD(j,beta)
@@ -107,7 +113,7 @@
      1         + MQCDnsp(nf,alpha,beta) * fevQCD(12,beta)
             endif
 *     T35
-            if(nf.lt.6)then
+            if(jnf.lt.6)then
                do j=1,2
                   fevQCDb(13,alpha) = fevQCDb(13,alpha) 
      1            + MQCDsg(nf,1,j,alpha,beta) * fevQCD(j,beta)
@@ -121,8 +127,8 @@
 *
 *     Apply matching conditions for the forward evolution
 *
-      if(sgn.eq.1)then
-         if(nf.lt.nff) call MatchPDFs(nf+1,fevQCDb)
+      if(sgn.eq.1.and.nf.lt.nff.and.nf.lt.nfMaxPDFs)then
+         call MatchPDFs(nf+1,fevQCDb)
       endif
 *
 *     Copy backup PDFs into main PDFs

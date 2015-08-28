@@ -13,6 +13,7 @@
 *
       include "../commons/grid.h"
       include "../commons/EvolutionMatrices.h"
+      include "../commons/MaxFlavourPDFs.h"
 **
 *     Input Variables
 *
@@ -20,6 +21,7 @@
 **
 *     Internal Variables
 *
+      integer jnf
       integer i,j
       integer alpha,beta
       double precision fevUnib(0:13,0:nint_max)
@@ -32,17 +34,19 @@
       double precision flevUni(6,0:nint_max)
       double precision fevUni(0:13,0:nint_max)
 *
+*     Limit the number of flavour PDFs
+*
+      jnf = min(nf,nfMaxPDFs)
+*
 *     Apply matching conditions for the backward evolution
 *
-      if(sgn.eq.-1)then
-         if(nf.lt.nfli(nl))then
+      if(sgn.eq.-1.and.nf.lt.nfli(nl).and.nf.lt.nfMaxPDFs)then
 *     Rotate to the QCD evolution basis
-            call PDFevUni2evQCD(fevUni,fevQCD)
+         call PDFevUni2evQCD(fevUni,fevQCD)
 *     Apply matching conditions
-            call MatchPDFs(nf,fevQCD)
+         call MatchPDFs(nf,fevQCD)
 *     Rotate back to the unified evolution basis
-            call PDFevQCD2evUni(fevQCD,fevUni)
-         endif
+         call PDFevQCD2evUni(fevQCD,fevUni)
       endif
 *
       do alpha=0,nin(igrid)
@@ -78,7 +82,7 @@
                enddo
             enddo
 *     Tu1
-            if(nf.ge.4)then
+            if(jnf.ge.4)then
                fevUnib(4,alpha) = fevUnib(4,alpha)
      1         + MUninspu(nf,nl,alpha,beta) * fevUni(4,beta)
             else
@@ -90,7 +94,7 @@
                enddo
             endif
 *     Tu2
-            if(nf.ge.6)then
+            if(jnf.ge.6)then
                fevUnib(5,alpha) = fevUnib(5,alpha)
      1         + MUninspu(nf,nl,alpha,beta) * fevUni(5,beta)
             else
@@ -105,7 +109,7 @@
             fevUnib(6,alpha) = fevUnib(6,alpha)
      1      + MUninspd(nf,nl,alpha,beta) * fevUni(6,beta)
 *     Td2
-            if(nf.ge.5)then
+            if(jnf.ge.5)then
                fevUnib(7,alpha) = fevUnib(7,alpha)
      1         + MUninspd(nf,nl,alpha,beta) * fevUni(7,beta)
             else
@@ -117,7 +121,7 @@
                enddo
             endif
 *     Vu1
-            if(nf.ge.4)then
+            if(jnf.ge.4)then
                fevUnib(10,alpha) = fevUnib(10,alpha)
      1         + MUninsmu(nf,nl,alpha,beta) * fevUni(10,beta)
             else
@@ -129,7 +133,7 @@
                enddo
             endif
 *     Vu2
-            if(nf.ge.6)then
+            if(jnf.ge.6)then
                fevUnib(11,alpha) = fevUnib(11,alpha)
      1         + MUninsmu(nf,nl,alpha,beta) * fevUni(11,beta)
             else
@@ -144,7 +148,7 @@
             fevUnib(12,alpha) = fevUnib(12,alpha)
      1      + MUninsmd(nf,nl,alpha,beta) * fevUni(12,beta)
 *     Vd2
-            if(nf.ge.5)then
+            if(jnf.ge.5)then
                fevUnib(13,alpha) = fevUnib(13,alpha)
      1         + MUninsmd(nf,nl,alpha,beta) * fevUni(13,beta)
             else
@@ -182,15 +186,13 @@
 *
 *     Apply matching conditions for the forward evolution
 *
-      if(sgn.eq.1)then
-         if(nf.lt.nflf(nl))then
+      if(sgn.eq.1.and.nf.lt.nflf(nl).and.nf.lt.nfMaxPDFs)then
 *     Rotate to the QCD evolution basis
-            call PDFevUni2evQCD(fevUnib,fevQCD)
+         call PDFevUni2evQCD(fevUnib,fevQCD)
 *     Apply matching conditions
-            call MatchPDFs(nf+1,fevQCD)
+         call MatchPDFs(nf+1,fevQCD)
 *     Rotate back to the unified evolution basis
-            call PDFevQCD2evUni(fevQCD,fevUnib)
-         endif
+         call PDFevQCD2evUni(fevQCD,fevUnib)
       endif
 *
 *     Copy backup PDFs into main PDFs

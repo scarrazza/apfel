@@ -1,0 +1,160 @@
+%% LyX 2.0.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[twoside,english]{article}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+%\numberwithin{equation}{section}
+
+\makeatother
+
+\begin{document}
+
+\title{Notes on the Parton Luminosities}
+
+\author{Valerio Bertone}
+\maketitle
+\begin{abstract}
+In this document I describe the definition and the implementation of
+the differential parton-luminosity functions.
+\end{abstract}
+
+\section{Definition}
+
+The definition of the parton-luminosity functions is given by the
+expression of the total hadronic cross section $\sigma$ in terms of
+the parton ditribution functions $f_{i(j)}(x_{1,(2)},\mu)$ and the
+partonic cross sections $\hat{\sigma}_{ij}$:
+\begin{equation}\label{XsecX1X2}
+\sigma = \sum_{ij}\int_0^1dx_1 \int_0^1dx_2 f_{i}(x_{1},\mu) f_{j}(x_{2},\mu) \hat{\sigma}_{ij}\,.
+\end{equation}
+Now, defining the kinematic variable $y$ (rapidity) and $M_X$
+(invariant mass of the partonic final state, usually normalized to the
+total center of mass squared energy energy $s$) as:
+\begin{equation}
+\begin{array}{l}
+\displaystyle \tau = \frac{M_X^2}{s} = x_1x_2\\
+\\
+\displaystyle y = \frac12\ln\left(\frac{x_1}{x_2}\right)
+\end{array}\,,
+\end{equation}
+one can express the integral in eq.~(\ref{XsecX1X2}) in terms of $y$
+and $\tau$. In fact, by means of a change of variables and taking into
+account the fact that the Jacobian $\partial
+(y,\tau)/\partial(x_1,x_2)=1$, we find that:
+\begin{equation}\label{XsecYM}
+\sigma = \sum_{ij}\left(\int_{-\infty}^{0}dy \int_0^{e^{2y}} d\tau+\int_{0}^{+\infty}dy \int_0^{e^{-2y}} d\tau \right)
+\frac{d^2\mathcal{L}_{ij}}{dy d\tau} \hat{\sigma}_{ij} = \sum_{ij}\int_0^{1} d\tau\left(\int_{0}^{-\frac12\ln\tau}dy +\int_{\frac12\ln\tau}^{0}dy \right)
+\frac{d^2\mathcal{L}_{ij}}{dy d\tau} \hat{\sigma}_{ij}\,,
+\end{equation}
+where we have defined fully differential parton-luminosity functions as:
+\begin{equation}
+\frac{d^2\mathcal{L}_{ij}}{dy d\tau} = f_{i}\left(\sqrt{\tau}e^{y},\sqrt{s\tau}\right) f_{j}\left(\sqrt{\tau}e^{-y},\sqrt{s\tau}\right)\,,
+\end{equation}
+and where we have also set $\mu=M_X=\sqrt{s\tau}$.
+Considering that the the differential parton-luminosity functions and
+the partonic cross sections must be symmetric under $y\leftrightarrow
+-y$, eq.~(\ref{XsecYM}) can be written as:
+\begin{equation}\label{XsecYM1}
+\sigma = \sum_{ij}\int_{-\infty}^{+\infty}dy \int_0^{e^{-2|y|}} d\tau
+\frac{d^2\mathcal{L}_{ij}}{dy d\tau} \hat{\sigma}_{ij} = \sum_{ij}\int_0^{1} d\tau\int_{\frac12\ln\tau}^{-\frac12\ln\tau}dy
+\frac{d^2\mathcal{L}_{ij}}{dy d\tau} \hat{\sigma}_{ij}\,,
+\end{equation}
+that can be written in a unique way as:
+\begin{equation}\label{XsecYM2}
+\sigma = \sum_{ij}\int_{-\infty}^{+\infty}dy \int_0^1 d\tau\,\theta\left(-y-\frac12\ln\tau\right) \theta\left(y-\frac12\ln\tau\right)
+\frac{d^2\mathcal{L}_{ij}}{dy d\tau} \hat{\sigma}_{ij} \,.
+\end{equation}
+More in general, we can write the following equivalence at the level of
+phase space as:
+\begin{equation}\label{PhaseSpace}
+\int_0^1dx_1 \int_0^1dx_2 = \int_{-\infty}^{+\infty}dy \int_0^1 d\tau  
+\,\theta\left(-y-\frac12\ln\tau\right)
+\theta\left(y-\frac12\ln\tau\right) =\int_0^1
+d\tau \int_{-\infty}^{+\infty}dy \,\theta\left(e^{-2|y|}-\tau\right)\,.
+\end{equation}
+
+Now, let us compute the single differential parton-luminosity
+functions integrating out one of the kinematic variables $y$ and
+$\tau$. Let us start with $y$. In this case we have:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \frac{d\mathcal{L}_{ij}}{d\tau} &=&\displaystyle \sum_{ij}\int_{-\infty}^{+\infty}dy \int_0^1 d\tau\,\theta\left(-y-\frac12\ln\tau\right) \theta\left(y-\frac12\ln\tau\right)
+\frac{d^2\mathcal{L}_{ij}}{dy d\tau} \delta(\tau-\tau')\\
+\\
+&=&\displaystyle \int_{\frac12\ln\tau}^{-\frac12\ln\tau}dy f_i\left(\sqrt{\tau'}e^{y},\sqrt{s\tau'}\right) f_j\left(\sqrt{\tau'}e^{-y},\sqrt{s\tau'}\right)\,,
+\end{array}
+\end{equation}
+that, performing the change of variable $x=\sqrt{\tau'}e^{y}$ and
+taking into account that $s\tau'=M_X^2$, becomes:
+\begin{equation}
+\Phi_{ij} = \frac{d\mathcal{L}_{ij}}{dM_X^2} =\frac1{s}\int_{\tau'}^1
+\frac{dx}{x} f_{i}(x,M_X) f_{j}\left(\frac{\tau'}{x},M_X\right)\,.
+\end{equation}
+
+Now we integrate the same for $\tau$:
+\begin{equation}\label{YLumiTau}
+\begin{array}{rcl}
+\displaystyle \Psi_{ij}=\frac{d\mathcal{L}_{ij}}{dy} &=&\displaystyle \sum_{ij} \int_0^1 d\tau\int_{-\infty}^{+\infty}dy\,\theta\left(e^{-2|y|}-\tau\right)
+\frac{d^2\mathcal{L}_{ij}}{dy d\tau} \delta(y-y')\\
+\\
+&=&\displaystyle \int_{0}^{e^{-2|y'|}}d\tau f_i\left(\sqrt{\tau}e^{y'},\sqrt{s\tau}\right) f_j\left(\sqrt{\tau}e^{-y'},\sqrt{s\tau}\right)\,,
+\end{array}
+\end{equation}
+that, defining $x=\sqrt{\tau}e^{y'}$ and assuming $y'\geq0$, becomes:
+\begin{equation}\label{YLumi}
+\Psi_{ij} = \frac{d\mathcal{L}_{ij}}{dy}  = 2e^{-2y'}\int_{0}^{e^{-y'}} dx\,x  f_{i}(x,\sqrt{s}xe^{-y'}) f_{j}(xe^{-2y'},\sqrt{s}xe^{-y'})\,.
+\end{equation}
+
+Eq.~(\ref{YLumi}) has the drawback that the integration range in $x$
+goes down to zero. In addition, also the scale in which PDFs are
+evaluate depends on $x$ linarly. This implies that performing the
+integral requires the evaluation of PDFs in $x=\mu=0$ and this is
+clearly impossible. However, for converge reasons, the invariant mass
+of the final state is alway taken to be bigger than a give
+threshold. At the LHC 14 TeV this threshold is typically of the order of a
+few tens of GeV. Here, for explicative purposes, we take $M_{X,\rm cut}=10$ GeV
+and this results in the cutoff $\tau_{\rm cut}\simeq 6 \cdot 10^{-7}$, so that
+eq.~(\ref{YLumiTau}) becomes:
+\begin{equation}\label{YLumiTau1}
+\begin{array}{rcl}
+\displaystyle \Psi_{ij}=\frac{d\mathcal{L}_{ij}}{dy} &=&\displaystyle
+                                                         \int_{\tau_{\rm
+                                                         cut}}^{e^{-2y'}}d\tau f_i\left(\sqrt{\tau}e^{y'},\sqrt{s\tau}\right) f_j\left(\sqrt{\tau}e^{-y'},\sqrt{s\tau}\right)\,,
+\end{array}
+\end{equation}
+and thus:
+\begin{equation}\label{YLumi2}
+\Psi_{ij} = \frac{d\mathcal{L}_{ij}}{dy}  =
+2e^{-2y'}\int_{\sqrt{\tau_{\rm cut}}e^{y'}}^{e^{-y'}} dx\,x  f_{i}(x,\sqrt{s}xe^{-y'}) f_{j}(xe^{-2y'},\sqrt{s}xe^{-y'})\,.
+\end{equation}
+Eq.~(\ref{YLumi2}) should allow for a practical implementation as the
+minimum of the integration range is now of the order of $7\cdot 10^{-4}$ and the
+minimum energy in which PDFs are avaluated is equal to
+$M_{X,\rm cut}$. In addition, in order for the upper limit of the
+integral in eq.~(\ref{YLumi2}) to be smaller than the lower one, one
+should also require that:
+\begin{equation}
+y'\leq-\frac12\ln\frac{M_{X,\rm cut}}{\sqrt{s}}\simeq 3.6\,.
+\end{equation}
+
+\end{document}

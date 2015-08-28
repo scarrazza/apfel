@@ -11,6 +11,7 @@ do
     pdflatex TruncatedSolution.tex
     pdflatex manual.tex
     pdflatex running_mass.tex
+    pdflatex Luminosities.tex
 done
 
 mv *.pdf ../pdfs/.

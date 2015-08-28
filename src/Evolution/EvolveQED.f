@@ -13,6 +13,7 @@
 *
       include "../commons/grid.h"
       include "../commons/EvolutionMatrices.h"
+      include "../commons/MaxFlavourPDFs.h"
 **
 *     Input Variables
 *
@@ -20,6 +21,7 @@
 **
 *     Internal Variables
 *
+      integer jnf
       integer i,j
       integer alpha,beta
       double precision fevQEDb(0:13,0:nint_max)
@@ -27,6 +29,10 @@
 *     Input and Output Variables
 *
       double precision fevQED(0:13,0:nint_max)
+*
+*     Limit the number of flavour PDFs
+*
+      jnf = min(nf,nfMaxPDFs)
 *
       do alpha=0,nin(igrid)
 *     Initialize backup PDF
@@ -42,7 +48,7 @@
                enddo
             enddo
 *     Duc
-            if(nf.lt.4)then
+            if(jnf.lt.4)then
                do j=1,3
                   fevQEDb(4,alpha) = fevQEDb(4,alpha) 
      1            + ( MQEDsg(nf,2,j,alpha,beta) 
@@ -57,7 +63,7 @@
             fevQEDb(5,alpha) = fevQEDb(5,alpha) 
      1      + MQEDnsm(nf,alpha,beta) * fevQED(5,beta)
 *     Dsb
-            if(nf.lt.5)then
+            if(jnf.lt.5)then
                do j=1,3
                   fevQEDb(6,alpha) = fevQEDb(6,alpha)
      1            + ( MQEDsg(nf,2,j,alpha,beta)
@@ -71,9 +77,9 @@
      1         + MQEDnsm(nf,alpha,beta) * fevQED(6,beta)
             endif
 *     Dct
-            if(nf.lt.4)then
+            if(jnf.lt.4)then
                fevQEDb(7,alpha) = 0d0
-            elseif(nf.lt.6)then
+            elseif(jnf.lt.6)then
                do j=1,3
                   fevQEDb(7,alpha) = fevQEDb(7,alpha)
      1            + ( MQEDsg(nf,2,j,alpha,beta)
@@ -96,21 +102,21 @@
              fevQEDb(10,alpha) = fevQEDb(10,alpha) 
      1       + MQEDnsm(nf,alpha,beta) * fevQED(10,beta)
 *     c-
-            if(nf.lt.4)then
+            if(jnf.lt.4)then
                fevQEDb(11,alpha) = 0d0
             else
                fevQEDb(11,alpha) = fevQEDb(11,alpha) 
      1         + MQEDnsp(nf,alpha,beta) * fevQED(11,beta)
             endif
 *     b-
-            if(nf.lt.5)then
+            if(jnf.lt.5)then
                fevQEDb(12,alpha) = 0d0
             else
                fevQEDb(12,alpha) = fevQEDb(12,alpha) 
      1         + MQEDnsm(nf,alpha,beta) * fevQED(12,beta)
             endif
 *     t-
-            if(nf.lt.6)then
+            if(jnf.lt.6)then
                fevQEDb(13,alpha) = 0d0
             else
                fevQEDb(13,alpha) = fevQEDb(13,alpha) 

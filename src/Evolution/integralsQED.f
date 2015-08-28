@@ -20,10 +20,13 @@
       include "../commons/integrals.h"
       include "../commons/wrap.h"
       include "../commons/Th.h"
+      include "../commons/MaxFlavourPDFs.h"
+      include "../commons/MaxFlavourAlpha.h"
 **
 *     Input Variables
 *
       integer alpha,beta,kk
+      integer bnf,pnf
       double precision coup
       double precision beta0qed
 **
@@ -37,13 +40,19 @@
 *
       if(beta.ge.nin(igrid).or.alpha.ge.nin(igrid)) return
 *
+*     Define the number of flavours to be used in the
+*     beta function and in the splitting functions.
+*
+      bnf = min(wnf,nfMaxAlpha)
+      pnf = min(wnf,nfMaxPDFs)
+*
 *     Integrals
 *
       if(PDFEvol.eq."exactmu".or.Th.eq."QUniD")then
-         integralsQED = coup * SQ(igrid,wnf,wnl,kk,alpha,beta)
+         integralsQED = coup * SQ(igrid,pnf,wnl,kk,alpha,beta)
       else
-         integralsQED = SQ(igrid,wnf,wnl,kk,alpha,beta) 
-     1                / beta0qed(wnf,wnl) / coup
+         integralsQED = SQ(igrid,pnf,wnl,kk,alpha,beta) 
+     1                / beta0qed(bnf,wnl) / coup
       endif
 *
       return

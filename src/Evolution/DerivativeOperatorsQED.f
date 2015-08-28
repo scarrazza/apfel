@@ -17,6 +17,7 @@
       include "../commons/EvolutionMatrices.h"
       include "../commons/wrap.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/MaxFlavourAlpha.h"
 **
 *     Input Variables
 *
@@ -24,8 +25,12 @@
 **
 *     Internal Variables
 *
-      integer inf
+      integer inf,nfmax
       double precision coup,a_QED
+*
+*     Define maximun number of flavours
+*
+      nfmax = max(nfMaxPDFs,nfMaxAlpha)
 *
 *     Mass scheme
 *
@@ -44,7 +49,7 @@
          else
             inf = 3
          endif
-         if(inf.gt.nfMaxPDFs) inf = nfMaxPDFs
+         if(inf.gt.nfmax) inf = nfmax
       endif
 *
       coup = a_QED(muF2)

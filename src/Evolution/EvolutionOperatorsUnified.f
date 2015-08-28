@@ -21,6 +21,7 @@
       include "../commons/EvolutionMatrices.h"
       include "../commons/wrap.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/MaxFlavourAlpha.h"
       include "../commons/LeptEvol.h"
 **
 *     Input Variables
@@ -29,7 +30,7 @@
 **
 *     Internal Variables
 *
-      integer inf,inl
+      integer inf,inl,nfmax
       double precision mu2i(3:7),mu2f(3:7)
       double precision muF20l,muF2l
       double precision M0sg1(5,5,0:nint_max,0:nint_max)
@@ -55,6 +56,10 @@
 *
       call IdentityOperatorsUnified(M0sg1,M0sg2,M0nspu,M0nspd,
      1                                          M0nsmu,M0nsmd,M0nslep)
+*
+*     Define maximun number of flavours
+*
+      nfmax = max(nfMaxPDFs,nfMaxAlpha)
 *
 *     Mass scheme
 *
@@ -147,7 +152,7 @@
             else
                nflf(inl) = 3
             endif
-            if(nflf(inl).gt.nfMaxPDFs) nflf(inl) = nfMaxPDFs
+            if(nflf(inl).gt.nfmax) nflf(inl) = nfmax
 *
             if(muF20l.gt.m2th(6))then
                nfli(inl) = 6
@@ -158,7 +163,7 @@
             else
                nfli(inl) = 3
             endif
-            if(nfli(inl).gt.nfMaxPDFs) nfli(inl) = nfMaxPDFs
+            if(nfli(inl).gt.nfmax) nfli(inl) = nfmax
 *
             mu2i(nfli(inl)) = muF20l
             if(sgn.eq.1)then
