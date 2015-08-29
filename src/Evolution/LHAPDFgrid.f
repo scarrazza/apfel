@@ -23,6 +23,7 @@
       include "../commons/MaxFlavourPDFs.h"
       include "../commons/LeptEvol.h"
       include "../commons/Nf_FF.h"
+      include "../commons/pdfset.h"
 **
 *     Input Variables
 *
@@ -39,7 +40,7 @@
       integer isg,nQ(3:7)
       double precision qref,mth(4:6)
       double precision lambda3,lambda4,lambda5,lambdaNF
-      double precision xbLHA(nxmax),q2LHA(nq2max)
+      double precision xbLHA(nxmax),q2LHA(0:nq2max)
       double precision lnQmin,lnQmax
       double precision eps,offset
       double precision xpdfLHA(-6:6,nxmax,nq2max)
@@ -48,6 +49,7 @@
       double precision xPDFj,xgammaj,xLeptonj
       double precision AlphaQCD
       character*30 str
+      character*43 pdfsetbkp
       parameter(eps=1d-4)
       parameter(offset=1d-2)
 *
@@ -99,6 +101,7 @@
       lnQmin = dlog( q2minLHA / Lambda2 )
       lnQmax = dlog( q2maxLHA / Lambda2 )
 *
+      q2LHA(0) = Qin**2d0
       if(Evs.eq."VF")then
          if(q2minLHA.gt.m2th(6))then
             nfin = 6
@@ -188,6 +191,10 @@
          enddo
       endif
 *
+*     Back up name of the PDF set
+*
+      pdfsetbkp = trim(pdfset)//".LHgrid"
+*
 *     LHAPDF5 output
 *
       if(.not.islhapdf6())then
@@ -272,15 +279,19 @@
             write(13,*) q2LHA(iq2)
          enddo
 *     
-*     EvolvePPDFs starting from Qin and write them on file
+*     Evolve PDFs starting from Qin and write them on file
 *     
          write(13,*) Nrep
          do krep=0,Nrep
+            call SetPDFSet(pdfsetbkp)
             write(6,*) "Evaluating replica",krep," ..."
             call SetReplica(krep)
             do iq2=1,nq2LHA
                if(Qin.gt.0d0)then
-                  call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
+c                  call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
+                  call EvolveAPFEL(dsqrt(q2LHA(iq2-1)),
+     1                             dsqrt(q2LHA(iq2)))
+                  call SetPDFSet("apfel")
                else
                   call EvolveAPFEL(dsqrt(q2LHA(iq2)),dsqrt(q2LHA(iq2)))
                endif
@@ -376,8 +387,6 @@
 *     Now Loop over all replicas and print to file
 *
          do krep=0,Nrep
-            write(6,*) "Evaluating replica",krep," ..."            
-*
             if (krep.lt.10) then
                write(str,'(i1)' ) krep
                open(unit=13,status="unknown",file=fname(1:ln)//"/"
@@ -403,6 +412,8 @@
             write(13,*) "Format: lhagrid1"
             write(13,*) "---"
 *
+            call SetPDFSet(pdfsetbkp)
+            write(6,*) "Evaluating replica",krep," ..."
             call SetReplica(krep)
             iq2in = 1
             iq2fi = nQ(nfin)
@@ -425,7 +436,10 @@
 *
                do iq2=iq2in,iq2fi
                   if(Qin.gt.0d0)then
-                     call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
+c                     call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
+                     call EvolveAPFEL(dsqrt(q2LHA(iq2-1)),
+     1                                dsqrt(q2LHA(iq2)))
+                     call SetPDFSet("apfel")
                   else
                      call EvolveAPFEL(dsqrt(q2LHA(iq2)),
      1                                dsqrt(q2LHA(iq2)))

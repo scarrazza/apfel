@@ -17,6 +17,7 @@
       include "../commons/Evs.h"
       include "../commons/m2th.h"
       include "../commons/fph.h"
+      include "../commons/f0ph.h"
       include "../commons/EpsTrunc.h"
       include "../commons/MaxFlavourPDFs.h"
       include "../commons/MaxFlavourAlpha.h"
@@ -136,6 +137,18 @@
 *     Back up PDF name
          pdfsetbkp = pdfset
          do inf=mfi,mff,sign
+*     Initialize PDFs at the initial scale on the grid
+            call initPDFs(mu2i(inf))
+*     Save pretabulated PDFs
+            do alpha=0,nin(igrid)
+               do ipdf=-6,6
+                  fqpre(igrid,ipdf,alpha) = f0ph(ipdf,alpha)
+               enddo
+               do ipdf=-3,3
+                  flpre(igrid,ipdf,alpha) = f0lep(ipdf,alpha)
+               enddo
+            enddo
+            call SetPDFSet("pretabulated")
             do ieps=-2,2
                EpsEff = eps(ieps)
                if(FastEvol)then
