@@ -52,7 +52,11 @@
 *     Pretabulated PDFs (for internal use).
 *
       elseif(name(1:12).eq."pretabulated")then
-         ln = 12
+         if(name(13:13).eq."1")then
+            ln = 13
+         else
+            ln = 12
+         endif
 *
 *     External LHAPDF grids
 *

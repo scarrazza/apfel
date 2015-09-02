@@ -164,16 +164,27 @@
 *     (for internal use).
 *
       elseif(pdfset(1:12).eq."pretabulated")then
-         do alpha=0,nin(igrid)
-            call pretabulatedPDFs(igrid,alpha,f0,flext0)
-            do ifl=-6,6
-               f0ph(ifl,alpha) = f0(ifl)
+         if(pdfset(13:13).eq."1")then
+            do alpha=0,nin(igrid)
+               call pretabulatedPDFs1(igrid,alpha,f0,flext0)
+               do ifl=-6,6
+                  f0ph(ifl,alpha) = f0(ifl)
+               enddo
+               do ilept=-3,3
+                  f0lep(ilept,alpha) = flext0(ilept)
+               enddo
             enddo
-            do ilept=-3,3
-               f0lep(ilept,alpha) = flext0(ilept)
+         else
+            do alpha=0,nin(igrid)
+               call pretabulatedPDFs(igrid,alpha,f0,flext0)
+               do ifl=-6,6
+                  f0ph(ifl,alpha) = f0(ifl)
+               enddo
+               do ilept=-3,3
+                  f0lep(ilept,alpha) = flext0(ilept)
+               enddo
             enddo
-         enddo
-
+        endif
 *
 *     LHAPDF set
 *

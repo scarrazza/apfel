@@ -13,6 +13,7 @@
 *
       implicit none
 *
+      include "../commons/grid.h"
       include "../commons/ipt.h"
       include "../commons/alpha_ref_QCD.h"
       include "../commons/m2th.h"
@@ -21,9 +22,11 @@
       include "../commons/LHAgrid.h"
       include "../commons/Evs.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/MaxFlavourAlpha.h"
       include "../commons/LeptEvol.h"
       include "../commons/Nf_FF.h"
       include "../commons/pdfset.h"
+      include "../commons/f0ph.h"
 **
 *     Input Variables
 *
@@ -38,20 +41,27 @@
       integer i,ix,iq2,iq2c,ipdf,ilep,krep,iq2in,iq2fi
       integer nfin,nffi
       integer isg,nQ(3:7)
+      integer nfmax
+      integer alpha
       double precision qref,mth(4:6)
       double precision lambda3,lambda4,lambda5,lambdaNF
-      double precision xbLHA(nxmax),q2LHA(0:nq2max)
+      double precision xbLHA(nxmax),q2LHA(nq2max)
       double precision lnQmin,lnQmax
-      double precision eps,offset
+      double precision eps,eps2,offset
       double precision xpdfLHA(-6:6,nxmax,nq2max)
       double precision xgammaLHA(nxmax,nq2max)
       double precision xlepLHA(-6:6,nxmax,nq2max)
       double precision xPDFj,xgammaj,xLeptonj
       double precision AlphaQCD
-      character*30 str
-      character*43 pdfsetbkp
+      character*30  str
+      character*100 pdfsetbkp
       parameter(eps=1d-4)
+      parameter(eps2=1d-12)
       parameter(offset=1d-2)
+*
+      double precision fqpre1(ngrid_max,-6:6,0:nint_max)
+      double precision flpre1(ngrid_max,-3:3,0:nint_max)
+      common / pretab1APFEL / fqpre1,flpre1
 *
 *     Specify initialization for the LHgrid
 *
@@ -62,8 +72,11 @@
       call SetGridParameters(1,150,3,xminLHA)
       call SetGridParameters(2,100,5,xmLHA)
       call SetGridParameters(3,100,5,0.65d0)
+      call LockGrids(.true.)
 *
-      call initializeAPFEL
+*     Initialize APFEL
+*
+      Call initializeAPFEL
 *
 *     Report grid parameters
 *
@@ -80,6 +93,10 @@
       lambda5 = lambdaNF(5,alpha_ref_qcd,q2_ref_qcd)
       lambda4 = lambdaNF(4,alpha_ref_qcd,q2_ref_qcd)
       lambda3 = lambdaNF(3,alpha_ref_qcd,q2_ref_qcd)
+*
+*     Define maximun number of flavours
+*
+      nfmax = max(nfMaxPDFs,nfMaxAlpha)
 *
 *     Compute x-space grid
 *
@@ -101,7 +118,6 @@
       lnQmin = dlog( q2minLHA / Lambda2 )
       lnQmax = dlog( q2maxLHA / Lambda2 )
 *
-      q2LHA(0) = Qin**2d0
       if(Evs.eq."VF")then
          if(q2minLHA.gt.m2th(6))then
             nfin = 6
@@ -112,7 +128,7 @@
          else
             nfin = 3
          endif
-         if(nfin.gt.nfMaxPDFs) nfin = nfMaxPDFs
+         if(nfin.gt.nfmax) nfin = nfmax
 *
          if(q2maxLHA.gt.m2th(6))then
             nffi = 6
@@ -123,7 +139,7 @@
          else
             nffi = 3
          endif
-         if(nffi.gt.nfMaxPDFs) nffi = nfMaxPDFs
+         if(nffi.gt.nfmax) nffi = nfmax
 *
 *     Number of points per subgrid
 *
@@ -140,7 +156,7 @@
                nQ(isg) = nQ(isg) + 1
             else
                isg = isg + 1
-               if(isg.gt.nfMaxPDFs) isg = nfMaxPDFs
+               if(isg.gt.nfmax) isg = nfmax
                nQ(isg) = nQ(isg) + 1
             endif
          enddo
@@ -190,10 +206,6 @@
      2                 * dlog( lnQmax / lnQmin ) ) )
          enddo
       endif
-*
-*     Back up name of the PDF set
-*
-      pdfsetbkp = trim(pdfset)//".LHgrid"
 *
 *     LHAPDF5 output
 *
@@ -283,15 +295,27 @@
 *     
          write(13,*) Nrep
          do krep=0,Nrep
-            call SetPDFSet(pdfsetbkp)
             write(6,*) "Evaluating replica",krep," ..."
             call SetReplica(krep)
+*     Tabulate PDFs at the initial scale on the grid
+            do igrid=1,ngrid
+               call initPDFs(Qin**2d0)
+               do alpha=0,nin(igrid)
+                  do ipdf=-6,6
+                     fqpre1(igrid,ipdf,alpha) = f0ph(ipdf,alpha)
+                  enddo
+                  do ipdf=-3,3
+                     flpre1(igrid,ipdf,alpha) = f0lep(ipdf,alpha)
+                  enddo
+               enddo
+            enddo
+*     Back up PDF name and set pretabulated PDFs as input
+            pdfsetbkp = pdfset
+            call SetPDFSet("pretabulated1")
+*
             do iq2=1,nq2LHA
                if(Qin.gt.0d0)then
-c                  call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
-                  call EvolveAPFEL(dsqrt(q2LHA(iq2-1)),
-     1                             dsqrt(q2LHA(iq2)))
-                  call SetPDFSet("apfel")
+                  call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
                else
                   call EvolveAPFEL(dsqrt(q2LHA(iq2)),dsqrt(q2LHA(iq2)))
                endif
@@ -317,6 +341,8 @@ c                  call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
                   enddo
                enddo
             endif
+*     Restore PDF name
+            pdfset = pdfsetbkp
          enddo
 *     
          write(13,* ) "'End:'"
@@ -412,9 +438,26 @@ c                  call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
             write(13,*) "Format: lhagrid1"
             write(13,*) "---"
 *
-            call SetPDFSet(pdfsetbkp)
             write(6,*) "Evaluating replica",krep," ..."
             call SetReplica(krep)
+*
+*     Tabulate PDFs at the initial scale on the grid
+*
+            do igrid=1,ngrid
+               call initPDFs(Qin**2d0)
+               do alpha=0,nin(igrid)
+                  do ipdf=-6,6
+                     fqpre1(igrid,ipdf,alpha) = f0ph(ipdf,alpha)
+                  enddo
+                  do ipdf=-3,3
+                     flpre1(igrid,ipdf,alpha) = f0lep(ipdf,alpha)
+                  enddo
+               enddo
+            enddo
+*     Back up PDF name and set pretabulated PDFs as input
+            pdfsetbkp = pdfset
+            call SetPDFSet("pretabulated1")
+*
             iq2in = 1
             iq2fi = nQ(nfin)
             do isg=nfin,nffi
@@ -436,13 +479,24 @@ c                  call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
 *
                do iq2=iq2in,iq2fi
                   if(Qin.gt.0d0)then
-c                     call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
-                     call EvolveAPFEL(dsqrt(q2LHA(iq2-1)),
-     1                                dsqrt(q2LHA(iq2)))
-                     call SetPDFSet("apfel")
+                     if(iq2.eq.iq2in.and.isg.ne.nfin)then
+                        call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)+eps2))
+                     elseif(iq2.eq.iq2fi.and.isg.ne.nffi)then
+                        call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)-eps2))
+                     else
+                        call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
+                     endif
                   else
-                     call EvolveAPFEL(dsqrt(q2LHA(iq2)),
-     1                                dsqrt(q2LHA(iq2)))
+                     if(iq2.eq.iq2in.and.isg.ne.nfin)then
+                        call EvolveAPFEL(dsqrt(q2LHA(iq2)+eps2),
+     1                                   dsqrt(q2LHA(iq2)+eps2))
+                     elseif(iq2.eq.iq2fi.and.isg.ne.nffi)then
+                        call EvolveAPFEL(dsqrt(q2LHA(iq2)-eps2),
+     1                                   dsqrt(q2LHA(iq2)-eps2))
+                     else
+                        call EvolveAPFEL(dsqrt(q2LHA(iq2)),
+     1                                   dsqrt(q2LHA(iq2)))
+                     endif
                   endif
                   do ix=1,nxLHA
                      do ipdf=-6,6
@@ -489,6 +543,8 @@ c                     call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
                iq2fi = iq2fi + nQ(isg+1)
             enddo
             close(13)
+*     Restore PDF name
+            pdfset = pdfsetbkp
          enddo
 *     
          write(6,*) "File ",fname(1:ln)," grid produced!"
@@ -499,5 +555,38 @@ c                     call EvolveAPFEL(Qin,dsqrt(q2LHA(iq2)))
  45   format(14(1x,es14.7))
  46   format(20(1x,es14.7))
 *     
+      return
+      end
+*
+************************************************************************
+      subroutine pretabulatedPDFs1(jgrid,alpha,fq,fl)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+**
+*     Input Variables
+*
+      integer jgrid,alpha
+**
+*     Internal Variables
+*
+      integer ifl,ilept
+      double precision fqpre1(ngrid_max,-6:6,0:nint_max)
+      double precision flpre1(ngrid_max,-3:3,0:nint_max)
+      common / pretab1APFEL / fqpre1,flpre1
+**
+*     Output Variables
+*
+      double precision fq(-6:6)
+      double precision fl(-3:3)
+*
+      do ifl=-6,6
+         fq(ifl) = fqpre1(jgrid,ifl,alpha)
+      enddo
+      do ilept=-3,3
+         fl(ilept) = flpre1(jgrid,ilept,alpha)
+      enddo
+*
       return
       end

@@ -37,7 +37,7 @@
 *     Apply matching conditions for the backward evolution
 *
       if(sgn.eq.-1.and.nf.lt.nfi.and.nf.lt.nfMaxPDFs)then
-         call MatchPDFs(nf,fevQCD)
+         call MatchPDFs(nf+1,fevQCD)
       endif
 *
       do alpha=0,nin(igrid)
