@@ -18,6 +18,8 @@
       include "../commons/TimeLike.h"
       include "../commons/m2th.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/PropagatorCorrection.h"
+      include "../commons/EWCouplings.h"
 **
 *     Input Variables
 *
@@ -63,37 +65,47 @@
 *
       eq(1) = - 1d0 / 3d0
       eq(2) = 2d0 / 3d0
-      eq(3) = - 1d0 / 3d0
-      eq(4) = 2d0 / 3d0
-      eq(5) = - 1d0 / 3d0
-      eq(6) = 2d0 / 3d0
+      eq(3) = eq(1) ! - 1d0 / 3d0
+      eq(4) = eq(2) ! 2d0 / 3d0
+      eq(5) = eq(1) ! - 1d0 / 3d0
+      eq(6) = eq(2) ! 2d0 / 3d0
 *
 *     Squared Charges
 *
-      eq2(1) = eq(1) * eq(1) ! 1d0 / 9d0
-      eq2(2) = eq(2) * eq(2) ! 4d0 / 9d0
-      eq2(3) = eq(3) * eq(3) ! 1d0 / 9d0
-      eq2(4) = eq(4) * eq(4) ! 4d0 / 9d0
-      eq2(5) = eq(5) * eq(5) ! 1d0 / 9d0
-      eq2(6) = eq(6) * eq(6) ! 4d0 / 9d0
+      eq2(1) = eq(1) * eq(1)
+      eq2(2) = eq(2) * eq(2)
+      eq2(3) = eq2(1) ! eq(3) * eq(3)
+      eq2(4) = eq2(2) ! eq(4) * eq(4)
+      eq2(5) = eq2(1) ! eq(5) * eq(5)
+      eq2(6) = eq2(2) ! eq(6) * eq(6)
 *
 *     Vector Couplings
 *
-      vq(1) = - 0.5d0 + 2d0 / 3d0 * SinThetaW
-      vq(2) = + 0.5d0 - 4d0 / 3d0 * SinThetaW
-      vq(3) = - 0.5d0 + 2d0 / 3d0 * SinThetaW
-      vq(4) = + 0.5d0 - 4d0 / 3d0 * SinThetaW
-      vq(5) = - 0.5d0 + 2d0 / 3d0 * SinThetaW
-      vq(6) = + 0.5d0 - 4d0 / 3d0 * SinThetaW
+      if(ExtCoup)then
+         vq(1) = VectorD
+         vq(2) = VectorU
+      else
+         vq(1) = - 0.5d0 + 2d0 / 3d0 * SinThetaW
+         vq(2) = + 0.5d0 - 4d0 / 3d0 * SinThetaW
+      endif
+      vq(3) = vq(1) ! - 0.5d0 + 2d0 / 3d0 * SinThetaW
+      vq(4) = vq(2) ! + 0.5d0 - 4d0 / 3d0 * SinThetaW
+      vq(5) = vq(1) ! - 0.5d0 + 2d0 / 3d0 * SinThetaW
+      vq(6) = vq(2) ! + 0.5d0 - 4d0 / 3d0 * SinThetaW
 *
 *     Axial Couplings
 *
-      aq(1) = - 0.5d0
-      aq(2) = + 0.5d0
-      aq(3) = - 0.5d0
-      aq(4) = + 0.5d0
-      aq(5) = - 0.5d0
-      aq(6) = + 0.5d0
+      if(ExtCoup)then
+         aq(1) = AxialD
+         aq(2) = AxialU
+      else
+         aq(1) = - 0.5d0
+         aq(2) = + 0.5d0
+      endif
+      aq(3) = aq(1) ! - 0.5d0
+      aq(4) = aq(2) ! + 0.5d0
+      aq(5) = aq(1) ! - 0.5d0
+      aq(6) = aq(2) ! + 0.5d0
 *
 *     Vector and Axial Electron Couplings
 *
@@ -163,6 +175,9 @@
      1          / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) )
             pz2 = pz * pz
          endif
+*     Apply propagator correction
+         pz  = pz  / ( 1d0 - DeltaR )
+         pz2 = pz2 / ( 1d0 - DeltaR )**2d0
          do i=nfi,nff
             bq(i) = eq2(i) 
      1            - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz

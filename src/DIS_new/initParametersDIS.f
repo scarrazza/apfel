@@ -29,6 +29,8 @@
       include "../commons/SelectedCharge.h"
       include "../commons/krenQ.h"
       include "../commons/kfacQ.h"
+      include "../commons/PropagatorCorrection.h"
+      include "../commons/EWCouplings.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -54,6 +56,9 @@
      1                                0.97427d0, 0.22536d0, 0.00355d0,
      2                                0.22522d0, 0.97343d0, 0.04140d0,
      3                                0.00886d0, 0.04050d0, 0.99914d0)
+      if(InDeltaR.ne."done")          call SetPropagatorCorrection(0d0)
+      if(InEWCouplings.ne."done")     call SetEWCouplings(0d0,0d0,
+     1                                                    0d0,0d0)
 *
 *     Check the consistency of the input parameters
 *
@@ -298,6 +303,17 @@
      1                 //achar(27)//"[0m"
             call SetPerturbativeOrder(2)
          endif
+      endif
+*
+*     Avoid that the propagator correction is equal to one
+*
+      if(DeltaR.eq.1d0)then
+         write(6,*) achar(27)//"[33m"//
+     1        "WARNING: The propagator correction cannot be equal to",
+     2        " one"
+         write(6,*) "         ... setting propagator correction to zero"
+     1        //achar(27)//"[0m"
+         call SetPropagatorCorrection(0d0)
       endif
 *
       return

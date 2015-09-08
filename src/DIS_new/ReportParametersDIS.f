@@ -26,6 +26,8 @@
       include "../commons/SelectedCharge.h"
       include "../commons/krenQ.h"
       include "../commons/kfacQ.h"
+      include "../commons/PropagatorCorrection.h"
+      include "../commons/EWCouplings.h"
 *
 *     Print welcome message and report of the parameters (if enabled)
 *
@@ -41,6 +43,8 @@
          write(6,"(a,3f7.4,a)") "       |",V_ud,V_us,V_ub," |"
          write(6,"(a,3f7.4,a)") " CKM = |",V_cd,V_cs,V_cb," |"
          write(6,"(a,3f7.4,a)") "       |",V_td,V_ts,V_tb," |"
+         write(6,"(a,f7.5)") " Z propagator correction = ",DeltaR
+         if(ExtCoup) write(6,*) "External EW couplings will be used"
          write(6,*) "  "
 *
          write(6,*) "Report of the DIS parameters:"

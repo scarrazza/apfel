@@ -29,6 +29,8 @@
 *
 c      call SetMassScheme("ZM-VFNS")
       call SetProcessDIS("NC")
+c      call SetEWCouplings(1d0,1d0,1d0,1d0)
+c      call SetPropagatorCorrection(0.1d0)
 c      call SetPolarizationDIS(0d0)
 c      call SetProjectileDIS("electron")
 c      call SetTargetDIS("proton")

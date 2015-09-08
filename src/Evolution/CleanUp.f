@@ -56,6 +56,8 @@
       include "../commons/LHAgrid.h"
       include "../commons/krenQ.h"
       include "../commons/kfacQ.h"
+      include "../commons/PropagatorCorrection.h"
+      include "../commons/EWCouplings.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -108,6 +110,8 @@
       InSinThetaW       = "xxxx"
       InGFermi          = "xxxx"
       InCKM             = "xxxx"
+      InDeltaR          = "xxxx"
+      InEWCouplings     = "xxxx"
 *
       return
       end
