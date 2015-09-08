@@ -99,6 +99,12 @@ extern "C" {
 #define fsetckm FC_FUNC(setckm,SETCKM)
   void fsetckm(double*,double*,double*,double*,double*,double*,double*,double*,double*);
 
+#define fsetpropagatorcorrection FC_FUNC(setpropagatorcorrection,SETPROPAGATORCORRECTION)
+  void fsetpropagatorcorrection(double*);
+
+#define fsetewcouplings FC_FUNC(setewcouplings,SETEWCOUPLINGS)
+  void fsetewcouplings(double*,double*,double*,double*);
+
 #define fsetgfermi FC_FUNC(setgfermi,SETGFERMI)
   void fsetgfermi(double*);
 

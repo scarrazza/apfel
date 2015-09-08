@@ -209,6 +209,18 @@ ccccccccccccc
       end subroutine fsetckm
 
 ccccccccccccc
+      subroutine fsetpropagatorcorrection(dr)
+      double precision dr
+      call SetPropagatorCorrection(dr)
+      end subroutine fsetpropagatorcorrection
+
+ccccccccccccc
+      subroutine fsetewcouplings(vd,vu,ad,au)
+      double precision vd,vu,ad,au
+      call SetEWCouplings(vd,vu,ad,au)
+      end subroutine fsetewcouplings
+
+ccccccccccccc
       subroutine fsetgfermi(gf)
       double precision gf
       call SetGFermi(gf)

@@ -92,6 +92,12 @@ namespace APFEL {
   /// Set the absolute value of the entries of the CKM matrix
   void SetCKM(double vud,double vus,double vub,double vcd,double vcs,double vcb,double vtd,double vts,double vtb);
 
+  /// Set the the correction to the Z propagator
+  void SetPropagatorCorrection(double dr);
+
+  /// Set the EW vector and axial couplings
+  void SetEWCouplings(double vd,double vu,double ad,double au);
+
   /// Set the value of the Fermi constant
   void SetGFermi(double gf);
 

@@ -451,6 +451,14 @@ def SetCKM(*args):
   return _apfel.SetCKM(*args)
 SetCKM = _apfel.SetCKM
 
+def SetPropagatorCorrection(*args):
+  return _apfel.SetPropagatorCorrection(*args)
+SetPropagatorCorrection = _apfel.SetPropagatorCorrection
+
+def SetEWCouplings(*args):
+  return _apfel.SetEWCouplings(*args)
+SetEWCouplings = _apfel.SetEWCouplings
+
 def SetGFermi(*args):
   return _apfel.SetGFermi(*args)
 SetGFermi = _apfel.SetGFermi

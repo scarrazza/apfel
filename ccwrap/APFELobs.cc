@@ -199,6 +199,16 @@ namespace APFEL {
     fsetckm(&vud,&vus,&vub,&vcd,&vcs,&vcb,&vtd,&vts,&vtb);
   }
 
+  void SetPropagatorCorrection(double dr)
+  {
+    fsetpropagatorcorrection(&dr);
+  }
+
+  void SetEWCouplings(double vd,double vu,double ad,double au)
+  {
+    fsetewcouplings(&vd,&vu,&ad,&au);
+  }
+
   void SetGFermi(double gf)
   {
     fsetgfermi(&gf);
