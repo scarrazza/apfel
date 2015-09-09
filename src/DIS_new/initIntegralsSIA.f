@@ -11,8 +11,7 @@
       implicit none
 *
       include "../commons/grid.h"
-      include "../commons/krenQ.h"
-      include "../commons/kfacQ.h"
+      include "../commons/DynScVar.h"
 **
 *     Internal Variables
 *
@@ -51,8 +50,9 @@
       endif
 *
 *     Scale variations
+*     (only if the dynamical scale variation is disabled)
 *
-      if(krenQ.ne.1d0.or.kfacQ.ne.1d0) call IncludeScaleVariation
+      if(.not.DynScVar) call IncludeScaleVariation
 *
       return
       end

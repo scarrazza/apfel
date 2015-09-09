@@ -28,6 +28,7 @@
       include "../commons/kfacQ.h"
       include "../commons/PropagatorCorrection.h"
       include "../commons/EWCouplings.h"
+      include "../commons/DynScVar.h"
 *
 *     Print welcome message and report of the parameters (if enabled)
 *
@@ -70,8 +71,12 @@
          if(SelectedCharge(1:3).ne."all") 
      1   write(6,*) "Selected Charge: ",trim(SelectedCharge)
 *
-         write(6,"(a,f7.4)") " muR / Q = ",dsqrt(krenQ)
-         write(6,"(a,f7.4)") " muF / Q = ",dsqrt(kfacQ)
+         if(DynScVAr)then
+            write(6,*) "Dynamical scale variations enabled"
+         else
+            write(6,"(a,f7.4)") " muR / Q = ",dsqrt(krenQ)
+            write(6,"(a,f7.4)") " muF / Q = ",dsqrt(kfacQ)
+         endif
 *
          if(TMC)then
             write(6,*) "Target Mass corrections enabled"

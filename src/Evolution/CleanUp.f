@@ -58,6 +58,7 @@
       include "../commons/kfacQ.h"
       include "../commons/PropagatorCorrection.h"
       include "../commons/EWCouplings.h"
+      include "../commons/DynScVar.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -103,6 +104,7 @@
       InSelectedCharge  = "xxxx"
       InKrenQ           = "xxxx"
       InKfacQ           = "xxxx"
+      InDynScVar        = "xxxx"
 *
       InMZ              = "xxxx"
       InMW              = "xxxx"

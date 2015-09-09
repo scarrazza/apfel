@@ -114,6 +114,9 @@ extern "C" {
 #define fsetfacqratio FC_FUNC(setfacqratio,SETFACQRATIO)
   void fsetfacqratio(double*);
 
+#define fenabledynamicalscalevariations FC_FUNC(enabledynamicalscalevariations,ENABLEDYNAMICALSCALEVARIATIONS)
+  void fenabledynamicalscalevariations(int*);
+
 #define fgetzmass FC_FUNC(getzmass,GETZMASS)
   double fgetzmass();
 

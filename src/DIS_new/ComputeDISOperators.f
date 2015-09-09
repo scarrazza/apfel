@@ -27,6 +27,7 @@
       include "../commons/DampingFONLL.h"
       include "../commons/ProtonMass.h"
       include "../commons/kfacQ.h"
+      include "../commons/DynScVar.h"
 **
 *     Internal Variables
 *
@@ -181,6 +182,15 @@
             damp(ihq) = 1d0
          endif
       enddo
+*
+*     Include scale variations if the dynamical evaluation
+*     has been enabled
+*
+      if(DynScVar)then
+         do igrid=1,ngrid
+            call IncludeScaleVariation
+         enddo
+      endif
 *
 *     Electromagnetic and Neutral current structure functions
 *

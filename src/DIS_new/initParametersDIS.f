@@ -31,34 +31,37 @@
       include "../commons/kfacQ.h"
       include "../commons/PropagatorCorrection.h"
       include "../commons/EWCouplings.h"
+      include "../commons/DynScVar.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
-      if(InWelcome.ne."done")         call EnableWelcomeMessage(.true.)
-      if(InMassScheme.ne."done")      call SetMassScheme("ZM-VFNS")
-      if(InProcessDIS.ne."done")      call SetProcessDIS("EM")
-      if(InPolarizationDIS.ne."done") call SetPolarizationDIS(0d0)
-      if(InProjectileDIS.ne."done")   call SetProjectileDIS("electron")
-      if(InTargetDIS.ne."done")       call SetTargetDIS("proton")
-      if(InSelectedCharge.ne."done")  call SelectCharge("all")
-      if(InKrenQ.ne."done")           call SetRenQRatio(1d0)
-      if(InKfacQ.ne."done")           call SetFacQRatio(1d0)
-      if(InDampingFONLL.ne."done")    call EnableDampingFONLL(.true.)
-      if(InTMC.ne."done")             call EnableTargetMassCorrections
+      if(InWelcome.ne."done")        call EnableWelcomeMessage(.true.)
+      if(InMassScheme.ne."done")     call SetMassScheme("ZM-VFNS")
+      if(InProcessDIS.ne."done")     call SetProcessDIS("EM")
+      if(InPolarizationDIS.ne."done")call SetPolarizationDIS(0d0)
+      if(InProjectileDIS.ne."done")  call SetProjectileDIS("electron")
+      if(InTargetDIS.ne."done")      call SetTargetDIS("proton")
+      if(InSelectedCharge.ne."done") call SelectCharge("all")
+      if(InKrenQ.ne."done")          call SetRenQRatio(1d0)
+      if(InKfacQ.ne."done")          call SetFacQRatio(1d0)
+      if(InDynScVar.ne."done")       call EnableDynamicalScaleVariations
+     1                                    (.false.)
+      if(InDampingFONLL.ne."done")   call EnableDampingFONLL(.true.)
+      if(InTMC.ne."done")            call EnableTargetMassCorrections
      1                                     (.false.)
 *
-      if(InMZ.ne."done")              call SetZMass(91.1876d0)
-      if(InMW.ne."done")              call SetWMass(80.385d0)
-      if(InMProton.ne."done")         call SetProtonMass(0.938272046d0)
-      if(InSinThetaW.ne."done")       call SetSinThetaW(0.23126d0)
-      if(InGFermi.ne."done")          call SetGFermi(1.1663787d-5)
-      if(InCKM.ne."done")             call SetCKM(
-     1                                0.97427d0, 0.22536d0, 0.00355d0,
-     2                                0.22522d0, 0.97343d0, 0.04140d0,
-     3                                0.00886d0, 0.04050d0, 0.99914d0)
-      if(InDeltaR.ne."done")          call SetPropagatorCorrection(0d0)
-      if(InEWCouplings.ne."done")     call SetEWCouplings(0d0,0d0,
-     1                                                    0d0,0d0)
+      if(InMZ.ne."done")             call SetZMass(91.1876d0)
+      if(InMW.ne."done")             call SetWMass(80.385d0)
+      if(InMProton.ne."done")        call SetProtonMass(0.938272046d0)
+      if(InSinThetaW.ne."done")      call SetSinThetaW(0.23126d0)
+      if(InGFermi.ne."done")         call SetGFermi(1.1663787d-5)
+      if(InCKM.ne."done")            call SetCKM(
+     1                               0.97427d0, 0.22536d0, 0.00355d0,
+     2                               0.22522d0, 0.97343d0, 0.04140d0,
+     3                               0.00886d0, 0.04050d0, 0.99914d0)
+      if(InDeltaR.ne."done")         call SetPropagatorCorrection(0d0)
+      if(InEWCouplings.ne."done")    call SetEWCouplings(0d0,0d0,
+     1                                                   0d0,0d0)
 *
 *     Check the consistency of the input parameters
 *
@@ -314,6 +317,19 @@
          write(6,*) "         ... setting propagator correction to zero"
      1        //achar(27)//"[0m"
          call SetPropagatorCorrection(0d0)
+      endif
+*
+*     Inform the user that if the dynamical scale variation has been enabled
+*     the factorization and the renormalization scales will be set equal
+*
+      if(DynScVar)then
+         write(6,*) achar(27)//"[33m"//
+     1        "WARNING: The dynamical scale variation has been enabled"
+         write(6,*) "         ... factorization and renormalization",
+     1              " scales will be set equal."
+         write(6,*) "          (in particular mu_R = mu_F)"
+     2        //achar(27)//"[0m"
+         call SetRenQRatio(dsqrt(kfacQ))
       endif
 *
       return

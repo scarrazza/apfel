@@ -62,6 +62,24 @@ ccccccccccccc
       call SelectCharge(selch)
       end subroutine fselectcharge
 
+ccccccccccccc      
+      subroutine fsetrenqratio(ratioR)
+      double precision ratioR
+      call SetRenQRatio(ratioR)
+      end subroutine fsetrenqratio
+
+ccccccccccccc      
+      subroutine fsetfacqratio(ratioF)
+      double precision ratioF
+      call SetFacQRatio(ratioF)
+      end subroutine fsetfacqratio
+
+ccccccccccccc      
+      subroutine fenabledynamicalscalevariations(dsv)
+      logical dsv
+      call EnableDynamicalScaleVariations(dsv)
+      end subroutine fenabledynamicalscalevariations
+
 ccccccccccccc
       function fexternaldisoperator(SF,ihq,i,x,beta)
       integer ihq,i

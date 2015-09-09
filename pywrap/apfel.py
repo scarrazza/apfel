@@ -471,6 +471,10 @@ def SetFacQRatio(*args):
   return _apfel.SetFacQRatio(*args)
 SetFacQRatio = _apfel.SetFacQRatio
 
+def EnableDynamicalScaleVariations(*args):
+  return _apfel.EnableDynamicalScaleVariations(*args)
+EnableDynamicalScaleVariations = _apfel.EnableDynamicalScaleVariations
+
 def GetZMass():
   return _apfel.GetZMass()
 GetZMass = _apfel.GetZMass

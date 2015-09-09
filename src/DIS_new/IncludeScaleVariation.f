@@ -20,6 +20,7 @@
       include "../commons/Nf_FF.h"
       include "../commons/krenQ.h"
       include "../commons/kfacQ.h"
+      include "../commons/DynScVar.h"
 **
 *     Internal Variables
 *
@@ -38,10 +39,16 @@
       double precision beta0apf,b0
 *
       if(ipt.eq.0) return
+      if(krenQ.eq.1d0.and.kfacQ.eq.1d0) return
 *
       tR   = dlog(krenQ)
       tF   = dlog(kfacQ)
       tF2h = tF * tF / 2d0
+*
+*     in the dynamical scale variation has been enabled
+*     set the renormalization scale equal to the factorization scale
+*
+      if(DynScVar) tR = tF
 *
 *     Maps used for the muliplications
 *

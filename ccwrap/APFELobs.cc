@@ -224,6 +224,11 @@ namespace APFEL {
     fsetfacqratio(&ratioF);
   }
 
+  void EnableDynamicalScaleVariations(int dsv)
+  {
+    fenabledynamicalscalevariations(&dsv);
+  }
+
   double GetZMass()
   {
     return fgetzmass();

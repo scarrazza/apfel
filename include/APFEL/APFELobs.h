@@ -52,7 +52,7 @@ namespace APFEL {
   /// Set the target
   void SetTargetDIS(const std::string& tar);
 
-  /// Set the projectile
+  /// Select a given charge contribution
   void SelectCharge(const std::string& selch);
 
   /// Returns the DIS operator times the evolution factors on the grid
@@ -106,6 +106,9 @@ namespace APFEL {
 
   /// Sets the ratio between factorization scale and Q
   void SetFacQRatio(double ratioF);
+
+  /// Enables the posibility to vary scales dynamically
+  void EnableDynamicalScaleVariations(int);
 
   // Returns the mass of the Z
   double GetZMass();

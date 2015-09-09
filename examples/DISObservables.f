@@ -29,6 +29,9 @@
 *
 c      call SetMassScheme("ZM-VFNS")
       call SetProcessDIS("NC")
+c      call EnableDynamicalScaleVariations(.true.)
+c      call SetRenQRatio(0.5d0)
+c      call SetFacQRatio(0.5d0)
 c      call SetEWCouplings(1d0,1d0,1d0,1d0)
 c      call SetPropagatorCorrection(0.1d0)
 c      call SetPolarizationDIS(0d0)
