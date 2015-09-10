@@ -28,6 +28,7 @@
       include "../commons/ProtonMass.h"
       include "../commons/kfacQ.h"
       include "../commons/DynScVar.h"
+      include "../commons/MassInterpolIndices.h"
 **
 *     Internal Variables
 *
@@ -40,7 +41,7 @@
       integer nf
       integer gbound
       integer ipr
-      integer i,ixi(4:6)
+      integer i
       integer ik
       double precision Q2,muF,W2,M2(4:6),HeavyQuarkMass
       double precision as(0:2),a_QCD

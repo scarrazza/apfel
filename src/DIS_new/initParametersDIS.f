@@ -188,54 +188,51 @@
       if(InTimeLike.eq."done".and.TimeLike)then
          if(MassScheme.ne."ZM-VFNS")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: The computation of the SIA structure ",
-     2                 "functions available only in the ZM-VFNS."
-            write(6,*) "         ... setting ZM-VFNS."
+     1                 "WARNING: Computation of the SIA structure ",
+     2                 "functions available only in the ZM-VFNS"
+            write(6,*) "         ... setting ZM-VFNS"
      1                 //achar(27)//"[0m"
             call SetMassScheme("ZM-VFNS")
          endif
          if(TMC)then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: The computation of the SIA structure ",
-     2                 "functions does not allow the inclusion"
-            write(6,*) "         of the target mass corrections (TMCs)."
-            write(6,*) "         ... switching off TMCs."
+     1                 "WARNING: Computation of the SIA structure ",
+     2                 "functions with target mass corrections ",
+     3                 "unavailable"
+            write(6,*) "         ... switching off TMCs"
      1                 //achar(27)//"[0m"
             call EnableTargetMassCorrections(.false.)
          endif
          if(ProjectileDIS(1:8).ne."electron")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: The computation of the SIA structure ",
-     2                 "functions is possible only using"
-            write(6,*) "         electrons as projectiles."
+     1                 "WARNING: Computation of the SIA structure ",
+     2                 "functions possible only using electrons ",
+     3                 "projectiles"
             write(6,*) "         ... setting 'elelectron' projectile"
      1                 //achar(27)//"[0m"
             call SetProjectileDIS("electron")
          endif
          if(TargetDIS(1:6).ne."proton")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: The computation of the SIA structure ",
-     2                 "functions is possible only using protons"
-            write(6,*) "         as targets."
+     1                 "WARNING: Computation of the SIA structure ",
+     2                 "functions possible only using protons targets"
             write(6,*) "         ... setting 'proton' targets"
      1                 //achar(27)//"[0m"
             call SetTargetDIS("proton")
          endif
          if(PolarizationDIS.ne.0d0)then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: The computation of the SIA structure ",
-     2                 "functions is possible only for"
-            write(6,*) "         unpolarized beams."
-            write(6,*) "         ... setting polarization to zero."
+     1                 "WARNING: Computation of the SIA structure ",
+     2                 "functions possible only for unpolarized beams"
+            write(6,*) "         ... setting polarization to zero"
      1                 //achar(27)//"[0m"
             call SetPolarizationDIS(0d0)
          endif
          if(ProcessDIS.eq."CC")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: The computation of the SIA structure ",
-     2                 "functions is not available for CC"
-            write(6,*) "         processes."
-            write(6,*) "         ... setting EM process."
+     1                 "WARNING: Computation of the SIA structure ",
+     2                 "functions not available for CC processes"
+            write(6,*) "         ... setting EM process"
      1                 //achar(27)//"[0m"
             call SetProcessDIS("EM")
          endif
@@ -281,27 +278,21 @@
          call SetVFNS
          if(MassScheme.eq."FONLL-A")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: For the FONLL-A scheme the",
-     2                 " perturbative order will automatically be",
-     3                 " set to NLO"
+     1                 "WARNING: FONLL-A is NLO scheme"
             write(6,*) "         ... setting NLO perturbative order"
      1                 //achar(27)//"[0m"
             call SetPerturbativeOrder(1)
          endif
          if(MassScheme.eq."FONLL-B")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: For the FONLL-B scheme the",
-     2                 " perturbative order will automatically be",
-     3                 " set to NLO"
+     1                 "WARNING: FONLL-B is a NLO scheme"
             write(6,*) "         ... setting NLO perturbative order"
      1                 //achar(27)//"[0m"
             call SetPerturbativeOrder(1)
          endif
          if(MassScheme.eq."FONLL-C")then
             write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: For the FONLL-C scheme the",
-     2                 " perturbative order will automatically be",
-     3                 " set to NNLO"
+     1                 "WARNING: FONLL-C is a NNLO scheme"
             write(6,*) "         ... setting NNLO perturbative order"
      1                 //achar(27)//"[0m"
             call SetPerturbativeOrder(2)
@@ -324,12 +315,13 @@
 *
       if(DynScVar)then
          write(6,*) achar(27)//"[33m"//
-     1        "WARNING: The dynamical scale variation has been enabled"
-         write(6,*) "         ... factorization and renormalization",
-     1              " scales will be set equal."
-         write(6,*) "          (in particular mu_R = mu_F)"
-     2        //achar(27)//"[0m"
-         call SetRenQRatio(dsqrt(kfacQ))
+     1        "WARNING: Dynamical scale variation enabled"
+         write(6,*) "         ... the initialization will be done with"
+         write(6,*) "         factorization and renormalization scales"
+         write(6,*) "         set equal to Q (mu_R = mu_F = Q)"
+     1              //achar(27)//"[0m"
+         call SetRenQRatio(1d0)
+         call SetFacQRatio(1d0)
       endif
 *
       return
