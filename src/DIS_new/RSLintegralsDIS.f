@@ -865,7 +865,7 @@ c     2                    + sig2 * SCLm0NC(igrid,ixi,k,2,beta,alpha)
          if(ipt.gt.1) iptmx = 1
 *
          do ixi=1,nxir
-            lnQ = dlog(xigrid(ixi*xistep))
+            lnQ  = dlog(xigrid(ixi*xistep))
             lnC2 = lnkQF2 + lnQ
             lnC3 = lnkQF2 - lnQ
 *

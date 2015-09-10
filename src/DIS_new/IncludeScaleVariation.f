@@ -420,15 +420,15 @@
                         SC2mCC(igrid,jxi,1,1,beta,alpha) = 
      1                       SC2mCC(igrid,jxi,1,1,beta,alpha) - tF
      2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
-     3                       / Nf_FF
+     3                       / Nf_FF / 2d0
                         SCLmCC(igrid,jxi,1,1,beta,alpha) = 
      1                       SCLmCC(igrid,jxi,1,1,beta,alpha) - tF
      2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
-     3                       / Nf_FF * omlam
+     3                       / Nf_FF  / 2d0 * omlam
                         SC3mCC(igrid,jxi,1,1,beta,alpha) = 
      1                       SC3mCC(igrid,jxi,1,1,beta,alpha) - tF
      2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
-     3                       / Nf_FF
+     3                       / Nf_FF / 2d0
 *     Plus
                         SC2mCC(igrid,jxi,3,1,beta,alpha) = 
      1                       SC2mCC(igrid,jxi,3,1,beta,alpha) - tF
@@ -538,11 +538,11 @@
                         SC2m0CC(igrid,jxi,1,1,beta,alpha) = 
      1                       SC2m0CC(igrid,jxi,1,1,beta,alpha) - tF
      2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
-     3                       / Nf_FF
+     3                       / Nf_FF / 2d0
                         SC3m0CC(igrid,jxi,1,1,beta,alpha) = 
      1                       SC3m0CC(igrid,jxi,1,1,beta,alpha) - tF
      2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
-     3                       / Nf_FF
+     3                       / Nf_FF / 2d0
 *     Plus
                         SC2m0CC(igrid,jxi,3,1,beta,alpha) = 
      1                       SC2m0CC(igrid,jxi,3,1,beta,alpha) - tF

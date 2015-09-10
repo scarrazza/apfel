@@ -14,6 +14,7 @@
       include "../commons/kfacQ.h"
       include "../commons/MassScheme.h"
       include "../commons/ipt.h"
+      include "../commons/DynScVar.h"
 **
 *     Input Variables
 *
@@ -38,6 +39,10 @@
       endif
 *
       call cpu_time(t1)
+*
+*     If the dynamical scale variation is enabled set muR = muF
+*
+      if(DynScVar) call SetRenQRatio(dsqrt(kfacQ))
 *
 *     Compute PDF evolution in the factorization scales
 *
