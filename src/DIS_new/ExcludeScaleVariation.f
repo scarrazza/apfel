@@ -1,13 +1,15 @@
 ************************************************************************
 *
-*     IncludeScaleVariation.f:
+*     ExcludeScaleVariation.f:
 *
-*     This routine includes in the precomputed coefficient functions
-*     all the scale variation terms that were not included in 
-*     RSLintegralsDIS.f (or RSLintegralsSIA.f)
+*     This routine excludes from the precomputed coefficient functions
+*     all the scale variation terms that were included in 
+*     IncludeScaleVariation.f. This is needed when doing dynamical scale
+*     variotions in such a way that any new iteration starts from a
+*     "scale free" set of coefficient functions.
 *
 ************************************************************************
-      subroutine IncludeScaleVariation
+      subroutine ExcludeScaleVariation
 *
       implicit none
 *
@@ -20,7 +22,6 @@
       include "../commons/Nf_FF.h"
       include "../commons/krenQ.h"
       include "../commons/kfacQ.h"
-      include "../commons/DynScVar.h"
       include "../commons/MassInterpolIndices.h"
 **
 *     Internal Variables
@@ -42,14 +43,11 @@
       if(ipt.eq.0) return
       if(krenQ.eq.1d0.and.kfacQ.eq.1d0) return
 *
-      tR   = dlog(krenQ)
-      tF   = dlog(kfacQ)
-      tF2h = tF * tF / 2d0
+*     The minus signs serve to subtract the terms proportional to the logs
 *
-*     If the dynamical scale variation has been enabled
-*     set the renormalization scale equal to the factorization scale.
-*
-      if(DynScVar) tR = tF
+      tF   = - dlog(kfacQ)
+      tF2h = - tF * tF / 2d0
+      tR   = tF
 *
 *     Maps used for the muliplications
 *
@@ -70,9 +68,37 @@
 *
       do inf=3,6
 *
-         b0 = beta0apf(inf)
+*     NLO
+*
+         do beta=0,gbound
+            do alpha=beta,nin(igrid)-1
+*     Gluon
+               SC2zm(igrid,inf,1,1,beta,alpha) = 
+     1              SC2zm(igrid,inf,1,1,beta,alpha)
+     2              - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf
+               SC3zm(igrid,inf,1,1,beta,alpha) = 
+     1              SC3zm(igrid,inf,1,1,beta,alpha)
+     2              - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf
+*     Plus
+               SC2zm(igrid,inf,3,1,beta,alpha) = 
+     1              SC2zm(igrid,inf,3,1,beta,alpha)
+     2              - tF * SP(igrid,inf,1,0,beta,alpha)
+               SC3zm(igrid,inf,3,1,beta,alpha) = 
+     1              SC3zm(igrid,inf,3,1,beta,alpha)
+     2              - tF * SP(igrid,inf,1,0,beta,alpha)
+*     Minus
+               SC2zm(igrid,inf,4,1,beta,alpha) = 
+     1              SC2zm(igrid,inf,4,1,beta,alpha)
+     2              - tF * SP(igrid,inf,2,0,beta,alpha)
+               SC3zm(igrid,inf,4,1,beta,alpha) = 
+     1              SC3zm(igrid,inf,4,1,beta,alpha)
+     2              - tF * SP(igrid,inf,2,0,beta,alpha)
+            enddo
+         enddo
 *
 *     NNLO
+*
+         b0 = beta0apf(inf)
 *
          if(ipt.ge.2)then
             do beta=0,gbound
@@ -285,327 +311,239 @@
                enddo
             enddo
          endif
-*
-*     NLO
-*
-         do beta=0,gbound
-            do alpha=beta,nin(igrid)-1
-*     Gluon
-               SC2zm(igrid,inf,1,1,beta,alpha) = 
-     1              SC2zm(igrid,inf,1,1,beta,alpha)
-     2              - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf
-               SC3zm(igrid,inf,1,1,beta,alpha) = 
-     1              SC3zm(igrid,inf,1,1,beta,alpha)
-     2              - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf
-*     Plus
-               SC2zm(igrid,inf,3,1,beta,alpha) = 
-     1              SC2zm(igrid,inf,3,1,beta,alpha)
-     2              - tF * SP(igrid,inf,1,0,beta,alpha)
-               SC3zm(igrid,inf,3,1,beta,alpha) = 
-     1              SC3zm(igrid,inf,3,1,beta,alpha)
-     2              - tF * SP(igrid,inf,1,0,beta,alpha)
-*     Minus
-               SC2zm(igrid,inf,4,1,beta,alpha) = 
-     1              SC2zm(igrid,inf,4,1,beta,alpha)
-     2              - tF * SP(igrid,inf,2,0,beta,alpha)
-               SC3zm(igrid,inf,4,1,beta,alpha) = 
-     1              SC3zm(igrid,inf,4,1,beta,alpha)
-     2              - tF * SP(igrid,inf,2,0,beta,alpha)
-            enddo
-         enddo
       enddo
 *
       ipt_FF = ipt
       if(MassScheme.eq."FONLL-B".and.ipt.ge.1) ipt_FF = 2
 *
-*     If the dynamical scale variation has been chosen, the analytical
-*     factorization scale terms, that would already be present at the
-*     initialization stage, have been set to zero and must be computed
-*     numerically here and added to the non-scale terms. Otherwise only
-*     the renormalization scale dependente terms need to be included.
-*
-      if(DynScVar)then
-*
 *     FFNS
 *
-         if(MassScheme(1:4).eq."FFNS".or.
-     1      MassScheme(1:5).eq."FONLL")then
+      if(MassScheme(1:4).eq."FFNS".or.
+     1   MassScheme(1:5).eq."FONLL")then
 *
 *     Neutral Current
 *
-            if(ipt_FF.ge.2)then
-               b0 = beta0apf(Nf_FF)
-               do beta=0,gbound
-                  do alpha=beta,nin(igrid)-1
-                     do inf=4,6
-                        do jxi=ixi(inf),ixi(inf)+1
-                           if(ixi(inf).eq.0) cycle
+         if(ipt_FF.ge.2)then
+            b0 = beta0apf(Nf_FF)
+            do beta=0,gbound
+               do alpha=beta,nin(igrid)-1
+                  do inf=4,6
+                     do jxi=ixi(inf),ixi(inf)+1
+                        if(ixi(inf).eq.0) cycle
 *
 *     Precompute needed convolutions
 *
-                           do k=1,2
-                              C12P0(k) = 0d0
-                              C1LP0(k) = 0d0
-                           enddo
+                        do k=1,2
+                           C12P0(k) = 0d0
+                           C1LP0(k) = 0d0
+                        enddo
 *
 *     External grid
 *
-                           if(IsExt(igrid))then
-                              do gamma=beta,alpha
+                        if(IsExt(igrid))then
+                           do gamma=beta,alpha
 *     Gluon
-                                 C12P0(1) = C12P0(1)
+                              C12P0(1) = C12P0(1)
      4                         + SC2mNC(igrid,jxi,mapC(2),1,beta,gamma)
      5                         * SP(igrid,Nf_FF,mapP(2,2),0,gamma,alpha)
-                                 C1LP0(1) = C1LP0(1)
+                              C1LP0(1) = C1LP0(1)
      4                         + SCLmNC(igrid,jxi,mapC(2),1,beta,gamma)
      5                         * SP(igrid,Nf_FF,mapP(2,2),0,gamma,alpha)
 *     Pure-singlet
-                                 C12P0(2) = C12P0(2)
+                              C12P0(2) = C12P0(2)
      1                         + SC2mNC(igrid,jxi,mapC(2),1,beta,gamma)
      2                         * SP(igrid,Nf_FF,mapP(2,1),0,gamma,alpha)
-                                 C1LP0(2) = C1LP0(2)
+                              C1LP0(2) = C1LP0(2)
      1                         + SCLmNC(igrid,jxi,mapC(2),1,beta,gamma)
      2                         * SP(igrid,Nf_FF,mapP(2,1),0,gamma,alpha)
-                              enddo
+                           enddo
 *
 *     Internal grid
 *
-                           else
-                              do gamma=beta,alpha
+                        else
+                           do gamma=beta,alpha
 *     Gluon
-                                 C12P0(1) = C12P0(1)
+                              C12P0(1) = C12P0(1)
      4                       + SC2mNC(igrid,jxi,mapC(2),1,0,gamma-beta)
      5                       * SP(igrid,Nf_FF,mapP(2,2),0,0,alpha-gamma)
-                                 C1LP0(1) = C1LP0(1)
+                              C1LP0(1) = C1LP0(1)
      4                       + SCLmNC(igrid,jxi,mapC(2),1,0,gamma-beta)
      5                       * SP(igrid,Nf_FF,mapP(2,2),0,0,alpha-gamma)
 *     Pure-singlet
-                                 C12P0(2) = C12P0(2)
+                              C12P0(2) = C12P0(2)
      1                       + SC2mNC(igrid,jxi,mapC(2),1,0,gamma-beta)
      2                       * SP(igrid,Nf_FF,mapP(2,1),0,0,alpha-gamma)
-                                 C1LP0(2) = C1LP0(2)
+                              C1LP0(2) = C1LP0(2)
      1                       + SCLmNC(igrid,jxi,mapC(2),1,0,gamma-beta)
      2                       * SP(igrid,Nf_FF,mapP(2,1),0,0,alpha-gamma)
-                              enddo
-                           endif
-*
-                           do k=1,2
-                              SC2mNC(igrid,jxi,k,2,beta,alpha) = 
-     1                             SC2mNC(igrid,jxi,k,2,beta,alpha)
-     2                             + tR * b0
-     3                             * SC2mNC(igrid,jxi,k,1,beta,alpha)
-     4                             - tF * C12P0(k)
-                              SCLmNC(igrid,jxi,k,2,beta,alpha) = 
-     1                             SCLmNC(igrid,jxi,k,2,beta,alpha)
-     2                             + tR * b0
-     3                             * SCLmNC(igrid,jxi,k,1,beta,alpha)
-     4                             - tF * C1LP0(k)
                            enddo
-                        enddo
-                     enddo
-                  enddo
-               enddo
-            endif
+                        endif
 *
-*     Charged Current
-*     (Correct only NLO terms)
-*
-            do beta=0,gbound
-               do alpha=beta,nin(igrid)-1
-                  do inf=4,6
-                     do jxi=ixi(inf),ixi(inf)+1
-                        if(ixi(inf).eq.0) cycle
-                        omlam = 1d0 / ( 1d0 + xigrid(jxi*xistep) )
-*     Gluon
-                        SC2mCC(igrid,jxi,1,1,beta,alpha) = 
-     1                       SC2mCC(igrid,jxi,1,1,beta,alpha) - tF
-     2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
-     3                       / Nf_FF / 2d0
-                        SCLmCC(igrid,jxi,1,1,beta,alpha) = 
-     1                       SCLmCC(igrid,jxi,1,1,beta,alpha) - tF
-     2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
-     3                       / Nf_FF  / 2d0 * omlam
-                        SC3mCC(igrid,jxi,1,1,beta,alpha) = 
-     1                       SC3mCC(igrid,jxi,1,1,beta,alpha) - tF
-     2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
-     3                       / Nf_FF / 2d0
-*     Plus
-                        SC2mCC(igrid,jxi,3,1,beta,alpha) = 
-     1                       SC2mCC(igrid,jxi,3,1,beta,alpha) - tF
-     2                       * SP(igrid,Nf_FF,1,0,beta,alpha)
-                        SCLmCC(igrid,jxi,3,1,beta,alpha) = 
-     1                       SCLmCC(igrid,jxi,3,1,beta,alpha) - tF
-     2                       * SP(igrid,Nf_FF,1,0,beta,alpha) * omlam
-                        SC3mCC(igrid,Nf_FF,3,1,beta,alpha) = 
-     1                       SC3mCC(igrid,jxi,3,1,beta,alpha) - tF
-     2                       * SP(igrid,Nf_FF,1,0,beta,alpha)
-                     enddo
-                  enddo
-               enddo
-            enddo
-         endif
-*
-*     FFN0
-*
-         if(MassScheme(1:4).eq."FFN0".or.
-     1      MassScheme(1:5).eq."FONLL")then
-*
-*     Neutral Current
-*
-            if(ipt_FF.ge.2)then
-               b0 = beta0apf(Nf_FF)
-               do beta=0,gbound
-                  do alpha=beta,nin(igrid)-1
-                     do inf=4,6
-                        do jxi=ixi(inf),ixi(inf)+1
-                           if(ixi(inf).eq.0) cycle
-*
-*     Precompute needed convolutions
-*
-                           do k=1,2
-                              C12P0(k) = 0d0
-                              C1LP0(k) = 0d0
-                           enddo
-*
-*     External grid
-*
-                           if(IsExt(igrid))then
-                              do gamma=beta,alpha
-*     Gluon
-                                 C12P0(1) = C12P0(1)
-     1                         + SC2m0NC(igrid,jxi,mapC(2),1,beta,gamma)
-     2                         * SP(igrid,Nf_FF,mapP(2,2),0,gamma,alpha)
-                                 C1LP0(1) = C1LP0(1)
-     1                         + SCLm0NC(igrid,jxi,mapC(2),1,beta,gamma)
-     2                         * SP(igrid,Nf_FF,mapP(2,2),0,gamma,alpha)
-*     Pure-singlet
-                                 C12P0(2) = C12P0(2)
-     1                         + SC2m0NC(igrid,jxi,mapC(2),1,beta,gamma)
-     2                         * SP(igrid,Nf_FF,mapP(2,1),0,gamma,alpha)
-                                 C1LP0(2) = C1LP0(2)
-     1                         + SCLm0NC(igrid,jxi,mapC(2),1,beta,gamma)
-     2                         * SP(igrid,Nf_FF,mapP(2,1),0,gamma,alpha)
-                              enddo
-*
-*     Internal grid
-*
-                           else
-                              do gamma=beta,alpha
-*     Gluon
-                                 C12P0(1) = C12P0(1)
-     1                       + SC2m0NC(igrid,jxi,mapC(2),1,0,gamma-beta)
-     2                       * SP(igrid,Nf_FF,mapP(2,2),0,0,alpha-gamma)
-                                 C1LP0(1) = C1LP0(1)
-     1                       + SCLm0NC(igrid,jxi,mapC(2),1,0,gamma-beta)
-     2                       * SP(igrid,Nf_FF,mapP(2,2),0,0,alpha-gamma)
-*     Pure-singlet
-                                 C12P0(2) = C12P0(2)
-     1                       + SC2m0NC(igrid,jxi,mapC(2),1,0,gamma-beta)
-     2                       * SP(igrid,Nf_FF,mapP(2,1),0,0,alpha-gamma)
-                                 C1LP0(2) = C1LP0(2)
-     1                       + SCLm0NC(igrid,jxi,mapC(2),1,0,gamma-beta)
-     2                       * SP(igrid,Nf_FF,mapP(2,1),0,0,alpha-gamma)
-                              enddo
-                           endif
-*
-                           do k=1,2
-                              SC2m0NC(igrid,jxi,k,2,beta,alpha) = 
-     1                             SC2m0NC(igrid,jxi,k,2,beta,alpha)
-     2                             + tR * b0
-     3                             * SC2m0NC(igrid,jxi,k,1,beta,alpha)
-     4                             - tF * C12P0(k)
-                              SCLm0NC(igrid,jxi,k,2,beta,alpha) = 
-     1                             SCLm0NC(igrid,jxi,k,2,beta,alpha)
-     2                             + tR * b0
-     3                             * SCLm0NC(igrid,jxi,k,1,beta,alpha)
-     4                             - tF * C1LP0(k)
-                           enddo
-                        enddo
-                     enddo
-                  enddo
-               enddo
-            endif
-*
-*     Charged Current
-*     (Correct only NLO terms)
-*
-            do beta=0,gbound
-               do alpha=beta,nin(igrid)-1
-                  do inf=4,6
-                     do jxi=ixi(inf),ixi(inf)+1
-                        if(ixi(inf).eq.0) cycle
-*     Gluon
-                        SC2m0CC(igrid,jxi,1,1,beta,alpha) = 
-     1                       SC2m0CC(igrid,jxi,1,1,beta,alpha) - tF
-     2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
-     3                       / Nf_FF / 2d0
-                        SC3m0CC(igrid,jxi,1,1,beta,alpha) = 
-     1                       SC3m0CC(igrid,jxi,1,1,beta,alpha) - tF
-     2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
-     3                       / Nf_FF / 2d0
-*     Plus
-                        SC2m0CC(igrid,jxi,3,1,beta,alpha) = 
-     1                       SC2m0CC(igrid,jxi,3,1,beta,alpha) - tF
-     2                       * SP(igrid,Nf_FF,1,0,beta,alpha)
-                        SC3m0CC(igrid,Nf_FF,3,1,beta,alpha) = 
-     1                       SC3m0CC(igrid,jxi,3,1,beta,alpha) - tF
-     2                       * SP(igrid,Nf_FF,1,0,beta,alpha)
-                     enddo
-                  enddo
-               enddo
-            enddo
-         endif
-      else
-*
-*     FFNS
-*
-         if(MassScheme(1:4).eq."FFNS".or.
-     1      MassScheme(1:5).eq."FONLL")then
-            if(ipt_FF.ge.2)then
-               b0 = beta0apf(Nf_FF)
-               do beta=0,gbound
-                  do alpha=beta,nin(igrid)-1
-                     do jxi=1,nxir
                         do k=1,2
                            SC2mNC(igrid,jxi,k,2,beta,alpha) = 
      1                          SC2mNC(igrid,jxi,k,2,beta,alpha)
-     2                          + ( tR - tF ) * b0
+     2                          + tR * b0
      3                          * SC2mNC(igrid,jxi,k,1,beta,alpha)
+     4                          - tF * C12P0(k)
                            SCLmNC(igrid,jxi,k,2,beta,alpha) = 
      1                          SCLmNC(igrid,jxi,k,2,beta,alpha)
-     2                          + ( tR - tF ) * b0
+     2                          + tR * b0
      3                          * SCLmNC(igrid,jxi,k,1,beta,alpha)
+     4                          - tF * C1LP0(k)
                         enddo
                      enddo
                   enddo
                enddo
-            endif
+            enddo
          endif
+*
+*     Charged Current
+*     (Correct only NLO terms)
+*
+         do beta=0,gbound
+            do alpha=beta,nin(igrid)-1
+               do inf=4,6
+                  do jxi=ixi(inf),ixi(inf)+1
+                     if(ixi(inf).eq.0) cycle
+                     omlam = 1d0 / ( 1d0 + xigrid(jxi*xistep) )
+*     Gluon
+                     SC2mCC(igrid,jxi,1,1,beta,alpha) = 
+     1                    SC2mCC(igrid,jxi,1,1,beta,alpha)
+     2                    - tF * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
+     3                    / Nf_FF / 2d0
+                     SCLmCC(igrid,jxi,1,1,beta,alpha) = 
+     1                    SCLmCC(igrid,jxi,1,1,beta,alpha)
+     2                    - tF * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
+     3                    / Nf_FF  / 2d0 * omlam
+                     SC3mCC(igrid,jxi,1,1,beta,alpha) = 
+     1                    SC3mCC(igrid,jxi,1,1,beta,alpha)
+     2                    - tF * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
+     3                    / Nf_FF / 2d0
+*     Plus
+                     SC2mCC(igrid,jxi,3,1,beta,alpha) = 
+     1                    SC2mCC(igrid,jxi,3,1,beta,alpha)
+     2                    - tF * SP(igrid,Nf_FF,1,0,beta,alpha)
+                     SCLmCC(igrid,jxi,3,1,beta,alpha) = 
+     1                    SCLmCC(igrid,jxi,3,1,beta,alpha)
+     2                    - tF * SP(igrid,Nf_FF,1,0,beta,alpha) * omlam
+                     SC3mCC(igrid,Nf_FF,3,1,beta,alpha) = 
+     1                    SC3mCC(igrid,jxi,3,1,beta,alpha)
+     2                    - tF * SP(igrid,Nf_FF,1,0,beta,alpha)
+                  enddo
+               enddo
+            enddo
+         enddo
+      endif
 *
 *     FFN0
 *
-         if(MassScheme(1:4).eq."FFN0".or.
-     1      MassScheme(1:5).eq."FONLL")then
-            if(ipt_FF.ge.2)then
-               b0 = beta0apf(Nf_FF)
-               do beta=0,gbound
-                  do alpha=beta,nin(igrid)-1
-                     do jxi=1,nxir
+      if(MassScheme(1:4).eq."FFN0".or.
+     1   MassScheme(1:5).eq."FONLL")then
+*
+*     Neutral Current
+*
+         if(ipt_FF.ge.2)then
+            b0 = beta0apf(Nf_FF)
+            do beta=0,gbound
+               do alpha=beta,nin(igrid)-1
+                  do inf=4,6
+                     do jxi=ixi(inf),ixi(inf)+1
+                        if(ixi(inf).eq.0) cycle
+*
+*     Precompute needed convolutions
+*
+                        do k=1,2
+                           C12P0(k) = 0d0
+                           C1LP0(k) = 0d0
+                        enddo
+*
+*     External grid
+*
+                        if(IsExt(igrid))then
+                           do gamma=beta,alpha
+*     Gluon
+                              C12P0(1) = C12P0(1)
+     1                         + SC2m0NC(igrid,jxi,mapC(2),1,beta,gamma)
+     2                         * SP(igrid,Nf_FF,mapP(2,2),0,gamma,alpha)
+                              C1LP0(1) = C1LP0(1)
+     1                         + SCLm0NC(igrid,jxi,mapC(2),1,beta,gamma)
+     2                         * SP(igrid,Nf_FF,mapP(2,2),0,gamma,alpha)
+*     Pure-singlet
+                              C12P0(2) = C12P0(2)
+     1                         + SC2m0NC(igrid,jxi,mapC(2),1,beta,gamma)
+     2                         * SP(igrid,Nf_FF,mapP(2,1),0,gamma,alpha)
+                              C1LP0(2) = C1LP0(2)
+     1                         + SCLm0NC(igrid,jxi,mapC(2),1,beta,gamma)
+     2                         * SP(igrid,Nf_FF,mapP(2,1),0,gamma,alpha)
+                           enddo
+*
+*     Internal grid
+*
+                        else
+                           do gamma=beta,alpha
+*     Gluon
+                              C12P0(1) = C12P0(1)
+     1                       + SC2m0NC(igrid,jxi,mapC(2),1,0,gamma-beta)
+     2                       * SP(igrid,Nf_FF,mapP(2,2),0,0,alpha-gamma)
+                              C1LP0(1) = C1LP0(1)
+     1                       + SCLm0NC(igrid,jxi,mapC(2),1,0,gamma-beta)
+     2                       * SP(igrid,Nf_FF,mapP(2,2),0,0,alpha-gamma)
+*     Pure-singlet
+                              C12P0(2) = C12P0(2)
+     1                       + SC2m0NC(igrid,jxi,mapC(2),1,0,gamma-beta)
+     2                       * SP(igrid,Nf_FF,mapP(2,1),0,0,alpha-gamma)
+                              C1LP0(2) = C1LP0(2)
+     1                       + SCLm0NC(igrid,jxi,mapC(2),1,0,gamma-beta)
+     2                       * SP(igrid,Nf_FF,mapP(2,1),0,0,alpha-gamma)
+                           enddo
+                        endif
+*
                         do k=1,2
                            SC2m0NC(igrid,jxi,k,2,beta,alpha) = 
      1                          SC2m0NC(igrid,jxi,k,2,beta,alpha)
-     2                          + ( tR - tF ) * b0
+     2                          + tR * b0
      3                          * SC2m0NC(igrid,jxi,k,1,beta,alpha)
+     4                          - tF * C12P0(k)
                            SCLm0NC(igrid,jxi,k,2,beta,alpha) = 
      1                          SCLm0NC(igrid,jxi,k,2,beta,alpha)
-     2                          + ( tR - tF ) * b0
+     2                          + tR * b0
      3                          * SCLm0NC(igrid,jxi,k,1,beta,alpha)
+     4                          - tF * C1LP0(k)
                         enddo
                      enddo
                   enddo
                enddo
-            endif
+            enddo
          endif
+*
+*     Charged Current
+*     (Correct only NLO terms)
+*
+         do beta=0,gbound
+            do alpha=beta,nin(igrid)-1
+               do inf=4,6
+                  do jxi=ixi(inf),ixi(inf)+1
+                     if(ixi(inf).eq.0) cycle
+*     Gluon
+                     SC2m0CC(igrid,jxi,1,1,beta,alpha) = 
+     1                    SC2m0CC(igrid,jxi,1,1,beta,alpha)
+     2                    - tF * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
+     3                    / Nf_FF / 2d0
+                     SC3m0CC(igrid,jxi,1,1,beta,alpha) = 
+     1                    SC3m0CC(igrid,jxi,1,1,beta,alpha)
+     2                    - tF * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
+     3                    / Nf_FF / 2d0
+*     Plus
+                     SC2m0CC(igrid,jxi,3,1,beta,alpha) = 
+     1                    SC2m0CC(igrid,jxi,3,1,beta,alpha)
+     2                    - tF * SP(igrid,Nf_FF,1,0,beta,alpha)
+                     SC3m0CC(igrid,Nf_FF,3,1,beta,alpha) = 
+     1                    SC3m0CC(igrid,jxi,3,1,beta,alpha)
+     2                    - tF * SP(igrid,Nf_FF,1,0,beta,alpha)
+                  enddo
+               enddo
+            enddo
+         enddo
       endif
 *
       return

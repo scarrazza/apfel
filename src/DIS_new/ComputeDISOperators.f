@@ -3468,6 +3468,16 @@ c$$$                     enddo
          call ConvoluteEvolutionWithDISOperators
       endif
 *
+*     Once the computation is complete and if the dynamical evaluation
+*     has been enabled, exlude the scale variations ins such a way that
+*     the next computation wil start from clean coefficient functions.
+*
+      if(DynScVar)then
+         do igrid=1,ngrid
+            call ExcludeScaleVariation
+         enddo
+      endif
+*
       call cpu_time(t2)
 *
 c      write(6,"(a,a,f9.5,a)") " Computation of the DIS operators",
