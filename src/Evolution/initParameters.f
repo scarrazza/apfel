@@ -353,7 +353,7 @@
 *
       if(ThereAreExtGrids.and.lock)then
          write(6,*) achar(27)//"[33m"//
-     1              "WARNING: if there are external grids they cannot",
+     1              "WARNING: if there are external grids they cannot ",
      2              "be locked"
          write(6,*) "         ... unlocking subgrids"
      1              //achar(27)//"[0m"
