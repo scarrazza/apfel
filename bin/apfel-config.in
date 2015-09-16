@@ -16,6 +16,7 @@ if [[ $# -eq 0 || -n $( echo $* | egrep -- "--help|-h" ) ]]; then
     echo "  --incdir       : show the path to the APFEL header directory (for C++ interface)"
     echo "  --libdir       : show the path to the APFEL library directory"
     echo "  --cppflags     : get compiler flags for use with the C preprocessor stage of C++ compilation"
+    echo "  --cxxflags     : get compiler flags for use with the C preprocessor stage of C++ compilation"
     echo "  --ldflags      : get compiler flags for use with the linker stage of any compilation"
     echo "  --ldflagsevol  : get compiler flags for use with the linker stage only evolution"
     echo "  --list-funcs   : list functions available in the current version of APFEL with a short description"
@@ -33,6 +34,9 @@ tmp=$( echo "$*" | egrep -- '--\<incdir\>')
 test -n "$tmp" && OUT="$OUT @includedir@"
 
 tmp=$( echo "$*" | egrep -- '--\<cppflags\>')
+test -n "$tmp" && OUT="$OUT -I@includedir@"
+
+tmp=$( echo "$*" | egrep -- '--\<cxxflags\>')
 test -n "$tmp" && OUT="$OUT -I@includedir@"
 
 tmp=$( echo "$*" | egrep -- '--\<libdir\>')
