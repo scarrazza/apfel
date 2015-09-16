@@ -136,7 +136,7 @@ am__objects_1 = Evolution/apfelversion.lo Evolution/lhapdfwrapper.lo \
 	Evolution/DeriveAPFEL.lo Evolution/initHELL.lo \
 	Evolution/TruncatedEvolveAPFEL.lo \
 	Evolution/ExponentiatedEvolveAPFEL.lo \
-	Evolution/ReportParameters.lo
+	Evolution/ReportParameters.lo Evolution/CheckAPFEL.lo
 am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetAlphaQEDRef.lo Evolution/SetQLimits.lo \
 	Evolution/SetPerturbativeOrder.lo Evolution/SetFFNS.lo \
@@ -498,7 +498,7 @@ INIT = Evolution/apfelversion.cc Evolution/lhapdfwrapper.cc Evolution/WelcomeMes
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
 	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
 	Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f Evolution/ExponentiatedEvolveAPFEL.f \
-	Evolution/ReportParameters.f
+	Evolution/ReportParameters.f Evolution/CheckAPFEL.f
 
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
 	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f Evolution/SetExternalGrid.f \
@@ -682,6 +682,8 @@ Evolution/TruncatedEvolveAPFEL.lo: Evolution/$(am__dirstamp) \
 Evolution/ExponentiatedEvolveAPFEL.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/ReportParameters.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/CheckAPFEL.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetAlphaQCDRef.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)

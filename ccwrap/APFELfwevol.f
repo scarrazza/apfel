@@ -370,3 +370,10 @@ ccccccccccccc
       subroutine flistfunctions
       call ListFunctions
       end subroutine flistfunctions
+
+ccccccccccccc
+      function fcheckapfel()
+      logical fcheckapfel, CheckAPFEL
+      fcheckapfel = CheckAPFEL()
+      return
+      end

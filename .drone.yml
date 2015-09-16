@@ -6,6 +6,7 @@ script:
    - ./examples/Tabulation < examples/input.txt
    - ./examples/SumRules < examples/input.txt
    - ./examples/DISObservables < examples/input.txt
+   - ./examples/CheckAPFEL
 notify:
   email:
     recipients:

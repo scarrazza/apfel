@@ -322,4 +322,9 @@ namespace APFEL {
   {
     flistfunctions();
   }
+
+  bool CheckAPFEL(void)
+  {
+    return fcheckapfel();
+  }
 }

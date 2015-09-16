@@ -83,12 +83,12 @@ noinst_PROGRAMS = Tabulation$(EXEEXT) SumRules$(EXEEXT) \
 	Luminosity$(EXEEXT) DISObservables$(EXEEXT) \
 	TabulationStep$(EXEEXT) TabulationFrag$(EXEEXT) \
 	TabulationExternal$(EXEEXT) ListFunctions$(EXEEXT) \
-	TabulationCxx$(EXEEXT) SumRulesCxx$(EXEEXT) \
-	LHgridProductionCxx$(EXEEXT) \
+	CheckAPFEL$(EXEEXT) TabulationCxx$(EXEEXT) \
+	SumRulesCxx$(EXEEXT) LHgridProductionCxx$(EXEEXT) \
 	LHgridDerivativeProductionCxx$(EXEEXT) LuminosityCxx$(EXEEXT) \
 	Timing$(EXEEXT) DISObservablesCxx$(EXEEXT) \
 	TabulationStepCxx$(EXEEXT) TabulationFragCxx$(EXEEXT) \
-	ListFunctionsCxx$(EXEEXT)
+	ListFunctionsCxx$(EXEEXT) CheckAPFELCxx$(EXEEXT)
 subdir = examples
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/config/depcomp
@@ -107,13 +107,19 @@ CONFIG_HEADER = $(top_builddir)/config/config.h \
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 PROGRAMS = $(noinst_PROGRAMS)
-am_DISObservables_OBJECTS = DISObservables.$(OBJEXT)
-DISObservables_OBJECTS = $(am_DISObservables_OBJECTS)
-DISObservables_LDADD = $(LDADD)
+am_CheckAPFEL_OBJECTS = CheckAPFEL.$(OBJEXT)
+CheckAPFEL_OBJECTS = $(am_CheckAPFEL_OBJECTS)
+CheckAPFEL_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+am_CheckAPFELCxx_OBJECTS = CheckAPFELCxx.$(OBJEXT)
+CheckAPFELCxx_OBJECTS = $(am_CheckAPFELCxx_OBJECTS)
+CheckAPFELCxx_LDADD = $(LDADD)
+am_DISObservables_OBJECTS = DISObservables.$(OBJEXT)
+DISObservables_OBJECTS = $(am_DISObservables_OBJECTS)
+DISObservables_LDADD = $(LDADD)
 am_DISObservablesCxx_OBJECTS = DISObservablesCxx.$(OBJEXT)
 DISObservablesCxx_OBJECTS = $(am_DISObservablesCxx_OBJECTS)
 DISObservablesCxx_LDADD = $(LDADD)
@@ -242,7 +248,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
+SOURCES = $(CheckAPFEL_SOURCES) $(CheckAPFELCxx_SOURCES) \
+	$(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(LHgridDerivativeProduction_SOURCES) \
 	$(LHgridDerivativeProductionCxx_SOURCES) \
 	$(LHgridProduction_SOURCES) $(LHgridProductionCxx_SOURCES) \
@@ -253,7 +260,8 @@ SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(TabulationExternal_SOURCES) $(TabulationFrag_SOURCES) \
 	$(TabulationFragCxx_SOURCES) $(TabulationStep_SOURCES) \
 	$(TabulationStepCxx_SOURCES) $(Timing_SOURCES)
-DIST_SOURCES = $(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
+DIST_SOURCES = $(CheckAPFEL_SOURCES) $(CheckAPFELCxx_SOURCES) \
+	$(DISObservables_SOURCES) $(DISObservablesCxx_SOURCES) \
 	$(LHgridDerivativeProduction_SOURCES) \
 	$(LHgridDerivativeProductionCxx_SOURCES) \
 	$(LHgridProduction_SOURCES) $(LHgridProductionCxx_SOURCES) \
@@ -438,6 +446,7 @@ TabulationStep_SOURCES = TabulationStep.f
 TabulationFrag_SOURCES = TabulationFrag.f
 TabulationExternal_SOURCES = TabulationExternal.f
 ListFunctions_SOURCES = ListFunctions.f
+CheckAPFEL_SOURCES = CheckAPFEL.f
 TabulationCxx_SOURCES = TabulationCxx.cc
 SumRulesCxx_SOURCES = SumRulesCxx.cc
 LHgridProductionCxx_SOURCES = LHgridProductionCxx.cc
@@ -448,6 +457,7 @@ DISObservablesCxx_SOURCES = DISObservablesCxx.cc
 TabulationStepCxx_SOURCES = TabulationStepCxx.cc
 TabulationFragCxx_SOURCES = TabulationFragCxx.cc
 ListFunctionsCxx_SOURCES = ListFunctionsCxx.cc
+CheckAPFELCxx_SOURCES = CheckAPFELCxx.cc
 EXTRA_DIST = TabulationPython SumRulesPython LHgridProductionPython LuminosityPython
 all: all-am
 
@@ -492,6 +502,14 @@ clean-noinstPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+
+CheckAPFEL$(EXEEXT): $(CheckAPFEL_OBJECTS) $(CheckAPFEL_DEPENDENCIES) $(EXTRA_CheckAPFEL_DEPENDENCIES) 
+	@rm -f CheckAPFEL$(EXEEXT)
+	$(AM_V_F77LD)$(F77LINK) $(CheckAPFEL_OBJECTS) $(CheckAPFEL_LDADD) $(LIBS)
+
+CheckAPFELCxx$(EXEEXT): $(CheckAPFELCxx_OBJECTS) $(CheckAPFELCxx_DEPENDENCIES) $(EXTRA_CheckAPFELCxx_DEPENDENCIES) 
+	@rm -f CheckAPFELCxx$(EXEEXT)
+	$(AM_V_CXXLD)$(CXXLINK) $(CheckAPFELCxx_OBJECTS) $(CheckAPFELCxx_LDADD) $(LIBS)
 
 DISObservables$(EXEEXT): $(DISObservables_OBJECTS) $(DISObservables_DEPENDENCIES) $(EXTRA_DISObservables_DEPENDENCIES) 
 	@rm -f DISObservables$(EXEEXT)
@@ -579,6 +597,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CheckAPFELCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DISObservablesCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LHgridDerivativeProductionCxx.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LHgridProductionCxx.Po@am__quote@

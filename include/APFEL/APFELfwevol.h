@@ -182,7 +182,8 @@ extern "C" {
 #define fgetapfelversion FC_FUNC(getapfelversion,GETAPFELVERSION)
   void fgetapfelversion(char*,int len);
 
-
+#define fcheckapfel FC_FUNC(checkapfel,CHECKAPFEL)
+  bool fcheckapfel(void);
 }
 
 #endif

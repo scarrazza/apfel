@@ -203,6 +203,9 @@ namespace APFEL {
 
   /// List the functions of APFEL
   void ListFunctions(void);
+
+  /// Check APFEL
+  bool CheckAPFEL(void);
 }
 
 #endif
