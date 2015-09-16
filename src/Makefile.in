@@ -126,10 +126,11 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
 libAPFELCore_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am__objects_1 = Evolution/apfelversion.lo Evolution/WelcomeMessage.lo \
-	Evolution/initParameters.lo Evolution/initGrid.lo \
-	Evolution/initGridAlpha.lo Evolution/initIntegralsQCD.lo \
-	Evolution/initIntegralsQCDRes.lo Evolution/initIntegralsQED.lo \
+am__objects_1 = Evolution/apfelversion.lo Evolution/lhapdfwrapper.lo \
+	Evolution/WelcomeMessage.lo Evolution/initParameters.lo \
+	Evolution/initGrid.lo Evolution/initGridAlpha.lo \
+	Evolution/initIntegralsQCD.lo Evolution/initIntegralsQCDRes.lo \
+	Evolution/initIntegralsQED.lo \
 	Evolution/initIntegralsMatching.lo Evolution/initPDFs.lo \
 	Evolution/InitializeAPFEL.lo Evolution/EvolveAPFEL.lo \
 	Evolution/DeriveAPFEL.lo Evolution/initHELL.lo \
@@ -203,51 +204,37 @@ am__objects_8 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
 	Evolution/xLepton.lo
 am__objects_9 = core/dgauss.lo core/wgplg.lo core/ddilog.lo \
 	core/gamma.lo core/beta.lo core/hplog.lo
-am__objects_10 = HELL/src/hell.lo HELL/src/DGLAPevol.lo \
+am__objects_10 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
+	DIS/SetMassScheme.lo DIS/initIntegralsDIS.lo \
+	DIS/ZeroMassCoefficientFunctions.lo DIS/RSLintegralsDIS.lo \
+	DIS/ComputeStructureFunctionsAPFEL.lo DIS/F2total.lo \
+	DIS/F2light.lo DIS/F2charm.lo DIS/F2bottom.lo DIS/F2top.lo \
+	DIS/FLtotal.lo DIS/FLlight.lo DIS/FLcharm.lo DIS/FLbottom.lo \
+	DIS/FLtop.lo DIS/F3total.lo DIS/F3light.lo DIS/F3charm.lo \
+	DIS/F3bottom.lo DIS/F3top.lo DIS/integrandsDIS.lo \
+	DIS/SetProcessDIS.lo DIS/ComputeChargesDIS.lo \
+	DIS/SetPolarizationDIS.lo DIS/SetProjectileDIS.lo \
+	DIS/SetTargetDIS.lo DIS/MassiveCoefficientFunctions.lo \
+	DIS/MassiveZeroCoefficientFunctions.lo \
+	DIS/ComputeDISOperators.lo \
+	DIS/ConvolutePDFsWithDISOperators.lo DIS/JoinDISOperators.lo \
+	DIS/ConvoluteEvolutionWithDISOperators.lo \
+	DIS/ExternalDISOperator.lo DIS/SetCKM.lo DIS/SetGFermi.lo \
+	DIS/SetProtonMass.lo DIS/SetSinThetaW.lo DIS/SetWMass.lo \
+	DIS/SetZMass.lo DIS/FKSimulator.lo DIS/SetFKObservable.lo \
+	DIS/GetFKObservable.lo DIS/FKObservables.lo \
+	DIS/EnableTargetMassCorrections.lo DIS/GetCKM.lo \
+	DIS/GetGFermi.lo DIS/GetProtonMass.lo DIS/GetSinThetaW.lo \
+	DIS/GetWMass.lo DIS/GetZMass.lo DIS/RSLintegralsSIA.lo \
+	DIS/integrandsSIA.lo DIS/initIntegralsSIA.lo \
+	DIS/SelectCharge.lo DIS/SetRenQRatio.lo DIS/SetFacQRatio.lo \
+	DIS/GetSIATotalCrossSection.lo DIS/IncludeScaleVariation.lo \
+	DIS/ExcludeScaleVariation.lo DIS/ReportParametersDIS.lo \
+	DIS/EnableDampingFONLL.lo DIS/SetPropagatorCorrection.lo \
+	DIS/SetEWCouplings.lo DIS/EnableDynamicalScaleVariations.lo
+am__objects_11 = HELL/src/hell.lo HELL/src/DGLAPevol.lo \
 	HELL/src/hell_wrapper.lo
-am__objects_11 = DIS/cc_dis.lo DIS/FF0CoefficientFunctions.lo \
-	DIS/integrands_cc.lo DIS/nc_dis.lo DIS/xcoeffunc_cc.lo \
-	DIS/xpdfs.lo DIS/dis_xsec.lo DIS/FFCoefficientFunctions.lo \
-	DIS/integrands_nc.lo DIS/PDFparam.lo DIS/xcoeffunc_nc.lo \
-	DIS/ZMCoefficientFunctions.lo
-am__objects_12 = DIS_new/InitializeAPFEL_DIS.lo \
-	DIS_new/initParametersDIS.lo DIS_new/SetMassScheme.lo \
-	DIS_new/initIntegralsDIS.lo \
-	DIS_new/ZeroMassCoefficientFunctions.lo \
-	DIS_new/RSLintegralsDIS.lo \
-	DIS_new/ComputeStructureFunctionsAPFEL.lo DIS_new/F2total.lo \
-	DIS_new/F2light.lo DIS_new/F2charm.lo DIS_new/F2bottom.lo \
-	DIS_new/F2top.lo DIS_new/FLtotal.lo DIS_new/FLlight.lo \
-	DIS_new/FLcharm.lo DIS_new/FLbottom.lo DIS_new/FLtop.lo \
-	DIS_new/F3total.lo DIS_new/F3light.lo DIS_new/F3charm.lo \
-	DIS_new/F3bottom.lo DIS_new/F3top.lo DIS_new/integrandsDIS.lo \
-	DIS_new/SetProcessDIS.lo DIS_new/ComputeChargesDIS.lo \
-	DIS_new/SetPolarizationDIS.lo DIS_new/SetProjectileDIS.lo \
-	DIS_new/SetTargetDIS.lo DIS_new/MassiveCoefficientFunctions.lo \
-	DIS_new/MassiveZeroCoefficientFunctions.lo \
-	DIS_new/ComputeDISOperators.lo \
-	DIS_new/ConvolutePDFsWithDISOperators.lo \
-	DIS_new/JoinDISOperators.lo \
-	DIS_new/ConvoluteEvolutionWithDISOperators.lo \
-	DIS_new/ExternalDISOperator.lo DIS_new/SetCKM.lo \
-	DIS_new/SetGFermi.lo DIS_new/SetProtonMass.lo \
-	DIS_new/SetSinThetaW.lo DIS_new/SetWMass.lo \
-	DIS_new/SetZMass.lo DIS_new/FKSimulator.lo \
-	DIS_new/SetFKObservable.lo DIS_new/GetFKObservable.lo \
-	DIS_new/FKObservables.lo \
-	DIS_new/EnableTargetMassCorrections.lo DIS_new/GetCKM.lo \
-	DIS_new/GetGFermi.lo DIS_new/GetProtonMass.lo \
-	DIS_new/GetSinThetaW.lo DIS_new/GetWMass.lo \
-	DIS_new/GetZMass.lo DIS_new/RSLintegralsSIA.lo \
-	DIS_new/integrandsSIA.lo DIS_new/initIntegralsSIA.lo \
-	DIS_new/SelectCharge.lo DIS_new/SetRenQRatio.lo \
-	DIS_new/SetFacQRatio.lo DIS_new/GetSIATotalCrossSection.lo \
-	DIS_new/IncludeScaleVariation.lo \
-	DIS_new/ExcludeScaleVariation.lo \
-	DIS_new/ReportParametersDIS.lo DIS_new/EnableDampingFONLL.lo \
-	DIS_new/SetPropagatorCorrection.lo DIS_new/SetEWCouplings.lo \
-	DIS_new/EnableDynamicalScaleVariations.lo
-am__objects_13 = FTDY/src/ComputeFKTables.lo \
+am__objects_12 = FTDY/src/ComputeFKTables.lo \
 	FTDY/src/ComputeHardCrossSectionsDY.lo FTDY/src/gauleg.lo \
 	FTDY/src/initDYcouplings.lo FTDY/src/initxGridDY.lo \
 	FTDY/src/readcDY.lo FTDY/src/ReadDataFile.lo \
@@ -259,7 +246,7 @@ am_libAPFELCore_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
 	$(am__objects_6) $(am__objects_7) $(am__objects_8) \
 	$(am__objects_9) $(am__objects_10) $(am__objects_11) \
-	$(am__objects_12) $(am__objects_13)
+	$(am__objects_12)
 libAPFELCore_la_OBJECTS = $(am_libAPFELCore_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -271,7 +258,7 @@ libAPFELevol_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 am_libAPFELevol_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
 	$(am__objects_6) $(am__objects_7) $(am__objects_8) \
-	$(am__objects_9) $(am__objects_10)
+	$(am__objects_9) $(am__objects_11)
 libAPFELevol_la_OBJECTS = $(am_libAPFELevol_la_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -506,7 +493,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LTLIBRARIES = libAPFELevol.la
 noinst_LTLIBRARIES = libAPFELCore.la
-INIT = Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
+INIT = Evolution/apfelversion.cc Evolution/lhapdfwrapper.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
 	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
 	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
@@ -550,23 +537,20 @@ PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQE
 	Evolution/xGrid.f Evolution/nIntervals.f Evolution/xLepton.f
 
 UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f core/gamma.f core/beta.f core/hplog.f
-DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f \
-	DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
-
-DIS_NEW = DIS_new/InitializeAPFEL_DIS.f DIS_new/initParametersDIS.f DIS_new/SetMassScheme.f DIS_new/initIntegralsDIS.f \
-	DIS_new/ZeroMassCoefficientFunctions.f DIS_new/RSLintegralsDIS.f DIS_new/ComputeStructureFunctionsAPFEL.f DIS_new/F2total.f \
-	DIS_new/F2light.f DIS_new/F2charm.f DIS_new/F2bottom.f DIS_new/F2top.f DIS_new/FLtotal.f DIS_new/FLlight.f DIS_new/FLcharm.f \
-	DIS_new/FLbottom.f DIS_new/FLtop.f DIS_new/F3total.f DIS_new/F3light.f DIS_new/F3charm.f DIS_new/F3bottom.f DIS_new/F3top.f \
-	DIS_new/integrandsDIS.f DIS_new/SetProcessDIS.f DIS_new/ComputeChargesDIS.f DIS_new/SetPolarizationDIS.f DIS_new/SetProjectileDIS.f \
-	DIS_new/SetTargetDIS.f DIS_new/MassiveCoefficientFunctions.f DIS_new/MassiveZeroCoefficientFunctions.f DIS_new/ComputeDISOperators.f \
-	DIS_new/ConvolutePDFsWithDISOperators.f DIS_new/JoinDISOperators.f DIS_new/ConvoluteEvolutionWithDISOperators.f \
-	DIS_new/ExternalDISOperator.f DIS_new/SetCKM.f DIS_new/SetGFermi.f DIS_new/SetProtonMass.f DIS_new/SetSinThetaW.f \
-	DIS_new/SetWMass.f DIS_new/SetZMass.f DIS_new/FKSimulator.f DIS_new/SetFKObservable.f DIS_new/GetFKObservable.f DIS_new/FKObservables.f \
-	DIS_new/EnableTargetMassCorrections.f DIS_new/GetCKM.f DIS_new/GetGFermi.f DIS_new/GetProtonMass.f DIS_new/GetSinThetaW.f \
-	DIS_new/GetWMass.f DIS_new/GetZMass.f DIS_new/RSLintegralsSIA.f DIS_new/integrandsSIA.f DIS_new/initIntegralsSIA.f DIS_new/SelectCharge.f \
-	DIS_new/SetRenQRatio.f DIS_new/SetFacQRatio.f DIS_new/GetSIATotalCrossSection.f DIS_new/IncludeScaleVariation.f \
-	DIS_new/ExcludeScaleVariation.f DIS_new/ReportParametersDIS.f DIS_new/EnableDampingFONLL.f DIS_new/SetPropagatorCorrection.f \
-	DIS_new/SetEWCouplings.f DIS_new/EnableDynamicalScaleVariations.f
+DIS = DIS/InitializeAPFEL_DIS.f DIS/initParametersDIS.f DIS/SetMassScheme.f DIS/initIntegralsDIS.f \
+	DIS/ZeroMassCoefficientFunctions.f DIS/RSLintegralsDIS.f DIS/ComputeStructureFunctionsAPFEL.f DIS/F2total.f \
+	DIS/F2light.f DIS/F2charm.f DIS/F2bottom.f DIS/F2top.f DIS/FLtotal.f DIS/FLlight.f DIS/FLcharm.f \
+	DIS/FLbottom.f DIS/FLtop.f DIS/F3total.f DIS/F3light.f DIS/F3charm.f DIS/F3bottom.f DIS/F3top.f \
+	DIS/integrandsDIS.f DIS/SetProcessDIS.f DIS/ComputeChargesDIS.f DIS/SetPolarizationDIS.f DIS/SetProjectileDIS.f \
+	DIS/SetTargetDIS.f DIS/MassiveCoefficientFunctions.f DIS/MassiveZeroCoefficientFunctions.f DIS/ComputeDISOperators.f \
+	DIS/ConvolutePDFsWithDISOperators.f DIS/JoinDISOperators.f DIS/ConvoluteEvolutionWithDISOperators.f \
+	DIS/ExternalDISOperator.f DIS/SetCKM.f DIS/SetGFermi.f DIS/SetProtonMass.f DIS/SetSinThetaW.f \
+	DIS/SetWMass.f DIS/SetZMass.f DIS/FKSimulator.f DIS/SetFKObservable.f DIS/GetFKObservable.f DIS/FKObservables.f \
+	DIS/EnableTargetMassCorrections.f DIS/GetCKM.f DIS/GetGFermi.f DIS/GetProtonMass.f DIS/GetSinThetaW.f \
+	DIS/GetWMass.f DIS/GetZMass.f DIS/RSLintegralsSIA.f DIS/integrandsSIA.f DIS/initIntegralsSIA.f DIS/SelectCharge.f \
+	DIS/SetRenQRatio.f DIS/SetFacQRatio.f DIS/GetSIATotalCrossSection.f DIS/IncludeScaleVariation.f \
+	DIS/ExcludeScaleVariation.f DIS/ReportParametersDIS.f DIS/EnableDampingFONLL.f DIS/SetPropagatorCorrection.f \
+	DIS/SetEWCouplings.f DIS/EnableDynamicalScaleVariations.f
 
 FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src/gauleg.f FTDY/src/initDYcouplings.f FTDY/src/initxGridDY.f \
 	FTDY/src/readcDY.f FTDY/src/ReadDataFile.f FTDY/src/sigmafk_dy.f FTDY/src/wcDYlo.f FTDY/src/wcDYqg.f FTDY/src/wcDYqq.f FTDY/src/wcoeffDY.f \
@@ -574,7 +558,7 @@ FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src
 
 EXTRA_DIST = commons FTDY/commons
 HELL = HELL/src/hell.cc HELL/src/DGLAPevol.cc HELL/src/hell_wrapper.cc
-libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES)  $(HELL) $(DIS) $(DIS_NEW) $(FTDY)
+libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
 libAPFELevol_la_LIBADD = $(FCLIBS) $(top_builddir)/ccwrap/libAPFELCCWrapEvol.la
 libAPFELevol_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES)  $(HELL)
 all: all-am
@@ -664,6 +648,8 @@ Evolution/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) Evolution/$(DEPDIR)
 	@: > Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/apfelversion.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/lhapdfwrapper.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/WelcomeMessage.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -935,6 +921,114 @@ core/ddilog.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
 core/gamma.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
 core/beta.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
 core/hplog.lo: core/$(am__dirstamp) core/$(DEPDIR)/$(am__dirstamp)
+DIS/$(am__dirstamp):
+	@$(MKDIR_P) DIS
+	@: > DIS/$(am__dirstamp)
+DIS/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) DIS/$(DEPDIR)
+	@: > DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/InitializeAPFEL_DIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/initParametersDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetMassScheme.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/initIntegralsDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/ZeroMassCoefficientFunctions.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/RSLintegralsDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/ComputeStructureFunctionsAPFEL.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/F2total.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/F2light.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/F2charm.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/F2bottom.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/F2top.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/FLtotal.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/FLlight.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/FLcharm.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/FLbottom.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/FLtop.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/F3total.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/F3light.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/F3charm.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/F3bottom.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/F3top.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/integrandsDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetProcessDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/ComputeChargesDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetPolarizationDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetProjectileDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetTargetDIS.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/MassiveCoefficientFunctions.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/MassiveZeroCoefficientFunctions.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/ComputeDISOperators.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/ConvolutePDFsWithDISOperators.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/JoinDISOperators.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/ConvoluteEvolutionWithDISOperators.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/ExternalDISOperator.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetCKM.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetGFermi.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetProtonMass.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetSinThetaW.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetWMass.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetZMass.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/FKSimulator.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetFKObservable.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/GetFKObservable.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/FKObservables.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/EnableTargetMassCorrections.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/GetCKM.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/GetGFermi.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/GetProtonMass.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/GetSinThetaW.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/GetWMass.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/GetZMass.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/RSLintegralsSIA.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/integrandsSIA.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/initIntegralsSIA.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SelectCharge.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetRenQRatio.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetFacQRatio.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/GetSIATotalCrossSection.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/IncludeScaleVariation.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/ExcludeScaleVariation.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/ReportParametersDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/EnableDampingFONLL.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetPropagatorCorrection.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetEWCouplings.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/EnableDynamicalScaleVariations.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
 HELL/src/$(am__dirstamp):
 	@$(MKDIR_P) HELL/src
 	@: > HELL/src/$(am__dirstamp)
@@ -947,167 +1041,6 @@ HELL/src/DGLAPevol.lo: HELL/src/$(am__dirstamp) \
 	HELL/src/$(DEPDIR)/$(am__dirstamp)
 HELL/src/hell_wrapper.lo: HELL/src/$(am__dirstamp) \
 	HELL/src/$(DEPDIR)/$(am__dirstamp)
-DIS/$(am__dirstamp):
-	@$(MKDIR_P) DIS
-	@: > DIS/$(am__dirstamp)
-DIS/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) DIS/$(DEPDIR)
-	@: > DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/cc_dis.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/FF0CoefficientFunctions.lo: DIS/$(am__dirstamp) \
-	DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/integrands_cc.lo: DIS/$(am__dirstamp) \
-	DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/nc_dis.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/xcoeffunc_cc.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/xpdfs.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/dis_xsec.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/FFCoefficientFunctions.lo: DIS/$(am__dirstamp) \
-	DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/integrands_nc.lo: DIS/$(am__dirstamp) \
-	DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/PDFparam.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/xcoeffunc_nc.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/ZMCoefficientFunctions.lo: DIS/$(am__dirstamp) \
-	DIS/$(DEPDIR)/$(am__dirstamp)
-DIS_new/$(am__dirstamp):
-	@$(MKDIR_P) DIS_new
-	@: > DIS_new/$(am__dirstamp)
-DIS_new/$(DEPDIR)/$(am__dirstamp):
-	@$(MKDIR_P) DIS_new/$(DEPDIR)
-	@: > DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/InitializeAPFEL_DIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/initParametersDIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetMassScheme.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/initIntegralsDIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/ZeroMassCoefficientFunctions.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/RSLintegralsDIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/ComputeStructureFunctionsAPFEL.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/F2total.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/F2light.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/F2charm.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/F2bottom.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/F2top.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/FLtotal.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/FLlight.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/FLcharm.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/FLbottom.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/FLtop.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/F3total.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/F3light.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/F3charm.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/F3bottom.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/F3top.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/integrandsDIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetProcessDIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/ComputeChargesDIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetPolarizationDIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetProjectileDIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetTargetDIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/MassiveCoefficientFunctions.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/MassiveZeroCoefficientFunctions.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/ComputeDISOperators.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/ConvolutePDFsWithDISOperators.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/JoinDISOperators.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/ConvoluteEvolutionWithDISOperators.lo:  \
-	DIS_new/$(am__dirstamp) DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/ExternalDISOperator.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetCKM.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetGFermi.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetProtonMass.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetSinThetaW.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetWMass.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetZMass.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/FKSimulator.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetFKObservable.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/GetFKObservable.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/FKObservables.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/EnableTargetMassCorrections.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/GetCKM.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/GetGFermi.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/GetProtonMass.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/GetSinThetaW.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/GetWMass.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/GetZMass.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/RSLintegralsSIA.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/integrandsSIA.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/initIntegralsSIA.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SelectCharge.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetRenQRatio.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetFacQRatio.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/GetSIATotalCrossSection.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/IncludeScaleVariation.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/ExcludeScaleVariation.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/ReportParametersDIS.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/EnableDampingFONLL.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetPropagatorCorrection.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/SetEWCouplings.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
-DIS_new/EnableDynamicalScaleVariations.lo: DIS_new/$(am__dirstamp) \
-	DIS_new/$(DEPDIR)/$(am__dirstamp)
 FTDY/src/$(am__dirstamp):
 	@$(MKDIR_P) FTDY/src
 	@: > FTDY/src/$(am__dirstamp)
@@ -1157,8 +1090,6 @@ mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f DIS/*.$(OBJEXT)
 	-rm -f DIS/*.lo
-	-rm -f DIS_new/*.$(OBJEXT)
-	-rm -f DIS_new/*.lo
 	-rm -f Evolution/*.$(OBJEXT)
 	-rm -f Evolution/*.lo
 	-rm -f FTDY/src/*.$(OBJEXT)
@@ -1172,6 +1103,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@Evolution/$(DEPDIR)/apfelversion.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@Evolution/$(DEPDIR)/lhapdfwrapper.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/DGLAPevol.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell_wrapper.Plo@am__quote@
@@ -1215,7 +1147,6 @@ mostlyclean-libtool:
 clean-libtool:
 	-rm -rf .libs _libs
 	-rm -rf DIS/.libs DIS/_libs
-	-rm -rf DIS_new/.libs DIS_new/_libs
 	-rm -rf Evolution/.libs Evolution/_libs
 	-rm -rf FTDY/src/.libs FTDY/src/_libs
 	-rm -rf HELL/src/.libs HELL/src/_libs
@@ -1338,8 +1269,6 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f DIS/$(DEPDIR)/$(am__dirstamp)
 	-rm -f DIS/$(am__dirstamp)
-	-rm -f DIS_new/$(DEPDIR)/$(am__dirstamp)
-	-rm -f DIS_new/$(am__dirstamp)
 	-rm -f Evolution/$(DEPDIR)/$(am__dirstamp)
 	-rm -f Evolution/$(am__dirstamp)
 	-rm -f FTDY/src/$(DEPDIR)/$(am__dirstamp)

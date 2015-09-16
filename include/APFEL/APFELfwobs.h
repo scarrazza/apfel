@@ -7,11 +7,11 @@
 
 extern "C" {
   
-
+  /*
 #define fdisxsec FC_FUNC(fdisxsec,FDISXSEC)
   void fdisxsec(double*,double*,double*,double*,double*,char*,char*,int*,
                 char*,int*,char*,char*,double*,double*,double*,double*);
-
+  */
 #define finitializeapfel_dis FC_FUNC(initializeapfel_dis,INITIALIZEAPFEL_DIS)
   void finitializeapfel_dis(void);
 

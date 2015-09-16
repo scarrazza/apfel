@@ -1,7 +1,7 @@
 lib_LTLIBRARIES = libAPFELevol.la
 noinst_LTLIBRARIES = libAPFELCore.la
 
-INIT = 	Evolution/apfelversion.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
+INIT = 	Evolution/apfelversion.cc Evolution/lhapdfwrapper.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
 	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
 	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
@@ -49,23 +49,20 @@ PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQE
 
 UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f core/gamma.f core/beta.f core/hplog.f
 
-DIS = DIS/cc_dis.f DIS/FF0CoefficientFunctions.f DIS/integrands_cc.f DIS/nc_dis.f DIS/xcoeffunc_cc.f DIS/xpdfs.f \
-	DIS/dis_xsec.f DIS/FFCoefficientFunctions.f DIS/integrands_nc.f DIS/PDFparam.f DIS/xcoeffunc_nc.f DIS/ZMCoefficientFunctions.f
-
-DIS_NEW = DIS_new/InitializeAPFEL_DIS.f DIS_new/initParametersDIS.f DIS_new/SetMassScheme.f DIS_new/initIntegralsDIS.f \
-	DIS_new/ZeroMassCoefficientFunctions.f DIS_new/RSLintegralsDIS.f DIS_new/ComputeStructureFunctionsAPFEL.f DIS_new/F2total.f \
-	DIS_new/F2light.f DIS_new/F2charm.f DIS_new/F2bottom.f DIS_new/F2top.f DIS_new/FLtotal.f DIS_new/FLlight.f DIS_new/FLcharm.f \
-	DIS_new/FLbottom.f DIS_new/FLtop.f DIS_new/F3total.f DIS_new/F3light.f DIS_new/F3charm.f DIS_new/F3bottom.f DIS_new/F3top.f \
-	DIS_new/integrandsDIS.f DIS_new/SetProcessDIS.f DIS_new/ComputeChargesDIS.f DIS_new/SetPolarizationDIS.f DIS_new/SetProjectileDIS.f \
-	DIS_new/SetTargetDIS.f DIS_new/MassiveCoefficientFunctions.f DIS_new/MassiveZeroCoefficientFunctions.f DIS_new/ComputeDISOperators.f \
-	DIS_new/ConvolutePDFsWithDISOperators.f DIS_new/JoinDISOperators.f DIS_new/ConvoluteEvolutionWithDISOperators.f \
-	DIS_new/ExternalDISOperator.f DIS_new/SetCKM.f DIS_new/SetGFermi.f DIS_new/SetProtonMass.f DIS_new/SetSinThetaW.f \
-	DIS_new/SetWMass.f DIS_new/SetZMass.f DIS_new/FKSimulator.f DIS_new/SetFKObservable.f DIS_new/GetFKObservable.f DIS_new/FKObservables.f \
-	DIS_new/EnableTargetMassCorrections.f DIS_new/GetCKM.f DIS_new/GetGFermi.f DIS_new/GetProtonMass.f DIS_new/GetSinThetaW.f \
-	DIS_new/GetWMass.f DIS_new/GetZMass.f DIS_new/RSLintegralsSIA.f DIS_new/integrandsSIA.f DIS_new/initIntegralsSIA.f DIS_new/SelectCharge.f \
-	DIS_new/SetRenQRatio.f DIS_new/SetFacQRatio.f DIS_new/GetSIATotalCrossSection.f DIS_new/IncludeScaleVariation.f \
-	DIS_new/ExcludeScaleVariation.f DIS_new/ReportParametersDIS.f DIS_new/EnableDampingFONLL.f DIS_new/SetPropagatorCorrection.f \
-	DIS_new/SetEWCouplings.f DIS_new/EnableDynamicalScaleVariations.f
+DIS =   DIS/InitializeAPFEL_DIS.f DIS/initParametersDIS.f DIS/SetMassScheme.f DIS/initIntegralsDIS.f \
+	DIS/ZeroMassCoefficientFunctions.f DIS/RSLintegralsDIS.f DIS/ComputeStructureFunctionsAPFEL.f DIS/F2total.f \
+	DIS/F2light.f DIS/F2charm.f DIS/F2bottom.f DIS/F2top.f DIS/FLtotal.f DIS/FLlight.f DIS/FLcharm.f \
+	DIS/FLbottom.f DIS/FLtop.f DIS/F3total.f DIS/F3light.f DIS/F3charm.f DIS/F3bottom.f DIS/F3top.f \
+	DIS/integrandsDIS.f DIS/SetProcessDIS.f DIS/ComputeChargesDIS.f DIS/SetPolarizationDIS.f DIS/SetProjectileDIS.f \
+	DIS/SetTargetDIS.f DIS/MassiveCoefficientFunctions.f DIS/MassiveZeroCoefficientFunctions.f DIS/ComputeDISOperators.f \
+	DIS/ConvolutePDFsWithDISOperators.f DIS/JoinDISOperators.f DIS/ConvoluteEvolutionWithDISOperators.f \
+	DIS/ExternalDISOperator.f DIS/SetCKM.f DIS/SetGFermi.f DIS/SetProtonMass.f DIS/SetSinThetaW.f \
+	DIS/SetWMass.f DIS/SetZMass.f DIS/FKSimulator.f DIS/SetFKObservable.f DIS/GetFKObservable.f DIS/FKObservables.f \
+	DIS/EnableTargetMassCorrections.f DIS/GetCKM.f DIS/GetGFermi.f DIS/GetProtonMass.f DIS/GetSinThetaW.f \
+	DIS/GetWMass.f DIS/GetZMass.f DIS/RSLintegralsSIA.f DIS/integrandsSIA.f DIS/initIntegralsSIA.f DIS/SelectCharge.f \
+	DIS/SetRenQRatio.f DIS/SetFacQRatio.f DIS/GetSIATotalCrossSection.f DIS/IncludeScaleVariation.f \
+	DIS/ExcludeScaleVariation.f DIS/ReportParametersDIS.f DIS/EnableDampingFONLL.f DIS/SetPropagatorCorrection.f \
+	DIS/SetEWCouplings.f DIS/EnableDynamicalScaleVariations.f
 
 FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src/gauleg.f FTDY/src/initDYcouplings.f FTDY/src/initxGridDY.f \
 	FTDY/src/readcDY.f FTDY/src/ReadDataFile.f FTDY/src/sigmafk_dy.f FTDY/src/wcDYlo.f FTDY/src/wcDYqg.f FTDY/src/wcDYqq.f FTDY/src/wcoeffDY.f \
@@ -75,7 +72,7 @@ EXTRA_DIST = commons FTDY/commons
 
 HELL = HELL/src/hell.cc HELL/src/DGLAPevol.cc HELL/src/hell_wrapper.cc
 
-libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES)  $(HELL) $(DIS) $(DIS_NEW) $(FTDY)
+libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
 
 libAPFELevol_la_LIBADD = $(FCLIBS) $(top_builddir)/ccwrap/libAPFELCCWrapEvol.la
 libAPFELevol_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES)  $(HELL)

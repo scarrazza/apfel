@@ -2,7 +2,7 @@
 *
 *     LHAPDFgrid.f:
 *
-*     If LHAPDF5 is found, this subrotine produces the *.LHgrid file 
+*     If LHAPDF5 is found, this subrotine produces the *.LHgrid file
 *     that can be used with LHAPDF v5.9. If instead LHAPDF6 is found
 *     a folder contained the PDF set in a suitable format is produced.
 *     Note that if "Qin" < 0 then the internal evolution of the input
@@ -105,8 +105,8 @@
             xbLHA(ix) = xminLHA * ( xmLHA / xminLHA )
      1                **( 2d0 * dble( ix-1 ) / dble( nxLHA - 1 ) )
          else
-            xbLHA(ix) = xmLHA + ( xmaxLHA - xmLHA ) 
-     1                * ( dble( ix - nxmLHA - 1 ) 
+            xbLHA(ix) = xmLHA + ( xmaxLHA - xmLHA )
+     1                * ( dble( ix - nxmLHA - 1 )
      2                / dble( nxLHA - nxmLHA - 1 ) )
          endif
       enddo
@@ -149,7 +149,7 @@
 *
          isg = nfin
          do iq2=1,nq2LHA
-            q2LHA(iq2) = Lambda2 * dexp( lnQmin 
+            q2LHA(iq2) = Lambda2 * dexp( lnQmin
      1                 * dexp( dble( iq2 - 1 ) / dble( nq2LHA - 1 )
      2                 * dlog( lnQmax / lnQmin ) ) )
             if(q2LHA(iq2).lt.m2th(isg+1)+eps)then
@@ -175,7 +175,7 @@
             do isg=nfin,nffi
                do iq2=1,nQ(isg)
                   iq2c = iq2c + 1
-                  q2LHA(iq2c) = Lambda2 * dexp( lnQmin 
+                  q2LHA(iq2c) = Lambda2 * dexp( lnQmin
      1                        * dexp( dble( iq2 - 1 )
      2                        / dble( nQ(isg) - 1 )
      3                        * dlog( lnQmax / lnQmin ) ) )
@@ -201,7 +201,7 @@
          nfin      = Nf_FF
          nffi      = Nf_FF
          do iq2=1,nq2LHA
-            q2LHA(iq2) = Lambda2 * dexp( lnQmin 
+            q2LHA(iq2) = Lambda2 * dexp( lnQmin
      1                 * dexp( dble( iq2 - 1 ) / dble( nq2LHA - 1 )
      2                 * dlog( lnQmax / lnQmin ) ) )
          enddo
@@ -210,15 +210,15 @@
 *     LHAPDF5 output
 *
       if(.not.islhapdf6())then
-*     
+*
 *     Open the output file
 *
          ln = index(fname,char(0)) - 1
          if(ln.eq.-1) ln = index(fname,char(32)) - 1
          open(unit=13,status="unknown",file=fname(1:ln)//".LHgrid")
-*     
+*
 *     Write header
-*     
+*
          write(13,*) "'Version'"," '5.8.9'"
          write(13,*) "'Description: set generated with APFEL'"
          write(13,*) "'",fname(1:ln),".LHgrid'"
@@ -231,7 +231,7 @@
          write(13,*) "'This set has ",Nrep," member PDF'"
          write(13,*) "'mem=0 --> average on replicas. '"
          write(13,*) "'Evolution: pol. interpolation on the LH grid.'"
-*     
+*
          write(13,*) "'Alphas:'"
          if(ipt.eq.0)then
             write(13,*) "'Variable',","'lo',","'EvolCode'"
@@ -240,29 +240,29 @@
          elseif(ipt.eq.2)then
             write(13,*) "'Variable',","'nnlo',","'EvolCode'"
          endif
-*     
+*
          qref = dsqrt(q2_ref_qcd)
          do i=4,6
             mth(i) = dsqrt(m2th(i))
          enddo
-*     
+*
          write(13,*) 1,",",qref,",",mth(4),",",mth(5),",",mth(6)
-*     
+*
          write(13,*) "'MinMax:'"
          write(13,*) Nrep,",",1
          write(13,*) xminLHA,",",xmaxLHA,",",q2minLHA,",",q2maxLHA
-*     
+*
          write(13,*) "'QCDparams:'"
          write(13,*) Nrep,",",1
          write(13,*) lambda4,",",lambda5
-*     
+*
          write(13,*) "'Parameterlist:'"
          write(13,*) "'list',",Nrep,",",1
-*     
+*
          do i=0,Nrep
             write(13,*) alpha_ref_qcd
          enddo
-*     
+*
          write(13,* ) "'Evolution:'"
          if(ipt.eq.0)then
             write(13,*) "'lo',",q2minLHA,",",kren
@@ -277,22 +277,22 @@
             write(13,*) "'NNPDF20intqed'"
          endif
          write(13,*) Nrep,",",1
-*     
+*
 *     Compute and write the grids in x and Q2
-*     
+*
          write(13,*) nxLHA
          do ix=1,nxLHA
             write(13,*) xbLHA(ix)
          enddo
-*     
+*
          write(13,*) nq2LHA
          write(13,*) q2minLHA
          do iq2=1,nq2LHA
             write(13,*) q2LHA(iq2)
          enddo
-*     
+*
 *     Evolve PDFs starting from Qin and write them on file
-*     
+*
          write(13,*) Nrep
          do krep=0,Nrep
             write(6,*) "Evaluating replica",krep," ..."
@@ -326,7 +326,7 @@
                   xgammaLHA(ix,iq2) = xgammaj(xbLHA(ix))
                enddo
             enddo
-*     
+*
             if(Th.eq."QCD")then
                do ix=1,nxLHA
                   do iq2=1,nq2LHA
@@ -342,12 +342,13 @@
                enddo
             endif
 *     Restore PDF name
-            pdfset = pdfsetbkp
+c            pdfset = pdfsetbkp
+            call SetPDFSet(pdfsetbkp)
          enddo
-*     
+*
          write(13,* ) "'End:'"
          close(13)
-*     
+*
          write(6,*) "File ",fname(1:ln),".LHgrid produced!"
          write(6,*) "  "
       else
@@ -361,9 +362,9 @@
 *     creating info file
          open(unit=13,status="unknown",file=fname(1:ln)//"/"
      1        //fname(1:ln)//".info")
-*     
+*
 *     Write header
-*     
+*
          write(13,*) "SetDesc: set generated with APFEL - ",fname(1:ln)
          write(13,*) "Authors: V. Bertone, S. Carrazza, J. Rojo"
          write(13,*) "Reference: ArXiv:1310.1394"
@@ -403,7 +404,7 @@
          write(13,*) "AlphaS_OrderQCD:",ipt
          write(13,*) "AlphaS_Type: ipol"
          write(13,*)"AlphaS_Qs: [",(dsqrt(q2LHA(iq2)),",",iq2=1,nq2LHA),
-     1              "]" 
+     1              "]"
          write(13,*) "AlphaS_Vals: [",(AlphaQCD(dsqrt(q2LHA(iq2))),
      1               ",",iq2=1,nq2LHA), "]"
          write(13,*) "AlphaS_Lambda4:", lambda4
@@ -421,7 +422,7 @@
                write(str,'(i2)' ) krep
                open(unit=13,status="unknown",file=fname(1:ln)//"/"
      1              //fname(1:ln)//"_00"//str(1:2)//".dat")
-            elseif (krep.lt.1000) then               
+            elseif (krep.lt.1000) then
                write(str,'(i3)' ) krep
                open(unit=13,status="unknown",file=fname(1:ln)//"/"
      1              //fname(1:ln)//"_0"//str(1:3)//".dat")
@@ -508,7 +509,7 @@
                      xgammaLHA(ix,iq2) = xgammaj(xbLHA(ix))
                   enddo
                enddo
-*     
+*
                if(Th.eq."QCD")then
                   do ix=1,nxLHA
                      do iq2=iq2in,iq2fi
@@ -544,17 +545,18 @@
             enddo
             close(13)
 *     Restore PDF name
-            pdfset = pdfsetbkp
+c            pdfset = pdfsetbkp
+            call SetPDFSet(pdfsetbkp)
          enddo
-*     
+*
          write(6,*) "File ",fname(1:ln)," grid produced!"
-         write(6,*) "  "     
+         write(6,*) "  "
       endif
 *
  44   format(13(1x,es14.7))
  45   format(14(1x,es14.7))
  46   format(20(1x,es14.7))
-*     
+*
       return
       end
 *

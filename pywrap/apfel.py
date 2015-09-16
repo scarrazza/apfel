@@ -331,10 +331,6 @@ def ListFunctions():
   return _apfel.ListFunctions()
 ListFunctions = _apfel.ListFunctions
 
-def DIS_xsec(*args):
-  return _apfel.DIS_xsec(*args)
-DIS_xsec = _apfel.DIS_xsec
-
 def InitializeAPFEL_DIS():
   return _apfel.InitializeAPFEL_DIS()
 InitializeAPFEL_DIS = _apfel.InitializeAPFEL_DIS

@@ -27,8 +27,8 @@
 *
       integer alpha
       integer ifl,ilept
-      integer Nrep
-      double precision f0(-6:6),fp0,fext0(-6:7),flext0(-3:3)
+      integer Nrep, numberPDF
+      double precision f0(-6:6),fp0,fext0(-6:7),flext0(-3:3), xfxQ
       logical has_photon
       external ExternalSetAPFEL
       external ExternalSetAPFEL1
@@ -190,8 +190,8 @@
 *
       else
          if(igrid.eq.1)then
-            call InitPDFsetbyname(pdfset)
-            call numberPDF(Nrep)
+            call mkPDFs(irep,pdfsetlen,pdfset)
+            Nrep = numberPDF()
             if(irep.lt.0.or.irep.gt.Nrep)then
                write(6,*) "Replica requested out of range:"
                write(6,*) "- irep=",irep
@@ -199,34 +199,21 @@
                call exit(-10)
             endif
          endif
-         call InitPDF(irep)
-         if(has_photon())then
-            do alpha=0,nin(igrid)
-               call evolvePDFphoton(xg(igrid,alpha),dsqrt(Q20),f0,fp0)
-               do ifl=-6,6
-                  f0ph(ifl,alpha) = f0(ifl)
-               enddo
-               f0lep(0,alpha) = fp0
-               do ilept=1,3
-                  f0lep(ilept,alpha) = 0d0
-                  f0lep(-ilept,alpha) = 0d0
-               enddo
+         do alpha=0,nin(igrid)
+            do ifl=-6,6
+               f0ph(ifl,alpha) = xfxQ(ifl,xg(igrid,alpha),dsqrt(Q20))
             enddo
-         else
-            do alpha=0,nin(igrid)
-               call evolvePDF(xg(igrid,alpha),dsqrt(Q20),f0)
-               fp0 = 0d0
-               do ifl=-6,6
-                  f0ph(ifl,alpha) = f0(ifl)
-               enddo
-               do ilept=-3,3
-                  f0lep(ilept,alpha) = 0d0
-               enddo
+            f0lep(0,alpha) = xfxQ(22,xg(igrid,alpha),dsqrt(Q20))
+            do ilept=1,3
+               f0lep(ilept,alpha) = xfxQ(9+2*ilept,
+     1              xg(igrid,alpha),dsqrt(Q20))
+               f0lep(-ilept,alpha) = xfxQ(-9-2*ilept,
+     1              xg(igrid,alpha),dsqrt(Q20))
             enddo
-         endif
+         enddo
       endif
 *
-*     For the FFNS, erase the heavy flavour PDFs 
+*     For the FFNS, erase the heavy flavour PDFs
 *
       if(Evs.eq."FF".and.Nf_FF.lt.6)then
          do alpha=0,nin(igrid)

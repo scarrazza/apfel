@@ -2,7 +2,7 @@
 *
 *     LHAPDFgridDerivative.f:
 *
-*     If LHAPDF5 is found, this subrotine produces the *.LHgrid file 
+*     If LHAPDF5 is found, this subrotine produces the *.LHgrid file
 *     that can be used with LHAPDF v5.9. If instead LHAPDF6 is found
 *     a folder contained the PDF set in a suitable format is produced.
 *
@@ -28,7 +28,7 @@
 *
       integer ln
       integer i,ix,iq2,ipdf,krep
-      double precision qref,mth(4:6),alphasPDF
+      double precision qref,mth(4:6)
       double precision lref,lambda3,lambda4,lambda5,lambdaNF
       double precision xbLHA(nxLHA),q2LHA(nq2LHA)
       double precision dxpdfLHA(-6:6,nxLHA,nq2LHA)
@@ -93,31 +93,30 @@ c      call lambda(3,lref,lambda3)
          elseif(ipt.eq.2)then
             write(13,*) "'Variable',","'nnlo',","'EvolCode'"
          endif
-*     
+*
 c     qref = dsqrt(q2_ref_qcd)
          qref = 91.2d0          ! Z mass
          do i=4,6
-            call GetQmass(i,mth(i))
+            mth(i) = dsqrt(m2th(i))
          enddo
-*     
+*
          write(13,*) 1,",",qref,",",mth(4),",",mth(5),",",mth(6)
-*     
+*
          write(13,*) "'MinMax:'"
          write(13,*) Nrep,",",1
          write(13,*) xminLHA,",",xmaxLHA,",",q2minLHA,",",q2maxLHA
-*     
+*
          write(13,*) "'QCDparams:'"
          write(13,*) Nrep,",",1
          write(13,*) lambda4,",",lambda5
-*     
+*
          write(13,*) "'Parameterlist:'"
          write(13,*) "'list',",Nrep,",",1
-*     
+*
          do i=0,Nrep
-c     write(13,*) alpha_ref_qcd
-            write(13,*) alphasPDF(qref)
+            write(13,*) AlphaQCD(qref)
          enddo
-*     
+*
          write(13,* ) "'Evolution:'"
          if(ipt.eq.0)then
             write(13,*) "'lo',",q2minLHA,",",kren
@@ -132,9 +131,9 @@ c     write(13,*) alpha_ref_qcd
             write(13,*) "'NNPDF20intqed'"
          endif
          write(13,*) Nrep,",",1
-*     
+*
 *     Compute and write the grids in x and Q2
-*     
+*
          write(13,*) nxLHA
          do ix=1,nxLHA
             if(ix.le.nxmLHA)then
@@ -147,7 +146,7 @@ c     write(13,*) alpha_ref_qcd
             endif
             write(13,*) xbLHA(ix)
          enddo
-*     
+*
          write(13,*) nq2LHA
          write(13,*) q2minLHA
          do iq2=1,nq2LHA
@@ -155,9 +154,9 @@ c     write(13,*) alpha_ref_qcd
      1           **( dble( iq2 - 1 ) / dble( nq2LHA - 1 ) )
             write(13,*) q2LHA(iq2)
          enddo
-*     
+*
 *     EvolvePPDFs starting from Qin and write them on file
-*     
+*
          write(13,*) Nrep
          do krep=0,Nrep
             write(6,*) "Evaluating replica",krep," ..."
@@ -171,7 +170,7 @@ c     write(13,*) alpha_ref_qcd
                   dxgammaLHA(ix,iq2) = dxgamma(xbLHA(ix))
                enddo
             enddo
-*     
+*
             if(Th.eq."QCD")then
                do ix=1,nxLHA
                   do iq2=1,nq2LHA
@@ -187,10 +186,10 @@ c     write(13,*) alpha_ref_qcd
                enddo
             endif
          enddo
-*     
+*
          write(13,* ) "'End:'"
          close(13)
-*     
+*
          write(6,*) "File ",fname(1:ln),".LHgrid produced!"
          write(6,*) "  "
       else
@@ -203,9 +202,9 @@ c     write(13,*) alpha_ref_qcd
 *     creating info file
          open(unit=13,status="unknown",file=fname(1:ln)//"/"
      1        //fname(1:ln)//".info")
-*     
+*
 *     Write header
-*     
+*
          write(13,*) "SetDesc: ",fname(1:ln)
          write(13,*) "Authors: APFEL a PDF Evolution Library"
          write(13,*) "Reference: 1310.1394"
@@ -217,7 +216,7 @@ c     write(13,*) alpha_ref_qcd
             write(13,*) "Flavors: [-6, -5, -4, -3, -1, -2,",
      1           "21, 2, 1, 3, 4, 5, 6]"
          else
-            write(13,*) "Flavors: [-6, -5, -4, -3, -1, -2, 21, 2, 1,", 
+            write(13,*) "Flavors: [-6, -5, -4, -3, -1, -2, 21, 2, 1,",
      1           "3, 4, 5, 6, 22]"
          endif
          write(13,*) "OrderQCD:",ipt
@@ -238,7 +237,7 @@ c     write(13,*) alpha_ref_qcd
          write(13,*) "AlphaS_MZ:",alpha_ref_qcd
          write(13,*) "AlphaS_OrderQCD:",ipt
          write(13,*) "AlphaS_Type: ipol"
-         
+
          do ix=1,nxLHA
             if(ix.le.nxmLHA)then
                xbLHA(ix) = xminLHA * ( xmLHA / xminLHA )
@@ -256,18 +255,18 @@ c     write(13,*) alpha_ref_qcd
          enddo
 
          write(13,*)"AlphaS_Qs: [",(dsqrt(q2LHA(iq2)),",",iq2=1,nq2LHA),
-     1        "]" 
-         write(13,*) "AlphaS_Vals: [", 
+     1        "]"
+         write(13,*) "AlphaS_Vals: [",
      1        (AlphaQCD(dsqrt(q2LHA(iq2))),",",iq2=1,nq2LHA), "]"
          write(13,*) "AlphaS_Lambda4:", lambda4
          write(13,*) "AlphaS_Lambda5:", lambda5
-         
+
          close(13)
 *
 *     Now Loop over all replicas and print to file
 *
          do krep=0,Nrep
-            write(6,*) "Evaluating replica",krep," ..."            
+            write(6,*) "Evaluating replica",krep," ..."
 
             if (krep.lt.10) then
                write(str,'(i1)' ) krep
@@ -277,7 +276,7 @@ c     write(13,*) alpha_ref_qcd
                write(str,'(i2)' ) krep
                open(unit=13,status="unknown",file=fname(1:ln)//"/"
      1              //fname(1:ln)//"_00"//str(1:2)//".dat")
-            elseif (krep.lt.1000) then               
+            elseif (krep.lt.1000) then
                write(str,'(i3)' ) krep
                open(unit=13,status="unknown",file=fname(1:ln)//"/"
      1              //fname(1:ln)//"_0"//str(1:3)//".dat")
@@ -312,7 +311,7 @@ c     write(13,*) alpha_ref_qcd
                   dxgammaLHA(ix,iq2) = dxgamma(xbLHA(ix))
                enddo
             enddo
-*     
+*
             if(Th.eq."QCD")then
                do ix=1,nxLHA
                   do iq2=1,nq2LHA
@@ -330,9 +329,9 @@ c     write(13,*) alpha_ref_qcd
             write(13,*) "---"
             close(13)
          enddo
-*     
+*
          write(6,*) "File ",fname(1:ln)," grid produced!"
-         write(6,*) "  "     
+         write(6,*) "  "
       endif
 *
  44   format(1x,13((es14.7),1x))

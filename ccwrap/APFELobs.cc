@@ -15,7 +15,7 @@ using namespace std;
 #define SIZE 999
 
 namespace APFEL {
-  
+  /*  
   void DIS_xsec(double x,double qi,double qf,double y,double pol,
 		const std::string& proc,const std::string& scheme,
 		int pto,const std::string& pdfset, int irep,
@@ -40,6 +40,7 @@ namespace APFEL {
     fdisxsec(&x,&qi,&qf,&y,&pol,cproc,cscheme,&pto,cpdfset,&irep,ctarget, cproj,
 	     F2,F3,FL,sigma);
   }
+  */
 
   // Functions for the new DIS module
   void InitializeAPFEL_DIS()

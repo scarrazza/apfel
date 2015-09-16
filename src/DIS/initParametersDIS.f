@@ -32,6 +32,8 @@
       include "../commons/PropagatorCorrection.h"
       include "../commons/EWCouplings.h"
       include "../commons/DynScVar.h"
+      include "../commons/coeffhqmellin.h"
+      include "../commons/minimax.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *

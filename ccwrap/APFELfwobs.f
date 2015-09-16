@@ -1,19 +1,19 @@
 !     The APFEL Fortran wrapper
 
 ccccccccccccc
-      subroutine fdisxsec(x,qi,qf,y,pol,proc,scheme,pto,pdfset,irep,
-     1                    target,proj,F2,F3,FL,SIGMA)
-      double precision x,qi,qf,y,pol
-      character  proc*(*)
-      character  scheme*(*)
-      character pdfset*(*)
-      character  target*(*)
-      character proj*(*)
-      integer pto,irep
-      double precision F2(3:7),F3(3:7),FL(3:7),SIGMA(3:7)
-      call DIS_xsec(x,qi,qf,y,pol,proc,scheme,pto,pdfset,irep,
-     1              target,proj,F2,F3,FL,SIGMA)
-      end subroutine fdisxsec
+c      subroutine fdisxsec(x,qi,qf,y,pol,proc,scheme,pto,pdfset,irep,
+c     1                    target,proj,F2,F3,FL,SIGMA)
+c      double precision x,qi,qf,y,pol
+c      character  proc*(*)
+c      character  scheme*(*)
+c      character pdfset*(*)
+c      character  target*(*)
+c      character proj*(*)
+c      integer pto,irep
+c      double precision F2(3:7),F3(3:7),FL(3:7),SIGMA(3:7)
+c      call DIS_xsec(x,qi,qf,y,pol,proc,scheme,pto,pdfset,irep,
+c     1              target,proj,F2,F3,FL,SIGMA)
+c      end subroutine fdisxsec
 
 cccc Functions for the new DIS module ccccc
       subroutine finitializeapfel_dis

@@ -15,7 +15,7 @@
 *     Variables
 *
       integer ln
-      character*100 name
+      character name*(*)
       logical islhapdf6
 *
 *     Internal PDFs
@@ -61,16 +61,15 @@
 *     External LHAPDF grids
 *
       else
-         ln = index(name,"LHgrid") + 5
-         if(ln.eq.5)then
-            write(6,*) "Unknown input set:"
-            write(6,*) "set = ",name(1:10)
-            write(6,*) "  "
-            call exit(-10)
+         if(index(name,"LHgrid").eq.0)then
+           ln = len_trim(name)
+         else
+           ln = index(name,"LHgrid") + 5
+           if (islhapdf6().eqv..true.) ln = ln - 7
          endif
-         if (islhapdf6().eqv..true.) ln = ln - 7         
       endif
       pdfset = name(1:ln)
+      pdfsetlen = ln
       InPDFs = "done"
 *
       return
