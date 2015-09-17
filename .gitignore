@@ -37,3 +37,5 @@ examples/TabulationFragCxx
 examples/TabulationStep
 examples/TabulationStepCxx
 examples/Timing
+examples/CheckAPFEL
+examples/CheckAPFELCxx

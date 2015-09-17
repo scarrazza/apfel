@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+
 // Define APFEL I/O LHAPDF
 #ifndef NOLHAPDF
 
@@ -60,9 +64,6 @@ extern "C" {
 #endif
 
 #else
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/stat.h>
 extern "C" void stop() { printf(" [Error] LHAPDF support disabled with --disable-lhapdf.\n"); exit(-1); }
 extern "C" void mkpdfs_(){ stop(); return ; }
 extern "C" double xfxq_(){ stop(); return 0;}

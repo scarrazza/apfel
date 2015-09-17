@@ -327,7 +327,7 @@
 *     When the computation of the Evolution Operator is enabled
 *     lock the grids by default.
 *
-      if(EvolOp.and..not.lock)then
+      if(EvolOp.and..not.lock.and..not.ThereAreExtGrids)then
          write(6,*) achar(27)//"[33m"//
      1              "WARNING: computation of the evolution operator",
      2              " possible only on locked subgrids"
