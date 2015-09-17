@@ -331,6 +331,10 @@ def ListFunctions():
   return _apfel.ListFunctions()
 ListFunctions = _apfel.ListFunctions
 
+def CheckAPFEL():
+  return _apfel.CheckAPFEL()
+CheckAPFEL = _apfel.CheckAPFEL
+
 def InitializeAPFEL_DIS():
   return _apfel.InitializeAPFEL_DIS()
 InitializeAPFEL_DIS = _apfel.InitializeAPFEL_DIS
@@ -439,9 +443,9 @@ def SetProtonMass(*args):
   return _apfel.SetProtonMass(*args)
 SetProtonMass = _apfel.SetProtonMass
 
-def SetSinThetaW(*args):
-  return _apfel.SetSinThetaW(*args)
-SetSinThetaW = _apfel.SetSinThetaW
+def SetSin2ThetaW(*args):
+  return _apfel.SetSin2ThetaW(*args)
+SetSin2ThetaW = _apfel.SetSin2ThetaW
 
 def SetCKM(*args):
   return _apfel.SetCKM(*args)
@@ -483,9 +487,9 @@ def GetProtonMass():
   return _apfel.GetProtonMass()
 GetProtonMass = _apfel.GetProtonMass
 
-def GetSinThetaW():
-  return _apfel.GetSinThetaW()
-GetSinThetaW = _apfel.GetSinThetaW
+def GetSin2ThetaW():
+  return _apfel.GetSin2ThetaW()
+GetSin2ThetaW = _apfel.GetSin2ThetaW
 
 def GetCKM(*args):
   return _apfel.GetCKM(*args)

@@ -220,11 +220,11 @@ am__objects_10 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
 	DIS/ConvolutePDFsWithDISOperators.lo DIS/JoinDISOperators.lo \
 	DIS/ConvoluteEvolutionWithDISOperators.lo \
 	DIS/ExternalDISOperator.lo DIS/SetCKM.lo DIS/SetGFermi.lo \
-	DIS/SetProtonMass.lo DIS/SetSinThetaW.lo DIS/SetWMass.lo \
+	DIS/SetProtonMass.lo DIS/SetSin2ThetaW.lo DIS/SetWMass.lo \
 	DIS/SetZMass.lo DIS/FKSimulator.lo DIS/SetFKObservable.lo \
 	DIS/GetFKObservable.lo DIS/FKObservables.lo \
 	DIS/EnableTargetMassCorrections.lo DIS/GetCKM.lo \
-	DIS/GetGFermi.lo DIS/GetProtonMass.lo DIS/GetSinThetaW.lo \
+	DIS/GetGFermi.lo DIS/GetProtonMass.lo DIS/GetSin2ThetaW.lo \
 	DIS/GetWMass.lo DIS/GetZMass.lo DIS/RSLintegralsSIA.lo \
 	DIS/integrandsSIA.lo DIS/initIntegralsSIA.lo \
 	DIS/SelectCharge.lo DIS/SetRenQRatio.lo DIS/SetFacQRatio.lo \
@@ -544,9 +544,9 @@ DIS = DIS/InitializeAPFEL_DIS.f DIS/initParametersDIS.f DIS/SetMassScheme.f DIS/
 	DIS/integrandsDIS.f DIS/SetProcessDIS.f DIS/ComputeChargesDIS.f DIS/SetPolarizationDIS.f DIS/SetProjectileDIS.f \
 	DIS/SetTargetDIS.f DIS/MassiveCoefficientFunctions.f DIS/MassiveZeroCoefficientFunctions.f DIS/ComputeDISOperators.f \
 	DIS/ConvolutePDFsWithDISOperators.f DIS/JoinDISOperators.f DIS/ConvoluteEvolutionWithDISOperators.f \
-	DIS/ExternalDISOperator.f DIS/SetCKM.f DIS/SetGFermi.f DIS/SetProtonMass.f DIS/SetSinThetaW.f \
+	DIS/ExternalDISOperator.f DIS/SetCKM.f DIS/SetGFermi.f DIS/SetProtonMass.f DIS/SetSin2ThetaW.f \
 	DIS/SetWMass.f DIS/SetZMass.f DIS/FKSimulator.f DIS/SetFKObservable.f DIS/GetFKObservable.f DIS/FKObservables.f \
-	DIS/EnableTargetMassCorrections.f DIS/GetCKM.f DIS/GetGFermi.f DIS/GetProtonMass.f DIS/GetSinThetaW.f \
+	DIS/EnableTargetMassCorrections.f DIS/GetCKM.f DIS/GetGFermi.f DIS/GetProtonMass.f DIS/GetSin2ThetaW.f \
 	DIS/GetWMass.f DIS/GetZMass.f DIS/RSLintegralsSIA.f DIS/integrandsSIA.f DIS/initIntegralsSIA.f DIS/SelectCharge.f \
 	DIS/SetRenQRatio.f DIS/SetFacQRatio.f DIS/GetSIATotalCrossSection.f DIS/IncludeScaleVariation.f \
 	DIS/ExcludeScaleVariation.f DIS/ReportParametersDIS.f DIS/EnableDampingFONLL.f DIS/SetPropagatorCorrection.f \
@@ -987,7 +987,8 @@ DIS/SetCKM.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/SetGFermi.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/SetProtonMass.lo: DIS/$(am__dirstamp) \
 	DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/SetSinThetaW.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetSin2ThetaW.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/SetWMass.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/SetZMass.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/FKSimulator.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
@@ -1003,7 +1004,8 @@ DIS/GetCKM.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/GetGFermi.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/GetProtonMass.lo: DIS/$(am__dirstamp) \
 	DIS/$(DEPDIR)/$(am__dirstamp)
-DIS/GetSinThetaW.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/GetSin2ThetaW.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/GetWMass.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/GetZMass.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/RSLintegralsSIA.lo: DIS/$(am__dirstamp) \

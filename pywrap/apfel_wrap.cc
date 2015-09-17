@@ -6047,6 +6047,19 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_CheckAPFEL(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  bool result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":CheckAPFEL")) SWIG_fail;
+  result = (bool)APFEL::CheckAPFEL();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_InitializeAPFEL_DIS(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   
@@ -6708,20 +6721,20 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_SetSinThetaW(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_SetSin2ThetaW(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double val1 ;
   int ecode1 = 0 ;
   PyObject * obj0 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:SetSinThetaW",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"O:SetSin2ThetaW",&obj0)) SWIG_fail;
   ecode1 = SWIG_AsVal_double(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetSinThetaW" "', argument " "1"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetSin2ThetaW" "', argument " "1"" of type '" "double""'");
   } 
   arg1 = static_cast< double >(val1);
-  APFEL::SetSinThetaW(arg1);
+  APFEL::SetSin2ThetaW(arg1);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -7014,12 +7027,12 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_GetSinThetaW(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_GetSin2ThetaW(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double result;
   
-  if (!PyArg_ParseTuple(args,(char *)":GetSinThetaW")) SWIG_fail;
-  result = (double)APFEL::GetSinThetaW();
+  if (!PyArg_ParseTuple(args,(char *)":GetSin2ThetaW")) SWIG_fail;
+  result = (double)APFEL::GetSin2ThetaW();
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
@@ -7466,6 +7479,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetTheory", _wrap_SetTheory, METH_VARARGS, NULL},
 	 { (char *)"SetVFNS", _wrap_SetVFNS, METH_VARARGS, NULL},
 	 { (char *)"ListFunctions", _wrap_ListFunctions, METH_VARARGS, NULL},
+	 { (char *)"CheckAPFEL", _wrap_CheckAPFEL, METH_VARARGS, NULL},
 	 { (char *)"InitializeAPFEL_DIS", _wrap_InitializeAPFEL_DIS, METH_VARARGS, NULL},
 	 { (char *)"ComputeStructureFunctionsAPFEL", _wrap_ComputeStructureFunctionsAPFEL, METH_VARARGS, NULL},
 	 { (char *)"SetMassScheme", _wrap_SetMassScheme, METH_VARARGS, NULL},
@@ -7493,7 +7507,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetZMass", _wrap_SetZMass, METH_VARARGS, NULL},
 	 { (char *)"SetWMass", _wrap_SetWMass, METH_VARARGS, NULL},
 	 { (char *)"SetProtonMass", _wrap_SetProtonMass, METH_VARARGS, NULL},
-	 { (char *)"SetSinThetaW", _wrap_SetSinThetaW, METH_VARARGS, NULL},
+	 { (char *)"SetSin2ThetaW", _wrap_SetSin2ThetaW, METH_VARARGS, NULL},
 	 { (char *)"SetCKM", _wrap_SetCKM, METH_VARARGS, NULL},
 	 { (char *)"SetPropagatorCorrection", _wrap_SetPropagatorCorrection, METH_VARARGS, NULL},
 	 { (char *)"SetEWCouplings", _wrap_SetEWCouplings, METH_VARARGS, NULL},
@@ -7504,7 +7518,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"GetZMass", _wrap_GetZMass, METH_VARARGS, NULL},
 	 { (char *)"GetWMass", _wrap_GetWMass, METH_VARARGS, NULL},
 	 { (char *)"GetProtonMass", _wrap_GetProtonMass, METH_VARARGS, NULL},
-	 { (char *)"GetSinThetaW", _wrap_GetSinThetaW, METH_VARARGS, NULL},
+	 { (char *)"GetSin2ThetaW", _wrap_GetSin2ThetaW, METH_VARARGS, NULL},
 	 { (char *)"GetCKM", _wrap_GetCKM, METH_VARARGS, NULL},
 	 { (char *)"GetGFermi", _wrap_GetGFermi, METH_VARARGS, NULL},
 	 { (char *)"GetSIATotalCrossSection", _wrap_GetSIATotalCrossSection, METH_VARARGS, NULL},

@@ -12,7 +12,7 @@
       include "../commons/ProcessDIS.h"
       include "../commons/PolarizationDIS.h"
       include "../commons/ProjectileDIS.h"
-      include "../commons/SinThetaW.h"
+      include "../commons/Sin2ThetaW.h"
       include "../commons/ZedMass.h"
       include "../commons/SelectedCharge.h"
       include "../commons/TimeLike.h"
@@ -85,13 +85,13 @@
          vq(1) = VectorD
          vq(2) = VectorU
       else
-         vq(1) = - 0.5d0 + 2d0 / 3d0 * SinThetaW
-         vq(2) = + 0.5d0 - 4d0 / 3d0 * SinThetaW
+         vq(1) = - 0.5d0 + 2d0 / 3d0 * Sin2ThetaW
+         vq(2) = + 0.5d0 - 4d0 / 3d0 * Sin2ThetaW
       endif
-      vq(3) = vq(1) ! - 0.5d0 + 2d0 / 3d0 * SinThetaW
-      vq(4) = vq(2) ! + 0.5d0 - 4d0 / 3d0 * SinThetaW
-      vq(5) = vq(1) ! - 0.5d0 + 2d0 / 3d0 * SinThetaW
-      vq(6) = vq(2) ! + 0.5d0 - 4d0 / 3d0 * SinThetaW
+      vq(3) = vq(1) ! - 0.5d0 + 2d0 / 3d0 * Sin2ThetaW
+      vq(4) = vq(2) ! + 0.5d0 - 4d0 / 3d0 * Sin2ThetaW
+      vq(5) = vq(1) ! - 0.5d0 + 2d0 / 3d0 * Sin2ThetaW
+      vq(6) = vq(2) ! + 0.5d0 - 4d0 / 3d0 * Sin2ThetaW
 *
 *     Axial Couplings
 *
@@ -109,7 +109,7 @@
 *
 *     Vector and Axial Electron Couplings
 *
-      ve = - 0.5d0 + 2d0 * SinThetaW
+      ve = - 0.5d0 + 2d0 * Sin2ThetaW
       ae = - 0.5d0
 *
 *     Set the electric charges to zero if the projectile is either
@@ -122,7 +122,7 @@
             eq(i)  = 0d0
             eq2(i) = 0d0
          enddo
-         ve = 0.5d0 + 2d0 * SinThetaW
+         ve = 0.5d0 + 2d0 * Sin2ThetaW
          ae = 0.5d0
       endif
 *
@@ -166,13 +166,13 @@
          if(TimeLike)then
             pz  = Q2 * ( Q2 -  MZ**2d0 )
      1          / ( ( Q2 - MZ**2d0 )**2d0 + ( MZ * GammaZ )**2d0 ) 
-     2          / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) )
+     2          / ( 4d0 * Sin2ThetaW * ( 1d0 - Sin2ThetaW ) )
             pz2 = Q2**2d0 
      1          / ( ( Q2 - MZ**2d0 )**2d0 + ( MZ * GammaZ )**2d0 ) 
-     2          / ( ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) ) )**2d0
+     2          / ( ( 4d0 * Sin2ThetaW * ( 1d0 - Sin2ThetaW ) ) )**2d0
          else
             pz  = Q2 / ( Q2 + MZ**2d0 ) 
-     1          / ( 4d0 * SinThetaW * ( 1d0 - SinThetaW ) )
+     1          / ( 4d0 * Sin2ThetaW * ( 1d0 - Sin2ThetaW ) )
             pz2 = pz * pz
          endif
 *     Apply propagator correction

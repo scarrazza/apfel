@@ -1,22 +1,22 @@
 ************************************************************************
 *
-*     SetSinThetaW.f:
+*     SetSin2ThetaW.f:
 *
-*     This subroutine sets sin(\theta_W).
+*     This subroutine sets sin^2(\theta_W).
 *
 ************************************************************************
-      subroutine SetSinThetaW(sw)
+      subroutine SetSin2ThetaW(sw)
 *
       implicit none
 *
-      include "../commons/SinThetaW.h"
+      include "../commons/Sin2ThetaW.h"
 *
 *     Variables
 *
       double precision sw
 *
-      SinThetaW   = sw
-      InSinThetaW = "done"
+      Sin2ThetaW   = sw
+      InSin2ThetaW = "done"
 *
       return
       end

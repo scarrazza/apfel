@@ -19,19 +19,6 @@ namespace APFEL {
   /*
    * DIS module
    */
-
-  /*
-  /// DIS observables
-  void DIS_xsec(double x,double qi,double qf,double y,double pol,
-		const std::string& proc,const std::string& scheme,
-		int pto,const std::string& pdfset, int irep,
-		const std::string& target, const std::string& proj,
-		double *F2, double *F3, double *FL, double *sigma);
-  */
-  /*
-   * New DIS module
-   */
-
   /// Initialize the new DIS module
   void InitializeAPFEL_DIS();
 
@@ -87,8 +74,8 @@ namespace APFEL {
   /// Set the value of the proton mass in GeV
   void SetProtonMass(double massp);
 
-  /// Set the value of sin(theta_W)
-  void SetSinThetaW(double sw);
+  /// Set the value of sin^2(theta_W)
+  void SetSin2ThetaW(double sw);
 
   /// Set the absolute value of the entries of the CKM matrix
   void SetCKM(double vud,double vus,double vub,double vcd,double vcs,double vcb,double vtd,double vts,double vtb);
@@ -120,8 +107,8 @@ namespace APFEL {
   // Returns the mass of the proton
   double GetProtonMass();
 
-  // Returns sin(\theta_W)
-  double GetSinThetaW();
+  // Returns sin^2(\theta_W)
+  double GetSin2ThetaW();
 
   // Returns the entries of the CKM matrix
   double GetCKM(int u, int d);

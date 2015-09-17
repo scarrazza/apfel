@@ -18,7 +18,7 @@
       include "../commons/ZedMass.h"
       include "../commons/WMass.h"
       include "../commons/ProtonMass.h"
-      include "../commons/SinThetaW.h"
+      include "../commons/Sin2ThetaW.h"
       include "../commons/GFermi.h"
       include "../commons/CKM.h"
       include "../commons/TMC.h"
@@ -39,7 +39,7 @@
          write(6,"(a,f7.3,a)")  " Mass of the Z =",MZ," GeV"
          write(6,"(a,f7.3,a)")  " Mass of the W =",MW," GeV"
          write(6,"(a,f7.4,a)")  " Mass of the proton =",MProton," GeV"
-         write(6,"(a,f7.4)")    " sin(thetaW) =",SinThetaW
+         write(6,"(a,f7.4)")    " sin^2(thetaW) =",Sin2ThetaW
          write(6,"(a,es12.5)")   " GFermi =",GFermi
          write(6,"(a,3f7.4,a)") "       |",V_ud,V_us,V_ub," |"
          write(6,"(a,3f7.4,a)") " CKM = |",V_cd,V_cs,V_cb," |"

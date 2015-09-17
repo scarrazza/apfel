@@ -15,34 +15,7 @@ using namespace std;
 #define SIZE 999
 
 namespace APFEL {
-  /*  
-  void DIS_xsec(double x,double qi,double qf,double y,double pol,
-		const std::string& proc,const std::string& scheme,
-		int pto,const std::string& pdfset, int irep,
-		const std::string& target, const std::string& proj,
-		double *F2, double *F3, double *FL, double *sigma)
-  {
-    char cproc[SIZE+1];
-    strncpy(cproc, proc.c_str(), SIZE);
 
-    char cscheme[SIZE+1];
-    strncpy(cscheme, scheme.c_str(), SIZE);
-
-    char cpdfset[SIZE+1];
-    strncpy(cpdfset, pdfset.c_str(), SIZE);
-
-    char ctarget[SIZE+1];
-    strncpy(ctarget, target.c_str(), SIZE);    
-
-    char cproj[SIZE+1];
-    strncpy(cproj, proj.c_str(), SIZE);
-
-    fdisxsec(&x,&qi,&qf,&y,&pol,cproc,cscheme,&pto,cpdfset,&irep,ctarget, cproj,
-	     F2,F3,FL,sigma);
-  }
-  */
-
-  // Functions for the new DIS module
   void InitializeAPFEL_DIS()
   {
     finitializeapfel_dis();
@@ -190,9 +163,9 @@ namespace APFEL {
     fsetprotonmass(&massp);
   }
 
-  void SetSinThetaW(double sw)
+  void SetSin2ThetaW(double sw)
   {
-    fsetsinthetaw(&sw);
+    fsetsin2thetaw(&sw);
   }
 
   void SetCKM(double vud,double vus,double vub,double vcd,double vcs,double vcb,double vtd,double vts,double vtb)
@@ -245,9 +218,9 @@ namespace APFEL {
     return fgetprotonmass();
   }
 
-  double GetSinThetaW()
+  double GetSin2ThetaW()
   {
-    return fgetsinthetaw();
+    return fgetsin2thetaw();
   }
 
   double GetCKM(int u, int d)

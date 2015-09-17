@@ -1,19 +1,4 @@
-!     The APFEL Fortran wrapper
-
-ccccccccccccc
-c      subroutine fdisxsec(x,qi,qf,y,pol,proc,scheme,pto,pdfset,irep,
-c     1                    target,proj,F2,F3,FL,SIGMA)
-c      double precision x,qi,qf,y,pol
-c      character  proc*(*)
-c      character  scheme*(*)
-c      character pdfset*(*)
-c      character  target*(*)
-c      character proj*(*)
-c      integer pto,irep
-c      double precision F2(3:7),F3(3:7),FL(3:7),SIGMA(3:7)
-c      call DIS_xsec(x,qi,qf,y,pol,proc,scheme,pto,pdfset,irep,
-c     1              target,proj,F2,F3,FL,SIGMA)
-c      end subroutine fdisxsec
+C     The APFEL Fortran wrapper
 
 cccc Functions for the new DIS module ccccc
       subroutine finitializeapfel_dis
@@ -215,10 +200,10 @@ ccccccccccccc
       end subroutine fsetprotonmass
 
 ccccccccccccc
-      subroutine fsetsinthetaw(sw)
+      subroutine fsetsin2thetaw(sw)
       double precision sw
-      call SetSinThetaW(sw)
-      end subroutine fsetsinthetaw
+      call SetSin2ThetaW(sw)
+      end subroutine fsetsin2thetaw
 
 ccccccccccccc
       subroutine fsetckm(vud,vus,vub,vcd,vcs,vcb,vtd,vts,vtb)
@@ -266,9 +251,9 @@ ccccccccccccc
       end
 
 ccccccccccccc
-      function fgetsinthetaw()
-      double precision fgetsinthetaw
-      fgetsinthetaw = GetSinThetaW()
+      function fgetsin2thetaw()
+      double precision fgetsin2thetaw
+      fgetsin2thetaw = GetSin2ThetaW()
       return
       end
 

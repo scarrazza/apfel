@@ -20,7 +20,7 @@
       include "../commons/ZedMass.h"
       include "../commons/WMass.h"
       include "../commons/ProtonMass.h"
-      include "../commons/SinThetaW.h"
+      include "../commons/Sin2ThetaW.h"
       include "../commons/GFermi.h"
       include "../commons/CKM.h"
       include "../commons/TMC.h"
@@ -55,7 +55,7 @@
       if(InMZ.ne."done")             call SetZMass(91.1876d0)
       if(InMW.ne."done")             call SetWMass(80.385d0)
       if(InMProton.ne."done")        call SetProtonMass(0.938272046d0)
-      if(InSinThetaW.ne."done")      call SetSinThetaW(0.23126d0)
+      if(InSin2ThetaW.ne."done")     call SetSin2ThetaW(0.23126d0)
       if(InGFermi.ne."done")         call SetGFermi(1.1663787d-5)
       if(InCKM.ne."done")            call SetCKM(
      1                               0.97427d0, 0.22536d0, 0.00355d0,

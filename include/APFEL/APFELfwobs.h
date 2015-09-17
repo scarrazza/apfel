@@ -7,11 +7,6 @@
 
 extern "C" {
   
-  /*
-#define fdisxsec FC_FUNC(fdisxsec,FDISXSEC)
-  void fdisxsec(double*,double*,double*,double*,double*,char*,char*,int*,
-                char*,int*,char*,char*,double*,double*,double*,double*);
-  */
 #define finitializeapfel_dis FC_FUNC(initializeapfel_dis,INITIALIZEAPFEL_DIS)
   void finitializeapfel_dis(void);
 
@@ -93,8 +88,8 @@ extern "C" {
 #define fsetprotonmass FC_FUNC(setprotonmass,SETPROTONMASS)
   void fsetprotonmass(double*);
 
-#define fsetsinthetaw FC_FUNC(setsinthetaw,SETSINTHETAW)
-  void fsetsinthetaw(double*);
+#define fsetsin2thetaw FC_FUNC(setsin2thetaw,SETSIN2THETAW)
+  void fsetsin2thetaw(double*);
 
 #define fsetckm FC_FUNC(setckm,SETCKM)
   void fsetckm(double*,double*,double*,double*,double*,double*,double*,double*,double*);
@@ -126,8 +121,8 @@ extern "C" {
 #define fgetprotonmass FC_FUNC(getprotonmass,GETPROTONMASS)
   double fgetprotonmass();
 
-#define fgetsinthetaw FC_FUNC(getsinthetaw,GETSINTHETAW)
-  double fgetsinthetaw();
+#define fgetsin2thetaw FC_FUNC(getsin2thetaw,GETSIN2THETAW)
+  double fgetsin2thetaw();
 
 #define fgetckm FC_FUNC(getckm,GETCKM)
   double fgetckm(int*,int*);

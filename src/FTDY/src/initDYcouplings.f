@@ -15,13 +15,13 @@
 *
       integer ibos,iq,jq
       integer nff
-      double precision sw,GetSinThetaW
+      double precision sw,GetSin2ThetaW
       double precision V_UD,V_US,V_CD,V_CS,GetCKM
       double precision V_CKM(-6:6,-6:6)
 *
-*     Sin(\theta_W)
+*     sin^2(\theta_W)
 *
-      sw = GetSinThetaW()
+      sw = GetSin2ThetaW()
 *
       do ibos=1,4
          do iq=-6,6

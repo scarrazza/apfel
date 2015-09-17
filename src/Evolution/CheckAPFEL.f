@@ -12,11 +12,7 @@
 *
       implicit none
 **
-*     Internal variables
-*
-      logical succ, CheckAPFEL
-**
-*     Internal variables
+*     Internal Variables
 *
       integer ilha,iQ,iref
       double precision Q20,Q2(4),Q0,Q
@@ -30,9 +26,14 @@
       double precision F3light,F3charm,F3bottom,F3total
       double precision Ref(616)
       character*6 apfelversion
+      logical succ
       parameter(eps=1d-10)
       parameter(toll=1d-6)
-
+**
+*     Output Variables
+*
+      logical CheckAPFEL
+*
       data Q20  / 2d0 /
       data Q2   / 10d0, 100d0, 1000d0, 10000d0 /
       data xlha / 1d-5, 1d-4, 1d-3, 1d-2, 1d-1, 3d-1, 5d-1, 7d-1, 9d-1 /
@@ -316,6 +317,7 @@ c      call EnableWelcomeMessage(.false.)
      1        achar(27)//"[1;31m","failed",achar(27)//"[0m"
       endif
       write(6,*)
+      CheckAPFEL = succ
 *
 *     Code to write the reference table
 *
@@ -357,7 +359,6 @@ c$$$         enddo
 c$$$      enddo
 c$$$      write(6,'(a)') "      /"
 *
-      CheckAPFEL = succ
       return
       end
 
