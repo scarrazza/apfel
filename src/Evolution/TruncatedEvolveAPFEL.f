@@ -437,7 +437,7 @@
 *
 *     Restore PDF name
 *
-         pdfset = pdfsetbkp
+         call SetPDFSet(pdfsetbkp)
 *
 *     Join evolution operators
 *
