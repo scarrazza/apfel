@@ -74,6 +74,7 @@
       InAlpQED          = "xxxx"
       InKren            = "xxxx"  
       InMasses          = "xxxx"
+      InMassRef         = "xxxx"
       InMTau            = "xxxx"
       InMassRunning     = "xxxx"
       InMFP             = "xxxx"

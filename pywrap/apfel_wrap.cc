@@ -5810,6 +5810,45 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_SetMassScaleReference(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double arg3 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:SetMassScaleReference",&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetMassScaleReference" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SetMassScaleReference" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SetMassScaleReference" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  APFEL::SetMassScaleReference(arg1,arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_SetNumberOfGrids(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
@@ -7468,6 +7507,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetMaxFlavourAlpha", _wrap_SetMaxFlavourAlpha, METH_VARARGS, NULL},
 	 { (char *)"SetMaxFlavourPDFs", _wrap_SetMaxFlavourPDFs, METH_VARARGS, NULL},
 	 { (char *)"SetMSbarMasses", _wrap_SetMSbarMasses, METH_VARARGS, NULL},
+	 { (char *)"SetMassScaleReference", _wrap_SetMassScaleReference, METH_VARARGS, NULL},
 	 { (char *)"SetNumberOfGrids", _wrap_SetNumberOfGrids, METH_VARARGS, NULL},
 	 { (char *)"SetPDFSet", _wrap_SetPDFSet, METH_VARARGS, NULL},
 	 { (char *)"SetPerturbativeOrder", _wrap_SetPerturbativeOrder, METH_VARARGS, NULL},

@@ -145,6 +145,9 @@ extern "C" {
 #define fsetmsbarmasses FC_FUNC(setmsbarmasses,SETMSBARMASSES)
   void fsetmsbarmasses(double*,double*,double*);
 
+#define fsetmassscalereference FC_FUNC(setmassscalereference,SETMASSSCALEREFERENCE)
+  void fsetmassscalreference(double*,double*,double*);
+
 #define fsetnumberofgrids FC_FUNC(setnumberofgrids,SETNUMBEROFGRIDS)
   void fsetnumberofgrids(int*);
 

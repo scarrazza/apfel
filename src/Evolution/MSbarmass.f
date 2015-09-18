@@ -294,3 +294,69 @@
 *
       return
       end
+*
+****************************************************************************
+*
+*     Function whose zero is the so-called RG invariant mass.
+*     For the MSbar mass, it finds the scale m such that m(m) = m.
+*
+****************************************************************************
+      function MassQSplit(i,Q)
+*
+      implicit none
+*
+      include "../commons/m2th.h"
+**
+*     Input Variables
+*
+      integer i
+      double precision Q
+**
+*     Internal Variables
+*
+      double precision evmass
+      double precision a_QCD,as0,as
+**
+*     Output Variables
+*
+      double precision MassQSplit
+*
+      as0 = a_QCD(q2th(i))
+      as  = a_QCD(Q**2d0)
+      MassQSplit = dsqrt(m2th(i)) * evmass(i,as0,as) - Q
+*
+      return
+      end
+*
+****************************************************************************
+*
+*     Subroutine that computes the RG invariant masses
+*
+****************************************************************************
+      subroutine ComputeRGInvariantMasses
+*
+      implicit none
+*
+      include "../commons/m2th.h"
+**
+*     Internal Variables
+*
+      integer i
+      double precision MassQSplit,zriddr
+      double precision x1,x2
+      double precision acc,window
+      parameter(acc=1d-10)
+      parameter(window=2d0)
+      external MassQSplit
+*
+      do i=4,6
+         m2q(i) = m2th(i)
+         if(q2th(i).ne.m2th(i))then
+            x1 = dsqrt(q2th(i)) - window
+            x2 = dsqrt(q2th(i)) + window
+            m2th(i) = zriddr(MassQSplit,i,x1,x2,acc)**2d0
+         endif
+      enddo
+*
+      return
+      end

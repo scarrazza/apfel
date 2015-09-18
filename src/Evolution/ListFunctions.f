@@ -63,6 +63,11 @@
       write(6,*) "- SetMSbarMasses(double mc, double mb, double mt):"
       write(6,*) "    sets the values of the heavy quark thresholds"
       write(6,*) "    in GeV in the MSbar scheme."
+      write(6,*) "- SetMassScaleReference(double Qc, double Qb,",
+     1           " double Qt):"
+      write(6,*) "    sets the reference scales in GeV at which heavy"
+      write(6,*) "    quark masses are given. This has no effect if the"
+      write(6,*) "    pole masses are used."
       write(6,*) "- SetTauMass(double mtau):"
       write(6,*) "    sets the values of the tau lepton in GeV"
       write(6,*) "    (default 'mtau' = 1.777 GeV)"

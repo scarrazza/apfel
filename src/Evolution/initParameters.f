@@ -61,6 +61,10 @@
       if(InKren.ne."done")        call SetRenFacRatio(1d0)
       if(InMasses.ne."done")      call SetPoleMasses(dsqrt(2d0),4.5d0,
      1                                               175d0)
+      if(InMassRef.ne."done")     call SetMassScaleReference(
+     1                                                   dsqrt(m2th(4)),
+     2                                                   dsqrt(m2th(5)),
+     3                                                   dsqrt(m2th(6)))
       if(InMTau.ne."done")        call SetTauMass(1.777d0)
       if(InMassRunning.ne."done") call EnableMassRunning(.true.)
       if(InMFP.ne."done")         call SetMaxFlavourPDFs(6)
@@ -259,6 +263,29 @@
          call exit(-10)
       endif
 *
+*     Check that each scale at which heavy quark masses have been defined
+*     is below the following mass (only for MSbar masses).
+*
+      if(mass_scheme.eq."MSbar")then
+         if(q2th(4).ge.m2th(5).or.q2th(5).ge.m2th(6).or.
+     1      q2th(4).lt.m2th(4).or.q2th(5).lt.m2th(5).or.
+     2      q2th(6).lt.m2th(6))then
+            write(6,*) achar(27)//"[31mERROR:"
+            write(6,*) "Each heavy quark mass reference scale bust be"
+            write(6,*) "above quark mass itself and below the following"
+            write(6,*) "one:"
+            write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2th(4))," GeV"
+            write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2th(5))," GeV"
+            write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2th(6))," GeV"
+            write(6,*) "   "
+            write(6,"(a,f8.3,a)") " Qc = ",dsqrt(q2th(4))," GeV"
+            write(6,"(a,f8.3,a)") " Qb = ",dsqrt(q2th(5))," GeV"
+            write(6,"(a,f8.3,a)") " Qt = ",dsqrt(q2th(6))," GeV"
+            write(6,*) achar(27)//"[0m"
+            call exit(-10)
+         endif
+      endif
+*
 *     Check that the parameters of the LHA grid are within the maximum allowed.
 *
       if(nq2LHA.gt.nq2max)then
@@ -370,6 +397,12 @@
 *     the DGLAP equation different from 'exactmu').
 *
       call ThresholdAlphaQCD
+*
+*     If the MSbar are used and the heavy quark masses are not given
+*     at the mass scales themselves, compute the RG invariant masses
+*     i.e. mc(mc), mb(mb) and mt(mt).
+*
+      if(mass_scheme.eq."MSbar") call ComputeRGInvariantMasses
 *
       return
       end

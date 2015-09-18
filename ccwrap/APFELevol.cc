@@ -263,7 +263,12 @@ namespace APFEL {
   {
     fsetmsbarmasses(&mc,&mb,&mt);
   }
-  
+
+  void SetMassScaleReference(double Qc, double Qb, double Qt)
+  {
+    fsetmsbarmasses(&Qc,&Qb,&Qt);
+  }
+
   void SetNumberOfGrids(int n)
   {
     fsetnumberofgrids(&n);

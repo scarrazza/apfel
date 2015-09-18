@@ -110,6 +110,13 @@
          endif
 *
          if(mass_scheme.eq."MSbar")then
+            write(6,*) "MSbar heavy quark reference values:"
+            write(6,"(a,f7.3,a,f7.3,a)") " - mc(",dsqrt(Q2th(4)),
+     1           " GeV) = ",dsqrt(m2q(4))," GeV"
+            write(6,"(a,f7.3,a,f7.3,a)") " - mb(",dsqrt(Q2th(5)),
+     1           " GeV) = ",dsqrt(m2q(5))," GeV"
+            write(6,"(a,f7.3,a,f7.3,a)") " - mt(",dsqrt(Q2th(6)),
+     1           " GeV) = ",dsqrt(m2q(6))," GeV"
             write(6,*) "MSbar heavy quark thresholds:"
             write(6,"(a,f7.3,a)") " - mc(mc) = ",dsqrt(m2th(4))," GeV"
             write(6,"(a,f7.3,a)") " - mb(mb) = ",dsqrt(m2th(5))," GeV"

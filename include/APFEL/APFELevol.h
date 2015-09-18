@@ -170,6 +170,10 @@ namespace APFEL {
 
   /// Sets as a default the heavy quark MSbar masses
   void SetMSbarMasses(double mc, double mb, double mt);
+
+  /// Sets scales at which heavy quark masses are defined.
+  /// No effect for the pole masses.
+  void SetMassScaleReference(double Qc, double Qb, double Qt);
   
   /// Sets the number of x-space grids that will be used in the computation
   void SetNumberOfGrids(int n);

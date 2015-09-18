@@ -287,6 +287,10 @@ def SetMSbarMasses(*args):
   return _apfel.SetMSbarMasses(*args)
 SetMSbarMasses = _apfel.SetMSbarMasses
 
+def SetMassScaleReference(*args):
+  return _apfel.SetMassScaleReference(*args)
+SetMassScaleReference = _apfel.SetMassScaleReference
+
 def SetNumberOfGrids(*args):
   return _apfel.SetNumberOfGrids(*args)
 SetNumberOfGrids = _apfel.SetNumberOfGrids
