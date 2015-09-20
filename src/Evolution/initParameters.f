@@ -268,10 +268,10 @@
 *
       if(mass_scheme.eq."MSbar")then
          if(q2th(4).ge.m2th(5).or.q2th(5).ge.m2th(6).or.
-     1      q2th(4).lt.m2th(4).or.q2th(5).lt.m2th(5).or.
-     2      q2th(6).lt.m2th(6))then
+     1      q2th(4).lt.m2th(4)-1d-2.or.q2th(5).lt.m2th(5)-1d-2.or.
+     2      q2th(6).lt.m2th(6)-1d-2)then
             write(6,*) achar(27)//"[31mERROR:"
-            write(6,*) "Each heavy quark mass reference scale bust be"
+            write(6,*) "Each heavy quark mass reference scale must be"
             write(6,*) "above quark mass itself and below the following"
             write(6,*) "one:"
             write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2th(4))," GeV"
