@@ -834,7 +834,8 @@ c               endif
 *
 *     In order to improve the NNLO predictions of the FFNS in the large-Q region,
 *     the code smoothly switches to the FFN0 scheme by means of a sigma function
-*     centered in 'xi0' (Not needed for FL).
+*     centered in 'xi0'. This is also need to extend the range of the massive
+*     coefficient functions.
 *
          if(MassScheme(1:4).eq."FFNS")then
             if(ipt_FF.ge.2)then
@@ -846,9 +847,9 @@ c               endif
                      SC2mNC(igrid,ixi,k,2,beta,alpha) =
      1                    sig1 * SC2mNC(igrid,ixi,k,2,beta,alpha)
      2                    + sig2 * SC2m0NC(igrid,ixi,k,2,beta,alpha)
-c                      CLmNC(igrid,ixi,k,2,beta,alpha) =
-c     1                    sig1 * SCLmNC(igrid,ixi,k,2,beta,alpha)
-c     2                    + sig2 * SCLm0NC(igrid,ixi,k,2,beta,alpha)
+                      SCLmNC(igrid,ixi,k,2,beta,alpha) =
+     1                    sig1 * SCLmNC(igrid,ixi,k,2,beta,alpha)
+     2                    + sig2 * SCLm0NC(igrid,ixi,k,2,beta,alpha)
                   enddo
                enddo
             endif

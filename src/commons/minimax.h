@@ -18,7 +18,8 @@
       data m_coef( 14 ) /  15  /
    
       data ximin /  0.40000000000000002D0     /
-      data ximax /   10000.000000000000D0     /
+c      data ximax /   10000.000000000000D0     /
+      data ximax /   30000.000000000000D0     /
    
       data xigrid(   1 ) /  0.40000000000000002D0     /
       data xigrid(   2 ) /  0.41377935737673471D0     /
@@ -320,6 +321,28 @@
       data xigrid( 298 ) /   9345.0653141575058D0     /
       data xigrid( 299 ) /   9666.9878008392716D0     /
       data xigrid( 300 ) /   10000.000000000009D0     /
+*     Additional grid points to make use of the massive scheme also above
+*     Q^2 / m^2 = 10000. The massive scheme here is replaced by the
+*     massive0 one.
+      data xigrid( 301 ) /   10595.260647382751D0     /
+      data xigrid( 302 ) /   11225.954818597756D0     /
+      data xigrid( 303 ) /   11894.191731878558D0     /
+      data xigrid( 304 ) /   12602.206158919818D0     /
+      data xigrid( 305 ) /   13352.365898580769D0     /
+      data xigrid( 306 ) /   14147.179695468825D0     /
+      data xigrid( 307 ) /   14989.305629885313D0     /
+      data xigrid( 308 ) /   15881.560007191660D0     /
+      data xigrid( 309 ) /   16826.926776324552D0     /
+      data xigrid( 310 ) /   17828.567508958262D0     /
+      data xigrid( 311 ) /   18889.831972687221D0     /
+      data xigrid( 312 ) /   20014.269333588541D0     /
+      data xigrid( 313 ) /   21205.640025629007D0     /
+      data xigrid( 314 ) /   22467.928326611160D0     /
+      data xigrid( 315 ) /   23805.355682715941D0     /
+      data xigrid( 316 ) /   25222.394826202955D0     /
+      data xigrid( 317 ) /   26723.784733481847D0     /
+      data xigrid( 318 ) /   28314.546473578815D0     /
+      data xigrid( 319 ) /   30000.000000000000D0     /
    
       data coef_p1(  1 ) /    0.0000000000000000D0     /
       data coef_p1(  2 ) /    0.0000000000000000D0     /
