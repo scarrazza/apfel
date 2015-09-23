@@ -215,15 +215,7 @@
 *
       write(6,*) "---- Functions of the DIS module ----"
       write(6,*) "  "
-      write(6,*) "- DIS_xsec(double x, double qi, double qf, double y,",
-     1           " double pol,"
-      write(6,*) "           string proc, string scheme,"
-      write(6,*) "           int pto, string pdfset, int irep,"
-      write(6,*) "           string target, string proj,"
-      write(6,*) "           double *F2, double *F3, double *FL,",
-     1           " double *sigma):"
-      write(6,*) "    old DIS module (deprecated)."
-      write(6,*) "  "
+*
       write(6,*) "Initialization functions:"
       write(6,*) "  "
       write(6,*) "- InitializeAPFEL_DIS():"
