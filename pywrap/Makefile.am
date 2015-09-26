@@ -6,7 +6,6 @@ apfel_wrap.cc apfel.py: apfel.i
 	swig -c++ -python -I$(HEPMCINCPATH) -I$(top_srcdir)/include -o apfel_wrap.cc $<
 
 AM_CXXFLAGS += -Wno-long-long
-PYTHON = python
 
 all-local: apfel_wrap.cc
 	$(PYTHON) setup.py build
