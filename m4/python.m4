@@ -401,7 +401,7 @@ AC_DEFUN([AZ_PYTHON_VERSION_CHECK],
 import sys, string
 # split strings by '.' and convert to numeric.  Append some zeros
 # because we need at least 4 digits for the hex conversion.
-minver = map(int, string.split('$1', '.')) + [[0, 0, 0]]
+minver = map(int, string.split('$1' '.')) + [[0, 0, 0]]
 minverhex = 0
 for i in xrange(0, 4): minverhex = (minverhex << 8) + minver[[i]]
 if sys.hexversion >= minverhex:

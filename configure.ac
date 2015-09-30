@@ -89,7 +89,7 @@ AZ_PYTHON_DEFAULT
 ## Basic Python checks
 if test x$enable_pywrap == xyes; then
   AZ_PYTHON_PATH
-  AZ_PYTHON_VERSION_ENSURE([2.3])
+  #AZ_PYTHON_VERSION_ENSURE([2.3.0])
  ## Test for Python header
   if test -x "$PYTHON"; then
     AC_MSG_CHECKING([for Python include path])
