@@ -19,7 +19,7 @@ cxxargs = '@CXXFLAGS@'.split()
 ldargs = '@LDFLAGS@'.split()
 
 def get_status_output(*args):
-    p = subprocess.Popen(*args, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    p = subprocess.Popen(*args, stdout=subprocess.PIPE,stderr=subprocess.PIPE, shell=True)
     stdout, stderr = p.communicate()
     return p.returncode, stdout
 
