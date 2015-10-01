@@ -2,7 +2,7 @@
 
 from distutils.core import setup, Extension
 import os
-import commands
+import subprocess
 
 longdesc = """This is a simple SWIG wrapper on the main steering interface of
 the APFEL library. It is used to create, query and use the APFEL data from 
@@ -18,7 +18,12 @@ libdir = os.path.abspath('@top_builddir@/lib')
 cxxargs = '@CXXFLAGS@'.split()
 ldargs = '@LDFLAGS@'.split()
 
-status, result = commands.getstatusoutput("lhapdf-config --version")
+def get_status_output(*args):
+    p = subprocess.Popen(*args, stdout=subprocess.PIPE)
+    stdout, stderr = p.communicate()
+    return p.returncode, stdout
+
+status, result = get_status_output(["lhapdf-config","--version"])
 if status == 0:
     lhapdfdir = os.popen('lhapdf-config --libdir').read()
     ext = Extension('_apfel',
