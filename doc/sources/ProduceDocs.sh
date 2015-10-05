@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 for ((index=0; index<2; index++))
 do

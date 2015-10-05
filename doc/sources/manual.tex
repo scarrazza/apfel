@@ -22,109 +22,7 @@
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\def\smallfrac#1#2{\hbox{${{#1}\over {#2}}$}}
-\newcommand{\be}{\begin{equation}}
-\newcommand{\ee}{\end{equation}}
-\newcommand{\bea}{\begin{eqnarray}}
-\newcommand{\eea}{\end{eqnarray}}
-\newcommand{\bi}{\begin{itemize}}
-\newcommand{\ei}{\end{itemize}}
-\newcommand{\ben}{\begin{enumerate}}
-\newcommand{\een}{\end{enumerate}}
-\newcommand{\la}{\left\langle}
-\newcommand{\ra}{\right\rangle}
-\newcommand{\lc}{\left[}
-\newcommand{\rc}{\right]}
-\newcommand{\lp}{\left(}
-\newcommand{\rp}{\right)}
-\newcommand{\as}{\alpha_s}
-\newcommand{\aq}{\alpha_s\left( Q^2 \right)}
-\newcommand{\amz}{\alpha_s\left( M_Z^2 \right)}
-\newcommand{\aqq}{\alpha_s \left( Q^2_0 \right)}
-\newcommand{\aqz}{\alpha_s \left( Q^2_0 \right)}
-\def\toinf#1{\mathrel{\mathop{\sim}\limits_{\scriptscriptstyle
-{#1\rightarrow\infty }}}}
-\def\tozero#1{\mathrel{\mathop{\sim}\limits_{\scriptscriptstyle
-{#1\rightarrow0 }}}}
-\def\toone#1{\mathrel{\mathop{\sim}\limits_{\scriptscriptstyle
-{#1\rightarrow1 }}}}
-\def\frac#1#2{{{#1}\over {#2}}}
-\def\gsim{\mathrel{\rlap{\lower4pt\hbox{\hskip1pt$\sim$}}
-    \raise1pt\hbox{$>$}}}         %greater than or approx. symbol
-\def\lsim{\mathrel{\rlap{\lower4pt\hbox{\hskip1pt$\sim$}}
-    \raise1pt\hbox{$<$}}}         %less than or approx. symbol
-\newcommand{\mrexp}{\mathrm{exp}}
-\newcommand{\dat}{\mathrm{dat}}
-\newcommand{\one}{\mathrm{(1)}}
-\newcommand{\two}{\mathrm{(2)}}
-\newcommand{\art}{\mathrm{art}} 
-\newcommand{\rep}{\mathrm{rep}}
-\newcommand{\net}{\mathrm{net}}
-\newcommand{\stopp}{\mathrm{stop}}
-\newcommand{\sys}{\mathrm{sys}}
-\newcommand{\stat}{\mathrm{stat}}
-\newcommand{\diag}{\mathrm{diag}}
-\newcommand{\pdf}{\mathrm{pdf}}
-\newcommand{\tot}{\mathrm{tot}}
-\newcommand{\minn}{\mathrm{min}}
-\newcommand{\mut}{\mathrm{mut}}
-\newcommand{\partt}{\mathrm{part}}
-\newcommand{\dof}{\mathrm{dof}}
-\newcommand{\NS}{\mathrm{NS}}
-\newcommand{\cov}{\mathrm{cov}}
-\newcommand{\gen}{\mathrm{gen}}
-\newcommand{\cut}{\mathrm{cut}}
-\newcommand{\parr}{\mathrm{par}}
-\newcommand{\val}{\mathrm{val}}
-\newcommand{\tr}{\mathrm{tr}}
-\newcommand{\checkk}{\mathrm{check}}
-\newcommand{\reff}{\mathrm{ref}}
-\newcommand{\extra}{\mathrm{extra}}
-\newcommand{\draft}[1]{}
-\newcommand{\comment}[1]{{\bf \it  #1}}
-\def\beq{\begin{equation}}  
-\def\eeq{\end{equation}}  
-\usepackage{xspace}
-% Added by MU for the fast evolution section
-\def\bgamma{\boldsymbol{\gamma}}
-\def\nn{\nonumber}
-\def \so{\sigma_I^{DIS}(x_I,Q^2_I)}
-\def \sh{\frac{d\sigma^{hh}}{dX}}
-\def\sdy{\frac{d\sigma^{\mathrm{DY}}}{dQ_I^2dY_I}}
-\def \npdf{N_{\mathrm{pdf}}}
-\def \gtilda{\tilde\Gamma_J^{\mathrm{OBS}}}
-\def \n0{N_j^{(0)}}
-\def \a{\alpha}
-\def \b{\beta}
-\def \g{\gamma}
-\def \c{\xi}
-\def \z{\zeta}
-% Added by JR
-\def\lapprox{\lower .7ex\hbox{$\;\stackrel{\textstyle <}{\sim}\;$}}
-\def\gapprox{\lower .7ex\hbox{$\;\stackrel{\textstyle >}{\sim}\;$}}
-\def\half{\smallfrac{1}{2}}
-\def\GeV{{\rm GeV}}
-\def\TeV{{\rm TeV}}
-\def\ap{{a'}}
-\def\vp{{v'}}
-\def\e{\epsilon}
-\def\d{{\rm d}}
-\def\calN{{\cal N}}
-\def\shat{\hat{s}}
-\def\barq{\bar{q}}
-\def\qq{q \bar q}
-\def\uu{u \bar u}
-\def\dd{d \bar d}
-\def\pp{p \bar p}
-\def\xa{x_{1}}
-\def\xb{x_{2}}
-\def\xaa{x_{1}^{0}}
-\def\xbb{x_{2}^{0}}
-\def\smx{\stackrel{x\to 0}{\longrightarrow}}
-\def\Li{{\rm Li}}
 
 % Define special colors
 \usepackage{color}
@@ -180,149 +78,156 @@
   stringstyle=\color{red}
 }
 
-
-\newcommand{\MSbar}{\overline{\mathrm{MS}}}
-
-\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
-\newcommand{\tmtextit}[1]{{\itshape{#1}}}
-\newcommand{\tmtextrm}[1]{{\rmfamily{#1}}}
-\newcommand{\tmtexttt}[1]{{\ttfamily{#1}}}
-
 %GPS suggestion
 \lstset{basicstyle=\footnotesize\ttfamily,breaklines=true} 
 
 \begin{document}
 
+\begin{center}
+{\Large \bf {\tt APFEL v2.6.1}: A PDF Evolution Library with QED corrections}
+\vspace{.7cm}
+
+Valerio~Bertone$^{1,2}$,
+Stefano~Carrazza$^{2}$ and Juan~Rojo$^1$
+
+\vspace{.3cm}
+{
+\it ~$^1$ Rudolf Peierls Centre for Theoretical Physics,\\
+\it 1 Keble Road, University of Oxford, OX1 3NP, Oxford, UK\\
+\it ~$^2$ PH Department, TH Unit, CERN, CH-1211 Geneva 23, Switzerland \\
+}
+\end{center}
+
+\vspace{0.1cm}
+
+\begin{center}
+{\bf \large Abstract}
+\end{center}
+
+In this document we present the user manual for the {\tt APFEL}
+library. Written in {\scshape Fortran 77}, all the functionalities can
+also be accessed via the {\tt C/C++} and {\tt Python} interfaces.  For
+simplicity, we will restrict ourselves to the description of the {\tt
+  C/C++} interface, but the usage of the {\scshape Fortran 77} and
+{\tt Python} interfaces is very similar and examples of their use are
+provided in the {\tt examples} folder of the {\tt APFEL} source code.
+First of all, we will discuss how to install {\tt APFEL} and how to
+execute the basic example programs. After that, we will list the
+various customization options that can be accessed by the user for
+both the PDF evolution and the DIS structure functions modules.
+
 \tableofcontents
 
-\section{{\tt APFEL} library documentation}\label{sec-manual}
-
-In this document we present the user manual for the  {\tt APFEL} library.
-%
-Written in {\scshape Fortran 77},
-all the functionalities can also be accessed via the  {\tt C/C++} and
- {\tt Python} interfaces. 
-%
-For simplicity, we will restrict ourselves to the
-description of the {\tt C/C++} interface, but the usage of
-the {\scshape Fortran 77} and  {\tt Python} interfaces is
-very similar and examples of their use are provided 
-in the {\tt examples} folder of the {\tt APFEL} source code.
-%
-First of all, we will discuss how to install {\tt APFEL}  and how to execute the basic
-example programs. After that, we will 
-list the various customization options that can
-be accessed by the user for both the PDF evolution and the DIS structure functions modules.
-%
-%A description of the usage of the DIS structure functions module
-%follows.
-%
-Finally, we will describe how to install the {\tt APFEL} Graphical
-User Interface (GUI), giving some basic examples on how to use the associated plotting modules.
-
-\subsection{Installation and basic execution}
+\section{Installation}
 
 The  {\tt APFEL} library is available from its {\tt HepForge} website:
 \begin{center}
 {\bf \url{http://apfel.hepforge.org/}~}
 \end{center}
-and it can also be accessed directly from the svn repository, both
-for the development trunk:
+and from the {\tt GitHub} webpage:
 \begin{center}
-\tt svn checkout http://apfel.hepforge.org/svn/trunk apfel
+{\bf \url{https://github.com/scarrazza/apfel}~}
 \end{center}
-as well as for the current stable release, in the case of v2.0.1
-for instance one has:
-\begin{center}
-\tt svn checkout http://apfel.hepforge.org/svn/tags/2.0.1 apfel-2.0.1
-\end{center}
-We strongly recommend to use the latest stables release suggested on
-the {\tt APFEL} website.
-
-The installation of the {\tt APFEL} library  can be easily  performed 
-using the standard {\tt autotools} sequence:
+It can also be accessed directly from the {\tt git} repository.
+The last development version can be downloaded by giving:
 \begin{lstlisting}
-   ./configure
-   make
-   make install
+  git clone https://github.com/scarrazza/apfel.git
 \end{lstlisting}
-which automatically installs {\tt APFEL} in  {\tt
-  /usr/local/}. 
-%
-Note that the {\tt APFEL} library requires an installation of the {\tt LHAPDF} PDF library.\footnote{The
-current release of {\tt APFEL} assumes that {\tt LHAPDF5.9.0} or
-a more recent version has been previously installed.
-}
-%
+For the tagged versions one can use the {\tt git} tag commands:
+\begin{lstlisting}
+  git tag -l
+  git checkout tags/tag_name
+\end{lstlisting}
+to switch to any of the past releases. We strongly recommend to use
+the latest stables release.
+
+The installation of the {\tt APFEL} library can be easily done
+following the standard {\tt autotools} sequence:
+\begin{lstlisting}
+  ./configure
+  make
+  make install
+\end{lstlisting}
+which automatically installs {\tt APFEL} in {\tt /usr/local/}. Note
+that by default the {\tt APFEL} library requires an installation of
+the {\tt LHAPDF} PDF library\footnote{The current release of {\tt
+    APFEL} assumes that {\tt LHAPDF} version 6 has been previously
+  installed as version 5 is no longer supported.}. However, an
+LHAPDF-less installation is also supported by giving:
+\begin{lstlisting}
+  ./configure --disable-lhapdf
+\end{lstlisting}
 To use a different installation path, one simply needs to
 use the option:
 \begin{lstlisting}
-   ./configure --prefix=/path/to/the/installation/folder
+  ./configure --prefix=/path/to/the/installation/folder
 \end{lstlisting}
-%
-In this case, the {\tt APFEL} installation path should be included
-to the environmental variable {\tt LD\_LIBRARY\_PATH}.
-%
-This can be done adding to the local {\tt .bashrc} file (or {\tt
-  .profile} file on Mac) the string:
+In this case, the {\tt APFEL} installation path should be included to
+the environmental variable {\tt LD\_LIBRARY\_PATH}. This can be done
+adding to the local {\tt .bashrc} file (or {\tt .profile} file on Mac)
+the string:
 \begin{lstlisting}
-   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/the/installation/folder/lib
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/path/to/the/installation/folder/lib
 \end{lstlisting}
 
-
-Once {\tt APFEL} has been properly compiled and installed, the user
-has at her/his disposal a set of routines that can be called from a
-main program. In the installation {\tt bin} directory there is the
-{\tt apfel-config} script, useful to determine the compiler flags in
-custom {\tt makefiles}, together with a shell script {\tt apfel} which
-starts an interactive console session of {\tt APFEL} providing an
-immediate instrument to use the library without coding.
-%
-In the following
-we will illustrate these functionalities and how
-they can be accessed by the user.
-%
-The basic usage of {\tt APFEL}  requires
-only two steps to have the complete set of evolved PDFs.
-%
-The first step is the initialization of {\tt APFEL} through the call
-of the following routine:
+Once {\tt APFEL} has been properly compiled and installed, the
+configuration script {\tt apfel-config} should automatically be
+present. Such script is useful to determine the compiler flags. Type:
 \begin{lstlisting}
-   InitializeAPFEL
+  apfel-config --help
+\end{lstlisting}
+in a shell to see all the possible options. Particularly useful is the
+{\tt --list-funcs} flag that lists all the functions available in {\tt
+  APFEL} along with a short explanation. In addition, also the shell
+script {\tt apfel} is provided which starts an interactive console
+session of {\tt APFEL} providing a prompt tool to use the library
+without coding.
+
+In the following we will list and illustrate all the functionalities
+of {\tt APFEL} and explaining how they can be accessed by the
+user. The most recent version of {\tt APFEL} provide also an
+additional module to compute DIS (and SIA) structure functions in
+different mass scheme. Such module is dependent of the original PDF
+evolution module as it inherits from it many of the setting functions
+that we will describe in the next section. We will start describing
+the functions of the PDF evolution module and we will devote the
+following section to a thourough description of the DIS module.
+
+\section{The PDF evolution module}
+
+The basic usage of the PDF evolution module of {\tt APFEL} requires
+only two steps to have the complete set of evolved PDFs. The first
+step is the initialization of {\tt APFEL} through the call of the
+following function:
+\begin{lstlisting}
+  APFEL::InitializeAPFEL();
 \end{lstlisting}
 This will precompute all the needed evolution operators that enter the
-discretized DGLAP equation.
-%
-Let us recall that once the general settings of the
-evolution have been defined (perturbative order, heavy quark
-masses, reference value of $\alpha_s$, and so on), 
-the initialization needs to be performed only once, irrespective of
-the scales that are used in the PDF evolution.
-%
-The second step consists in performing the actual PDF evolution between the
-initial scale {\tt Q0} and the final scale {\tt Q} (in GeV). This can
-be achieved using the routine:
+discretized DGLAP equation. Let us recall that once the general
+settings of the evolution have been defined (perturbative order, heavy
+quark masses, reference value of $\alpha_s$, and so on), the
+initialization needs to be performed only once, irrespective of the
+scales that are used in the PDF evolution. The second step consists in
+performing the actual PDF evolution between the initial scale {\tt Q0}
+and the final scale {\tt Q} (in GeV). This can be achieved using the
+function:
 \begin{lstlisting}
-   EvolveAPFEL(Q0,Q)
+  APFEL::EvolveAPFEL(Q0,Q);
 \end{lstlisting}
-With this routine {\tt APFEL} numerically solves the 
-discretized DGLAP equations in $t$ using the evolution operators
- precomputed in the initialization step.
-%
-%As discussed below, the user can modify the initial condition for
-%PDF evolution at {\tt Q0} from either a {\tt LHAPDF} set or using toy
-%input PDFs.
-%
-Now the user can access the evolved PDFs at the scale {\tt Q}
-via the use of the functions:
+Calling this function {\tt APFEL} solves the discretized DGLAP
+equations using the evolution operators precomputed in the
+initialization step.
+
+Now the user can access the evolved PDFs at the scale {\tt Q} via the
+use of the functions:
 \begin{lstlisting}
-   xPDF(i,x)
-   xgamma(x)
+   APFEL::xPDF(i,x);
+   APFEL::xgamma(x);
 \end{lstlisting}
 where the real variable {\tt x} is the desired value of Bjorken-$x$
-while the integer variable {\tt i} in the function {\tt xPDF}, which runs from $-$6 to
-6, corresponds to quark flavor index according to the same convention
-used in the {\tt LHAPDF} library, that is:
+while the integer variable {\tt i} in the function {\tt xPDF}, which
+runs from $-$6 to 6, corresponds to the quark flavor index according
+to the following convention:
 \begin{table}[h]
 \centering
 \begin{tabular}{rcccccccccccccc}
@@ -331,57 +236,17 @@ used in the {\tt LHAPDF} library, that is:
 $g$&$d$&$u$&$s$&$c$&$b$&$t$ \\
 \end{tabular}
 \end{table}
-%
+Note that in {\tt APFEL} we have explicitly separated the access to
+the quark and gluon PDFs (via {\tt xPDF}) and from that to the photon
+PDF (via {\tt xgamma}). Note also that the functions {\tt xPDF} and
+{\tt xgamma} return $x$ times the PDFs ($i.e.$ the momentum
+fractions).
 
-In {\tt APFEL} we have explicitly separated the access to the quark
-and gluon PDFs (via {\tt xPDF}) and from that to the photon PDF
-(via {\tt xgamma}). Notice that the functions {\tt xPDF} and {\tt
-  xgamma} return $x$ times the PDFs (the momentum fractions).
-
-In addition to the PDF values, the user can also access the integer Mellin moments of
-the PDFs,\footnote{We follow the standard definition of
-Mellin moments:
-\be
-{\tt NPDF(i,N)}\equiv \int_0^1 dx~x^{{\tt N-2}}\, {\tt xPDF(i,x)} \, .
-\ee
-} using the routines:
-\begin{lstlisting}
-   NPDF(i,N)
-   Ngamma(N)
-\end{lstlisting}
-which are useful for instance to evaluate the momentum 
-and valence sum rules at the scale {\tt Q}, using {\tt N=2} and
-{\tt N=1} respectively.
-%
-Finally, two functions return the value of the QCD coupling $\alpha_s$ and of the QED
-coupling $\alpha$ using the same settings used for the PDF evolution, these are:
-\begin{lstlisting}
-   AlphaQCD(Q)
-   AlphaQED(Q)
-\end{lstlisting}
-In {\tt APFEL} we use the exact numerical solution of the QCD beta function
-equations
-using Runge-Kutta methods, while for the QED coupling the analytical
-leading-order solution is used.
-
-In a more recent release of {\tt APFEL} we introduced also the
-following function:
-\begin{lstlisting}
-   HeavyQuarkMass(n,Q)
-\end{lstlisting}
-which returns the value of the {\tt n}-th heavy quark, with {\tt n =
-  4,5,6}, at the scale {\tt Q} GeV. In case the pole heavy quark
-masses have been chosen for the evolution (see below), this function returns the
-value of the {\tt n}-th quark mass no matter the value of {\tt Q} (the
-pole mass does not run). If instead the $\MSbar$ masses have been
-chosen, this function evaluates the running of the masses using as initial
-conditions those given in the heavy quark mass initialization.
-
-The basic information above is enough to write a simple and yet complete
-program to perform PDF evolution using {\tt APFEL}.
+The basic information given above is enough to write a simple and yet
+complete program that performs PDF evolution using {\tt APFEL}.
 %
 As an illustration, a {\tt C/C++} program that computes and tabulates
-PDFs to be compared with the Les Houches PDF benchmark evolution 
+PDFs to be compared with the Les Houches PDF benchmark evolution
 tables would be the following:
 \begin{lstlisting}
 #include <iostream>
@@ -392,29 +257,19 @@ using namespace std;
 
 int main()
 {
- // Define grid in x
+  // Define grid in x
   double xlha[11] = {1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 
 		1e-1, 3e-1, 5e-1, 7e-1, 9e-1};
   
- // Precomputes evolution operators on the grids nodes
+  // Precomputes evolution operators on the grid
   APFEL::InitializeAPFEL();
 
-  // Set initial and final evolution scales
-  double Q02, Q2,
-  cout << "Enter initial and final scales in GeV2" << endl;
-  cin >> Q02 >> Q2;
-
   // Perform evolution
-  double Q0 = sqrt(Q02);
-  double Q  = sqrt(Q2);
+  double Q0 = sqrt(2);
+  double Q  = sqrt(10000);
   APFEL::EvolveAPFEL(Q0,Q);
 
   cout << scientific << setprecision(5) << endl;
-  
-  cout << "alpha_QCD(mu2F) = " << APFEL::AlphaQCD(Q) << endl;
-  cout << "alpha_QED(mu2F) = " << APFEL::AlphaQED(Q) << endl;
-  cout << endl;
-
   cout << "   x   " 
        << setw(11) << "   u-ubar   " 
        << setw(11) << "   d-dbar   " 
@@ -424,7 +279,6 @@ int main()
        << setw(11) << "   photon   " << endl;
 
   cout << scientific;
-
   // Tabulate PDFs for the LHA x values
   for (int i = 0; i < 11; i++)
     cout << xlha[i] << "\t"  
@@ -439,202 +293,660 @@ int main()
   return 0;
 }
 \end{lstlisting}
-This example code uses the default settings of {\tt APFEL} for the
-evolution parameters such as perturbative order, heavy quark masses, values of the couplings etc.
-%
-In the following we will discuss how the user can choose her/his own settings
-for the PDF evolution in {\tt APFEL}.
+It should be noticed that this example code uses the default settings
+of {\tt APFEL} for the evolution parameters such as: initial scale
+PDFs, perturbative order, heavy quark masses, values of the couplings,
+etc. In the following we will discuss how the user can customize the
+settings for the PDF evolution in {\tt APFEL}.
 
 \subsection{Customization of the PDF evolution}\label{EvolCustom}
 
-%
-The customization of the PDF evolution with {\tt APFEL} can be achieved using a number of dedicated 
-routines, to be called before the initialization stage, that is before
-calling {\tt InitializeAPFEL}.
-%
-These routines are:
+The customization of the PDF evolution with {\tt APFEL} can be
+achieved using a number of dedicated functions, to be called before
+the initialization stage, that is before calling {\tt
+  InitializeAPFEL}\footnote{This is not entirely precise because there
+  is a number of customization functions that are effective only at
+  the evolution level and thus can be called also after {\tt
+    InitializeAPFEL} but before {\tt EvolveAPFEL}. We will discuss
+  this feature case by case when going through all functions available
+  in {\tt APFEL}.}. We will subdivide the available functions into
+three cathegories:
 \begin{itemize}
+\item the \textit{setting functions} which provide the real
+  costumization tools. These functions allow the user to change the
+  way how the initialization and the output (see next items) functions
+  behave.
+\item The \textit{initialization functions} which are resposible to
+  perform the ``main'' operations, like initializing the evolution
+  factor and evolving PDFs.
+\item The \textit{output functions} which finally return the result of
+  a given set of setting and initialization functions.
+\end{itemize}
+In the following we will list and comment all the functions belonging
+to each of the cathegories above. Finally, we remind the reader
+that running the configuration script {\tt apfel-config} with the {\tt
+  --list-funcs} flag will list all the functions available in {\tt
+  APFEL} along with a short explanation.
 
-\item {\tt SetTheory(Theory)}: this routine defines the theory to be used
-  for the PDF evolution. The string variable {\tt Theory} can take
-  the following values:
+\subsubsection{Setting functions}
+
+Bofore going through the various setting functions, the user should be
+aware of the fact that {\tt APFEL} has a set of default settings that
+are used if the user does not intervene to change any of them. This is
+why the example described above needs only a very limited number of
+steps. However, while each time that {\tt APFEL} is run a banner with
+a list of the main settings is displayed, it is usefull to report here
+the default settings of {\tt APFEL}. We will first go through all the
+setting functions and only at the end we will report the default
+settings so that the meaning of all of them should be clear to the
+reader who went through this section. 
+
+Bofore proceeding with the descitpion of the setting functions of the
+evolution module, it is useful to notice that in the following we will
+use the identifiers {\tt int}, {\tt double}, {\tt bool} and {\tt
+  string} to specify the type of entry expected by each of the
+fuctions described below.
+
+\begin{lstlisting}
+  APFEL::SetPerturbativeOrder(int pto);
+\end{lstlisting}
+This function sets the perturbative order of the PDF evolution to {\tt
+  "pto"}. The integer {\tt "pto"} can take the values 0, 1 ot 2
+according to whether the PDF evolution is performed at
+$\mathcal{O}(\alpha_s)$, $\mathcal{O}(\alpha_s^2)$, or
+$\mathcal{O}(\alpha_s^3)$, that is LO, NLO and NNLO,
+respectively. This function also sets the perturbative order of the
+evolution of the couplings $\alpha_s$ and $\alpha$ and possibly of the
+heavy quark masses. The default for {\tt pto"} is 2.
+\begin{lstlisting}
+  APFEL::SetTheory(string theory);
+\end{lstlisting}
+This function sets the theory to be used in the evolution. The
+alternatives for {\tt theory} are:
 \begin{itemize}
-\item {\tt "QCD"} for pure QCD,
-\item {\tt "QED"} for pure QED,
-\item {\tt "QCEDP"} for QCD$\otimes$QED in parallel,
-\item {\tt "QCEDS"} for QCD$\otimes$QED in series,
-\item {\tt "QECDP"} for QED$\otimes$QCD in parallel,
-\item {\tt "QECDS"} for QED$\otimes$QCD in series,
+\item {\tt "QCD"}: the PDF evolution is done solving the pure QCD
+  DGLAP equations,
+\item {\tt "QED"}: the PDF evolution is done solving the pure QED
+  DGLAP equations,
+\item {\tt "QUniD"}: the PDF evolution is done solving the coupled
+  QCD+QED DGLAP equations as explained above.
+\end{itemize}
+There are more options available that access more ``exotic'' (and
+obsolete) solutions of the coupled QCD+QED DGLAP equations. They are:
+\begin{itemize}
+\item {\tt "QCEDP"} for QCD+QED in parallel,
+\item {\tt "QCEDS"} for QCD+QED in series,
+\item {\tt "QECDP"} for QED+QCD in parallel,
+\item {\tt "QECDS"} for QED+QCD in series,
 \item {\tt "QavDP"} for the averaged solution in parallel,
 \item {\tt "QavDS"} for the averaged solution in series,
-\item {\tt "QUniD"} for the QCD$\otimes$QED unified evolution (here
-  the order of QCD and QED evolution does not matter).
 \end{itemize}
-Let us recall that all the options for the solution of the combined
-QCD$\otimes$QED evolution equations are equivalent up to subleading $\mathcal{O}\lp \alpha \alpha_s\rp$
-terms.
+and they refer to different combinations of the separate QCD and QED
+evolutions. The reader can refer to the original {\tt APFEL}
+publication for a detailed explanation. However, the use of these
+solution is discouraged unless the user is well aware of their
+meaning. The default is {\tt "QCD"}.
+\begin{lstlisting}
+  APFEL::SetVFNS();
+\end{lstlisting}
+This function sets the Variable-Flavour Number Scheme (VFNS) for the
+PDF, $\alpha_s$, and $\alpha$\footnote{In case the
+  $\overline{\mbox{MS}}$ definition for the heavy quark masses is used
+  (see below) and the running of the masses has been enabled, this
+  function sets the VFNS also for the running of the heavy quark
+  masses.} evolution. In practice this means that, if any heavy quark
+threshold is encountered during the evolution, the solutions of the
+DGLAP equation below and above the threshold itself will be properly
+matched. This option is used as a default.
+\begin{lstlisting}
+  APFEL::SetFFNS(int nfl);
+\end{lstlisting}
+This function, as opposed to {\tt SetVFNS}, sets the Fixed-Flavour
+Number Scheme (FFNS) with {\tt "nfl"} active flavours for the PDF,
+$\alpha_s$ and $\alpha$ (and $\overline{\mbox{MS}}$) evolution. This
+function forces the evolution to be done with {\tt "nfl"} active
+flavours in any evolution range. The allowed values are {\tt nfl} = 3,
+4, 5 and 6.
+\begin{lstlisting}
+  APFEL::SetAlphaQCDRef(double alpharef, double Qref);
+\end{lstlisting}
+This function sets the reference values of the strong coupling
+$\alpha_s$ at the scale {\tt "Qref"} in GeV to {\tt "alpharef"}. The
+default is {\tt "alpharef"} = 0.35 at {\tt "Qref"} = $\sqrt{2}$ GeV.
+\begin{lstlisting}
+  APFEL::SetAlphaQEDRef(double alpharef, double Qref);
+\end{lstlisting}
+This function sets the reference values of the QED coupling $\alpha$
+at the scale {\tt "Qref"} in GeV to {\tt "alpharef"}. The default is
+{\tt "alpharef"} = 7.496252$\cdot 10^{-3}$ at {\tt "Qref"} = 1.777
+GeV.
+\begin{lstlisting}
+  APFEL::SetLambdaQCDRef(double lambdaref, int nref);
+\end{lstlisting}
+This function sets the value of $\Lambda_{\rm QCD}$ in GeV with {\tt
+  "nref"} flavours to {\tt "lambdaref"}. This value is used only if
+the {\tt "lambda"} solution of the $\beta$-function equation (see below)
+is used to compute the running of $\alpha_s$. The default is {\tt
+  "lambdaref"} = 0.220 GeV with {\tt "nref"} = 5.
+\begin{lstlisting}
+  APFEL::SetPoleMasses(double mc, double mb, double mt);
+\end{lstlisting}
+This function sets the values of the heavy quark thresholds in GeV and
+sets the pole-mass scheme as a renormalization scheme for the heavy
+quark masses. This function is used as a default with {\tt "mc"} =
+$\sqrt{2}$ GeV, {\tt "mb"} = 4.5 GeV, {\tt "mt"} = 175 GeV.
+\begin{lstlisting}
+  APFEL::SetMSbarMasses(double mc, double mb, double mt);
+     sets the values of the heavy quark thresholds
+     in GeV in the MSbar scheme.
+\end{lstlisting}
+This function, as opposed to {\tt SetPoleMasses}, sets the values of
+the heavy quark masses in GeV and sets the $\overline{\mbox{MS}}$
+scheme as a renormalization scheme for the heavy quark masses. The
+reference scales at which the masses are defined can be specified
+using the {\tt SetMassScaleReference} function (see below).
+\begin{lstlisting}
+  APFEL::SetMassScaleReference(double Qc, double Qb, double Qt);
+\end{lstlisting}
+This function sets the reference scales in GeV at which heavy quark
+masses are given. This function is effective only if the
+$\overline{\mbox{MS}}$ definition for the heavy quark masses is used
+and has no effect if the pole masses are used. If this function is not
+called, {\tt APFEL} will assume that the mass reference scales are
+equal to the masses themselves. In other words, in the absence of a
+call to this function when using the $\overline{\mbox{MS}}$ definition
+for the heavy quark masses, the {\tt SetMSbarMasses} function will
+define $m_c(m_c)$, $m_b(m_b)$ and $m_t(m_t)$. If instead this function
+is called and the reference scales are found to be different from the
+masses themselves, the values of $m_c(m_c)$, $m_b(m_b)$ and $m_t(m_t)$
+are also evaluated by applying the RG evolution as they are needed as
+thresholds for the VFNS evolution when using the
+$\overline{\mbox{MS}}$ definition for the heavy quark masses.
+\begin{lstlisting}
+  APFEL::EnableMassRunning(bool);
+\end{lstlisting}
+This function enables or disables the running of the
+$\overline{\mbox{MS}}$ masses.  This is effective only if the {\tt
+  SetMSbarMasses} is also called and in practice switches on and off
+the solution RG equation of the heavy quark masses. The default is
+{\tt true}.
+\begin{lstlisting}
+  APFEL::SetTauMass(double mtau);
+\end{lstlisting}
+This function sets the values of the $\tau$ lepton in GeV to {\tt
+  mtau}. This function is effective only if the evolution of the
+lepton PDFs is enabled (see below). The default is {\tt "mtau"} =
+1.777 GeV.
+\begin{lstlisting}
+  APFEL::SetMaxFlavourAlpha(int nf);
+\end{lstlisting}
+This function sets the maximum number of active flavours in the
+evolution of the couplings $\alpha_s$ and $\alpha$ (and the masses) to
+{\tt nf}. In practice, this function forces the code not to match the
+solution of the $\beta$-function and $\gamma$-function equations at a
+given threshold if that threshold is above the maximum number allowed
+{\tt nf}. The default is {\tt "nf"} = 6.
+\begin{lstlisting}
+  APFEL::SetMaxFlavourPDFs(int nf);
+\end{lstlisting}
+This function sets the maximum number of active flavours in the
+evolution of PDFs to {\tt nf}. In practice, this function forces the
+code not to match the solution of the DGLAP equation at a given
+threshold if that threshold is above the maximum number allowed {\tt
+  nf}. The default is {\tt "nf"} = 6.
+\begin{lstlisting}
+  APFEL::SetRenFacRatio(double ratio);
+\end{lstlisting}
+This function sets the ratio between factorization scale $\mu_F$
+(entering PDFs) and renormalization scale $\mu_R$ (entering the
+couplings and possibly the heavy quark masses) to {\tt "ratio"}. If
+{\tt "ratio"} is different from one, {\tt APFEL} will assume that
+$\mu_R$ = $\mu_F /$ {\tt "ratio"} and, as explained above, this gives
+rise to additional terms in the higher order splitting functions. The
+default is {\tt "ratio"} = 1.
+\begin{lstlisting}
+  APFEL::SetTimeLikeEvolution(bool);
+\end{lstlisting}
+This function enables or disables the time-like evolution. This
+evolution, as opposed to the space-like evolution used for PDFs, is
+used to evolve fragmentation functions (FFs). The default is {\tt
+  false}.
+\begin{lstlisting}
+  APFEL::SetSmallxResummation(bool, string la);
+\end{lstlisting}
+This function enables or disables the small-$x$ resummation in the
+evolution and set the logarithmic accuracy of the resummation to {\tt
+  "la"}. The possible options for {\tt la"} are {\tt "LL"} and {\tt
+  "NLL"}. The small-$x$ resummation of the evolution relies on an
+  external code called {\tt HELL} that returns the difference between
+  the fixed-order and the resummed splitting functions as explained
+  above. By default, the small-$x$ resummation is disabled.
+\begin{lstlisting}
+  APFEL::SetAlphaEvolution(string evol);
+\end{lstlisting}
+This function sets the solution of the $\beta$-function equations for
+the running couplings to {\tt "evol"}. The variable {\tt "evol"} can
+take the following strings:
+\begin{itemize}
+\item {\tt "exact"}: the $\beta$-function equations are solved
+  numerically in an exact way using the Runge-Kutta method. The
+  boundary condition is given by the reference values of the coupling
+  at the reference scales.
+\item {\tt "expanded"}: the $\beta$-function equations are solved
+  analytically by expanding the inverse of the $\beta$-function when
+  computing the solution of the RG equation. See above for more
+  details. The boundary condition is given by the reference values of
+  the coupling at the reference scales.
+\item {\tt "lambda"}: the $\beta$-function equations are solved in an
+  analytical way in terms of the Landau pole $\Lambda_{\rm QCD}$. See
+  above for more details.
+\end{itemize}
+It should be noticed that a different choice of {\tt "evol"} only
+affects the running of $\alpha_s$ beyond LO while the running of
+$\alpha$, being computed always at LO, is left unchanged. The default
+is {\tt "evol"} = {\tt "exact"}.
+\begin{lstlisting}
+  APFEL::SetPDFEvolution(string evolp);
+\end{lstlisting}
+This function sets the solution of the DGLAP equations for the
+evolution of PDFs to {\tt "evolp"}. The variable {\tt "evolp"} can
+take the following strings:
+\begin{itemize}
+\item {\tt "exactmu"}: the DGLAP equation differential in the
+  factorization scale $\mu_F$ is solved numerically in an exact way
+  using the Runge-Kutta method.
+\item {\tt "exactalpha"}: the DGLAP equation differential in the
+  coupling $\alpha_s$ is solved numerically in an exact way using the
+  Runge-Kutta method. This solution is completely equivalent to {\tt
+    exactmu}.
+\item {\tt "expandalpha"}: the DGLAP equation differential in the
+  coupling $\alpha_s$ is solved analytically by expanding the ratio
+  between splitting functions and $\beta$-function. See above for more
+  details.
+\item {\tt "truncated"}: this solution mimics the $N$-space truncated
+  solution and its implementation requires the numerical derivatives
+  of the {\tt expandalpha} solution. A detailed explanantion of the
+  implementation of thsi particular solution is given above.
+\end{itemize}
+In all cases the boundary conditions are given by the input initial
+scale PDFs. The default is {\tt "evol"} = {\tt "exact"}.
+\begin{lstlisting}
+  APFEL::SetEpsilonTruncation(double eps);
+\end{lstlisting}
+If the {\tt truncated} evolution for PDFs has been chosen by calling
+the {\tt SetPDFEvolution} function, the {\tt SetEpsilonTruncation}
+function sets the truncation parameter $\epsilon$ used to compute the
+numerical dericatives to {\tt eps}.
+\begin{lstlisting}
+  APFEL::SetPDFSet(string name);
+\end{lstlisting}
+This function sets the PDF set to be evolved to {\tt "name"}. The
+string variable {\tt "name"} can be the name of an LHAPDF set and in
+this case it must finish with the string {\tt ".LHgrid"}. This is
+needed to distinguish the LHAPDF sets from the other possible options
+available. The other possible options for {\tt "name"} are:
+\begin{itemize}
+\item {\tt "private"}:
+\item {\tt "apfel"}:
+\item {\tt "ToyLH"}:
+\item {\tt "external"}:
+\item {\tt "external1"}:
+\item {\tt "repexternal"}:
+\item {\tt "leptexternal"}:
+\item {\tt "kretzer"}:
+\item {\tt "MELA"}:
+\item {\tt "pretabulated"}:
+\item {\tt "pretabulated1"}:
+\end{itemize}
+The default is {\tt "name"} = {\tt "ToyLH"}.
 
-\item {\tt SetPerturbativeOrder(pt)}: this routine sets the
-  perturbative order of the QCD evolution. 
-%
-The integer variable {\tt pt} can
-  take the values 0, 1 or 2 corresponding to LO, NLO and NNLO
-  evolution respectively.
-%
-The QED evolution, when activated, is always LO.
+\begin{lstlisting}
+  APFEL::SetReplica(int nr);
+     sets the replica/member of the LHAPDF set to be
+     evolved (default "nr" = 0).
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::SetQLimits(double Qmin, double Qmax);
+     sets the range where it is possible to perform
+     the evolution (default "Qmin" = 0.5 GeV, "Qmax"
+     = 1000 GeV).
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::SetNumberOfGrids(int n);
+     sets the number of subgrids "n" (default 3)
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::SetGridParameters(int i, int n, int deg, double x);
+     sets the parameter of the i-th subgrid. "n" =
+     number intevals, "deg" = interpolation order,
+     "x" lower bound of the grid (the upper bound is
+     always 1).
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::SetExternalGrid(int i, int np, int deg, double *x);
+     sets the external grid in the position "i" with
+     "np" intervals, interpolation degree "deg". "x"
+     must be a one-dimentional array with upper bound
+     in 1 (there cannot be more than 1 external grid).
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::SetFastEvolution(bool);
+     sets the fast PDF evolution (default true).
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::GetVersion();
+     returns the APFEL version in use.
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::EnableWelcomeMessage(bool);
+     enables the printing of the welcome message with
+     the APFEL banner and the report of the evolution
+     parameters (default true).
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::EnableEvolutionOperator(bool);
+     enables the computation of the external evolution
+     parameters (default false).
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::EnableLeptonEvolution(bool);
+     enables the evolution of the lepton PDFs when the
+     fast QUniD is used (default false).
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::LockGrids(bool);
+     locks the subgrids (default false).
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::CleanUp();
+     resets all the evolution parameters to the
+     default settings.
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::SetLHgridParameters(int nx, int nxm, double xmin, double xm, double xmax, int nq2, double q2min, double q2max);
+     sets the parameters of the grid over which PDFs
+     will be tabulated in the LHAPDF format.
+\end{lstlisting}
+\begin{lstlisting}
+  APFEL::ListFunctions();
+     lists all the functions available in APFEL.
+\end{lstlisting}
 
-\item {\tt SetAlphaQCDRef(alphasref,Qref)}: this routine sets the
- reference value of the QCD coupling $\alpha_s$, {\tt alphasref},
- at the reference scale, {\tt Qref} in GeV. 
-%
 
-\item {\tt SetAlphaQEDRef(alpharef,Qref)}: same as {\tt
-    SetAlphaQCDRef} but for the QED coupling $\alpha$.
 
-\item {\tt SetPoleMasses(mc,mb,mt)}: this routine sets the values for
-  the heavy quark masses in the pole mass scheme. The real variables {\tt mc},
- {\tt mb} and {\tt mt} correspond to the numerical values in GeV of the pole heavy quark masses
- $m_c$, $m_b$ and $m_t$. Calling this routine also determines that
- pole heavy quark masses are used as thresholds for the VFN scheme PDF evolution.
+
+\begin{lstlisting}
+ Initialization functions: 
+  APFEL::InitializeAPFEL();
+     initializes the APFEL library. If no settings has
+     been specified, it uses the default ones.
+  APFEL::EvolveAPFEL(double Q0, double Q);
+     evolves PDFs on the grid to the scale "Q" [GeV]
+     starting from the scale "Q0" [GeV].
+  APFEL::DeriveAPFEL(double Q);
+     computes the logarithmic derivative with respect
+     of "Q" of PDFs at the scale "Q" [GeV].
+\end{lstlisting}
+
+
+
+
+
+\begin{lstlisting}    
+ Output functions:
+  APFEL::xPDF(int i, double x) and xgamma(double x);
+     return "x" times the i-th and the photon PDF
+     in "x" at the final scale "Q" [GeV] defined in
+     "EvolveAPFEL".
+  APFEL::xPDFall(double x, double *xf);
+     returns at once "x" times all the PDF in the
+     array xf[-6:6] computed in "x" at the final scale
+     "Q" [GeV] defined in "EvolveAPFEL".
+  APFEL::xPDFj(int i, double x) and xgammaj(double x);
+     return "x" times the i-th and the photon PDF
+     in "x" at the final scale "Q" [GeV] defined in
+     "EvolveAPFEL" interpolated on the joint grid.
+  APFEL::dxPDF(int i, double x) and dxgamma(double x);
+     return "x" times the derivative in ln(Q^2) of
+     the i-th and the photon PDF in "x" at the scale
+     "Q" [GeV] defined in "DeriveAPFEL".
+  APFEL::NPDF(int i, int N) and Ngamma(int N);
+     return the N-th moment of the i-th and the
+     photon PDF the final scale "Q" [GeV] defined in
+     "EvolveAPFEL".
+  APFEL::LUMI(int i, int j, double S);
+     returns the partonic luminosity of the i-th and
+     j-th partons for the CoM energy S [GeV^2] for the
+     final invariant mass Mx = Q [GeV] defined in 
+     "EvolveAPFEL".
+  APFEL::AlphaQCD(double Q);
+     returns the QCD strong coupling alpha_s at the
+     scale "Q" [GeV].
+  APFEL::AlphaQED(double Q);
+     returns the QED coupling alpha at the scale
+     "Q" [GeV].
+  APFEL::HeavyQuarkMass(int i,double Q);
+     returns the mass of the i-th heavy quark
+     (i = 4,5,6) scale "Q" [GeV] (the masses run only
+     when using the MSbar scheme).
+  APFEL::nIntervals();
+     returns the number of intervals of the joint
+     grid.
+  APFEL::xGrid(int alpha);
+     returns the value of "x" on the alpha-th node of
+     the joint grid.
+  APFEL::GetPerturbativeOrder();
+     returns the perturbative order set for the
+     evolution
+  APFEL::ExternalEvolutionOperator(string fname, int i, int j, double x, int beta);
+     returns the PDF evolution operator.
+  APFEL::LHAPDFgrid(int Nrep, double Qin, string fname);
+     produces a PDF interpolation grid in the LHAPDF
+     format.
+  APFEL::LHAPDFgridDerivative(int Nrep, string fname);
+     produces an interpolation grid in the LHAPDF
+     format for the derived PDFs.
+\end{lstlisting}
+
+
+
+\begin{lstlisting}
+ ---- Functions of the DIS module ----
  
-\item {\tt SetMSbarMasses(mc,mb,mt)}: this routine sets the values for
-  the heavy quark masses in the $\MSbar$  scheme. Here the real variables {\tt mc},
- {\tt mb} and {\tt mt} correspond to the numerical values in GeV of the 
-renormalization-group-invariant (RGI) heavy quark masses
-$m_c(m_c)$, $m_b(m_b)$ and $m_t(m_t)$. Calling this routine also
-determines that $\MSbar$ heavy quark masses are used as thresholds for
-the VFN scheme PDF evolution.
+ Initialization functions:
+ 
+  APFEL::InitializeAPFEL_DIS();
+     initializes the DIS module. If no settings has
+     been specified, it uses the default ones.
+  APFEL::ComputeStructureFunctionsAPFEL(double Q0, double Q);
+     computes the DIS structure functions on the grid
+     at the scale "Q" [GeV] applying also the PDF
+     evolution from the initial scale "Q0" [GeV].
+   
+ Setting functions:
+ 
+  APFEL::SetMassScheme(string ms);
+     sets the mass scheme to be used to compute the
+     structure functions ("ms" = "ZM-VFNS", "FFNS",
+     "FONLL-A", "FONLL-B", "FONLL-C", default "ms" =
+     "ZM-VFNS").
+  APFEL::SetPolarizationDIS(double pol);
+     sets the beam polarization (default "pol" = 0).
+  APFEL::SetProcessDIS(string pr);
+     sets process ("pr" = "EM", "NC", "CC", default
+     "pr" = "EM").
+  APFEL::SetProjectileDIS(string lept);
+     sets the projectile ("lept" = "electron",
+     "positron", "neutrino", "antineutrino", default
+     "lept" = "electron").
+  APFEL::SetTargetDIS(string tar);
+     sets the target ("tar" = "proton", "neutron",
+     "isoscalar", "iron", default "tar" = "proton")
+  APFEL::SetZMass(double massz);
+     sets the value of the mass of the Z boson
+     (default "massz" = 91.1876 GeV).
+  APFEL::SetWMass(double massw);
+     sets the value of the mass of the W boson
+     (default "massw" = 80.385 GeV).
+  APFEL::SetProtonMass(double massp);
+     sets the value of the mass of the proton
+     (default "massp" = 0.938272046 GeV).
+  APFEL::SetSin2ThetaW(double sw);
+     sets the value of sin^2(theta_W)
+     (default "sw" = 0.23126).
+  APFEL::SetGFermi(double gf);
+     sets the value of Fermi constant
+     (default "gf" = 1.1663787e-5).
+  APFEL::SetCKM(double vud, double vus, double vub,
+          double vcd, double vcs, double vcb,
+          double vtd, double vts, double vtb);
+     sets the absolute value of the entries of the
+     CKM matrix
+     (default: 0.97427d0, 0.22536d0, 0.00355d0,
+               0.22522d0, 0.97343d0, 0.04140d0,
+               0.00886d0, 0.04050d0, 0.99914d0).
+  APFEL::SetRenQRatio(double ratio);
+     sets the ratio muR / Q (default 1)
+  APFEL::SetFacQRatio(double ratio);
+     sets the ratio muF / Q (default 1)
+  APFEL::EnableDynamicalScaleVariations(bool);
+     enables or disables the possibility to perform
+     fact/ren scale variations point by point without
+     requiring the ratio \mu_{R,F} / Q to be constant.
+     Limitations: \mu_F = \mu_R and slower code.
+  APFEL::EnableTargetMassCorrections(bool);
+     enables or disables the target mass corrections
+     to the DIS structure functions due to the finite
+     mass of the proton.
+  APFEL::EnableDampingFONLL(bool);
+     enables or disables the damping factor when the
+     FONLL structure functions are computed.
+  APFEL::SelectCharge(string selch);
+     selects one particular charge in the NC structure
+     functions ("selch" = "down", "up", "strange",
+     "charm", "bottom", "top", "all", default 
+     "selch" = "all")
+  APFEL::SetPropagatorCorrection(double dr);
+     sets the correction to the Z propagator involved
+     in the NC DIS structure functions
+     (default "dr" = 0).
+  APFEL::SetEWCouplings(double vd, double vu, double ad, double au);
+     sets the vector and axial couplings of the up-
+     and down-type quarks. If they are not set by the
+     user the standard couplinglings are used.
+   
+ Output functions:
+ 
+  APFEL::F2light(double x), F2charm(double x), F2bottom(double x),
+   F2top(double x), F2total(double x);
+  APFEL::FLlight(double x), FLcharm(double x), FLbottom(double x),
+   FLtop(double x), FLtotal(double x);
+  APFEL::F3light(double x), F3charm(double x), F3bottom(double x),
+   F3top(double x), F3total(double x);
+     return the F2, FL and xF3 struncture functions in
+     "x" at the final scale "Q" [GeV] defined in
+     "ComputeStructureFunctionsAPFEL".
+  APFEL::GetZMass();
+     returns the value of the mass of the Z boson
+  APFEL::GetWMass();
+     returns the value of the mass of the W boson
+  APFEL::GetProtonMass();
+     returns the value of the mass of the proton
+  APFEL::GetSin2ThetaW();
+     returns the value of sin^2(theta_W)
+  APFEL::GetGFermi();
+     returns the value of Fermi constant
+  APFEL::GetCKM(int u, int d);
+     returns the absolute value of the (u,d) entry
+     of the CKM matrix
+  APFEL::GetSIATotalCrossSection(int pto, double Q);
+     returns the SIA total cross section in natural
+     units at the perturbative order "pto" and at the
+     scale "Q" in GeV (only for time-like evolution).
+  APFEL::ExternalDISOperator(string SF, int ihq, int i, double x, int beta);
+     returns the DIS operators.
+   
+ Special functions for the production of FK tables:
+   
+  APFEL::SetFKObservable(string obs);
+  APFEL::GetFKObservable();
+  APFEL::FKSimulator(string obs, double x, double q, double y, int i, int beta);
+  APFEL::FKObservables(string obs, double x, double q, double y);
+  APFEL::ComputeHardCrossSectionsDY(string inputfile, string outputfile);
+  APFEL::ComputeFKTables(string inputfile, double Q0, int flmap[196]);
+\end{lstlisting}
 
-\item {\tt SetRenFacRatio(Ratio)}: this routine sets the ratio between
-  renormalization and factorization scales. The real variable {\tt Ratio}
-  corresponds to the ratio $\mu_R / \mu_F$.
-%
-The default choice in {\tt APFEL} is {\tt Ratio=1}.
-%
 
-\item {\tt SetVFNS}: this routine determines that the
-  variable-flavor-number scheme is used  for the PDF evolution.
 
-\item {\tt SetFFNS(NF)}: this routine determines that the
-  fixed-flavor-number scheme is used  for the PDF evolution. The
-  integer variable {\tt NF} corresponds to the number
-  of active quark flavor and can then take any values between 3 and 6.
+Using the dafualt settings of {\tt APFEL} this is how the evolution
+banner would look like:
+\begin{lstlisting}
+ Welcome to 
+      _/_/_/    _/_/_/_/   _/_/_/_/   _/_/_/_/   _/
+    _/    _/   _/    _/   _/         _/         _/
+   _/_/_/_/   _/_/_/_/   _/_/_/     _/_/_/     _/
+  _/    _/   _/         _/         _/         _/
+ _/    _/   _/         _/         _/_/_/_/   _/_/_/_/
+ _____v2.6.1 A PDF Evolution Library, arXiv:1310.1394
+      Authors: V. Bertone, S. Carrazza, J. Rojo
+ 
+ Report of the evolution parameters:
+   
+ QCD evolution
+ Space-like evolution (PDFs)
+ Evolution scheme: VFNS at N2LO
+ Solution of the DGLAP equation: "exactmu" with maximum 6 active flavours
+ Solution of the coupling equations: "exact" with maximum 6 active flavours
+ Coupling reference value:
+ - AlphaQCD(  1.4142 GeV) =  0.350000
+ Pole heavy quark thresholds:
+ - Mc =   1.414 GeV
+ - Mb =   4.500 GeV
+ - Mt = 175.000 GeV
+ muR / muF =  1.0000
+  
+ Allowed evolution range [   0.50 : 100000.00 ] GeV
+ Fast evolution enabled
+\end{lstlisting}
+As clear, the most important settings are reported in the banner and
+we recommand to consult the banner every time that {\tt APFEL} is run
+to make sure that the desired setting are actually used.
 
-\item {\tt SetMaxFlavourAlpha(NF)}: this routine sets the maximum
-  number of active flavors that enter the QCD and QED beta functions
-  for the $\alpha_s$ and $\alpha$
-  running. The integer variable {\tt NF} can then take any value
-  between 3 and 6.
+Here is the complete set of default settings used by {\tt APFEL}:
+\begin{lstlisting}
+  APFEL::EnableWelcomeMessage(true);
+  APFEL::SetQLimits(0.5,100000);
+  APFEL::SetPerturbativeOrder(2);
+  APFEL::SetVFNS
+  APFEL::SetTheory("QCD");
+  APFEL::SetFastEvolution(true);
+  APFEL::SetTimeLikeEvolution(false);
+  APFEL::SetSmallxResummation(false,"NLL");
+  APFEL::SetAlphaQCDRef(0.35,sqrt(2););
+  APFEL::SetAlphaQEDRef(7.496252e-3,1.777);
+  APFEL::SetLambdaQCDRef(0.220,5);
+  APFEL::SetEpsilonTruncation(1e-5);
+  APFEL::SetAlphaEvolution("exact");
+  APFEL::SetPDFEvolution("exactmu");
+  APFEL::SetRenFacRatio(1);
+  APFEL::SetPoleMasses(sqrt(2),4.5,175);
+  APFEL::SetMassScaleReference(sqrt(2),4.5,175);
+  APFEL::SetTauMass(1.777);
+  APFEL::EnableMassRunning(true);
+  APFEL::SetMaxFlavourPDFs(6);
+  APFEL::SetMaxFlavourAlpha(6);
+  APFEL::SetPDFset("ToyLH");
+  APFEL::SetReplica(0);
+  APFEL::EnableEvolutionOperator(false);
+  APFEL::EnableLeptonEvolution(false);
+  APFEL::LockGrids(false);
+  APFEL::SetLHgridParameters(100,50,1e-9,1e-1,1,50,1,1e10);
+  APFEL::SetNumberOfGrids(3);
+  APFEL::SetGridParameters(1,80,3,1e-5);
+  APFEL::SetGridParameters(2,50,5,1e-1);
+  APFEL::SetGridParameters(3,40,5,8e-1);
+\end{lstlisting}
 
-\item {\tt SetMaxFlavourPDFs(NF)}: this routine sets the maximum
-  number of active flavors that can contribute to the PDF
-  evolution. The integer variable {\tt NF} can then take any value
-  between 3 and 6.
-
-\item {\tt SetPDFSet(name)}: this routine defines the PDF set to be
-  evolved from the initial to the final scale. The string variable
-  {\tt name} can take the value {\tt "ToyLH"}, corresponding to the toy
-  PDF model used in the Les Houches PDF benchmarks, 
-or the name (including
-  the {\tt LHgrid} extension) of any PDF set available from the {\tt
-    LHAPDF} library. 
-
-There is yet a third option, {\tt name="private"},  which can be easily modified by the user (in {\tt src/toyLHPDFs.f}) if
-new PDF boundary conditions not covered by the two other options
-are required.
-%
-Note that each time a new {\tt private} parametrization is coded,
-the library needs to be complied and installed again.
-
-Since release 2.0.2 of {\tt APFEL} we intruduced also a number of
-hardcoded \textit{fragmentation functions}.
-
-\item {\tt SetReplica(irep)}: this routine selects the replica (for a
-  Monte Carlo PDF set) or the specific eigenvector  (for Hessian PDF
-  sets) of the  PDF set defined above to be evolved with {\tt APFEL}.
-%
-  The integer variable {\tt irep} can then take any value included
-  between 0 (the central PDFs)  and the maximum number of PDF members
-  contained in the selected PDF set.
-
-\item {\tt SetQLimits(Qmin,Qmax)}: this routine sets the scale
-  bounds between which the evolution can be performed. 
-%
-The real
-  variables {\tt Qmin} and {\tt Qmax} correspond to the numerical
-  values of the lower and upper bounds (in GeV).
-%
- On top of making sure
-  that PDF evolution is performed only in the physical range, this
-  option also allows to reduce the initialization time, for instance
-  if {\tt Qmax} is below some heavy quark thresholds, reducing the number of
-  evolution operators to be precomputed will be smaller.
-
-\item {\tt SetNumberOfGrids(n)}: this routine sets the number of
-  $x$-space interpolation grids that will be used for the
-  evolution. The integer variable {\tt n} can be any positive integer number.
-
-\item {\tt SetGridParameters(i,np,deg,xmin)}: this routine sets the
-  parameters of the {\tt i}-th $x$-space interpolation grid. 
-%
-The
-  integer variable {\tt i} must be between 1 and {\tt n}, where
-the latter has been defined in
-  {\tt SetNumberOfGrids(n)}.
-%
- The integer variable {\tt np} corresponds
-  to the number of (logarithmically distributed) points of the grid,
-  the integer variable {\tt deg} corresponds to the interpolation
-  degree and the real variable {\tt xmin} corresponds to the lower
-  bound of the grid. The upper bound is always taken to be equal to
-  one.
-
-\item{\tt CleanUp}: this routine restores the default settings of the
-  {\tt APFEL} evolution. This function may be useful in case the user
-  wants to perform PDF evolutions with different settings in the same run
-  of her/his own code.
-
-\item{\tt EnableWelcomeMessage(true/false)}: this routine enables
-  ({\tt true}) or disables ({\tt false}) the {\tt APFEL} welcome
-  message. By default {\tt APFEL} writes the welcome message, but it
-  may be useful to disable it in case the user wants to perform a
-  large number of evolutions in series and does not want the welcome
-  message to be written as many times.
-
-\item{\tt GetVersion}: this function returns the version of {\tt
-    APFEL} in use.
-
-\item{\tt LHAPDFgrid(Nrep,Qin,name)}: this routine...
-
-\item{\tt ExternalEvolutionOperator(Q0,Q,n,extgrid,M)}: this routine...
-
-\item{\tt LUMI(i,j,s)}: this function...
-
-\item{\tt EnableEvolutionOperator(b)}: this routine...
-
-\item{\tt LockGrids(b)}: this routine...
-
-\item{\tt SetTimeLikeEvolution(b)}: this routine...
-
-\item{\tt SetAlphaEvolution(evol)}: this routine...
-
-\item{\tt SetLambdaQCDRef(Q,n)}: this routine...
-
-\item{\tt SetPDFEvolution(evol)}: this routine...
-
-\item{\tt dxPDF(i,x)}: this function...
-
-\item{\tt dxgamma(x)}: this function...
-
-\item{\tt xPDFj(i,x)}: this function...
-
-\item{\tt xgammaj(x)}: this function...
-
-\item{\tt LHAPDFgridDerivative(Nrep,name)}: this routine...
-
-\item{\tt SetFastEvolution(b)}: this routine...
-
-\end{itemize}
 
 As an illustration, if the user wants to perform the QCD evolution at NLO
 instead of  the default NNLO, she/he needs to add to the code above,
@@ -681,104 +993,9 @@ All these examples are available in the three possible interfaces to
 {\tt APFEL}: {\scshape Fortran 77}, {\tt C/C++} and {\tt Python}.
 
 
-\subsection{Computation of the DIS observables}
-
-Now we turn to the description of the module that computes the DIS
-neutral- and charged-current observables. 
-% up to  $\mathcal{O}(\alpha_s^2)$ in the FONLL GM-VFN, FFN and  ZM-VFN schemes.
-%
-This module can be either used together with the PDF
-evolution provided by {\tt APFEL} or directly interfaced to the
- {\tt LHAPDF} library.
-
-The computation of  DIS  structure functions
-is provided by a single routine,
- {\tt DIS\_xsec}, which takes a set of input parameters needed to
- specify the computation to be performed.
-The usage of the {\tt DIS\_xsec} routine is the following:
-\begin{lstlisting}
-APFEL::DIS_xsec(x,q0,q,y,proc,scheme,pto,pdfset,irep,target,proj,F2,F3,FL,sigma);
-\end{lstlisting}
-where the \textit{input} parameters are:
-\begin{itemize}
-
-\item the real variable {\tt x}: the value of Bjorken $x$,
-
-\item the real variable {\tt q0}: the value of the initial scale (in
-  GeV) used in the PDF evolution (this input is ignored if the {\tt LHAPDF} evolution
-is used),
-
-\item the real variable {\tt q}: the value of the scale (in GeV) where the DIS
- observables are to be computed,
-
-\item the real variable {\tt y}: the value of the inelasticity,
-
-\item the string variable {\tt proc}: it can take the values {\tt "EM"} for the
-  purely electromagnetic DIS observables (photon-only exchange), {\tt "NC"}
-  for neutral-current observables and {\tt CC"} for charged-current
-  observables,
-
-\item the string variable {\tt scheme}: it can take the values {\tt "FONLL"} for FONLL, {\tt "FFNS"}
-  for the FFN scheme and {\tt ZMVN"} for the ZM-VFN scheme,
-
-\item the integer variable {\tt pto},: it can take the values {\tt
-    0}, {\tt 1} or {\tt 2} corresponding to LO, NLO and NNLO,
-  respectively. Notice that choosing {\tt
-    pto=1} with {\tt scheme="FONLL"} implies using the
-  FONLL-A scheme, while choosing {\tt pto=2} with {\tt
-    scheme="FONLL"} leads to using the
-  FONLL-C scheme. The implementation of
- the FONLL-B scheme is postponed to a future release of the program.
-
-\item The string variable {\tt pdfset}: it can take any of the PDF sets
-  available in {\tt LHAPDF} (including the {\tt .LHgrid} extension). This way {\tt APFEL} will use
-  the selected PDF set to compute the DIS observables using the {\tt
-    LHAPDF} evolution rather than the internal one. As an alternative, the user can choose {\tt
-    pdfset="APFEL"}. This way the DIS observables will be computed
-  using the evolution provided by {\tt APFEL} between the scales {\tt q0} and {\tt
-    q}. For the setting of the PDF evolution, the user can refer to
-  Sect.~\ref{EvolCustom}.
-
-\item The integer value {\tt irep}: it specifies the member of the PDF set to be used,
-
-\item the string variable {\tt target}: it takes the value {\tt
-    "PROTON"} in case the target is a proton, {\tt "NEUTRON"} in case
-  the target is a neutron (assuming isospin symmetry) or {\tt
-    "ISOSCALAR"} if the target is an isoscalar, $e.g.$ a
-  deuteron (also this option assumes isospin asymmetry). There is a
-  further option, which is {\tt target="IRON"}, which uses the cross-section
-  definition used in the NuTeV experiment which is on iron
-  nuclei.
-
-\item The string variable {\tt proj}: it takes the values {\tt
-    "ELECTRON"} and {\tt "POSITRON"} if {\tt proc="EM", "NC"},
-  in case the projectile is either an electron or a positron. If
-  instead {\tt proc="CC"}, the variable {\tt proj} can also take the
-  values {\tt "NEUTRINO"} or {\tt "ANTINEUTRINO"} with obvious meaning.
-\end{itemize}
-
-Once all these input parameters have been specified, the \textit{output}
-array variables are {\tt F2, F3, FL} and {\tt sigma}. Each of them has
-5 entries corresponding to light, charm, bottom, top and total
-components of the corresponding quantity.
-%
-The user should be careful because in the {\tt Fortran} interface the arrays
-are numbered from 3 to 7 ($e.g.$ {\tt F2(3)} = $F_2^l$, {\tt F2(4)} =
-$F_2^c$, {\tt F2(5)} = $F_2^b$, {\tt F2(6)} = $F_2^t$, {\tt F2(7)} =
-$F_2^p$), while in the C++ version the arrays run from 0 to 4 ($e.g.$ {\tt F2(0)} = $F_2^l$, {\tt F2(1)} =
-$F_2^c$, {\tt F2(2)} = $F_2^b$, {\tt F2(3)} = $F_2^t$, {\tt F2(4)} =
-$F_2^p$).
-%
-As in the case of the PDF evolution, the user will find an example on how to use the DIS module in
-{\tt example} folder.
+\section{The DIS module}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-
-
 \clearpage
 
 \bibliography{qedevol}
