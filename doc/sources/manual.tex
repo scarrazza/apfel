@@ -351,13 +351,13 @@ fuctions described below.
   APFEL::SetPerturbativeOrder(int pto);
 \end{lstlisting}
 This function sets the perturbative order of the PDF evolution to {\tt
-  "pto"}. The integer {\tt "pto"} can take the values 0, 1 ot 2
+  pto}. The integer {\tt pto} can take the values 0, 1 ot 2
 according to whether the PDF evolution is performed at
 $\mathcal{O}(\alpha_s)$, $\mathcal{O}(\alpha_s^2)$, or
 $\mathcal{O}(\alpha_s^3)$, that is LO, NLO and NNLO,
 respectively. This function also sets the perturbative order of the
 evolution of the couplings $\alpha_s$ and $\alpha$ and possibly of the
-heavy quark masses. The default for {\tt pto"} is 2.
+heavy quark masses. The default for {\tt pto} is 2.
 \begin{lstlisting}
   APFEL::SetTheory(string theory);
 \end{lstlisting}
@@ -402,39 +402,39 @@ matched. This option is used as a default.
   APFEL::SetFFNS(int nfl);
 \end{lstlisting}
 This function, as opposed to {\tt SetVFNS}, sets the Fixed-Flavour
-Number Scheme (FFNS) with {\tt "nfl"} active flavours for the PDF,
+Number Scheme (FFNS) with {\tt nfl} active flavours for the PDF,
 $\alpha_s$ and $\alpha$ (and $\overline{\mbox{MS}}$) evolution. This
-function forces the evolution to be done with {\tt "nfl"} active
+function forces the evolution to be done with {\tt nfl} active
 flavours in any evolution range. The allowed values are {\tt nfl} = 3,
 4, 5 and 6.
 \begin{lstlisting}
   APFEL::SetAlphaQCDRef(double alpharef, double Qref);
 \end{lstlisting}
 This function sets the reference values of the strong coupling
-$\alpha_s$ at the scale {\tt "Qref"} in GeV to {\tt "alpharef"}. The
-default is {\tt "alpharef"} = 0.35 at {\tt "Qref"} = $\sqrt{2}$ GeV.
+$\alpha_s$ at the scale {\tt Qref} in GeV to {\tt alpharef}. The
+default is {\tt alpharef} = 0.35 at {\tt Qref} = $\sqrt{2}$ GeV.
 \begin{lstlisting}
   APFEL::SetAlphaQEDRef(double alpharef, double Qref);
 \end{lstlisting}
 This function sets the reference values of the QED coupling $\alpha$
-at the scale {\tt "Qref"} in GeV to {\tt "alpharef"}. The default is
-{\tt "alpharef"} = 7.496252$\cdot 10^{-3}$ at {\tt "Qref"} = 1.777
+at the scale {\tt Qref} in GeV to {\tt alpharef}. The default is
+{\tt alpharef} = 7.496252$\cdot 10^{-3}$ at {\tt Qref} = 1.777
 GeV.
 \begin{lstlisting}
   APFEL::SetLambdaQCDRef(double lambdaref, int nref);
 \end{lstlisting}
 This function sets the value of $\Lambda_{\rm QCD}$ in GeV with {\tt
-  "nref"} flavours to {\tt "lambdaref"}. This value is used only if
-the {\tt "lambda"} solution of the $\beta$-function equation (see below)
+  nref} flavours to {\tt lambdaref}. This value is used only if
+the {\tt lambda} solution of the $\beta$-function equation (see below)
 is used to compute the running of $\alpha_s$. The default is {\tt
-  "lambdaref"} = 0.220 GeV with {\tt "nref"} = 5.
+  lambdaref} = 0.220 GeV with {\tt nref} = 5.
 \begin{lstlisting}
   APFEL::SetPoleMasses(double mc, double mb, double mt);
 \end{lstlisting}
 This function sets the values of the heavy quark thresholds in GeV and
 sets the pole-mass scheme as a renormalization scheme for the heavy
-quark masses. This function is used as a default with {\tt "mc"} =
-$\sqrt{2}$ GeV, {\tt "mb"} = 4.5 GeV, {\tt "mt"} = 175 GeV.
+quark masses. This function is used as a default with {\tt mc} =
+$\sqrt{2}$ GeV, {\tt mb} = 4.5 GeV, {\tt mt} = 175 GeV.
 \begin{lstlisting}
   APFEL::SetMSbarMasses(double mc, double mb, double mt);
      sets the values of the heavy quark thresholds
@@ -475,7 +475,7 @@ the solution RG equation of the heavy quark masses. The default is
 \end{lstlisting}
 This function sets the values of the $\tau$ lepton in GeV to {\tt
   mtau}. This function is effective only if the evolution of the
-lepton PDFs is enabled (see below). The default is {\tt "mtau"} =
+lepton PDFs is enabled (see below). The default is {\tt mtau} =
 1.777 GeV.
 \begin{lstlisting}
   APFEL::SetMaxFlavourAlpha(int nf);
@@ -485,7 +485,7 @@ evolution of the couplings $\alpha_s$ and $\alpha$ (and the masses) to
 {\tt nf}. In practice, this function forces the code not to match the
 solution of the $\beta$-function and $\gamma$-function equations at a
 given threshold if that threshold is above the maximum number allowed
-{\tt nf}. The default is {\tt "nf"} = 6.
+{\tt nf}. The default is {\tt nf} = 6.
 \begin{lstlisting}
   APFEL::SetMaxFlavourPDFs(int nf);
 \end{lstlisting}
@@ -493,17 +493,17 @@ This function sets the maximum number of active flavours in the
 evolution of PDFs to {\tt nf}. In practice, this function forces the
 code not to match the solution of the DGLAP equation at a given
 threshold if that threshold is above the maximum number allowed {\tt
-  nf}. The default is {\tt "nf"} = 6.
+  nf}. The default is {\tt nf} = 6.
 \begin{lstlisting}
   APFEL::SetRenFacRatio(double ratio);
 \end{lstlisting}
 This function sets the ratio between factorization scale $\mu_F$
 (entering PDFs) and renormalization scale $\mu_R$ (entering the
-couplings and possibly the heavy quark masses) to {\tt "ratio"}. If
-{\tt "ratio"} is different from one, {\tt APFEL} will assume that
-$\mu_R$ = $\mu_F /$ {\tt "ratio"} and, as explained above, this gives
+couplings and possibly the heavy quark masses) to {\tt ratio}. If
+{\tt ratio} is different from one, {\tt APFEL} will assume that
+$\mu_R$ = $\mu_F /$ {\tt ratio} and, as explained above, this gives
 rise to additional terms in the higher order splitting functions. The
-default is {\tt "ratio"} = 1.
+default is {\tt ratio} = 1.
 \begin{lstlisting}
   APFEL::SetTimeLikeEvolution(bool);
 \end{lstlisting}
@@ -516,7 +516,7 @@ used to evolve fragmentation functions (FFs). The default is {\tt
 \end{lstlisting}
 This function enables or disables the small-$x$ resummation in the
 evolution and set the logarithmic accuracy of the resummation to {\tt
-  "la"}. The possible options for {\tt la"} are {\tt "LL"} and {\tt
+  la}. The possible options for {\tt la} are {\tt "LL"} and {\tt
   "NLL"}. The small-$x$ resummation of the evolution relies on an
   external code called {\tt HELL} that returns the difference between
   the fixed-order and the resummed splitting functions as explained
@@ -525,7 +525,7 @@ evolution and set the logarithmic accuracy of the resummation to {\tt
   APFEL::SetAlphaEvolution(string evol);
 \end{lstlisting}
 This function sets the solution of the $\beta$-function equations for
-the running couplings to {\tt "evol"}. The variable {\tt "evol"} can
+the running couplings to {\tt evol}. The variable {\tt evol} can
 take the following strings:
 \begin{itemize}
 \item {\tt "exact"}: the $\beta$-function equations are solved
@@ -541,15 +541,15 @@ take the following strings:
   analytical way in terms of the Landau pole $\Lambda_{\rm QCD}$. See
   above for more details.
 \end{itemize}
-It should be noticed that a different choice of {\tt "evol"} only
+It should be noticed that a different choice of {\tt evol} only
 affects the running of $\alpha_s$ beyond LO while the running of
 $\alpha$, being computed always at LO, is left unchanged. The default
-is {\tt "evol"} = {\tt "exact"}.
+is {\tt evol} = {\tt "exact"}.
 \begin{lstlisting}
   APFEL::SetPDFEvolution(string evolp);
 \end{lstlisting}
 This function sets the solution of the DGLAP equations for the
-evolution of PDFs to {\tt "evolp"}. The variable {\tt "evolp"} can
+evolution of PDFs to {\tt evolp}. The variable {\tt evolp} can
 take the following strings:
 \begin{itemize}
 \item {\tt "exactmu"}: the DGLAP equation differential in the
@@ -569,7 +569,7 @@ take the following strings:
   implementation of thsi particular solution is given above.
 \end{itemize}
 In all cases the boundary conditions are given by the input initial
-scale PDFs. The default is {\tt "evol"} = {\tt "exact"}.
+scale PDFs. The default is {\tt evolp} = {\tt "exactmu"}.
 \begin{lstlisting}
   APFEL::SetEpsilonTruncation(double eps);
 \end{lstlisting}
@@ -580,52 +580,145 @@ numerical dericatives to {\tt eps}.
 \begin{lstlisting}
   APFEL::SetPDFSet(string name);
 \end{lstlisting}
-This function sets the PDF set to be evolved to {\tt "name"}. The
-string variable {\tt "name"} can be the name of an LHAPDF set and in
+This function sets the PDF set to be evolved to {\tt name}. The
+string variable {\tt name} can be the name of an LHAPDF set and in
 this case it must finish with the string {\tt ".LHgrid"}. This is
 needed to distinguish the LHAPDF sets from the other possible options
-available. The other possible options for {\tt "name"} are:
+available. Other possible options for {\tt name} are:
 \begin{itemize}
-\item {\tt "private"}:
-\item {\tt "apfel"}:
-\item {\tt "ToyLH"}:
-\item {\tt "external"}:
-\item {\tt "external1"}:
-\item {\tt "repexternal"}:
-\item {\tt "leptexternal"}:
-\item {\tt "kretzer"}:
-\item {\tt "MELA"}:
-\item {\tt "pretabulated"}:
-\item {\tt "pretabulated1"}:
+\item {\tt "ToyLH"}: this option returns the so-called toy LH PDFs
+  that have been conceived for benchmark purposes. Details can be
+  found in Ref.~???.
+\item {\tt "external"}: this option is useful to evolve an
+  ``external'' set of PDFs provided by the user. If this option is
+  chosen, {\tt APFEL} will look for a routine called {\tt
+    ExternalSetAPFEL} whose structure is the following:
+\begin{center}
+\tt subroutine ExternalSetAPFEL(x,Q0,xf)
+\end{center}
+ where {\tt x} and {\tt Q0} are the input values of the Bjorken
+ variable and the scale in GeV, while {\tt xf(-6:7)} is the output
+ array whose entries from {\tt $-$6} to {\tt 6} are the usual quark
+ and gluon distributions (times {\tt x}) and the {\tt 7}-th entry
+ corresponds instead to the photon PDF.
+\item {\tt "external1"}: This option is completely analogous to {\tt
+  external} with the only difference that the name of the routined
+  expected is now {\tt ExternalSetAPFEL1}. A second slot for an
+  external set might be useful in some cases if the user want to
+  evolve a second PDF set in the same code.
+\item {\tt "repexternal"}: This option is an extension of the previous
+  two and the only difference is that the code expects a soubroutine
+  called {\tt ExternalSetAPFELRep} whose structure is:
+\begin{center}
+\tt subroutine ExternalSetAPFELRep(x,Q0,irep,xf)
+\end{center}
+where, in addition to the entries discussed above, there is the
+integer {\tt irep} that identifies the {\tt irep}-th replica of the
+input set.  This option might be useful is the input set has more than
+one replica but it's not directly an {\tt LHAPDF} set.
+\item {\tt "leptexternal"}: This option is a further extension of the
+  original {\tt external} option in that it also provides as an output
+  the lepton PDFs. In particular, if this option is chosen, the code
+  looks for a subroutine called {\tt ExternalSetAPFELLept} whose
+  structure is the following:
+\begin{center}
+\tt subroutine ExternalSetAPFELLept(x,Q0,irep,xf,xl)
+\end{center}
+where there is the additional output array {\tt xl(-3:3)} whose
+entries correspond to:
+\begin{center}
+{\tt xl(-3)} = $x\tau^+(x,Q_0)$,\\ 
+{\tt xl(-2)} = $x\mu^+(x,Q_0)$,\\
+{\tt xl(-1)} = $xe^+(x,Q_0)$,\\
+{\tt xl(0)}  = $x\gamma(x,Q_0)$,\\
+{\tt xl(1)}  = $xe^-(x,Q_0)$,\\
+{\tt xl(2)}  = $x\mu^-(x,Q_0)$,\\
+{\tt xl(3)}  = $x\tau^-(x,Q_0)$.
+\end{center}
+In addition, as compared to the options above, the index of the array
+{\tt xf} now runs from {\tt -6} to {\tt 6} (and no longer to {\tt 7})
+as the photon PDF is now the {\tt 0}-th entry of the array {\tt xl}.
+\item {\tt "pretabulated"}: This option is mainly conceived for an
+  internal purposes but the user the expert user might want to exploit
+  it becuase it allows one to evolve PDF sets whose functional form is
+  not know as it makes possible to evolve PDFs starting from their
+  value in a finite number of points. However, it is necessary to know
+  the full structure of the internal grids used by {\tt APFEL}. This
+  information is anyway (partially) accessible using some \textit{ad
+    hoc} functions of {\tt APFEL}.In particular, if this option is
+  chosen, the codes looks for a subroutine called {\tt
+    pretabulatedPDFs} with the following structure:
+\begin{center}
+\tt pretabulatedPDFs(igrid,alpha,xf,xl)
+\end{center}
+where the integer {\tt igrid} identifies the subgrid and the integer
+{\tt alpha} runs over the nodes of the {\tt igrid}-th grid. Again,
+{\tt xf(-6:6)} and {\tt xl(-3:3)} are the quark and gluon, and the
+lepton and photon PDFs.
+\item {\tt "pretabulated1"}: This option is a copy of {\tt
+  pretabulated} and the only difference is that in this case the code
+  looks for a subroutine called {\tt pretabulatedPDFs1} have the very
+  same structure of that shown above.
+\item {\tt "apfel"}: This option is again conceived for internal
+  purposes but it might turn out to be useful if a higher performance
+  of the evolution is required. If the {\tt apfel} option is chosen,
+  the code will use as initial PDFs the PDFs evolved from a previous
+  call of the function {\tt EvolveAPFEL}. Of course, this requires
+  that a previous evolution with a PDF set different from {\tt apfel}
+  exists. This might be convenient when one want to tabulate PDFs over
+  a grid in $Q$ in a faster way. In fact, using the {\tt apfel} option
+  allows one to split a wide range in $Q$ into small sequential steps
+  without the need to do every single evolution starting from the same
+  initial scale. This is convenient because the execution time is
+  proportional to the wideness of the energy range covered by the
+  evolution.
 \end{itemize}
-The default is {\tt "name"} = {\tt "ToyLH"}.
-
+There are other options that are strictly used for internal purposes
+and thus there is no need to list them here. The default is {\tt
+  name} = {\tt "ToyLH"}.
 \begin{lstlisting}
   APFEL::SetReplica(int nr);
-     sets the replica/member of the LHAPDF set to be
-     evolved (default "nr" = 0).
 \end{lstlisting}
+This function selects the member or replica of the PDF set to be
+evolved to {\tt nr}. This function is effective only if an LHAPDF
+set is used and, of course, the integer {\tt nr} must be within zero
+and the maximum number of members/replicas contained in the LHAPDF set
+in use. The default is default {\tt nr} = 0, that is, according to
+the LHAPDF convention, the central member.
 \begin{lstlisting}
   APFEL::SetQLimits(double Qmin, double Qmax);
-     sets the range where it is possible to perform
-     the evolution (default "Qmin" = 0.5 GeV, "Qmax"
-     = 1000 GeV).
 \end{lstlisting}
+This function sets the energy range in GeV within which the evolution
+is allowed. In practice, for a given pair of {\tt Qmin} and {\tt
+  Qmax}, the initial scale {\tt Q0} and the final scale {\tt Q} of any
+evolution must be such that {\tt Qmin < Q0, Q < Qmax}. The default is
+{\tt Qmin} = 0.5 GeV and {\tt Qmax} = 100000 GeV.
 \begin{lstlisting}
-  APFEL::SetNumberOfGrids(int n);
-     sets the number of subgrids "n" (default 3)
+  APFEL::SetNumberOfGrids(int ng);
 \end{lstlisting}
+This function sets the number of internal $x$-space subgrids to be
+used by {\tt APFEL} to {\tt ng}. The parameters of the single grids
+must be specified grid by grid using the {\tt SetGridParameters}
+function discussed below. The default is {\tt ng} = 3.
 \begin{lstlisting}
   APFEL::SetGridParameters(int i, int n, int deg, double x);
-     sets the parameter of the i-th subgrid. "n" =
-     number intevals, "deg" = interpolation order,
-     "x" lower bound of the grid (the upper bound is
-     always 1).
 \end{lstlisting}
+This function must always be associated with one call to the {\tt
+  SetNumberOfGrids} function described above. It sets the parameter of
+the {\tt i}-th subgrid where {\tt i} must run from 1 to {\tt ng} and
+thus there must be exactly {\tt ng} calls to {\tt SetGridParameters}.
+{\tt n} corresponds to the number intervals (not nodes) of the {\tt
+  i}-th subgrid, {\tt deg} identifies the degree of the lagrange
+polynomials and thus it is bound to be bigger than zero, and finally
+{\tt x} is lower bound of the grid being the upper bound always
+assumed to be 1. It is necessary that the value of {\tt x} is
+increasingly bigger as the index {\tt igrid} increases. In practice
+this mean that the lower bound of the {\tt igrid}-th subgrid must be
+in the range covered by the ({\tt igrid} - 1)-th subgrid.
 \begin{lstlisting}
   APFEL::SetExternalGrid(int i, int np, int deg, double *x);
-     sets the external grid in the position "i" with
-     "np" intervals, interpolation degree "deg". "x"
+     sets the external grid in the position i with
+     np intervals, interpolation degree deg. x
      must be a one-dimentional array with upper bound
      in 1 (there cannot be more than 1 external grid).
 \end{lstlisting}
@@ -681,11 +774,11 @@ The default is {\tt "name"} = {\tt "ToyLH"}.
      initializes the APFEL library. If no settings has
      been specified, it uses the default ones.
   APFEL::EvolveAPFEL(double Q0, double Q);
-     evolves PDFs on the grid to the scale "Q" [GeV]
-     starting from the scale "Q0" [GeV].
+     evolves PDFs on the grid to the scale Q [GeV]
+     starting from the scale Q0 [GeV].
   APFEL::DeriveAPFEL(double Q);
      computes the logarithmic derivative with respect
-     of "Q" of PDFs at the scale "Q" [GeV].
+     of Q of PDFs at the scale Q [GeV].
 \end{lstlisting}
 
 
