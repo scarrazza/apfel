@@ -1,0 +1,377 @@
+%% LyX 2.0.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[twoside,english]{paper}
+\usepackage{lmodern}
+\renewcommand{\ttdefault}{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{color}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
+\usepackage{breakurl}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{babel}
+
+\@ifundefined{showcaptionsetup}{}{%
+ \PassOptionsToPackage{caption=false}{subfig}}
+\usepackage{subfig}
+\makeatother
+
+\usepackage{listings}
+
+\makeindex
+
+\begin{document}
+
+\title{Intrinsic Charm Implementation}
+
+\author{Valerio Bertone$^{a}$}
+
+\institution{$^{a}$PH Department, TH Unit, CERN, CH-1211 Geneva 23, Switzerland}
+\maketitle
+
+\begin{abstract}
+In these set of notes I will describe the strategy to include the
+intrinsic charm (IC) contribution to the FONLL structure functions as
+implemented in {\tt APFEL}. I will first consider the massive sector
+(and its massless limit), where the IC implies the presence of the
+charm in the initial state with the consequence of additional diagrams
+to be include in the computation. I will the consider the massless
+sector where the presence of an IC implies a retratment of the PDF
+matching conditions at the charm threshold.
+\end{abstract}
+
+\tableofcontents{}
+
+\section{Intrinsic Charm Contribution to the Massive Structure Functions}
+
+\subsection{Order $\alpha_s^0$ Contributions}
+
+Assuming the presence of IC in the proton, the massive structure
+functions with $N_f=3$ light flavours acquire a further contribution
+coming from the presence of a massive charm in the initial state. As a
+consequence, the massive structure functions get a term that is
+proportional to a \textit{static} charm PDF, $i.e.$ a PDF that, being
+massive, does not evolve according to the DGLAP equantion. Such a
+contribution starts already at order $\alpha_s^0$ and has the novel
+effect to ``allign'' the massive scheme to the massless scheme in
+terms of power counting because, contrary to what happens without IC,
+the two sectors start at $\alpha_s^0$.
+
+In order to write explicitly the form of such LO contributions to the
+DIS structure functions, I consider eq.~(2) of \cite{Kretzer:1998ju}
+where the function $Q_1$ schould be indentified with the charm PDF. It
+should be noticed that in the $N_f=3$ scheme, such PDF does not obey
+the DGLAP equation because, due to the presence of the mass of the
+charm $m_c$, no large collinear logarithms appear in the calculation
+and thus there is no need to resum them.
+
+From eq.~(2) of \cite{Kretzer:1998ju} one reads that the
+$\mathcal{O}(\alpha_s^0)$ IC contributions to the massive structrure
+functions are given by:
+\begin{subequations}\label{GeneralSF}
+\begin{equation}
+F_1^{\rm FF,IC}(x,Q^2) = \frac{S_+\Sigma_{++}-2m_1m_2S_-}{2\Delta}c(\chi)
+\end{equation}
+\begin{equation}
+F_2^{\rm FF,IC}(x,Q^2) = \frac{S_+\Delta}{2Q^2}2xc(\chi)
+\end{equation}
+\begin{equation}
+F_3^{\rm FF,IC}(x,Q^2) = 2Rc(\chi)
+\end{equation}
+\end{subequations}
+where $m_1$ and $m_2$ are the masses of the incoming and outcoming
+quarks, respectively, while $\Delta\equiv\Delta(m_1^2,m_2^2,-Q^2)$
+with the function $\Delta$ defined as:
+\begin{equation}
+  \Delta(a,b,c)=\sqrt{a^2+b^2+c^2 -2(ab+ac+bc)}
+\end{equation}
+and:
+\begin{equation}
+\Sigma_{\pm\pm}=Q^2\pm m_2^2\pm m_1^2
+\end{equation}
+\begin{equation}
+\chi=\frac{x}{2Q^2}(\Sigma_{+-}+\Delta)
+\end{equation}
+The quantities $S_\pm$ and $R_\pm$, instead, are linked to the EW
+couplings and depend on the vector boson that strikes the heavy quark
+with mass $m_1$ in the initial state. Notice that in
+eq.~(\ref{GeneralSF}) the PDF $c$ does not depend on any factorization
+scale and, as mentioned before, the reason is that it is a static
+distribution of non-perturbative origin that does not evolve according
+to the DGLAP equation.
+
+In practice, assuming the presence of IC in the proton, the massive
+(FF) structure functions become:
+\begin{equation}
+F_i^{\rm FF}(x,Q^2)\longrightarrow F_i^{\rm FF}(x,Q^2)  + F_i^{\rm
+  FF,IC}(x,Q^2) \quad\mbox{with}\quad i =1,2,3
+\end{equation}
+
+Now, for a purely \textit{electromagnetic} process, where only a
+$\gamma$ strikes the charm, one has:
+\begin{equation}
+S_+=S_-=e_c^2\quad\mbox{and}\quad R=0
+\end{equation}
+Moreover, in this case both the incoming and the outcoming quarks are
+of the same flavour (charm) therefore we have $m_1=m_2=m_c$. Under
+this conditions one finds:
+\begin{subequations}
+\begin{equation}
+F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\frac{m_c^2}{Q^2}}}e_c^2c(\chi)
+\end{equation}
+\begin{equation}
+F_2^{\rm FF,IC}(x,Q^2)=x\left(\sqrt{1+4\frac{m_c^2}{Q^2}}\right)e_c^2c(\chi)
+\end{equation}
+\begin{equation}
+F_3^{\rm FF,IC}(x,Q^2)= 0
+\end{equation}
+\end{subequations}
+with:
+\begin{equation}
+\chi = \frac{x}{2}\left(1+\sqrt{1+4\frac{m_c^2}{Q^2}}\right)
+\end{equation}
+
+For a \textit{neutral current} process, where all the $\gamma$, the
+$Z$ and the interference $\gamma Z$ contributions are considered, one
+has:
+\begin{equation}
+S_+=S_-=B_c=e_c^2-2e_cV_eV_cP_Z+(V_e^2+A_e^2)(V_c^2+A_c^2)P_Z^2\quad\mbox{and}\quad R=D_c=-2e_c A_cA_eP_Z+4V_cA_cV_eA_eP_Z^2
+\end{equation}
+with:
+\begin{equation}
+V_c = \frac12-\frac43\sin^2\theta_W\quad\mbox{and}\quad A_c=\frac12
+\end{equation}
+and
+\begin{equation}
+V_e = -\frac12+2\sin^2\theta_W\quad\mbox{and}\quad A_e=-\frac12
+\end{equation}
+the vector and the axial coupling of charm and electron to the $Z$ and
+where:
+\begin{equation}
+P_Z=\frac1{4\sin^2\theta_W(1-\sin^2\theta_W)}\frac{Q^2}{Q^2+M_Z^2}
+\end{equation}
+Here, exactly as in the electromagnetic case, $m_1=m_2=m_c$ so that
+one ends up with:
+\begin{subequations}
+\begin{equation}
+F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\frac{m_c^2}{Q^2}}}B_c c(\chi)
+\end{equation}
+\begin{equation}
+F_2^{\rm FF,IC}(x,Q^2)=x\left(\sqrt{1+4\frac{m_c^2}{Q^2}}\right)B_cc(\chi)
+\end{equation}
+\begin{equation}
+F_3^{\rm FF,IC}(x,Q^2)= 2D_cc(\chi)
+\end{equation}
+\end{subequations}
+again with:
+\begin{equation}
+\chi = \frac{x}{2}\left(1+\sqrt{1+4\frac{m_c^2}{Q^2}}\right)
+\end{equation}
+
+Finally, for a \textit{charged current} process, where a charged boson
+$W^\pm$ strikes the charm, one has:
+\begin{equation}
+S_+=S_-=2|V_{cs}|^2\quad\mbox{and}\quad R=|V_{cs}|^2
+\end{equation}
+if the outcoming quark is a strange or an anti-strange, and:
+\begin{equation}
+S_+=S_-=2|V_{cd}|^2\quad\mbox{and}\quad R=|V_{cd}|^2
+\end{equation}
+if the outcoming quark is a down or an anti-down. 
+
+In this case $m_1=m_c$ but $m_2=0$ with the consequence that:
+\begin{subequations}
+\begin{equation}
+F_1^{\rm FF,IC}(x,Q^2)= |V_{cj}|^2c(x)
+\end{equation}
+\begin{equation}
+F_2^{\rm FF,IC}(x,Q^2)= 2x\left(1+\frac{m_c^2}{Q^2}\right)|V_{cj}|^2c(x)
+\end{equation}
+\begin{equation}
+F_3^{\rm FF,IC}(x,Q^2)= 2|V_{cj}|^2c(x)
+\end{equation}
+\end{subequations}
+with $j=d,s$. Note that in this case $\chi=x$.
+
+In order to take into account the possible contributions due to
+intrinsic charm, one has to consider all diagrams contributing to a
+given process. As far as the neutral current (electromagnetic) case is
+concerned, one has to consider also the presence of $\overline{c}$ in
+the proton which, summed to the contribution of the $c$, gives:
+\begin{subequations}\label{NCEM}
+\begin{equation}
+F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\frac{m_c^2}{Q^2}}}B_c c^+(\chi)
+\end{equation}
+\begin{equation}
+F_2^{\rm FF,IC}(x,Q^2)=x\left(\sqrt{1+4\frac{m_c^2}{Q^2}}\right)B_cc^+(\chi)
+\end{equation}
+\begin{equation}
+F_3^{\rm FF,IC}(x,Q^2)= 2D_cc^-(\chi)
+\end{equation}
+\end{subequations}
+where:
+\begin{equation}
+c^{\pm}=c\pm\overline{c}
+\end{equation}
+and:
+\begin{equation}
+\chi = \frac{x}{2}\left(1+\sqrt{1+4\frac{m_c^2}{q^2}}\right)
+\end{equation}
+therefore:
+\begin{equation}
+F_L^{\rm FF,IC}(x,Q^2) = F_2^{\rm FF,IC}(x,Q^2) -2x F_1^{\rm FF,IC}(x,Q^2)  = \frac{4\frac{m_c^2}{Q^2}}{\sqrt{1+4\frac{m_c^2}{Q^2}}}B_c c^+(\chi)
+\end{equation}
+
+In the charged current case, instead, one has to distinguish between
+neutrino and anti-neutrino scattering. The neutrino scattering gives
+as a result the following structure functions:
+\begin{subequations}\label{CCnu}
+\begin{equation}
+F_1^{\nu,\rm FF,IC}(x,Q^2)= (|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+\end{equation}
+\begin{equation}
+F_2^{\nu,\rm FF,IC}(x,Q^2)= 2x\left(1+\frac{m_c^2}{Q^2}\right)(|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+\end{equation}
+\begin{equation}
+F_3^{\nu,\rm FF,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+\end{equation}
+\begin{equation}
+F_L^{\nu,\rm FF,IC}(x,Q^2) = 2x\frac{m_c^2}{Q^2}(|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+\end{equation}
+\end{subequations}
+The anti-neutrino scattering instead gives as a result the following
+structure functions:
+\begin{subequations}\label{CCnb}
+\begin{equation}
+F_1^{\overline{\nu},\rm FF,IC}(x,Q^2)= (|V_{cd}|^2+|V_{cs}|^2)c(x)
+\end{equation}
+\begin{equation}
+F_2^{\overline{\nu},\rm FF,IC}(x,Q^2)= 2x\left(1+\frac{m_c^2}{Q^2}\right)(|V_{cd}|^2+|V_{cs}|^2)c(x)
+\end{equation}
+\begin{equation}
+F_3^{\overline{\nu},\rm FF,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)c(x)
+\end{equation}
+\begin{equation}
+F_L^{\overline{\nu},\rm FF,IC}(x,Q^2)= 2x\frac{m_c^2}{Q^2}(|V_{cd}|^2+|V_{cs}|^2)c(x)
+\end{equation}
+\end{subequations}
+
+It should be pointed out that since the charm quark belongs to the sea
+it is symmetric under isospin symmetry and thus all the above
+structure functions are the same for proton and neutron.
+
+\subsection{Massless Limit}
+
+When implementing the FONLL scheme, one also needs to consider the
+massless limit of the massive structuture functions (FF0). To this
+end, we just need to take the limit for $m_c\rightarrow 0$ of
+eqs.~(\ref{NCEM}), (\ref{CCnu}) and~(\ref{CCnb}). Considering that:
+\begin{equation}
+\chi \mathop{\longrightarrow}_{m_c\rightarrow0} x\,,
+\end{equation}
+one finds :
+\begin{subequations}\label{NCEM}
+\begin{equation}
+F_1^{\rm FF0,IC}(x,Q^2)= \frac{1}{2}B_c c^+(x)
+\end{equation}
+\begin{equation}
+F_2^{\rm FF0,IC}(x,Q^2)=xB_cc^+(x)
+\end{equation}
+\begin{equation}
+F_3^{\rm FF0,IC}(x,Q^2)= 2D_cc^-(x)
+\end{equation}
+\begin{equation}
+F_L^{\rm FF0,IC}(x,Q^2)= 0
+\end{equation}
+\end{subequations}
+and:
+\begin{subequations}\label{CCnu}
+\begin{equation}
+F_1^{\nu,\rm FF0,IC}(x,Q^2)= (|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+\end{equation}
+\begin{equation}
+F_2^{\nu,\rm FF0,IC}(x,Q^2)= 2x(|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+\end{equation}
+\begin{equation}
+F_3^{\nu,\rm FF0,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+\end{equation}
+\begin{equation}
+F_L^{\nu,\rm FF0,IC}(x,Q^2)= 0
+\end{equation}
+\end{subequations}
+and:
+\begin{subequations}\label{CCnb}
+\begin{equation}
+F_1^{\overline{\nu},\rm FF0,IC}(x,Q^2)= (|V_{cd}|^2+|V_{cs}|^2)c(x)
+\end{equation}
+\begin{equation}
+F_2^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 2x(|V_{cd}|^2+|V_{cs}|^2)c(x)
+\end{equation}
+\begin{equation}
+F_3^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)c(x)
+\end{equation}
+\begin{equation}
+F_L^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 0
+\end{equation}
+\end{subequations}
+
+
+\section{The FONLL Structure Functions}\label{FONNLSF}
+
+Once the inclusion of the IC into the massive sectors has been
+established, one can construct the FONLL structure functions using the
+usual recipe but now including the additional contributions. Calling
+$F_i^{\rm FONLL}$ the usual FONLL structure functions without IC and
+$F_i^{\rm FONLL,IC}$ the structure function with IC, the relation is:
+\begin{equation}\label{FONLL_mIC}
+\begin{array}{rcl}
+\displaystyle F_i^{\rm FONLL,IC} & = & \displaystyle F_i^{\rm FF} +
+F_i^{\rm FF,IC} + D(Q^2) \left[ F_i^{\rm ZM} - F_i^{\rm FF0} - F_i^{\rm FF0,IC}
+\right]\\
+\\
+                                              & = & \displaystyle
+                                              F_i^{\rm FONLL} +
+                                              \left[F_i^{\rm FF,IC} - D(Q^2) F_i^{\rm FF0,IC}\right] = F_i^{\rm FONLL} + \Delta F_i^{\rm FONLL,IC}
+\end{array}
+\end{equation}
+where $D(Q^2)$ is a damping factor needed to quench undesired possibly
+large subleading terms at small energies.
+
+\begin{thebibliography}{alp}
+
+%\cite{Kretzer:1998ju}
+\bibitem{Kretzer:1998ju}
+  S.~Kretzer and I.~Schienbein,
+  %``Heavy quark initiated contributions to deep inelastic structure functions,''
+  Phys.\ Rev.\ D {\bf 58} (1998) 094035
+  [hep-ph/9805233].
+  %%CITATION = HEP-PH/9805233;%%
+
+\end{thebibliography}
+
+
+\end{document}

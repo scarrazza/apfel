@@ -6,6 +6,7 @@ do
     pdflatex Complex_DGLAP.tex
     pdflatex DIS.tex
     pdflatex Evolution_code.tex
+    pdflatex intrinsic_charm.tex
     pdflatex Lagrange_derivative.tex
     pdflatex QCD_QED_common_basis.tex
     pdflatex TruncatedSolution.tex
