@@ -100,7 +100,7 @@ F_1^{\rm FF,IC}(x,Q^2) = \frac{S_+\Sigma_{++}-2m_1m_2S_-}{2\Delta}c(\chi)
 F_2^{\rm FF,IC}(x,Q^2) = \frac{S_+\Delta}{2Q^2}2xc(\chi)
 \end{equation}
 \begin{equation}
-F_3^{\rm FF,IC}(x,Q^2) = 2Rc(\chi)
+xF_3^{\rm FF,IC}(x,Q^2) = 2Rxc(\chi)
 \end{equation}
 \end{subequations}
 where $m_1$ and $m_2$ are the masses of the incoming and outcoming
@@ -113,7 +113,7 @@ and:
 \begin{equation}
 \Sigma_{\pm\pm}=Q^2\pm m_2^2\pm m_1^2
 \end{equation}
-\begin{equation}
+\begin{equation}\label{Rescaledx}
 \chi=\frac{x}{2Q^2}(\Sigma_{+-}+\Delta)
 \end{equation}
 The quantities $S_\pm$ and $R_\pm$, instead, are linked to the EW
@@ -144,16 +144,21 @@ this conditions one finds:
 F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\frac{m_c^2}{Q^2}}}e_c^2c(\chi)
 \end{equation}
 \begin{equation}
-F_2^{\rm FF,IC}(x,Q^2)=x\left(\sqrt{1+4\frac{m_c^2}{Q^2}}\right)e_c^2c(\chi)
+F_2^{\rm FF,IC}(x,Q^2)=\left(\sqrt{1+4\frac{m_c^2}{Q^2}}\right)e_c^2xc(\chi)
 \end{equation}
 \begin{equation}
-F_3^{\rm FF,IC}(x,Q^2)= 0
+xF_3^{\rm FF,IC}(x,Q^2)= 0
 \end{equation}
 \end{subequations}
 with:
 \begin{equation}
-\chi = \frac{x}{2}\left(1+\sqrt{1+4\frac{m_c^2}{Q^2}}\right)
+\chi = \frac{x}{2}\left(1+\sqrt{1+4\frac{m_c^2}{Q^2}}\right) = \frac{x}{\eta}\,,
 \end{equation}
+where I have defined:
+\begin{equation}\label{Rescaledx}
+\eta=\frac{2Q^2}{\Sigma_{+-}+\Delta} = 2\left(1+\sqrt{1+4\frac{m_c^2}{Q^2}}\right)^{-1}=2\left(1+\sqrt{1+4\lambda}\right)^{-1}\,,
+\end{equation}
+with $\lambda=\frac{m_c^2}{Q^2}$.
 
 For a \textit{neutral current} process, where all the $\gamma$, the
 $Z$ and the interference $\gamma Z$ contributions are considered, one
@@ -178,19 +183,15 @@ Here, exactly as in the electromagnetic case, $m_1=m_2=m_c$ so that
 one ends up with:
 \begin{subequations}
 \begin{equation}
-F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\frac{m_c^2}{Q^2}}}B_c c(\chi)
+F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\lambda}}B_c c(\chi)\,,
 \end{equation}
 \begin{equation}
-F_2^{\rm FF,IC}(x,Q^2)=x\left(\sqrt{1+4\frac{m_c^2}{Q^2}}\right)B_cc(\chi)
+F_2^{\rm FF,IC}(x,Q^2)=\left(\sqrt{1+4\lambda}\right)B_cxc(\chi)\,,
 \end{equation}
 \begin{equation}
-F_3^{\rm FF,IC}(x,Q^2)= 2D_cc(\chi)
+xF_3^{\rm FF,IC}(x,Q^2)= 2D_cxc(\chi)\,.
 \end{equation}
 \end{subequations}
-again with:
-\begin{equation}
-\chi = \frac{x}{2}\left(1+\sqrt{1+4\frac{m_c^2}{Q^2}}\right)
-\end{equation}
 
 Finally, for a \textit{charged current} process, where a charged boson
 $W^\pm$ strikes the charm, one has:
@@ -209,13 +210,13 @@ In this case $m_1=m_c$ but $m_2=0$ with the consequence that:
 F_1^{\rm FF,IC}(x,Q^2)= |V_{cj}|^2c(x)
 \end{equation}
 \begin{equation}
-F_2^{\rm FF,IC}(x,Q^2)= 2x\left(1+\frac{m_c^2}{Q^2}\right)|V_{cj}|^2c(x)
+F_2^{\rm FF,IC}(x,Q^2)= 2\left(1+\lambda\right)|V_{cj}|^2xc(x)
 \end{equation}
 \begin{equation}
-F_3^{\rm FF,IC}(x,Q^2)= 2|V_{cj}|^2c(x)
+xF_3^{\rm FF,IC}(x,Q^2)= 2|V_{cj}|^2xc(x)
 \end{equation}
 \end{subequations}
-with $j=d,s$. Note that in this case $\chi=x$.
+with $j=d,s$. Note that in this case $\eta=1$ and thus $\chi=x$.
 
 In order to take into account the possible contributions due to
 intrinsic charm, one has to consider all diagrams contributing to a
@@ -224,13 +225,13 @@ concerned, one has to consider also the presence of $\overline{c}$ in
 the proton which, summed to the contribution of the $c$, gives:
 \begin{subequations}\label{NCEM}
 \begin{equation}
-F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\frac{m_c^2}{Q^2}}}B_c c^+(\chi)
+F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\lambda}}B_c c^+(\chi)
 \end{equation}
 \begin{equation}
-F_2^{\rm FF,IC}(x,Q^2)=x\left(\sqrt{1+4\frac{m_c^2}{Q^2}}\right)B_cc^+(\chi)
+F_2^{\rm FF,IC}(x,Q^2)=\left(\sqrt{1+4\lambda}\right)B_cxc^+(\chi)
 \end{equation}
 \begin{equation}
-F_3^{\rm FF,IC}(x,Q^2)= 2D_cc^-(\chi)
+xF_3^{\rm FF,IC}(x,Q^2)= 2D_cxc^-(\chi)
 \end{equation}
 \end{subequations}
 where:
@@ -239,11 +240,11 @@ c^{\pm}=c\pm\overline{c}
 \end{equation}
 and:
 \begin{equation}
-\chi = \frac{x}{2}\left(1+\sqrt{1+4\frac{m_c^2}{q^2}}\right)
+\chi = \frac{x}{2}\left(1+\sqrt{1+4\lambda}\right)
 \end{equation}
 therefore:
 \begin{equation}
-F_L^{\rm FF,IC}(x,Q^2) = F_2^{\rm FF,IC}(x,Q^2) -2x F_1^{\rm FF,IC}(x,Q^2)  = \frac{4\frac{m_c^2}{Q^2}}{\sqrt{1+4\frac{m_c^2}{Q^2}}}B_c c^+(\chi)
+F_L^{\rm FF,IC}(x,Q^2) = F_2^{\rm FF,IC}(x,Q^2) -2x F_1^{\rm FF,IC}(x,Q^2)  = \frac{4\lambda}{\sqrt{1+4\lambda}}B_c xc^+(\chi)
 \end{equation}
 
 In the charged current case, instead, one has to distinguish between
@@ -254,13 +255,13 @@ as a result the following structure functions:
 F_1^{\nu,\rm FF,IC}(x,Q^2)= (|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
 \end{equation}
 \begin{equation}
-F_2^{\nu,\rm FF,IC}(x,Q^2)= 2x\left(1+\frac{m_c^2}{Q^2}\right)(|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+F_2^{\nu,\rm FF,IC}(x,Q^2)= 2\left(1+\lambda\right)(|V_{cd}|^2+|V_{cs}|^2)x\overline{c}(x)
 \end{equation}
 \begin{equation}
-F_3^{\nu,\rm FF,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+xF_3^{\nu,\rm FF,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)x\overline{c}(x)
 \end{equation}
 \begin{equation}
-F_L^{\nu,\rm FF,IC}(x,Q^2) = 2x\frac{m_c^2}{Q^2}(|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+F_L^{\nu,\rm FF,IC}(x,Q^2) = 2\lambda(|V_{cd}|^2+|V_{cs}|^2)x\overline{c}(x)
 \end{equation}
 \end{subequations}
 The anti-neutrino scattering instead gives as a result the following
@@ -270,13 +271,13 @@ structure functions:
 F_1^{\overline{\nu},\rm FF,IC}(x,Q^2)= (|V_{cd}|^2+|V_{cs}|^2)c(x)
 \end{equation}
 \begin{equation}
-F_2^{\overline{\nu},\rm FF,IC}(x,Q^2)= 2x\left(1+\frac{m_c^2}{Q^2}\right)(|V_{cd}|^2+|V_{cs}|^2)c(x)
+F_2^{\overline{\nu},\rm FF,IC}(x,Q^2)= 2\left(1+\lambda\right)(|V_{cd}|^2+|V_{cs}|^2)xc(x)
 \end{equation}
 \begin{equation}
-F_3^{\overline{\nu},\rm FF,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)c(x)
+xF_3^{\overline{\nu},\rm FF,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)xc(x)
 \end{equation}
 \begin{equation}
-F_L^{\overline{\nu},\rm FF,IC}(x,Q^2)= 2x\frac{m_c^2}{Q^2}(|V_{cd}|^2+|V_{cs}|^2)c(x)
+F_L^{\overline{\nu},\rm FF,IC}(x,Q^2)= 2\lambda(|V_{cd}|^2+|V_{cs}|^2)xc(x)
 \end{equation}
 \end{subequations}
 
@@ -299,10 +300,10 @@ one finds :
 F_1^{\rm FF0,IC}(x,Q^2)= \frac{1}{2}B_c c^+(x)
 \end{equation}
 \begin{equation}
-F_2^{\rm FF0,IC}(x,Q^2)=xB_cc^+(x)
+F_2^{\rm FF0,IC}(x,Q^2)=B_cxc^+(x)
 \end{equation}
 \begin{equation}
-F_3^{\rm FF0,IC}(x,Q^2)= 2D_cc^-(x)
+xF_3^{\rm FF0,IC}(x,Q^2)= 2D_cxc^-(x)
 \end{equation}
 \begin{equation}
 F_L^{\rm FF0,IC}(x,Q^2)= 0
@@ -314,10 +315,10 @@ and:
 F_1^{\nu,\rm FF0,IC}(x,Q^2)= (|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
 \end{equation}
 \begin{equation}
-F_2^{\nu,\rm FF0,IC}(x,Q^2)= 2x(|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+F_2^{\nu,\rm FF0,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)x\overline{c}(x)
 \end{equation}
 \begin{equation}
-F_3^{\nu,\rm FF0,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)\overline{c}(x)
+xF_3^{\nu,\rm FF0,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)x\overline{c}(x)
 \end{equation}
 \begin{equation}
 F_L^{\nu,\rm FF0,IC}(x,Q^2)= 0
@@ -329,15 +330,64 @@ and:
 F_1^{\overline{\nu},\rm FF0,IC}(x,Q^2)= (|V_{cd}|^2+|V_{cs}|^2)c(x)
 \end{equation}
 \begin{equation}
-F_2^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 2x(|V_{cd}|^2+|V_{cs}|^2)c(x)
+F_2^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)xc(x)
 \end{equation}
 \begin{equation}
-F_3^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)c(x)
+xF_3^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)xc(x)
 \end{equation}
 \begin{equation}
 F_L^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 0
 \end{equation}
 \end{subequations}
+
+\subsection{The Implementation}
+
+At $\mathcal{O}(\alpha_s^0)$ there is no convolution between PDFs and
+coefficient functions and the charm PDFs appear directly in the
+expression evaluated in ``rescaled'' Bjorken variable $\chi$ defined
+in eq.~(\ref{Rescaledx}). In fact, defining:
+\begin{equation}\label{Rescaledx}
+\eta=\frac{2Q^2}{\Sigma_{+-}+\Delta}\,,
+\end{equation}
+one can write:
+\begin{equation}\label{Rescalingx}
+\chi = \frac{x}{\eta}\,.
+\end{equation}
+One can also write that:
+\begin{equation}\label{MassiveLOPDF}
+\chi c(\chi) = \int_\chi^1\frac{dy}{y}y\delta(1-y)\frac{\chi}{y}c\left(\frac{\chi}{y}\right) = \int_\chi^1\frac{dy}{y}\frac{\chi}{y}\delta\left(1-\frac{\chi}{y}\right)yc(y)\,.
+\end{equation}
+Now we can use the usual interpolation formula to expand $yc(y)$:
+\begin{equation}\label{interpolationF}
+yc(y) = \tilde{c}(y) = \sum_{\alpha=0}^{N_x} w_{\alpha}^{(k)}(y)
+\tilde{c}(x_{\alpha})\,,
+\end{equation}
+where $w_{\alpha}^{(k)}$ are lagrange interpolation functions of
+degree $k$. Plugging eq.~(\ref{interpolationF}) into
+eq.~(\ref{MassiveLOPDF}) and also using eq.~(\ref{Rescalingx}), one
+finds:
+\begin{equation}
+\chi c(\chi) = \tilde{c}(\chi) = \sum_{\alpha=0}^{N_x} \left[\int_\chi^1\frac{dy}{y}\frac{\chi}{y}\delta\left(1-\frac{\chi}{y}\right)w_{\alpha}^{(k)}(y)\right]\tilde{c}(x_{\alpha})= \sum_{\alpha=0}^{N_x} w_{\alpha}^{(k)}(\chi)
+\tilde{c}(x_{\alpha})
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \section{The FONLL Structure Functions}\label{FONNLSF}
