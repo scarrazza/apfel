@@ -141,22 +141,22 @@ of the same flavour (charm) therefore we have $m_1=m_2=m_c$. Under
 this conditions one finds:
 \begin{subequations}
 \begin{equation}
-F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\frac{m_c^2}{Q^2}}}e_c^2c(\chi)
+F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\lambda}}e_c^2c(\chi)
 \end{equation}
 \begin{equation}
-F_2^{\rm FF,IC}(x,Q^2)=\left(\sqrt{1+4\frac{m_c^2}{Q^2}}\right)e_c^2xc(\chi)
+F_2^{\rm FF,IC}(x,Q^2)=\left(\sqrt{1+4\lambda}\right)e_c^2xc(\chi)
 \end{equation}
 \begin{equation}
 xF_3^{\rm FF,IC}(x,Q^2)= 0
 \end{equation}
 \end{subequations}
 with:
-\begin{equation}
-\chi = \frac{x}{2}\left(1+\sqrt{1+4\frac{m_c^2}{Q^2}}\right) = \frac{x}{\eta}\,,
+\begin{equation}\label{RescaledX}
+\chi = \frac{x}{2}\left(1+\sqrt{1+4\lambda}\right) = \frac{x}{\eta}\,,
 \end{equation}
 where I have defined:
 \begin{equation}\label{Rescaledx}
-\eta=\frac{2Q^2}{\Sigma_{+-}+\Delta} = 2\left(1+\sqrt{1+4\frac{m_c^2}{Q^2}}\right)^{-1}=2\left(1+\sqrt{1+4\lambda}\right)^{-1}\,,
+\eta=\frac{2Q^2}{\Sigma_{+-}+\Delta} = 2\left(1+\sqrt{1+4\lambda}\right)^{-1}=2\left(1+\sqrt{1+4\lambda}\right)^{-1}\,,
 \end{equation}
 with $\lambda=\frac{m_c^2}{Q^2}$.
 
@@ -228,23 +228,20 @@ the proton which, summed to the contribution of the $c$, gives:
 F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\lambda}}B_c c^+(\chi)
 \end{equation}
 \begin{equation}
-F_2^{\rm FF,IC}(x,Q^2)=\left(\sqrt{1+4\lambda}\right)B_cxc^+(\chi)
+F_2^{\rm FF,IC}(x,Q^2)=\frac{2\sqrt{1+4\lambda}}{1+\sqrt{1+4\lambda}}B_c\chi c^+(\chi)
 \end{equation}
 \begin{equation}
-xF_3^{\rm FF,IC}(x,Q^2)= 2D_cxc^-(\chi)
+xF_3^{\rm FF,IC}(x,Q^2)=\frac{4}{1+\sqrt{1+4\lambda}}D_c\chi c^-(\chi)
 \end{equation}
 \end{subequations}
 where:
 \begin{equation}
 c^{\pm}=c\pm\overline{c}
 \end{equation}
-and:
-\begin{equation}
-\chi = \frac{x}{2}\left(1+\sqrt{1+4\lambda}\right)
-\end{equation}
 therefore:
 \begin{equation}
-F_L^{\rm FF,IC}(x,Q^2) = F_2^{\rm FF,IC}(x,Q^2) -2x F_1^{\rm FF,IC}(x,Q^2)  = \frac{4\lambda}{\sqrt{1+4\lambda}}B_c xc^+(\chi)
+F_L^{\rm FF,IC}(x,Q^2) = F_2^{\rm FF,IC}(x,Q^2) -2x F_1^{\rm
+  FF,IC}(x,Q^2)  = \frac{8\lambda}{1+4\lambda+\sqrt{1+4\lambda}}B_c \chi c^+(\chi)
 \end{equation}
 
 In the charged current case, instead, one has to distinguish between
@@ -340,56 +337,6 @@ F_L^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 0
 \end{equation}
 \end{subequations}
 
-\subsection{The Implementation}
-
-At $\mathcal{O}(\alpha_s^0)$ there is no convolution between PDFs and
-coefficient functions and the charm PDFs appear directly in the
-expression evaluated in ``rescaled'' Bjorken variable $\chi$ defined
-in eq.~(\ref{Rescaledx}). In fact, defining:
-\begin{equation}\label{Rescaledx}
-\eta=\frac{2Q^2}{\Sigma_{+-}+\Delta}\,,
-\end{equation}
-one can write:
-\begin{equation}\label{Rescalingx}
-\chi = \frac{x}{\eta}\,.
-\end{equation}
-One can also write that:
-\begin{equation}\label{MassiveLOPDF}
-\chi c(\chi) = \int_\chi^1\frac{dy}{y}y\delta(1-y)\frac{\chi}{y}c\left(\frac{\chi}{y}\right) = \int_\chi^1\frac{dy}{y}\frac{\chi}{y}\delta\left(1-\frac{\chi}{y}\right)yc(y)\,.
-\end{equation}
-Now we can use the usual interpolation formula to expand $yc(y)$:
-\begin{equation}\label{interpolationF}
-yc(y) = \tilde{c}(y) = \sum_{\alpha=0}^{N_x} w_{\alpha}^{(k)}(y)
-\tilde{c}(x_{\alpha})\,,
-\end{equation}
-where $w_{\alpha}^{(k)}$ are lagrange interpolation functions of
-degree $k$. Plugging eq.~(\ref{interpolationF}) into
-eq.~(\ref{MassiveLOPDF}) and also using eq.~(\ref{Rescalingx}), one
-finds:
-\begin{equation}
-\chi c(\chi) = \tilde{c}(\chi) = \sum_{\alpha=0}^{N_x} \left[\int_\chi^1\frac{dy}{y}\frac{\chi}{y}\delta\left(1-\frac{\chi}{y}\right)w_{\alpha}^{(k)}(y)\right]\tilde{c}(x_{\alpha})= \sum_{\alpha=0}^{N_x} w_{\alpha}^{(k)}(\chi)
-\tilde{c}(x_{\alpha})
-\end{equation}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \section{The FONLL Structure Functions}\label{FONNLSF}
 
 Once the inclusion of the IC into the massive sectors has been
@@ -409,7 +356,111 @@ F_i^{\rm FF,IC} + D(Q^2) \left[ F_i^{\rm ZM} - F_i^{\rm FF0} - F_i^{\rm FF0,IC}
 \end{array}
 \end{equation}
 where $D(Q^2)$ is a damping factor needed to quench undesired possibly
-large subleading terms at small energies.
+large subleading terms at small energies. In the rest of theses notes
+I will concentrate on the implementation of the $\Delta F_i^{\rm
+  FONLL,IC}$ in {\tt APFEL}.
+
+
+\section{The Implementation}
+
+At $\mathcal{O}(\alpha_s^0)$ there is no convolution between PDFs and
+coefficient functions and the charm PDFs appear directly in the
+expressions. According to whether one considers CC or NC
+heavy-quark-initiated processes, PDFs enter either as $xc(x)$, where
+$x$ is the measured Bjorken variable, or as $\chi c(\chi)$, where
+$\chi$ is the rescaled variable defined in eq.~(\ref{RescaledX}). Now,
+in order to achive a proper implementation of the FONLL scheme in {\tt
+  APFEL}, I need to know all the component of the struncture functions
+(massive and massless) on the same $x$-space interpolation grid,
+defined as $\{x_{\alpha}\},\,,\alpha\in=0,\dots,N_x$.  At LO, this
+essentially means knowing both $xc(x)$ and $\chi c(\chi)$ on the same
+grid. But choosing to tabulate $xc(x)$, such that in the CC case:
+\begin{equation}
+F^{\rm CC}(x_\alpha)\propto x_\alpha c(x_\alpha)=\tilde{c}(x_\alpha)
+=\sum_{\beta=0}^{N_x} \delta_{\alpha\beta} \tilde{c}(x_{\beta})\,,
+\end{equation}
+in the NC case, using the usual interpolation formula, the structure
+function can be expanded as:
+\begin{equation}\label{interpolationF}
+F^{\rm NC}(x_\alpha)\propto \chi(x_\alpha) c(\chi(x_\alpha)) = \tilde{c}(\chi(x_\alpha)) = \sum_{\beta=0}^{N_x} w_{\beta}^{(k)}(\chi(x_\alpha)) 
+\tilde{c}(x_{\beta}) = \sum_{\beta=0}^{N_x} w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right) 
+\tilde{c}(x_{\beta})\,.
+\end{equation}
+As a consequence, in the {\tt APFEL} framework, quantities to store
+are $\delta_{\alpha\beta}$ and $w_{\beta}^{(k)}(x_\alpha/\eta)$ to be
+combined in a proper way to the other coefficient functions. First of
+all, let us compute case by case the quantity $\Delta F_i^{\rm
+  FONLL,IC}$. In the NC case one has:
+\begin{subequations}
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \Delta F_2^{\rm  FONLL,IC}(x_\alpha) &=&\displaystyle B_c
+\sum_{\beta=0}^{N_x}\left[\frac{2\sqrt{1+4\lambda}}{1+\sqrt{1+4\lambda}}
+  w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right) - D(Q^2)\delta_{\alpha\beta}\right]\tilde{c}^+(x_{\beta})
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \Delta x_\alpha F_3^{\rm  FONLL,IC}(x_\alpha) & = &\displaystyle 2D_c
+\sum_{\beta=0}^{N_x}\left[\frac{2}{1+\sqrt{1+4\lambda}}
+  w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right) - D(Q^2)\delta_{\alpha\beta}\right]\tilde{c}^-(x_{\beta})
+\end{array}
+\end{equation}
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \Delta F_L^{\rm  FONLL,IC}(x_\alpha) &=& \displaystyle
+                                                       B_c \frac{8\lambda}{1+4\lambda+\sqrt{1+4\lambda}}
+\sum_{\beta=0}^{N_x} w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right)\tilde{c}^+(x_{\beta})
+\end{array}
+\end{equation}
+\end{subequations}
+
+Finally, the CC case is slightly simpler:
+\begin{subequations}
+\begin{equation}
+\Delta F_2^{\nu,\rm FONLL,IC}(x_\alpha )=
+2(|V_{cd}|^2+|V_{cs}|^2) \left[\left(1+\lambda\right) - D(Q^2)\right]
+\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
+\end{equation}
+\begin{equation}
+\Delta x_\alpha F_3^{\nu,\rm FONLL,IC}(x_\alpha )=
+2(|V_{cd}|^2+|V_{cs}|^2) \left[1 -D(Q^2)\right] \sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
+\end{equation}
+\begin{equation}
+\Delta F_L^{\nu,\rm FONLL,IC}(x_\alpha ) = 2(|V_{cd}|^2+|V_{cs}|^2)\lambda
+\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
+\end{equation}
+\end{subequations}
+and:
+\begin{subequations}\label{CCnb}
+\begin{equation}
+\Delta F_2^{\overline{\nu},\rm FONLL,IC}(x_\alpha )= 2(|V_{cd}|^2+|V_{cs}|^2) \left[\left(1+\lambda\right)-D(Q^2)\right]\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{c}(x_\beta )
+\end{equation}
+\begin{equation}
+\Delta x_\alpha F_3^{\overline{\nu},\rm FONLL,IC}(x_\alpha )= 2(|V_{cd}|^2+|V_{cs}|^2) \left[1-D(Q^2)\right]\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{c}(x_\beta )
+\end{equation}
+\begin{equation}
+\Delta F_L^{\overline{\nu},\rm FONLL,IC}(x_\alpha )=
+2(|V_{cd}|^2+|V_{cs}|^2) \lambda \sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{c}(x_\beta )
+\end{equation}
+\end{subequations}
+
+Now, since structure functions in {\tt APFEL} are expressed in the
+so-called evolution basis $\{\Sigma,g,V,V_3,\dots\}$, we only need to
+re-express the charm PDFs in terms of the distributions in the
+evolution basis.
+
+
+
+
+
+
+
+
+
+
+
+
 
 \begin{thebibliography}{alp}
 

@@ -837,7 +837,7 @@ c               endif
 *     centered in 'xi0'. This is also need to extend the range of the massive
 *     coefficient functions.
 *
-         if(MassScheme(1:4).eq."FFNS")then
+         if(MassScheme(1:4).eq."FFNS".or.MassScheme(1:5).eq."FONLL")then
             if(ipt_FF.ge.2)then
                do ixi=1,nxir
                   xi   = xigrid(ixi*xistep)
