@@ -181,8 +181,8 @@
          do i=nfi,nff
             bq(i) = eq2(i) 
      1            - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
-     2            + ( ve**2d0 + ae**2d0 ) * ( vq(i)**2d0 + aq(i)**2d0 
-     3            + ie * pol * 2d0 * ve * ae ) * pz2
+     2            + ( ve**2d0 + ae**2d0 + ie * pol * 2d0 * ve * ae )
+     3            * ( vq(i)**2d0 + aq(i)**2d0 ) * pz2
             dq(i) = - 2d0 * eq(i) * aq(i) * ( ae + ie * pol * ve ) * pz
      1            + 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae 
      2            + ie * pol * ( ve**2d0 + ae**2d0 ) ) * pz2
