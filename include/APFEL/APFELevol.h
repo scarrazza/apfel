@@ -50,6 +50,9 @@ namespace APFEL {
   /// Returns all PDFs on the joint grid
   void xPDFall(double x, double *xf);
 
+  /// Returns all PDFs (including the photon) on the joint grid
+  void xPDFallPhoton(double x, double *xf);
+
   /// Returns x*Lepton PDFs
   double xLepton(int i, double x);
 

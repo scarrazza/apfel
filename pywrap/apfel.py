@@ -195,6 +195,10 @@ def xPDFall(x, xf):
     return _apfel.xPDFall(x, xf)
 xPDFall = _apfel.xPDFall
 
+def xPDFallPhoton(x, xf):
+    return _apfel.xPDFallPhoton(x, xf)
+xPDFallPhoton = _apfel.xPDFallPhoton
+
 def xLepton(i, x):
     return _apfel.xLepton(i, x)
 xLepton = _apfel.xLepton

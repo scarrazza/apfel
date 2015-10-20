@@ -37,6 +37,9 @@ extern "C" {
 #define fxpdfall FC_FUNC(xpdfall,XPDFALL)
   void fxpdfall(double*,double*);
 
+#define fxpdfallphoton FC_FUNC(xpdfallphoton,XPDFALLPHOTON)
+  void fxpdfallphoton(double*,double*);
+
 #define fxlepton FC_FUNC(xlepton,XLEPTON)
   double fxlepton(int*, double*);
 

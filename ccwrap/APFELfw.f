@@ -70,6 +70,13 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      function fxpdfallphoton(x,xf)
+      double precision x, xf(-6:7), fxpdfallphoton
+      fxpdfallPhoton = xPDFallPhoton(x,xf)
+      return
+      end
+
+ccccccccccccc      
       function fxlepton(i,x)
       integer i
       double precision x, fxlepton

@@ -197,6 +197,12 @@
       write(6,*) "    returns at once 'x' times all the PDF in the"
       write(6,*) "    array xf[-6:6] computed in 'x' at the final scale"
       write(6,*) "    'Q' [GeV] defined in 'EvolveAPFEL'."
+      write(6,*) achar(27)//"[34m- xPDFallPhoton(double x,",
+     1           " double *xf):"//achar(27)//"[0m"
+      write(6,*) "    returns at once 'x' times all the PDF, including"
+      write(6,*) "    the photon, in the array xf[-6:7] computed in 'x'"
+      write(6,*) "    at the final scale 'Q' [GeV] defined in "
+      write(6,*) "    'EvolveAPFEL'."
       write(6,*) achar(27)//"[34m- xPDFj(int i, double x) and",
      1           " xgammaj(double x):"//achar(27)//"[0m"
       write(6,*) "    return 'x' times the i-th and the photon PDF"

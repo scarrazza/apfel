@@ -66,6 +66,11 @@ namespace APFEL {
     fxpdfall(&x,xf);
   }
 
+  void xPDFallPhoton(double x, double *xf)
+  {
+    fxpdfallphoton(&x,xf);
+  }
+
   double xLepton(int i, double x)
   {
     return fxlepton(&i, &x);
