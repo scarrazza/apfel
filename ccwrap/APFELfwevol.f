@@ -307,6 +307,12 @@ ccccccccccccc
       end subroutine fsetmsbarmasses
 
 ccccccccccccc      
+      subroutine fsetmassscalereference(Qc,Qb,Qt)
+      double precision Qc, Qb, Qt
+      call SetMassScaleReference(Qc,Qb,Qt)
+      end subroutine fsetmassscalereference
+
+ccccccccccccc      
       subroutine fsetnumberofgrids(n)
       integer n
       call SetNumberOfGrids(n)
