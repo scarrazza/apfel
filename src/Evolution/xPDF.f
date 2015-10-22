@@ -241,7 +241,7 @@
 *
       xf(7) = 0d0
       do alpha=0,nin(0)
-         xf(7) = xf(7) + w_int_gen(n,alpha,x) * fgamma(0,alpha)
+         xf(7) = xf(7) + wgt(alpha) * fgamma(0,alpha)
       enddo
       if(dabs(xf(7)).le.1d-12) xf(7) = 0d0
 *
