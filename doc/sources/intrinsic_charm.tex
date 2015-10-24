@@ -401,7 +401,7 @@ all, let us compute case by case the quantity $\Delta F_i^{\rm
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle \Delta x_\alpha F_3^{\rm  FONLL,IC}(x_\alpha) & = &\displaystyle 2D_c
+\displaystyle x_\alpha \Delta F_3^{\rm  FONLL,IC}(x_\alpha) & = &\displaystyle 2D_c
 \sum_{\beta=0}^{N_x}\left[\frac{2}{1+\sqrt{1+4\lambda}}
   w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right) - D(Q^2)\delta_{\alpha\beta}\right]\tilde{c}^-(x_{\beta})
 \end{array}
@@ -423,7 +423,7 @@ Finally, the CC case is slightly simpler:
 \sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
 \end{equation}
 \begin{equation}
-\Delta x_\alpha F_3^{\nu,\rm FONLL,IC}(x_\alpha )=
+x_\alpha\Delta F_3^{\nu,\rm FONLL,IC}(x_\alpha )=
 2(|V_{cd}|^2+|V_{cs}|^2) \left[1 -D(Q^2)\right] \sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
 \end{equation}
 \begin{equation}
@@ -437,7 +437,7 @@ and:
 \Delta F_2^{\overline{\nu},\rm FONLL,IC}(x_\alpha )= 2(|V_{cd}|^2+|V_{cs}|^2) \left[\left(1+\lambda\right)-D(Q^2)\right]\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{c}(x_\beta )
 \end{equation}
 \begin{equation}
-\Delta x_\alpha F_3^{\overline{\nu},\rm FONLL,IC}(x_\alpha )= 2(|V_{cd}|^2+|V_{cs}|^2) \left[1-D(Q^2)\right]\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{c}(x_\beta )
+x_\alpha\Delta F_3^{\overline{\nu},\rm FONLL,IC}(x_\alpha )= 2(|V_{cd}|^2+|V_{cs}|^2) \left[1-D(Q^2)\right]\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{c}(x_\beta )
 \end{equation}
 \begin{equation}
 \Delta F_L^{\overline{\nu},\rm FONLL,IC}(x_\alpha )=
@@ -448,11 +448,18 @@ and:
 Now, since structure functions in {\tt APFEL} are expressed in the
 so-called evolution basis $\{\Sigma,g,V,V_3,\dots\}$, we only need to
 re-express the charm PDFs in terms of the distributions in the
-evolution basis.
-
-
-
-
+evolution basis. In particular, it is easy to show that:
+\begin{equation}
+c^+=\frac{1}{6}\Sigma - \frac{1}{4}T_{15}+\frac{1}{20}T_{24}+\frac{1}{30}T_{35}\,,
+\end{equation}
+and:
+\begin{equation}
+c^-=\frac{1}{6}V - \frac{1}{4}V_{15}+\frac{1}{20}V_{24}+\frac{1}{30}V_{35}\,.
+\end{equation}
+In addition:
+\begin{equation}
+c = \frac{1}{2}(c^+ + c^-)\quad\mbox{and}\quad \overline{c} = \frac{1}{2}(c^+ - c^-)\,.
+\end{equation}
 
 
 
