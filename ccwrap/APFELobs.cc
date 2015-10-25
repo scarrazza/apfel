@@ -203,6 +203,11 @@ namespace APFEL {
     fenabledynamicalscalevariations(&dsv);
   }
 
+  void EnableIntrinsicCharm(int ic)
+  {
+    fenableintrinsiccharm(&ic);
+  }
+
   double GetZMass()
   {
     return fgetzmass();

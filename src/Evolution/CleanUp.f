@@ -59,6 +59,7 @@
       include "../commons/PropagatorCorrection.h"
       include "../commons/EWCouplings.h"
       include "../commons/DynScVar.h"
+      include "../commons/IntrinsicCharm.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -106,6 +107,7 @@
       InKrenQ           = "xxxx"
       InKfacQ           = "xxxx"
       InDynScVar        = "xxxx"
+      InIntrinsicCharm  = "xxxx"
 *
       InMZ              = "xxxx"
       InMW              = "xxxx"

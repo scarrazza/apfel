@@ -7100,6 +7100,27 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_EnableIntrinsicCharm(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:EnableIntrinsicCharm",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "EnableIntrinsicCharm" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  APFEL::EnableIntrinsicCharm(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_GetZMass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double result;
@@ -7629,6 +7650,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetRenQRatio", _wrap_SetRenQRatio, METH_VARARGS, NULL},
 	 { (char *)"SetFacQRatio", _wrap_SetFacQRatio, METH_VARARGS, NULL},
 	 { (char *)"EnableDynamicalScaleVariations", _wrap_EnableDynamicalScaleVariations, METH_VARARGS, NULL},
+	 { (char *)"EnableIntrinsicCharm", _wrap_EnableIntrinsicCharm, METH_VARARGS, NULL},
 	 { (char *)"GetZMass", _wrap_GetZMass, METH_VARARGS, NULL},
 	 { (char *)"GetWMass", _wrap_GetWMass, METH_VARARGS, NULL},
 	 { (char *)"GetProtonMass", _wrap_GetProtonMass, METH_VARARGS, NULL},

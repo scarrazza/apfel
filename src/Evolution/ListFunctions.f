@@ -342,6 +342,10 @@
       write(6,*) "    fact/ren scale variations point by point without"
       write(6,*) "    requiring the ratio \mu_{R,F} / Q to be constant."
       write(6,*) "    Limitations: \mu_F = \mu_R and slower code."
+      write(6,*) achar(27)//"[34m- EnableIntrinsicCharm(",
+     1           "bool):"//achar(27)//"[0m"
+      write(6,*) "    enables or disables the intrinsic charm"
+      write(6,*) "    contributions to the massive structure functions."      
       write(6,*) achar(27)//"[34m- EnableTargetMassCorrections(bool):"//
      1           achar(27)//"[0m"
       write(6,*) "    enables or disables the target mass corrections"

@@ -32,6 +32,7 @@
       include "../commons/PropagatorCorrection.h"
       include "../commons/EWCouplings.h"
       include "../commons/DynScVar.h"
+      include "../commons/IntrinsicCharm.h"
       include "../commons/coeffhqmellin.h"
       include "../commons/minimax.h"
 *
@@ -50,7 +51,8 @@
      1                                    (.false.)
       if(InDampingFONLL.ne."done")   call EnableDampingFONLL(.true.)
       if(InTMC.ne."done")            call EnableTargetMassCorrections
-     1                                     (.false.)
+     1                                                         (.false.)
+      if(InIntrinsicCharm.ne."done") call EnableIntrinsicCharm(.false.)
 *
       if(InMZ.ne."done")             call SetZMass(91.1876d0)
       if(InMW.ne."done")             call SetWMass(80.385d0)

@@ -112,6 +112,9 @@ extern "C" {
 #define fenabledynamicalscalevariations FC_FUNC(enabledynamicalscalevariations,ENABLEDYNAMICALSCALEVARIATIONS)
   void fenabledynamicalscalevariations(int*);
 
+#define fenableintrinsiccharm FC_FUNC(enableintrinsiccharm,ENABLEINTRINSICCHARM)
+  void fenableintrinsiccharm(int*);
+
 #define fgetzmass FC_FUNC(getzmass,GETZMASS)
   double fgetzmass();
 

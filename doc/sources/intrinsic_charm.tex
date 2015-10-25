@@ -225,13 +225,13 @@ concerned, one has to consider also the presence of $\overline{c}$ in
 the proton which, summed to the contribution of the $c$, gives:
 \begin{subequations}\label{NCEM}
 \begin{equation}
-F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\lambda}}B_c c^+(\chi)
+F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\lambda}}B_c c^+(\chi)=\frac{1}{2x}\frac{\eta^2}{2-\eta}B_c \chi c^+(\chi)
 \end{equation}
 \begin{equation}
-F_2^{\rm FF,IC}(x,Q^2)=\frac{2\sqrt{1+4\lambda}}{1+\sqrt{1+4\lambda}}B_c\chi c^+(\chi)
+F_2^{\rm FF,IC}(x,Q^2)=\frac{2\sqrt{1+4\lambda}}{1+\sqrt{1+4\lambda}}B_c\chi c^+(\chi) = (2-\eta)B_c\chi c^+(\chi)
 \end{equation}
 \begin{equation}
-xF_3^{\rm FF,IC}(x,Q^2)=\frac{4}{1+\sqrt{1+4\lambda}}D_c\chi c^-(\chi)
+xF_3^{\rm FF,IC}(x,Q^2)=\frac{4}{1+\sqrt{1+4\lambda}}D_c\chi c^-(\chi) = 2\eta D_c \chi c^-(\chi)
 \end{equation}
 \end{subequations}
 where:
@@ -241,7 +241,7 @@ c^{\pm}=c\pm\overline{c}
 therefore:
 \begin{equation}
 F_L^{\rm FF,IC}(x,Q^2) = F_2^{\rm FF,IC}(x,Q^2) -2x F_1^{\rm
-  FF,IC}(x,Q^2)  = \frac{8\lambda}{1+4\lambda+\sqrt{1+4\lambda}}B_c \chi c^+(\chi)
+  FF,IC}(x,Q^2)  = 4\frac{1-\eta}{2-\eta} B_c \chi c^+(\chi)
 \end{equation}
 
 In the charged current case, instead, one has to distinguish between
@@ -289,7 +289,7 @@ massless limit of the massive structuture functions (FF0). To this
 end, we just need to take the limit for $m_c\rightarrow 0$ of
 eqs.~(\ref{NCEM}), (\ref{CCnu}) and~(\ref{CCnb}). Considering that:
 \begin{equation}
-\chi \mathop{\longrightarrow}_{m_c\rightarrow0} x\,,
+\eta \mathop{\longrightarrow}_{m_c\rightarrow0} 1 \quad\Rightarrow\quad \chi \mathop{\longrightarrow}_{m_c\rightarrow0} x\,,
 \end{equation}
 one finds :
 \begin{subequations}\label{NCEM}
@@ -395,22 +395,22 @@ all, let us compute case by case the quantity $\Delta F_i^{\rm
 \begin{equation}
 \begin{array}{rcl}
 \displaystyle \Delta F_2^{\rm  FONLL,IC}(x_\alpha) &=&\displaystyle B_c
-\sum_{\beta=0}^{N_x}\left[\frac{2\sqrt{1+4\lambda}}{1+\sqrt{1+4\lambda}}
+\sum_{\beta=0}^{N_x}\left[(2-\eta)
   w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right) - D(Q^2)\delta_{\alpha\beta}\right]\tilde{c}^+(x_{\beta})
 \end{array}
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle x_\alpha \Delta F_3^{\rm  FONLL,IC}(x_\alpha) & = &\displaystyle 2D_c
-\sum_{\beta=0}^{N_x}\left[\frac{2}{1+\sqrt{1+4\lambda}}
-  w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right) - D(Q^2)\delta_{\alpha\beta}\right]\tilde{c}^-(x_{\beta})
+\displaystyle x_\alpha \Delta F_3^{\rm  FONLL,IC}(x_\alpha) & = &\displaystyle D_c
+\sum_{\beta=0}^{N_x}\left[2\eta
+  w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right) - D(Q^2)2\delta_{\alpha\beta}\right]\tilde{c}^-(x_{\beta})
 \end{array}
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
 \displaystyle \Delta F_L^{\rm  FONLL,IC}(x_\alpha) &=& \displaystyle
-                                                       B_c \frac{8\lambda}{1+4\lambda+\sqrt{1+4\lambda}}
-\sum_{\beta=0}^{N_x} w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right)\tilde{c}^+(x_{\beta})
+                                                       B_c
+\sum_{\beta=0}^{N_x} \left[2\frac{1-\eta}{2-\eta} w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right)\right]\tilde{c}^+(x_{\beta})
 \end{array}
 \end{equation}
 \end{subequations}

@@ -9,8 +9,10 @@
       real SCLzm(0:ngrid_max,3:6,4,0:2,0:nint_max_DIS,0:nint_max_DIS)
       real SC3zm(0:ngrid_max,3:6,4,0:2,0:nint_max_DIS,0:nint_max_DIS)
 *
-      real SC2mNC(0:ngrid_max,0:nxir,3,2,0:nint_max_DIS,0:nint_max_DIS)
-      real SCLmNC(0:ngrid_max,0:nxir,3,2,0:nint_max_DIS,0:nint_max_DIS)
+      real SC2mNC(0:ngrid_max,0:nxir,3,0:2,0:nint_max_DIS,
+     1            0:nint_max_DIS)
+      real SCLmNC(0:ngrid_max,0:nxir,3,0:2,0:nint_max_DIS,
+     1            0:nint_max_DIS)
 *
       real SC2mCC(0:ngrid_max,0:nxir,3,0:1,0:nint_max_DIS,
      1            0:nint_max_DIS)
@@ -19,8 +21,10 @@
       real SC3mCC(0:ngrid_max,0:nxir,3,0:1,0:nint_max_DIS,
      1            0:nint_max_DIS)
 *
-      real SC2m0NC(0:ngrid_max,0:nxir,3,2,0:nint_max_DIS,0:nint_max_DIS)
-      real SCLm0NC(0:ngrid_max,0:nxir,3,2,0:nint_max_DIS,0:nint_max_DIS)
+      real SC2m0NC(0:ngrid_max,0:nxir,3,0:2,0:nint_max_DIS,
+     1             0:nint_max_DIS)
+      real SCLm0NC(0:ngrid_max,0:nxir,3,2,0:nint_max_DIS,
+     1             0:nint_max_DIS)
 *
       real SC2m0CC(0:ngrid_max,0:nxir,3,0:1,0:nint_max_DIS,
      1             0:nint_max_DIS)

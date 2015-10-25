@@ -66,6 +66,12 @@ ccccccccccccc
       end subroutine fenabledynamicalscalevariations
 
 ccccccccccccc
+      subroutine fenableintrinsiccharm(ic)
+      logical ic
+      call EnableIntrinsicCharm(ic)
+      end subroutine fenableintrinsiccharm
+
+ccccccccccccc
       function fexternaldisoperator(SF,ihq,i,x,beta)
       integer ihq,i
       double precision x

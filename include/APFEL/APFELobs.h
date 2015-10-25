@@ -95,8 +95,11 @@ namespace APFEL {
   /// Sets the ratio between factorization scale and Q
   void SetFacQRatio(double ratioF);
 
-  /// Enables the posibility to vary scales dynamically
+  /// Enables the possibility to vary scales dynamically
   void EnableDynamicalScaleVariations(int);
+
+  /// Enables intrinsic charm contributions
+  void EnableIntrinsicCharm(int);
 
   // Returns the mass of the Z
   double GetZMass();

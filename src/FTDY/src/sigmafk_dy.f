@@ -39,7 +39,7 @@
       integer ibos
       integer ich
       integer nf
-      integer ifl
+      integer ifl,ifl1,ifl2
       integer ipdf,jpdf
       integer ipdf1,ipdf2,jpdf1,jpdf2
       integer ix,jx
@@ -106,7 +106,7 @@
          ich   = 1
          ibos  = 1          ! Photon production
          fact1 = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
-         fact2 =  2d0 * shad**( 3d0 / 2d0 ) * dsqrt(m2)
+         fact2 = 2d0 * shad**( 3d0 / 2d0 ) * dsqrt(m2)
          norm  = fact1 * fact2 * convfact * 1d-3
       elseif(obslbl.eq."DYP_E886P")then
          zarat = 1d0        ! Proton target
@@ -139,7 +139,7 @@
       elseif(obslbl.eq."EWK_WASYM_WM")then
          zarat = 1d0        ! antiproton target
          ich   = - 1
-         ibos  = 4          ! W- production first
+         ibos  = 4          ! W- production
          fact1 = pi * gmu * ( sqrt(2d0) / 3d0 ) * mw**2d0 / shad
          fact2 = 1d3
          norm  = fact1 * fact2 * convfact * 1d-3
@@ -147,11 +147,12 @@
          zarat = 1d0        ! proton target
          ich   = 1
          ibos  = 1          ! Photon production
-         fact1 = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
-         fact2 =  2d0 * shad**( 3d0 / 2d0 ) * dsqrt(m2)
-c         norm  = fact1 * fact2 * convfact * 1d-3
-c         norm  = 1d0
-         norm  = fact1
+         norm  = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
+c      elseif(obslbl(1:7).eq."DYP_CPY")then
+c         zarat = 1d0        ! proton target
+c         ich   = 1
+c         ibos  = 3          ! W+ production
+c         norm  = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
       else
          write(6,*) "ERROR: in sigmafk_dy.f:"
          write(6,*) "Observable unsupported"
@@ -216,6 +217,39 @@ c         norm  = 1d0
          factorQG(ifl,0)  = CIF_NLO(nf,ifl,ibos)
      1   * ( VV(ifl,ibos)**2d0 + AA(ifl,ibos)**2d0 )
          factorQG(0,ifl) = factorQG(ifl,0)
+c      elseif(obslbl(1:7).eq."DYP_CPY")then
+c         if(obslbl(13:14).eq."UD")then
+c            ifl1 = 
+c            ifl2 = 
+c         elseif(obslbl(13:14).eq."US")then
+c            ifl1 = 
+c            ifl2 = 
+c         elseif(obslbl(13:14).eq."UB")then
+c            ifl1 = 
+c            ifl2 = 
+c         elseif(obslbl(13:14).eq."CD")then
+c            ifl1 = 
+c            ifl2 = 
+c         elseif(obslbl(13:14).eq."CS")then
+c            ifl1 = 
+c            ifl2 = 
+c         elseif(obslbl(13:14).eq."CB")then
+c            ifl1 = 
+c            ifl2 = 
+c         elseif(obslbl(13:14).eq."TD")then
+c            ifl1 = 
+c            ifl2 = 
+c         elseif(obslbl(13:14).eq."TS")then
+c            ifl1 = 
+c            ifl2 = 
+c         elseif(obslbl(13:14).eq."TB")then
+c            ifl1 = 
+c            ifl2 = 
+c         else
+c            write(6,*) "ERROR: in sigmafk_dy.f:"
+c            write(6,*) "Unknown flavour ",obslbl(13:14) 
+c            call exit(-10)
+c         endif
       elseif(obslbl.eq."EWK_WASYM")then
          do ipdf1=-nf,nf
             do ipdf2=-nf,nf

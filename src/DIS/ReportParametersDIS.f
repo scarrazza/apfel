@@ -29,6 +29,7 @@
       include "../commons/PropagatorCorrection.h"
       include "../commons/EWCouplings.h"
       include "../commons/DynScVar.h"
+      include "../commons/IntrinsicCharm.h"
 *
 *     Print welcome message and report of the parameters (if enabled)
 *
@@ -91,6 +92,12 @@
                write(6,*) "FONLL damping factor disabled"
             endif
          endif
+*
+         if(IntrinsicCharm)then
+            write(6,*) "Intrinsic charm enabled"
+         else
+            write(6,*) "Intrinsic charm disabled"
+         endif         
          write(6,*) achar(27)//"[0m"
       endif
 *

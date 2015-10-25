@@ -162,18 +162,18 @@
          CIF(iq,iq,1)  = 1d0
          CIF(iq,iq,2)  = 1d0
          do jq=-6,6
-            if(DABS(VV(iq,1)+VV(jq,1)-1d0).lt.1D-8)then 
+            if(DABS(VV(iq,1)+VV(jq,1)-1d0).lt.1d-8)then 
                CII(iq,jq,3) = V_CKM(iq,jq)**2d0
                CFF(iq,jq,4) = V_CKM(iq,jq)**2d0
             endif
-            if(DABS(VV(iq,1)+VV(jq,1)+1d0).lt.1D-8)then 
+            if(DABS(VV(iq,1)+VV(jq,1)+1d0).lt.1d-8)then 
                CII(iq,jq,4) = V_CKM(iq,jq)**2d0
                CFF(iq,jq,3) = V_CKM(iq,jq)**2d0
             endif
-            if(DABS(VV(iq,1)-VV(jq,1)-1d0).lt.1D-8)then 
+            if(DABS(VV(iq,1)-VV(jq,1)-1d0).lt.1d-8)then 
                CIF(iq,jq,3) = V_CKM(iq,jq)**2d0
             endif
-            if(DABS(VV(iq,1)-VV(jq,1)+1d0).lt.1D-8)then 
+            if(DABS(VV(iq,1)-VV(jq,1)+1d0).lt.1d-8)then 
                CIF(iq,jq,4) = V_CKM(iq,jq)**2d0
             endif
          enddo
@@ -196,66 +196,12 @@
          do nff=1,6
             do iq=-nff,nff
                CIF_NLO(nff,iq,ibos) = 0d0
-               do jq = -nff,nff,+1
+               do jq = -nff,nff
                   CIF_NLO(nff,iq,ibos) = CIF_NLO(nff,iq,ibos) 
      1                                 + CIF(iq,jq,ibos)
                enddo
             enddo
          enddo
-c$$$*     nf = 1
-c$$$         nff = 1
-c$$$         do iq=-nff,nff
-c$$$            CIF_NLO(nff,iq,ibos) = 0d0
-c$$$            do jq = -nff,nff,+1
-c$$$               CIF_NLO(nff,iq,ibos) = CIF_NLO(nff,iq,ibos) 
-c$$$     1                              + CIF(iq,jq,ibos)
-c$$$            enddo
-c$$$         enddo
-c$$$*     nf = 2
-c$$$         nff = 2
-c$$$         do iq=-nff,nff
-c$$$            CIF_NLO(nff,iq,ibos) = 0d0
-c$$$            do jq = -nff,nff,+1
-c$$$               CIF_NLO(nff,iq,ibos) = CIF_NLO(nff,iq,ibos) 
-c$$$     1                              + CIF(iq,jq,ibos)
-c$$$            enddo
-c$$$         enddo
-c$$$*     nf = 3
-c$$$         nff = 3
-c$$$         do iq=-nff,nff
-c$$$            CIF_NLO(nff,iq,ibos) = 0d0
-c$$$            do jq = -nff,nff,+1
-c$$$               CIF_NLO(nff,iq,ibos) = CIF_NLO(nff,iq,ibos) 
-c$$$     1                              + CIF(iq,jq,ibos)
-c$$$            enddo
-c$$$         enddo
-c$$$*     nf = 4
-c$$$         nff = 4
-c$$$         do iq=-nff,nff
-c$$$            CIF_NLO(nff,iq,ibos) = 0d0
-c$$$            do jq = -nff,nff,+1
-c$$$               CIF_NLO(nff,iq,ibos) = CIF_NLO(nff,iq,ibos) 
-c$$$     1                              + CIF(iq,jq,ibos)
-c$$$            enddo
-c$$$         enddo
-c$$$*     nf = 5
-c$$$         nff = 5
-c$$$         do iq=-nff,nff
-c$$$            CIF_NLO(nff,iq,ibos) = 0d0
-c$$$            do jq = -nff,nff
-c$$$               CIF_NLO(nff,iq,ibos) = CIF_NLO(nff,iq,ibos) 
-c$$$     1                              + CIF(iq,jq,ibos)
-c$$$            enddo
-c$$$         enddo
-c$$$*     nf = 6
-c$$$         nff = 6
-c$$$         do iq=-nff,nff
-c$$$            CIF_NLO(nff,iq,ibos) = 0d0
-c$$$            do jq = -nff,nff,+1
-c$$$               CIF_NLO(nff,iq,ibos) = CIF_NLO(nff,iq,ibos) 
-c$$$     1                              + CIF(iq,jq,ibos)
-c$$$            enddo
-c$$$         enddo
       enddo
 *
       return 

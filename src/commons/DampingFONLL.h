@@ -5,4 +5,4 @@
       logical DampingFONLL
       character*4 InDampingFONLL
 *
-      common / DampongFONLLAPFEL / DampingFONLL,InDampingFONLL
+      common / DampingFONLLAPFEL / DampingFONLL,InDampingFONLL

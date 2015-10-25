@@ -539,6 +539,10 @@ def EnableDynamicalScaleVariations(arg1):
     return _apfel.EnableDynamicalScaleVariations(arg1)
 EnableDynamicalScaleVariations = _apfel.EnableDynamicalScaleVariations
 
+def EnableIntrinsicCharm(arg1):
+    return _apfel.EnableIntrinsicCharm(arg1)
+EnableIntrinsicCharm = _apfel.EnableIntrinsicCharm
+
 def GetZMass():
     return _apfel.GetZMass()
 GetZMass = _apfel.GetZMass

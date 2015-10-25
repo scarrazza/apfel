@@ -12,6 +12,7 @@
 *
       include "../commons/grid.h"
       include "../commons/DynScVar.h"
+      include "../commons/IntrinsicCharm.h"
 **
 *     Internal Variables
 *
@@ -48,6 +49,10 @@
             call RSLintegralsDIS(0,alpha)
          enddo
       endif
+*
+*     Include intrinsic charm contributions
+*
+      if(IntrinsicCharm) call IncludeIntrinsicCharm
 *
 *     Scale variations
 *     (only if the dynamical scale variation is disabled)
