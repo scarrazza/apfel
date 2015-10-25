@@ -29,6 +29,7 @@
       include "../commons/kfacQ.h"
       include "../commons/DynScVar.h"
       include "../commons/MassInterpolIndices.h"
+      include "../commons/IntrinsicCharm.h"
 **
 *     Internal Variables
 *
@@ -36,7 +37,8 @@
 **
 *     Internal Variables
 *
-      integer jgrid,ipdf,ihq,pt,ipt_FF,iptbkp
+      integer jgrid,ipdf,ihq
+      integer pt,ipt_FF,ipt_FF_min,iptbkp
       integer alpha,beta,gamma
       integer nf
       integer gbound
@@ -91,6 +93,12 @@
 *     and converts it internally into the renormalization scale).
 *
       muF = kfacQ*Q2
+*
+*     Normally the NC coefficient functions in the FFNS start at O(alpha_s).
+*     In the presence of intrinsic charm insted they start at O(1).
+*
+      ipt_FF_min = 1
+      if(IntrinsicCharm) ipt_FF_min = 0
 *
 *     Scale down the perturbative order of the alphas evolution if one
 *     of the FFNSs has been chosen
@@ -325,7 +333,7 @@
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
                            if(Q2.ge.m2th(ihq))then
-                              do pt=1,ipt
+                              do pt=ipt_FF_min,ipt
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
      2                                * SC2m0NC(jgrid,ixi(ihq),
@@ -420,7 +428,7 @@
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
                            if(W2.ge.4d0*m2th(ihq))then
-                              do pt=1,ipt
+                              do pt=ipt_FF_min,ipt
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
      2                                * SC2mNC(jgrid,ixi(ihq),
@@ -536,7 +544,7 @@
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
                            if(W2.ge.4d0*m2th(ihq))then
-                              do pt=1,ipt_FF
+                              do pt=ipt_FF_min,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
      2                                * SC2mNC(jgrid,ixi(ihq),
@@ -568,7 +576,7 @@
                               enddo
                            endif
                            if(Q2.ge.m2th(ihq))then
-                              do pt=1,ipt_FF
+                              do pt=ipt_FF_min,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
      2                                * SC2m0NC(jgrid,ixi(ihq),

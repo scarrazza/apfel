@@ -28,7 +28,7 @@
 *
 *     if the ZM-VFNS has been selected no IC contribution
 *     has to be included.
-*      
+*
       if(MassScheme.eq."ZM-VFNS") return
 *     
 *     If an external grid is found compute the whole operator
@@ -48,13 +48,14 @@
 *
 *     FFNS
                win = w_int(inter_degree(igrid),alpha,
-     1                     xg(igrid,beta)/eta)
+     1              xg(igrid,beta)/eta)
 *
                SC2mNC(igrid,ixi,3,0,beta,alpha) = ( 2d0 - eta ) * win
                SCLmNC(igrid,ixi,3,0,beta,alpha) = 2d0 * ( 1d0 - eta )
      1              / ( 2d0 - eta ) * win
 *     FFN0
                SC2m0NC(igrid,ixi,3,0,beta,alpha) = 0d0
+               SCLm0NC(igrid,ixi,3,0,beta,alpha) = 0d0
                if(alpha.eq.beta) SC2m0NC(igrid,ixi,3,0,beta,alpha) = 1d0
 *
 *     Charged current

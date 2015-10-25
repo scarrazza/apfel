@@ -23,7 +23,7 @@
 *
       real SC2m0NC(0:ngrid_max,0:nxir,3,0:2,0:nint_max_DIS,
      1             0:nint_max_DIS)
-      real SCLm0NC(0:ngrid_max,0:nxir,3,2,0:nint_max_DIS,
+      real SCLm0NC(0:ngrid_max,0:nxir,3,0:2,0:nint_max_DIS,
      1             0:nint_max_DIS)
 *
       real SC2m0CC(0:ngrid_max,0:nxir,3,0:1,0:nint_max_DIS,
