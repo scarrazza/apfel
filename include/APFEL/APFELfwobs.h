@@ -130,10 +130,10 @@ extern "C" {
 #define fgetckm FC_FUNC(getckm,GETCKM)
   double fgetckm(int*,int*);
 
-#define fgetgfermi FC_FUNC(fgetgfermi,FGETGFERMI)
+#define fgetgfermi FC_FUNC(getgfermi,GETGFERMI)
   double fgetgfermi();
 
-#define fgetsiatotalcrosssection FC_FUNC(fgetsiatotalcrosssection,FGETSIATOTALCROSSSECTION)
+#define fgetsiatotalcrosssection FC_FUNC(getsiatotalcrosssection,GETSIATOTALCROSSSECTION)
   double fgetsiatotalcrosssection(int*,double*);
 
 #define fenabletargetmasscorrections FC_FUNC(enabletargetmasscorrections,ENABLETARGETMASSCORRECTIONS)
