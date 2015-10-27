@@ -225,33 +225,37 @@
 *
 *     Write header
 *
-      write(13,*) "SetDesc: set generated with APFEL - ",fname(1:ln)
+      write(13,*) 'SetDesc: "set generated with APFEL - ',
+     1     fname(1:ln),'"'
       write(13,*) "Authors: V. Bertone, S. Carrazza, J. Rojo"
       write(13,*) "Reference: ArXiv:1310.1394"
       write(13,*) "Format: lhagrid1"
       write(13,*) "DataVersion: 1"
-      write(13,*) "NumMembers:", Nrep+1
+      write(13,*) "NumMembers:",Nrep+1
       write(13,*) "Particle: 2212"
       if(Th.eq."QCD") then
-         write(13,*) "[",(ids(ipdf),",",ipdf=-nfMaxPDFs,nfMaxPDFs-1),
-     1        ids(nfMaxPDFs),"]"
+         write(13,*) "Flavors: [",
+     1        (ids(ipdf),",",ipdf=-nfMaxPDFs,nfMaxPDFs-1),
+     2        ids(nfMaxPDFs),"]"
       else
          if(LeptEvol)then
-            write(13,*) "[",(ids(ipdf),",",ipdf=-nfMaxPDFs,nfMaxPDFs),
-     1           " 22, 11, -11, 13, -13, 15, -15]"
+            write(13,*) "Flavors: [",
+     1           (ids(ipdf),",",ipdf=-nfMaxPDFs,nfMaxPDFs),
+     2           " 22, 11, -11, 13, -13, 15, -15]"
          else
-            write(13,*) "[",(ids(ipdf),",",ipdf=-nfMaxPDFs,nfMaxPDFs),
-     1           " 22]"
+            write(13,*) "Flavors: [",
+     1           (ids(ipdf),",",ipdf=-nfMaxPDFs,nfMaxPDFs),
+     2           " 22]"
          endif
       endif
       write(13,*) "OrderQCD:",ipt
       write(13,*) "FlavorScheme: variable"
-      write(13,*) "NumFlavors: 6"
+      write(13,*) "NumFlavors: ",nfMaxPDFs
       write(13,*) "ErrorType: replicas"
-      write(13,*) "XMin:", xminLHA
-      write(13,*) "XMax:", xmaxLHA
-      write(13,*) "QMin:", dsqrt(q2minLHA)
-      write(13,*) "QMax:", dsqrt(q2maxLHA)
+      write(13,*) "XMin:",xminLHA
+      write(13,*) "XMax:",xmaxLHA
+      write(13,*) "QMin:",dsqrt(q2minLHA)
+      write(13,*) "QMax:",dsqrt(q2maxLHA)
       write(13,*) "MZ:",dsqrt(q2_ref_qcd)
       write(13,*) "MUp: 0"
       write(13,*) "MDown: 0"
@@ -290,12 +294,12 @@
      1           //fname(1:ln)//"_"//str(1:4)//".dat")
          endif
          if (krep.eq.0) then
-            write(13,*) "PdfType: central"
+            write(13,"(a)") "PdfType: central"
          else
-            write(13,*) "PdfType: replica"
+            write(13,"(a)") "PdfType: replica"
          endif
-         write(13,*) "Format: lhagrid1"
-         write(13,*) "---"
+         write(13,"(a)") "Format: lhagrid1"
+         write(13,"(a)") "---"
 *
          write(6,*) "Evaluating replica",krep," ..."
          call SetReplica(krep)
@@ -324,18 +328,12 @@
             write(13,*) (dsqrt(q2LHA(iq2)),iq2=iq2in,iq2fi)
 *
             if(Th.eq."QCD") then
-c               write(13,"(a)") "-6 -5 -4 -3 -2 -1 21 1 2 3 4 5 6"
                write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs)
             else
                if(LeptEvol)then
-c                  write(13,"(a,a,a)") "-6 -5 -4 -3 -2 -1 21",
-c     1                 " 1 2 3 4 5 6 22 ",
-c     2                 " 11 -11 13 -13 15 -15"
                   write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
      2                 " 22 11 -11 13 -13 15 -15"
                else
-c                  write(13,"(a,a)") "-6 -5 -4 -3 -2 -1 21",
-c     1                 " 1 2 3 4 5 6 22"
                   write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
      1                 " 22"
                endif
@@ -376,7 +374,7 @@ c     1                 " 1 2 3 4 5 6 22"
             if(Th.eq."QCD")then
                do ix=1,nxLHA
                   do iq2=iq2in,iq2fi
-                     write(13,44) (xpdfLHA(ipdf,ix,iq2),
+                     write(13,40) (xpdfLHA(ipdf,ix,iq2),
      1                    ipdf=-nfMaxPDFs,nfMaxPDFs)
                   enddo
                enddo
@@ -384,7 +382,7 @@ c     1                 " 1 2 3 4 5 6 22"
                if(LeptEvol)then
                   do ix=1,nxLHA
                      do iq2=iq2in,iq2fi
-                        write(13,46)(xpdfLHA(ipdf,ix,iq2),
+                        write(13,60)(xpdfLHA(ipdf,ix,iq2),
      1                       ipdf=-nfMaxPDFs,nfMaxPDFs),
      2                       xgammaLHA(ix,iq2),
      3                       xlepLHA(1,ix,iq2),
@@ -398,14 +396,14 @@ c     1                 " 1 2 3 4 5 6 22"
                else
                   do ix=1,nxLHA
                      do iq2=iq2in,iq2fi
-                        write(13,45)(xpdfLHA(ipdf,ix,iq2),
+                        write(13,50)(xpdfLHA(ipdf,ix,iq2),
      1                       ipdf=-nfMaxPDFs,nfMaxPDFs),
      2                       xgammaLHA(ix,iq2)
                      enddo
                   enddo
                endif
             endif
-            write(13,*) "---"
+            write(13,"(a)") "---"
             iq2in = iq2in + nQ(isg)
             iq2fi = iq2fi + nQ(isg+1)
          enddo
@@ -417,9 +415,9 @@ c     1                 " 1 2 3 4 5 6 22"
       write(6,*) "File ",fname(1:ln)," grid produced!"
       write(6,*) "  "
 *
- 44   format(13(1x,es14.7))
- 45   format(14(1x,es14.7))
- 46   format(20(1x,es14.7))
+ 40   format(13(es14.7,1x))
+ 50   format(14(es14.7,1x))
+ 60   format(20(es14.7,1x))
 *
       return
       end
