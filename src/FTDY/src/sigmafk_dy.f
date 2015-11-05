@@ -148,11 +148,11 @@
          ich   = 1
          ibos  = 1          ! Photon production
          norm  = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
-c      elseif(obslbl(1:7).eq."DYP_CPY")then
-c         zarat = 1d0        ! proton target
-c         ich   = 1
-c         ibos  = 3          ! W+ production
-c         norm  = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
+      elseif(obslbl(1:7).eq."DYP_CPY")then
+         zarat = 1d0        ! proton target
+         ich   = 1
+         ibos  = 3          ! W+ production
+         norm  = 1d0!( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
       else
          write(6,*) "ERROR: in sigmafk_dy.f:"
          write(6,*) "Observable unsupported"
@@ -206,50 +206,55 @@ c         norm  = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
          endif
 *
          factorNS(-ifl,-ifl) = CII(-ifl,ifl,ibos) 
-     1   * ( VV(-ifl,ibos)**2d0 + AA(-ifl,ibos)**2d0 )
+     1        * ( VV(-ifl,ibos)**2d0 + AA(-ifl,ibos)**2d0 )
          factorNS(ifl,ifl)  = CII(ifl,-ifl,ibos) 
-     1   * ( VV(ifl,ibos)**2d0 + AA(ifl,ibos)**2d0 )
+     1        * ( VV(ifl,ibos)**2d0 + AA(ifl,ibos)**2d0 )
 *
          factorQG(-ifl,0) = CIF_NLO(nf,-ifl,ibos)
-     1   * ( VV(-ifl,ibos)**2d0 + AA(-ifl,ibos)**2d0 )
+     1        * ( VV(-ifl,ibos)**2d0 + AA(-ifl,ibos)**2d0 )
          factorQG(0,-ifl) = factorQG(-ifl,0)
 *
          factorQG(ifl,0)  = CIF_NLO(nf,ifl,ibos)
-     1   * ( VV(ifl,ibos)**2d0 + AA(ifl,ibos)**2d0 )
+     1        * ( VV(ifl,ibos)**2d0 + AA(ifl,ibos)**2d0 )
          factorQG(0,ifl) = factorQG(ifl,0)
-c      elseif(obslbl(1:7).eq."DYP_CPY")then
-c         if(obslbl(13:14).eq."UD")then
-c            ifl1 = 
-c            ifl2 = 
-c         elseif(obslbl(13:14).eq."US")then
-c            ifl1 = 
-c            ifl2 = 
-c         elseif(obslbl(13:14).eq."UB")then
-c            ifl1 = 
-c            ifl2 = 
-c         elseif(obslbl(13:14).eq."CD")then
-c            ifl1 = 
-c            ifl2 = 
-c         elseif(obslbl(13:14).eq."CS")then
-c            ifl1 = 
-c            ifl2 = 
-c         elseif(obslbl(13:14).eq."CB")then
-c            ifl1 = 
-c            ifl2 = 
-c         elseif(obslbl(13:14).eq."TD")then
-c            ifl1 = 
-c            ifl2 = 
-c         elseif(obslbl(13:14).eq."TS")then
-c            ifl1 = 
-c            ifl2 = 
-c         elseif(obslbl(13:14).eq."TB")then
-c            ifl1 = 
-c            ifl2 = 
-c         else
-c            write(6,*) "ERROR: in sigmafk_dy.f:"
-c            write(6,*) "Unknown flavour ",obslbl(13:14) 
-c            call exit(-10)
-c         endif
+      elseif(obslbl(1:7).eq."DYP_CPY")then
+         if(obslbl(13:14).eq."UD")then
+            ifl1 = 2
+            ifl2 = 1
+         elseif(obslbl(13:14).eq."CD")then
+            ifl1 = 4
+            ifl2 = 1
+         elseif(obslbl(13:14).eq."TD")then
+            ifl1 = 6
+            ifl2 = 1
+         elseif(obslbl(13:14).eq."US")then
+            ifl1 = 2
+            ifl2 = 3
+         elseif(obslbl(13:14).eq."CS")then
+            ifl1 = 4
+            ifl2 = 3
+         elseif(obslbl(13:14).eq."TS")then
+            ifl1 = 6
+            ifl2 = 3
+         elseif(obslbl(13:14).eq."UB")then
+            ifl1 = 2
+            ifl2 = 5
+         elseif(obslbl(13:14).eq."CB")then
+            ifl1 = 4
+            ifl2 = 5
+         elseif(obslbl(13:14).eq."TB")then
+            ifl1 = 6
+            ifl2 = 5
+         else
+            write(6,*) "ERROR: in sigmafk_dy.f:"
+            write(6,*) "Unknown flavour ",obslbl(13:14) 
+            call exit(-10)
+         endif
+*
+*     Omit CKM matrix elements
+*
+         factorNS(ifl1,ifl2) = VV(ifl1,ibos)**2d0 + AA(ifl1,ibos)**2d0
+         factorQG(ifl1,-ifl2) = factorNS(ifl1,ifl2)
       elseif(obslbl.eq."EWK_WASYM")then
          do ipdf1=-nf,nf
             do ipdf2=-nf,nf
@@ -344,7 +349,8 @@ c         endif
                         lum_qg = 0d0
                         lum_gq = 0d0
 *     W^+/W^- observables
-                        if(obslbl(1:9).eq."EWK_WASYM")then
+                        if(obslbl(1:9).eq."EWK_WASYM".or.
+     1                     obslbl(1:7).eq."DYP_CPY")then
                            do ipdf1=-nf,nf
                               do ipdf2=-nf,nf
 *     quark-antiquark luminosity
@@ -436,7 +442,8 @@ c         endif
                lum_qg = 0d0
                lum_gq = 0d0
 *     W^+/W^- observables
-               if(obslbl(1:9).eq."EWK_WASYM")then
+               if(obslbl(1:9).eq."EWK_WASYM".or.
+     1            obslbl(1:7).eq."DYP_CPY")then
                   do ipdf1=-nf,nf
                      do ipdf2=-nf,nf
 *     quark-antiquark luminosity
