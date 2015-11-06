@@ -24,10 +24,10 @@ extern "C" {
     catch(LHAPDF::Exception e) { std::cout << e.what() << std::endl; }
   }
 
-  int numberpdf_()
-  {
-    return std::atoi(_pdfs->info().get_entry("NumMembers").c_str())-1;
-  }
+  //int numberpdf_()
+  //{
+  //  return std::atoi(_pdfs->info().get_entry("NumMembers").c_str())-1;
+  //}
 
   double xfxq_(int *fl, double *x, double *Q)
   {
@@ -53,10 +53,10 @@ extern "C" {
     return pdf[*fl+6];
   }
 
-  int numberpdf_()
-  {
-    return LHAPDF::numberPDF();
-  }
+  //int numberpdf_()
+  //{
+  //  return LHAPDF::numberPDF();
+  //}
 
   bool   islhapdf6_() { return false; }
 }

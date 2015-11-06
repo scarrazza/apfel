@@ -27,7 +27,7 @@
 *
       integer alpha
       integer ifl,ilept
-      integer Nrep, numberPDF
+c      integer Nrep,numberPDF
       double precision f0(-6:6),fp0,fext0(-6:7),flext0(-3:3), xfxQ
       logical has_photon
       external ExternalSetAPFEL
@@ -191,13 +191,13 @@
       else
          if(igrid.eq.1)then
             call mkPDFs(irep,pdfsetlen,pdfset)
-            Nrep = numberPDF()
-            if(irep.lt.0.or.irep.gt.Nrep)then
-               write(6,*) "Replica requested out of range:"
-               write(6,*) "- irep=",irep
-               write(6,*) "- Nrep=",Nrep
-               call exit(-10)
-            endif
+c            Nrep = numberPDF()
+c            if(irep.lt.0.or.irep.gt.Nrep)then
+c               write(6,*) "Replica requested out of range:"
+c               write(6,*) "- irep=",irep
+c               write(6,*) "- Nrep=",Nrep
+c               call exit(-10)
+c            endif
          endif
          do alpha=0,nin(igrid)
             do ifl=-6,6
