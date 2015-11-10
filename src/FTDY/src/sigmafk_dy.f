@@ -148,11 +148,26 @@
          ich   = 1
          ibos  = 1          ! Photon production
          norm  = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
-      elseif(obslbl(1:7).eq."DYP_CPY")then
+      elseif(obslbl(1:7).eq."DYP_CPS")then
          zarat = 1d0        ! proton target
          ich   = 1
          ibos  = 3          ! W+ production
-         norm  = 1d0!( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
+         norm  = 1d0
+      elseif(obslbl(1:7).eq."DYP_CNS")then
+         zarat = 1d0        ! proton target
+         ich   = 1
+         ibos  = 4          ! W- production
+         norm  = 1d0
+      elseif(obslbl(1:7).eq."DYP_CPO")then
+         zarat = 1d0        ! antiproton target
+         ich   = - 1
+         ibos  = 3          ! W+ production
+         norm  = 1d0
+      elseif(obslbl(1:7).eq."DYP_CNO")then
+         zarat = 1d0        ! antiproton target
+         ich   = - 1
+         ibos  = 4          ! W- production
+         norm  = 1d0
       else
          write(6,*) "ERROR: in sigmafk_dy.f:"
          write(6,*) "Observable unsupported"
@@ -217,34 +232,72 @@
          factorQG(ifl,0)  = CIF_NLO(nf,ifl,ibos)
      1        * ( VV(ifl,ibos)**2d0 + AA(ifl,ibos)**2d0 )
          factorQG(0,ifl) = factorQG(ifl,0)
-      elseif(obslbl(1:7).eq."DYP_CPY")then
-         if(obslbl(13:14).eq."UD")then
+      elseif(obslbl(1:6).eq."DYP_CP")then
+         if(obslbl(13:14).eq."UDB")then
             ifl1 = 2
             ifl2 = 1
-         elseif(obslbl(13:14).eq."CD")then
+         elseif(obslbl(13:14).eq."CDB")then
             ifl1 = 4
             ifl2 = 1
-         elseif(obslbl(13:14).eq."TD")then
+         elseif(obslbl(13:14).eq."TDB")then
             ifl1 = 6
             ifl2 = 1
-         elseif(obslbl(13:14).eq."US")then
+         elseif(obslbl(13:14).eq."USB")then
             ifl1 = 2
             ifl2 = 3
-         elseif(obslbl(13:14).eq."CS")then
+         elseif(obslbl(13:14).eq."CSB")then
             ifl1 = 4
             ifl2 = 3
-         elseif(obslbl(13:14).eq."TS")then
+         elseif(obslbl(13:14).eq."TSB")then
             ifl1 = 6
             ifl2 = 3
-         elseif(obslbl(13:14).eq."UB")then
+         elseif(obslbl(13:14).eq."UBB")then
             ifl1 = 2
             ifl2 = 5
-         elseif(obslbl(13:14).eq."CB")then
+         elseif(obslbl(13:14).eq."CBB")then
             ifl1 = 4
             ifl2 = 5
-         elseif(obslbl(13:14).eq."TB")then
+         elseif(obslbl(13:14).eq."TBB")then
             ifl1 = 6
             ifl2 = 5
+         else
+            write(6,*) "ERROR: in sigmafk_dy.f:"
+            write(6,*) "Unknown flavour ",obslbl(13:14) 
+            call exit(-10)
+         endif
+*
+*     Omit CKM matrix elements
+*
+         factorNS(ifl1,ifl2) = VV(ifl1,ibos)**2d0 + AA(ifl1,ibos)**2d0
+         factorQG(ifl1,-ifl2) = factorNS(ifl1,ifl2)
+      elseif(obslbl(1:6).eq."DYP_CN")then
+         if(obslbl(13:14).eq."UBD")then
+            ifl1 = - 2
+            ifl2 = - 1
+         elseif(obslbl(13:14).eq."CBD")then
+            ifl1 = - 4
+            ifl2 = - 1
+         elseif(obslbl(13:14).eq."TBD")then
+            ifl1 = - 6
+            ifl2 = - 1
+         elseif(obslbl(13:14).eq."UBS")then
+            ifl1 = - 2
+            ifl2 = - 3
+         elseif(obslbl(13:14).eq."CBS")then
+            ifl1 = - 4
+            ifl2 = - 3
+         elseif(obslbl(13:14).eq."TBS")then
+            ifl1 = - 6
+            ifl2 = - 3
+         elseif(obslbl(13:14).eq."UBB")then
+            ifl1 = - 2
+            ifl2 = - 5
+         elseif(obslbl(13:14).eq."CBB")then
+            ifl1 = - 4
+            ifl2 = - 5
+         elseif(obslbl(13:14).eq."TBB")then
+            ifl1 = - 6
+            ifl2 = - 5
          else
             write(6,*) "ERROR: in sigmafk_dy.f:"
             write(6,*) "Unknown flavour ",obslbl(13:14) 

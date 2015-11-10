@@ -321,28 +321,28 @@ c      data ximax /   10000.000000000000D0     /
       data xigrid( 298 ) /   9345.0653141575058D0     /
       data xigrid( 299 ) /   9666.9878008392716D0     /
       data xigrid( 300 ) /   10000.000000000009D0     /
-*     Additional grid points to make use of the massive scheme also above
-*     Q^2 / m^2 = 10000. The massive scheme here is replaced by the
-*     massive0 one.
-      data xigrid( 301 ) /   10883.984007303872D0     /
-      data xigrid( 302 ) /   11846.110787124646D0     /
-      data xigrid( 303 ) /   12893.288035581454D0     /
-      data xigrid( 304 ) /   14033.034078083092D0     /
-      data xigrid( 305 ) /   15273.531847980663D0     /
-      data xigrid( 306 ) /   16623.687636846789D0     /
-      data xigrid( 307 ) /   18093.195038185557D0     /
-      data xigrid( 308 ) /   19692.604543664140D0     /
-      data xigrid( 309 ) /   21433.399291540009D0     /
-      data xigrid( 310 ) /   23328.077511127962D0     /
-      data xigrid( 311 ) /   25390.242255226189D0     /
-      data xigrid( 312 ) /   27634.699064745284D0     /
-      data xigrid( 313 ) /   30077.562266734298D0     /
-      data xigrid( 314 ) /   32736.370668982254D0     /
-      data xigrid( 315 ) /   35630.213481837447D0     /
-      data xigrid( 316 ) /   38779.867371314162D0     /
-      data xigrid( 317 ) /   42207.945627474859D0     /
-      data xigrid( 318 ) /   45939.060519058781D0     /
-      data xigrid( 319 ) /   50000.000000000051D0     /
+c*     Additional grid points to make use of the massive scheme also above
+c*     Q^2 / m^2 = 10000. The massive scheme here is replaced by the
+c*     massive0 one.
+c      data xigrid( 301 ) /   10883.984007303872D0     /
+c      data xigrid( 302 ) /   11846.110787124646D0     /
+c      data xigrid( 303 ) /   12893.288035581454D0     /
+c      data xigrid( 304 ) /   14033.034078083092D0     /
+c      data xigrid( 305 ) /   15273.531847980663D0     /
+c      data xigrid( 306 ) /   16623.687636846789D0     /
+c      data xigrid( 307 ) /   18093.195038185557D0     /
+c      data xigrid( 308 ) /   19692.604543664140D0     /
+c      data xigrid( 309 ) /   21433.399291540009D0     /
+c      data xigrid( 310 ) /   23328.077511127962D0     /
+c      data xigrid( 311 ) /   25390.242255226189D0     /
+c      data xigrid( 312 ) /   27634.699064745284D0     /
+c      data xigrid( 313 ) /   30077.562266734298D0     /
+c      data xigrid( 314 ) /   32736.370668982254D0     /
+c      data xigrid( 315 ) /   35630.213481837447D0     /
+c      data xigrid( 316 ) /   38779.867371314162D0     /
+c      data xigrid( 317 ) /   42207.945627474859D0     /
+c      data xigrid( 318 ) /   45939.060519058781D0     /
+c      data xigrid( 319 ) /   50000.000000000051D0     /
    
       data coef_p1(  1 ) /    0.0000000000000000D0     /
       data coef_p1(  2 ) /    0.0000000000000000D0     /
