@@ -403,7 +403,7 @@
                         lum_gq = 0d0
 *     W^+/W^- observables
                         if(obslbl(1:9).eq."EWK_WASYM".or.
-     1                     obslbl(1:7).eq."DYP_CPY")then
+     1                     obslbl(1:5).eq."DYP_C")then
                            do ipdf1=-nf,nf
                               do ipdf2=-nf,nf
 *     quark-antiquark luminosity
