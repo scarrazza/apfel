@@ -190,6 +190,12 @@ namespace APFEL {
   /// Returns the perturbative order of the evolution
   int GetPerturbativeOrder();
 
+  /// Returns the final factorization scale
+  double GetMuF();
+
+  /// Returns the initial factorization scale
+  double GetMuF0();
+
   /// Sets as a default the heavy quark pole masses
   void SetPoleMasses(double mc, double mb, double mt);
 

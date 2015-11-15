@@ -338,6 +338,20 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      function fgetmuf()
+      integer fgetmuf
+      fgetmuf = GetMuF()
+      return
+      end
+
+ccccccccccccc      
+      function fgetmuf0()
+      integer fgetmuf0
+      fgetmuf0 = GetMuF0()
+      return
+      end
+
+ccccccccccccc      
       subroutine fsetpolemasses(mc,mb,mt)
       double precision mc, mb, mt
       call SetPoleMasses(mc,mb,mt)

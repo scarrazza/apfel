@@ -159,7 +159,7 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/ListFunctions.lo Evolution/GetPerturbativeOrder.lo \
 	Evolution/SetTauMass.lo Evolution/EnableLeptonEvolution.lo \
 	Evolution/SetLHgridParameters.lo \
-	Evolution/SetEpsilonTruncation.lo
+	Evolution/SetEpsilonTruncation.lo Evolution/GetMuF.lo
 am__objects_3 = Evolution/interpolants.lo
 am__objects_4 = Evolution/SplittingFunctions.lo Evolution/Hellx.lo
 am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
@@ -412,7 +412,6 @@ LIBTOOL = @LIBTOOL@
 LIPO = @LIPO@
 LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
-LT_SYS_LIBRARY_PATH = @LT_SYS_LIBRARY_PATH@
 MAINT = @MAINT@
 MAKEINFO = @MAKEINFO@
 MANIFEST_TOOL = @MANIFEST_TOOL@
@@ -512,7 +511,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/LHAPDFgridDerivative.f \
 	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f Evolution/EnableMassRunning.f Evolution/ListFunctions.f \
 	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f Evolution/SetLHgridParameters.f \
-	Evolution/SetEpsilonTruncation.f
+	Evolution/SetEpsilonTruncation.f Evolution/GetMuF.f
 
 INTER = Evolution/interpolants.f
 SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f Evolution/Hellx.f
@@ -766,6 +765,8 @@ Evolution/EnableLeptonEvolution.lo: Evolution/$(am__dirstamp) \
 Evolution/SetLHgridParameters.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetEpsilonTruncation.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/GetMuF.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)

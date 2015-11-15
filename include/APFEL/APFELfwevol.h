@@ -163,6 +163,12 @@ extern "C" {
 #define fgetperturbativeorder FC_FUNC(getperturbativeorder,GETPERTURBATIVEORDER)
   int fgetperturbativeorder();
 
+#define fgetmuf FC_FUNC(getmuf,GETMUF)
+  double fgetmuf();
+
+#define fgetmuf0 FC_FUNC(getmuf0,GETMUF0)
+  double fgetmuf0();
+
 #define fsetpolemasses FC_FUNC(setpolemasses,SETPOLEMASSES)
   void fsetpolemasses(double*,double*,double*);
 

@@ -296,6 +296,16 @@ namespace APFEL {
     return fgetperturbativeorder();
   }
 
+  double GetMuF()
+  {
+    return fgetmuf();
+  }
+
+  double GetMuF0()
+  {
+    return fgetmuf0();
+  }
+
   void SetPoleMasses(double mc, double mb, double mt)
   {
     fsetpolemasses(&mc,&mb,&mt);

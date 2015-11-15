@@ -535,8 +535,8 @@
                endif
 *     Combination and normalisation
                pred_me = pred_me + norm * ( 
-     1              ( cDY_NS(0,ix2,ix1,idat) 
-     2              + as * cDY_NS(1,ix2,ix1,idat) ) * lum_ns +
+     1              ( cDY_NS(0,ix2,ix1,idat) +
+     2              as * cDY_NS(1,ix2,ix1,idat) ) * lum_ns +
      3              as * cDY_QG(1,ix2,ix1,idat) * lum_qg +
      4              as * cDY_GQ(1,ix2,ix1,idat) * lum_gq )
             enddo
