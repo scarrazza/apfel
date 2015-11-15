@@ -246,7 +246,13 @@
       write(6,*) achar(27)//"[34m- GetPerturbativeOrder():"//
      1           achar(27)//"[0m"
       write(6,*) "    returns the perturbative order set for the"
-      write(6,*) "    evolution"
+      write(6,*) "    evolution."
+      write(6,*) achar(27)//"[34m- GetMuF0():"//
+     1           achar(27)//"[0m"
+      write(6,*) "    returns the initial factorizationn scale."
+      write(6,*) achar(27)//"[34m- GetMuF():"//
+     1           achar(27)//"[0m"
+      write(6,*) "    returns the final factorizationn scale."
       write(6,*) achar(27)//"[34m- ExternalEvolutionOperator(",
      1           "string fname, int i, int j, double x, int beta):"//
      2           achar(27)//"[0m"
