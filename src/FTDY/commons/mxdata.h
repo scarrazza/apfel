@@ -4,5 +4,5 @@
 *
       integer mxdata
 *
-      parameter(mxdata = 500)
+      parameter(mxdata = 200)
 

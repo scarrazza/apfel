@@ -4,5 +4,5 @@
 *
       integer mxgridsize
 *
-      parameter(mxgridsize = 200)
+      parameter(mxgridsize = 150)
 
