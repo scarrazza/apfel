@@ -1,19 +1,19 @@
 *     -*-fortran-*-
 
       integer nint_max
-      parameter(nint_max=350)
+      parameter(nint_max=250)
       integer nint_max_DIS
       parameter(nint_max_DIS=120)
       integer ngrid_max
-      parameter(ngrid_max=5)
+      parameter(ngrid_max=4)
       double precision xmax
       parameter(xmax=1d0)
 
       integer ngrid,igrid
       integer nin(0:ngrid_max)
       integer inter_degree(0:ngrid_max)
-      integer DensityFactor(ngrid_max),TransitionPoint(ngrid_max+1)
-      double precision xmin(ngrid_max)
+      integer DensityFactor(ngrid_max+1),TransitionPoint(ngrid_max+1)
+      double precision xmin(ngrid_max+1)
       character*4 InGrid
       logical IsExt(ngrid_max)
       logical ThereAreExtGrids

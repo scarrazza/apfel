@@ -24,7 +24,7 @@
       double precision F2light,F2charm,F2bottom,F2total
       double precision FLlight,FLcharm,FLbottom,FLtotal
       double precision F3light,F3charm,F3bottom,F3total
-      double precision Ref(616)
+      double precision Ref(616),Act(616)
       character*6 apfelversion
       logical succ
       parameter(eps=1d-10)
@@ -233,7 +233,7 @@ c      call EnableWelcomeMessage(.false.)
       call SetMassScheme("FONLL-C")
       call SetProcessDIS("NC")
 *
-*     Initializes integrals on the grids
+*     Compute predictions
 *
       call InitializeAPFEL_DIS
 *
@@ -241,72 +241,59 @@ c      call EnableWelcomeMessage(.false.)
 *
       Q0   = dsqrt(Q20) - eps
       iref = 0
-      succ = .true.
       do iQ=1,4
          Q = dsqrt(Q2(iQ))
          call ComputeStructureFunctionsAPFEL(Q0,Q)
 *     alpha_s
          iref = iref + 1
-         if((Ref(iref)-AlphaQCD(Q))/Ref(iref).gt.toll)
-     1        succ = .false.
+         Act(iref) = AlphaQCD(Q)
 *     PDF evolution
          do ilha=1,9
             iref = iref + 1
-            if((Ref(iref)-(xPDFj(2,xlha(ilha))-xPDFj(-2,xlha(ilha))))
-     1           /Ref(iref).gt.toll) succ = .false.
+            Act(iref) = xPDFj(2,xlha(ilha))-xPDFj(-2,xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-(xPDFj(1,xlha(ilha))-xPDFj(-1,xlha(ilha))))
-     1           /Ref(iref).gt.toll) succ = .false.
+            Act(iref) = xPDFj(1,xlha(ilha))-xPDFj(-1,xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-2d0*(xPDFj(-1,xlha(ilha))
-     1           +xPDFj(-2,xlha(ilha))))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = 2d0*(xPDFj(-1,xlha(ilha))+xPDFj(-2,xlha(ilha)))
             iref = iref + 1
-            if((Ref(iref)-(xPDFj(4,xlha(ilha))+xPDFj(-4,xlha(ilha))))
-     1           /Ref(iref).gt.toll) succ = .false.
+            Act(iref) = xPDFj(4,xlha(ilha))+xPDFj(-4,xlha(ilha)) 
             iref = iref + 1
-            if((Ref(iref)-xPDFj(0,xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = xPDFj(0,xlha(ilha))
 *     F_2
             iref = iref + 1
-            if((Ref(iref)-F2light(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = F2light(xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-F2charm(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = F2charm(xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-F2bottom(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = F2bottom(xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-F2total(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = F2total(xlha(ilha))
 *     F_L
             iref = iref + 1
-            if((Ref(iref)-FLlight(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = FLlight(xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-FLcharm(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = FLcharm(xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-FLbottom(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = FLbottom(xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-FLtotal(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = FLtotal(xlha(ilha))
 *     F_3
             iref = iref + 1
-            if((Ref(iref)-F3light(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = F3light(xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-F3charm(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = F3charm(xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-F3bottom(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = F3bottom(xlha(ilha))
             iref = iref + 1
-            if((Ref(iref)-F3total(xlha(ilha)))/Ref(iref).gt.toll)
-     1           succ = .false.
+            Act(iref) = F3total(xlha(ilha))
          enddo
+      enddo
+*
+*     Compare present predictions with the reference
+*
+      succ = .true.
+      do iref=1,616
+         if((Ref(iref)-Act(iref))/Ref(iref).gt.toll) succ = .false.
       enddo
 *
       if(succ)then

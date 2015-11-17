@@ -31,6 +31,7 @@
       if(nin(igrid)+inter_degree(igrid).gt.nint_max)then
          write(6,*) "In initGrid.f:"
          write(6,*) "Number of grid points too large:"
+         write(6,*) "found =",nin(igrid)+inter_degree(igrid)
          write(6,*) "Maximum value allowed =",nint_max
          write(6,*) "You should reduce it."
          write(6,*) " "
