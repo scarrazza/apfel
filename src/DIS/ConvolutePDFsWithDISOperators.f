@@ -129,9 +129,6 @@
          enddo
       enddo
 *
-      return
-      end
-*
       call cpu_time(t2)
 *
 c      write(6,"(a,a,f9.5,a)") " Convolution of the DIS operators",
