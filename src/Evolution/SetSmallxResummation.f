@@ -25,12 +25,12 @@
       endif
       InSmallx = "done"
 *
-      if(Smallx)then
-         write(6,*) "Small-x resummation currently not available."
-         write(6,*) "Disable it to use APFEL."
-         write(6,*) " "
-         call exit(-10)
-      endif
+c      if(Smallx)then
+c         write(6,*) "Small-x resummation currently not available."
+c         write(6,*) "Disable it to use APFEL."
+c         write(6,*) " "
+c         call exit(-10)
+c      endif
 *
       return
       end

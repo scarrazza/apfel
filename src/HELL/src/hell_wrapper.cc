@@ -14,10 +14,10 @@ using namespace std;
 #define STR(tok) STR_EXPAND(tok)
 
 // Global allocation
-HELL::LogOrder order;
-HELL::HELL *sxD = NULL;
-HELL::Order fixed_order_to_be_matched_to;
-sqmatrix<double> xdPNLL;
+HELLx::LogOrder order;
+HELLx::HELLx *sxD = NULL;
+HELLx::Order fixed_order_to_be_matched_to;
+HELLx::sqmatrix<double> xdPNLL;
 
 string dataPath()
 {
@@ -32,28 +32,28 @@ extern "C" {
   void helllogorder_(int *ord)
   {    
     if (*ord == 0)
-      order = HELL::LL;
+      order = HELLx::LL;
     else 
-      order = HELL::NLL;
+      order = HELLx::NLL;
   }
 
   void hell_(double *asmc, double *asmb, double *asmt)
   {
     if (sxD) delete sxD;
-    sxD = new HELL::HELL(order, dataPath());
+    sxD = new HELLx::HELLx(order, dataPath());
     sxD->init_as_thresholds(*asmc,*asmb,*asmt);
   }
 
   void hellorder_(int *ord)
   {
     if (*ord == -1)
-      fixed_order_to_be_matched_to = HELL::none;
+      fixed_order_to_be_matched_to = HELLx::none;
     else if (*ord == 0)
-      fixed_order_to_be_matched_to = HELL::LO;
+      fixed_order_to_be_matched_to = HELLx::LO;
     else if (*ord == 1)
-      fixed_order_to_be_matched_to = HELL::NLO;
+      fixed_order_to_be_matched_to = HELLx::NLO;
     else if (*ord == 2)
-      fixed_order_to_be_matched_to = HELL::NNLO;	
+      fixed_order_to_be_matched_to = HELLx::NNLO;	
   }
 
   double xdeltap_(int *k, double *as, double *x)
