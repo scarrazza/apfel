@@ -24,7 +24,7 @@
 *
       if(TimeLike)then
 *
-*     Initialize integrals fo the time-like evolution
+*     Initialize integrals for the time-like evolution
 *
          if(IsExt(igrid))then
 *
@@ -46,7 +46,7 @@
          endif
       else
 *
-*     Initialize integrals fo the space-like evolution
+*     Initialize integrals for the space-like evolution
 *
          if(IsExt(igrid))then
 *

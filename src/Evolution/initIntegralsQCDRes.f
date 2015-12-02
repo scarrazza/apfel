@@ -15,13 +15,25 @@
 **
 *     Variables
 *
-      integer alpha,tau
+      integer alpha,beta,tau
 *
-      do tau=0,na
-         do alpha=0,nin(igrid)-1
-            call RSLintegralsQCDRes(0,alpha,tau)
+*     Initialize integrals 
+*
+      if(IsExt(igrid))then
+         do tau=0,na
+            do alpha=0,nin(igrid)-1
+               do beta=alpha,nin(igrid)-1
+                  call RSLintegralsQCDRes(alpha,beta,tau)
+               enddo
+            enddo
          enddo
-      enddo
+      else
+         do tau=0,na
+            do alpha=0,nin(igrid)-1
+               call RSLintegralsQCDRes(0,alpha,tau)
+            enddo
+         enddo
+      endif
 *
       return
       end
