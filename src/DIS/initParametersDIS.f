@@ -328,5 +328,19 @@
          call SetFacQRatio(1d0)
       endif
 *
+*     If the intrinsic charm has been activated, make sure that the number
+*     of light flavours in the massive sector is not bigger than 3.
+*
+      if(IntrinsicCharm.and.Nf_FF.gt.3)then
+         write(6,*) achar(27)//"[33m"//
+     1        "WARNING: Intrinsic charm enabled"
+         write(6,*) "         ... the number of light flavours in the"
+         write(6,*) "         massive sector will be forced to be equal"
+         write(6,*) "         to three"
+         write(6,*) "         "
+     1              //achar(27)//"[0m"
+         Nf_FF = 3
+      endif
+*
       return
       end

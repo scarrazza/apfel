@@ -108,7 +108,7 @@
          endif
       enddo
 *
-*     Fill joint structure functions Operators
+*     Fill joint structure functions operators
 *
       do alpha=0,nin(0)+inter_degree(0)
 *     Determine starting grid

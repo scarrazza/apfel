@@ -366,6 +366,29 @@
                            endif
                         enddo
                      endif
+*
+*     Include intrinsic charm contributions if needed
+*
+                     if(IntrinsicCharm)then
+                        if(Nf_FF.lt.4)then
+                           do pt=ipt_FF_min,ipt
+                              CLnsp(4) = CLnsp(4) + as(pt)
+     1                             * ( c0(4)
+     2                             * SCLm0NC(jgrid,ixi(4),
+     3                             3,pt,alpha,beta)
+     4                             + c1(4)
+     5                             * SCLm0NC(jgrid,ixi(4)+1,
+     6                             3,pt,alpha,beta) )
+                              C2nsp(4) = C2nsp(4) + as(pt)
+     1                             * ( c0(4)
+     2                             * SC2m0NC(jgrid,ixi(4),
+     3                             3,pt,alpha,beta)
+     4                             + c1(4)
+     5                             * SC2m0NC(jgrid,ixi(4)+1,
+     6                             3,pt,alpha,beta) )
+                           enddo
+                        endif
+                     endif
                   elseif(MassScheme(1:4).eq."FFNS")then
 *
 *     Light coefficient functions
@@ -460,6 +483,29 @@
                               enddo
                            endif
                         enddo
+                     endif
+*
+*     Include intrinsic charm contributions if needed
+*
+                     if(IntrinsicCharm)then
+                        if(Nf_FF.lt.4)then
+                           do pt=ipt_FF_min,ipt
+                              CLnsp(4) = CLnsp(4) + as(pt)
+     1                             * ( c0(4)
+     2                             * SCLmNC(jgrid,ixi(4),
+     3                             3,pt,alpha,beta)
+     4                             + c1(4)
+     5                             * SCLmNC(jgrid,ixi(4)+1,
+     6                             3,pt,alpha,beta) )
+                              C2nsp(4) = C2nsp(4) + as(pt)
+     1                             * ( c0(4)
+     2                             * SC2mNC(jgrid,ixi(4),
+     3                             3,pt,alpha,beta)
+     4                             + c1(4)
+     5                             * SC2mNC(jgrid,ixi(4)+1,
+     6                             3,pt,alpha,beta) )
+                           enddo
+                        endif
                      endif
                   elseif(MassScheme(1:5).eq."FONLL")then
 *
@@ -608,6 +654,45 @@
                               enddo
                            endif
                         enddo
+                     endif
+*
+*     Include intrinsic charm contributions if needed
+*
+                     if(IntrinsicCharm)then
+                        if(Nf_FF.lt.4)then
+                           do pt=ipt_FF_min,ipt
+*     FFNS
+                              CLnsp(4) = CLnsp(4) + as(pt)
+     1                             * ( c0(4)
+     2                             * SCLmNC(jgrid,ixi(4),
+     3                             3,pt,alpha,beta)
+     4                             + c1(4)
+     5                             * SCLmNC(jgrid,ixi(4)+1,
+     6                             3,pt,alpha,beta) )
+                              C2nsp(4) = C2nsp(4) + as(pt)
+     1                             * ( c0(4)
+     2                             * SC2mNC(jgrid,ixi(4),
+     3                             3,pt,alpha,beta)
+     4                             + c1(4)
+     5                             * SC2mNC(jgrid,ixi(4)+1,
+     6                             3,pt,alpha,beta) )
+*     FFN0
+                              CLnsp(4) = CLnsp(4) - as(pt)
+     1                             *  damp(ihq) * ( c0(4)
+     2                             * SCLm0NC(jgrid,ixi(4),
+     3                             3,pt,alpha,beta)
+     4                             + c1(4)
+     5                             * SCLm0NC(jgrid,ixi(4)+1,
+     6                             3,pt,alpha,beta) )
+                              C2nsp(4) = C2nsp(4) - as(pt)
+     1                             *  damp(ihq) * ( c0(4)
+     2                             * SC2m0NC(jgrid,ixi(4),
+     3                             3,pt,alpha,beta)
+     4                             + c1(4)
+     5                             * SC2m0NC(jgrid,ixi(4)+1,
+     6                             3,pt,alpha,beta) )
+                           enddo
+                        endif
                      endif
                   endif
 c$$$*     

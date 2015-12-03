@@ -18,6 +18,7 @@
       include "../commons/Evs.h"
       include "../commons/Nf_FF.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/IntrinsicCharm.h"
 **
 *     Input Variables
 *
@@ -189,16 +190,7 @@ c      integer Nrep,numberPDF
 *     LHAPDF set
 *
       else
-         if(igrid.eq.1)then
-            call mkPDFs(irep,pdfsetlen,pdfset)
-c            Nrep = numberPDF()
-c            if(irep.lt.0.or.irep.gt.Nrep)then
-c               write(6,*) "Replica requested out of range:"
-c               write(6,*) "- irep=",irep
-c               write(6,*) "- Nrep=",Nrep
-c               call exit(-10)
-c            endif
-         endif
+         if(igrid.eq.1) call mkPDFs(irep,pdfsetlen,pdfset)
          do alpha=0,nin(igrid)
             do ifl=-6,6
                f0ph(ifl,alpha) = xfxQ(ifl,xg(igrid,alpha),dsqrt(Q20))
@@ -216,14 +208,25 @@ c            endif
 *     For the FFNS, erase the heavy flavour PDFs
 *
       if(Evs.eq."FF".and.Nf_FF.lt.6)then
-         do alpha=0,nin(igrid)
-            do ifl=Nf_FF+1,6
-               f0ph(ifl,alpha)  = 0d0
-               f0ph(-ifl,alpha) = 0d0
+         if(IntrinsicCharm.and.Nf_FF.lt.4)then
+            do alpha=0,nin(igrid)
+               do ifl=5,6
+                  f0ph(ifl,alpha)  = 0d0
+                  f0ph(-ifl,alpha) = 0d0
+               enddo
+               f0lep(3,alpha)  = 0d0
+               f0lep(-3,alpha) = 0d0
             enddo
-            f0lep(3,alpha)  = 0d0
-            f0lep(-3,alpha) = 0d0
-         enddo
+         else
+            do alpha=0,nin(igrid)
+               do ifl=Nf_FF+1,6
+                  f0ph(ifl,alpha)  = 0d0
+                  f0ph(-ifl,alpha) = 0d0
+               enddo
+               f0lep(3,alpha)  = 0d0
+               f0lep(-3,alpha) = 0d0
+            enddo
+         endif
 *
 *     For the VFNS, erase the heavy flavour beyond nfMaxPDFs
 *
