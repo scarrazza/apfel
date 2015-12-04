@@ -51,7 +51,7 @@
      1              xg(igrid,beta)/eta)
 *
                SC2mNC(igrid,ixi,3,0,beta,alpha) = ( 2d0 - eta ) * win
-               SCLmNC(igrid,ixi,3,0,beta,alpha) = 2d0 * ( 1d0 - eta )
+               SCLmNC(igrid,ixi,3,0,beta,alpha) = 4d0 * ( 1d0 - eta )
      1              / ( 2d0 - eta ) * win
 *     FFN0
                SC2m0NC(igrid,ixi,3,0,beta,alpha) = 0d0
