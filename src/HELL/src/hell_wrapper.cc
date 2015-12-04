@@ -19,7 +19,7 @@ HELLx::HELLx *sxD = NULL;
 HELLx::Order fixed_order_to_be_matched_to;
 HELLx::sqmatrix<double> xdPNLL;
 
-string dataPath()
+string HELLdataPath()
 {
   string dataDir(STR(DATA_PATH));
   stringstream s;
@@ -40,7 +40,7 @@ extern "C" {
   void hell_(double *asmc, double *asmb, double *asmt)
   {
     if (sxD) delete sxD;
-    sxD = new HELLx::HELLx(order, dataPath());
+    sxD = new HELLx::HELLx(order, HELLdataPath());
     sxD->init_as_thresholds(*asmc,*asmb,*asmt);
   }
 
