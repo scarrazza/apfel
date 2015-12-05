@@ -58,7 +58,7 @@
       double precision Kl,Kc,Kb,Kt
       double precision sgn,diff(nxir),xi(4:6),c0(4:6),c1(4:6)
       double precision damp(4:6)
-      double precision eta,cFLIC
+      double precision cFLIC
       double precision t1,t2
 *
       call cpu_time(t1)
@@ -213,11 +213,8 @@
 *     In case of intrinsic charm, compute the correction to apply
 *     to the non-singlet part of the massive F_L
 *
-         if(IntrinsicCharm)then
-            eta = 2d0 / ( 1d0 + dsqrt( 1d0 + 4d0 * M2(4) / Q2 ) )
-            cFLIC = ( 1d0 - ( ( 2d0 - eta )**2d0 - 1d0 ) 
-     1           / 8d0 / ( 1d0 - eta ) * ( 1d0 - bqt(4) / bq(4) ) )
-         endif
+         if(IntrinsicCharm)
+     1        cFLIC = ( 1d0 - ( 1d0 - bqt(4) / bq(4) ) / 2d0 )
 *     
          do jgrid=1,ngrid
 *     
@@ -691,13 +688,13 @@
                            CLnsp(4) = cFLIC * CLnsp(4)
 *     FFN0
                            do pt=ipt_FF_min,ipt
-                              CLnsp(4) = CLnsp(4) - as(pt)
-     1                             *  damp(ihq) * ( c0(4)
-     2                             * SCLm0NC(jgrid,ixi(4),
-     3                             3,pt,alpha,beta)
-     4                             + c1(4)
-     5                             * SCLm0NC(jgrid,ixi(4)+1,
-     6                             3,pt,alpha,beta) )
+c                              CLnsp(4) = CLnsp(4) - as(pt)
+c     1                             *  damp(ihq) * ( c0(4)
+c     2                             * SCLm0NC(jgrid,ixi(4),
+c     3                             3,pt,alpha,beta)
+c     4                             + c1(4)
+c     5                             * SCLm0NC(jgrid,ixi(4)+1,
+c     6                             3,pt,alpha,beta) )
                               C2nsp(4) = C2nsp(4) - as(pt)
      1                             *  damp(ihq) * ( c0(4)
      2                             * SC2m0NC(jgrid,ixi(4),
