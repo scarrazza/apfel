@@ -48,7 +48,7 @@ distribution $f$(\footnote{At this stage it is not necessary to
   settled.}):
 \begin{equation}\label{DGLAPStandard}
 \mu^2\frac{\partial f}{\partial \mu^2} =
-P\left(x,\alpha_s(\mu)\right)\otimes f(x,\mu)\,
+P\left(x,\left|\alpha_s(\mu)\right|\right)\otimes f(x,\mu)\,
 \end{equation}
 where $\otimes$ represents the usual Mellin convolution such that:
 \begin{equation}
@@ -57,19 +57,28 @@ A(x)\otimes B(x) \equiv \int_0^1dz \int_0^1dy A(y)B(z)\delta(x-yz)=
 A(x)B\left(\frac{y}{x}\right) = \int^1_x\frac{dy}{y}
 A\left(\frac{y}{x}\right)B(x)\,.
 \end{equation}
-Now we consider the RGE for the strong coupling $\alpha_s$, that reads:
-\begin{equation}\label{RGEalphas}
-\mu^2\frac{\partial \alpha_s}{\partial \mu^2} = \beta(\alpha_s)\,,
+Now we consider the RGE for the strong coupling $\alpha_s$. When
+considering complex values of the factorization scale $\mu$, one
+should keep in mind that it is the absolute value of the strong
+coupling $\alpha_s$, defined as\footnote{It is crucial to recognize
+  that $|g(\mu)|^2=|g^2(\mu)|$.}:
+\begin{equation}
+\alpha_s(\mu) = \frac{g(\mu)^2}{4\pi}\,,
 \end{equation}
-and combine it with the DGLAP equation in eq.~(\ref{DGLAPStandard}),
-obtaining the DGLAP equation differential in $\alpha_s$:
+that enters the DGLAP equation. The RGE for the strong coupling reads:
+\begin{equation}\label{RGEalphas}
+\mu^2\frac{\partial \alpha_s}{\partial \mu^2} = \beta(\alpha_s)\,.
+\end{equation}
+
+Combining eq.~(\ref{RGEalphas}) with the DGLAP equation in eq.~(\ref{DGLAPStandard}),
+we obtain:
 \begin{equation}\label{DGLAPalphas}
 \frac{\partial f}{\partial \alpha_s} =
 R\left(x,\alpha_s\right)\otimes f(x,\alpha_s)\,
 \end{equation}
 where:
 \begin{equation}
-R\left(x,\alpha_s\right) = \frac{P\left(x,\alpha_s\right)}{\beta(\alpha_s)}\,.
+R\left(x,\alpha_s\right) = \frac{P\left(x,\left|\alpha_s\right|\right)}{\beta(\alpha_s)}\,.
 \end{equation}
 
 The next fundamental step is the promotion of the factorization scale

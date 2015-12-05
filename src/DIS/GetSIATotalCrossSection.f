@@ -28,7 +28,7 @@
       integer i,nf
       integer NC
       double precision Q2,a_QCD,as(2),a_QED,alpha2
-      double precision bq(0:6),dq(0:6),sumq
+      double precision bq(0:6),dq(0:6),bqt(0:6),sumq
       double precision sigma0tot
       double precision lnQ2M2
       double precision Ree
@@ -56,7 +56,7 @@
 *
       alpha2 = ( 4d0 * pi * a_QED(Q2) )**2d0
 *
-      call ComputeChargesDIS(Q2,bq,dq)
+      call ComputeChargesDIS(Q2,bq,dq,bqt)
 *
 *     Find number of active flavours at the scale Q2
 *

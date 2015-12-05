@@ -164,7 +164,7 @@ For a \textit{neutral current} process, where all the $\gamma$, the
 $Z$ and the interference $\gamma Z$ contributions are considered, one
 has:
 \begin{equation}
-S_+=S_-=B_c=e_c^2-2e_cV_eV_cP_Z+(V_e^2+A_e^2)(V_c^2+A_c^2)P_Z^2\quad\mbox{and}\quad R=D_c=-2e_c A_cA_eP_Z+4V_cA_cV_eA_eP_Z^2
+S_{\pm}=B_c(\tilde{B}_c)=e_c^2-2e_cV_eV_cP_Z+(V_e^2+A_e^2)(V_c^2\pm A_c^2)P_Z^2\quad\mbox{and}\quad R=D_c=-2e_c A_cA_eP_Z+4V_cA_cV_eA_eP_Z^2
 \end{equation}
 with:
 \begin{equation}
@@ -183,7 +183,7 @@ Here, exactly as in the electromagnetic case, $m_1=m_2=m_c$ so that
 one ends up with:
 \begin{subequations}
 \begin{equation}
-F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\lambda}}B_c c(\chi)\,,
+F_1^{\rm FF,IC}(x,Q^2)= \frac{B_c+2\lambda(B_c-\tilde{B}_c)}{2\sqrt{1+4\lambda}} c(\chi)\,,
 \end{equation}
 \begin{equation}
 F_2^{\rm FF,IC}(x,Q^2)=\left(\sqrt{1+4\lambda}\right)B_cxc(\chi)\,,
@@ -225,7 +225,7 @@ concerned, one has to consider also the presence of $\overline{c}$ in
 the proton which, summed to the contribution of the $c$, gives:
 \begin{subequations}\label{NCEM}
 \begin{equation}
-F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\lambda}}B_c c^+(\chi)=\frac{1}{2x}\frac{\eta^2}{2-\eta}B_c \chi c^+(\chi)
+F_1^{\rm FF,IC}(x,Q^2)= \frac{1}{2\sqrt{1+4\lambda}}B_c c^+(\chi)=\frac{1}{2x}\frac{\eta^2}{2-\eta}\left[B_c +\frac{(2-\eta)^2-1}{2\eta^2}(B_c-\tilde{B}_c)\right]\chi c^+(\chi)
 \end{equation}
 \begin{equation}
 F_2^{\rm FF,IC}(x,Q^2)=\frac{2\sqrt{1+4\lambda}}{1+\sqrt{1+4\lambda}}B_c\chi c^+(\chi) = (2-\eta)B_c\chi c^+(\chi)
@@ -240,8 +240,17 @@ c^{\pm}=c\pm\overline{c}
 \end{equation}
 therefore:
 \begin{equation}
+%\begin{array}{rcl}
 F_L^{\rm FF,IC}(x,Q^2) = F_2^{\rm FF,IC}(x,Q^2) -2x F_1^{\rm
-  FF,IC}(x,Q^2)  = 4\frac{1-\eta}{2-\eta} B_c \chi c^+(\chi)
+FF,IC}(x,Q^2)  = 4\frac{1-\eta}{2-\eta}
+B_c\left[1-\frac{(2-\eta)^2-1}{8(1-\eta)}\left(1-\frac{\tilde{B}_c}{B_c}\right)\right] \chi c^+(\chi)
+%\displaystyle F_L^{\rm FF,IC}(x,Q^2) &=&\displaystyle F_2^{\rm
+%FF,IC}(x,Q^2) -2x F_1^{\rm FF,IC}(x,Q^2)  \\
+%\\
+%&=&\displaystyle \frac{B_c}{2(2-\eta)}\left[\frac{\tilde{B}_c}{B_c}
+%(\eta^2-4\eta+3)-(\eta^2+4\eta-5)\right]\chi
+%c^+(\chi)
+%\end{array}
 \end{equation}
 
 In the charged current case, instead, one has to distinguish between
@@ -394,23 +403,22 @@ all, let us compute case by case the quantity $\Delta F_i^{\rm
 \begin{subequations}\label{LONCgrid}
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle \Delta F_2^{\rm  FONLL,IC}(x_\alpha) &=&\displaystyle B_c
-\sum_{\beta=0}^{N_x}\left[(2-\eta)
+\displaystyle \Delta F_2^{\rm  FONLL,IC}(x_\alpha) &=&\displaystyle 
+\sum_{\beta=0}^{N_x}B_c\left[(2-\eta)
   w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right) - D(Q^2)\delta_{\alpha\beta}\right]\tilde{c}^+(x_{\beta})
 \end{array}
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle x_\alpha \Delta F_3^{\rm  FONLL,IC}(x_\alpha) & = &\displaystyle D_c
-\sum_{\beta=0}^{N_x}\left[2\eta
+\displaystyle x_\alpha \Delta F_3^{\rm  FONLL,IC}(x_\alpha) & = &\displaystyle 
+\sum_{\beta=0}^{N_x}D_c\left[2\eta
   w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right) - D(Q^2)2\delta_{\alpha\beta}\right]\tilde{c}^-(x_{\beta})
 \end{array}
 \end{equation}
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle \Delta F_L^{\rm  FONLL,IC}(x_\alpha) &=& \displaystyle
-                                                       B_c
-\sum_{\beta=0}^{N_x} \left[2\frac{1-\eta}{2-\eta} w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right)\right]\tilde{c}^+(x_{\beta})
+\displaystyle \Delta F_L^{\rm  FONLL,IC}(x_\alpha) &=& \displaystyle\sum_{\beta=0}^{N_x} B_c\left[1-\frac{(2-\eta)^2-1}{8(1-\eta)}\left(1-\frac{\tilde{B}_c}{B_c}\right)\right]
+4\frac{1-\eta}{(2-\eta)} w_{\beta}^{(k)}\left(\frac{x_\alpha}{\eta}\right)\tilde{c}^+(x_{\beta})
 \end{array}
 \end{equation}
 \end{subequations}
@@ -419,29 +427,29 @@ Finally, the CC case is slightly simpler:
 \begin{subequations}\label{LOCCgrid}
 \begin{equation}
 \Delta F_2^{\nu,\rm FONLL,IC}(x_\alpha )=
-2(|V_{cd}|^2+|V_{cs}|^2) \left[\left(1+\lambda\right) - D(Q^2)\right]
-\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
+\sum_{\beta=0}^{N_x} 2(|V_{cd}|^2+|V_{cs}|^2) \left[\left(1+\lambda\right) - D(Q^2)\right]
+\delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
 \end{equation}
 \begin{equation}
 x_\alpha\Delta F_3^{\nu,\rm FONLL,IC}(x_\alpha )=
-2(|V_{cd}|^2+|V_{cs}|^2) \left[1 -D(Q^2)\right] \sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
+\sum_{\beta=0}^{N_x} 2(|V_{cd}|^2+|V_{cs}|^2) \left[1 -D(Q^2)\right] \delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
 \end{equation}
 \begin{equation}
-\Delta F_L^{\nu,\rm FONLL,IC}(x_\alpha ) = 2(|V_{cd}|^2+|V_{cs}|^2)\lambda
-\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
+\Delta F_L^{\nu,\rm FONLL,IC}(x_\alpha ) = \sum_{\beta=0}^{N_x} 2(|V_{cd}|^2+|V_{cs}|^2)\lambda
+\delta_{\alpha\beta}\tilde{\overline{c}}(x_\beta )
 \end{equation}
 \end{subequations}
 and:
 \begin{subequations}\label{CCnb}
 \begin{equation}
-\Delta F_2^{\overline{\nu},\rm FONLL,IC}(x_\alpha )= 2(|V_{cd}|^2+|V_{cs}|^2) \left[\left(1+\lambda\right)-D(Q^2)\right]\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{c}(x_\beta )
+\Delta F_2^{\overline{\nu},\rm FONLL,IC}(x_\alpha )= \sum_{\beta=0}^{N_x} 2(|V_{cd}|^2+|V_{cs}|^2) \left[\left(1+\lambda\right)-D(Q^2)\right]\delta_{\alpha\beta}\tilde{c}(x_\beta )
 \end{equation}
 \begin{equation}
-x_\alpha\Delta F_3^{\overline{\nu},\rm FONLL,IC}(x_\alpha )= 2(|V_{cd}|^2+|V_{cs}|^2) \left[1-D(Q^2)\right]\sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{c}(x_\beta )
+x_\alpha\Delta F_3^{\overline{\nu},\rm FONLL,IC}(x_\alpha )= \sum_{\beta=0}^{N_x} 2(|V_{cd}|^2+|V_{cs}|^2) \left[1-D(Q^2)\right]\delta_{\alpha\beta}\tilde{c}(x_\beta )
 \end{equation}
 \begin{equation}
 \Delta F_L^{\overline{\nu},\rm FONLL,IC}(x_\alpha )=
-2(|V_{cd}|^2+|V_{cs}|^2) \lambda \sum_{\beta=0}^{N_x}\delta_{\alpha\beta}\tilde{c}(x_\beta )
+\sum_{\beta=0}^{N_x} 2(|V_{cd}|^2+|V_{cs}|^2) \lambda \delta_{\alpha\beta}\tilde{c}(x_\beta )
 \end{equation}
 \end{subequations}
 

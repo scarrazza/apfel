@@ -5,7 +5,7 @@
 *     It sets the charges used for the computation of the DIS observables.
 *
 ************************************************************************
-      subroutine ComputeChargesDIS(Q2,bq,dq)
+      subroutine ComputeChargesDIS(Q2,bq,dq,bqt)
 *
       implicit none
 *
@@ -36,12 +36,12 @@
       double precision ve,ae
       double precision pz,pz2
       double precision GammaZ
-      double precision sumbq,sumdq
+      double precision sumbq,sumdq,sumbqt
       parameter(GammaZ = 2.4952d0)
 **
 *     Double precision
 *
-      double precision bq(0:6),dq(0:6)
+      double precision bq(0:6),dq(0:6),bqt(0:6)
 *
 *     Polarization fraction
 *
@@ -129,8 +129,9 @@
 *     Initialize charges
 *
       do i=0,6
-         bq(i) = 0d0
-         dq(i) = 0d0
+         bq(i)  = 0d0
+         dq(i)  = 0d0
+         bqt(i) = 0d0
       enddo
 *
 *     Select the charge
@@ -159,8 +160,9 @@
 *
       if(ProcessDIS.eq."EM")then
          do i=nfi,nff
-            bq(i) = eq2(i)
-            dq(i) = 0d0
+            bq(i)  = eq2(i)
+            dq(i)  = 0d0
+            bqt(i) = eq2(i)
          enddo
       elseif(ProcessDIS.eq."NC")then
          if(TimeLike)then
@@ -179,13 +181,17 @@
          pz  = pz  / ( 1d0 - DeltaR )
          pz2 = pz2 / ( 1d0 - DeltaR )**2d0
          do i=nfi,nff
-            bq(i) = eq2(i) 
-     1            - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
-     2            + ( ve**2d0 + ae**2d0 + ie * pol * 2d0 * ve * ae )
-     3            * ( vq(i)**2d0 + aq(i)**2d0 ) * pz2
-            dq(i) = - 2d0 * eq(i) * aq(i) * ( ae + ie * pol * ve ) * pz
-     1            + 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae 
-     2            + ie * pol * ( ve**2d0 + ae**2d0 ) ) * pz2
+            bq(i)  = eq2(i) 
+     1             - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
+     2             + ( ve**2d0 + ae**2d0 + ie * pol * 2d0 * ve * ae )
+     3             * ( vq(i)**2d0 + aq(i)**2d0 ) * pz2
+            dq(i)  = - 2d0 * eq(i) * aq(i) * ( ae + ie * pol * ve ) * pz
+     1             + 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae 
+     2             + ie * pol * ( ve**2d0 + ae**2d0 ) ) * pz2
+            bqt(i) = eq2(i) 
+     1             - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
+     2             + ( ve**2d0 + ae**2d0 + ie * pol * 2d0 * ve * ae )
+     3             * ( vq(i)**2d0 - aq(i)**2d0 ) * pz2
          enddo
       endif
 *
@@ -203,18 +209,22 @@
          endif
          if(nf.gt.nfMaxPDFs) nf = nfMaxPDFs
 *
-         sumbq = 0d0
-         sumdq = 0d0
+         sumbq  = 0d0
+         sumdq  = 0d0
+         sumbqt = 0d0
          do i=1,nf
-            sumbq = sumbq + bq(i)
-            sumdq = sumdq + dq(i)
+            sumbq  = sumbq + bq(i)
+            sumdq  = sumdq + dq(i)
+            sumbqt = sumdq + bqt(i)
          enddo
 *
-         bq(0) = sumbq
-         dq(0) = sumdq
+         bq(0)  = sumbq
+         dq(0)  = sumdq
+         bqt(0) = sumbqt
          do i=1,6
-            bq(i) = bq(i) / sumbq
-            dq(i) = dq(i) / sumdq
+            bq(i)  = bq(i)  / sumbq
+            dq(i)  = dq(i)  / sumdq
+            bqt(i) = bqt(i) / sumbqt
          enddo
       endif
 *

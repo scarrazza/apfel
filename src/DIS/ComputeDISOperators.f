@@ -47,7 +47,7 @@
       integer ik
       double precision Q2,muF,W2,M2(4:6),HeavyQuarkMass
       double precision as(0:2),a_QCD
-      double precision bq(0:6),dq(0:6)
+      double precision bq(0:6),dq(0:6),bqt(0:6)
       double precision frac,fr3
       double precision C2g(3:6),C2ps(3:6),C2nsp(3:6),C2nsm(3:6)
       double precision CLg(3:6),CLps(3:6),CLnsp(3:6),CLnsm(3:6)
@@ -58,6 +58,7 @@
       double precision Kl,Kc,Kb,Kt
       double precision sgn,diff(nxir),xi(4:6),c0(4:6),c1(4:6)
       double precision damp(4:6)
+      double precision eta,cFLIC
       double precision t1,t2
 *
       call cpu_time(t1)
@@ -207,7 +208,16 @@
 *     
 *     Compute needed couplings
 *     
-         call ComputeChargesDIS(Q2,bq,dq)
+         call ComputeChargesDIS(Q2,bq,dq,bqt)
+*
+*     In case of intrinsic charm, compute the correction to apply
+*     to the non-singlet part of the massive F_L
+*
+         if(IntrinsicCharm)then
+            eta = 2d0 / ( 1d0 + dsqrt( 1d0 + 4d0 * M2(4) / Q2 ) )
+            cFLIC = ( 1d0 - ( ( 2d0 - eta )**2d0 - 1d0 ) 
+     1           / 8d0 / ( 1d0 - eta ) * ( 1d0 - bqt(4) / bq(4) ) )
+         endif
 *     
          do jgrid=1,ngrid
 *     
@@ -505,6 +515,7 @@
      5                             * SC2mNC(jgrid,ixi(4)+1,
      6                             3,pt,alpha,beta) )
                            enddo
+                           CLnsp(4) = cFLIC * CLnsp(4)
                         endif
                      endif
                   elseif(MassScheme(1:5).eq."FONLL")then
@@ -660,8 +671,8 @@
 *
                      if(IntrinsicCharm)then
                         if(Nf_FF.lt.4)then
-                           do pt=ipt_FF_min,ipt
 *     FFNS
+                           do pt=ipt_FF_min,ipt
                               CLnsp(4) = CLnsp(4) + as(pt)
      1                             * ( c0(4)
      2                             * SCLmNC(jgrid,ixi(4),
@@ -676,7 +687,10 @@
      4                             + c1(4)
      5                             * SC2mNC(jgrid,ixi(4)+1,
      6                             3,pt,alpha,beta) )
+                           enddo
+                           CLnsp(4) = cFLIC * CLnsp(4)
 *     FFN0
+                           do pt=ipt_FF_min,ipt
                               CLnsp(4) = CLnsp(4) - as(pt)
      1                             *  damp(ihq) * ( c0(4)
      2                             * SCLm0NC(jgrid,ixi(4),
