@@ -11,7 +11,8 @@ build:
 
 notify:
   email:
-    host: 127.0.0.1
+    host: 0.0.0.0
+    port: 25
     from: support@apfel.mi.infn.it
     recipients:
       - stefano.carrazza@cern.ch
