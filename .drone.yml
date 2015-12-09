@@ -12,10 +12,6 @@ build:
 notify:
   email:
     from: support@apfel.mi.infn.it    
-    host: localhost
-    port: 25
-    username: ""
-    password: ""
     recipients:
       - stefano.carrazza@mi.infn.it
       - valerio.bertone@cern.ch
