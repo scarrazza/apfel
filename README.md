@@ -1,4 +1,4 @@
-[![Build Status](http://apfel.mi.infn.it:9000/api/badge/github.com/scarrazza/apfel/status.svg?branch=master)](http://apfel.mi.infn.it:9000/github.com/scarrazza/apfel)
+[![Build Status](http://apfel.mi.infn.it:8888/api/badges/scarrazza/apfel/status.svg)](http://apfel.mi.infn.it:8888/scarrazza/apfel)
 
 ![alt text](https://github.com/scarrazza/apfel/raw/master/resources/logoapfel.png "Logo APFEL")
 
