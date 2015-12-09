@@ -13,7 +13,7 @@ notify:
   email:
     host: localhost
     port: 25
-    from: support@apfel.mi.infn.it    
+    from: support@apfel.mi.infn.it
     recipients:
-      - stefano.carrazza@mi.infn.it
+      - stefano.carrazza@cern.ch
       - valerio.bertone@cern.ch
