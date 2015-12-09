@@ -12,7 +12,7 @@ build:
 notify:
   email:
     host: 0.0.0.0
-    from: support@apfel.mi.infn.it
+    from: apfel@apfel.mi.infn.it
     recipients:
       - stefano.carrazza@cern.ch
       - valerio.bertone@cern.ch
