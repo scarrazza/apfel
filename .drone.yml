@@ -11,6 +11,8 @@ build:
 
 notify:
   email:
+    host: localhost
+    port: 25
     from: support@apfel.mi.infn.it    
     recipients:
       - stefano.carrazza@mi.infn.it
