@@ -119,6 +119,9 @@ namespace APFEL {
   /// Switch to the time-like evolution
   void SetTimeLikeEvolution(int);
 
+  /// Switch to the polarized evolution
+  void SetPolarizedEvolution(int);
+
   /// Switch to the fast evolution
   void SetFastEvolution(int);
 

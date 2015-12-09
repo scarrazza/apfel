@@ -32,6 +32,7 @@
       include "../commons/Replica.h"
       include "../commons/lock.h"
       include "../commons/TimeLike.h"
+      include "../commons/Polarized.h"
       include "../commons/Smallx.h"
       include "../commons/FastEvol.h"
       include "../commons/MassRunning.h"
@@ -49,6 +50,7 @@
       if(InTheory.ne."done")      call SetTheory("QCD")
       if(InFastEvol.ne."done")    call SetFastEvolution(.true.)
       if(InTimeLike.ne."done")    call SetTimeLikeEvolution(.false.)
+      if(InPolarized.ne."done")   call SetPolarizedEvolution(.false.)
       if(InSmallx.ne."done")      call SetSmallxResummation(.false.,
      1                                                      "NLL")
       if(InAlpQCD.ne."done")      call SetAlphaQCDRef(0.35d0,dsqrt(2d0))
@@ -207,6 +209,13 @@
             write(6,*) achar(27)//"[0m"
             call exit(-10)
          endif
+         if(Polarized)then
+            write(6,*) achar(27)//"[31mERROR:"
+            write(6,*) "Polarized evolution and Small-x resummation"
+            write(6,*) "cannot be combined, switch off one of them."
+            write(6,*) achar(27)//"[0m"
+            call exit(-10)
+         endif
          if(kren.ne.1d0)then
             write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Renormalization scale variation not allowed"
@@ -308,6 +317,42 @@
          call exit(-10)
       endif
 *
+*     Make sure that time-like and polarized evolutions are not invoked
+*     at the same time.
+*
+      if(Timelike.and.Polarized)then
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "Time-like polarized evolution not available yet."
+         write(6,*) "Switch off either the time-like or the polarized",
+     1              " evolution."
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
+      endif
+*
+*     Make sure that the time-like evolution at NNLO is done in the FFNS
+*
+      if(TimeLike.and.Evs.eq."VF".and.ipt.ge.2)then
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "The time-like evolution at NNLO is available only",
+     1              " in the FFNS."
+         write(6,*) "(Unknown matching conditions)"
+         write(6,*) "Use 'SetFFNS(nf)' to use the FFNS."
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
+      endif
+*
+*     Make sure that the polarized evolution at NNLO is done in the FFNS
+*
+      if(Polarized.and.Evs.eq."VF".and.ipt.ge.2)then
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "The polarized evolution at NNLO is available only",
+     1              " in the FFNS."
+         write(6,*) "(Unknown matching conditions)"
+         write(6,*) "Use 'SetFFNS(nf)' to use the FFNS."
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
+      endif
+*
 *     Security switches
 *
 *     If one of the combined solutions QCD x QED is chose
@@ -385,6 +430,18 @@
          write(6,*) "         ... unlocking subgrids"
      1              //achar(27)//"[0m"
          call LockGrids(.false.)
+      endif
+*
+*     If the polarized evolution is invoked at NNLO, give a warning
+*     to inform the user that P^(2,v) is not known yet and that
+*     the code uses P^(2,v) = P^(2,-).
+*
+      if(Polarized.and.ipt.ge.2)then
+         write(6,*) achar(27)//"[33m"//
+     1              "WARNING: the polarized evolution at NNLO is ",
+     2              "incomplete."
+         write(6,*) "         APFEL uses P^(2,v) = P^(2,minus). "
+     1              //achar(27)//"[0m"
       endif
 *
 *     If the alpha solution is "lambda", compute values of LambdaQCD

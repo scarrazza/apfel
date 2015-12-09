@@ -28,6 +28,7 @@
       include "../commons/MaxFlavourAlpha.h"
       include "../commons/lock.h"
       include "../commons/TimeLike.h"
+      include "../commons/Polarized.h"
       include "../commons/Smallx.h"
       include "../commons/FastEvol.h"
       include "../commons/MassRunning.h"
@@ -55,6 +56,12 @@
             write(6,*) "Time-like evolution (fragmentation functions)"
          else
             write(6,*) "Space-like evolution (PDFs)"
+         endif
+*
+         if(Polarized)then
+            write(6,*) "Polarized evolution"
+         else
+            write(6,*) "Unpolarized evolution"
          endif
 *
          if(Evs.eq."VF")then

@@ -172,6 +172,11 @@ namespace APFEL {
     fsettimelikeevolution(&tl);
   }
 
+  void SetPolarizedEvolution(int polev)
+  {
+    fsetpolarizedevolution(&polev);
+  }
+
   void SetFastEvolution(int fe)
   {
     fsetfastevolution(&fe);

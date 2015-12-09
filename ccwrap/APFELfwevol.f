@@ -199,6 +199,12 @@ ccccccccccccc
       end subroutine fsettimelikeevolution
 
 ccccccccccccc      
+      subroutine fsetpolarizedevolution(polev)
+      logical polev
+      call SetPolarizedEvolution(polev)
+      end subroutine fsetpolarizedevolution
+
+ccccccccccccc      
       subroutine fsetfastevolution(fe)
       logical fe
       call SetFastEvolution(fe)

@@ -94,6 +94,9 @@ extern "C" {
 #define fsettimelikeevolution FC_FUNC(settimelikeevolution,SETTIMELIKEEVOLUTION)
   void fsettimelikeevolution(int*);
 
+#define fsetpolarizedevolution FC_FUNC(setpolarizedevolution,SETPOLARIZEDEVOLUTION)
+  void fsetpolarizedevolution(int*);
+
 #define fsetfastevolution FC_FUNC(setfastevolution,SETFASTEVOLUTION)
   void fsetfastevolution(int*);
 

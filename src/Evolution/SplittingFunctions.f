@@ -1,4 +1,4 @@
-************************************************************************
+***********************************************************************
 *
 *     SplittingFunctions.f:
 *
@@ -182,20 +182,16 @@
       IMPLICIT REAL*8 (A - Z)
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 *
       INTEGER NF
-*
-      PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-     1            Z3 = 1.2020 56903 15959 42854 D0 )
 *
 * ..The soft coefficient for use in X2NSB and X2NSC
 *
       COMMON / P1SOFT / A2
 *
-* ...Colour factors and some abbreviations
+* ...some abbreviations
 *
-      CF  = 4D0/3D0
-      CA  = 3D0
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
       pqq   = 2d0 / ( 1d0 - x ) - 1d0 - x
@@ -216,7 +212,7 @@
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-       A2 = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*z2*ca*cf
+       A2 = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*zeta2*ca*cf
 *
        GQQ1L = DM * A2
 *
@@ -237,20 +233,16 @@
       IMPLICIT REAL*8 (A - Z)
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 *
       INTEGER NF
-*
-      PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-     1            Z3 = 1.2020 56903 15959 42854 D0 )
 *
 * ..The soft coefficient for use in X2NSB and X2NSC
 *
       COMMON / P1SOFT / A2
 *
-* ...Colour factors and some abbreviations
+* ...some abbreviations
 *
-      CF  = 4D0/3D0
-      CA  = 3D0
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
       pqq   = 2d0 / ( 1d0 - x ) - 1d0 - x
@@ -271,7 +263,7 @@
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-       A2 = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*z2*ca*cf
+       A2 = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*zeta2*ca*cf
 *
        GQQ1L = DM * A2
 *
@@ -305,16 +297,11 @@
        FUNCTION X1NSC (Y, NF)
 *
        IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/consts.h"
+       include "../commons/ColorFactors.h"
+*
        INTEGER NF
-       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-     ,             Z3 = 1.2020 56903 15959 42854 D0 )
-c*
-c       COMMON / P1SOFT / A2
-*
-* ...Colour factors
-*
-       CF  = 4D0/3D0
-       CA  = 3D0
 *
 * ...The coefficient of delta(1-x)
 *
@@ -322,15 +309,15 @@ c       COMMON / P1SOFT / A2
      &     - 1D0/3D0*cf*nf
      &     + 3D0/2D0*cf**2
      &     + 17D0/6D0*ca*cf
-     &     + 24D0*z3*cf**2
-     &     - 12D0*z3*ca*cf
-     &     - 8D0/3D0*z2*cf*nf
-     &     - 12D0*z2*cf**2
-     &     + 44D0/3D0*z2*ca*cf
+     &     + 24D0*zeta3*cf**2
+     &     - 12D0*zeta3*ca*cf
+     &     - 8D0/3D0*zeta2*cf*nf
+     &     - 12D0*zeta2*cf**2
+     &     + 44D0/3D0*zeta2*ca*cf
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-       A2 = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*z2*ca*cf
+       A2 = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*zeta2*ca*cf
 *
        X1NSC = LOG (1D0-Y) * A2 + P1DELT
 *
@@ -345,7 +332,8 @@ c       COMMON / P1SOFT / A2
        FUNCTION X0NSA (X)
        IMPLICIT REAL*8 (A - Z)
 *
-       CF = 4D0/3D0
+       include "../commons/ColorFactors.h"
+*
        X0NSA = - 2D0*CF * (1.+ X)
 *
        RETURN
@@ -359,7 +347,8 @@ c       COMMON / P1SOFT / A2
        FUNCTION X0NSB (Y)
        IMPLICIT REAL*8 (A - Z)
 *
-       CF = 4D0/3D0
+       include "../commons/ColorFactors.h"
+*
        X0NSB = 4D0*CF/(1D0-Y)
 *
        RETURN
@@ -373,7 +362,8 @@ c       COMMON / P1SOFT / A2
        FUNCTION X0NSC (Y)
        IMPLICIT REAL*8 (A - Z)
 *
-       CF = 4D0/3D0
+       include "../commons/ColorFactors.h"
+*
        X0NSC = 4D0*CF * LOG (1D0-Y) + 3D0*CF
 *
        RETURN
@@ -584,11 +574,13 @@ c       COMMON / P1SOFT / A2
       FUNCTION X1PSA (X, NF)
 *
       IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/ColorFactors.h"
+*
       INTEGER NF
 *
-* ...Colour factors and abbreviation
+* ...some abbreviations
 *
-      CF = 4D0/3D0
       DX = 1D0/X
       LNX = DLOG(X)
       HR200 = LNX * LNX / 2D0
@@ -613,11 +605,10 @@ c       COMMON / P1SOFT / A2
       IMPLICIT REAL*8 (A - Z)
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 *
       INTEGER NF
 *
-      CF = 4D0/3D0
-      CA = 3D0
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
       pqg   = x**2d0 + ( 1d0 - x )**2d0
@@ -648,13 +639,12 @@ c       COMMON / P1SOFT / A2
       IMPLICIT REAL*8 (A - Z)
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 *
       INTEGER NF
 *
-* ...Colour factors and abbreviation
+* ...some abbreviations
 *
-      CF = 4D0/3D0
-      CA = 3D0
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
       pgq   = ( 1d0 + ( 1d0 - x )**2d0 ) / x
@@ -686,19 +676,16 @@ c       COMMON / P1SOFT / A2
       IMPLICIT REAL*8 (A - Z)
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 *
       INTEGER NF
-      PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-     1            Z3 = 1.2020 56903 15959 42854 D0 )
 *
 * ..The soft coefficient for use in X1GGB and X1GGC
 *
        COMMON / P1GSOFT / A2G
 *
-* ...Colour factors and abbreviation
+* ...some abbreviations
 *
-      CF = 4D0/3D0
-      CA = 3D0
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
       pgg   = ( 1d0 / ( 1d0 - x ) +  1d0 / x - 2d0 + x * ( 1d0 - x ) )
@@ -721,7 +708,7 @@ c       COMMON / P1SOFT / A2
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-       A2G = - 40D0/9D0*ca*nf + 268D0/9D0*ca**2 - 8D0*z2*ca**2
+       A2G = - 40D0/9D0*ca*nf + 268D0/9D0*ca**2 - 8D0*zeta2*ca**2
 *
        GGG1L = DM * A2G
 *
@@ -755,16 +742,11 @@ c       COMMON / P1SOFT / A2
        FUNCTION X1GGC (Y, NF)
 *
        IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/consts.h"
+       include "../commons/ColorFactors.h"
+*
        INTEGER NF
-       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-     ,             Z3 = 1.2020 56903 15959 42854 D0 )
-c*
-c       COMMON / P1GSOFT / A2G
-*
-* ...Colour factors
-*
-       CF  = 4D0/3D0
-       CA  = 3D0
 *
 * ...The coefficient of delta(1-x)
 *
@@ -772,11 +754,11 @@ c       COMMON / P1GSOFT / A2G
      ,    - 2D0*cf*nf
      ,    - 8D0/3D0*ca*nf
      ,    + 32D0/3D0*ca**2
-     ,    + 12D0*z3*ca**2
+     ,    + 12D0*zeta3*ca**2
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-       A2G = - 40D0/9D0*ca*nf + 268D0/9D0*ca**2 - 8D0*z2*ca**2
+       A2G = - 40D0/9D0*ca*nf + 268D0/9D0*ca**2 - 8D0*zeta2*ca**2
 *
        X1GGC = DLOG (1D0-Y) * A2G + P1DELT
 *
@@ -807,7 +789,8 @@ c       COMMON / P1GSOFT / A2G
 *
        IMPLICIT REAL*8 (A - Z)
 *
-       CF = 4D0/3D0
+       include "../commons/ColorFactors.h"
+*
        X0GQA = 4D0 * CF * ( - 1. + 0.5 * X + 1D0 / X )
 *
        RETURN
@@ -821,7 +804,8 @@ c       COMMON / P1GSOFT / A2G
        FUNCTION X0GGA (X)
        IMPLICIT REAL*8 (A - Z)
 *
-       CA = 3D0
+       include "../commons/ColorFactors.h"
+*
        X0GGA = 4D0*CA * ( - 2. + X - X**2 + 1D0/X )
 *
        RETURN
@@ -835,7 +819,8 @@ c       COMMON / P1GSOFT / A2G
        FUNCTION X0GGB (X)
        IMPLICIT REAL*8 (A - Z)
 *
-       CA = 3D0
+       include "../commons/ColorFactors.h"
+*
        X0GGB = 4D0 * CA / ( 1D0 - X )
 *
        RETURN
@@ -848,9 +833,11 @@ c       COMMON / P1GSOFT / A2G
 *
        FUNCTION X0GGC (X,NF)
        IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
        INTEGER NF
 *
-       CA = 3D0
        X0GGC = 4D0*CA * LOG (1D0-X) - 2D0/3D0 * NF + 11D0/3D0 * CA
 *
        RETURN
@@ -902,20 +889,16 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
       IMPLICIT REAL*8 (A - Z)
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 *
       INTEGER NF
-*
-      PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-     1            Z3 = 1.2020 56903 15959 42854 D0 )
 *
 * ..The soft coefficient for use in X2NSBT and X2NSCT
 *
       COMMON / P1SOFTT / A2T
 *
-* ...Colour factors and some abbreviations
+* ...some abbreviations
 *
-      CF  = 4D0/3D0
-      CA  = 3D0
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
       pqq   = 2d0 / ( 1d0 - x ) - 1d0 - x
@@ -937,7 +920,7 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-       A2T = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*z2*ca*cf
+       A2T = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*zeta2*ca*cf
 *
        GQQ1L = DM * A2T
 *
@@ -958,20 +941,16 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
       IMPLICIT REAL*8 (A - Z)
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 *
       INTEGER NF
-*
-      PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-     1            Z3 = 1.2020 56903 15959 42854 D0 )
 *
 * ..The soft coefficient for use in X2NSBT and X2NSCT
 *
       COMMON / P1SOFTT / A2T
 *
-* ...Colour factors and some abbreviations
+* ...some abbreviations
 *
-      CF  = 4D0/3D0
-      CA  = 3D0
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
       pqq   = 2d0 / ( 1d0 - x ) - 1d0 - x
@@ -993,7 +972,7 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-       A2T = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*z2*ca*cf
+       A2T = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*zeta2*ca*cf
 *
        GQQ1L = DM * A2T
 *
@@ -1027,16 +1006,11 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
        FUNCTION X1NSTC (Y, NF)
 *
        IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/consts.h"
+       include "../commons/ColorFactors.h"
+*
        INTEGER NF
-       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-     ,             Z3 = 1.2020 56903 15959 42854 D0 )
-c*
-c       COMMON / P1SOFTT / A2T
-*
-* ...Colour factors
-*
-       CF  = 4D0/3D0
-       CA  = 3D0
 *
 * ...The coefficient of delta(1-x)
 *
@@ -1044,15 +1018,15 @@ c       COMMON / P1SOFTT / A2T
      &     - 1D0/3D0*cf*nf
      &     + 3D0/2D0*cf**2
      &     + 17D0/6D0*ca*cf
-     &     + 24D0*z3*cf**2
-     &     - 12D0*z3*ca*cf
-     &     - 8D0/3D0*z2*cf*nf
-     &     - 12D0*z2*cf**2
-     &     + 44D0/3D0*z2*ca*cf
+     &     + 24D0*zeta3*cf**2
+     &     - 12D0*zeta3*ca*cf
+     &     - 8D0/3D0*zeta2*cf*nf
+     &     - 12D0*zeta2*cf**2
+     &     + 44D0/3D0*zeta2*ca*cf
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-       A2T = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*z2*ca*cf
+       A2T = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*zeta2*ca*cf
 *
        X1NSTC = LOG (1D0-Y) * A2T + P1DELT
 *
@@ -1067,11 +1041,13 @@ c       COMMON / P1SOFTT / A2T
       FUNCTION X1PSTA (X, NF)
 *
       IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/ColorFactors.h"
+*
       INTEGER NF
 *
-* ...Colour factors and abbreviation
+* ...some abbreviations
 *
-      CF = 4D0/3D0
       DX = 1D0/X
       LNX = DLOG(X)
       HR200 = LNX * LNX / 2D0
@@ -1096,11 +1072,10 @@ c       COMMON / P1SOFTT / A2T
       IMPLICIT REAL*8 (A - Z)
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 *
       INTEGER NF
 *
-      CF = 4D0/3D0
-      CA = 3D0
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
       pqg   = x**2d0 + ( 1d0 - x )**2d0
@@ -1136,13 +1111,12 @@ c       COMMON / P1SOFTT / A2T
       IMPLICIT REAL*8 (A - Z)
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 *
       INTEGER NF
 *
-* ...Colour factors and abbreviation
+* ...some abbreviations
 *
-      CF = 4D0/3D0
-      CA = 3D0
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
       pgq   = ( 1d0 + ( 1d0 - x )**2d0 ) / x
@@ -1175,18 +1149,17 @@ c       COMMON / P1SOFTT / A2T
 *
       IMPLICIT REAL*8 (A - Z)
 *
+      include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
+*
       INTEGER NF
-      PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-     1            Z3 = 1.2020 56903 15959 42854 D0 )
 *
 * ..The soft coefficient for use in X1GGB and X1GGC
 *
        COMMON / P1GSOFTT / A2GT
 *
-* ...Colour factors and abbreviation
+* ...some abbreviations
 *
-      CF = 4D0/3D0
-      CA = 3D0
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
       pgg   = ( 1d0 / ( 1d0 - x ) +  1d0 / x - 2d0 + x * ( 1d0 - x ) )
@@ -1206,11 +1179,11 @@ c       COMMON / P1SOFTT / A2T
      9      + ( 11d0 / 3d0 - 25d0 * x / 3d0 - 44d0 / 3d0 / x ) * lnx
      1      - 4d0 * ( 1d0 + x ) * lnx**2d0
      2      + ( 4d0 * lnx * ln1mx - 3d0 * lnx**2d0 + 22d0 * lnx / 3d0
-     3      - 2d0 * z2 + 67d0 / 9d0 ) * pgg + 2d0 * pggmx * S2x )
+     3      - 2d0 * zeta2 + 67d0 / 9d0 ) * pgg + 2d0 * pggmx * S2x )
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-       A2GT = - 40D0/9D0*ca*nf + 268D0/9D0*ca**2 - 8D0*z2*ca**2
+       A2GT = - 40D0/9D0*ca*nf + 268D0/9D0*ca**2 - 8D0*zeta2*ca**2
 *
        GGG1L = DM * A2GT
 *
@@ -1244,16 +1217,11 @@ c       COMMON / P1SOFTT / A2T
        FUNCTION X1GGTC (Y, NF)
 *
        IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/consts.h"
+       include "../commons/ColorFactors.h"
+*
        INTEGER NF
-       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-     ,             Z3 = 1.2020 56903 15959 42854 D0 )
-c*
-c       COMMON / P1GSOFTT / A2GT
-*
-* ...Colour factors
-*
-       CF  = 4D0/3D0
-       CA  = 3D0
 *
 * ...The coefficient of delta(1-x)
 *
@@ -1261,11 +1229,11 @@ c       COMMON / P1GSOFTT / A2GT
      ,    - 2D0*cf*nf
      ,    - 8D0/3D0*ca*nf
      ,    + 32D0/3D0*ca**2
-     ,    + 12D0*z3*ca**2
+     ,    + 12D0*zeta3*ca**2
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-       A2GT = - 40D0/9D0*ca*nf + 268D0/9D0*ca**2 - 8D0*z2*ca**2
+       A2GT = - 40D0/9D0*ca*nf + 268D0/9D0*ca**2 - 8D0*zeta2*ca**2
 *
        X1GGTC = DLOG (1D0-Y) * A2GT + P1DELT
 *
@@ -1346,7 +1314,6 @@ c       COMMON / P1GSOFTT / A2GT
 *
        DL  = LOG (Y)
        DL1 = LOG (1.-Y)
-
 *
        P2QG1 = - 64./Y* DL**3 - 64./Y* DL**2 + 675.83/Y* DL + 1141.7/Y
      &         + 100./27.D0* DL1**4 + 350./9.D0* DL1**3
@@ -1644,2041 +1611,750 @@ c       COMMON / P1GSOFTT / A2GT
        RETURN
        END
 *
-* =================================================================aaa=
-c$$$*
-c$$$* ..File: xpij2te.f 
-c$$$*
-c$$$*
-c$$$* ..The exact 3-loop MS(bar) singlet splitting functions  P_ij^(2)T
-c$$$*    for the evolution of unpolarized fragmentation densities at
-c$$$*    mu_r = mu_f.  The expansion parameter is alpha_s/(4 pi).
-c$$$*
-c$$$* ..The function  X2QGAT  includes a parameter IMOD for estimating, 
-c$$$*    via  IMOD = 1 and IMOD = -1, a residual uncertainty discussed in 
-c$$$*    the paper.  IMOD = 0  provides the main result.
-c$$$* 
-c$$$* ..The distributions (in the mathematical sense) are given as in eq.
-c$$$*    (B.26) of Floratos, Kounnas, Lacaze: Nucl. Phys. B192 (1981) 417.
-c$$$*    The name-endings A, B, and C of the functions below correspond to 
-c$$$*    the kernel superscripts [2], [3], and [1] in that equation.
-c$$$*
-c$$$* ..The code uses the package of Gehrmann and Remiddi for the harmonic
-c$$$*    polylogarithms published in hep-ph/0107173 = CPC 141 (2001) 296.
-c$$$*
-c$$$* ..References: S. Moch and A. Vogt, 
-c$$$*               Phys. Lett. B659 (2008) 290, arXiv:0708.3899   (ps, gg)
-c$$$*               A. Almasy, S. Moch and A. Vogt,
-c$$$*               arXiv:1107.nnnn                                (qg, gq)
-c$$$*
-c$$$* =====================================================================
-c$$$*
-c$$$*
-c$$$* ..The (regular) pure-singlet splitting functions P_ps^(2)T.
-c$$$*    P_qq^(2) is obtained by adding the non-singlet quantity P_NS^(2)T+
-c$$$*
-c$$$       FUNCTION X2PSTA (X, NF)
-c$$$*
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       COMPLEX*16 HC1, HC2, HC3, HC4
-c$$$       INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N, IMOD
-c$$$       PARAMETER ( N1 = -1, N2 = 1, NW = 4 )
-c$$$       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HC4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       DIMENSION HR1(N1:N2),HR2(N1:N2,N1:N2),HR3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HR4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       DIMENSION HI1(N1:N2),HI2(N1:N2,N1:N2),HI3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HI4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-c$$$     ,             Z3 = 1.2020 56903 15959 42854 D0 )
-c$$$*
-c$$$* ...Colour factors and an abbreviation
-c$$$*
-c$$$       CF  = 4./3.D0
-c$$$       CA  = 3.D0
-c$$$       NF2 = NF*NF
-c$$$*
-c$$$       DX = 1.D0/X
-c$$$*
-c$$$* ...The harmonic polylogs up to weight 4 by Gehrmann and Remiddi
-c$$$*
-c$$$       CALL HPLOG (X, NW, HC1,HC2,HC3,HC4, HR1,HR2,HR3,HR4,
-c$$$     ,            HI1,HI2,HI3,HI4, N1, N2)
-c$$$*
-c$$$* ...The splitting function in terms of the harmonic polylogs
-c$$$*
-c$$$      PTqqps2 =
-c$$$     &  + nf*cf*ca * ( 820.D0/3.D0 - 1172.D0/3.D0*x + 7496.D0/81.D0*
-c$$$     &    x**2 + 2008.D0/81.D0*dx + 296.D0/3.D0*z3 - 1312.D0/3.D0*z3*x
-c$$$     &     + 256.D0/3.D0*z3*x**2 + 2212.D0/9.D0*z2 + 4912.D0/9.D0*z2*x
-c$$$     &     + 640.D0/9.D0*z2*x**2 + 512.D0/9.D0*z2*dx - 852.D0/5.D0*
-c$$$     &    z2**2 - 812.D0/5.D0*z2**2*x + 40.D0*Hr1(-1)*z2 + 40.D0*Hr1(-1
-c$$$     &    )*z2*x + 32.D0/3.D0*Hr1(-1)*z2*x**2 + 32.D0/3.D0*Hr1(-1)*z2*
-c$$$     &    dx - 2380.D0/27.D0*Hr1(0) + 23540.D0/27.D0*Hr1(0)*x + 9172.D0/
-c$$$     &    27.D0*Hr1(0)*x**2 + 1240.D0/27.D0*Hr1(0)*dx - 160.D0*Hr1(0)*
-c$$$     &    z3 - 32.D0*Hr1(0)*z3*x + 196.D0/3.D0*Hr1(0)*z2 - 404.D0/3.D0*
-c$$$     &    Hr1(0)*z2*x + 32.D0/3.D0*Hr1(0)*z2*x**2 + 64.D0/3.D0*Hr1(0)*
-c$$$     &    z2*dx - 2596.D0/9.D0*Hr1(1) + 592.D0/9.D0*Hr1(1)*x + 7868.D0/
-c$$$     &    27.D0*Hr1(1)*x**2 - 1856.D0/27.D0*Hr1(1)*dx - 72.D0*Hr1(1)*z2
-c$$$     &     + 72.D0*Hr1(1)*z2*x + 96.D0*Hr1(1)*z2*x**2 - 96.D0*Hr1(1)*z2
-c$$$     &    *dx + 688.D0/3.D0*Hr2(-1,0) + 400.D0/3.D0*Hr2(-1,0)*x - 992.D0
-c$$$     &    /9.D0*Hr2(-1,0)*x**2 - 128.D0/9.D0*Hr2(-1,0)*dx + 16.D0*Hr2(0
-c$$$     &    ,-1)*z2 )
-c$$$      PTqqps2 = PTqqps2 + nf*cf*ca * (  - 16.D0*Hr2(0,-1)*z2*x - 2440.D0
-c$$$     &    /9.D0*Hr2(0,0) - 10468.D0/9.D0*Hr2(0,0)*x - 2312.D0/9.D0*Hr2(
-c$$$     &    0,0)*x**2 - 64.D0/9.D0*Hr2(0,0)*dx - 8.D0*Hr2(0,0)*z2 + 104.D0
-c$$$     &    *Hr2(0,0)*z2*x - 1540.D0/9.D0*Hr2(0,1) - 3520.D0/9.D0*Hr2(0,1
-c$$$     &    )*x - 2032.D0/9.D0*Hr2(0,1)*x**2 - 112.D0/9.D0*Hr2(0,1)*dx - 
-c$$$     &    144.D0*Hr2(0,1)*z2 - 144.D0*Hr2(0,1)*z2*x + 4.D0/3.D0*Hr2(1,0
-c$$$     &    ) + 140.D0/3.D0*Hr2(1,0)*x - 72.D0*Hr2(1,0)*x**2 + 24.D0*Hr2(
-c$$$     &    1,0)*dx - 12.D0*Hr2(1,1) + 12.D0*Hr2(1,1)*x + 16.D0/9.D0*Hr2(
-c$$$     &    1,1)*x**2 - 16.D0/9.D0*Hr2(1,1)*dx + 16.D0*Hr3(-1,-1,0) + 16.D
-c$$$     &    0*Hr3(-1,-1,0)*x - 64.D0/3.D0*Hr3(-1,-1,0)*x**2 - 64.D0/3.D0*
-c$$$     &    Hr3(-1,-1,0)*dx - 56.D0*Hr3(-1,0,0) - 56.D0*Hr3(-1,0,0)*x + 
-c$$$     &    128.D0/3.D0*Hr3(-1,0,0)*x**2 + 128.D0/3.D0*Hr3(-1,0,0)*dx - 
-c$$$     &    32.D0*Hr3(-1,0,1) - 32.D0*Hr3(-1,0,1)*x - 64.D0/3.D0*Hr3(-1,0
-c$$$     &    ,1)*x**2 - 64.D0/3.D0*Hr3(-1,0,1)*dx + 120.D0*Hr3(0,-1,0) - 
-c$$$     &    232.D0*Hr3(0,-1,0)*x + 256.D0/3.D0*Hr3(0,-1,0)*x**2 + 64.D0/3.
-c$$$     &    D0*Hr3(0,-1,0)*dx )
-c$$$      PTqqps2 = PTqqps2 + nf*cf*ca * (  - 112.D0/3.D0*Hr3(0,0,0) + 2288.
-c$$$     &    D0/3.D0*Hr3(0,0,0)*x - 128.D0/3.D0*Hr3(0,0,0)*dx + 236.D0/3.D0
-c$$$     &    *Hr3(0,0,1) + 380.D0/3.D0*Hr3(0,0,1)*x + 224.D0/3.D0*Hr3(0,0,
-c$$$     &    1)*x**2 + 64.D0/3.D0*Hr3(0,0,1)*dx - 64.D0*Hr3(0,1,0) + 24.D0
-c$$$     &    *Hr3(0,1,0)*x + 224.D0/3.D0*Hr3(0,1,0)*x**2 - 64.D0/3.D0*Hr3(
-c$$$     &    0,1,0)*dx - 136.D0/3.D0*Hr3(0,1,1) - 88.D0/3.D0*Hr3(0,1,1)*x
-c$$$     &     + 32.D0/3.D0*Hr3(0,1,1)*x**2 - 32.D0/3.D0*Hr3(0,1,1)*dx + 60.
-c$$$     &    D0*Hr3(1,0,0) - 60.D0*Hr3(1,0,0)*x - 96.D0*Hr3(1,0,0)*x**2 + 
-c$$$     &    96.D0*Hr3(1,0,0)*dx + 48.D0*Hr3(1,0,1) - 48.D0*Hr3(1,0,1)*x
-c$$$     &     - 64.D0*Hr3(1,0,1)*x**2 + 64.D0*Hr3(1,0,1)*dx + 32.D0*Hr3(1,
-c$$$     &    1,0) - 32.D0*Hr3(1,1,0)*x - 128.D0/3.D0*Hr3(1,1,0)*x**2 + 128.
-c$$$     &    D0/3.D0*Hr3(1,1,0)*dx + 16.D0*Hr3(1,1,1) - 16.D0*Hr3(1,1,1)*x
-c$$$     &     - 64.D0/3.D0*Hr3(1,1,1)*x**2 + 64.D0/3.D0*Hr3(1,1,1)*dx + 32.
-c$$$     &    D0*Hr4(0,-1,-1,0) - 32.D0*Hr4(0,-1,-1,0)*x - 80.D0*Hr4(0,-1,0
-c$$$     &    ,0) + 80.D0*Hr4(0,-1,0,0)*x - 48.D0*Hr4(0,0,-1,0) + 112.D0*
-c$$$     &    Hr4(0,0,-1,0)*x )
-c$$$      PTqqps2 = PTqqps2 + nf*cf*ca * ( 64.D0*Hr4(0,0,0,0) - 304.D0*Hr4(
-c$$$     &    0,0,0,0)*x + 8.D0*Hr4(0,0,0,1) + 8.D0*Hr4(0,0,0,1)*x - 144.D0
-c$$$     &    *Hr4(0,0,1,0) - 144.D0*Hr4(0,0,1,0)*x - 48.D0*Hr4(0,0,1,1) - 
-c$$$     &    48.D0*Hr4(0,0,1,1)*x + 136.D0*Hr4(0,1,0,0) + 136.D0*Hr4(0,1,0
-c$$$     &    ,0)*x + 96.D0*Hr4(0,1,0,1) + 96.D0*Hr4(0,1,0,1)*x + 64.D0*
-c$$$     &    Hr4(0,1,1,0) + 64.D0*Hr4(0,1,1,0)*x + 32.D0*Hr4(0,1,1,1) + 32.
-c$$$     &    D0*Hr4(0,1,1,1)*x )
-c$$$      PTqqps2 = PTqqps2 + nf*cf**2 * (  - 74.D0/27.D0 + 6266.D0/27.D0*x
-c$$$     &     - 156.D0*x**2 - 220.D0/3.D0*dx + 288.D0*z3 + 352.D0*z3*x + 
-c$$$     &    256.D0/3.D0*z3*x**2 + 64.D0*z3*dx - 200.D0/3.D0*z2 - 1444.D0/
-c$$$     &    3.D0*z2*x - 2624.D0/9.D0*z2*x**2 + 984.D0/5.D0*z2**2 + 984.D0/
-c$$$     &    5.D0*z2**2*x - 598.D0/9.D0*Hr1(0) - 4406.D0/9.D0*Hr1(0)*x - 
-c$$$     &    9836.D0/27.D0*Hr1(0)*x**2 + 160.D0*Hr1(0)*z3 + 160.D0*Hr1(0)*
-c$$$     &    z3*x + 80.D0*Hr1(0)*z2*x + 128.D0/3.D0*Hr1(0)*z2*x**2 + 856.D0
-c$$$     &    /3.D0*Hr1(1) - 140.D0/3.D0*Hr1(1)*x - 8972.D0/27.D0*Hr1(1)*
-c$$$     &    x**2 + 2528.D0/27.D0*Hr1(1)*dx + 80.D0*Hr1(1)*z2 - 80.D0*Hr1(
-c$$$     &    1)*z2*x - 320.D0/3.D0*Hr1(1)*z2*x**2 + 320.D0/3.D0*Hr1(1)*z2*
-c$$$     &    dx + 976.D0/3.D0*Hr2(0,0) + 1184.D0/3.D0*Hr2(0,0)*x + 608.D0/
-c$$$     &    9.D0*Hr2(0,0)*x**2 - 16.D0*Hr2(0,0)*z2 - 16.D0*Hr2(0,0)*z2*x
-c$$$     &     + 296.D0*Hr2(0,1) + 348.D0*Hr2(0,1)*x + 512.D0/3.D0*Hr2(0,1)
-c$$$     &    *x**2 + 224.D0/9.D0*Hr2(0,1)*dx + 160.D0*Hr2(0,1)*z2 + 160.D0
-c$$$     &    *Hr2(0,1)*z2*x + 428.D0/3.D0*Hr2(1,0) - 284.D0/3.D0*Hr2(1,0)*
-c$$$     &    x )
-c$$$      PTqqps2 = PTqqps2 + nf*cf**2 * (  - 1120.D0/9.D0*Hr2(1,0)*x**2 + 
-c$$$     &    688.D0/9.D0*Hr2(1,0)*dx + 28.D0/3.D0*Hr2(1,1) - 28.D0/3.D0*
-c$$$     &    Hr2(1,1)*x - 64.D0/3.D0*Hr2(1,1)*x**2 + 64.D0/3.D0*Hr2(1,1)*
-c$$$     &    dx + 72.D0*Hr3(0,0,0) + 184.D0*Hr3(0,0,0)*x + 160.D0/3.D0*
-c$$$     &    Hr3(0,0,0)*x**2 + 32.D0*Hr3(0,0,1) + 80.D0*Hr3(0,0,1)*x - 128.
-c$$$     &    D0/3.D0*Hr3(0,0,1)*dx + 208.D0*Hr3(0,1,0) + 224.D0*Hr3(0,1,0)
-c$$$     &    *x + 64.D0/3.D0*Hr3(0,1,0)*x**2 + 128.D0/3.D0*Hr3(0,1,0)*dx
-c$$$     &     + 64.D0*Hr3(0,1,1) + 48.D0*Hr3(0,1,1)*x + 64.D0/3.D0*Hr3(0,1
-c$$$     &    ,1)*dx - 88.D0*Hr3(1,0,0) + 88.D0*Hr3(1,0,0)*x + 352.D0/3.D0*
-c$$$     &    Hr3(1,0,0)*x**2 - 352.D0/3.D0*Hr3(1,0,0)*dx - 48.D0*Hr3(1,0,1
-c$$$     &    ) + 48.D0*Hr3(1,0,1)*x + 64.D0*Hr3(1,0,1)*x**2 - 64.D0*Hr3(1,
-c$$$     &    0,1)*dx - 32.D0*Hr3(1,1,0) + 32.D0*Hr3(1,1,0)*x + 128.D0/3.D0
-c$$$     &    *Hr3(1,1,0)*x**2 - 128.D0/3.D0*Hr3(1,1,0)*dx - 16.D0*Hr3(1,1,
-c$$$     &    1) + 16.D0*Hr3(1,1,1)*x + 64.D0/3.D0*Hr3(1,1,1)*x**2 - 64.D0/
-c$$$     &    3.D0*Hr3(1,1,1)*dx - 64.D0*Hr4(0,0,0,0) - 64.D0*Hr4(0,0,0,0)*
-c$$$     &    x )
-c$$$      PTqqps2 = PTqqps2 + nf*cf**2 * (  - 112.D0*Hr4(0,0,0,1) - 112.D0*
-c$$$     &    Hr4(0,0,0,1)*x + 80.D0*Hr4(0,0,1,0) + 80.D0*Hr4(0,0,1,0)*x + 
-c$$$     &    48.D0*Hr4(0,0,1,1) + 48.D0*Hr4(0,0,1,1)*x - 176.D0*Hr4(0,1,0,
-c$$$     &    0) - 176.D0*Hr4(0,1,0,0)*x - 96.D0*Hr4(0,1,0,1) - 96.D0*Hr4(0
-c$$$     &    ,1,0,1)*x - 64.D0*Hr4(0,1,1,0) - 64.D0*Hr4(0,1,1,0)*x - 32.D0
-c$$$     &    *Hr4(0,1,1,1) - 32.D0*Hr4(0,1,1,1)*x )
-c$$$      PTqqps2 = PTqqps2 + nf2*cf * (  - 344.D0/27.D0 - 376.D0/27.D0*x
-c$$$     &     + 752.D0/27.D0*x**2 - 32.D0/27.D0*dx + 64.D0/3.D0*z3 + 64.D0/
-c$$$     &    3.D0*z3*x + 296.D0/9.D0*z2 + 440.D0/9.D0*z2*x + 32.D0/3.D0*z2
-c$$$     &    *x**2 + 736.D0/27.D0*Hr1(0) + 304.D0/27.D0*Hr1(0)*x - 16.D0*
-c$$$     &    Hr1(0)*x**2 - 16.D0/3.D0*Hr1(0)*z2 - 16.D0/3.D0*Hr1(0)*z2*x
-c$$$     &     - 128.D0/3.D0*Hr1(1) + 80.D0/3.D0*Hr1(1)*x + 752.D0/27.D0*
-c$$$     &    Hr1(1)*x**2 - 320.D0/27.D0*Hr1(1)*dx + 64.D0/9.D0*Hr2(0,0) + 
-c$$$     &    208.D0/9.D0*Hr2(0,0)*x + 32.D0/3.D0*Hr2(0,0)*x**2 - 296.D0/9.D
-c$$$     &    0*Hr2(0,1) - 440.D0/9.D0*Hr2(0,1)*x - 32.D0/3.D0*Hr2(0,1)*
-c$$$     &    x**2 + 8.D0*Hr2(1,0) - 8.D0*Hr2(1,0)*x - 32.D0/3.D0*Hr2(1,0)*
-c$$$     &    x**2 + 32.D0/3.D0*Hr2(1,0)*dx + 8.D0/3.D0*Hr2(1,1) - 8.D0/3.D0
-c$$$     &    *Hr2(1,1)*x - 32.D0/9.D0*Hr2(1,1)*x**2 + 32.D0/9.D0*Hr2(1,1)*
-c$$$     &    dx - 32.D0/3.D0*Hr3(0,0,0) - 32.D0/3.D0*Hr3(0,0,0)*x + 16.D0/
-c$$$     &    3.D0*Hr3(0,0,1) + 16.D0/3.D0*Hr3(0,0,1)*x + 16.D0*Hr3(0,1,0)
-c$$$     &     + 16.D0*Hr3(0,1,0)*x + 16.D0/3.D0*Hr3(0,1,1) + 16.D0/3.D0*
-c$$$     &    Hr3(0,1,1)*x )
-c$$$
-c$$$*
-c$$$       X2PSTA = PTqqps2
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..The quark-gluon splitting functions P_qg^(2)T
-c$$$*
-c$$$       FUNCTION X2QGTA (X, NF, IMOD)
-c$$$*
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       COMPLEX*16 HC1, HC2, HC3, HC4 
-c$$$       INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N, CORR, IMOD
-c$$$       PARAMETER ( N1 = -1, N2 = 1, NW = 4 ) 
-c$$$       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2), 
-c$$$     ,           HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
-c$$$       DIMENSION HR1(N1:N2),HR2(N1:N2,N1:N2),HR3(N1:N2,N1:N2,N1:N2), 
-c$$$     ,           HR4(N1:N2,N1:N2,N1:N2,N1:N2) 
-c$$$       DIMENSION HI1(N1:N2),HI2(N1:N2,N1:N2),HI3(N1:N2,N1:N2,N1:N2), 
-c$$$     ,           HI4(N1:N2,N1:N2,N1:N2,N1:N2) 
-c$$$       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-c$$$     ,             Z3 = 1.2020 56903 15959 42854 D0 )
-c$$$*
-c$$$* ...Colour factors and an abbreviation
-c$$$*
-c$$$       CF  = 4./3.D0
-c$$$       CA  = 3.D0
-c$$$       NF2 = NF*NF
-c$$$*
-c$$$       DX = 1.D0/X
-c$$$*
-c$$$* ...The harmonic polylogs up to weight 4 by Gehrmann and Remiddi
-c$$$*
-c$$$       CALL HPLOG (X, NW, HC1,HC2,HC3,HC4, HR1,HR2,HR3,HR4,
-c$$$     ,            HI1,HI2,HI3,HI4, N1, N2) 
-c$$$*
-c$$$* ...The splitting function in terms of the harmonic polylogs
-c$$$*
-c$$$      PTqg2 =
-c$$$     &  + nf*ca**2 * ( 2057.D0/9.D0 - 672.D0*x + 53753.D0/81.D0*x**2 + 
-c$$$     &    2092.D0/81.D0*dx - 196.D0*z3 - 2416.D0/3.D0*z3*x + 328.D0/3.D0
-c$$$     &    *z3*x**2 - 310.D0/3.D0*z2 + 308.D0*z2*x - 536.D0/3.D0*z2*x**2
-c$$$     &     + 544.D0/9.D0*z2*dx + 34.D0*z2**2 + 252.D0/5.D0*z2**2*x + 
-c$$$     &    704.D0/5.D0*z2**2*x**2 + 136.D0*Hr1(-1)*z3 + 272.D0*Hr1(-1)*
-c$$$     &    z3*x + 272.D0*Hr1(-1)*z3*x**2 + 512.D0/3.D0*Hr1(-1)*z2 + 760.D
-c$$$     &    0/3.D0*Hr1(-1)*z2*x - 24.D0*Hr1(-1)*z2*x**2 + 32.D0/3.D0*Hr1(
-c$$$     &    -1)*z2*dx - 2996.D0/27.D0*Hr1(0) - 4832.D0/27.D0*Hr1(0)*x + 
-c$$$     &    5044.D0/9.D0*Hr1(0)*x**2 + 40.D0*Hr1(0)*dx + 16.D0*Hr1(0)*z3
-c$$$     &     + 960.D0*Hr1(0)*z3*x + 96.D0*Hr1(0)*z2 - 484.D0/3.D0*Hr1(0)*
-c$$$     &    z2*x + 824.D0/3.D0*Hr1(0)*z2*x**2 + 64.D0/3.D0*Hr1(0)*z2*dx
-c$$$     &     - 3940.D0/27.D0*Hr1(1) - 8416.D0/27.D0*Hr1(1)*x + 7448.D0/27.
-c$$$     &    D0*Hr1(1)*x**2 + 752.D0/27.D0*Hr1(1)*dx + 248.D0*Hr1(1)*z3 - 
-c$$$     &    496.D0*Hr1(1)*z3*x + 496.D0*Hr1(1)*z3*x**2 + 440.D0/3.D0*Hr1(
-c$$$     &    1)*z2 - 664.D0/3.D0*Hr1(1)*z2*x + 464.D0/3.D0*Hr1(1)*z2*x**2
-c$$$     &     - 64.D0/3.D0*Hr1(1)*z2*dx )
-c$$$      PTqg2 = PTqg2 + nf*ca**2 * (  - 208.D0*Hr2(-1,-1)*z2 - 416.D0*
-c$$$     &    Hr2(-1,-1)*z2*x - 416.D0*Hr2(-1,-1)*z2*x**2 - 152.D0/3.D0*
-c$$$     &    Hr2(-1,0) - 256.D0/3.D0*Hr2(-1,0)*x - 248.D0*Hr2(-1,0)*x**2
-c$$$     &     - 32.D0/3.D0*Hr2(-1,0)*dx + 112.D0*Hr2(-1,0)*z2 + 224.D0*
-c$$$     &    Hr2(-1,0)*z2*x + 224.D0*Hr2(-1,0)*z2*x**2 + 72.D0*Hr2(0,-1)*
-c$$$     &    z2 - 176.D0*Hr2(0,-1)*z2*x + 96.D0*Hr2(0,-1)*z2*x**2 - 598.D0/
-c$$$     &    9.D0*Hr2(0,0) - 3508.D0/9.D0*Hr2(0,0)*x - 7208.D0/9.D0*Hr2(0,
-c$$$     &    0)*x**2 - 128.D0/9.D0*Hr2(0,0)*dx - 28.D0*Hr2(0,0)*z2 + 632.D0
-c$$$     &    *Hr2(0,0)*z2*x - 96.D0*Hr2(0,0)*z2*x**2 - 1262.D0/9.D0*Hr2(0,
-c$$$     &    1) + 4828.D0/9.D0*Hr2(0,1)*x - 2900.D0/3.D0*Hr2(0,1)*x**2 + 
-c$$$     &    112.D0/9.D0*Hr2(0,1)*dx + 168.D0*Hr2(0,1)*z2 - 432.D0*Hr2(0,1
-c$$$     &    )*z2*x + 384.D0*Hr2(0,1)*z2*x**2 - 562.D0/9.D0*Hr2(1,0) + 92.D
-c$$$     &    0/9.D0*Hr2(1,0)*x + 704.D0/3.D0*Hr2(1,0)*x**2 - 8.D0/9.D0*
-c$$$     &    Hr2(1,0)*dx + 48.D0*Hr2(1,0)*z2 - 96.D0*Hr2(1,0)*z2*x + 96.D0
-c$$$     &    *Hr2(1,0)*z2*x**2 + 134.D0/9.D0*Hr2(1,1) - 700.D0/9.D0*Hr2(1,
-c$$$     &    1)*x )
-c$$$      PTqg2 = PTqg2 + nf*ca**2 * ( 652.D0/3.D0*Hr2(1,1)*x**2 - 128.D0/9.
-c$$$     &    D0*Hr2(1,1)*dx - 16.D0*Hr2(1,1)*z2 + 32.D0*Hr2(1,1)*z2*x - 32.
-c$$$     &    D0*Hr2(1,1)*z2*x**2 + 320.D0/3.D0*Hr3(-1,-1,0) + 112.D0/3.D0*
-c$$$     &    Hr3(-1,-1,0)*x - 208.D0*Hr3(-1,-1,0)*x**2 - 64.D0/3.D0*Hr3(-1
-c$$$     &    ,-1,0)*dx - 872.D0/3.D0*Hr3(-1,0,0) - 520.D0/3.D0*Hr3(-1,0,0)
-c$$$     &    *x + 304.D0/3.D0*Hr3(-1,0,0)*x**2 + 128.D0/3.D0*Hr3(-1,0,0)*
-c$$$     &    dx - 352.D0/3.D0*Hr3(-1,0,1) - 704.D0/3.D0*Hr3(-1,0,1)*x - 80.
-c$$$     &    D0*Hr3(-1,0,1)*x**2 - 64.D0/3.D0*Hr3(-1,0,1)*dx + 184.D0/3.D0
-c$$$     &    *Hr3(0,-1,0) - 344.D0/3.D0*Hr3(0,-1,0)*x + 832.D0/3.D0*Hr3(0,
-c$$$     &    -1,0)*x**2 + 64.D0/3.D0*Hr3(0,-1,0)*dx + 64.D0/3.D0*Hr3(0,0,0
-c$$$     &    ) + 2680.D0/3.D0*Hr3(0,0,0)*x - 192.D0*Hr3(0,0,0)*x**2 - 128.D
-c$$$     &    0/3.D0*Hr3(0,0,0)*dx + 64.D0/3.D0*Hr3(0,0,1) + 292.D0*Hr3(0,0
-c$$$     &    ,1)*x + 120.D0*Hr3(0,0,1)*x**2 - 64.D0/3.D0*Hr3(0,0,1)*dx - 
-c$$$     &    100.D0*Hr3(0,1,0) - 312.D0*Hr3(0,1,0)*x + 72.D0*Hr3(0,1,0)*
-c$$$     &    x**2 + 64.D0/3.D0*Hr3(0,1,0)*dx + 128.D0*Hr3(0,1,1) - 400.D0*
-c$$$     &    Hr3(0,1,1)*x )
-c$$$      PTqg2 = PTqg2 + nf*ca**2 * ( 640.D0/3.D0*Hr3(0,1,1)*x**2 + 32.D0/
-c$$$     &    3.D0*Hr3(0,1,1)*dx + 728.D0/3.D0*Hr3(1,0,0) + 188.D0/3.D0*
-c$$$     &    Hr3(1,0,0)*x - 304.D0/3.D0*Hr3(1,0,0)*x**2 + 224.D0/3.D0*Hr3(
-c$$$     &    1,0,0)*dx + 160.D0/3.D0*Hr3(1,0,1) + 304.D0/3.D0*Hr3(1,0,1)*x
-c$$$     &     - 472.D0/3.D0*Hr3(1,0,1)*x**2 + 32.D0*Hr3(1,0,1)*dx + 160.D0/
-c$$$     &    3.D0*Hr3(1,1,0) + 304.D0/3.D0*Hr3(1,1,0)*x - 472.D0/3.D0*Hr3(
-c$$$     &    1,1,0)*x**2 + 32.D0*Hr3(1,1,0)*dx - 196.D0/3.D0*Hr3(1,1,1) + 
-c$$$     &    344.D0/3.D0*Hr3(1,1,1)*x - 400.D0/3.D0*Hr3(1,1,1)*x**2 + 32.D0
-c$$$     &    /3.D0*Hr3(1,1,1)*dx - 96.D0*Hr4(-1,-1,-1,0) - 192.D0*Hr4(-1,
-c$$$     &    -1,-1,0)*x - 192.D0*Hr4(-1,-1,-1,0)*x**2 + 64.D0*Hr4(-1,-1,0,
-c$$$     &    0) + 128.D0*Hr4(-1,-1,0,0)*x + 128.D0*Hr4(-1,-1,0,0)*x**2 + 
-c$$$     &    160.D0*Hr4(-1,-1,0,1) + 320.D0*Hr4(-1,-1,0,1)*x + 320.D0*Hr4(
-c$$$     &    -1,-1,0,1)*x**2 + 112.D0*Hr4(-1,0,-1,0) + 224.D0*Hr4(-1,0,-1,
-c$$$     &    0)*x + 224.D0*Hr4(-1,0,-1,0)*x**2 + 8.D0*Hr4(-1,0,0,0) + 16.D0
-c$$$     &    *Hr4(-1,0,0,0)*x + 16.D0*Hr4(-1,0,0,0)*x**2 - 64.D0*Hr4(-1,0,
-c$$$     &    1,0) )
-c$$$      PTqg2 = PTqg2 + nf*ca**2 * (  - 128.D0*Hr4(-1,0,1,0)*x - 128.D0*
-c$$$     &    Hr4(-1,0,1,0)*x**2 - 32.D0*Hr4(-1,0,1,1) - 64.D0*Hr4(-1,0,1,1
-c$$$     &    )*x - 64.D0*Hr4(-1,0,1,1)*x**2 + 16.D0*Hr4(0,-1,-1,0) - 352.D0
-c$$$     &    *Hr4(0,-1,-1,0)*x - 64.D0*Hr4(0,-1,-1,0)*x**2 - 104.D0*Hr4(0,
-c$$$     &    -1,0,0) + 432.D0*Hr4(0,-1,0,0)*x - 32.D0*Hr4(0,-1,0,0)*x**2
-c$$$     &     - 64.D0*Hr4(0,-1,0,1) - 128.D0*Hr4(0,-1,0,1)*x**2 - 56.D0*
-c$$$     &    Hr4(0,0,-1,0) + 496.D0*Hr4(0,0,-1,0)*x + 64.D0*Hr4(0,0,0,0)
-c$$$     &     - 1264.D0*Hr4(0,0,0,0)*x - 100.D0*Hr4(0,0,0,1) - 776.D0*Hr4(
-c$$$     &    0,0,0,1)*x + 96.D0*Hr4(0,0,0,1)*x**2 + 64.D0*Hr4(0,0,1,0) - 
-c$$$     &    96.D0*Hr4(0,0,1,0)*x + 160.D0*Hr4(0,0,1,0)*x**2 + 176.D0*Hr4(
-c$$$     &    0,0,1,1) - 192.D0*Hr4(0,0,1,1)*x + 320.D0*Hr4(0,0,1,1)*x**2
-c$$$     &     + 92.D0*Hr4(0,1,0,0) + 408.D0*Hr4(0,1,0,0)*x - 32.D0*Hr4(0,1
-c$$$     &    ,0,0)*x**2 + 288.D0*Hr4(0,1,0,1)*x - 96.D0*Hr4(0,1,0,1)*x**2
-c$$$     &     + 288.D0*Hr4(0,1,1,0)*x - 96.D0*Hr4(0,1,1,0)*x**2 - 80.D0*
-c$$$     &    Hr4(0,1,1,1) + 256.D0*Hr4(0,1,1,1)*x - 192.D0*Hr4(0,1,1,1)*
-c$$$     &    x**2 )
-c$$$      PTqg2 = PTqg2 + nf*ca**2 * (  - 16.D0*Hr4(1,0,-1,0) + 32.D0*Hr4(1
-c$$$     &    ,0,-1,0)*x - 32.D0*Hr4(1,0,-1,0)*x**2 - 120.D0*Hr4(1,0,0,0)
-c$$$     &     + 240.D0*Hr4(1,0,0,0)*x - 240.D0*Hr4(1,0,0,0)*x**2 - 128.D0*
-c$$$     &    Hr4(1,0,0,1) + 256.D0*Hr4(1,0,0,1)*x - 256.D0*Hr4(1,0,0,1)*
-c$$$     &    x**2 - 32.D0*Hr4(1,0,1,1) + 64.D0*Hr4(1,0,1,1)*x - 64.D0*Hr4(
-c$$$     &    1,0,1,1)*x**2 - 160.D0*Hr4(1,1,0,0) + 320.D0*Hr4(1,1,0,0)*x
-c$$$     &     - 320.D0*Hr4(1,1,0,0)*x**2 - 32.D0*Hr4(1,1,0,1) + 64.D0*Hr4(
-c$$$     &    1,1,0,1)*x - 64.D0*Hr4(1,1,0,1)*x**2 - 32.D0*Hr4(1,1,1,0) + 
-c$$$     &    64.D0*Hr4(1,1,1,0)*x - 64.D0*Hr4(1,1,1,0)*x**2 + 32.D0*Hr4(1,
-c$$$     &    1,1,1) - 64.D0*Hr4(1,1,1,1)*x + 64.D0*Hr4(1,1,1,1)*x**2 )
-c$$$      PTqg2 = PTqg2 + nf*cf*ca * ( 17597.D0/36.D0 + 2659.D0/6.D0*x - 
-c$$$     &    3092.D0/3.D0*x**2 - 220.D0/3.D0*dx + 1340.D0/3.D0*z3 + 4904.D0
-c$$$     &    /3.D0*z3*x + 488.D0*z3*x**2 + 64.D0*z3*dx + 28.D0/9.D0*z2 + 
-c$$$     &    4540.D0/9.D0*z2*x - 2620.D0/3.D0*z2*x**2 - 44.D0/5.D0*z2**2
-c$$$     &     + 2632.D0/5.D0*z2**2*x - 128.D0*z2**2*x**2 - 40.D0*Hr1(-1)*
-c$$$     &    z3 - 80.D0*Hr1(-1)*z3*x - 80.D0*Hr1(-1)*z3*x**2 - 96.D0*Hr1(
-c$$$     &    -1)*z2 - 160.D0*Hr1(-1)*z2*x + 32.D0*Hr1(-1)*z2*x**2 - 2422.D0
-c$$$     &    /27.D0*Hr1(0) + 30203.D0/27.D0*Hr1(0)*x - 17918.D0/27.D0*Hr1(
-c$$$     &    0)*x**2 - 56.D0*Hr1(0)*z3 + 16.D0*Hr1(0)*z3*x - 160.D0*Hr1(0)
-c$$$     &    *z3*x**2 - 260.D0/3.D0*Hr1(0)*z2 - 176.D0/3.D0*Hr1(0)*z2*x - 
-c$$$     &    8.D0*Hr1(0)*z2*x**2 + 2788.D0/27.D0*Hr1(1) + 19660.D0/27.D0*
-c$$$     &    Hr1(1)*x - 19970.D0/27.D0*Hr1(1)*x**2 - 80.D0/27.D0*Hr1(1)*dx
-c$$$     &     - 792.D0*Hr1(1)*z3 + 1584.D0*Hr1(1)*z3*x - 1584.D0*Hr1(1)*z3
-c$$$     &    *x**2 - 188.D0*Hr1(1)*z2 + 272.D0*Hr1(1)*z2*x - 120.D0*Hr1(1)
-c$$$     &    *z2*x**2 + 32.D0*Hr1(1)*z2*dx + 80.D0*Hr2(-1,-1)*z2 + 160.D0*
-c$$$     &    Hr2(-1,-1)*z2*x )
-c$$$      PTqg2 = PTqg2 + nf*cf*ca * ( 160.D0*Hr2(-1,-1)*z2*x**2 + 672.D0*
-c$$$     &    Hr2(-1,0) + 544.D0*Hr2(-1,0)*x - 16.D0*Hr2(-1,0)*x**2 - 64.D0
-c$$$     &    *Hr2(0,-1)*z2 - 32.D0*Hr2(0,-1)*z2*x - 128.D0*Hr2(0,-1)*z2*
-c$$$     &    x**2 - 1007.D0/9.D0*Hr2(0,0) - 6254.D0/9.D0*Hr2(0,0)*x + 2444.
-c$$$     &    D0/9.D0*Hr2(0,0)*x**2 + 32.D0*Hr2(0,0)*z2 - 256.D0*Hr2(0,0)*
-c$$$     &    z2*x + 256.D0*Hr2(0,0)*z2*x**2 + 2204.D0/9.D0*Hr2(0,1) - 3772.
-c$$$     &    D0/9.D0*Hr2(0,1)*x + 3176.D0/3.D0*Hr2(0,1)*x**2 - 200.D0*Hr2(
-c$$$     &    0,1)*z2 + 592.D0*Hr2(0,1)*z2*x - 512.D0*Hr2(0,1)*z2*x**2 - 
-c$$$     &    212.D0*Hr2(1,0) + 2036.D0/3.D0*Hr2(1,0)*x - 3284.D0/3.D0*Hr2(
-c$$$     &    1,0)*x**2 + 304.D0/3.D0*Hr2(1,0)*dx + 80.D0*Hr2(1,0)*z2 - 160.
-c$$$     &    D0*Hr2(1,0)*z2*x + 160.D0*Hr2(1,0)*z2*x**2 - 488.D0/9.D0*Hr2(
-c$$$     &    1,1) + 868.D0/9.D0*Hr2(1,1)*x - 1904.D0/9.D0*Hr2(1,1)*x**2 + 
-c$$$     &    304.D0/9.D0*Hr2(1,1)*dx + 32.D0*Hr2(1,1)*z2 - 64.D0*Hr2(1,1)*
-c$$$     &    z2*x + 64.D0*Hr2(1,1)*z2*x**2 - 288.D0*Hr3(-1,-1,0) - 448.D0*
-c$$$     &    Hr3(-1,-1,0)*x - 64.D0*Hr3(-1,-1,0)*x**2 + 16.D0*Hr3(-1,0,0)
-c$$$     &     - 80.D0*Hr3(-1,0,0)*x )
-c$$$      PTqg2 = PTqg2 + nf*cf*ca * (  - 144.D0*Hr3(-1,0,0)*x**2 - 48.D0*
-c$$$     &    Hr3(-1,0,1) - 64.D0*Hr3(-1,0,1)*x - 64.D0*Hr3(-1,0,1)*x**2 + 
-c$$$     &    336.D0*Hr3(0,-1,0) + 16.D0*Hr3(0,-1,0)*x + 160.D0*Hr3(0,-1,0)
-c$$$     &    *x**2 - 148.D0/3.D0*Hr3(0,0,0) + 1832.D0/3.D0*Hr3(0,0,0)*x + 
-c$$$     &    640.D0/3.D0*Hr3(0,0,0)*x**2 + 388.D0/3.D0*Hr3(0,0,1) + 256.D0/
-c$$$     &    3.D0*Hr3(0,0,1)*x - 40.D0/3.D0*Hr3(0,0,1)*x**2 + 28.D0/3.D0*
-c$$$     &    Hr3(0,1,0) + 2032.D0/3.D0*Hr3(0,1,0)*x + 280.D0/3.D0*Hr3(0,1,
-c$$$     &    0)*x**2 - 592.D0/3.D0*Hr3(0,1,1) + 1352.D0/3.D0*Hr3(0,1,1)*x
-c$$$     &     - 192.D0*Hr3(0,1,1)*x**2 - 16.D0*Hr3(1,0,0) - 504.D0*Hr3(1,0
-c$$$     &    ,0)*x + 368.D0*Hr3(1,0,0)*x**2 - 96.D0*Hr3(1,0,0)*dx + 268.D0/
-c$$$     &    3.D0*Hr3(1,0,1) - 608.D0/3.D0*Hr3(1,0,1)*x + 728.D0/3.D0*Hr3(
-c$$$     &    1,0,1)*x**2 - 32.D0*Hr3(1,0,1)*dx + 452.D0/3.D0*Hr3(1,1,0) - 
-c$$$     &    1024.D0/3.D0*Hr3(1,1,0)*x + 1048.D0/3.D0*Hr3(1,1,0)*x**2 - 32.
-c$$$     &    D0*Hr3(1,1,0)*dx + 424.D0/3.D0*Hr3(1,1,1) - 536.D0/3.D0*Hr3(1
-c$$$     &    ,1,1)*x + 544.D0/3.D0*Hr3(1,1,1)*x**2 - 32.D0/3.D0*Hr3(1,1,1)
-c$$$     &    *dx )
-c$$$      PTqg2 = PTqg2 + nf*cf*ca * ( 96.D0*Hr4(-1,-1,-1,0) + 192.D0*Hr4(
-c$$$     &    -1,-1,-1,0)*x + 192.D0*Hr4(-1,-1,-1,0)*x**2 + 64.D0*Hr4(-1,-1
-c$$$     &    ,0,0) + 128.D0*Hr4(-1,-1,0,0)*x + 128.D0*Hr4(-1,-1,0,0)*x**2
-c$$$     &     - 32.D0*Hr4(-1,-1,0,1) - 64.D0*Hr4(-1,-1,0,1)*x - 64.D0*Hr4(
-c$$$     &    -1,-1,0,1)*x**2 - 80.D0*Hr4(-1,0,-1,0) - 160.D0*Hr4(-1,0,-1,0
-c$$$     &    )*x - 160.D0*Hr4(-1,0,-1,0)*x**2 - 24.D0*Hr4(-1,0,0,0) - 48.D0
-c$$$     &    *Hr4(-1,0,0,0)*x - 48.D0*Hr4(-1,0,0,0)*x**2 + 96.D0*Hr4(-1,0,
-c$$$     &    1,0) + 192.D0*Hr4(-1,0,1,0)*x + 192.D0*Hr4(-1,0,1,0)*x**2 + 
-c$$$     &    32.D0*Hr4(-1,0,1,1) + 64.D0*Hr4(-1,0,1,1)*x + 64.D0*Hr4(-1,0,
-c$$$     &    1,1)*x**2 - 128.D0*Hr4(0,-1,-1,0) - 64.D0*Hr4(0,-1,-1,0)*x - 
-c$$$     &    256.D0*Hr4(0,-1,-1,0)*x**2 - 96.D0*Hr4(0,-1,0,0)*x - 128.D0*
-c$$$     &    Hr4(0,-1,0,0)*x**2 + 144.D0*Hr4(0,0,-1,0) + 32.D0*Hr4(0,0,-1,
-c$$$     &    0)*x + 384.D0*Hr4(0,0,-1,0)*x**2 - 32.D0*Hr4(0,0,0,0) - 64.D0
-c$$$     &    *Hr4(0,0,0,0)*x + 64.D0*Hr4(0,0,0,1) + 96.D0*Hr4(0,0,0,1)*x
-c$$$     &     + 128.D0*Hr4(0,0,0,1)*x**2 - 160.D0*Hr4(0,0,1,0) - 160.D0*
-c$$$     &    Hr4(0,0,1,0)*x )
-c$$$      PTqg2 = PTqg2 + nf*cf*ca * (  - 320.D0*Hr4(0,0,1,0)*x**2 - 176.D0
-c$$$     &    *Hr4(0,0,1,1) + 192.D0*Hr4(0,0,1,1)*x - 384.D0*Hr4(0,0,1,1)*
-c$$$     &    x**2 + 136.D0*Hr4(0,1,0,0) - 1040.D0*Hr4(0,1,0,0)*x + 672.D0*
-c$$$     &    Hr4(0,1,0,0)*x**2 + 168.D0*Hr4(0,1,0,1) - 624.D0*Hr4(0,1,0,1)
-c$$$     &    *x + 448.D0*Hr4(0,1,0,1)*x**2 + 184.D0*Hr4(0,1,1,0) - 656.D0*
-c$$$     &    Hr4(0,1,1,0)*x + 512.D0*Hr4(0,1,1,0)*x**2 + 136.D0*Hr4(0,1,1,
-c$$$     &    1) - 368.D0*Hr4(0,1,1,1)*x + 320.D0*Hr4(0,1,1,1)*x**2 + 80.D0
-c$$$     &    *Hr4(1,0,-1,0) - 160.D0*Hr4(1,0,-1,0)*x + 160.D0*Hr4(1,0,-1,0
-c$$$     &    )*x**2 - 56.D0*Hr4(1,0,0,0) + 112.D0*Hr4(1,0,0,0)*x - 112.D0*
-c$$$     &    Hr4(1,0,0,0)*x**2 + 112.D0*Hr4(1,0,0,1) - 224.D0*Hr4(1,0,0,1)
-c$$$     &    *x + 224.D0*Hr4(1,0,0,1)*x**2 - 240.D0*Hr4(1,0,1,0) + 480.D0*
-c$$$     &    Hr4(1,0,1,0)*x - 480.D0*Hr4(1,0,1,0)*x**2 - 32.D0*Hr4(1,0,1,1
-c$$$     &    ) + 64.D0*Hr4(1,0,1,1)*x - 64.D0*Hr4(1,0,1,1)*x**2 + 208.D0*
-c$$$     &    Hr4(1,1,0,0) - 416.D0*Hr4(1,1,0,0)*x + 416.D0*Hr4(1,1,0,0)*
-c$$$     &    x**2 - 48.D0*Hr4(1,1,0,1) + 96.D0*Hr4(1,1,0,1)*x - 96.D0*Hr4(
-c$$$     &    1,1,0,1)*x**2 )
-c$$$      PTqg2 = PTqg2 + nf*cf*ca * (  - 16.D0*Hr4(1,1,1,0) + 32.D0*Hr4(1,
-c$$$     &    1,1,0)*x - 32.D0*Hr4(1,1,1,0)*x**2 - 64.D0*Hr4(1,1,1,1) + 128.
-c$$$     &    D0*Hr4(1,1,1,1)*x - 128.D0*Hr4(1,1,1,1)*x**2 )
-c$$$      PTqg2 = PTqg2 + nf*cf**2 * (  - 227.D0/4.D0 - 1967.D0/2.D0*x + 
-c$$$     &    1069.D0*x**2 + 156.D0*z3 - 816.D0*z3*x - 640.D0*z3*x**2 + 106.
-c$$$     &    D0*z2 - 564.D0*z2*x + 564.D0*z2*x**2 + 56.D0*z2**2 - 1904.D0/
-c$$$     &    5.D0*z2**2*x + 352.D0/5.D0*z2**2*x**2 + 128.D0*Hr1(-1)*z2 + 
-c$$$     &    160.D0*Hr1(-1)*z2*x + 32.D0*Hr1(-1)*z2*x**2 + 92.D0*Hr1(0) - 
-c$$$     &    1143.D0*Hr1(0)*x + 110.D0*Hr1(0)*x**2 + 40.D0*Hr1(0)*z3 - 304.
-c$$$     &    D0*Hr1(0)*z3*x + 160.D0*Hr1(0)*z3*x**2 + 12.D0*Hr1(0)*z2 + 
-c$$$     &    272.D0*Hr1(0)*z2*x - 176.D0*Hr1(0)*z2*x**2 + 180.D0*Hr1(1) - 
-c$$$     &    480.D0*Hr1(1)*x + 318.D0*Hr1(1)*x**2 + 496.D0*Hr1(1)*z3 - 992.
-c$$$     &    D0*Hr1(1)*z3*x + 992.D0*Hr1(1)*z3*x**2 + 108.D0*Hr1(1)*z2 - 
-c$$$     &    64.D0*Hr1(1)*z2*x - 80.D0*Hr1(1)*z2*x**2 - 496.D0*Hr2(-1,0)
-c$$$     &     - 240.D0*Hr2(-1,0)*x + 224.D0*Hr2(-1,0)*x**2 - 96.D0*Hr2(-1,
-c$$$     &    0)*z2 - 192.D0*Hr2(-1,0)*z2*x - 192.D0*Hr2(-1,0)*z2*x**2 + 64.
-c$$$     &    D0*Hr2(0,-1)*z2 + 64.D0*Hr2(0,-1)*z2*x + 128.D0*Hr2(0,-1)*z2*
-c$$$     &    x**2 + 107.D0*Hr2(0,0) - 42.D0*Hr2(0,0)*x - 76.D0*Hr2(0,0)*
-c$$$     &    x**2 )
-c$$$      PTqg2 = PTqg2 + nf*cf**2 * (  - 40.D0*Hr2(0,0)*z2 + 144.D0*Hr2(0,
-c$$$     &    0)*z2*x - 160.D0*Hr2(0,0)*z2*x**2 - 2.D0*Hr2(0,1) + 116.D0*
-c$$$     &    Hr2(0,1)*x - 324.D0*Hr2(0,1)*x**2 + 104.D0*Hr2(0,1)*z2 - 144.D
-c$$$     &    0*Hr2(0,1)*z2*x + 224.D0*Hr2(0,1)*z2*x**2 + 294.D0*Hr2(1,0)
-c$$$     &     - 560.D0*Hr2(1,0)*x + 468.D0*Hr2(1,0)*x**2 - 112.D0*Hr2(1,0)
-c$$$     &    *z2 + 224.D0*Hr2(1,0)*z2*x - 224.D0*Hr2(1,0)*z2*x**2 + 34.D0*
-c$$$     &    Hr2(1,1) - 32.D0*Hr2(1,1)*x - 4.D0*Hr2(1,1)*x**2 - 16.D0*Hr2(
-c$$$     &    1,1)*z2 + 32.D0*Hr2(1,1)*z2*x - 32.D0*Hr2(1,1)*z2*x**2 + 256.D
-c$$$     &    0*Hr3(-1,-1,0) + 320.D0*Hr3(-1,-1,0)*x + 64.D0*Hr3(-1,-1,0)*
-c$$$     &    x**2 + 64.D0*Hr3(-1,0,0) + 320.D0*Hr3(-1,0,0)*x + 256.D0*Hr3(
-c$$$     &    -1,0,0)*x**2 - 240.D0*Hr3(0,-1,0) + 64.D0*Hr3(0,-1,0)*x - 256.
-c$$$     &    D0*Hr3(0,-1,0)*x**2 + 36.D0*Hr3(0,0,0) - 584.D0*Hr3(0,0,0)*x
-c$$$     &     - 192.D0*Hr3(0,0,0)*x**2 - 28.D0*Hr3(0,0,1) - 144.D0*Hr3(0,0
-c$$$     &    ,1)*x + 16.D0*Hr3(0,0,1)*x**2 + 184.D0*Hr3(0,1,0) - 128.D0*
-c$$$     &    Hr3(0,1,0)*x - 112.D0*Hr3(0,1,0)*x**2 + 104.D0*Hr3(0,1,1) - 
-c$$$     &    80.D0*Hr3(0,1,1)*x )
-c$$$      PTqg2 = PTqg2 + nf*cf**2 * ( 16.D0*Hr3(0,1,1)*x**2 - 288.D0*Hr3(1
-c$$$     &    ,0,0) + 352.D0*Hr3(1,0,0)*x - 160.D0*Hr3(1,0,0)*x**2 - 124.D0
-c$$$     &    *Hr3(1,0,1) + 64.D0*Hr3(1,0,1)*x - 48.D0*Hr3(1,0,1)*x**2 - 
-c$$$     &    180.D0*Hr3(1,1,0) + 192.D0*Hr3(1,1,0)*x - 144.D0*Hr3(1,1,0)*
-c$$$     &    x**2 - 76.D0*Hr3(1,1,1) + 64.D0*Hr3(1,1,1)*x - 48.D0*Hr3(1,1,
-c$$$     &    1)*x**2 - 192.D0*Hr4(-1,-1,0,0) - 384.D0*Hr4(-1,-1,0,0)*x - 
-c$$$     &    384.D0*Hr4(-1,-1,0,0)*x**2 - 96.D0*Hr4(-1,0,-1,0) - 192.D0*
-c$$$     &    Hr4(-1,0,-1,0)*x - 192.D0*Hr4(-1,0,-1,0)*x**2 + 176.D0*Hr4(-1
-c$$$     &    ,0,0,0) + 352.D0*Hr4(-1,0,0,0)*x + 352.D0*Hr4(-1,0,0,0)*x**2
-c$$$     &     + 128.D0*Hr4(0,-1,-1,0) + 128.D0*Hr4(0,-1,-1,0)*x + 256.D0*
-c$$$     &    Hr4(0,-1,-1,0)*x**2 + 32.D0*Hr4(0,-1,0,0) + 128.D0*Hr4(0,-1,0
-c$$$     &    ,0)*x + 256.D0*Hr4(0,-1,0,0)*x**2 - 96.D0*Hr4(0,0,-1,0) + 64.D
-c$$$     &    0*Hr4(0,0,-1,0)*x - 256.D0*Hr4(0,0,-1,0)*x**2 + 16.D0*Hr4(0,0
-c$$$     &    ,0,0) - 256.D0*Hr4(0,0,0,0)*x + 128.D0*Hr4(0,0,0,0)*x**2 + 8.D
-c$$$     &    0*Hr4(0,0,0,1) - 16.D0*Hr4(0,0,0,1)*x + 32.D0*Hr4(0,0,0,1)*
-c$$$     &    x**2 )
-c$$$      PTqg2 = PTqg2 + nf*cf**2 * ( 96.D0*Hr4(0,0,1,0) - 192.D0*Hr4(0,0,
-c$$$     &    1,0)*x + 352.D0*Hr4(0,0,1,0)*x**2 + 64.D0*Hr4(0,0,1,1) - 128.D
-c$$$     &    0*Hr4(0,0,1,1)*x + 192.D0*Hr4(0,0,1,1)*x**2 - 176.D0*Hr4(0,1,
-c$$$     &    0,0) + 288.D0*Hr4(0,1,0,0)*x - 416.D0*Hr4(0,1,0,0)*x**2 - 104.
-c$$$     &    D0*Hr4(0,1,0,1) + 208.D0*Hr4(0,1,0,1)*x - 224.D0*Hr4(0,1,0,1)
-c$$$     &    *x**2 - 120.D0*Hr4(0,1,1,0) + 240.D0*Hr4(0,1,1,0)*x - 288.D0*
-c$$$     &    Hr4(0,1,1,0)*x**2 - 56.D0*Hr4(0,1,1,1) + 112.D0*Hr4(0,1,1,1)*
-c$$$     &    x - 128.D0*Hr4(0,1,1,1)*x**2 - 96.D0*Hr4(1,0,-1,0) + 192.D0*
-c$$$     &    Hr4(1,0,-1,0)*x - 192.D0*Hr4(1,0,-1,0)*x**2 + 336.D0*Hr4(1,0,
-c$$$     &    0,0) - 672.D0*Hr4(1,0,0,0)*x + 672.D0*Hr4(1,0,0,0)*x**2 + 80.D
-c$$$     &    0*Hr4(1,0,0,1) - 160.D0*Hr4(1,0,0,1)*x + 160.D0*Hr4(1,0,0,1)*
-c$$$     &    x**2 + 304.D0*Hr4(1,0,1,0) - 608.D0*Hr4(1,0,1,0)*x + 608.D0*
-c$$$     &    Hr4(1,0,1,0)*x**2 + 64.D0*Hr4(1,0,1,1) - 128.D0*Hr4(1,0,1,1)*
-c$$$     &    x + 128.D0*Hr4(1,0,1,1)*x**2 + 16.D0*Hr4(1,1,0,0) - 32.D0*
-c$$$     &    Hr4(1,1,0,0)*x + 32.D0*Hr4(1,1,0,0)*x**2 + 80.D0*Hr4(1,1,0,1)
-c$$$     &     - 160.D0*Hr4(1,1,0,1)*x )
-c$$$      PTqg2 = PTqg2 + nf*cf**2 * ( 160.D0*Hr4(1,1,0,1)*x**2 + 48.D0*
-c$$$     &    Hr4(1,1,1,0) - 96.D0*Hr4(1,1,1,0)*x + 96.D0*Hr4(1,1,1,0)*x**2
-c$$$     &     + 32.D0*Hr4(1,1,1,1) - 64.D0*Hr4(1,1,1,1)*x + 64.D0*Hr4(1,1,
-c$$$     &    1,1)*x**2 )
-c$$$      PTqg2 = PTqg2 + nf2*ca * (  - 14.D0/9.D0 - 1216.D0/9.D0*x + 916.
-c$$$     &    D0/9.D0*x**2 - 44.D0/9.D0*dx - 40.D0*z3 + 352.D0/3.D0*z3*x - 
-c$$$     &    272.D0/3.D0*z3*x**2 + 100.D0/3.D0*z2 + 208.D0/3.D0*z2*x - 16.D
-c$$$     &    0/9.D0*z2*x**2 + 32.D0/9.D0*z2*dx + 64.D0/3.D0*Hr1(-1)*z2 + 
-c$$$     &    128.D0/3.D0*Hr1(-1)*z2*x + 128.D0/3.D0*Hr1(-1)*z2*x**2 + 44.D0
-c$$$     &    /27.D0*Hr1(0) + 752.D0/27.D0*Hr1(0)*x - 2212.D0/27.D0*Hr1(0)*
-c$$$     &    x**2 - 256.D0/27.D0*Hr1(0)*dx - 24.D0*Hr1(0)*z2 + 112.D0/3.D0
-c$$$     &    *Hr1(0)*z2*x - 112.D0/3.D0*Hr1(0)*z2*x**2 + 592.D0/27.D0*Hr1(
-c$$$     &    1) - 1232.D0/27.D0*Hr1(1)*x + 2632.D0/27.D0*Hr1(1)*x**2 - 320.
-c$$$     &    D0/27.D0*Hr1(1)*dx - 32.D0/3.D0*Hr1(1)*z2 + 64.D0/3.D0*Hr1(1)
-c$$$     &    *z2*x - 64.D0/3.D0*Hr1(1)*z2*x**2 - 16.D0*Hr2(-1,0) + 32.D0/3.
-c$$$     &    D0*Hr2(-1,0)*x + 512.D0/9.D0*Hr2(-1,0)*x**2 + 32.D0/9.D0*Hr2(
-c$$$     &    -1,0)*dx - 296.D0/9.D0*Hr2(0,0) - 416.D0/9.D0*Hr2(0,0)*x - 
-c$$$     &    536.D0/9.D0*Hr2(0,0)*x**2 - 64.D0/9.D0*Hr2(0,0)*dx + 356.D0/9.
-c$$$     &    D0*Hr2(0,1) - 1360.D0/9.D0*Hr2(0,1)*x + 632.D0/9.D0*Hr2(0,1)*
-c$$$     &    x**2 )
-c$$$      PTqg2 = PTqg2 + nf2*ca * ( 16.D0/9.D0*Hr2(1,0) + 496.D0/9.D0*
-c$$$     &    Hr2(1,0)*x - 664.D0/9.D0*Hr2(1,0)*x**2 + 32.D0/3.D0*Hr2(1,0)*
-c$$$     &    dx - 320.D0/9.D0*Hr2(1,1) + 544.D0/9.D0*Hr2(1,1)*x - 200.D0/3.
-c$$$     &    D0*Hr2(1,1)*x**2 + 32.D0/9.D0*Hr2(1,1)*dx + 64.D0/3.D0*Hr3(-1
-c$$$     &    ,-1,0) + 128.D0/3.D0*Hr3(-1,-1,0)*x + 128.D0/3.D0*Hr3(-1,-1,0
-c$$$     &    )*x**2 + 32.D0/3.D0*Hr3(-1,0,0) + 64.D0/3.D0*Hr3(-1,0,0)*x + 
-c$$$     &    64.D0/3.D0*Hr3(-1,0,0)*x**2 - 32.D0/3.D0*Hr3(-1,0,1) - 64.D0/
-c$$$     &    3.D0*Hr3(-1,0,1)*x - 64.D0/3.D0*Hr3(-1,0,1)*x**2 - 64.D0/3.D0
-c$$$     &    *Hr3(0,-1,0) + 128.D0/3.D0*Hr3(0,-1,0)*x - 64.D0/3.D0*Hr3(0,
-c$$$     &    -1,0)*x**2 - 64.D0/3.D0*Hr3(0,0,0) - 640.D0/3.D0*Hr3(0,0,0)*x
-c$$$     &     + 104.D0/3.D0*Hr3(0,0,1) - 16.D0*Hr3(0,0,1)*x + 176.D0/3.D0*
-c$$$     &    Hr3(0,0,1)*x**2 + 8.D0*Hr3(0,1,0) + 80.D0*Hr3(0,1,0)*x - 16.D0
-c$$$     &    *Hr3(0,1,0)*x**2 - 32.D0*Hr3(0,1,1) + 96.D0*Hr3(0,1,1)*x - 
-c$$$     &    224.D0/3.D0*Hr3(0,1,1)*x**2 - 152.D0/3.D0*Hr3(1,0,0) + 304.D0/
-c$$$     &    3.D0*Hr3(1,0,0)*x - 304.D0/3.D0*Hr3(1,0,0)*x**2 - 16.D0/3.D0*
-c$$$     &    Hr3(1,0,1) )
-c$$$      PTqg2 = PTqg2 + nf2*ca * ( 32.D0/3.D0*Hr3(1,0,1)*x - 32.D0/3.D0
-c$$$     &    *Hr3(1,0,1)*x**2 - 16.D0/3.D0*Hr3(1,1,0) + 32.D0/3.D0*Hr3(1,1
-c$$$     &    ,0)*x - 32.D0/3.D0*Hr3(1,1,0)*x**2 + 40.D0/3.D0*Hr3(1,1,1) - 
-c$$$     &    80.D0/3.D0*Hr3(1,1,1)*x + 80.D0/3.D0*Hr3(1,1,1)*x**2 )
-c$$$      PTqg2 = PTqg2 + nf2*cf * (  - 4847.D0/54.D0 - 2375.D0/27.D0*x
-c$$$     &     + 4066.D0/27.D0*x**2 + 200.D0/27.D0*dx + 304.D0/3.D0*z3 - 
-c$$$     &    608.D0/3.D0*z3*x + 160.D0*z3*x**2 + 272.D0/9.D0*z2 + 8.D0/9.D0
-c$$$     &    *z2*x + 32.D0*z2*x**2 - 64.D0/9.D0*z2*dx + 1684.D0/27.D0*Hr1(
-c$$$     &    0) - 4022.D0/27.D0*Hr1(0)*x - 4480.D0/27.D0*Hr1(0)*x**2 + 512.
-c$$$     &    D0/27.D0*Hr1(0)*dx + 80.D0/3.D0*Hr1(0)*z2 - 352.D0/3.D0*Hr1(0
-c$$$     &    )*z2*x + 48.D0*Hr1(0)*z2*x**2 - 808.D0/27.D0*Hr1(1) + 560.D0/
-c$$$     &    27.D0*Hr1(1)*x - 248.D0/27.D0*Hr1(1)*x**2 - 8.D0*Hr1(1)*z2 + 
-c$$$     &    16.D0*Hr1(1)*z2*x - 16.D0*Hr1(1)*z2*x**2 + 48.D0*Hr2(-1,0) - 
-c$$$     &    496.D0/9.D0*Hr2(-1,0)*x**2 - 64.D0/9.D0*Hr2(-1,0)*dx + 902.D0/
-c$$$     &    9.D0*Hr2(0,0) + 956.D0/9.D0*Hr2(0,0)*x + 1400.D0/9.D0*Hr2(0,0
-c$$$     &    )*x**2 + 128.D0/9.D0*Hr2(0,0)*dx - 416.D0/9.D0*Hr2(0,1) + 376.
-c$$$     &    D0/9.D0*Hr2(0,1)*x - 88.D0/3.D0*Hr2(0,1)*x**2 + 64.D0*Hr2(1,0
-c$$$     &    ) - 248.D0/3.D0*Hr2(1,0)*x + 232.D0/3.D0*Hr2(1,0)*x**2 + 344.D
-c$$$     &    0/9.D0*Hr2(1,1) - 376.D0/9.D0*Hr2(1,1)*x + 328.D0/9.D0*Hr2(1,
-c$$$     &    1)*x**2 )
-c$$$      PTqg2 = PTqg2 + nf2*cf * ( 32.D0*Hr3(0,-1,0) - 64.D0*Hr3(0,-1,0
-c$$$     &    )*x + 64.D0/3.D0*Hr3(0,-1,0)*x**2 - 32.D0/3.D0*Hr3(0,0,0) + 
-c$$$     &    112.D0/3.D0*Hr3(0,0,0)*x + 32.D0*Hr3(0,0,0)*x**2 - 64.D0/3.D0
-c$$$     &    *Hr3(0,0,1) + 128.D0/3.D0*Hr3(0,0,1)*x - 176.D0/3.D0*Hr3(0,0,
-c$$$     &    1)*x**2 + 80.D0/3.D0*Hr3(0,1,0) - 160.D0/3.D0*Hr3(0,1,0)*x + 
-c$$$     &    176.D0/3.D0*Hr3(0,1,0)*x**2 + 64.D0/3.D0*Hr3(0,1,1) - 128.D0/
-c$$$     &    3.D0*Hr3(0,1,1)*x + 48.D0*Hr3(0,1,1)*x**2 + 32.D0*Hr3(1,0,0)
-c$$$     &     - 64.D0*Hr3(1,0,0)*x + 64.D0*Hr3(1,0,0)*x**2 - 40.D0/3.D0*
-c$$$     &    Hr3(1,0,1) + 80.D0/3.D0*Hr3(1,0,1)*x - 80.D0/3.D0*Hr3(1,0,1)*
-c$$$     &    x**2 - 56.D0/3.D0*Hr3(1,1,0) + 112.D0/3.D0*Hr3(1,1,0)*x - 112.
-c$$$     &    D0/3.D0*Hr3(1,1,0)*x**2 - 40.D0/3.D0*Hr3(1,1,1) + 80.D0/3.D0*
-c$$$     &    Hr3(1,1,1)*x - 80.D0/3.D0*Hr3(1,1,1)*x**2 - 32.D0*Hr4(0,0,0,0
-c$$$     &    ) + 64.D0*Hr4(0,0,0,0)*x )
-c$$$      PTqg2 = PTqg2 + nf**3 * (  - 8.D0/9.D0 + 16.D0/3.D0*x - 16.D0/3.D0
-c$$$     &    *x**2 + 8.D0/3.D0*z2 - 16.D0/3.D0*z2*x + 16.D0/3.D0*z2*x**2
-c$$$     &     + 40.D0/9.D0*Hr1(0) - 32.D0/9.D0*Hr1(0)*x + 32.D0/9.D0*Hr1(0
-c$$$     &    )*x**2 - 40.D0/9.D0*Hr1(1) + 32.D0/9.D0*Hr1(1)*x - 32.D0/9.D0
-c$$$     &    *Hr1(1)*x**2 + 8.D0/3.D0*Hr2(0,0) - 16.D0/3.D0*Hr2(0,0)*x + 
-c$$$     &    16.D0/3.D0*Hr2(0,0)*x**2 - 8.D0/3.D0*Hr2(0,1) + 16.D0/3.D0*
-c$$$     &    Hr2(0,1)*x - 16.D0/3.D0*Hr2(0,1)*x**2 - 8.D0/3.D0*Hr2(1,0) + 
-c$$$     &    16.D0/3.D0*Hr2(1,0)*x - 16.D0/3.D0*Hr2(1,0)*x**2 + 8.D0/3.D0*
-c$$$     &    Hr2(1,1) - 16.D0/3.D0*Hr2(1,1)*x + 16.D0/3.D0*Hr2(1,1)*x**2 )
-c$$$      PTqg2 = PTqg2
-c$$$     , + 2.*z2*(ca-cf)*b0* 2.*nf* (1.- 2.*x + 2.*x*x )
-c$$$     ,     * ( 11.+24.*Hr1(0) ) * IMOD
-c$$$*
-c$$$       X2QGTA = PTqg2
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..The gluon-quark splitting functions P_gq^(2)T
-c$$$*
-c$$$       FUNCTION X2GQTA (X, NF)
-c$$$*
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       COMPLEX*16 HC1, HC2, HC3, HC4 
-c$$$       INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N
-c$$$       PARAMETER ( N1 = -1, N2 = 1, NW = 4 ) 
-c$$$       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2), 
-c$$$     ,           HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
-c$$$       DIMENSION HR1(N1:N2),HR2(N1:N2,N1:N2),HR3(N1:N2,N1:N2,N1:N2), 
-c$$$     ,           HR4(N1:N2,N1:N2,N1:N2,N1:N2) 
-c$$$       DIMENSION HI1(N1:N2),HI2(N1:N2,N1:N2),HI3(N1:N2,N1:N2,N1:N2), 
-c$$$     ,           HI4(N1:N2,N1:N2,N1:N2,N1:N2) 
-c$$$       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-c$$$     ,             Z3 = 1.2020 56903 15959 42854 D0 )
-c$$$*
-c$$$* ...Colour factors and an abbreviation
-c$$$*
-c$$$       CF  = 4./3.D0
-c$$$       CA  = 3.D0
-c$$$       NF2 = NF*NF
-c$$$*
-c$$$       DX = 1.D0/X
-c$$$*
-c$$$* ...The harmonic polylogs up to weight 4 by Gehrmann and Remiddi
-c$$$*
-c$$$       CALL HPLOG (X, NW, HC1,HC2,HC3,HC4, HR1,HR2,HR3,HR4,
-c$$$     ,            HI1,HI2,HI3,HI4, N1, N2) 
-c$$$*
-c$$$* ...The splitting function in terms of the harmonic polylogs
-c$$$*
-c$$$      PTgq2 =
-c$$$     &  + cf*ca**2 * (  - 17798.D0/27.D0 - 3436.D0/27.D0*x + 4136.D0/9.D
-c$$$     &    0*x**2 + 3514.D0/9.D0*dx - 400.D0*z3 + 148.D0*z3*x - 640.D0/3.
-c$$$     &    D0*z3*x**2 + 160.D0*z3*dx - 848.D0*z2 - 2800.D0/9.D0*z2*x - 
-c$$$     &    352.D0/9.D0*z2*x**2 - 5176.D0/9.D0*z2*dx + 572.D0/5.D0*z2**2
-c$$$     &     + 314.D0*z2**2*x + 1984.D0/5.D0*z2**2*dx - 16.D0*Hr1(-1)*z3
-c$$$     &     - 8.D0*Hr1(-1)*z3*x - 16.D0*Hr1(-1)*z3*dx - 168.D0*Hr1(-1)*
-c$$$     &    z2 - 160.D0*Hr1(-1)*z2*x - 32.D0/3.D0*Hr1(-1)*z2*x**2 - 176.D0
-c$$$     &    /3.D0*Hr1(-1)*z2*dx - 32612.D0/27.D0*Hr1(0) - 23630.D0/27.D0*
-c$$$     &    Hr1(0)*x - 12964.D0/27.D0*Hr1(0)*x**2 + 13384.D0/27.D0*Hr1(0)
-c$$$     &    *dx + 352.D0*Hr1(0)*z3 + 240.D0*Hr1(0)*z3*x + 416.D0*Hr1(0)*
-c$$$     &    z3*dx - 12.D0*Hr1(0)*z2 + 532.D0/3.D0*Hr1(0)*z2*x - 128.D0/3.D
-c$$$     &    0*Hr1(0)*z2*x**2 - 752.D0/3.D0*Hr1(0)*z2*dx - 22270.D0/27.D0*
-c$$$     &    Hr1(1) - 688.D0/27.D0*Hr1(1)*x - 1924.D0/9.D0*Hr1(1)*x**2 + 
-c$$$     &    31504.D0/27.D0*Hr1(1)*dx - 656.D0*Hr1(1)*z3 + 328.D0*Hr1(1)*
-c$$$     &    z3*x + 656.D0*Hr1(1)*z3*dx - 280.D0*Hr1(1)*z2 - 32.D0*Hr1(1)*
-c$$$     &    z2*x )
-c$$$      PTgq2 = PTgq2 + cf*ca**2 * (  - 64.D0*Hr1(1)*z2*x**2 + 344.D0*
-c$$$     &    Hr1(1)*z2*dx - 32.D0*Hr2(-1,-1)*z2 - 16.D0*Hr2(-1,-1)*z2*x - 
-c$$$     &    32.D0*Hr2(-1,-1)*z2*dx - 1280.D0/9.D0*Hr2(-1,0) + 1052.D0/9.D0
-c$$$     &    *Hr2(-1,0)*x + 704.D0/9.D0*Hr2(-1,0)*x**2 - 248.D0/3.D0*Hr2(
-c$$$     &    -1,0)*dx + 160.D0*Hr2(-1,0)*z2 + 80.D0*Hr2(-1,0)*z2*x + 160.D0
-c$$$     &    *Hr2(-1,0)*z2*dx - 144.D0*Hr2(0,-1)*z2 - 8.D0*Hr2(0,-1)*z2*x
-c$$$     &     - 64.D0*Hr2(0,-1)*z2*dx + 11848.D0/9.D0*Hr2(0,0) + 7280.D0/9.
-c$$$     &    D0*Hr2(0,0)*x + 3688.D0/9.D0*Hr2(0,0)*x**2 + 3920.D0/9.D0*
-c$$$     &    Hr2(0,0)*dx + 152.D0*Hr2(0,0)*z2 - 156.D0*Hr2(0,0)*z2*x - 128.
-c$$$     &    D0*Hr2(0,0)*z2*dx + 6896.D0/9.D0*Hr2(0,1) + 4220.D0/9.D0*Hr2(
-c$$$     &    0,1)*x + 1552.D0/9.D0*Hr2(0,1)*x**2 + 4664.D0/9.D0*Hr2(0,1)*
-c$$$     &    dx + 48.D0*Hr2(0,1)*z2 + 248.D0*Hr2(0,1)*z2*x + 320.D0*Hr2(0,
-c$$$     &    1)*z2*dx + 1160.D0/9.D0*Hr2(1,0) - 604.D0/9.D0*Hr2(1,0)*x + 
-c$$$     &    760.D0/3.D0*Hr2(1,0)*x**2 - 4136.D0/9.D0*Hr2(1,0)*dx + 128.D0
-c$$$     &    *Hr2(1,0)*z2 - 64.D0*Hr2(1,0)*z2*x - 128.D0*Hr2(1,0)*z2*dx + 
-c$$$     &    808.D0/9.D0*Hr2(1,1) )
-c$$$      PTgq2 = PTgq2 + cf*ca**2 * (  - 440.D0/9.D0*Hr2(1,1)*x + 560.D0/9.
-c$$$     &    D0*Hr2(1,1)*x**2 - 532.D0/3.D0*Hr2(1,1)*dx - 96.D0*Hr2(1,1)*
-c$$$     &    z2 + 48.D0*Hr2(1,1)*z2*x + 96.D0*Hr2(1,1)*z2*dx - 16.D0*Hr3(
-c$$$     &    -1,-1,0) - 160.D0*Hr3(-1,-1,0)*x + 64.D0/3.D0*Hr3(-1,-1,0)*
-c$$$     &    x**2 + 352.D0/3.D0*Hr3(-1,-1,0)*dx - 328.D0/3.D0*Hr3(-1,0,0)
-c$$$     &     + 544.D0/3.D0*Hr3(-1,0,0)*x - 128.D0/3.D0*Hr3(-1,0,0)*x**2
-c$$$     &     - 272.D0*Hr3(-1,0,0)*dx + 160.D0*Hr3(-1,0,1) + 80.D0*Hr3(-1,
-c$$$     &    0,1)*x + 64.D0/3.D0*Hr3(-1,0,1)*x**2 + 352.D0/3.D0*Hr3(-1,0,1
-c$$$     &    )*dx - 280.D0/3.D0*Hr3(0,-1,0) + 928.D0/3.D0*Hr3(0,-1,0)*x - 
-c$$$     &    256.D0/3.D0*Hr3(0,-1,0)*x**2 - 752.D0/3.D0*Hr3(0,-1,0)*dx - 
-c$$$     &    848.D0/3.D0*Hr3(0,0,0) - 3344.D0/3.D0*Hr3(0,0,0)*x - 224.D0/3.
-c$$$     &    D0*Hr3(0,0,0)*x**2 + 1856.D0/3.D0*Hr3(0,0,0)*dx - 1292.D0/3.D0
-c$$$     &    *Hr3(0,0,1) - 284.D0/3.D0*Hr3(0,0,1)*x - 128.D0/3.D0*Hr3(0,0,
-c$$$     &    1)*x**2 - 32.D0/3.D0*Hr3(0,0,1)*dx - 576.D0*Hr3(0,1,0) - 424.D
-c$$$     &    0*Hr3(0,1,0)*x - 512.D0/3.D0*Hr3(0,1,0)*x**2 + 1504.D0/3.D0*
-c$$$     &    Hr3(0,1,0)*dx )
-c$$$      PTgq2 = PTgq2 + cf*ca**2 * (  - 296.D0/3.D0*Hr3(0,1,1) - 260.D0/3.
-c$$$     &    D0*Hr3(0,1,1)*x - 128.D0/3.D0*Hr3(0,1,1)*x**2 + 448.D0/3.D0*
-c$$$     &    Hr3(0,1,1)*dx + 1300.D0/3.D0*Hr3(1,0,0) - 1004.D0/3.D0*Hr3(1,
-c$$$     &    0,0)*x - 1024.D0/3.D0*Hr3(1,0,0)*dx + 192.D0*Hr3(1,0,1) - 72.D
-c$$$     &    0*Hr3(1,0,1)*x + 32.D0*Hr3(1,0,1)*x**2 - 248.D0*Hr3(1,0,1)*dx
-c$$$     &     + 368.D0/3.D0*Hr3(1,1,0) - 352.D0/3.D0*Hr3(1,1,0)*x + 32.D0/
-c$$$     &    3.D0*Hr3(1,1,0)*x**2 - 424.D0/3.D0*Hr3(1,1,0)*dx + 104.D0/3.D0
-c$$$     &    *Hr3(1,1,1) - 76.D0/3.D0*Hr3(1,1,1)*x + 32.D0/3.D0*Hr3(1,1,1)
-c$$$     &    *x**2 - 160.D0/3.D0*Hr3(1,1,1)*dx - 192.D0*Hr4(-1,-1,-1,0) - 
-c$$$     &    96.D0*Hr4(-1,-1,-1,0)*x - 192.D0*Hr4(-1,-1,-1,0)*dx + 192.D0*
-c$$$     &    Hr4(-1,-1,0,0) + 96.D0*Hr4(-1,-1,0,0)*x + 192.D0*Hr4(-1,-1,0,
-c$$$     &    0)*dx - 64.D0*Hr4(-1,-1,0,1) - 32.D0*Hr4(-1,-1,0,1)*x - 64.D0
-c$$$     &    *Hr4(-1,-1,0,1)*dx + 352.D0*Hr4(-1,0,-1,0) + 176.D0*Hr4(-1,0,
-c$$$     &    -1,0)*x + 352.D0*Hr4(-1,0,-1,0)*dx - 336.D0*Hr4(-1,0,0,0) - 
-c$$$     &    168.D0*Hr4(-1,0,0,0)*x - 336.D0*Hr4(-1,0,0,0)*dx + 64.D0*Hr4(
-c$$$     &    -1,0,0,1) )
-c$$$      PTgq2 = PTgq2 + cf*ca**2 * ( 32.D0*Hr4(-1,0,0,1)*x + 64.D0*Hr4(-1
-c$$$     &    ,0,0,1)*dx - 192.D0*Hr4(-1,0,1,0) - 96.D0*Hr4(-1,0,1,0)*x - 
-c$$$     &    192.D0*Hr4(-1,0,1,0)*dx - 64.D0*Hr4(-1,0,1,1) - 32.D0*Hr4(-1,
-c$$$     &    0,1,1)*x - 64.D0*Hr4(-1,0,1,1)*dx - 160.D0*Hr4(0,-1,-1,0) + 
-c$$$     &    48.D0*Hr4(0,-1,-1,0)*x + 240.D0*Hr4(0,-1,0,0) - 136.D0*Hr4(0,
-c$$$     &    -1,0,0)*x - 96.D0*Hr4(0,-1,0,0)*dx + 64.D0*Hr4(0,-1,0,1) + 32.
-c$$$     &    D0*Hr4(0,-1,0,1)*x + 64.D0*Hr4(0,-1,0,1)*dx + 112.D0*Hr4(0,0,
-c$$$     &    -1,0) - 248.D0*Hr4(0,0,-1,0)*x - 256.D0*Hr4(0,0,-1,0)*dx - 
-c$$$     &    128.D0*Hr4(0,0,0,0) + 632.D0*Hr4(0,0,0,0)*x + 512.D0*Hr4(0,0,
-c$$$     &    0,0)*dx - 152.D0*Hr4(0,0,0,1) - 92.D0*Hr4(0,0,0,1)*x - 128.D0
-c$$$     &    *Hr4(0,0,0,1)*dx + 384.D0*Hr4(0,0,1,0) + 480.D0*Hr4(0,0,1,0)*
-c$$$     &    x + 576.D0*Hr4(0,0,1,0)*dx + 128.D0*Hr4(0,0,1,1) + 160.D0*
-c$$$     &    Hr4(0,0,1,1)*x + 192.D0*Hr4(0,0,1,1)*dx + 232.D0*Hr4(0,1,0,0)
-c$$$     &     - 76.D0*Hr4(0,1,0,0)*x - 160.D0*Hr4(0,1,0,0)*dx + 64.D0*Hr4(
-c$$$     &    0,1,0,1) - 176.D0*Hr4(0,1,0,1)*x - 256.D0*Hr4(0,1,0,1)*dx + 
-c$$$     &    128.D0*Hr4(0,1,1,0) )
-c$$$      PTgq2 = PTgq2 + cf*ca**2 * (  - 112.D0*Hr4(0,1,1,0)*x - 192.D0*
-c$$$     &    Hr4(0,1,1,0)*dx + 64.D0*Hr4(0,1,1,1) - 80.D0*Hr4(0,1,1,1)*x
-c$$$     &     - 128.D0*Hr4(0,1,1,1)*dx + 96.D0*Hr4(1,0,-1,0) - 48.D0*Hr4(1
-c$$$     &    ,0,-1,0)*x - 96.D0*Hr4(1,0,-1,0)*dx - 560.D0*Hr4(1,0,0,0) + 
-c$$$     &    280.D0*Hr4(1,0,0,0)*x + 560.D0*Hr4(1,0,0,0)*dx - 160.D0*Hr4(1
-c$$$     &    ,0,0,1) + 80.D0*Hr4(1,0,0,1)*x + 160.D0*Hr4(1,0,0,1)*dx - 640.
-c$$$     &    D0*Hr4(1,0,1,0) + 320.D0*Hr4(1,0,1,0)*x + 640.D0*Hr4(1,0,1,0)
-c$$$     &    *dx - 64.D0*Hr4(1,0,1,1) + 32.D0*Hr4(1,0,1,1)*x + 64.D0*Hr4(1
-c$$$     &    ,0,1,1)*dx - 160.D0*Hr4(1,1,0,0) + 80.D0*Hr4(1,1,0,0)*x + 160.
-c$$$     &    D0*Hr4(1,1,0,0)*dx - 128.D0*Hr4(1,1,0,1) + 64.D0*Hr4(1,1,0,1)
-c$$$     &    *x + 128.D0*Hr4(1,1,0,1)*dx - 192.D0*Hr4(1,1,1,0) + 96.D0*
-c$$$     &    Hr4(1,1,1,0)*x + 192.D0*Hr4(1,1,1,0)*dx - 64.D0*Hr4(1,1,1,1)
-c$$$     &     + 32.D0*Hr4(1,1,1,1)*x + 64.D0*Hr4(1,1,1,1)*dx )
-c$$$      PTgq2 = PTgq2 + cf**2*ca * ( 1735.D0/6.D0 - 4811.D0/12.D0*x - 140.
-c$$$     &    D0/3.D0*x**2 + 200.D0*dx + 552.D0*z3 + 424.D0*z3*x + 128.D0/3.
-c$$$     &    D0*z3*x**2 + 264.D0*z3*dx + 3452.D0/3.D0*z2 + 436.D0/3.D0*z2*
-c$$$     &    x + 1760.D0/9.D0*z2*x**2 + 528.D0*z2*dx - 608.D0/5.D0*z2**2
-c$$$     &     - 2144.D0/5.D0*z2**2*x - 3664.D0/5.D0*z2**2*dx - 176.D0*Hr1(
-c$$$     &    -1)*z3 - 88.D0*Hr1(-1)*z3*x - 176.D0*Hr1(-1)*z3*dx - 64.D0*
-c$$$     &    Hr1(-1)*z2 - 32.D0*Hr1(-1)*z2*x - 24.D0*Hr1(-1)*z2*dx + 40301.
-c$$$     &    D0/27.D0*Hr1(0) + 18911.D0/27.D0*Hr1(0)*x + 8932.D0/27.D0*
-c$$$     &    Hr1(0)*x**2 + 244.D0*Hr1(0)*dx - 272.D0*Hr1(0)*z3 - 376.D0*
-c$$$     &    Hr1(0)*z3*x - 832.D0*Hr1(0)*z3*dx + 72.D0*Hr1(0)*z2 + 128.D0*
-c$$$     &    Hr1(0)*z2*x - 32.D0/3.D0*Hr1(0)*z2*x**2 + 192.D0*Hr1(0)*z2*dx
-c$$$     &     + 26008.D0/27.D0*Hr1(1) + 3988.D0/27.D0*Hr1(1)*x + 5908.D0/
-c$$$     &    27.D0*Hr1(1)*x**2 - 39092.D0/27.D0*Hr1(1)*dx + 816.D0*Hr1(1)*
-c$$$     &    z3 - 408.D0*Hr1(1)*z3*x - 816.D0*Hr1(1)*z3*dx + 672.D0*Hr1(1)
-c$$$     &    *z2 - 180.D0*Hr1(1)*z2*x + 224.D0/3.D0*Hr1(1)*z2*x**2 - 1760.D
-c$$$     &    0/3.D0*Hr1(1)*z2*dx )
-c$$$      PTgq2 = PTgq2 + cf**2*ca * ( 288.D0*Hr2(-1,-1)*z2 + 144.D0*Hr2(-1
-c$$$     &    ,-1)*z2*x + 288.D0*Hr2(-1,-1)*z2*dx - 88.D0*Hr2(-1,0) - 268.D0
-c$$$     &    *Hr2(-1,0)*x + 192.D0*Hr2(-1,0)*dx - 192.D0*Hr2(-1,0)*z2 - 96.
-c$$$     &    D0*Hr2(-1,0)*z2*x - 192.D0*Hr2(-1,0)*z2*dx - 128.D0*Hr2(0,-1)
-c$$$     &    *z2 - 16.D0*Hr2(0,-1)*z2*x + 32.D0*Hr2(0,-1)*z2*dx - 2338.D0/
-c$$$     &    3.D0*Hr2(0,0) - 441.D0*Hr2(0,0)*x - 1408.D0/9.D0*Hr2(0,0)*
-c$$$     &    x**2 + 80.D0*Hr2(0,0)*dx - 16.D0*Hr2(0,0)*z2 - 40.D0*Hr2(0,0)
-c$$$     &    *z2*x - 128.D0*Hr2(0,0)*z2*dx - 8980.D0/9.D0*Hr2(0,1) - 4576.D
-c$$$     &    0/9.D0*Hr2(0,1)*x - 352.D0/3.D0*Hr2(0,1)*x**2 - 5800.D0/9.D0*
-c$$$     &    Hr2(0,1)*dx + 272.D0*Hr2(0,1)*z2 - 456.D0*Hr2(0,1)*z2*x - 608.
-c$$$     &    D0*Hr2(0,1)*z2*dx + 488.D0/3.D0*Hr2(1,0) - 200.D0*Hr2(1,0)*x
-c$$$     &     - 704.D0/9.D0*Hr2(1,0)*x**2 + 620.D0/9.D0*Hr2(1,0)*dx - 32.D0
-c$$$     &    *Hr2(1,0)*z2 + 16.D0*Hr2(1,0)*z2*x + 32.D0*Hr2(1,0)*z2*dx - 
-c$$$     &    160.D0/9.D0*Hr2(1,1) - 280.D0/9.D0*Hr2(1,1)*x - 352.D0/9.D0*
-c$$$     &    Hr2(1,1)*x**2 + 848.D0/9.D0*Hr2(1,1)*dx + 192.D0*Hr2(1,1)*z2
-c$$$     &     - 96.D0*Hr2(1,1)*z2*x )
-c$$$      PTgq2 = PTgq2 + cf**2*ca * (  - 192.D0*Hr2(1,1)*z2*dx + 192.D0*
-c$$$     &    Hr3(-1,-1,0) + 128.D0*Hr3(-1,-1,0)*x + 48.D0*Hr3(-1,-1,0)*dx
-c$$$     &     - 192.D0*Hr3(-1,0,0) - 72.D0*Hr3(-1,0,0)*x - 48.D0*Hr3(-1,0,
-c$$$     &    0)*dx + 160.D0*Hr3(-1,0,1) + 96.D0*Hr3(-1,0,1)*x + 48.D0*Hr3(
-c$$$     &    -1,0,1)*dx - 144.D0*Hr3(0,-1,0) + 128.D0*Hr3(0,-1,0)*x + 96.D0
-c$$$     &    *Hr3(0,-1,0)*dx + 368.D0/3.D0*Hr3(0,0,0) - 268.D0/3.D0*Hr3(0,
-c$$$     &    0,0)*x + 64.D0/3.D0*Hr3(0,0,0)*x**2 + 136.D0/3.D0*Hr3(0,0,1)
-c$$$     &     - 680.D0/3.D0*Hr3(0,0,1)*x - 32.D0*Hr3(0,0,1)*x**2 + 640.D0/
-c$$$     &    3.D0*Hr3(0,0,1)*dx + 600.D0*Hr3(0,1,0) + 96.D0*Hr3(0,1,0)*x
-c$$$     &     + 224.D0/3.D0*Hr3(0,1,0)*x**2 - 1280.D0/3.D0*Hr3(0,1,0)*dx
-c$$$     &     + 424.D0/3.D0*Hr3(0,1,1) + 28.D0/3.D0*Hr3(0,1,1)*x + 32.D0*
-c$$$     &    Hr3(0,1,1)*x**2 - 464.D0/3.D0*Hr3(0,1,1)*dx - 1760.D0/3.D0*
-c$$$     &    Hr3(1,0,0) + 832.D0/3.D0*Hr3(1,0,0)*x - 64.D0/3.D0*Hr3(1,0,0)
-c$$$     &    *x**2 + 336.D0*Hr3(1,0,0)*dx - 976.D0/3.D0*Hr3(1,0,1) + 404.D0
-c$$$     &    /3.D0*Hr3(1,0,1)*x - 32.D0*Hr3(1,0,1)*x**2 + 904.D0/3.D0*Hr3(
-c$$$     &    1,0,1)*dx )
-c$$$      PTgq2 = PTgq2 + cf**2*ca * (  - 256.D0/3.D0*Hr3(1,1,0) + 332.D0/3.
-c$$$     &    D0*Hr3(1,1,0)*x - 32.D0/3.D0*Hr3(1,1,0)*x**2 + 88.D0*Hr3(1,1,
-c$$$     &    0)*dx - 152.D0/3.D0*Hr3(1,1,1) + 232.D0/3.D0*Hr3(1,1,1)*x - 
-c$$$     &    32.D0/3.D0*Hr3(1,1,1)*x**2 + 160.D0/3.D0*Hr3(1,1,1)*dx + 192.D
-c$$$     &    0*Hr4(-1,-1,-1,0) + 96.D0*Hr4(-1,-1,-1,0)*x + 192.D0*Hr4(-1,
-c$$$     &    -1,-1,0)*dx + 64.D0*Hr4(-1,-1,0,0) + 32.D0*Hr4(-1,-1,0,0)*x
-c$$$     &     + 64.D0*Hr4(-1,-1,0,0)*dx - 192.D0*Hr4(-1,-1,0,1) - 96.D0*
-c$$$     &    Hr4(-1,-1,0,1)*x - 192.D0*Hr4(-1,-1,0,1)*dx - 160.D0*Hr4(-1,0
-c$$$     &    ,-1,0) - 80.D0*Hr4(-1,0,-1,0)*x - 160.D0*Hr4(-1,0,-1,0)*dx - 
-c$$$     &    16.D0*Hr4(-1,0,0,0) - 8.D0*Hr4(-1,0,0,0)*x - 16.D0*Hr4(-1,0,0
-c$$$     &    ,0)*dx - 64.D0*Hr4(-1,0,0,1) - 32.D0*Hr4(-1,0,0,1)*x - 64.D0*
-c$$$     &    Hr4(-1,0,0,1)*dx + 128.D0*Hr4(-1,0,1,0) + 64.D0*Hr4(-1,0,1,0)
-c$$$     &    *x + 128.D0*Hr4(-1,0,1,0)*dx + 64.D0*Hr4(-1,0,1,1) + 32.D0*
-c$$$     &    Hr4(-1,0,1,1)*x + 64.D0*Hr4(-1,0,1,1)*dx - 128.D0*Hr4(0,-1,-1
-c$$$     &    ,0) - 96.D0*Hr4(0,-1,-1,0)*x - 64.D0*Hr4(0,-1,-1,0)*dx - 32.D0
-c$$$     &    *Hr4(0,-1,0,0) )
-c$$$      PTgq2 = PTgq2 + cf**2*ca * (  - 32.D0*Hr4(0,-1,0,0)*x + 64.D0*
-c$$$     &    Hr4(0,-1,0,1) - 32.D0*Hr4(0,-1,0,1)*x - 64.D0*Hr4(0,-1,0,1)*
-c$$$     &    dx - 32.D0*Hr4(0,0,-1,0) + 48.D0*Hr4(0,0,-1,0)*x + 64.D0*Hr4(
-c$$$     &    0,0,0,0) + 64.D0*Hr4(0,0,0,0)*x + 336.D0*Hr4(0,0,0,1) + 376.D0
-c$$$     &    *Hr4(0,0,0,1)*x + 512.D0*Hr4(0,0,0,1)*dx - 208.D0*Hr4(0,0,1,0
-c$$$     &    ) - 344.D0*Hr4(0,0,1,0)*x - 448.D0*Hr4(0,0,1,0)*dx - 16.D0*
-c$$$     &    Hr4(0,0,1,1) - 216.D0*Hr4(0,0,1,1)*x - 320.D0*Hr4(0,0,1,1)*dx
-c$$$     &     - 320.D0*Hr4(0,1,0,0) + 208.D0*Hr4(0,1,0,0)*x + 256.D0*Hr4(0
-c$$$     &    ,1,0,0)*dx - 336.D0*Hr4(0,1,0,1) + 312.D0*Hr4(0,1,0,1)*x + 
-c$$$     &    448.D0*Hr4(0,1,0,1)*dx - 336.D0*Hr4(0,1,1,0) + 216.D0*Hr4(0,1
-c$$$     &    ,1,0)*x + 384.D0*Hr4(0,1,1,0)*dx - 272.D0*Hr4(0,1,1,1) + 184.D
-c$$$     &    0*Hr4(0,1,1,1)*x + 320.D0*Hr4(0,1,1,1)*dx - 96.D0*Hr4(1,0,-1,
-c$$$     &    0) + 48.D0*Hr4(1,0,-1,0)*x + 96.D0*Hr4(1,0,-1,0)*dx + 48.D0*
-c$$$     &    Hr4(1,0,0,0) - 24.D0*Hr4(1,0,0,0)*x - 48.D0*Hr4(1,0,0,0)*dx
-c$$$     &     - 224.D0*Hr4(1,0,0,1) + 112.D0*Hr4(1,0,0,1)*x + 224.D0*Hr4(1
-c$$$     &    ,0,0,1)*dx )
-c$$$      PTgq2 = PTgq2 + cf**2*ca * ( 544.D0*Hr4(1,0,1,0) - 272.D0*Hr4(1,0
-c$$$     &    ,1,0)*x - 544.D0*Hr4(1,0,1,0)*dx - 64.D0*Hr4(1,0,1,1) + 32.D0
-c$$$     &    *Hr4(1,0,1,1)*x + 64.D0*Hr4(1,0,1,1)*dx - 160.D0*Hr4(1,1,0,0)
-c$$$     &     + 80.D0*Hr4(1,1,0,0)*x + 160.D0*Hr4(1,1,0,0)*dx + 32.D0*Hr4(
-c$$$     &    1,1,0,1) - 16.D0*Hr4(1,1,0,1)*x - 32.D0*Hr4(1,1,0,1)*dx + 224.
-c$$$     &    D0*Hr4(1,1,1,0) - 112.D0*Hr4(1,1,1,0)*x - 224.D0*Hr4(1,1,1,0)
-c$$$     &    *dx + 128.D0*Hr4(1,1,1,1) - 64.D0*Hr4(1,1,1,1)*x - 128.D0*
-c$$$     &    Hr4(1,1,1,1)*dx )
-c$$$      PTgq2 = PTgq2 + cf**3 * (  - 1915.D0/2.D0 + 731.D0/4.D0*x + 794.D0
-c$$$     &    *dx - 96.D0*z3 - 196.D0*z3*x - 720.D0*z3*dx - 224.D0*z2 + 148.
-c$$$     &    D0*z2*x - 256.D0*z2*dx - 776.D0/5.D0*z2**2 + 84.D0/5.D0*z2**2
-c$$$     &    *x + 1216.D0/5.D0*z2**2*dx - 64.D0*Hr1(-1)*z2 - 32.D0*Hr1(-1)
-c$$$     &    *z2*x + 197.D0*Hr1(0) + 29.D0*Hr1(0)*x + 208.D0*Hr1(0)*dx - 
-c$$$     &    80.D0*Hr1(0)*z3 - 200.D0*Hr1(0)*z3*x + 128.D0*Hr1(0)*z3*dx - 
-c$$$     &    24.D0*Hr1(0)*z2 - 20.D0*Hr1(0)*z2*x - 192.D0*Hr1(0)*z2*dx - 
-c$$$     &    230.D0*Hr1(1) + 16.D0*Hr1(1)*x + 228.D0*Hr1(1)*dx - 64.D0*
-c$$$     &    Hr1(1)*z3 + 32.D0*Hr1(1)*z3*x + 64.D0*Hr1(1)*z3*dx - 352.D0*
-c$$$     &    Hr1(1)*z2 + 252.D0*Hr1(1)*z2*x + 144.D0*Hr1(1)*z2*dx - 80.D0*
-c$$$     &    Hr2(-1,0) + 208.D0*Hr2(-1,0)*x - 256.D0*Hr2(-1,0)*dx + 128.D0
-c$$$     &    *Hr2(0,-1)*z2 + 96.D0*Hr2(0,-1)*z2*x + 128.D0*Hr2(0,-1)*z2*dx
-c$$$     &     - 290.D0*Hr2(0,0) - 251.D0*Hr2(0,0)*x - 64.D0*Hr2(0,0)*z2 - 
-c$$$     &    64.D0*Hr2(0,0)*z2*x + 208.D0*Hr2(0,1) - 140.D0*Hr2(0,1)*x - 
-c$$$     &    464.D0*Hr2(0,1)*z2 + 200.D0*Hr2(0,1)*z2*x + 320.D0*Hr2(0,1)*
-c$$$     &    z2*dx )
-c$$$      PTgq2 = PTgq2 + cf**3 * (  - 264.D0*Hr2(1,0) + 140.D0*Hr2(1,0)*x
-c$$$     &     + 180.D0*Hr2(1,0)*dx - 128.D0*Hr2(1,0)*z2 + 64.D0*Hr2(1,0)*
-c$$$     &    z2*x + 128.D0*Hr2(1,0)*z2*dx - 72.D0*Hr2(1,1) + 80.D0*Hr2(1,1
-c$$$     &    )*x + 60.D0*Hr2(1,1)*dx - 96.D0*Hr2(1,1)*z2 + 48.D0*Hr2(1,1)*
-c$$$     &    z2*x + 96.D0*Hr2(1,1)*z2*dx - 128.D0*Hr3(-1,-1,0) - 64.D0*
-c$$$     &    Hr3(-1,-1,0)*x + 224.D0*Hr3(-1,0,0) + 96.D0*Hr3(-1,0,0)*x + 
-c$$$     &    96.D0*Hr3(-1,0,0)*dx + 128.D0*Hr3(0,-1,0) - 112.D0*Hr3(0,-1,0
-c$$$     &    )*x - 192.D0*Hr3(0,-1,0)*dx + 160.D0*Hr3(0,0,0) + 40.D0*Hr3(0
-c$$$     &    ,0,0)*x + 248.D0*Hr3(0,0,1) - 28.D0*Hr3(0,0,1)*x - 104.D0*
-c$$$     &    Hr3(0,1,0) + 40.D0*Hr3(0,1,0)*x - 72.D0*Hr3(0,1,1) + 56.D0*
-c$$$     &    Hr3(0,1,1)*x + 128.D0*Hr3(1,0,0) - 36.D0*Hr3(1,0,0)*x + 48.D0
-c$$$     &    *Hr3(1,0,0)*dx + 128.D0*Hr3(1,0,1) - 60.D0*Hr3(1,0,1)*x - 48.D
-c$$$     &    0*Hr3(1,0,1)*dx - 32.D0*Hr3(1,1,0) + 4.D0*Hr3(1,1,0)*x + 48.D0
-c$$$     &    *Hr3(1,1,0)*dx + 16.D0*Hr3(1,1,1) - 52.D0*Hr3(1,1,1)*x - 128.D
-c$$$     &    0*Hr4(-1,-1,0,0) - 64.D0*Hr4(-1,-1,0,0)*x - 128.D0*Hr4(-1,-1,
-c$$$     &    0,0)*dx )
-c$$$      PTgq2 = PTgq2 + cf**3 * (  - 64.D0*Hr4(-1,0,-1,0) - 32.D0*Hr4(-1,
-c$$$     &    0,-1,0)*x - 64.D0*Hr4(-1,0,-1,0)*dx + 32.D0*Hr4(-1,0,0,0) + 
-c$$$     &    16.D0*Hr4(-1,0,0,0)*x + 32.D0*Hr4(-1,0,0,0)*dx + 256.D0*Hr4(0
-c$$$     &    ,-1,-1,0) + 192.D0*Hr4(0,-1,-1,0)*x + 256.D0*Hr4(0,-1,-1,0)*
-c$$$     &    dx - 64.D0*Hr4(0,-1,0,0) - 64.D0*Hr4(0,-1,0,0)*x - 128.D0*
-c$$$     &    Hr4(0,-1,0,0)*dx - 64.D0*Hr4(0,0,-1,0) - 96.D0*Hr4(0,0,-1,0)*
-c$$$     &    x - 32.D0*Hr4(0,0,0,0) + 96.D0*Hr4(0,0,0,0)*x - 128.D0*Hr4(0,
-c$$$     &    0,0,1) + 64.D0*Hr4(0,0,0,1)*x - 176.D0*Hr4(0,0,1,0) + 88.D0*
-c$$$     &    Hr4(0,0,1,0)*x + 128.D0*Hr4(0,0,1,0)*dx - 240.D0*Hr4(0,0,1,1)
-c$$$     &     + 120.D0*Hr4(0,0,1,1)*x + 256.D0*Hr4(0,0,1,1)*dx - 16.D0*
-c$$$     &    Hr4(0,1,0,0) + 40.D0*Hr4(0,1,0,0)*x + 128.D0*Hr4(0,1,0,0)*dx
-c$$$     &     + 144.D0*Hr4(0,1,0,1) - 72.D0*Hr4(0,1,0,1)*x - 64.D0*Hr4(0,1
-c$$$     &    ,0,1)*dx + 80.D0*Hr4(0,1,1,0) - 40.D0*Hr4(0,1,1,0)*x - 64.D0*
-c$$$     &    Hr4(0,1,1,0)*dx + 208.D0*Hr4(0,1,1,1) - 104.D0*Hr4(0,1,1,1)*x
-c$$$     &     - 192.D0*Hr4(0,1,1,1)*dx + 64.D0*Hr4(1,0,-1,0) - 32.D0*Hr4(1
-c$$$     &    ,0,-1,0)*x )
-c$$$      PTgq2 = PTgq2 + cf**3 * (  - 64.D0*Hr4(1,0,-1,0)*dx + 192.D0*Hr4(
-c$$$     &    1,0,0,0) - 96.D0*Hr4(1,0,0,0)*x - 192.D0*Hr4(1,0,0,0)*dx + 
-c$$$     &    256.D0*Hr4(1,0,0,1) - 128.D0*Hr4(1,0,0,1)*x - 256.D0*Hr4(1,0,
-c$$$     &    0,1)*dx - 32.D0*Hr4(1,0,1,0) + 16.D0*Hr4(1,0,1,0)*x + 32.D0*
-c$$$     &    Hr4(1,0,1,0)*dx + 128.D0*Hr4(1,0,1,1) - 64.D0*Hr4(1,0,1,1)*x
-c$$$     &     - 128.D0*Hr4(1,0,1,1)*dx + 192.D0*Hr4(1,1,0,0) - 96.D0*Hr4(1
-c$$$     &    ,1,0,0)*x - 192.D0*Hr4(1,1,0,0)*dx + 96.D0*Hr4(1,1,0,1) - 48.D
-c$$$     &    0*Hr4(1,1,0,1)*x - 96.D0*Hr4(1,1,0,1)*dx - 32.D0*Hr4(1,1,1,0)
-c$$$     &     + 16.D0*Hr4(1,1,1,0)*x + 32.D0*Hr4(1,1,1,0)*dx - 64.D0*Hr4(1
-c$$$     &    ,1,1,1) + 32.D0*Hr4(1,1,1,1)*x + 64.D0*Hr4(1,1,1,1)*dx )
-c$$$      PTgq2 = PTgq2 + nf*cf*ca * ( 332.D0/27.D0 - 2624.D0/27.D0*x + 
-c$$$     &    1892.D0/81.D0*x**2 + 3778.D0/81.D0*dx + 64.D0*z3 - 40.D0*z3*x
-c$$$     &     - 80.D0*z3*dx + 8.D0/3.D0*z2 - 176.D0/9.D0*z2*x - 160.D0/9.D0
-c$$$     &    *z2*dx + 1280.D0/27.D0*Hr1(0) + 308.D0/27.D0*Hr1(0)*x + 64.D0/
-c$$$     &    9.D0*Hr1(0)*x**2 + 1156.D0/27.D0*Hr1(0)*dx - 16.D0/3.D0*Hr1(0
-c$$$     &    )*z2*x - 32.D0/3.D0*Hr1(0)*z2*dx + 448.D0/27.D0*Hr1(1) - 392.D
-c$$$     &    0/27.D0*Hr1(1)*x - 448.D0/27.D0*Hr1(1)*dx - 32.D0*Hr1(1)*z2
-c$$$     &     + 16.D0*Hr1(1)*z2*x + 32.D0*Hr1(1)*z2*dx - 160.D0/9.D0*Hr2(
-c$$$     &    -1,0) - 104.D0/9.D0*Hr2(-1,0)*x - 160.D0/9.D0*Hr2(-1,0)*dx - 
-c$$$     &    256.D0/9.D0*Hr2(0,0) - 464.D0/9.D0*Hr2(0,0)*x - 128.D0/9.D0*
-c$$$     &    Hr2(0,0)*x**2 + 656.D0/9.D0*Hr2(0,0)*dx + 136.D0/9.D0*Hr2(0,1
-c$$$     &    ) - 104.D0/9.D0*Hr2(0,1)*x - 160.D0/9.D0*Hr2(0,1)*dx - 320.D0/
-c$$$     &    9.D0*Hr2(1,0) + 136.D0/9.D0*Hr2(1,0)*x + 320.D0/9.D0*Hr2(1,0)
-c$$$     &    *dx - 160.D0/9.D0*Hr2(1,1) + 104.D0/9.D0*Hr2(1,1)*x + 160.D0/
-c$$$     &    9.D0*Hr2(1,1)*dx - 32.D0/3.D0*Hr3(-1,0,0) - 16.D0/3.D0*Hr3(-1
-c$$$     &    ,0,0)*x )
-c$$$      PTgq2 = PTgq2 + nf*cf*ca * (  - 32.D0/3.D0*Hr3(-1,0,0)*dx - 32.D0/
-c$$$     &    3.D0*Hr3(0,-1,0) - 16.D0/3.D0*Hr3(0,-1,0)*x - 32.D0/3.D0*Hr3(
-c$$$     &    0,-1,0)*dx + 32.D0/3.D0*Hr3(0,0,0) + 128.D0/3.D0*Hr3(0,0,0)*x
-c$$$     &     + 128.D0/3.D0*Hr3(0,0,0)*dx + 32.D0/3.D0*Hr3(0,0,1) - 16.D0/
-c$$$     &    3.D0*Hr3(0,0,1)*x - 32.D0/3.D0*Hr3(0,0,1)*dx - 16.D0/3.D0*
-c$$$     &    Hr3(0,1,1) + 8.D0/3.D0*Hr3(0,1,1)*x + 16.D0/3.D0*Hr3(0,1,1)*
-c$$$     &    dx - 160.D0/3.D0*Hr3(1,0,0) + 80.D0/3.D0*Hr3(1,0,0)*x + 160.D0
-c$$$     &    /3.D0*Hr3(1,0,0)*dx - 32.D0/3.D0*Hr3(1,1,0) + 16.D0/3.D0*Hr3(
-c$$$     &    1,1,0)*x + 32.D0/3.D0*Hr3(1,1,0)*dx + 16.D0/3.D0*Hr3(1,1,1)
-c$$$     &     - 8.D0/3.D0*Hr3(1,1,1)*x - 16.D0/3.D0*Hr3(1,1,1)*dx )
-c$$$      PTgq2 = PTgq2 + nf*cf**2 * (  - 12803.D0/27.D0 + 30475.D0/54.D0*x
-c$$$     &     - 21784.D0/81.D0*x**2 + 14008.D0/81.D0*dx - 2330.D0/27.D0*
-c$$$     &    Hr1(0) + 2494.D0/27.D0*Hr1(0)*x + 3040.D0/27.D0*Hr1(0)*x**2
-c$$$     &     + 200.D0/9.D0*Hr1(0)*dx - 484.D0/27.D0*Hr1(1) + 464.D0/27.D0
-c$$$     &    *Hr1(1)*x + 448.D0/27.D0*Hr1(1)*dx + 16.D0*Hr1(1)*z2 - 8.D0*
-c$$$     &    Hr1(1)*z2*x - 16.D0*Hr1(1)*z2*dx - 204.D0*Hr2(0,0) + 142.D0/3.
-c$$$     &    D0*Hr2(0,0)*x - 256.D0/9.D0*Hr2(0,0)*x**2 - 128.D0/3.D0*Hr2(0
-c$$$     &    ,0)*dx - 320.D0/9.D0*Hr2(0,1) + 208.D0/9.D0*Hr2(0,1)*x + 320.D
-c$$$     &    0/9.D0*Hr2(0,1)*dx + 80.D0/3.D0*Hr2(1,0) - 40.D0/3.D0*Hr2(1,0
-c$$$     &    )*x - 80.D0/3.D0*Hr2(1,0)*dx + 160.D0/9.D0*Hr2(1,1) - 104.D0/
-c$$$     &    9.D0*Hr2(1,1)*x - 160.D0/9.D0*Hr2(1,1)*dx - 176.D0/3.D0*Hr3(0
-c$$$     &    ,0,0) + 160.D0/3.D0*Hr3(0,0,0)*x - 128.D0/3.D0*Hr3(0,0,0)*dx
-c$$$     &     - 64.D0/3.D0*Hr3(0,0,1) + 32.D0/3.D0*Hr3(0,0,1)*x + 64.D0/3.D
-c$$$     &    0*Hr3(0,0,1)*dx + 32.D0/3.D0*Hr3(0,1,1) - 16.D0/3.D0*Hr3(0,1,
-c$$$     &    1)*x - 32.D0/3.D0*Hr3(0,1,1)*dx + 80.D0/3.D0*Hr3(1,0,0) - 40.D
-c$$$     &    0/3.D0*Hr3(1,0,0)*x )
-c$$$      PTgq2 = PTgq2 + nf*cf**2 * (  - 80.D0/3.D0*Hr3(1,0,0)*dx + 16.D0/
-c$$$     &    3.D0*Hr3(1,0,1) - 8.D0/3.D0*Hr3(1,0,1)*x - 16.D0/3.D0*Hr3(1,0
-c$$$     &    ,1)*dx + 16.D0/3.D0*Hr3(1,1,0) - 8.D0/3.D0*Hr3(1,1,0)*x - 16.D
-c$$$     &    0/3.D0*Hr3(1,1,0)*dx - 16.D0/3.D0*Hr3(1,1,1) + 8.D0/3.D0*Hr3(
-c$$$     &    1,1,1)*x + 16.D0/3.D0*Hr3(1,1,1)*dx + 64.D0*Hr4(0,0,0,0) - 32.
-c$$$     &    D0*Hr4(0,0,0,0)*x )
-c$$$*
-c$$$       X2GQTA = PTgq2
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..The regular piece of the gluon-gluon splitting functions P_gg^(2)T
-c$$$*
-c$$$       FUNCTION X2GGTA (X, NF)
-c$$$*
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       COMPLEX*16 HC1, HC2, HC3, HC4
-c$$$       INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N
-c$$$       PARAMETER ( N1 = -1, N2 = 1, NW = 4 )
-c$$$       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HC4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       DIMENSION HR1(N1:N2),HR2(N1:N2,N1:N2),HR3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HR4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       DIMENSION HI1(N1:N2),HI2(N1:N2,N1:N2),HI3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HI4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-c$$$     ,             Z3 = 1.2020 56903 15959 42854 D0,
-c$$$     ,             Z5 = 1.0369 27755 14336 99263 D0 )
-c$$$*
-c$$$* ..The soft coefficient for use in X2GGTB and X2GGTC
-c$$$*
-c$$$       COMMON / P2GSOFT / A3G
-c$$$*
-c$$$* ...Colour factors
-c$$$*
-c$$$       CF  = 4./3.D0
-c$$$       CA  = 3.D0
-c$$$       NF2 = NF*NF
-c$$$*
-c$$$* ...Some abbreviations
-c$$$*
-c$$$       DX = 1.D0/X
-c$$$       DM = 1.D0/(1.D0-X)
-c$$$       DP = 1.D0/(1.D0+X)
-c$$$*
-c$$$* ...The harmonic polylogs up to weight 4 by Gehrmann and Remiddi
-c$$$*
-c$$$       CALL HPLOG (X, NW, HC1,HC2,HC3,HC4, HR1,HR2,HR3,HR4,
-c$$$     ,            HI1,HI2,HI3,HI4, N1, N2)
-c$$$*
-c$$$* ...The splitting function in terms of the harmonic polylogs
-c$$$*    (without the delta(1-x) part, but with the soft contribution)
-c$$$*
-c$$$      PTgg2 =
-c$$$     &  + ca**3 * (  - 54088.D0/27.D0 + 49678.D0/27.D0*x - 146182.D0/81.
-c$$$     &    D0*x**2 + 146182.D0/81.D0*dx + 490.D0/3.D0*dm + 1064.D0/3.D0*
-c$$$     &    z3 + 704.D0/3.D0*z3*x + 1408.D0/3.D0*z3*x**2 - 1144.D0/3.D0*
-c$$$     &    z3*dx + 176.D0/3.D0*z3*dm + 976.D0/3.D0*z2 - 2632.D0/9.D0*z2*
-c$$$     &    x + 1072.D0/9.D0*z2*x**2 - 3112.D0/9.D0*z2*dx - 1072.D0/9.D0*
-c$$$     &    z2*dp - 1072.D0/9.D0*z2*dm - 272.D0*z2**2 - 1152.D0/5.D0*
-c$$$     &    z2**2*x - 416.D0/5.D0*z2**2*x**2 - 464.D0/5.D0*z2**2*dx + 88.D
-c$$$     &    0*z2**2*dp - 24.D0/5.D0*z2**2*dm - 384.D0*Hr1(-1)*z3 - 192.D0
-c$$$     &    *Hr1(-1)*z3*x - 192.D0*Hr1(-1)*z3*x**2 - 192.D0*Hr1(-1)*z3*dx
-c$$$     &     + 192.D0*Hr1(-1)*z3*dp - 424.D0*Hr1(-1)*z2 - 424.D0*Hr1(-1)*
-c$$$     &    z2*x - 88.D0*Hr1(-1)*z2*x**2 - 88.D0*Hr1(-1)*z2*dx + 1274.D0/
-c$$$     &    9.D0*Hr1(0) + 9382.D0/9.D0*Hr1(0)*x + 5524.D0/27.D0*Hr1(0)*
-c$$$     &    x**2 + 32608.D0/27.D0*Hr1(0)*dx + 8272.D0/27.D0*Hr1(0)*dm - 
-c$$$     &    800.D0*Hr1(0)*z3*x - 288.D0*Hr1(0)*z3*dx + 144.D0*Hr1(0)*z3*
-c$$$     &    dp - 144.D0*Hr1(0)*z3*dm + 808.D0/3.D0*Hr1(0)*z2 + 512.D0/3.D0
-c$$$     &    *Hr1(0)*z2*x )
-c$$$      PTgg2 = PTgg2 + ca**3 * ( 176.D0/3.D0*Hr1(0)*z2*x**2 - 880.D0/3.D0
-c$$$     &    *Hr1(0)*z2*dx - 88.D0*Hr1(0)*z2*dp - 176.D0/3.D0*Hr1(0)*z2*dm
-c$$$     &     + 124.D0/9.D0*Hr1(1) - 124.D0/9.D0*Hr1(1)*x + 1652.D0/27.D0*
-c$$$     &    Hr1(1)*x**2 - 1652.D0/27.D0*Hr1(1)*dx + 192.D0*Hr1(1)*z3 - 96.
-c$$$     &    D0*Hr1(1)*z3*x + 96.D0*Hr1(1)*z3*x**2 - 96.D0*Hr1(1)*z3*dx - 
-c$$$     &    96.D0*Hr1(1)*z3*dm - 24.D0*Hr1(1)*z2 + 24.D0*Hr1(1)*z2*x + 88.
-c$$$     &    D0*Hr1(1)*z2*x**2 - 88.D0*Hr1(1)*z2*dx + 512.D0*Hr2(-1,-1)*z2
-c$$$     &     + 256.D0*Hr2(-1,-1)*z2*x + 256.D0*Hr2(-1,-1)*z2*x**2 + 256.D0
-c$$$     &    *Hr2(-1,-1)*z2*dx - 256.D0*Hr2(-1,-1)*z2*dp - 872.D0/9.D0*
-c$$$     &    Hr2(-1,0) - 3016.D0/9.D0*Hr2(-1,0)*x - 680.D0/3.D0*Hr2(-1,0)*
-c$$$     &    x**2 - 680.D0/3.D0*Hr2(-1,0)*dx - 2144.D0/9.D0*Hr2(-1,0)*dp
-c$$$     &     - 64.D0*Hr2(-1,0)*z2 - 32.D0*Hr2(-1,0)*z2*x - 32.D0*Hr2(-1,0
-c$$$     &    )*z2*x**2 - 32.D0*Hr2(-1,0)*z2*dx + 32.D0*Hr2(-1,0)*z2*dp - 
-c$$$     &    256.D0*Hr2(0,-1)*z2 + 160.D0*Hr2(0,-1)*z2*x - 96.D0*Hr2(0,-1)
-c$$$     &    *z2*x**2 + 96.D0*Hr2(0,-1)*z2*dx + 96.D0*Hr2(0,-1)*z2*dm - 
-c$$$     &    116.D0/9.D0*Hr2(0,0) )
-c$$$      PTgg2 = PTgg2 + ca**3 * ( 9044.D0/9.D0*Hr2(0,0)*x + 2248.D0/9.D0*
-c$$$     &    Hr2(0,0)*x**2 + 6224.D0/9.D0*Hr2(0,0)*dx + 1072.D0/9.D0*Hr2(0
-c$$$     &    ,0)*dp - 1280.D0/9.D0*Hr2(0,0)*dm + 96.D0*Hr2(0,0)*z2 - 608.D0
-c$$$     &    *Hr2(0,0)*z2*x - 256.D0*Hr2(0,0)*z2*dx + 128.D0*Hr2(0,0)*z2*
-c$$$     &    dp - 128.D0*Hr2(0,0)*z2*dm + 1760.D0/9.D0*Hr2(0,1) - 784.D0/9.
-c$$$     &    D0*Hr2(0,1)*x + 1072.D0/9.D0*Hr2(0,1)*x**2 - 1072.D0/9.D0*
-c$$$     &    Hr2(0,1)*dx - 2144.D0/9.D0*Hr2(0,1)*dm - 256.D0*Hr2(0,1)*z2
-c$$$     &     - 32.D0*Hr2(0,1)*z2*x - 96.D0*Hr2(0,1)*z2*x**2 + 32.D0*Hr2(0
-c$$$     &    ,1)*z2*dx + 32.D0*Hr2(0,1)*z2*dp + 64.D0*Hr2(0,1)*z2*dm + 
-c$$$     &    2344.D0/9.D0*Hr2(1,0) - 200.D0/9.D0*Hr2(1,0)*x + 1072.D0/9.D0
-c$$$     &    *Hr2(1,0)*x**2 - 1072.D0/9.D0*Hr2(1,0)*dx - 2144.D0/9.D0*Hr2(
-c$$$     &    1,0)*dm - 64.D0*Hr2(1,0)*z2 + 32.D0*Hr2(1,0)*z2*x - 32.D0*
-c$$$     &    Hr2(1,0)*z2*x**2 + 32.D0*Hr2(1,0)*z2*dx + 32.D0*Hr2(1,0)*z2*
-c$$$     &    dm - 48.D0*Hr3(-1,-1,0) - 48.D0*Hr3(-1,-1,0)*x + 176.D0*Hr3(
-c$$$     &    -1,-1,0)*x**2 + 176.D0*Hr3(-1,-1,0)*dx + 928.D0/3.D0*Hr3(-1,0
-c$$$     &    ,0) )
-c$$$      PTgg2 = PTgg2 + ca**3 * ( 224.D0/3.D0*Hr3(-1,0,0)*x - 704.D0/3.D0
-c$$$     &    *Hr3(-1,0,0)*x**2 - 704.D0/3.D0*Hr3(-1,0,0)*dx - 704.D0/3.D0*
-c$$$     &    Hr3(-1,0,0)*dp + 400.D0*Hr3(-1,0,1) + 400.D0*Hr3(-1,0,1)*x + 
-c$$$     &    176.D0*Hr3(-1,0,1)*x**2 + 176.D0*Hr3(-1,0,1)*dx + 64.D0*Hr3(0
-c$$$     &    ,-1,0) - 320.D0/3.D0*Hr3(0,-1,0)*x - 1232.D0/3.D0*Hr3(0,-1,0)
-c$$$     &    *dx - 352.D0/3.D0*Hr3(0,-1,0)*dp + 176.D0/3.D0*Hr3(0,-1,0)*dm
-c$$$     &     + 176.D0*Hr3(0,0,0) - 1264.D0/3.D0*Hr3(0,0,0)*x + 352.D0*
-c$$$     &    Hr3(0,0,0)*x**2 + 704.D0*Hr3(0,0,0)*dx + 176.D0*Hr3(0,0,0)*dp
-c$$$     &     - 528.D0*Hr3(0,0,0)*dm + 376.D0/3.D0*Hr3(0,0,1) - 512.D0/3.D0
-c$$$     &    *Hr3(0,0,1)*x + 176.D0/3.D0*Hr3(0,0,1)*x**2 + 704.D0/3.D0*
-c$$$     &    Hr3(0,0,1)*dx - 616.D0/3.D0*Hr3(0,0,1)*dm + 944.D0/3.D0*Hr3(0
-c$$$     &    ,1,0) - 16.D0/3.D0*Hr3(0,1,0)*x + 352.D0/3.D0*Hr3(0,1,0)*x**2
-c$$$     &     + 352.D0/3.D0*Hr3(0,1,0)*dx - 704.D0/3.D0*Hr3(0,1,0)*dm + 
-c$$$     &    632.D0/3.D0*Hr3(1,0,0) - 16.D0/3.D0*Hr3(1,0,0)*x - 176.D0/3.D0
-c$$$     &    *Hr3(1,0,0)*x**2 + 176.D0/3.D0*Hr3(1,0,0)*dx - 616.D0/3.D0*
-c$$$     &    Hr3(1,0,0)*dm )
-c$$$      PTgg2 = PTgg2 + ca**3 * ( 256.D0*Hr4(-1,-1,0,0) + 128.D0*Hr4(-1,
-c$$$     &    -1,0,0)*x + 128.D0*Hr4(-1,-1,0,0)*x**2 + 128.D0*Hr4(-1,-1,0,0
-c$$$     &    )*dx - 128.D0*Hr4(-1,-1,0,0)*dp - 512.D0*Hr4(-1,-1,0,1) - 256.
-c$$$     &    D0*Hr4(-1,-1,0,1)*x - 256.D0*Hr4(-1,-1,0,1)*x**2 - 256.D0*
-c$$$     &    Hr4(-1,-1,0,1)*dx + 256.D0*Hr4(-1,-1,0,1)*dp + 256.D0*Hr4(-1,
-c$$$     &    0,-1,0) + 128.D0*Hr4(-1,0,-1,0)*x + 128.D0*Hr4(-1,0,-1,0)*
-c$$$     &    x**2 + 128.D0*Hr4(-1,0,-1,0)*dx - 128.D0*Hr4(-1,0,-1,0)*dp - 
-c$$$     &    640.D0*Hr4(-1,0,0,0) - 320.D0*Hr4(-1,0,0,0)*x - 320.D0*Hr4(-1
-c$$$     &    ,0,0,0)*x**2 - 320.D0*Hr4(-1,0,0,0)*dx + 320.D0*Hr4(-1,0,0,0)
-c$$$     &    *dp - 128.D0*Hr4(-1,0,1,0) - 64.D0*Hr4(-1,0,1,0)*x - 64.D0*
-c$$$     &    Hr4(-1,0,1,0)*x**2 - 64.D0*Hr4(-1,0,1,0)*dx + 64.D0*Hr4(-1,0,
-c$$$     &    1,0)*dp + 320.D0*Hr4(0,-1,-1,0)*x + 64.D0*Hr4(0,-1,-1,0)*x**2
-c$$$     &     + 192.D0*Hr4(0,-1,-1,0)*dx - 128.D0*Hr4(0,-1,-1,0)*dp + 64.D0
-c$$$     &    *Hr4(0,-1,-1,0)*dm + 128.D0*Hr4(0,-1,0,0) - 544.D0*Hr4(0,-1,0
-c$$$     &    ,0)*x - 96.D0*Hr4(0,-1,0,0)*x**2 - 224.D0*Hr4(0,-1,0,0)*dx + 
-c$$$     &    160.D0*Hr4(0,-1,0,0)*dp )
-c$$$      PTgg2 = PTgg2 + ca**3 * (  - 64.D0*Hr4(0,-1,0,0)*dm + 256.D0*Hr4(
-c$$$     &    0,-1,0,1) + 128.D0*Hr4(0,-1,0,1)*x**2 - 64.D0*Hr4(0,-1,0,1)*
-c$$$     &    dp - 64.D0*Hr4(0,-1,0,1)*dm - 64.D0*Hr4(0,0,-1,0) - 704.D0*
-c$$$     &    Hr4(0,0,-1,0)*x - 128.D0*Hr4(0,0,-1,0)*x**2 - 256.D0*Hr4(0,0,
-c$$$     &    -1,0)*dx + 192.D0*Hr4(0,0,-1,0)*dp - 64.D0*Hr4(0,0,-1,0)*dm
-c$$$     &     - 256.D0*Hr4(0,0,0,0) + 1984.D0*Hr4(0,0,0,0)*x - 128.D0*Hr4(
-c$$$     &    0,0,0,0)*x**2 + 512.D0*Hr4(0,0,0,0)*dx - 192.D0*Hr4(0,0,0,0)*
-c$$$     &    dp + 320.D0*Hr4(0,0,0,0)*dm - 96.D0*Hr4(0,0,0,1) + 800.D0*
-c$$$     &    Hr4(0,0,0,1)*x - 256.D0*Hr4(0,0,0,1)*x**2 + 384.D0*Hr4(0,0,0,
-c$$$     &    1)*dx - 64.D0*Hr4(0,0,0,1)*dp + 320.D0*Hr4(0,0,0,1)*dm - 128.D
-c$$$     &    0*Hr4(0,0,1,0) + 512.D0*Hr4(0,0,1,0)*x - 192.D0*Hr4(0,0,1,0)*
-c$$$     &    x**2 + 256.D0*Hr4(0,0,1,0)*dx - 32.D0*Hr4(0,0,1,0)*dp + 224.D0
-c$$$     &    *Hr4(0,0,1,0)*dm - 256.D0*Hr4(0,0,1,1) + 128.D0*Hr4(0,0,1,1)*
-c$$$     &    x - 128.D0*Hr4(0,0,1,1)*x**2 + 128.D0*Hr4(0,0,1,1)*dx + 128.D0
-c$$$     &    *Hr4(0,0,1,1)*dm - 288.D0*Hr4(0,1,0,0) + 384.D0*Hr4(0,1,0,0)*
-c$$$     &    x )
-c$$$      PTgg2 = PTgg2 + ca**3 * (  - 224.D0*Hr4(0,1,0,0)*x**2 + 224.D0*
-c$$$     &    Hr4(0,1,0,0)*dx + 224.D0*Hr4(0,1,0,0)*dm - 256.D0*Hr4(0,1,0,1
-c$$$     &    ) + 128.D0*Hr4(0,1,0,1)*x - 128.D0*Hr4(0,1,0,1)*x**2 + 128.D0
-c$$$     &    *Hr4(0,1,0,1)*dx + 128.D0*Hr4(0,1,0,1)*dm - 256.D0*Hr4(0,1,1,
-c$$$     &    0) + 128.D0*Hr4(0,1,1,0)*x - 128.D0*Hr4(0,1,1,0)*x**2 + 128.D0
-c$$$     &    *Hr4(0,1,1,0)*dx + 128.D0*Hr4(0,1,1,0)*dm + 128.D0*Hr4(1,0,-1
-c$$$     &    ,0) - 64.D0*Hr4(1,0,-1,0)*x + 64.D0*Hr4(1,0,-1,0)*x**2 - 64.D0
-c$$$     &    *Hr4(1,0,-1,0)*dx - 64.D0*Hr4(1,0,-1,0)*dm - 640.D0*Hr4(1,0,0
-c$$$     &    ,0) + 320.D0*Hr4(1,0,0,0)*x - 320.D0*Hr4(1,0,0,0)*x**2 + 320.D
-c$$$     &    0*Hr4(1,0,0,0)*dx + 320.D0*Hr4(1,0,0,0)*dm - 256.D0*Hr4(1,0,0
-c$$$     &    ,1) + 128.D0*Hr4(1,0,0,1)*x - 128.D0*Hr4(1,0,0,1)*x**2 + 128.D
-c$$$     &    0*Hr4(1,0,0,1)*dx + 128.D0*Hr4(1,0,0,1)*dm - 256.D0*Hr4(1,0,1
-c$$$     &    ,0) + 128.D0*Hr4(1,0,1,0)*x - 128.D0*Hr4(1,0,1,0)*x**2 + 128.D
-c$$$     &    0*Hr4(1,0,1,0)*dx + 128.D0*Hr4(1,0,1,0)*dm - 256.D0*Hr4(1,1,0
-c$$$     &    ,0) + 128.D0*Hr4(1,1,0,0)*x - 128.D0*Hr4(1,1,0,0)*x**2 + 128.D
-c$$$     &    0*Hr4(1,1,0,0)*dx )
-c$$$      PTgg2 = PTgg2 + ca**3 * ( 128.D0*Hr4(1,1,0,0)*dm )
-c$$$      PTgg2 = PTgg2 + nf*ca**2 * (  - 2174.D0/9.D0 + 7358.D0/27.D0*x - 
-c$$$     &    19264.D0/81.D0*x**2 + 19264.D0/81.D0*dx - 836.D0/27.D0*dm + 
-c$$$     &    496.D0/3.D0*z3 + 112.D0/3.D0*z3*x + 128.D0/3.D0*z3*x**2 - 176.
-c$$$     &    D0/3.D0*z3*dx - 128.D0/3.D0*z3*dm - 1700.D0/9.D0*z2 + 1076.D0/
-c$$$     &    9.D0*z2*x - 176.D0/3.D0*z2*x**2 - 128.D0/3.D0*z2*dx + 160.D0/
-c$$$     &    9.D0*z2*dp + 160.D0/9.D0*z2*dm + 276.D0/5.D0*z2**2 + 156.D0/5.
-c$$$     &    D0*z2**2*x - 88.D0*Hr1(-1)*z2 - 88.D0*Hr1(-1)*z2*x + 16.D0/3.D
-c$$$     &    0*Hr1(-1)*z2*x**2 + 16.D0/3.D0*Hr1(-1)*z2*dx + 1408.D0/9.D0*
-c$$$     &    Hr1(0) + 202.D0/3.D0*Hr1(0)*x + 340.D0/3.D0*Hr1(0)*x**2 + 
-c$$$     &    5912.D0/27.D0*Hr1(0)*dx - 2600.D0/27.D0*Hr1(0)*dm - 96.D0*
-c$$$     &    Hr1(0)*z3*x - 196.D0/3.D0*Hr1(0)*z2 + 76.D0/3.D0*Hr1(0)*z2*x
-c$$$     &     - 32.D0/3.D0*Hr1(0)*z2*x**2 - 32.D0/3.D0*Hr1(0)*z2*dx + 16.D0
-c$$$     &    *Hr1(0)*z2*dp + 32.D0/3.D0*Hr1(0)*z2*dm + 1354.D0/9.D0*Hr1(1)
-c$$$     &     - 1354.D0/9.D0*Hr1(1)*x - 820.D0/27.D0*Hr1(1)*x**2 + 820.D0/
-c$$$     &    27.D0*Hr1(1)*dx - 56.D0*Hr1(1)*z2 + 56.D0*Hr1(1)*z2*x + 16.D0
-c$$$     &    *Hr1(1)*z2*x**2 )
-c$$$      PTgg2 = PTgg2 + nf*ca**2 * (  - 16.D0*Hr1(1)*z2*dx + 1208.D0/9.D0
-c$$$     &    *Hr2(-1,0) + 1528.D0/9.D0*Hr2(-1,0)*x - 304.D0/3.D0*Hr2(-1,0)
-c$$$     &    *x**2 - 304.D0/3.D0*Hr2(-1,0)*dx + 320.D0/9.D0*Hr2(-1,0)*dp
-c$$$     &     - 48.D0*Hr2(0,-1)*z2 + 48.D0*Hr2(0,-1)*z2*x + 1264.D0/9.D0*
-c$$$     &    Hr2(0,0) + 196.D0/3.D0*Hr2(0,0)*x + 560.D0/9.D0*Hr2(0,0)*x**2
-c$$$     &     + 2176.D0/9.D0*Hr2(0,0)*dx - 160.D0/9.D0*Hr2(0,0)*dp - 224.D0
-c$$$     &    /9.D0*Hr2(0,0)*dm - 24.D0*Hr2(0,0)*z2 - 40.D0*Hr2(0,0)*z2*x
-c$$$     &     + 44.D0/3.D0*Hr2(0,1) + 460.D0/3.D0*Hr2(0,1)*x - 176.D0/3.D0
-c$$$     &    *Hr2(0,1)*x**2 + 176.D0/3.D0*Hr2(0,1)*dx + 320.D0/9.D0*Hr2(0,
-c$$$     &    1)*dm - 48.D0*Hr2(0,1)*z2 - 48.D0*Hr2(0,1)*z2*x - 784.D0/9.D0
-c$$$     &    *Hr2(1,0) + 464.D0/9.D0*Hr2(1,0)*x - 176.D0/3.D0*Hr2(1,0)*
-c$$$     &    x**2 + 176.D0/3.D0*Hr2(1,0)*dx + 320.D0/9.D0*Hr2(1,0)*dm - 
-c$$$     &    112.D0*Hr3(-1,-1,0) - 112.D0*Hr3(-1,-1,0)*x + 32.D0*Hr3(-1,-1
-c$$$     &    ,0)*x**2 + 32.D0*Hr3(-1,-1,0)*dx - 40.D0/3.D0*Hr3(-1,0,0) + 
-c$$$     &    88.D0/3.D0*Hr3(-1,0,0)*x - 160.D0/3.D0*Hr3(-1,0,0)*x**2 - 160.
-c$$$     &    D0/3.D0*Hr3(-1,0,0)*dx )
-c$$$      PTgg2 = PTgg2 + nf*ca**2 * ( 128.D0/3.D0*Hr3(-1,0,0)*dp + 32.D0*
-c$$$     &    Hr3(-1,0,1) + 32.D0*Hr3(-1,0,1)*x + 32.D0/3.D0*Hr3(-1,0,1)*
-c$$$     &    x**2 + 32.D0/3.D0*Hr3(-1,0,1)*dx + 104.D0*Hr3(0,-1,0) - 136.D0
-c$$$     &    /3.D0*Hr3(0,-1,0)*x - 128.D0/3.D0*Hr3(0,-1,0)*x**2 - 32.D0*
-c$$$     &    Hr3(0,-1,0)*dx + 64.D0/3.D0*Hr3(0,-1,0)*dp - 32.D0/3.D0*Hr3(0
-c$$$     &    ,-1,0)*dm - 32.D0*Hr3(0,0,0) + 1000.D0/3.D0*Hr3(0,0,0)*x - 64.
-c$$$     &    D0*Hr3(0,0,0)*x**2 + 128.D0*Hr3(0,0,0)*dx - 32.D0*Hr3(0,0,0)*
-c$$$     &    dp + 96.D0*Hr3(0,0,0)*dm - 124.D0/3.D0*Hr3(0,0,1) + 44.D0/3.D0
-c$$$     &    *Hr3(0,0,1)*x - 160.D0/3.D0*Hr3(0,0,1)*x**2 + 128.D0/3.D0*
-c$$$     &    Hr3(0,0,1)*dx + 112.D0/3.D0*Hr3(0,0,1)*dm - 224.D0/3.D0*Hr3(0
-c$$$     &    ,1,0) + 160.D0/3.D0*Hr3(0,1,0)*x - 128.D0/3.D0*Hr3(0,1,0)*
-c$$$     &    x**2 + 128.D0/3.D0*Hr3(0,1,0)*dx + 128.D0/3.D0*Hr3(0,1,0)*dm
-c$$$     &     - 140.D0/3.D0*Hr3(1,0,0) + 28.D0/3.D0*Hr3(1,0,0)*x - 128.D0/
-c$$$     &    3.D0*Hr3(1,0,0)*x**2 + 128.D0/3.D0*Hr3(1,0,0)*dx + 112.D0/3.D0
-c$$$     &    *Hr3(1,0,0)*dm - 96.D0*Hr4(0,-1,-1,0) + 96.D0*Hr4(0,-1,-1,0)*
-c$$$     &    x )
-c$$$      PTgg2 = PTgg2 + nf*ca**2 * ( 48.D0*Hr4(0,-1,0,0) - 48.D0*Hr4(0,-1
-c$$$     &    ,0,0)*x + 80.D0*Hr4(0,0,-1,0) - 16.D0*Hr4(0,0,-1,0)*x + 16.D0
-c$$$     &    *Hr4(0,0,0,0)*x + 24.D0*Hr4(0,0,0,1) + 24.D0*Hr4(0,0,0,1)*x
-c$$$     &     + 24.D0*Hr4(0,1,0,0) + 24.D0*Hr4(0,1,0,0)*x )
-c$$$      PTgg2 = PTgg2 + nf*cf*ca * ( 16180.D0/27.D0 - 12022.D0/27.D0*x + 
-c$$$     &    50210.D0/81.D0*x**2 - 59714.D0/81.D0*dx - 110.D0/3.D0*dm - 
-c$$$     &    776.D0/3.D0*z3 + 352.D0/3.D0*z3*x - 640.D0/3.D0*z3*x**2 + 512.
-c$$$     &    D0/3.D0*z3*dx + 32.D0*z3*dm - 1432.D0/9.D0*z2 - 7972.D0/9.D0*
-c$$$     &    z2*x - 352.D0/9.D0*z2*x**2 + 608.D0/9.D0*z2*dx + 616.D0/5.D0*
-c$$$     &    z2**2 + 936.D0/5.D0*z2**2*x + 208.D0*Hr1(-1)*z2 + 208.D0*Hr1(
-c$$$     &    -1)*z2*x - 64.D0/3.D0*Hr1(-1)*z2*x**2 - 64.D0/3.D0*Hr1(-1)*z2
-c$$$     &    *dx - 5636.D0/27.D0*Hr1(0) - 25544.D0/27.D0*Hr1(0)*x - 500.D0
-c$$$     &    *Hr1(0)*x**2 - 14552.D0/27.D0*Hr1(0)*dx - 16.D0*Hr1(0)*dm + 
-c$$$     &    160.D0*Hr1(0)*z3 + 512.D0*Hr1(0)*z3*x - 304.D0/3.D0*Hr1(0)*z2
-c$$$     &     + 8.D0/3.D0*Hr1(0)*z2*x - 32.D0/3.D0*Hr1(0)*z2*x**2 + 128.D0/
-c$$$     &    3.D0*Hr1(0)*z2*dx + 2080.D0/9.D0*Hr1(1) - 76.D0/9.D0*Hr1(1)*x
-c$$$     &     - 8068.D0/27.D0*Hr1(1)*x**2 + 2056.D0/27.D0*Hr1(1)*dx + 224.D
-c$$$     &    0*Hr1(1)*z2 - 224.D0*Hr1(1)*z2*x - 448.D0/3.D0*Hr1(1)*z2*x**2
-c$$$     &     + 448.D0/3.D0*Hr1(1)*z2*dx - 1664.D0/3.D0*Hr2(-1,0) - 1376.D0
-c$$$     &    /3.D0*Hr2(-1,0)*x )
-c$$$      PTgg2 = PTgg2 + nf*cf*ca * ( 2528.D0/9.D0*Hr2(-1,0)*x**2 + 1664.D0
-c$$$     &    /9.D0*Hr2(-1,0)*dx + 128.D0*Hr2(0,-1)*z2 - 128.D0*Hr2(0,-1)*
-c$$$     &    z2*x + 904.D0/3.D0*Hr2(0,0) + 2000.D0/3.D0*Hr2(0,0)*x + 1544.D
-c$$$     &    0/9.D0*Hr2(0,0)*x**2 - 3712.D0/9.D0*Hr2(0,0)*dx - 16.D0*Hr2(0
-c$$$     &    ,0)*z2 + 112.D0*Hr2(0,0)*z2*x + 1672.D0/9.D0*Hr2(0,1) + 2740.D
-c$$$     &    0/9.D0*Hr2(0,1)*x + 272.D0*Hr2(0,1)*x**2 - 176.D0/9.D0*Hr2(0,
-c$$$     &    1)*dx + 288.D0*Hr2(0,1)*z2 + 288.D0*Hr2(0,1)*z2*x + 148.D0/3.D
-c$$$     &    0*Hr2(1,0) - 292.D0/3.D0*Hr2(1,0)*x + 1000.D0/9.D0*Hr2(1,0)*
-c$$$     &    x**2 - 568.D0/9.D0*Hr2(1,0)*dx + 12.D0*Hr2(1,1) - 12.D0*Hr2(1
-c$$$     &    ,1)*x - 16.D0/9.D0*Hr2(1,1)*x**2 + 16.D0/9.D0*Hr2(1,1)*dx + 
-c$$$     &    288.D0*Hr3(-1,-1,0) + 288.D0*Hr3(-1,-1,0)*x - 256.D0/3.D0*
-c$$$     &    Hr3(-1,-1,0)*x**2 - 256.D0/3.D0*Hr3(-1,-1,0)*dx - 208.D0*Hr3(
-c$$$     &    -1,0,0) - 208.D0*Hr3(-1,0,0)*x + 224.D0/3.D0*Hr3(-1,0,0)*x**2
-c$$$     &     + 224.D0/3.D0*Hr3(-1,0,0)*dx - 64.D0*Hr3(-1,0,1) - 64.D0*
-c$$$     &    Hr3(-1,0,1)*x - 64.D0/3.D0*Hr3(-1,0,1)*x**2 - 64.D0/3.D0*Hr3(
-c$$$     &    -1,0,1)*dx )
-c$$$      PTgg2 = PTgg2 + nf*cf*ca * (  - 416.D0*Hr3(0,-1,0) + 160.D0*Hr3(0
-c$$$     &    ,-1,0)*x + 256.D0/3.D0*Hr3(0,-1,0)*dx + 640.D0/3.D0*Hr3(0,0,0
-c$$$     &    ) - 920.D0/3.D0*Hr3(0,0,0)*x - 640.D0/3.D0*Hr3(0,0,0)*dx - 
-c$$$     &    128.D0*Hr3(0,0,1) - 88.D0*Hr3(0,0,1)*x - 32.D0*Hr3(0,0,1)*
-c$$$     &    x**2 - 64.D0/3.D0*Hr3(0,0,1)*dx + 64.D0/3.D0*Hr3(0,1,0) - 104.
-c$$$     &    D0/3.D0*Hr3(0,1,0)*x - 160.D0/3.D0*Hr3(0,1,0)*x**2 + 136.D0/3.
-c$$$     &    D0*Hr3(0,1,1) + 88.D0/3.D0*Hr3(0,1,1)*x - 32.D0/3.D0*Hr3(0,1,
-c$$$     &    1)*x**2 + 32.D0/3.D0*Hr3(0,1,1)*dx - 200.D0*Hr3(1,0,0) + 200.D
-c$$$     &    0*Hr3(1,0,0)*x + 512.D0/3.D0*Hr3(1,0,0)*x**2 - 512.D0/3.D0*
-c$$$     &    Hr3(1,0,0)*dx - 48.D0*Hr3(1,0,1) + 48.D0*Hr3(1,0,1)*x + 64.D0
-c$$$     &    *Hr3(1,0,1)*x**2 - 64.D0*Hr3(1,0,1)*dx - 32.D0*Hr3(1,1,0) + 
-c$$$     &    32.D0*Hr3(1,1,0)*x + 128.D0/3.D0*Hr3(1,1,0)*x**2 - 128.D0/3.D0
-c$$$     &    *Hr3(1,1,0)*dx - 16.D0*Hr3(1,1,1) + 16.D0*Hr3(1,1,1)*x + 64.D0
-c$$$     &    /3.D0*Hr3(1,1,1)*x**2 - 64.D0/3.D0*Hr3(1,1,1)*dx + 256.D0*
-c$$$     &    Hr4(0,-1,-1,0) - 256.D0*Hr4(0,-1,-1,0)*x - 192.D0*Hr4(0,-1,0,
-c$$$     &    0) )
-c$$$      PTgg2 = PTgg2 + nf*cf*ca * ( 192.D0*Hr4(0,-1,0,0)*x - 256.D0*Hr4(
-c$$$     &    0,0,-1,0) + 128.D0*Hr4(0,0,-1,0)*x + 128.D0*Hr4(0,0,0,0) - 
-c$$$     &    448.D0*Hr4(0,0,0,0)*x - 112.D0*Hr4(0,0,0,1) - 112.D0*Hr4(0,0,
-c$$$     &    0,1)*x + 80.D0*Hr4(0,0,1,0) + 80.D0*Hr4(0,0,1,0)*x + 48.D0*
-c$$$     &    Hr4(0,0,1,1) + 48.D0*Hr4(0,0,1,1)*x - 304.D0*Hr4(0,1,0,0) - 
-c$$$     &    304.D0*Hr4(0,1,0,0)*x - 96.D0*Hr4(0,1,0,1) - 96.D0*Hr4(0,1,0,
-c$$$     &    1)*x - 64.D0*Hr4(0,1,1,0) - 64.D0*Hr4(0,1,1,0)*x - 32.D0*Hr4(
-c$$$     &    0,1,1,1) - 32.D0*Hr4(0,1,1,1)*x )
-c$$$      PTgg2 = PTgg2 + nf*cf**2 * (  - 1682.D0/9.D0 - 382.D0/9.D0*x + 
-c$$$     &    292.D0/3.D0*x**2 + 132.D0*dx - 288.D0*z3 - 224.D0*z3*x - 256.D
-c$$$     &    0/3.D0*z3*x**2 - 320.D0/3.D0*z3*dx + 824.D0/3.D0*z2 + 2516.D0/
-c$$$     &    3.D0*z2*x + 320.D0*z2*x**2 - 152.D0*z2**2 - 184.D0*z2**2*x - 
-c$$$     &    64.D0*Hr1(-1)*z2 - 64.D0*Hr1(-1)*z2*x + 64.D0/3.D0*Hr1(-1)*z2
-c$$$     &    *x**2 + 64.D0/3.D0*Hr1(-1)*z2*dx + 370.D0/3.D0*Hr1(0) + 1786.D
-c$$$     &    0/3.D0*Hr1(0)*x + 3604.D0/9.D0*Hr1(0)*x**2 + 32.D0*Hr1(0)*dx
-c$$$     &     - 160.D0*Hr1(0)*z3 - 288.D0*Hr1(0)*z3*x - 80.D0*Hr1(0)*z2*x
-c$$$     &     - 128.D0/3.D0*Hr1(0)*z2*x**2 - 1432.D0/3.D0*Hr1(1) + 716.D0/
-c$$$     &    3.D0*Hr1(1)*x + 3316.D0/9.D0*Hr1(1)*x**2 - 1168.D0/9.D0*Hr1(1
-c$$$     &    )*dx - 144.D0*Hr1(1)*z2 + 144.D0*Hr1(1)*z2*x + 128.D0*Hr1(1)*
-c$$$     &    z2*x**2 - 128.D0*Hr1(1)*z2*dx + 1072.D0/3.D0*Hr2(-1,0) + 1072.
-c$$$     &    D0/3.D0*Hr2(-1,0)*x - 64.D0*Hr2(0,-1)*z2 + 64.D0*Hr2(0,-1)*z2
-c$$$     &    *x - 760.D0/3.D0*Hr2(0,0) - 784.D0*Hr2(0,0)*x - 160.D0/3.D0*
-c$$$     &    Hr2(0,0)*x**2 + 16.D0*Hr2(0,0)*z2 + 16.D0*Hr2(0,0)*z2*x - 296.
-c$$$     &    D0*Hr2(0,1) )
-c$$$      PTgg2 = PTgg2 + nf*cf**2 * (  - 556.D0*Hr2(0,1)*x - 512.D0/3.D0*
-c$$$     &    Hr2(0,1)*x**2 - 160.D0/3.D0*Hr2(0,1)*dx - 224.D0*Hr2(0,1)*z2
-c$$$     &     - 224.D0*Hr2(0,1)*z2*x - 116.D0/3.D0*Hr2(1,0) - 28.D0/3.D0*
-c$$$     &    Hr2(1,0)*x + 416.D0/3.D0*Hr2(1,0)*x**2 - 272.D0/3.D0*Hr2(1,0)
-c$$$     &    *dx - 28.D0/3.D0*Hr2(1,1) + 28.D0/3.D0*Hr2(1,1)*x + 64.D0/3.D0
-c$$$     &    *Hr2(1,1)*x**2 - 64.D0/3.D0*Hr2(1,1)*dx - 128.D0*Hr3(-1,-1,0)
-c$$$     &     - 128.D0*Hr3(-1,-1,0)*x + 128.D0/3.D0*Hr3(-1,-1,0)*x**2 + 
-c$$$     &    128.D0/3.D0*Hr3(-1,-1,0)*dx + 64.D0*Hr3(-1,0,0) + 64.D0*Hr3(
-c$$$     &    -1,0,0)*x - 64.D0/3.D0*Hr3(-1,0,0)*x**2 - 64.D0/3.D0*Hr3(-1,0
-c$$$     &    ,0)*dx + 128.D0*Hr3(0,-1,0) - 128.D0/3.D0*Hr3(0,-1,0)*x**2 - 
-c$$$     &    72.D0*Hr3(0,0,0) - 40.D0*Hr3(0,0,0)*x - 160.D0/3.D0*Hr3(0,0,0
-c$$$     &    )*x**2 + 16.D0*Hr3(0,0,1)*x - 128.D0/3.D0*Hr3(0,0,1)*dx - 192.
-c$$$     &    D0*Hr3(0,1,0) - 176.D0*Hr3(0,1,0)*x - 64.D0/3.D0*Hr3(0,1,0)*
-c$$$     &    x**2 - 256.D0/3.D0*Hr3(0,1,0)*dx - 64.D0*Hr3(0,1,1) - 48.D0*
-c$$$     &    Hr3(0,1,1)*x - 64.D0/3.D0*Hr3(0,1,1)*dx + 152.D0*Hr3(1,0,0)
-c$$$     &     - 152.D0*Hr3(1,0,0)*x )
-c$$$      PTgg2 = PTgg2 + nf*cf**2 * (  - 416.D0/3.D0*Hr3(1,0,0)*x**2 + 416.
-c$$$     &    D0/3.D0*Hr3(1,0,0)*dx + 48.D0*Hr3(1,0,1) - 48.D0*Hr3(1,0,1)*x
-c$$$     &     - 64.D0*Hr3(1,0,1)*x**2 + 64.D0*Hr3(1,0,1)*dx + 32.D0*Hr3(1,
-c$$$     &    1,0) - 32.D0*Hr3(1,1,0)*x - 128.D0/3.D0*Hr3(1,1,0)*x**2 + 128.
-c$$$     &    D0/3.D0*Hr3(1,1,0)*dx + 16.D0*Hr3(1,1,1) - 16.D0*Hr3(1,1,1)*x
-c$$$     &     - 64.D0/3.D0*Hr3(1,1,1)*x**2 + 64.D0/3.D0*Hr3(1,1,1)*dx - 
-c$$$     &    128.D0*Hr4(0,-1,-1,0) + 128.D0*Hr4(0,-1,-1,0)*x + 64.D0*Hr4(0
-c$$$     &    ,-1,0,0) - 64.D0*Hr4(0,-1,0,0)*x + 128.D0*Hr4(0,0,-1,0) - 32.D
-c$$$     &    0*Hr4(0,0,0,0) - 32.D0*Hr4(0,0,0,0)*x - 16.D0*Hr4(0,0,0,1) - 
-c$$$     &    16.D0*Hr4(0,0,0,1)*x - 144.D0*Hr4(0,0,1,0) - 144.D0*Hr4(0,0,1
-c$$$     &    ,0)*x - 48.D0*Hr4(0,0,1,1) - 48.D0*Hr4(0,0,1,1)*x + 240.D0*
-c$$$     &    Hr4(0,1,0,0) + 240.D0*Hr4(0,1,0,0)*x + 96.D0*Hr4(0,1,0,1) + 
-c$$$     &    96.D0*Hr4(0,1,0,1)*x + 64.D0*Hr4(0,1,1,0) + 64.D0*Hr4(0,1,1,0
-c$$$     &    )*x + 32.D0*Hr4(0,1,1,1) + 32.D0*Hr4(0,1,1,1)*x )
-c$$$      PTgg2 = PTgg2 + nf2*ca * (  - 110.D0/27.D0 + 14.D0/3.D0*x - 472.
-c$$$     &    D0/81.D0*x**2 + 472.D0/81.D0*dx - 16.D0/27.D0*dm + 32.D0/9.D0
-c$$$     &    *z2 + 32.D0/9.D0*z2*x - 104.D0/9.D0*Hr1(0) + 130.D0/9.D0*Hr1(
-c$$$     &    0)*x - 88.D0/9.D0*Hr1(0)*x**2 + 368.D0/27.D0*Hr1(0)*dx + 160.D
-c$$$     &    0/27.D0*Hr1(0)*dm + 22.D0/9.D0*Hr1(1) - 22.D0/9.D0*Hr1(1)*x
-c$$$     &     + 104.D0/27.D0*Hr1(1)*x**2 - 104.D0/27.D0*Hr1(1)*dx - 80.D0/
-c$$$     &    9.D0*Hr2(0,0) + 112.D0/9.D0*Hr2(0,0)*x - 64.D0/9.D0*Hr2(0,0)*
-c$$$     &    x**2 + 64.D0/9.D0*Hr2(0,0)*dx + 64.D0/9.D0*Hr2(0,0)*dm - 32.D0
-c$$$     &    /9.D0*Hr2(0,1) - 32.D0/9.D0*Hr2(0,1)*x )
-c$$$      PTgg2 = PTgg2 + nf2*cf * ( 544.D0/9.D0 - 304.D0/9.D0*x - 1216.D0
-c$$$     &    /81.D0*x**2 - 944.D0/81.D0*dx - 64.D0/3.D0*z3 - 64.D0/3.D0*z3
-c$$$     &    *x - 200.D0/9.D0*z2 - 440.D0/9.D0*z2*x - 224.D0/9.D0*z2*x**2
-c$$$     &     - 208.D0/27.D0*Hr1(0) - 64.D0/27.D0*Hr1(0)*x + 16.D0*Hr1(0)*
-c$$$     &    x**2 - 736.D0/27.D0*Hr1(0)*dx + 16.D0/3.D0*Hr1(0)*z2 + 16.D0/
-c$$$     &    3.D0*Hr1(0)*z2*x - 32.D0/3.D0*Hr1(1) + 80.D0/3.D0*Hr1(1)*x - 
-c$$$     &    1168.D0/27.D0*Hr1(1)*x**2 + 736.D0/27.D0*Hr1(1)*dx - 160.D0/3.
-c$$$     &    D0*Hr2(0,0) - 64.D0*Hr2(0,0)*x - 160.D0/9.D0*Hr2(0,0)*x**2 - 
-c$$$     &    128.D0/9.D0*Hr2(0,0)*dx + 296.D0/9.D0*Hr2(0,1) + 344.D0/9.D0*
-c$$$     &    Hr2(0,1)*x + 32.D0/3.D0*Hr2(0,1)*x**2 + 128.D0/9.D0*Hr2(0,1)*
-c$$$     &    dx - 8.D0/3.D0*Hr2(1,0) + 8.D0/3.D0*Hr2(1,0)*x + 32.D0/9.D0*
-c$$$     &    Hr2(1,0)*x**2 - 32.D0/9.D0*Hr2(1,0)*dx - 8.D0/3.D0*Hr2(1,1)
-c$$$     &     + 8.D0/3.D0*Hr2(1,1)*x + 32.D0/9.D0*Hr2(1,1)*x**2 - 32.D0/9.D
-c$$$     &    0*Hr2(1,1)*dx - 64.D0/3.D0*Hr3(0,0,0) - 64.D0/3.D0*Hr3(0,0,0)
-c$$$     &    *x + 16.D0*Hr3(0,0,1) + 16.D0*Hr3(0,0,1)*x - 16.D0/3.D0*Hr3(0
-c$$$     &    ,1,0) )
-c$$$      PTgg2 = PTgg2 + nf2*cf * (  - 16.D0/3.D0*Hr3(0,1,0)*x - 16.D0/3.
-c$$$     &    D0*Hr3(0,1,1) - 16.D0/3.D0*Hr3(0,1,1)*x )
-c$$$*
-c$$$* ...The soft (`+'-distribution) part of the splitting function
-c$$$*
-c$$$       A3G =
-c$$$     ,      ca**3    * ( + 490.D0/3.D0 + 88.D0/3.D0*z3 - 1072.D0/9.D0*z2
-c$$$     ,                   + 176.D0/5.D0*z2**2 )
-c$$$     ,    + ca**2*nf * ( - 836./27.D0 + 160./9.D0*z2 - 112./3.D0*z3 )
-c$$$     ,    + ca*cf*nf * ( - 110./3.D0 + 32.*z3 ) - ca*nf2 * 16./27.D0
-c$$$*
-c$$$       GGG2L = DM * A3G
-c$$$*
-c$$$* ...The regular piece of the splitting function
-c$$$*
-c$$$       X2GGTA = PTgg2 - GGG2L
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..The singular (soft) piece of P_gg^(2)T  (as in the spacelike case)
-c$$$*
-c$$$       FUNCTION X2GGTB (Y, NF)
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       INTEGER NF
-c$$$*
-c$$$       COMMON / P2GSOFT / A3G
-c$$$*
-c$$$       X2GGTB  = A3G/(1.D0-Y)
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..The 'local' piece of P_gg^(2)T  (as in the spacelike case)
-c$$$*
-c$$$       FUNCTION X2GGTC (Y, NF)
-c$$$*
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       INTEGER NF, NF2
-c$$$       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-c$$$     ,             Z3 = 1.2020 56903 15959 42854 D0,
-c$$$     ,             Z5 = 1.0369 27755 14336 99263 D0 )
-c$$$*
-c$$$       COMMON / P2GSOFT / A3G
-c$$$*
-c$$$* ...Colour factors
-c$$$*
-c$$$       CF  = 4./3.D0
-c$$$       CA  = 3.D0
-c$$$       NF2 = NF*NF
-c$$$*
-c$$$* ...The coefficient of delta(1-x)
-c$$$*
-c$$$       P2GDELT = 
-c$$$     ,    + 79.D0/2.D0*ca**3
-c$$$     ,    + 8.D0/3.D0*z2*ca**3
-c$$$     ,    + 22.D0/3.D0*z2**2*ca**3
-c$$$     ,    + 536.D0/3.D0*z3*ca**3
-c$$$     ,    - 16.D0*z2*z3*ca**3
-c$$$     ,    - 80.D0*z5*ca**3
-c$$$     ,    + cf**2*nf
-c$$$     ,    - 233.D0/18*ca**2*nf
-c$$$     ,    - 8.D0/3.D0*z2*ca**2*nf
-c$$$     ,    - 80.D0/3.D0*z3*ca**2*nf
-c$$$     ,    - 4.D0/3.D0*z2**2*ca**2*nf
-c$$$     ,    - 241.D0/18.D0*ca*cf*nf
-c$$$     ,    + 29.D0/18.D0*ca*nf2
-c$$$     ,    + 11.D0/9.D0*cf*nf2
-c$$$*
-c$$$       X2GGTC = LOG (1.D0-Y) * A3G + P2GDELT
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
-c$$$* =================================================================av==
-c$$$*
-c$$$* ..File: xpns2e.f
-c$$$*
-c$$$*
-c$$$* ..The exact 3-loop MS(bar) non-singlet splitting functions P_NS^(2)T
-c$$$*    for the evolution of unpolarized fragmentation densities at
-c$$$*    mu_r = mu_f.  The expansion parameter is alpha_s/(4 pi).
-c$$$*
-c$$$* ..The distributions (in the mathematical sense) are given as in eq.
-c$$$*    (B.26) of Floratos, Kounnas, Lacaze: Nucl. Phys. B192 (1981) 417.
-c$$$*    The name-endings A, B, and C of the functions below correspond to
-c$$$*    the kernel superscripts [2], [3], and [1] in that equation.
-c$$$*
-c$$$* ..The code uses the package of Gehrmann and Remiddi for the harmonic
-c$$$*    polylogarithms published in hep-ph/0107173 = CPC 141 (2001) 296.
-c$$$*
-c$$$* ..References: A. Mitov, S. Moch and A. Vogt,
-c$$$*               Phys. Lett. B638 (2006) 61, hep-ph/0604053   (+ and -)
-c$$$*               S. Moch, J. Vermaseren and A. Vogt,
-c$$$*               Nucl. Phys. B688 (2004) 101, hep-ph/0403192        (S)
-c$$$*
-c$$$* =====================================================================
-c$$$*
-c$$$*
-c$$$* ..This is the regular piece of P_NS+  (the even-moment combination)
-c$$$*
-c$$$       FUNCTION X2NSPTA (X, NF)
-c$$$*
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       COMPLEX*16 HC1, HC2, HC3, HC4
-c$$$       INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N
-c$$$       PARAMETER ( N1 = -1, N2 = 1, NW = 4 )
-c$$$       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HC4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       DIMENSION HR1(N1:N2),HR2(N1:N2,N1:N2),HR3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HR4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       DIMENSION HI1(N1:N2),HI2(N1:N2,N1:N2),HI3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HI4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-c$$$     ,             Z3 = 1.2020 56903 15959 42854 D0,
-c$$$     ,             Z5 = 1.0369 27755 14336 99263 D0 )
-c$$$*
-c$$$* ..The soft coefficient for use in X2NSPB and X2NSPC
-c$$$*
-c$$$       COMMON / P2SOFT / A3
-c$$$*
-c$$$* ...Colour factors
-c$$$*
-c$$$       CF  = 4./3.D0
-c$$$       CA  = 3.D0
-c$$$       NF2 = NF*NF
-c$$$*
-c$$$* ...Some abbreviations
-c$$$*
-c$$$       DX = 1.D0/X
-c$$$       DM = 1.D0/(1.D0-X)
-c$$$       DP = 1.D0/(1.D0+X)
-c$$$*
-c$$$* ...The harmonic polylogs up to weight 4 by Gehrmann and Remiddi
-c$$$*
-c$$$       CALL HPLOG (X, NW, HC1,HC2,HC3,HC4, HR1,HR2,HR3,HR4,
-c$$$     ,            HI1,HI2,HI3,HI4, N1, N2)
-c$$$*
-c$$$* ...The splitting function in terms of the harmonic polylogs
-c$$$*    (without the delta(1-x) part, but with the soft contribution)
-c$$$*
-c$$$      PTqq2 =
-c$$$     &  + cf*ca**2 * ( 5327.D0/27.D0 - 9737.D0/27.D0*x + 490.D0/3.D0*dm
-c$$$     &     - 224.D0*z3*x - 88.D0*z3*dp + 16.D0*z3*dm - 112.D0*z2 + 448.D
-c$$$     &    0/9.D0*z2*x + 1072.D0/9.D0*z2*dp - 1072.D0/9.D0*z2*dm - 62.D0/
-c$$$     &    5.D0*z2**2 - 242.D0/5.D0*z2**2*x - 32.D0*z2**2*dp + 384.D0/5.D
-c$$$     &    0*z2**2*dm - 192.D0*Hr1(-1)*z3 + 192.D0*Hr1(-1)*z3*x + 384.D0
-c$$$     &    *Hr1(-1)*z3*dp + 208.D0/3.D0*Hr1(-1)*z2 + 560.D0/3.D0*Hr1(-1)
-c$$$     &    *z2*x + 352.D0/3.D0*Hr1(-1)*z2*dp + 410.D0/27.D0*Hr1(0) - 
-c$$$     &    8686.D0/27.D0*Hr1(0)*x - 24.D0*Hr1(0)*dp + 4172.D0/27.D0*Hr1(
-c$$$     &    0)*dm - 144.D0*Hr1(0)*z3*x - 128.D0*Hr1(0)*z3*dp + 128.D0*
-c$$$     &    Hr1(0)*z3*dm - 4.D0*Hr1(0)*z2 - 148.D0/3.D0*Hr1(0)*z2*x - 16.D
-c$$$     &    0/3.D0*Hr1(0)*z2*dp - 248.D0/3.D0*Hr1(0)*z2*dm + 176.D0*Hr1(1
-c$$$     &    ) - 176.D0*Hr1(1)*x - 144.D0*Hr1(1)*z3 - 144.D0*Hr1(1)*z3*x
-c$$$     &     + 288.D0*Hr1(1)*z3*dm + 32.D0*Hr1(1)*z2 - 32.D0*Hr1(1)*z2*x
-c$$$     &     + 256.D0*Hr2(-1,-1)*z2 - 256.D0*Hr2(-1,-1)*z2*x - 512.D0*
-c$$$     &    Hr2(-1,-1)*z2*dp - 688.D0/9.D0*Hr2(-1,0) + 1456.D0/9.D0*Hr2(
-c$$$     &    -1,0)*x )
-c$$$      PTqq2 = PTqq2 + cf*ca**2 * ( 2144.D0/9.D0*Hr2(-1,0)*dp - 176.D0*
-c$$$     &    Hr2(-1,0)*z2 + 176.D0*Hr2(-1,0)*z2*x + 352.D0*Hr2(-1,0)*z2*dp
-c$$$     &     - 136.D0*Hr2(0,-1)*z2 + 136.D0*Hr2(0,-1)*z2*x + 256.D0*Hr2(0
-c$$$     &    ,-1)*z2*dp - 242.D0/9.D0*Hr2(0,0) - 230.D0/3.D0*Hr2(0,0)*x - 
-c$$$     &    1072.D0/9.D0*Hr2(0,0)*dp + 1556.D0/9.D0*Hr2(0,0)*dm + 36.D0*
-c$$$     &    Hr2(0,0)*z2 - 68.D0*Hr2(0,0)*z2*x - 96.D0*Hr2(0,0)*z2*dp + 
-c$$$     &    112.D0*Hr2(0,1) + 112.D0*Hr2(0,1)*x - 40.D0*Hr2(0,1)*z2 + 24.D
-c$$$     &    0*Hr2(0,1)*z2*x + 64.D0*Hr2(0,1)*z2*dp + 16.D0*Hr2(1,0)*z2 + 
-c$$$     &    16.D0*Hr2(1,0)*z2*x - 32.D0*Hr2(1,0)*z2*dm + 64.D0*Hr3(-1,-1,
-c$$$     &    0) + 64.D0*Hr3(-1,-1,0)*x - 328.D0/3.D0*Hr3(-1,0,0) - 152.D0/
-c$$$     &    3.D0*Hr3(-1,0,0)*x + 176.D0/3.D0*Hr3(-1,0,0)*dp - 112.D0/3.D0
-c$$$     &    *Hr3(-1,0,1) - 464.D0/3.D0*Hr3(-1,0,1)*x - 352.D0/3.D0*Hr3(-1
-c$$$     &    ,0,1)*dp - 88.D0/3.D0*Hr3(0,-1,0) + 40.D0/3.D0*Hr3(0,-1,0)*x
-c$$$     &     + 176.D0/3.D0*Hr3(0,-1,0)*dp - 48.D0*Hr3(0,-1,0)*dm - 128.D0/
-c$$$     &    3.D0*Hr3(0,0,0)*x - 248.D0/3.D0*Hr3(0,0,0)*dp + 248.D0/3.D0*
-c$$$     &    Hr3(0,0,0)*dm )
-c$$$      PTqq2 = PTqq2 + cf*ca**2 * ( 4.D0*Hr3(0,0,1) + 188.D0/3.D0*Hr3(0,
-c$$$     &    0,1)*x + 176.D0/3.D0*Hr3(0,0,1)*dp + 88.D0/3.D0*Hr3(0,0,1)*dm
-c$$$     &     + 12.D0*Hr3(1,0,0) + 76.D0*Hr3(1,0,0)*x - 88.D0*Hr3(1,0,0)*
-c$$$     &    dm - 128.D0*Hr4(-1,-1,0,0) + 128.D0*Hr4(-1,-1,0,0)*x + 256.D0
-c$$$     &    *Hr4(-1,-1,0,0)*dp - 256.D0*Hr4(-1,-1,0,1) + 256.D0*Hr4(-1,-1
-c$$$     &    ,0,1)*x + 512.D0*Hr4(-1,-1,0,1)*dp + 48.D0*Hr4(-1,0,0,0) - 48.
-c$$$     &    D0*Hr4(-1,0,0,0)*x - 96.D0*Hr4(-1,0,0,0)*dp + 128.D0*Hr4(-1,0
-c$$$     &    ,0,1) - 128.D0*Hr4(-1,0,0,1)*x - 256.D0*Hr4(-1,0,0,1)*dp - 80.
-c$$$     &    D0*Hr4(0,-1,-1,0) - 48.D0*Hr4(0,-1,-1,0)*x + 128.D0*Hr4(0,-1,
-c$$$     &    -1,0)*dm + 88.D0*Hr4(0,-1,0,0) - 56.D0*Hr4(0,-1,0,0)*x - 128.D
-c$$$     &    0*Hr4(0,-1,0,0)*dp - 32.D0*Hr4(0,-1,0,0)*dm + 96.D0*Hr4(0,-1,
-c$$$     &    0,1) - 160.D0*Hr4(0,-1,0,1)*x - 256.D0*Hr4(0,-1,0,1)*dp + 64.D
-c$$$     &    0*Hr4(0,-1,0,1)*dm + 8.D0*Hr4(0,0,-1,0) - 40.D0*Hr4(0,0,-1,0)
-c$$$     &    *x - 32.D0*Hr4(0,0,-1,0)*dp + 32.D0*Hr4(0,0,-1,0)*dm + 40.D0*
-c$$$     &    Hr4(0,0,0,0)*x + 32.D0*Hr4(0,0,0,0)*dp - 32.D0*Hr4(0,0,0,0)*
-c$$$     &    dm )
-c$$$      PTqq2 = PTqq2 + cf*ca**2 * (  - 36.D0*Hr4(0,0,0,1) + 28.D0*Hr4(0,
-c$$$     &    0,0,1)*x + 64.D0*Hr4(0,0,0,1)*dp + 32.D0*Hr4(0,0,0,1)*dm + 28.
-c$$$     &    D0*Hr4(0,1,0,0) + 28.D0*Hr4(0,1,0,0)*x - 64.D0*Hr4(0,1,0,0)*
-c$$$     &    dm - 96.D0*Hr4(1,0,-1,0) - 96.D0*Hr4(1,0,-1,0)*x + 192.D0*
-c$$$     &    Hr4(1,0,-1,0)*dm + 48.D0*Hr4(1,0,0,0) + 48.D0*Hr4(1,0,0,0)*x
-c$$$     &     - 96.D0*Hr4(1,0,0,0)*dm - 64.D0*Hr4(1,0,0,1) - 64.D0*Hr4(1,0
-c$$$     &    ,0,1)*x + 128.D0*Hr4(1,0,0,1)*dm + 64.D0*Hr4(1,1,0,0) + 64.D0
-c$$$     &    *Hr4(1,1,0,0)*x - 128.D0*Hr4(1,1,0,0)*dm )
-c$$$      PTqq2 = PTqq2 + cf**2*ca * ( 532.D0/9.D0 - 532.D0/9.D0*x - 16.D0/
-c$$$     &    3.D0*z3 + 2336.D0/3.D0*z3*x + 248.D0*z3*dp + 80.D0/3.D0*z3*dm
-c$$$     &     + 3448.D0/9.D0*z2 + 2024.D0/9.D0*z2*x - 2144.D0/9.D0*z2*dp
-c$$$     &     - 24.D0/5.D0*z2**2 + 56.D0/5.D0*z2**2*x + 8.D0*z2**2*dp - 
-c$$$     &    552.D0/5.D0*z2**2*dm + 672.D0*Hr1(-1)*z3 - 672.D0*Hr1(-1)*z3*
-c$$$     &    x - 1344.D0*Hr1(-1)*z3*dp - 992.D0/3.D0*Hr1(-1)*z2 - 1984.D0/
-c$$$     &    3.D0*Hr1(-1)*z2*x - 992.D0/3.D0*Hr1(-1)*z2*dp - 562.D0/3.D0*
-c$$$     &    Hr1(0) + 5650.D0/9.D0*Hr1(0)*x + 72.D0*Hr1(0)*dp + 302.D0/3.D0
-c$$$     &    *Hr1(0)*dm + 224.D0*Hr1(0)*z3*x + 240.D0*Hr1(0)*z3*dp - 240.D0
-c$$$     &    *Hr1(0)*z3*dm + 40.D0/3.D0*Hr1(0)*z2 + 328.D0*Hr1(0)*z2*x + 
-c$$$     &    248.D0/3.D0*Hr1(0)*z2*dp + 536.D0/3.D0*Hr1(0)*z2*dm - 1672.D0/
-c$$$     &    3.D0*Hr1(1) + 1672.D0/3.D0*Hr1(1)*x + 384.D0*Hr1(1)*z3 + 384.D
-c$$$     &    0*Hr1(1)*z3*x - 768.D0*Hr1(1)*z3*dm - 112.D0*Hr1(1)*z2 + 112.D
-c$$$     &    0*Hr1(1)*z2*x - 896.D0*Hr2(-1,-1)*z2 + 896.D0*Hr2(-1,-1)*z2*x
-c$$$     &     + 1792.D0*Hr2(-1,-1)*z2*dp + 1520.D0/9.D0*Hr2(-1,0) - 2768.D0
-c$$$     &    /9.D0*Hr2(-1,0)*x )
-c$$$      PTqq2 = PTqq2 + cf**2*ca * (  - 4288.D0/9.D0*Hr2(-1,0)*dp + 544.D0
-c$$$     &    *Hr2(-1,0)*z2 - 544.D0*Hr2(-1,0)*z2*x - 1088.D0*Hr2(-1,0)*z2*
-c$$$     &    dp + 448.D0*Hr2(0,-1)*z2 - 352.D0*Hr2(0,-1)*z2*x - 768.D0*
-c$$$     &    Hr2(0,-1)*z2*dp - 96.D0*Hr2(0,-1)*z2*dm + 32.D0*Hr2(0,0) + 
-c$$$     &    1736.D0/9.D0*Hr2(0,0)*x + 2144.D0/9.D0*Hr2(0,0)*dp - 3640.D0/
-c$$$     &    9.D0*Hr2(0,0)*dm - 96.D0*Hr2(0,0)*z2 + 32.D0*Hr2(0,0)*z2*x + 
-c$$$     &    160.D0*Hr2(0,0)*z2*dp + 128.D0*Hr2(0,0)*z2*dm - 2648.D0/9.D0*
-c$$$     &    Hr2(0,1) - 1304.D0/9.D0*Hr2(0,1)*x - 2144.D0/9.D0*Hr2(0,1)*dm
-c$$$     &     + 96.D0*Hr2(0,1)*z2 - 128.D0*Hr2(0,1)*z2*x - 224.D0*Hr2(0,1)
-c$$$     &    *z2*dp + 64.D0*Hr2(0,1)*z2*dm + 400.D0/9.D0*Hr2(1,0) + 1744.D0
-c$$$     &    /9.D0*Hr2(1,0)*x - 2144.D0/9.D0*Hr2(1,0)*dm - 32.D0*Hr2(1,0)*
-c$$$     &    z2 - 32.D0*Hr2(1,0)*z2*x + 64.D0*Hr2(1,0)*z2*dm - 224.D0*Hr3(
-c$$$     &    -1,-1,0) - 224.D0*Hr3(-1,-1,0)*x + 680.D0/3.D0*Hr3(-1,0,0) + 
-c$$$     &    760.D0/3.D0*Hr3(-1,0,0)*x + 80.D0/3.D0*Hr3(-1,0,0)*dp + 656.D0
-c$$$     &    /3.D0*Hr3(-1,0,1) + 1648.D0/3.D0*Hr3(-1,0,1)*x + 992.D0/3.D0*
-c$$$     &    Hr3(-1,0,1)*dp )
-c$$$      PTqq2 = PTqq2 + cf**2*ca * ( 32.D0/3.D0*Hr3(0,-1,0) + 160.D0/3.D0
-c$$$     &    *Hr3(0,-1,0)*x - 208.D0/3.D0*Hr3(0,-1,0)*dp + 96.D0*Hr3(0,-1,
-c$$$     &    0)*dm + 132.D0*Hr3(0,0,0) + 460.D0/3.D0*Hr3(0,0,0)*x + 280.D0/
-c$$$     &    3.D0*Hr3(0,0,0)*dp - 808.D0/3.D0*Hr3(0,0,0)*dm + 136.D0/3.D0*
-c$$$     &    Hr3(0,0,1) - 216.D0*Hr3(0,0,1)*x - 496.D0/3.D0*Hr3(0,0,1)*dp
-c$$$     &     - 640.D0/3.D0*Hr3(0,0,1)*dm + 176.D0/3.D0*Hr3(0,1,0) + 176.D0
-c$$$     &    /3.D0*Hr3(0,1,0)*x - 352.D0/3.D0*Hr3(0,1,0)*dm + 16.D0*Hr3(1,
-c$$$     &    0,0) - 112.D0*Hr3(1,0,0)*x + 96.D0*Hr3(1,0,0)*dm + 320.D0*
-c$$$     &    Hr4(-1,-1,0,0) - 320.D0*Hr4(-1,-1,0,0)*x - 640.D0*Hr4(-1,-1,0
-c$$$     &    ,0)*dp + 896.D0*Hr4(-1,-1,0,1) - 896.D0*Hr4(-1,-1,0,1)*x - 
-c$$$     &    1792.D0*Hr4(-1,-1,0,1)*dp - 64.D0*Hr4(-1,0,-1,0) + 64.D0*Hr4(
-c$$$     &    -1,0,-1,0)*x + 128.D0*Hr4(-1,0,-1,0)*dp + 16.D0*Hr4(-1,0,0,0)
-c$$$     &     - 16.D0*Hr4(-1,0,0,0)*x - 32.D0*Hr4(-1,0,0,0)*dp - 384.D0*
-c$$$     &    Hr4(-1,0,0,1) + 384.D0*Hr4(-1,0,0,1)*x + 768.D0*Hr4(-1,0,0,1)
-c$$$     &    *dp + 32.D0*Hr4(-1,0,1,0) - 32.D0*Hr4(-1,0,1,0)*x - 64.D0*
-c$$$     &    Hr4(-1,0,1,0)*dp )
-c$$$      PTqq2 = PTqq2 + cf**2*ca * ( 192.D0*Hr4(0,-1,-1,0) + 256.D0*Hr4(0
-c$$$     &    ,-1,-1,0)*x + 128.D0*Hr4(0,-1,-1,0)*dp - 448.D0*Hr4(0,-1,-1,0
-c$$$     &    )*dm - 176.D0*Hr4(0,-1,0,0) + 16.D0*Hr4(0,-1,0,0)*x + 224.D0*
-c$$$     &    Hr4(0,-1,0,0)*dp + 160.D0*Hr4(0,-1,0,0)*dm - 352.D0*Hr4(0,-1,
-c$$$     &    0,1) + 480.D0*Hr4(0,-1,0,1)*x + 832.D0*Hr4(0,-1,0,1)*dp - 128.
-c$$$     &    D0*Hr4(0,-1,0,1)*dm + 64.D0*Hr4(0,0,-1,0) - 64.D0*Hr4(0,0,-1,
-c$$$     &    0)*x - 96.D0*Hr4(0,0,-1,0)*dp - 32.D0*Hr4(0,0,-1,0)*dm + 160.D
-c$$$     &    0*Hr4(0,0,0,0)*x + 96.D0*Hr4(0,0,0,0)*dp - 96.D0*Hr4(0,0,0,0)
-c$$$     &    *dm + 96.D0*Hr4(0,0,0,1) - 32.D0*Hr4(0,0,0,1)*x - 128.D0*Hr4(
-c$$$     &    0,0,0,1)*dp - 160.D0*Hr4(0,0,0,1)*dm + 32.D0*Hr4(0,0,1,0)*x
-c$$$     &     + 32.D0*Hr4(0,0,1,0)*dp - 32.D0*Hr4(0,0,1,0)*dm - 16.D0*Hr4(
-c$$$     &    0,1,0,0) - 16.D0*Hr4(0,1,0,0)*x + 96.D0*Hr4(0,1,0,0)*dm + 256.
-c$$$     &    D0*Hr4(1,0,-1,0) + 256.D0*Hr4(1,0,-1,0)*x - 512.D0*Hr4(1,0,-1
-c$$$     &    ,0)*dm - 80.D0*Hr4(1,0,0,0) - 80.D0*Hr4(1,0,0,0)*x + 160.D0*
-c$$$     &    Hr4(1,0,0,0)*dm + 128.D0*Hr4(1,0,0,1) + 128.D0*Hr4(1,0,0,1)*x
-c$$$     &     - 256.D0*Hr4(1,0,0,1)*dm )
-c$$$      PTqq2 = PTqq2 + cf**2*ca * (  - 128.D0*Hr4(1,1,0,0) - 128.D0*Hr4(
-c$$$     &    1,1,0,0)*x + 256.D0*Hr4(1,1,0,0)*dm )
-c$$$      PTqq2 = PTqq2 + cf**3 * (  - 62.D0 + 62.D0*x - 48.D0*z3 - 720.D0*
-c$$$     &    z3*x - 144.D0*z3*dp - 308.D0*z2 - 372.D0*z2*x - 56.D0/5.D0*
-c$$$     &    z2**2 + 504.D0/5.D0*z2**2*x + 112.D0*z2**2*dp + 144.D0/5.D0*
-c$$$     &    z2**2*dm - 576.D0*Hr1(-1)*z3 + 576.D0*Hr1(-1)*z3*x + 1152.D0*
-c$$$     &    Hr1(-1)*z3*dp + 384.D0*Hr1(-1)*z2 + 576.D0*Hr1(-1)*z2*x + 192.
-c$$$     &    D0*Hr1(-1)*z2*dp + 42.D0*Hr1(0) - 590.D0*Hr1(0)*x - 48.D0*
-c$$$     &    Hr1(0)*dp + 6.D0*Hr1(0)*dm + 128.D0*Hr1(0)*z3*x + 32.D0*Hr1(0
-c$$$     &    )*z3*dp - 32.D0*Hr1(0)*z3*dm + 48.D0*Hr1(0)*z2 - 400.D0*Hr1(0
-c$$$     &    )*z2*x - 144.D0*Hr1(0)*z2*dp - 144.D0*Hr1(0)*z2*dm + 560.D0*
-c$$$     &    Hr1(1) - 560.D0*Hr1(1)*x - 192.D0*Hr1(1)*z3 - 192.D0*Hr1(1)*
-c$$$     &    z3*x + 384.D0*Hr1(1)*z3*dm + 96.D0*Hr1(1)*z2 - 96.D0*Hr1(1)*
-c$$$     &    z2*x + 768.D0*Hr2(-1,-1)*z2 - 768.D0*Hr2(-1,-1)*z2*x - 1536.D0
-c$$$     &    *Hr2(-1,-1)*z2*dp - 32.D0*Hr2(-1,0) - 32.D0*Hr2(-1,0)*x - 384.
-c$$$     &    D0*Hr2(-1,0)*z2 + 384.D0*Hr2(-1,0)*z2*x + 768.D0*Hr2(-1,0)*z2
-c$$$     &    *dp - 352.D0*Hr2(0,-1)*z2 + 160.D0*Hr2(0,-1)*z2*x + 512.D0*
-c$$$     &    Hr2(0,-1)*z2*dp )
-c$$$      PTqq2 = PTqq2 + cf**3 * ( 192.D0*Hr2(0,-1)*z2*dm - 20.D0*Hr2(0,0)
-c$$$     &     + 316.D0*Hr2(0,0)*x + 52.D0*Hr2(0,0)*dm + 48.D0*Hr2(0,0)*z2
-c$$$     &     + 208.D0*Hr2(0,0)*z2*x + 64.D0*Hr2(0,0)*z2*dp - 256.D0*Hr2(0
-c$$$     &    ,0)*z2*dm + 340.D0*Hr2(0,1) + 308.D0*Hr2(0,1)*x - 96.D0*Hr2(0
-c$$$     &    ,1)*z2 + 96.D0*Hr2(0,1)*z2*x + 192.D0*Hr2(0,1)*z2*dp + 16.D0*
-c$$$     &    Hr2(1,0) - 16.D0*Hr2(1,0)*x + 192.D0*Hr3(-1,-1,0) + 192.D0*
-c$$$     &    Hr3(-1,-1,0)*x - 16.D0*Hr3(-1,0,0) - 304.D0*Hr3(-1,0,0)*x - 
-c$$$     &    288.D0*Hr3(-1,0,0)*dp - 288.D0*Hr3(-1,0,1) - 480.D0*Hr3(-1,0,
-c$$$     &    1)*x - 192.D0*Hr3(-1,0,1)*dp + 96.D0*Hr3(0,-1,0) - 160.D0*
-c$$$     &    Hr3(0,-1,0)*x - 96.D0*Hr3(0,-1,0)*dp + 144.D0*Hr3(0,0,0) + 
-c$$$     &    176.D0*Hr3(0,0,0)*x + 144.D0*Hr3(0,0,0)*dp - 288.D0*Hr3(0,0,0
-c$$$     &    )*dm + 128.D0*Hr3(0,0,1) + 288.D0*Hr3(0,0,1)*x + 96.D0*Hr3(0,
-c$$$     &    0,1)*dp + 88.D0*Hr3(0,1,0) + 24.D0*Hr3(0,1,0)*x - 96.D0*Hr3(0
-c$$$     &    ,1,0)*dm + 96.D0*Hr3(1,0,0) + 96.D0*Hr3(1,0,0)*x - 192.D0*
-c$$$     &    Hr3(1,0,0)*dm - 128.D0*Hr4(-1,-1,0,0) + 128.D0*Hr4(-1,-1,0,0)
-c$$$     &    *x )
-c$$$      PTqq2 = PTqq2 + cf**3 * ( 256.D0*Hr4(-1,-1,0,0)*dp - 768.D0*Hr4(
-c$$$     &    -1,-1,0,1) + 768.D0*Hr4(-1,-1,0,1)*x + 1536.D0*Hr4(-1,-1,0,1)
-c$$$     &    *dp + 128.D0*Hr4(-1,0,-1,0) - 128.D0*Hr4(-1,0,-1,0)*x - 256.D0
-c$$$     &    *Hr4(-1,0,-1,0)*dp - 224.D0*Hr4(-1,0,0,0) + 224.D0*Hr4(-1,0,0
-c$$$     &    ,0)*x + 448.D0*Hr4(-1,0,0,0)*dp + 256.D0*Hr4(-1,0,0,1) - 256.D
-c$$$     &    0*Hr4(-1,0,0,1)*x - 512.D0*Hr4(-1,0,0,1)*dp - 64.D0*Hr4(-1,0,
-c$$$     &    1,0) + 64.D0*Hr4(-1,0,1,0)*x + 128.D0*Hr4(-1,0,1,0)*dp - 64.D0
-c$$$     &    *Hr4(0,-1,-1,0) - 320.D0*Hr4(0,-1,-1,0)*x - 256.D0*Hr4(0,-1,
-c$$$     &    -1,0)*dp + 384.D0*Hr4(0,-1,-1,0)*dm + 192.D0*Hr4(0,-1,0,0)*x
-c$$$     &     + 64.D0*Hr4(0,-1,0,0)*dp - 192.D0*Hr4(0,-1,0,0)*dm + 320.D0*
-c$$$     &    Hr4(0,-1,0,1) - 320.D0*Hr4(0,-1,0,1)*x - 640.D0*Hr4(0,-1,0,1)
-c$$$     &    *dp - 160.D0*Hr4(0,0,-1,0) + 288.D0*Hr4(0,0,-1,0)*x + 320.D0*
-c$$$     &    Hr4(0,0,-1,0)*dp - 64.D0*Hr4(0,0,-1,0)*dm - 112.D0*Hr4(0,0,0,
-c$$$     &    0) - 592.D0*Hr4(0,0,0,0)*x - 320.D0*Hr4(0,0,0,0)*dp + 448.D0*
-c$$$     &    Hr4(0,0,0,0)*dm - 240.D0*Hr4(0,0,0,1) - 240.D0*Hr4(0,0,0,1)*x
-c$$$     &     + 448.D0*Hr4(0,0,0,1)*dm )
-c$$$      PTqq2 = PTqq2 + cf**3 * (  - 128.D0*Hr4(0,0,1,0) - 192.D0*Hr4(0,0
-c$$$     &    ,1,0)*x - 64.D0*Hr4(0,0,1,0)*dp + 256.D0*Hr4(0,0,1,0)*dm - 64.
-c$$$     &    D0*Hr4(0,0,1,1) - 64.D0*Hr4(0,0,1,1)*x + 128.D0*Hr4(0,0,1,1)*
-c$$$     &    dm - 144.D0*Hr4(0,1,0,0) - 144.D0*Hr4(0,1,0,0)*x + 192.D0*
-c$$$     &    Hr4(0,1,0,0)*dm - 64.D0*Hr4(0,1,0,1) - 64.D0*Hr4(0,1,0,1)*x
-c$$$     &     + 128.D0*Hr4(0,1,0,1)*dm - 64.D0*Hr4(0,1,1,0) - 64.D0*Hr4(0,
-c$$$     &    1,1,0)*x + 128.D0*Hr4(0,1,1,0)*dm - 128.D0*Hr4(1,0,-1,0) - 
-c$$$     &    128.D0*Hr4(1,0,-1,0)*x + 256.D0*Hr4(1,0,-1,0)*dm - 128.D0*
-c$$$     &    Hr4(1,0,0,0) - 128.D0*Hr4(1,0,0,0)*x + 256.D0*Hr4(1,0,0,0)*dm
-c$$$     &     - 128.D0*Hr4(1,0,0,1) - 128.D0*Hr4(1,0,0,1)*x + 256.D0*Hr4(1
-c$$$     &    ,0,0,1)*dm - 64.D0*Hr4(1,0,1,0) - 64.D0*Hr4(1,0,1,0)*x + 128.D
-c$$$     &    0*Hr4(1,0,1,0)*dm )
-c$$$      PTqq2 = PTqq2 + nf*cf*ca * (  - 182.D0/3.D0 + 2474.D0/27.D0*x - 
-c$$$     &    836.D0/27.D0*dm + 16.D0*z3 + 32.D0*z3*x + 16.D0*z3*dp - 48.D0
-c$$$     &    *z3*dm + 8.D0*z2 - 184.D0/9.D0*z2*x - 160.D0/9.D0*z2*dp + 160.
-c$$$     &    D0/9.D0*z2*dm + 32.D0/3.D0*Hr1(-1)*z2 - 32.D0/3.D0*Hr1(-1)*z2
-c$$$     &    *x - 64.D0/3.D0*Hr1(-1)*z2*dp + 68.D0/27.D0*Hr1(0) + 1700.D0/
-c$$$     &    27.D0*Hr1(0)*x - 1336.D0/27.D0*Hr1(0)*dm - 8.D0*Hr1(0)*z2 - 8.
-c$$$     &    D0/3.D0*Hr1(0)*z2*x + 16.D0/3.D0*Hr1(0)*z2*dp + 32.D0/3.D0*
-c$$$     &    Hr1(0)*z2*dm - 16.D0*Hr1(1) + 16.D0*Hr1(1)*x + 64.D0/9.D0*
-c$$$     &    Hr2(-1,0) - 256.D0/9.D0*Hr2(-1,0)*x - 320.D0/9.D0*Hr2(-1,0)*
-c$$$     &    dp + 88.D0/9.D0*Hr2(0,0) + 272.D0/9.D0*Hr2(0,0)*x + 160.D0/9.D
-c$$$     &    0*Hr2(0,0)*dp - 112.D0/3.D0*Hr2(0,0)*dm - 8.D0*Hr2(0,1) - 8.D0
-c$$$     &    *Hr2(0,1)*x + 16.D0/3.D0*Hr3(-1,0,0) - 16.D0/3.D0*Hr3(-1,0,0)
-c$$$     &    *x - 32.D0/3.D0*Hr3(-1,0,0)*dp - 32.D0/3.D0*Hr3(-1,0,1) + 32.D
-c$$$     &    0/3.D0*Hr3(-1,0,1)*x + 64.D0/3.D0*Hr3(-1,0,1)*dp + 16.D0/3.D0
-c$$$     &    *Hr3(0,-1,0) - 16.D0/3.D0*Hr3(0,-1,0)*x - 32.D0/3.D0*Hr3(0,-1
-c$$$     &    ,0)*dp )
-c$$$      PTqq2 = PTqq2 + nf*cf*ca * ( 32.D0/3.D0*Hr3(0,0,0)*x + 32.D0/3.D0
-c$$$     &    *Hr3(0,0,0)*dp - 32.D0/3.D0*Hr3(0,0,0)*dm + 8.D0*Hr3(0,0,1)
-c$$$     &     - 8.D0/3.D0*Hr3(0,0,1)*x - 32.D0/3.D0*Hr3(0,0,1)*dp - 16.D0/
-c$$$     &    3.D0*Hr3(0,0,1)*dm - 8.D0*Hr3(1,0,0) - 8.D0*Hr3(1,0,0)*x + 16.
-c$$$     &    D0*Hr3(1,0,0)*dm )
-c$$$      PTqq2 = PTqq2 + nf*cf**2 * ( 5.D0/9.D0 + 325.D0/9.D0*x - 110.D0/3.
-c$$$     &    D0*dm - 32.D0/3.D0*z3 - 128.D0/3.D0*z3*x - 32.D0*z3*dp + 160.D
-c$$$     &    0/3.D0*z3*dm - 160.D0/9.D0*z2 + 160.D0/9.D0*z2*x + 320.D0/9.D0
-c$$$     &    *z2*dp - 64.D0/3.D0*Hr1(-1)*z2 + 64.D0/3.D0*Hr1(-1)*z2*x + 
-c$$$     &    128.D0/3.D0*Hr1(-1)*z2*dp + 64.D0/3.D0*Hr1(0) - 256.D0/9.D0*
-c$$$     &    Hr1(0)*x - 68.D0/3.D0*Hr1(0)*dm + 32.D0/3.D0*Hr1(0)*z2 - 32.D0
-c$$$     &    /3.D0*Hr1(0)*z2*dp - 32.D0/3.D0*Hr1(0)*z2*dm + 64.D0/3.D0*
-c$$$     &    Hr1(1) - 64.D0/3.D0*Hr1(1)*x - 128.D0/9.D0*Hr2(-1,0) + 512.D0/
-c$$$     &    9.D0*Hr2(-1,0)*x + 640.D0/9.D0*Hr2(-1,0)*dp - 704.D0/9.D0*
-c$$$     &    Hr2(0,0)*x - 320.D0/9.D0*Hr2(0,0)*dp + 496.D0/9.D0*Hr2(0,0)*
-c$$$     &    dm + 32.D0/9.D0*Hr2(0,1) - 160.D0/9.D0*Hr2(0,1)*x + 320.D0/9.D
-c$$$     &    0*Hr2(0,1)*dm - 64.D0/9.D0*Hr2(1,0) - 256.D0/9.D0*Hr2(1,0)*x
-c$$$     &     + 320.D0/9.D0*Hr2(1,0)*dm - 32.D0/3.D0*Hr3(-1,0,0) + 32.D0/3.
-c$$$     &    D0*Hr3(-1,0,0)*x + 64.D0/3.D0*Hr3(-1,0,0)*dp + 64.D0/3.D0*
-c$$$     &    Hr3(-1,0,1) - 64.D0/3.D0*Hr3(-1,0,1)*x - 128.D0/3.D0*Hr3(-1,0
-c$$$     &    ,1)*dp )
-c$$$      PTqq2 = PTqq2 + nf*cf**2 * (  - 32.D0/3.D0*Hr3(0,-1,0) + 32.D0/3.D
-c$$$     &    0*Hr3(0,-1,0)*x + 64.D0/3.D0*Hr3(0,-1,0)*dp - 24.D0*Hr3(0,0,0
-c$$$     &    ) - 136.D0/3.D0*Hr3(0,0,0)*x - 64.D0/3.D0*Hr3(0,0,0)*dp + 160.
-c$$$     &    D0/3.D0*Hr3(0,0,0)*dm - 64.D0/3.D0*Hr3(0,0,1) + 64.D0/3.D0*
-c$$$     &    Hr3(0,0,1)*dp + 64.D0/3.D0*Hr3(0,0,1)*dm - 32.D0/3.D0*Hr3(0,1
-c$$$     &    ,0) - 32.D0/3.D0*Hr3(0,1,0)*x + 64.D0/3.D0*Hr3(0,1,0)*dm )
-c$$$      PTqq2 = PTqq2 + nf2*cf * ( 112.D0/27.D0 - 32.D0/9.D0*x - 16.D0/
-c$$$     &    27.D0*dm + 8.D0/27.D0*Hr1(0) - 88.D0/27.D0*Hr1(0)*x + 80.D0/
-c$$$     &    27.D0*Hr1(0)*dm - 8.D0/9.D0*Hr2(0,0) - 8.D0/9.D0*Hr2(0,0)*x
-c$$$     &     + 16.D0/9.D0*Hr2(0,0)*dm )
-c$$$*
-c$$$* ...The soft (`+'-distribution) part of the splitting function
-c$$$*
-c$$$       A3 =
-c$$$     ,      ca**2*cf * ( + 490.D0/3.D0 + 88.D0/3.D0*z3 - 1072.D0/9.D0*z2
-c$$$     ,                   + 176.D0/5.D0*z2**2 )
-c$$$     ,    + ca*cf*nf * ( - 836./27.D0 + 160./9.D0*z2 - 112./3.D0*z3 )
-c$$$     ,    + cf**2*nf * ( - 110./3.D0 + 32.*z3 ) - cf*nf2 * 16./27.D0
-c$$$*
-c$$$       GQQ2L = DM * A3
-c$$$*
-c$$$* ...The regular piece of the splitting function
-c$$$*
-c$$$       X2NSPTA = PTqq2 - GQQ2L
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$       FUNCTION X2NSMTA (X, NF)
-c$$$*
-c$$$* ..This is the regular piece of P_NS-  (the odd-moment combination)
-c$$$*
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       COMPLEX*16 HC1, HC2, HC3, HC4
-c$$$       INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N
-c$$$       PARAMETER ( N1 = -1, N2 = 1, NW = 4 )
-c$$$       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HC4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       DIMENSION HR1(N1:N2),HR2(N1:N2,N1:N2),HR3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HR4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       DIMENSION HI1(N1:N2),HI2(N1:N2,N1:N2),HI3(N1:N2,N1:N2,N1:N2),
-c$$$     ,           HI4(N1:N2,N1:N2,N1:N2,N1:N2)
-c$$$       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-c$$$     ,             Z3 = 1.2020 56903 15959 42854 D0,
-c$$$     ,             Z5 = 1.0369 27755 14336 99263 D0 )
-c$$$*
-c$$$* ..The soft coefficient for use in X2NSPB and X2NSMTC
-c$$$*
-c$$$       COMMON / P2SOFT / A3
-c$$$*
-c$$$* ...Colour factors
-c$$$*
-c$$$       CF  = 4./3.D0
-c$$$       CA  = 3.D0
-c$$$       NF2 = NF*NF
-c$$$*
-c$$$* ...Some abbreviations
-c$$$*
-c$$$       DX = 1.D0/X
-c$$$       DM = 1.D0/(1.D0-X)
-c$$$       DP = 1.D0/(1.D0+X)
-c$$$*
-c$$$* ...The harmonic polylogs up to weight 4 by Gehrmann and Remiddi
-c$$$*
-c$$$       CALL HPLOG (X, NW, HC1,HC2,HC3,HC4, HR1,HR2,HR3,HR4,
-c$$$     ,            HI1,HI2,HI3,HI4, N1, N2)
-c$$$*
-c$$$* ...The splitting function in terms of the harmonic polylogs
-c$$$*    (without the delta(1-x) part, but with the soft contribution)
-c$$$*
-c$$$      PTqq2m = cf*ca**2 * ( 923.D0/27.D0 - 5333.D0/27.D0*x + 
-c$$$     &    490.D0/3.D0*dm + 112.D0*z3 + 48.D0*z3*x + 88.D0*z3*dp + 16.D0
-c$$$     &    *z3*dm + 1504.D0/9.D0*z2 + 224.D0/3.D0*z2*x - 1072.D0/9.D0*z2
-c$$$     &    *dp - 1072.D0/9.D0*z2*dm - 242.D0/5.D0*z2**2 - 62.D0/5.D0*
-c$$$     &    z2**2*x + 32.D0*z2**2*dp + 384.D0/5.D0*z2**2*dm + 192.D0*Hr1(
-c$$$     &    -1)*z3 - 192.D0*Hr1(-1)*z3*x - 384.D0*Hr1(-1)*z3*dp - 208.D0/
-c$$$     &    3.D0*Hr1(-1)*z2 - 560.D0/3.D0*Hr1(-1)*z2*x - 352.D0/3.D0*Hr1(
-c$$$     &    -1)*z2*dp - 1378.D0/27.D0*Hr1(0) - 2266.D0/27.D0*Hr1(0)*x + 
-c$$$     &    24.D0*Hr1(0)*dp + 4172.D0/27.D0*Hr1(0)*dm - 144.D0*Hr1(0)*z3
-c$$$     &     + 128.D0*Hr1(0)*z3*dp + 128.D0*Hr1(0)*z3*dm + 332.D0/3.D0*
-c$$$     &    Hr1(0)*z2 + 188.D0*Hr1(0)*z2*x + 16.D0/3.D0*Hr1(0)*z2*dp - 
-c$$$     &    248.D0/3.D0*Hr1(0)*z2*dm - 592.D0/3.D0*Hr1(1) + 592.D0/3.D0*
-c$$$     &    Hr1(1)*x - 144.D0*Hr1(1)*z3 - 144.D0*Hr1(1)*z3*x + 288.D0*
-c$$$     &    Hr1(1)*z3*dm - 32.D0*Hr1(1)*z2 + 32.D0*Hr1(1)*z2*x - 256.D0*
-c$$$     &    Hr2(-1,-1)*z2 + 256.D0*Hr2(-1,-1)*z2*x + 512.D0*Hr2(-1,-1)*z2
-c$$$     &    *dp )
-c$$$      PTqq2m = PTqq2m + cf*ca**2 * ( 832.D0/9.D0*Hr2(-1,0) - 1312.D0/9.D
-c$$$     &    0*Hr2(-1,0)*x - 2144.D0/9.D0*Hr2(-1,0)*dp + 176.D0*Hr2(-1,0)*
-c$$$     &    z2 - 176.D0*Hr2(-1,0)*z2*x - 352.D0*Hr2(-1,0)*z2*dp + 136.D0*
-c$$$     &    Hr2(0,-1)*z2 - 136.D0*Hr2(0,-1)*z2*x - 256.D0*Hr2(0,-1)*z2*dp
-c$$$     &     - 130.D0*Hr2(0,0) + 238.D0/9.D0*Hr2(0,0)*x + 1072.D0/9.D0*
-c$$$     &    Hr2(0,0)*dp + 1556.D0/9.D0*Hr2(0,0)*dm - 68.D0*Hr2(0,0)*z2 + 
-c$$$     &    36.D0*Hr2(0,0)*z2*x + 96.D0*Hr2(0,0)*z2*dp - 224.D0/3.D0*Hr2(
-c$$$     &    0,1) - 224.D0/3.D0*Hr2(0,1)*x + 24.D0*Hr2(0,1)*z2 - 40.D0*
-c$$$     &    Hr2(0,1)*z2*x - 64.D0*Hr2(0,1)*z2*dp + 16.D0*Hr2(1,0)*z2 + 16.
-c$$$     &    D0*Hr2(1,0)*z2*x - 32.D0*Hr2(1,0)*z2*dm + 64.D0*Hr3(-1,-1,0)
-c$$$     &     + 64.D0*Hr3(-1,-1,0)*x + 232.D0/3.D0*Hr3(-1,0,0) + 56.D0/3.D0
-c$$$     &    *Hr3(-1,0,0)*x - 176.D0/3.D0*Hr3(-1,0,0)*dp + 304.D0/3.D0*
-c$$$     &    Hr3(-1,0,1) + 656.D0/3.D0*Hr3(-1,0,1)*x + 352.D0/3.D0*Hr3(-1,
-c$$$     &    0,1)*dp + 328.D0/3.D0*Hr3(0,-1,0) - 376.D0/3.D0*Hr3(0,-1,0)*x
-c$$$     &     - 176.D0/3.D0*Hr3(0,-1,0)*dp - 48.D0*Hr3(0,-1,0)*dm - 416.D0/
-c$$$     &    3.D0*Hr3(0,0,0) )
-c$$$      PTqq2m = PTqq2m + cf*ca**2 * ( 248.D0/3.D0*Hr3(0,0,0)*dp + 248.D0/
-c$$$     &    3.D0*Hr3(0,0,0)*dm - 4.D0/3.D0*Hr3(0,0,1) - 188.D0*Hr3(0,0,1)
-c$$$     &    *x - 176.D0/3.D0*Hr3(0,0,1)*dp + 88.D0/3.D0*Hr3(0,0,1)*dm + 
-c$$$     &    12.D0*Hr3(1,0,0) + 76.D0*Hr3(1,0,0)*x - 88.D0*Hr3(1,0,0)*dm
-c$$$     &     + 128.D0*Hr4(-1,-1,0,0) - 128.D0*Hr4(-1,-1,0,0)*x - 256.D0*
-c$$$     &    Hr4(-1,-1,0,0)*dp + 256.D0*Hr4(-1,-1,0,1) - 256.D0*Hr4(-1,-1,
-c$$$     &    0,1)*x - 512.D0*Hr4(-1,-1,0,1)*dp - 48.D0*Hr4(-1,0,0,0) + 48.D
-c$$$     &    0*Hr4(-1,0,0,0)*x + 96.D0*Hr4(-1,0,0,0)*dp - 128.D0*Hr4(-1,0,
-c$$$     &    0,1) + 128.D0*Hr4(-1,0,0,1)*x + 256.D0*Hr4(-1,0,0,1)*dp - 48.D
-c$$$     &    0*Hr4(0,-1,-1,0) - 80.D0*Hr4(0,-1,-1,0)*x + 128.D0*Hr4(0,-1,
-c$$$     &    -1,0)*dm - 56.D0*Hr4(0,-1,0,0) + 88.D0*Hr4(0,-1,0,0)*x + 128.D
-c$$$     &    0*Hr4(0,-1,0,0)*dp - 32.D0*Hr4(0,-1,0,0)*dm - 160.D0*Hr4(0,-1
-c$$$     &    ,0,1) + 96.D0*Hr4(0,-1,0,1)*x + 256.D0*Hr4(0,-1,0,1)*dp + 64.D
-c$$$     &    0*Hr4(0,-1,0,1)*dm - 40.D0*Hr4(0,0,-1,0) + 8.D0*Hr4(0,0,-1,0)
-c$$$     &    *x + 32.D0*Hr4(0,0,-1,0)*dp + 32.D0*Hr4(0,0,-1,0)*dm + 40.D0*
-c$$$     &    Hr4(0,0,0,0) )
-c$$$      PTqq2m = PTqq2m + cf*ca**2 * (  - 32.D0*Hr4(0,0,0,0)*dp - 32.D0*
-c$$$     &    Hr4(0,0,0,0)*dm + 28.D0*Hr4(0,0,0,1) - 36.D0*Hr4(0,0,0,1)*x
-c$$$     &     - 64.D0*Hr4(0,0,0,1)*dp + 32.D0*Hr4(0,0,0,1)*dm + 28.D0*Hr4(
-c$$$     &    0,1,0,0) + 28.D0*Hr4(0,1,0,0)*x - 64.D0*Hr4(0,1,0,0)*dm - 96.D
-c$$$     &    0*Hr4(1,0,-1,0) - 96.D0*Hr4(1,0,-1,0)*x + 192.D0*Hr4(1,0,-1,0
-c$$$     &    )*dm + 48.D0*Hr4(1,0,0,0) + 48.D0*Hr4(1,0,0,0)*x - 96.D0*Hr4(
-c$$$     &    1,0,0,0)*dm - 64.D0*Hr4(1,0,0,1) - 64.D0*Hr4(1,0,0,1)*x + 128.
-c$$$     &    D0*Hr4(1,0,0,1)*dm + 64.D0*Hr4(1,1,0,0) + 64.D0*Hr4(1,1,0,0)*
-c$$$     &    x - 128.D0*Hr4(1,1,0,0)*dm )
-c$$$      PTqq2m = PTqq2m + cf**2*ca * ( 1516.D0/3.D0 - 1516.D0/3.D0*x - 
-c$$$     &    832.D0/3.D0*z3 - 880.D0/3.D0*z3*x - 248.D0*z3*dp + 80.D0/3.D0
-c$$$     &    *z3*dm - 3880.D0/9.D0*z2 - 152.D0/9.D0*z2*x + 2144.D0/9.D0*z2
-c$$$     &    *dp + 56.D0/5.D0*z2**2 - 24.D0/5.D0*z2**2*x - 8.D0*z2**2*dp
-c$$$     &     - 552.D0/5.D0*z2**2*dm - 672.D0*Hr1(-1)*z3 + 672.D0*Hr1(-1)*
-c$$$     &    z3*x + 1344.D0*Hr1(-1)*z3*dp + 704.D0/3.D0*Hr1(-1)*z2 + 1696.D
-c$$$     &    0/3.D0*Hr1(-1)*z2*x + 992.D0/3.D0*Hr1(-1)*z2*dp - 350.D0/9.D0
-c$$$     &    *Hr1(0) - 1798.D0/9.D0*Hr1(0)*x - 72.D0*Hr1(0)*dp + 302.D0/3.D
-c$$$     &    0*Hr1(0)*dm + 224.D0*Hr1(0)*z3 - 240.D0*Hr1(0)*z3*dp - 240.D0
-c$$$     &    *Hr1(0)*z3*dm - 184.D0*Hr1(0)*z2 - 1688.D0/3.D0*Hr1(0)*z2*x
-c$$$     &     - 248.D0/3.D0*Hr1(0)*z2*dp + 536.D0/3.D0*Hr1(0)*z2*dm + 2008.
-c$$$     &    D0/3.D0*Hr1(1) - 2008.D0/3.D0*Hr1(1)*x + 384.D0*Hr1(1)*z3 + 
-c$$$     &    384.D0*Hr1(1)*z3*x - 768.D0*Hr1(1)*z3*dm + 112.D0*Hr1(1)*z2
-c$$$     &     - 112.D0*Hr1(1)*z2*x + 896.D0*Hr2(-1,-1)*z2 - 896.D0*Hr2(-1,
-c$$$     &    -1)*z2*x - 1792.D0*Hr2(-1,-1)*z2*dp - 1232.D0/9.D0*Hr2(-1,0)
-c$$$     &     + 3056.D0/9.D0*Hr2(-1,0)*x )
-c$$$      PTqq2m = PTqq2m + cf**2*ca * ( 4288.D0/9.D0*Hr2(-1,0)*dp - 544.D0
-c$$$     &    *Hr2(-1,0)*z2 + 544.D0*Hr2(-1,0)*z2*x + 1088.D0*Hr2(-1,0)*z2*
-c$$$     &    dp - 352.D0*Hr2(0,-1)*z2 + 448.D0*Hr2(0,-1)*z2*x + 768.D0*
-c$$$     &    Hr2(0,-1)*z2*dp - 96.D0*Hr2(0,-1)*z2*dm + 1280.D0/9.D0*Hr2(0,
-c$$$     &    0) + 776.D0/3.D0*Hr2(0,0)*x - 2144.D0/9.D0*Hr2(0,0)*dp - 3640.
-c$$$     &    D0/9.D0*Hr2(0,0)*dm + 32.D0*Hr2(0,0)*z2 - 96.D0*Hr2(0,0)*z2*x
-c$$$     &     - 160.D0*Hr2(0,0)*z2*dp + 128.D0*Hr2(0,0)*z2*dm + 2296.D0/9.D
-c$$$     &    0*Hr2(0,1) + 4792.D0/9.D0*Hr2(0,1)*x - 2144.D0/9.D0*Hr2(0,1)*
-c$$$     &    dm - 128.D0*Hr2(0,1)*z2 + 96.D0*Hr2(0,1)*z2*x + 224.D0*Hr2(0,
-c$$$     &    1)*z2*dp + 64.D0*Hr2(0,1)*z2*dm - 176.D0/9.D0*Hr2(1,0) + 2320.
-c$$$     &    D0/9.D0*Hr2(1,0)*x - 2144.D0/9.D0*Hr2(1,0)*dm - 32.D0*Hr2(1,0
-c$$$     &    )*z2 - 32.D0*Hr2(1,0)*z2*x + 64.D0*Hr2(1,0)*z2*dm - 224.D0*
-c$$$     &    Hr3(-1,-1,0) - 224.D0*Hr3(-1,-1,0)*x - 200.D0/3.D0*Hr3(-1,0,0
-c$$$     &    ) - 280.D0/3.D0*Hr3(-1,0,0)*x - 80.D0/3.D0*Hr3(-1,0,0)*dp - 
-c$$$     &    1040.D0/3.D0*Hr3(-1,0,1) - 2032.D0/3.D0*Hr3(-1,0,1)*x - 992.D0
-c$$$     &    /3.D0*Hr3(-1,0,1)*dp )
-c$$$      PTqq2m = PTqq2m + cf**2*ca * (  - 416.D0/3.D0*Hr3(0,-1,0) + 992.D0
-c$$$     &    /3.D0*Hr3(0,-1,0)*x + 208.D0/3.D0*Hr3(0,-1,0)*dp + 96.D0*Hr3(
-c$$$     &    0,-1,0)*dm + 652.D0/3.D0*Hr3(0,0,0) + 36.D0*Hr3(0,0,0)*x - 
-c$$$     &    280.D0/3.D0*Hr3(0,0,0)*dp - 808.D0/3.D0*Hr3(0,0,0)*dm + 40.D0
-c$$$     &    *Hr3(0,0,1) + 1672.D0/3.D0*Hr3(0,0,1)*x + 496.D0/3.D0*Hr3(0,0
-c$$$     &    ,1)*dp - 640.D0/3.D0*Hr3(0,0,1)*dm + 80.D0/3.D0*Hr3(0,1,0) + 
-c$$$     &    80.D0/3.D0*Hr3(0,1,0)*x - 352.D0/3.D0*Hr3(0,1,0)*dm + 16.D0*
-c$$$     &    Hr3(1,0,0) - 112.D0*Hr3(1,0,0)*x + 96.D0*Hr3(1,0,0)*dm - 320.D
-c$$$     &    0*Hr4(-1,-1,0,0) + 320.D0*Hr4(-1,-1,0,0)*x + 640.D0*Hr4(-1,-1
-c$$$     &    ,0,0)*dp - 896.D0*Hr4(-1,-1,0,1) + 896.D0*Hr4(-1,-1,0,1)*x + 
-c$$$     &    1792.D0*Hr4(-1,-1,0,1)*dp + 64.D0*Hr4(-1,0,-1,0) - 64.D0*Hr4(
-c$$$     &    -1,0,-1,0)*x - 128.D0*Hr4(-1,0,-1,0)*dp - 16.D0*Hr4(-1,0,0,0)
-c$$$     &     + 16.D0*Hr4(-1,0,0,0)*x + 32.D0*Hr4(-1,0,0,0)*dp + 384.D0*
-c$$$     &    Hr4(-1,0,0,1) - 384.D0*Hr4(-1,0,0,1)*x - 768.D0*Hr4(-1,0,0,1)
-c$$$     &    *dp - 32.D0*Hr4(-1,0,1,0) + 32.D0*Hr4(-1,0,1,0)*x + 64.D0*
-c$$$     &    Hr4(-1,0,1,0)*dp )
-c$$$      PTqq2m = PTqq2m + cf**2*ca * ( 256.D0*Hr4(0,-1,-1,0) + 192.D0*
-c$$$     &    Hr4(0,-1,-1,0)*x - 128.D0*Hr4(0,-1,-1,0)*dp - 448.D0*Hr4(0,-1
-c$$$     &    ,-1,0)*dm + 16.D0*Hr4(0,-1,0,0) - 176.D0*Hr4(0,-1,0,0)*x - 
-c$$$     &    224.D0*Hr4(0,-1,0,0)*dp + 160.D0*Hr4(0,-1,0,0)*dm + 480.D0*
-c$$$     &    Hr4(0,-1,0,1) - 352.D0*Hr4(0,-1,0,1)*x - 832.D0*Hr4(0,-1,0,1)
-c$$$     &    *dp - 128.D0*Hr4(0,-1,0,1)*dm - 64.D0*Hr4(0,0,-1,0) + 64.D0*
-c$$$     &    Hr4(0,0,-1,0)*x + 96.D0*Hr4(0,0,-1,0)*dp - 32.D0*Hr4(0,0,-1,0
-c$$$     &    )*dm + 160.D0*Hr4(0,0,0,0) - 96.D0*Hr4(0,0,0,0)*dp - 96.D0*
-c$$$     &    Hr4(0,0,0,0)*dm - 32.D0*Hr4(0,0,0,1) + 96.D0*Hr4(0,0,0,1)*x
-c$$$     &     + 128.D0*Hr4(0,0,0,1)*dp - 160.D0*Hr4(0,0,0,1)*dm + 32.D0*
-c$$$     &    Hr4(0,0,1,0) - 32.D0*Hr4(0,0,1,0)*dp - 32.D0*Hr4(0,0,1,0)*dm
-c$$$     &     - 16.D0*Hr4(0,1,0,0) - 16.D0*Hr4(0,1,0,0)*x + 96.D0*Hr4(0,1,
-c$$$     &    0,0)*dm + 256.D0*Hr4(1,0,-1,0) + 256.D0*Hr4(1,0,-1,0)*x - 512.
-c$$$     &    D0*Hr4(1,0,-1,0)*dm - 80.D0*Hr4(1,0,0,0) - 80.D0*Hr4(1,0,0,0)
-c$$$     &    *x + 160.D0*Hr4(1,0,0,0)*dm + 128.D0*Hr4(1,0,0,1) + 128.D0*
-c$$$     &    Hr4(1,0,0,1)*x )
-c$$$      PTqq2m = PTqq2m + cf**2*ca * (  - 256.D0*Hr4(1,0,0,1)*dm - 128.D0
-c$$$     &    *Hr4(1,1,0,0) - 128.D0*Hr4(1,1,0,0)*x + 256.D0*Hr4(1,1,0,0)*
-c$$$     &    dm )
-c$$$      PTqq2m = PTqq2m + cf**3 * (  - 302.D0 + 302.D0*x + 48.D0*z3 + 336.
-c$$$     &    D0*z3*x + 144.D0*z3*dp + 204.D0*z2 + 12.D0*z2*x + 504.D0/5.D0
-c$$$     &    *z2**2 - 56.D0/5.D0*z2**2*x - 112.D0*z2**2*dp + 144.D0/5.D0*
-c$$$     &    z2**2*dm + 576.D0*Hr1(-1)*z3 - 576.D0*Hr1(-1)*z3*x - 1152.D0*
-c$$$     &    Hr1(-1)*z3*dp - 192.D0*Hr1(-1)*z2 - 384.D0*Hr1(-1)*z2*x - 192.
-c$$$     &    D0*Hr1(-1)*z2*dp + 10.D0*Hr1(0) + 114.D0*Hr1(0)*x + 48.D0*
-c$$$     &    Hr1(0)*dp + 6.D0*Hr1(0)*dm + 128.D0*Hr1(0)*z3 - 32.D0*Hr1(0)*
-c$$$     &    z3*dp - 32.D0*Hr1(0)*z3*dm - 16.D0*Hr1(0)*z2 + 432.D0*Hr1(0)*
-c$$$     &    z2*x + 144.D0*Hr1(0)*z2*dp - 144.D0*Hr1(0)*z2*dm - 400.D0*
-c$$$     &    Hr1(1) + 400.D0*Hr1(1)*x - 192.D0*Hr1(1)*z3 - 192.D0*Hr1(1)*
-c$$$     &    z3*x + 384.D0*Hr1(1)*z3*dm - 96.D0*Hr1(1)*z2 + 96.D0*Hr1(1)*
-c$$$     &    z2*x - 768.D0*Hr2(-1,-1)*z2 + 768.D0*Hr2(-1,-1)*z2*x + 1536.D0
-c$$$     &    *Hr2(-1,-1)*z2*dp - 96.D0*Hr2(-1,0) - 96.D0*Hr2(-1,0)*x + 384.
-c$$$     &    D0*Hr2(-1,0)*z2 - 384.D0*Hr2(-1,0)*z2*x - 768.D0*Hr2(-1,0)*z2
-c$$$     &    *dp + 160.D0*Hr2(0,-1)*z2 - 352.D0*Hr2(0,-1)*z2*x - 512.D0*
-c$$$     &    Hr2(0,-1)*z2*dp )
-c$$$      PTqq2m = PTqq2m + cf**3 * ( 192.D0*Hr2(0,-1)*z2*dm + 172.D0*Hr2(0
-c$$$     &    ,0) - 228.D0*Hr2(0,0)*x + 52.D0*Hr2(0,0)*dm + 208.D0*Hr2(0,0)
-c$$$     &    *z2 + 48.D0*Hr2(0,0)*z2*x - 64.D0*Hr2(0,0)*z2*dp - 256.D0*
-c$$$     &    Hr2(0,0)*z2*dm - 12.D0*Hr2(0,1) - 300.D0*Hr2(0,1)*x + 96.D0*
-c$$$     &    Hr2(0,1)*z2 - 96.D0*Hr2(0,1)*z2*x - 192.D0*Hr2(0,1)*z2*dp + 
-c$$$     &    144.D0*Hr2(1,0) - 144.D0*Hr2(1,0)*x + 192.D0*Hr3(-1,-1,0) + 
-c$$$     &    192.D0*Hr3(-1,-1,0)*x - 176.D0*Hr3(-1,0,0) + 112.D0*Hr3(-1,0,
-c$$$     &    0)*x + 288.D0*Hr3(-1,0,0)*dp + 288.D0*Hr3(-1,0,1) + 480.D0*
-c$$$     &    Hr3(-1,0,1)*x + 192.D0*Hr3(-1,0,1)*dp - 160.D0*Hr3(0,-1,0) - 
-c$$$     &    160.D0*Hr3(0,-1,0)*x + 96.D0*Hr3(0,-1,0)*dp + 528.D0*Hr3(0,0,
-c$$$     &    0) + 240.D0*Hr3(0,0,0)*x - 144.D0*Hr3(0,0,0)*dp - 288.D0*Hr3(
-c$$$     &    0,0,0)*dm + 160.D0*Hr3(0,0,1) - 256.D0*Hr3(0,0,1)*x - 96.D0*
-c$$$     &    Hr3(0,0,1)*dp + 152.D0*Hr3(0,1,0) + 88.D0*Hr3(0,1,0)*x - 96.D0
-c$$$     &    *Hr3(0,1,0)*dm + 96.D0*Hr3(1,0,0) + 96.D0*Hr3(1,0,0)*x - 192.D
-c$$$     &    0*Hr3(1,0,0)*dm + 128.D0*Hr4(-1,-1,0,0) - 128.D0*Hr4(-1,-1,0,
-c$$$     &    0)*x )
-c$$$      PTqq2m = PTqq2m + cf**3 * (  - 256.D0*Hr4(-1,-1,0,0)*dp + 768.D0*
-c$$$     &    Hr4(-1,-1,0,1) - 768.D0*Hr4(-1,-1,0,1)*x - 1536.D0*Hr4(-1,-1,
-c$$$     &    0,1)*dp - 128.D0*Hr4(-1,0,-1,0) + 128.D0*Hr4(-1,0,-1,0)*x + 
-c$$$     &    256.D0*Hr4(-1,0,-1,0)*dp + 224.D0*Hr4(-1,0,0,0) - 224.D0*Hr4(
-c$$$     &    -1,0,0,0)*x - 448.D0*Hr4(-1,0,0,0)*dp - 256.D0*Hr4(-1,0,0,1)
-c$$$     &     + 256.D0*Hr4(-1,0,0,1)*x + 512.D0*Hr4(-1,0,0,1)*dp + 64.D0*
-c$$$     &    Hr4(-1,0,1,0) - 64.D0*Hr4(-1,0,1,0)*x - 128.D0*Hr4(-1,0,1,0)*
-c$$$     &    dp - 320.D0*Hr4(0,-1,-1,0) - 64.D0*Hr4(0,-1,-1,0)*x + 256.D0*
-c$$$     &    Hr4(0,-1,-1,0)*dp + 384.D0*Hr4(0,-1,-1,0)*dm + 192.D0*Hr4(0,
-c$$$     &    -1,0,0) - 64.D0*Hr4(0,-1,0,0)*dp - 192.D0*Hr4(0,-1,0,0)*dm - 
-c$$$     &    320.D0*Hr4(0,-1,0,1) + 320.D0*Hr4(0,-1,0,1)*x + 640.D0*Hr4(0,
-c$$$     &    -1,0,1)*dp + 288.D0*Hr4(0,0,-1,0) - 160.D0*Hr4(0,0,-1,0)*x - 
-c$$$     &    320.D0*Hr4(0,0,-1,0)*dp - 64.D0*Hr4(0,0,-1,0)*dm - 592.D0*
-c$$$     &    Hr4(0,0,0,0) - 112.D0*Hr4(0,0,0,0)*x + 320.D0*Hr4(0,0,0,0)*dp
-c$$$     &     + 448.D0*Hr4(0,0,0,0)*dm - 240.D0*Hr4(0,0,0,1) - 240.D0*Hr4(
-c$$$     &    0,0,0,1)*x )
-c$$$      PTqq2m = PTqq2m + cf**3 * ( 448.D0*Hr4(0,0,0,1)*dm - 192.D0*Hr4(0
-c$$$     &    ,0,1,0) - 128.D0*Hr4(0,0,1,0)*x + 64.D0*Hr4(0,0,1,0)*dp + 256.
-c$$$     &    D0*Hr4(0,0,1,0)*dm - 64.D0*Hr4(0,0,1,1) - 64.D0*Hr4(0,0,1,1)*
-c$$$     &    x + 128.D0*Hr4(0,0,1,1)*dm - 144.D0*Hr4(0,1,0,0) - 144.D0*
-c$$$     &    Hr4(0,1,0,0)*x + 192.D0*Hr4(0,1,0,0)*dm - 64.D0*Hr4(0,1,0,1)
-c$$$     &     - 64.D0*Hr4(0,1,0,1)*x + 128.D0*Hr4(0,1,0,1)*dm - 64.D0*Hr4(
-c$$$     &    0,1,1,0) - 64.D0*Hr4(0,1,1,0)*x + 128.D0*Hr4(0,1,1,0)*dm - 
-c$$$     &    128.D0*Hr4(1,0,-1,0) - 128.D0*Hr4(1,0,-1,0)*x + 256.D0*Hr4(1,
-c$$$     &    0,-1,0)*dm - 128.D0*Hr4(1,0,0,0) - 128.D0*Hr4(1,0,0,0)*x + 
-c$$$     &    256.D0*Hr4(1,0,0,0)*dm - 128.D0*Hr4(1,0,0,1) - 128.D0*Hr4(1,0
-c$$$     &    ,0,1)*x + 256.D0*Hr4(1,0,0,1)*dm - 64.D0*Hr4(1,0,1,0) - 64.D0
-c$$$     &    *Hr4(1,0,1,0)*x + 128.D0*Hr4(1,0,1,0)*dm )
-c$$$      PTqq2m = PTqq2m + nf*cf*ca * (  - 1034.D0/9.D0 + 3938.D0/27.D0*x
-c$$$     &     - 836.D0/27.D0*dm + 32.D0*z3 + 16.D0*z3*x - 16.D0*z3*dp - 48.
-c$$$     &    D0*z3*dm - 88.D0/9.D0*z2 - 8.D0/3.D0*z2*x + 160.D0/9.D0*z2*dp
-c$$$     &     + 160.D0/9.D0*z2*dm - 32.D0/3.D0*Hr1(-1)*z2 + 32.D0/3.D0*
-c$$$     &    Hr1(-1)*z2*x + 64.D0/3.D0*Hr1(-1)*z2*dp - 916.D0/27.D0*Hr1(0)
-c$$$     &     + 716.D0/27.D0*Hr1(0)*x - 1336.D0/27.D0*Hr1(0)*dm - 8.D0/3.D0
-c$$$     &    *Hr1(0)*z2 - 8.D0*Hr1(0)*z2*x - 16.D0/3.D0*Hr1(0)*z2*dp + 32.D
-c$$$     &    0/3.D0*Hr1(0)*z2*dm + 16.D0/3.D0*Hr1(1) - 16.D0/3.D0*Hr1(1)*x
-c$$$     &     - 64.D0/9.D0*Hr2(-1,0) + 256.D0/9.D0*Hr2(-1,0)*x + 320.D0/9.D
-c$$$     &    0*Hr2(-1,0)*dp + 104.D0/9.D0*Hr2(0,0) - 32.D0/9.D0*Hr2(0,0)*x
-c$$$     &     - 160.D0/9.D0*Hr2(0,0)*dp - 112.D0/3.D0*Hr2(0,0)*dm + 8.D0/3.
-c$$$     &    D0*Hr2(0,1) + 8.D0/3.D0*Hr2(0,1)*x - 16.D0/3.D0*Hr3(-1,0,0)
-c$$$     &     + 16.D0/3.D0*Hr3(-1,0,0)*x + 32.D0/3.D0*Hr3(-1,0,0)*dp + 32.D
-c$$$     &    0/3.D0*Hr3(-1,0,1) - 32.D0/3.D0*Hr3(-1,0,1)*x - 64.D0/3.D0*
-c$$$     &    Hr3(-1,0,1)*dp - 16.D0/3.D0*Hr3(0,-1,0) + 16.D0/3.D0*Hr3(0,-1
-c$$$     &    ,0)*x )
-c$$$      PTqq2m = PTqq2m + nf*cf*ca * ( 32.D0/3.D0*Hr3(0,-1,0)*dp + 32.D0/
-c$$$     &    3.D0*Hr3(0,0,0) - 32.D0/3.D0*Hr3(0,0,0)*dp - 32.D0/3.D0*Hr3(0
-c$$$     &    ,0,0)*dm - 8.D0/3.D0*Hr3(0,0,1) + 8.D0*Hr3(0,0,1)*x + 32.D0/3.
-c$$$     &    D0*Hr3(0,0,1)*dp - 16.D0/3.D0*Hr3(0,0,1)*dm - 8.D0*Hr3(1,0,0)
-c$$$     &     - 8.D0*Hr3(1,0,0)*x + 16.D0*Hr3(1,0,0)*dm )
-c$$$      PTqq2m = PTqq2m + nf*cf**2 * ( 109.D0 - 217.D0/3.D0*x - 110.D0/3.D
-c$$$     &    0*dm - 128.D0/3.D0*z3 - 32.D0/3.D0*z3*x + 32.D0*z3*dp + 160.D0
-c$$$     &    /3.D0*z3*dm + 160.D0/9.D0*z2 - 160.D0/9.D0*z2*x - 320.D0/9.D0
-c$$$     &    *z2*dp + 64.D0/3.D0*Hr1(-1)*z2 - 64.D0/3.D0*Hr1(-1)*z2*x - 
-c$$$     &    128.D0/3.D0*Hr1(-1)*z2*dp + 848.D0/9.D0*Hr1(0) + 400.D0/9.D0*
-c$$$     &    Hr1(0)*x - 68.D0/3.D0*Hr1(0)*dm + 32.D0/3.D0*Hr1(0)*z2*x + 32.
-c$$$     &    D0/3.D0*Hr1(0)*z2*dp - 32.D0/3.D0*Hr1(0)*z2*dm - 64.D0/3.D0*
-c$$$     &    Hr1(1) + 64.D0/3.D0*Hr1(1)*x + 128.D0/9.D0*Hr2(-1,0) - 512.D0/
-c$$$     &    9.D0*Hr2(-1,0)*x - 640.D0/9.D0*Hr2(-1,0)*dp - 32.D0/9.D0*Hr2(
-c$$$     &    0,0) - 32.D0/3.D0*Hr2(0,0)*x + 320.D0/9.D0*Hr2(0,0)*dp + 496.D
-c$$$     &    0/9.D0*Hr2(0,0)*dm - 160.D0/9.D0*Hr2(0,1) - 352.D0/9.D0*Hr2(0
-c$$$     &    ,1)*x + 320.D0/9.D0*Hr2(0,1)*dm - 64.D0/9.D0*Hr2(1,0) - 256.D0
-c$$$     &    /9.D0*Hr2(1,0)*x + 320.D0/9.D0*Hr2(1,0)*dm + 32.D0/3.D0*Hr3(
-c$$$     &    -1,0,0) - 32.D0/3.D0*Hr3(-1,0,0)*x - 64.D0/3.D0*Hr3(-1,0,0)*
-c$$$     &    dp - 64.D0/3.D0*Hr3(-1,0,1) + 64.D0/3.D0*Hr3(-1,0,1)*x + 128.D
-c$$$     &    0/3.D0*Hr3(-1,0,1)*dp )
-c$$$      PTqq2m = PTqq2m + nf*cf**2 * ( 32.D0/3.D0*Hr3(0,-1,0) - 32.D0/3.D0
-c$$$     &    *Hr3(0,-1,0)*x - 64.D0/3.D0*Hr3(0,-1,0)*dp - 136.D0/3.D0*Hr3(
-c$$$     &    0,0,0) - 24.D0*Hr3(0,0,0)*x + 64.D0/3.D0*Hr3(0,0,0)*dp + 160.D
-c$$$     &    0/3.D0*Hr3(0,0,0)*dm - 64.D0/3.D0*Hr3(0,0,1)*x - 64.D0/3.D0*
-c$$$     &    Hr3(0,0,1)*dp + 64.D0/3.D0*Hr3(0,0,1)*dm - 32.D0/3.D0*Hr3(0,1
-c$$$     &    ,0) - 32.D0/3.D0*Hr3(0,1,0)*x + 64.D0/3.D0*Hr3(0,1,0)*dm )
-c$$$      PTqq2m = PTqq2m + nf2*cf * ( 112.D0/27.D0 - 32.D0/9.D0*x - 16.D0
-c$$$     &    /27.D0*dm + 8.D0/27.D0*Hr1(0) - 88.D0/27.D0*Hr1(0)*x + 80.D0/
-c$$$     &    27.D0*Hr1(0)*dm - 8.D0/9.D0*Hr2(0,0) - 8.D0/9.D0*Hr2(0,0)*x
-c$$$     &     + 16.D0/9.D0*Hr2(0,0)*dm )
-c$$$*
-c$$$* ...The soft (`+'-distribution) part of the splitting function
-c$$$*
-c$$$       A3 =
-c$$$     ,      ca**2*cf * ( + 490.D0/3.D0 + 88.D0/3.D0*z3 - 1072.D0/9.D0*z2
-c$$$     ,                   + 176.D0/5.D0*z2**2 )
-c$$$     ,    + ca*cf*nf * ( - 836./27.D0 + 160./9.D0*z2 - 112./3.D0*z3 )
-c$$$     ,    + cf**2*nf * ( - 110./3.D0 + 32.*z3 ) - cf*nf2 * 16./27.D0
-c$$$*
-c$$$       GQQ2L = DM * A3
-c$$$*
-c$$$* ...The regular piece of the splitting function
-c$$$*
-c$$$       X2NSMTA = PTqq2m - GQQ2L
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..This is the singular (soft) piece  (as in the spacelike case)
-c$$$*
-c$$$       FUNCTION X2NSTB (Y, NF)
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       INTEGER NF
-c$$$*
-c$$$       COMMON / P2SOFT / A3
-c$$$*
-c$$$       X2NSTB  = A3/(1.D0-Y)
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..This is the 'local' piece  (as in the spacelike case)
-c$$$*
-c$$$       FUNCTION X2NSTC (Y, NF)
-c$$$*
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       INTEGER NF, NF2
-c$$$       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-c$$$     ,             Z3 = 1.2020 56903 15959 42854 D0,
-c$$$     ,             Z5 = 1.0369 27755 14336 99263 D0 )
-c$$$*
-c$$$       COMMON / P2SOFT / A3
-c$$$*
-c$$$* ...Colour factors
-c$$$*
-c$$$       CF  = 4./3.D0
-c$$$       CA  = 3.D0
-c$$$       NF2 = NF*NF
-c$$$*
-c$$$* ...The coefficient of delta(1-x)
-c$$$*
-c$$$       P2DELT = 
-c$$$     &     + 29.D0/2.D0*cf**3
-c$$$     &     + 151.D0/4.D0*ca*cf**2
-c$$$     &     - 1657.D0/36.D0*ca**2*cf
-c$$$     &     - 240.D0*z5*cf**3
-c$$$     &     + 120.D0*z5*ca*cf**2
-c$$$     &     + 40.D0*z5*ca**2*cf
-c$$$     &     + 68.D0*z3*cf**3
-c$$$     &     + 844.D0/3.D0*z3*ca*cf**2
-c$$$     &     - 1552.D0/9.D0*z3*ca**2*cf
-c$$$     &     + 18.D0*z2*cf**3
-c$$$     &     - 410.D0/3.D0*z2*ca*cf**2
-c$$$     &     + 4496.D0/27.D0*z2*ca**2*cf
-c$$$     &     - 32.D0*z2*z3*cf**3
-c$$$     &     + 16.D0*z2*z3*ca*cf**2
-c$$$     &     + 288.D0/5.D0*z2**2*cf**3
-c$$$     &     - 988.D0/15.D0*z2**2*ca*cf**2
-c$$$     &     - 2.D0*z2**2*ca**2*cf
-c$$$*
-c$$$     &     - 1336.D0/27.D0*z2*ca*cf*nf
-c$$$     &     + 4.D0/5.D0*z2**2*ca*cf*nf
-c$$$     &     + 200.D0/9.D0*z3*ca*cf*nf
-c$$$     &     + 20.D0*ca*cf*nf
-c$$$     &     + 20.D0/3.D0*z2*cf**2*nf
-c$$$     &     + 232.D0/15.D0*z2**2*cf**2*nf
-c$$$     &     - 136.D0/3.D0*z3*cf**2*nf
-c$$$     &     - 23.D0*cf**2*nf
-c$$$     &     + 80.D0/27.D0*z2*cf*nf2
-c$$$     &     - 16.D0/9.D0*z3*cf*nf2
-c$$$     &     - 17.D0/9.D0*cf*nf2
-c$$$*
-c$$$       X2NSTC = LOG (1.D0-Y) * A3 + P2DELT
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
-c$$$* ---------------------------------------------------------------------
-c$$$*
-c$$$*
-c$$$* ..This is P_NSS, the difference of P_NSV and P_NS-  (odd moments).
-c$$$*    Identical to the spacelike result, given here for completeness.
-c$$$*
-c$$$       FUNCTION X2NSSTA (X, NF)
-c$$$*
-c$$$       IMPLICIT REAL*8 (A - Z)
-c$$$       COMPLEX*16 HC1, HC2, HC3, HC4 
-c$$$       INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N
-c$$$       PARAMETER ( N1 = -1, N2 = 1, NW = 4 ) 
-c$$$       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2), 
-c$$$     ,           HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
-c$$$       DIMENSION HR1(N1:N2),HR2(N1:N2,N1:N2),HR3(N1:N2,N1:N2,N1:N2), 
-c$$$     ,           HR4(N1:N2,N1:N2,N1:N2,N1:N2) 
-c$$$       DIMENSION HI1(N1:N2),HI2(N1:N2,N1:N2),HI3(N1:N2,N1:N2,N1:N2), 
-c$$$     ,           HI4(N1:N2,N1:N2,N1:N2,N1:N2) 
-c$$$       PARAMETER ( Z2 = 1.6449 34066 84822 64365 D0,
-c$$$     ,             Z3 = 1.2020 56903 15959 42854 D0 )
-c$$$*
-c$$$* ...An abbreviation
-c$$$*
-c$$$       DX = 1.D0/X
-c$$$*
-c$$$* ...The harmonic polylogs up to weight 4 by Gehrmann and Remiddi
-c$$$*
-c$$$       CALL HPLOG (X, NW, HC1,HC2,HC3,HC4, HR1,HR2,HR3,HR4,
-c$$$     ,            HI1,HI2,HI3,HI4, N1, N2) 
-c$$$*
-c$$$* ...The splitting function in terms of the harmonic polylogs
-c$$$*
-c$$$      gqq2 =
-c$$$     &  + 5./18.D0 * NF * ( 6400.D0/3.D0 - 6400.D0/3.D0*x + 256.D0*z3
-c$$$     &     + 1280.D0/3.D0*z3*x**2 - 2144.D0/3.D0*z2 - 1312.D0/3.D0*z2*x
-c$$$     &     + 96.D0*z2**2 + 160.D0*z2**2*x - 192.D0*Hr1(-1)*z2 - 192.D0*
-c$$$     &    Hr1(-1)*z2*x - 256.D0*Hr1(-1)*z2*x**2 - 256.D0*Hr1(-1)*z2*dx
-c$$$     &     + 3200.D0/3.D0*Hr1(0) + 96.D0*Hr1(0)*x - 256.D0*Hr1(0)*z3 +
-c$$$     &    32.D0*Hr1(0)*z2 + 288.D0*Hr1(0)*z2*x + 1024.D0/3.D0*Hr1(0)*z2
-c$$$     &    *x**2 + 2912.D0/3.D0*Hr1(1) - 2912.D0/3.D0*Hr1(1)*x - 64.D0*
-c$$$     &    Hr1(1)*z2 + 64.D0*Hr1(1)*z2*x + 256.D0/3.D0*Hr1(1)*z2*x**2 -
-c$$$     &    256.D0/3.D0*Hr1(1)*z2*dx - 832.D0/3.D0*Hr2(-1,0) - 832.D0/3.D0
-c$$$     &    *Hr2(-1,0)*x + 128.D0*Hr2(0,-1)*z2 - 128.D0*Hr2(0,-1)*z2*x +
-c$$$     &    1216.D0/3.D0*Hr2(0,0) + 928.D0/3.D0*Hr2(0,0)*x - 320.D0*Hr2(0
-c$$$     &    ,0)*z2 - 192.D0*Hr2(0,0)*z2*x + 1312.D0/3.D0*Hr2(0,1) + 1312.D
-c$$$     &    0/3.D0*Hr2(0,1)*x - 128.D0*Hr2(0,1)*z2 - 128.D0*Hr2(0,1)*z2*x
-c$$$     &     + 128.D0*Hr3(-1,-1,0) + 128.D0*Hr3(-1,-1,0)*x - 512.D0/3.D0*
-c$$$     &    Hr3(-1,-1,0)*x**2 - 512.D0/3.D0*Hr3(-1,-1,0)*dx + 64.D0*Hr3(
-c$$$     &    -1,0,0) )
-c$$$      gqq2 = gqq2 + 5./18.D0 * NF* ( 64.D0*Hr3(-1,0,0)*x + 512.D0/3.D
-c$$$     &    0*Hr3(-1,0,0)*x**2 + 512.D0/3.D0*Hr3(-1,0,0)*dx + 256.D0*Hr3(
-c$$$     &    -1,0,1) + 256.D0*Hr3(-1,0,1)*x + 512.D0/3.D0*Hr3(-1,0,1)*x**2
-c$$$     &     + 512.D0/3.D0*Hr3(-1,0,1)*dx + 64.D0*Hr3(0,-1,0) - 192.D0*
-c$$$     &    Hr3(0,-1,0)*x + 512.D0/3.D0*Hr3(0,-1,0)*x**2 - 64.D0*Hr3(0,0,
-c$$$     &    0) - 512.D0/3.D0*Hr3(0,0,0)*x**2 + 32.D0*Hr3(0,0,1) - 288.D0*
-c$$$     &    Hr3(0,0,1)*x - 512.D0/3.D0*Hr3(0,0,1)*x**2 - 96.D0*Hr3(1,0,0)
-c$$$     &     + 96.D0*Hr3(1,0,0)*x + 256.D0*Hr4(0,-1,-1,0) - 256.D0*Hr4(0,
-c$$$     &    -1,-1,0)*x - 128.D0*Hr4(0,-1,0,0) + 128.D0*Hr4(0,-1,0,0)*x -
-c$$$     &    128.D0*Hr4(0,0,-1,0) + 128.D0*Hr4(0,0,-1,0)*x + 128.D0*Hr4(0,
-c$$$     &    0,0,0) + 192.D0*Hr4(0,0,0,1) + 192.D0*Hr4(0,0,0,1)*x - 64.D0*
-c$$$     &    Hr4(0,1,0,0) - 64.D0*Hr4(0,1,0,0)*x )
-c$$$*
-c$$$       X2NSSTA = GQQ2 
-c$$$*
-c$$$       RETURN
-c$$$       END
-c$$$*
-c$$$* =================================================================av==
+************************************************************************
+*
+*     Space-like polarized splitting functions.
+*     References:
+*     - Vogt website: http://www.liv.ac.uk/~avogt/split.html
+*     - hep-ph/9603366
+*
+***********************************************************************
+*
+* ..This is the regular 1-loop piece. 
+*
+       FUNCTION X0NSPA (X)
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+       X0NSPA = - 2D0 * CF * ( 1D0 + X )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the singular (soft) piece.
+*
+       FUNCTION X0NSPB (Y)
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+       X0NSPB = 4D0 * CF / ( 1D0 - Y )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' piece.
+*
+       FUNCTION X0NSPC (Y)
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+       X0NSPC = 4D0 * CF * LOG ( 1D0 - Y ) + 3D0 * CF
+*
+       RETURN
+       END
+*
+* =====================================================================
+*
+*
+* ..The 1-loop gluon->quark splitting functions P_qg^(0)
+*
+       FUNCTION X0QGPA (X, NF)
+*
+       IMPLICIT REAL*8 (A - Z)
+*
+       INTEGER NF
+*
+       X0QGPA = 2D0 * NF * ( 2D0 * X - 1D0 )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The 1-loop quark->gluon splitting functions P_gq^(0)
+*
+       FUNCTION X0GQPA (X)
+*
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+       X0GQPA = 2D0 * CF * ( 2D0 - X )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The regular piece of the 1-loop gg splitting function P_gg^(0)
+*
+       FUNCTION X0GGPA (X)
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+       X0GGPA = 4D0 * CA * ( - 2D0 * X + 1D0 )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the singular (soft) piece.
+*
+       FUNCTION X0GGPB (X)
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+       X0GGPB = 4D0 * CA / ( 1D0 - X )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' piece.
+*
+       FUNCTION X0GGPC (X,NF)
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+       INTEGER NF
+*
+       X0GGPC = 4D0 * CA * LOG ( 1D0 - X )
+     1      - 2D0 / 3D0 * NF + 11D0 / 3D0 * CA
+*
+       RETURN
+       END
+*
+* =====================================================================
+*
+*
+* ..This is the regular 2-loop piece for P_NS^-. 
+*
+      FUNCTION X1NSMPA (X, NF)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
+*
+      INTEGER NF
+*
+* ..The soft coefficient for use in X2NSB and X2NSC
+*
+      COMMON / P1SOFTP / A2P
+*
+* ...some abbreviations
+*
+      lnx   = dlog(x)
+      ln1mx = dlog(1d0 - x)
+      pqq   = 2d0 / ( 1d0 - x ) - 1d0 - x
+      pqqmx = 2d0 / ( 1d0 + x ) - 1d0 + x
+      S2x   = S2(x)
+      DM    = 1d0 / ( 1d0 - x )
+*
+      gqq1 = 2d0 * CF * NF * ( ( - 1.1111111111111112d0 - ( 2d0 * lnx ) 
+     1     / 3d0 ) * pqq - ( 4d0 * ( 1d0 - x ) ) / 3d0 ) 
+     2     + 4d0 * CA * CF * ( ( 3.7222222222222223d0 + ( 11d0 * lnx ) 
+     3     / 6d0 + lnx**2d0 / 2d0 - pi**2d0 / 6d0 ) * pqq
+     4     + ( 20d0 * ( 1d0 - x ) ) / 3d0 + lnx * ( 1d0 + x) )
+     5     + 4d0 * CF**2d0 * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
+     6     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2d0 * ( 1d0 
+     7     + x ) ) / 2d0 - lnx * ( 1.5d0 + ( 7d0 * x ) / 2d0 ) )
+     8     + 4d0 * CF * ( CF - CA / 2d0 ) * ( 2d0 * pqqmx * S2x 
+     9     + 4d0 * ( 1d0 - x ) + 2d0 * lnx * ( 1d0 + x ) )
+*
+* ...The soft (`+'-distribution) part of the splitting function
+*
+       A2P = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*zeta2*ca*cf
+*
+       GQQ1L = DM * A2P
+*
+* ...The regular piece of the coefficient function
+*
+       X1NSMPA = GQQ1 - GQQ1L
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the regular 2-loop piece for P_NS^+. 
+*
+      FUNCTION X1NSPPA (X, NF)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
+*
+      INTEGER NF
+*
+* ..The soft coefficient for use in X2NSB and X2NSC
+*
+      COMMON / P1SOFTP / A2P
+*
+* ...some abbreviations
+*
+      lnx   = dlog(x)
+      ln1mx = dlog(1d0 - x)
+      pqq   = 2d0 / ( 1d0 - x ) - 1d0 - x
+      pqqmx = 2d0 / ( 1d0 + x ) - 1d0 + x
+      S2x   = S2(x)
+      DM    = 1d0 / ( 1d0 - x )
+*
+      gqq1 = 2d0 * CF * NF * ( ( - 1.1111111111111112d0 - ( 2d0 * lnx ) 
+     1     / 3d0 ) * pqq - ( 4d0 * ( 1d0 - x ) ) / 3d0 ) 
+     2     + 4d0 * CA * CF * ( ( 3.7222222222222223d0 + ( 11d0 * lnx ) 
+     3     / 6d0 + lnx**2d0 / 2d0 - pi**2d0 / 6d0 ) * pqq
+     4     + ( 20d0 * ( 1d0 - x ) ) / 3d0 + lnx * ( 1d0 + x) )
+     5     + 4d0 * CF**2d0 * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
+     6     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2d0 * ( 1d0 
+     7     + x ) ) / 2d0 - lnx * ( 1.5d0 + ( 7d0 * x ) / 2d0 ) )
+     8     - 4d0 * CF * ( CF - CA / 2d0 ) * ( 2d0 * pqqmx * S2x 
+     9     + 4d0 * ( 1d0 - x ) + 2d0 * lnx * ( 1d0 + x ) )
+*
+* ...The soft (`+'-distribution) part of the splitting function
+*
+       A2P = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*zeta2*ca*cf
+*
+       GQQ1L = DM * A2P
+*
+* ...The regular piece of the coefficient function
+*
+       X1NSPPA = GQQ1 - GQQ1L
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the singular (soft) piece.
+*
+       FUNCTION X1NSPB (Y)
+       IMPLICIT REAL*8 (A - Z)
+*
+       COMMON / P1SOFTP / A2P
+*
+       X1NSPB  = A2P / ( 1D0 - Y )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' piece.
+*
+       FUNCTION X1NSPC (Y, NF)
+*
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/consts.h"
+       include "../commons/ColorFactors.h"
+*
+       INTEGER NF
+*
+* ...The coefficient of delta(1-x)
+*
+       P1DELT = 
+     &     - 1D0/3D0*cf*nf
+     &     + 3D0/2D0*cf**2
+     &     + 17D0/6D0*ca*cf
+     &     + 24D0*zeta3*cf**2
+     &     - 12D0*zeta3*ca*cf
+     &     - 8D0/3D0*zeta2*cf*nf
+     &     - 12D0*zeta2*cf**2
+     &     + 44D0/3D0*zeta2*ca*cf
+*
+* ...The soft (`+'-distribution) part of the splitting function
+*
+       A2 = - 40D0/9D0*cf*nf + 268D0/9D0*ca*cf - 8D0*zeta2*ca*cf
+*
+       X1NSPC = LOG (1D0-Y) * A2 + P1DELT
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+* ..The 2-loop pure-singlet splitting functions P_ps^(1)
+*
+      function X1PSPA(x,nf)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      integer nf
+      double precision x
+**
+*     Internal Variables
+*
+      double precision lnx,lnx2
+**
+*     Output Variables
+*
+      double precision X1PSPA
+*
+*     Abbreviation
+*
+      lnx  = dlog(x)
+      lnx2 = lnx * lnx
+*
+* ...The splitting function in terms of the harmonic polylogs
+*
+      X1PSPA = 8d0 * CF * TR * nf * ( ( 1d0 - x ) 
+     1       - ( 1d0 - 3d0 * x ) * lnx - ( 1d0 + x ) * lnx2 )
+*
+      return
+      end
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The 2-loop gluon->quark splitting function DeltaP_qg^(1)
+*
+      FUNCTION X1QGPA (X, NF)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
+*
+      INTEGER NF
+*
+      lnx    = dlog(x)
+      ln1mx  = dlog(1d0 - x)
+      dpqg   =   2d0 * x - 1d0 
+      dpqgmx = - 2d0 * x - 1d0
+      S2x    = S2(x)
+*
+      X1QGPA =  4d0 * TR * nf * ( CF * ( - 22d0 + 27d0 * x - 9d0 * lnx
+     1     + 8d0 * ( 1d0 - x ) * ln1mx + dpqg * ( 2d0 * ln1mx**2d0
+     3     - 4d0 * ln1mx * lnx + lnx**2d0 - 4d0 * zeta2 ) )
+     3     + CA * ( ( 24d0 - 22d0 * x )
+     4     - 8d0 * ( 1d0 - x ) * ln1mx + ( 2d0 + 16d0 * x ) * lnx 
+     5     - 2d0 * ( ln1mx**2d0 - zeta2 ) * dpqg
+     6     - ( 2d0 * S2x - 3d0 * lnx**2d0 ) * dpqgmx ) )
+*
+      RETURN
+      END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The 2-loop quark->gluon splitting function DeltaP_gq^(1)
+*
+      FUNCTION X1GQPA (X, NF)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
+*
+      INTEGER NF
+*
+* ...some abbreviations
+*
+      lnx    = dlog(x)
+      ln1mx  = dlog(1d0 - x)
+      dpgq   = 2d0 - x
+      dpgqmx = 2d0 + x
+      S2x    = S2(x)
+*
+      X1GQPA = 4d0 * ( CF * TR * nf * (- 4d0 / 9d0 * ( x + 4d0 )
+     1     - 4d0 / 3d0 * dpgq * ln1mx )
+     2     + CF * CF * ( - 1d0 / 2d0 - ( 4d0 - x ) * lnx / 2d0
+     3     - dpgqmx * ln1mx + ( - 4d0 - ln1mx**2d0 + lnx**2d0 / 2d0 )
+     4     * dpgq )
+     5     + CF * CA * ( ( 4d0 - 13d0 * x ) * lnx + ( 10d0 + x )
+     6     * ln1mx / 3d0 + ( 41d0 + 35d0 * x ) / 9d0
+     7     + ( - 2d0 * S2x + 3d0 * lnx**2d0 ) * dpgqmx / 2d0
+     8     + ( ln1mx**2d0 - 2d0 * ln1mx * lnx - zeta2 ) * dpgq ) )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..2-loop gluon-gluon splitting function DeltaP_gg^(1), regular part
+*
+      FUNCTION X1GGPA (X, NF)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
+*
+      INTEGER NF
+*
+* ..The soft coefficient for use in X1GGB and X1GGC
+*
+       COMMON / P1GSOFTP / A2GP
+*
+* ...some abbreviations
+*
+      lnx    = dlog(x)
+      ln1mx  = dlog(1d0 - x)
+      dpgg   = 1d0 / ( 1d0 - x ) - 2d0 * x + 1d0
+      dpggmx = 1d0 / ( 1d0 + x ) + 2d0 * x + 1d0
+      S2x    = S2(x)
+      DM     = 1d0 / ( 1d0 - x )
+*
+      ggg1  = 4d0 * ( - CA * TR * nf * ( 4d0 * ( 1d0 - x )
+     1     + 4d0 / 3d0 * ( 1d0 + x ) * lnx + 20d0 / 9d0 * dpgg )
+     2     - CF * TR * nf * ( 10d0 * ( 1d0 - x )
+     3     + 2d0 * ( 5d0 - x ) * lnx + 2d0 * ( 1d0 + x ) * lnx**2d0 )
+     4     + CA * CA * ( ( 29d0 - 67d0 * x ) * lnx / 3d0
+     5     - 19d0 * ( 1d0 - x ) / 2d0 + 4d0 * ( 1d0 + x ) * lnx**2d0
+     4     - 2d0 * S2x * dpggmx + ( 67d0 / 9d0 - 4d0 * ln1mx * lnx
+     5     + lnx**2d0 - 2d0 * zeta2 ) * dpgg ) )
+*
+* ...The soft (`+'-distribution) part of the splitting function
+*
+      A2GP = - 80d0 / 9d0 * CA * TR * nf + 268d0 / 9d0 * CA**2d0
+     1     - 8d0 * zeta2 * CA**2
+*
+       GGG1L = DM * A2GP
+*
+* ...The regular piece of the coefficient function
+*
+       X1GGPA = GGG1 - GGG1L
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+* ..The singular (soft) piece of DeltaP_gg^(1)
+*
+       FUNCTION X1GGPB (Y, NF)
+       IMPLICIT REAL*8 (A - Z)
+       INTEGER NF
+*
+       COMMON / P1GSOFTP / A2GP
+*
+       X1GGPB  = A2GP/(1.D0-Y)
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+* ..The 'local' piece of DeltaP_gg^(1)
+*
+       FUNCTION X1GGPC (Y, NF)
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/consts.h"
+       include "../commons/ColorFactors.h"
+*
+       INTEGER NF
+*
+* ...The coefficient of delta(1-x)
+*
+       P1GDELT = 
+     ,    - 4d0 * CF * TR * nf
+     ,    - 16d0 / 3d0 * CA * TR * nf
+     ,    + 32d0 / 3d0 * CA**2d0
+     ,    + 12d0 * zeta3 * CA**2d0
+*
+* ...The soft (`+'-distribution) part of the splitting function
+*
+      A2GP = - 80d0 / 9d0 * CA * TR * nf + 268d0 / 9d0 * CA**2d0
+     1     - 8d0 * zeta2 * CA**2
+*
+       X1GGPC = DLOG (1d0-Y) * A2GP + P1GDELT
+*
+       RETURN
+       END
+*
+* =====================================================================
+*
+*
+* ..The pure-singlet splitting function DeltaP_ps^(2). 
+*    The quark-quark splitting function DeltaP_qq^(2) is obtained by 
+*    adding the unpolarized quantity P_ns^(2)- given in hep-ph/0403192.
 
+       FUNCTION P2PSPA (x, nf)
+*
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER nf
+*
+       L  = log (x)
+       L1 = log (1.d0-x)
+*
+       P2ps1 = - 344./27.d0 * L**4 - (90.9198 + 81.50* x)* L**3 
+     ,         - (368.6 - 349.9* x)* L*L - (739.0 - 232.57* L1)* L 
+     ,         - 1362.6 + 1617.4 * x - 674.8 * x*x + 167.41 * x**3
+     ,         - 204.76 * L1 - 12.61 * L1*L1 - 6.541 * L1**3
+       P2ps2 = (1.1741 - 0.8253* x)* L**3  + (13.287 + 10.657* x)* L*L 
+     ,         + 45.482 * L + 49.13 - 30.77 * x - 4.307 * x*x 
+     ,         - 0.5094 *x**3 + 9.517 * L1 + 1.7805 * L1*L1
+*
+       P2PSPA = (1.-x) * nf * ( P2ps1 + nf * P2ps2 ) 
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The gluon->quark splitting function DeltaP_qg^(2).
+*
+       FUNCTION P2QGPA (x, nf)
+*
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER nf 
+*
+       L  = log (x)
+       L1 = log (1.d0-x)
+*
+       P2qg1 = - 151./3.d0 * L**4 - (385.64 + 73.30* x)* L**3
+     ,         - (894.8 - 1145.3* x)* L*L - (1461.2 - 825.4* L1)* L
+     ,         - 2972.4 + 4672.* x - 1221.6 * x*x - 18.0 * x**3
+     ,         + 278.32* L1 - 90.26* L1*L1 - 5.30* L1**3 + 3.784*L1**4
+       P2qg2 =   16./9.d0 * L**4 + (30.739  + 10.186* x) * L**3 
+     ,         + (196.96 + 179.1* x)* L*L + (526.3  - 47.30* L1)* L 
+     ,         + 499.65 - 432.18 * x - 141.63 * x*x - 11.34 * x**3 
+     ,         - 6.256 * L1 + 7.32 * L1*L1 + 0.7374 * L1**3
+* 
+       P2QGPA = nf * ( P2qg1 + nf * P2qg2 )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The quark->gluon splitting functions DeltaP_gq^(2). P2gq2 is exact.
+*
+       FUNCTION P2GQPA (x, nf)
+*
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER nf 
+*
+       L  = log (x)
+       L1 = log (1.d0-x)
+*
+       P2gq0 =   11512./81.d0* L**4 + (888.003  + 175.1* x)* L**3
+     ,         + (2140. - 850.7* x)* L*L + (4046.6 - 1424.8* L1)* L
+     ,         + 6159. - 3825.9 * x + 1942.* x*x - 742.1 * x**3
+     ,         + 1843.7* L1 + 451.55* L1*L1 + 59.3* L1**3 + 5.143* L1**4
+       P2gq1 = - 128./27.d0 * L**4 - (39.3872 + 30.023*x)* L**3
+     ,         - (202.46 + 126.53* x)* L*L - (308.98 + 16.18* L1)* L
+     ,         - 301.07 - 296.0 * x + 406.13 * x*x - 101.62 * x**3
+     ,         - 171.78* L1 - 47.86 * L1*L1 - 4.963 * L1**3
+       P2gq2 =   16./27.d0 * ( - 12. + 10.* x + ( 8.+ 2.*x)* L1 
+     ,         + (6.- 3.*x)* L1*L1 )
+*
+       P2GQPA = P2gq0 + nf * (P2gq1 + nf * P2gq2) 
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The gluon-gluon splitting function DeltaP_gg^(2), regular piece.
+*
+       FUNCTION P2GGPA (x, nf)
+*
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER NF
+*
+       L  = log (x)
+       L1 = log (1.d0-x)
+*
+       P2ggA0 =   504.d0 * L**4 + (3777.5  + 1167.* x)* L**3
+     ,          + (10902. - 863.* x)* L*L + (23091. - 12292.* L1)* L
+     ,          + 30988. - 39925.* x + 13447.* x*x - 4576.* x**3 
+     ,          - 13247.* (1.-x)*L1 + 3801.* L1
+       P2ggA1 = - 766./27.d0 * L**4 - (357.798 - 131.* x)* L**3
+     ,          - (1877.2 - 613.1* x)* L*L - (3524. + 7932.* L1)* L
+     ,          - 1173.5 + 2648.6 * x - 2160.8 * x*x + 1251.7 * x**3
+     ,          - 6746.* (1.-x)*L1 - 295.7* L1
+       P2ggA2 = - 1.1809 * L**3 - (6.679 - 15.764* x)* L*L 
+     ,          - (13.29 + 16.944* L1) * L - 16.606 + 32.905 * x 
+     ,          - 18.30 * x*x + 2.637 * x**3 - 0.210 * L1
+*
+       P2GGPA = P2ggA0 + nf * ( P2ggA1 + nf * P2ggA2 )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The gluon-gluon splitting function DeltaP_gg^(2), singular piece.
+*
+       FUNCTION P2GGPB (x, nf)
+*
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER nf
+*
+       P2GGPB = ( 2643.521 - nf * (412.172 + nf * 16./9.D0 ) ) 
+     1           / (1.d0-x)
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The gluon-gluon splitting function DeltaP_gg^(2), `local' piece.  
+*
+       FUNCTION P2GGPC (x, nf)
+*
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER nf
+*
+       L1 = log (1.d0-x)
+*
+       P2GGPC =             2643.521 * L1 + 4425.448 + 2.314   
+     ,           - nf *    (  412.172 * L1 +  528.720 - 0.184 ) 
+     ,           - nf*nf * ( 16./9.D0 * L1 -   6.4630 + 0.0023 )
+*
+       RETURN
+       END
+*
+* =====================================================================
+*
+*
+       FUNCTION P2NSMPA (Y, NF)
+       IMPLICIT REAL*8 (A - Z)
+       INTEGER NF
+*
+       DL  = LOG (Y)
+       DL1 = LOG (1.-Y)
+       D81 = 1./81.D0
+*
+       P2NSMPA =   1641.1 - 3135.* Y + 243.6 * Y**2 - 522.1 * Y**3
+     ,            + 128.*D81 * DL**4 + 2400.*D81 * DL**3
+     ,            + 294.9 * DL**2 + 1258.* DL
+     ,            + 714.1 * DL1 + DL*DL1 * (563.9 + 256.8 * DL)
+     ,        + NF * ( -197.0 + 381.1 * Y + 72.94 * Y**2 + 44.79 * Y**3
+     ,            - 192.*D81 * DL**3  - 2608.*D81 * DL**2 - 152.6 * DL
+     ,            - 5120.*D81 * DL1 - 56.66 * DL*DL1 - 1.497 * Y*DL**3 )
+     ,        + NF**2 * ( 32.* Y*DL/(1.-Y) * (3.* DL + 10.) + 64.
+     ,            + (48.* DL**2 + 352.* DL + 384.) * (1.-Y) ) * D81
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+       FUNCTION P2NSPPA (Y, NF)
+       IMPLICIT REAL*8 (A - Z)
+       INTEGER NF
+*
+       DL  = LOG (Y)
+       DL1 = LOG (1.-Y)
+       D81 = 1./81.D0
+*
+       P2NSPPA =   1860.2 - 3505.* Y + 297.0 * Y**2 - 433.2 * Y**3
+     ,            + 116.*D81 * DL**4 + 2880.*D81 * DL**3 
+     ,            + 399.2 * DL**2 + 1465.2 * DL
+     ,            + 714.1 * DL1 + DL*DL1 * (684.0 + 251.2 * DL)
+     ,        + NF * ( -216.62 + 406.5 * Y + 77.89 * Y**2 + 34.76 * Y**3
+     ,            - 256.*D81 * DL**3  - 3216.*D81 * DL**2 - 172.69 * DL 
+     ,            - 5120.*D81 * DL1 - 65.43 * DL*DL1 - 1.136 * Y*DL**3 )
+     ,        + NF**2 * ( 32.* Y*DL/(1.-Y) * (3.* DL + 10.) + 64.
+     ,            + (48.* DL**2 + 352.* DL + 384.) * (1.-Y) ) * D81
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the singular piece of both P2_NS+ and P2_NS-. It is exact 
+*    up to the truncation of the irrational coefficients.
+*
+       FUNCTION P2NSPB (Y, NF)
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER NF
+*
+       P2NSPB = ( 1174.898 - NF * 183.187 - NF**2 * 64./81.D0 ) / (1.-Y)
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' piece of P2_NS+. The coefficients of delta(1-x)
+*    have been partly shifted relative to the exact (truncated) values.
+*
+       FUNCTION P2NSMPC (Y, NF)
+       IMPLICIT REAL*8 (A - Z)
+       INTEGER NF
+*
+       DL1 = LOG (1.-Y)
+*
+       P2NSMPC =       1174.898 * DL1 + 1295.624 - 0.24
+     ,        - NF * ( 183.187 * DL1 + 173.938 - 0.011 )
+     ,        + NF**2 * ( - 64./81.D0 * DL1 + 1.13067 )
+*
+       RETURN
+       END
+*
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' piece of P2_NS-. The coefficients of delta(1-x) 
+*    have been partly shifted relative to the exact (truncated) values.
+*
+       FUNCTION P2NSPPC (Y, NF)
+       IMPLICIT REAL*8 (A - Z)
+       INTEGER NF
+*
+       DL1 = LOG (1.-Y)
+*
+       P2NSPPC =       1174.898 * DL1 + 1295.624 - 0.154
+     ,        - NF * ( 183.187 * DL1 + 173.938  - 0.005 )
+     ,        + NF**2 * ( - 64./81.D0 * DL1 + 1.13067 )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is P2_NSS, the difference of P2_NSV and P2_NS-.
+*     (For the polarized case, this contributions has not been calculated
+*     yet. We include the function but we set it to zero.)
+*
+       FUNCTION P2NSSPA (Y, NF)
+*
+       IMPLICIT REAL*8 (A-Z)
+       INTEGER NF
+*
+       P2NSSPA = 0D0
+*
+       RETURN
+       END

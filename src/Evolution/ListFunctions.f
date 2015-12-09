@@ -104,6 +104,9 @@
      1           achar(27)//"[0m"
       write(6,*) "    sets the time-like evolution (frag. functions)"
       write(6,*) "    (default false)."
+      write(6,*) achar(27)//"[34m- SetPolarizedEvolution(bool):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    sets the polarized evolution (default false)"
       write(6,*) achar(27)//"[34m- SetSmallxResummation(bool,",
      1           " string la):"//achar(27)//"[0m"
       write(6,*) "    sets the the small-x resummation at 'la' log"
