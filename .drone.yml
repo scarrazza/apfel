@@ -10,6 +10,10 @@ build:
     - ./examples/CheckAPFEL
 
 notify:
+  slack:
+    webhook_url: https://hooks.slack.com/services/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 
+    channel: general
+    username: drone
   email:
     host: 0.0.0.0
     from: apfel@apfel.mi.infn.it
