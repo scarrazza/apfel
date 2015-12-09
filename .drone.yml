@@ -1,18 +1,21 @@
-image: ubuntu-drone
-script:
-   - ./configure --disable-lhapdf
-   - make
-   - ./examples/Luminosity
-   - ./examples/Tabulation < examples/input.txt
-   - ./examples/SumRules < examples/input.txt
-   - ./examples/DISObservables < examples/input.txt
-   - ./examples/CheckAPFEL
+build:
+  image: ubuntu-drone
+  commands:
+    - ./configure --disable-lhapdf
+    - make
+    - ./examples/Luminosity
+    - ./examples/Tabulation < examples/input.txt
+    - ./examples/SumRules < examples/input.txt
+    - ./examples/DISObservables < examples/input.txt
+    - ./examples/CheckAPFEL
+
 notify:
   email:
+    from: support@apfel.mi.infn.it    
+    host: localhost
+    port: 25
+    username: ""
+    password: ""
     recipients:
       - stefano.carrazza@mi.infn.it
       - valerio.bertone@cern.ch
-    on_success: true
-    on_failure: true
-branches:
-  - master
