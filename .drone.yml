@@ -10,10 +10,5 @@ build:
     - ./examples/CheckAPFEL
 
 notify:
-  gitter:    
-    webhook:
-      urls:
-        - https://webhooks.gitter.im/e/c18c4fa359e51b9fa8be
-      on_started: true
-      on_success: true
-      on_failure: true
+  gitter:
+    webhook: https://webhooks.gitter.im/e/c18c4fa359e51b9fa8be
