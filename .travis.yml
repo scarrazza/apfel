@@ -1,0 +1,11 @@
+before_install:
+  - sudo apt-get install gfortran g++ gcc
+
+script: 
+  - ./configure --disable-lhapdf
+  - make
+  - ./examples/Luminosity
+
+notifications:
+  email:
+    - stefano.carrazza@cern.ch
