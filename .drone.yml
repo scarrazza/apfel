@@ -10,6 +10,5 @@ build:
     - ./examples/CheckAPFEL
 
 notify:
-  webhook:
-    urls:
-      - "https://webhooks.gitter.im/e/b72232c0ea60ceee4673"
+  gitter:
+    webhook: https://webhooks.gitter.im/e/b72232c0ea60ceee4673
