@@ -1,10 +1,16 @@
-before_install:
-  - sudo apt-get install gfortran g++ gcc
+sudo: false
 
+addons:
+  apt:
+    packages:
+      - gfortran
 script: 
-  - ./configure --disable-lhapdf
-  - make
+  - ./configure --disable-lhapdf && make
   - ./examples/Luminosity
+  - ./examples/Tabulation < examples/input.txt
+  - ./examples/SumRules < examples/input.txt
+  - ./examples/DISObservables < examples/input.txt
+  - ./examples/CheckAPFEL
 
 notifications:
   email:
