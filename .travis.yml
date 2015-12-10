@@ -1,10 +1,5 @@
-sudo: false
-
-addons:
-  apt:
-    packages:
-      - gfortran
-      - g++
+before_install:
+  - sudo apt-get install gfortran
       
 script: 
   - ./configure --disable-lhapdf
