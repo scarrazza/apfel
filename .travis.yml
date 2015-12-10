@@ -4,8 +4,11 @@ addons:
   apt:
     packages:
       - gfortran
+      - g++
+      
 script: 
-  - ./configure --disable-lhapdf && make
+  - ./configure --disable-lhapdf
+  - make -j1
   - ./examples/Luminosity
   - ./examples/Tabulation < examples/input.txt
   - ./examples/SumRules < examples/input.txt
