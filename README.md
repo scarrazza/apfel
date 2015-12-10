@@ -4,6 +4,8 @@
 
 # APFEL: A PDF Evolution Library
 
+[![Join the chat at https://gitter.im/scarrazza/apfel](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/scarrazza/apfel?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Visit: http://apfel.hepforge.org and http://apfel.mi.infn.it/
  
 APFEL is able to perform DGLAP evolution up to NNLO in QCD and to LO
