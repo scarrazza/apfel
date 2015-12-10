@@ -1793,6 +1793,210 @@ It is interesting to notice that, as expected, the soft-singular part
 of the quark coefficient functions is exactly the same as in DIS and
 this allows us to reuse part of the DIS coefficient functions.
 
+\section{Polarized DIS cross section and structure functions}
+
+Let us consider the differential cross sections for unpolarized and
+polarized Deep-Inelastic Scattering (DIS) (see {\it e.g.} Eq.~(19.16) of
+Sec.~19 in Ref.~\cite{Agashe:2014kda}:
+\begin{equation}
+\begin{array}{lcl}
+\displaystyle \frac{d^2\sigma^i}{dxdy}
+& = &
+\displaystyle \frac{2\pi\alpha^2}{xyQ^2}\eta^i
+\left[
++Y_+ F_2^i \mp Y_- x F_3^i - y^2 F_L^i
+\right]
+\\ \\
+\displaystyle \frac{d^2\Delta\sigma^i}{dxdy}
+& = &
+\displaystyle \frac{4\pi\alpha^2}{xyQ^2}\eta^i
+\left[
+-Y_+ g_4^i \mp Y_- 2x g_1^i + y^2 g_L^i
+\right]
+\mbox{\,,}
+\end{array}
+\end{equation}
+where $i={\rm NC, CC}$, $Y_{\pm}=1 \pm (1-y)^2$, $\eta^{\rm NC}=1$,
+$\eta^{\rm CC}=(1\pm \lambda)^2\eta_W$ (with $\lambda=\pm 1$ is the 
+helicity of the incoming lepton and $\eta_W=\frac{1}{2}
+\left(\frac{G_FM_W}{4\pi\alpha}\frac{Q^2}{Q^2+M_W^2} \right)^2$), and 
+\begin{equation}
+\begin{array}{lcl}
+\displaystyle F_L^i & = & \displaystyle F_2^i - 2xF_1^i\\ \\
+\displaystyle F_L^i & = & \displaystyle g_4^i - 2xg_5^i
+\mbox{\,.}
+\end{array}
+\end{equation}
+Because the same tensor structure occurs in the spin-dependent and 
+spin-independent parts of the DIS hadronic tensor (in the limit $M^2/Q^2\to 0$),
+the polarized cross section can be obtained from the unpolarized cross section
+with the following replacement
+\begin{equation}
+\displaystyle F_2^i \rightarrow -2g_4^i
+\ \ \ \ \ \ \ \ \ 
+\displaystyle F_3^i \rightarrow +4g_1^i
+\ \ \ \ \ \ \ \ \
+\displaystyle F_L^i \rightarrow -2g_L^i 
+\mbox{\,.}
+\end{equation}
+Note that the extra factor two is due to the fact that the total cross section 
+is an average over initial-state polarizations.
+
+The {\it polarized} structure functions $g_4$, $g_1$ and $g_L$ 
+are expressed as a convolution of coefficient functions, $\Delta c_{k,j}$,
+and polarized PDFs, $\Delta f_j$, (summed over all flavors $j$)
+\begin{equation}
+g_k(x,Q) 
+=
+\sum_{j=q,g}x \int_x^1 \frac{dy}{y} \Delta c_{k,j}(\alpha_s(Q),x)
+\Delta f_j\left(\frac{x}{y},Q\right)
+\mbox{\,,}
+\ \ \ \ \ \ \ \ \ \ \
+{\rm with} 
+\ \ k=4,1,L
+\mbox{\,.}
+\end{equation} 
+The coefficient functions $\Delta c_{k,j}$ allow for the usual perturbative
+expansion
+\begin{equation}
+\Delta c_{k,j}(\alpha_s(Q),x) 
+=
+\sum_{n=0}^N\alpha_s^n(Q)\Delta c_{k,j}^{(n)}(x)
+\,\mbox{,}
+\end{equation}
+where the coefficients $\Delta c_{k,j}^{(n)}(x)$ are known up to NLO,
+{\it i.e.} $n=1$ (see {\it e.g.}~\cite{deFlorian:2012wk} and references 
+therein). At LO they are 
+\begin{equation}
+\begin{array}{lcl}
+\Delta c_{4,q}^{(0)}(x) = \Delta c_{1,q}^{(0)}(x) &=& \delta(1-x)
+\\ \\
+\Delta c_{L,q}^{(0)}(x) &=& 0
+\,\mbox{,}
+\\ \\
+\Delta c_{k,g}^{(0)}(x) &=& 0
+\ \ \ \ \ \ \ \ \ \
+{\rm with} \ k=4,1,L
+\,\mbox{.}
+\end{array}
+\end{equation}
+At NLO they read 
+\begin{equation}
+\begin{array}{lcl}
+  %C4q
+  \displaystyle \Delta c_{4,q}^{(1)}(x) 
+  &=& 
+  \displaystyle 2C_F\,
+  \bigg\{
+  2\left[\frac{\ln(1-x)}{1-x}\right]_+ 
+  - \frac{3}{2}\left[\frac{1}{1-x}\right]_+
+  - (1+x)\ln(1-x)
+  \\ \\ 
+  & &\displaystyle - \frac{1+x^2}{1-x}\ln x
+  + 3 + 2x
+  -\left(\frac{9}{2} + 2\zeta_2\right)\delta(1-x)\bigg]
+  \,\mbox{,}
+  \\ \\ 
+  %C4g
+  \displaystyle \Delta c_{4,g}^{(1)}(x) 
+  &=& 
+  0
+  \,\mbox{,} 
+  \\ \\
+  %C1q
+  \displaystyle \Delta c_{1,q}^{(1)}(x) 
+  &=& 
+  \displaystyle 2C_F\,
+  \bigg\{
+  2\left[\frac{\ln(1-x)}{1-x}\right]_+ 
+  - \frac{3}{2}\left[\frac{1}{1-x}\right]_+
+  - (1+x)\ln(1-x)
+  \\ \\ 
+  & &\displaystyle - \frac{1+x^2}{1-x}\ln x
+  + 2 + x
+  -\left(\frac{9}{2} + 2\zeta_2\right)\delta(1-x)\bigg]
+  \,\mbox{,}
+  \\ \\ 
+  %C1g
+  \displaystyle \Delta c_{1,g}^{(1)}(x) 
+  &=&
+  \displaystyle 4T_R
+  \bigg\{(2x - 1)\ln \frac{1-x}{x} - 4x +3 \bigg\} 
+  \,\mbox{,}
+  \\ \\ 
+  %CLq
+  \displaystyle \Delta c_{L,q}^{(1)}(x) 
+  =
+  \Delta c_{4,q}^{(1)}(x)  - 2x\Delta c_{5,q}^{(1)}(x) 
+  &=& 
+  2C_F\, 2x 
+  \,\mbox{,}
+  \\ \\
+  %CLg
+  \displaystyle \Delta c_{L,g}^{(1)}(x) 
+  =
+  \Delta c_{4,g}^{(1)}(x)  - 2x\Delta c_{5,g}^{(1)}(x) 
+  &=& 
+  0 
+  \,\mbox{.}
+%  %C1q
+%  \displaystyle \Delta c_{1,q}^{(1)}(x) 
+%  &=& 
+%  \displaystyle 2C_F\,
+%  \bigg\{
+%  2\left[\frac{\ln(1-x)}{1-x}\right]_+ 
+%  - \frac{3}{2}\left[\frac{1}{1-x}\right]_+
+%  - (1+x)\ln(1-x)\\ \\ 
+%  & &\displaystyle - \frac{1+x^2}{1-x}\ln x
+%  + 2 + x
+%  -\left(\frac{9}{2} + 2\zeta_2\right)\delta(1-x)\bigg]\\ \\ 
+%  %C1g
+%  \displaystyle \Delta c_{1,g}^{(1)}(x) 
+%  &=&
+%  \displaystyle 4T_R
+%  \bigg\{(2x - 1)\ln \frac{1-x}{x} - 4x +3 \bigg\} \\ \\ 
+%  %C4q
+%  \displaystyle \Delta c_{4,q}^{(1)}(x) 
+%  &=& 
+%  \displaystyle 2C_F\,
+%  \bigg\{
+%  2\left[\frac{\ln(1-x)}{1-x}\right]_+ 
+%  - \frac{3}{2}\left[\frac{1}{1-x}\right]_+
+%  - (1+x)\ln(1-x)\\ \\ 
+%  & &\displaystyle - \frac{1+x^2}{1-x}\ln x
+%  + 3 + 2x
+%  -\left(\frac{9}{2} + 2\zeta_2\right)\delta(1-x)\bigg]\\ \\ 
+%  %C4g
+%  \displaystyle \Delta c_{4,g}^{(1)}(x) 
+%  &=& 
+%  0 \\ \\
+%  %C5q
+%  \displaystyle \Delta c_{5,q}^{(1)}(x) 
+%  &=& 
+%  \displaystyle 2C_F\,
+%  \bigg\{
+%  2\left[\frac{\ln(1-x)}{1-x}\right]_+ 
+%  - \frac{3}{2}\left[\frac{1}{1-x}\right]_+
+%  - (1+x)\ln(1-x)\\ \\ 
+%  & &\displaystyle - \frac{1+x^2}{1-x}\ln x
+%  + 3 
+%  -\left(\frac{9}{2} + 2\zeta_2\right)\delta(1-x)\bigg]\\ \\ 
+%  %C5g
+%  \displaystyle \Delta c_{5,g}^{(1)}(x) 
+%  &=& 
+%  0  
+\end{array}
+\end{equation}
+
+
+
+
+
+
+
+
+
+
 \newpage
 
 \begin{thebibliography}{alp}
@@ -1867,6 +2071,28 @@ this allows us to reuse part of the DIS coefficient functions.
   [hep-ph/0604160].
   %%CITATION = HEP-PH/0604160;%%
   %39 citations counted in INSPIRE as of 16 Mar 2015
+
+
+
+%\cite{Agashe:2014kda}
+\bibitem{Agashe:2014kda}
+  K.~A.~Olive {\it et al.} [Particle Data Group Collaboration],
+  %``Review of Particle Physics,''
+  Chin.\ Phys.\ C {\bf 38} (2014) 090001.
+  %doi:10.1088/1674-1137/38/9/090001
+  %%CITATION = doi:10.1088/1674-1137/38/9/090001;%%
+  %2477 citations counted in INSPIRE as of 10 Dec 2015
+
+%\cite{deFlorian:2012wk}
+\bibitem{deFlorian:2012wk}
+  D.~de Florian and Y.~R.~Habarnau,
+  %``Polarized semi-inclusive electroweak structure functions at next-to-leading-order,''
+  Eur.\ Phys.\ J.\ C {\bf 73} (2013) 3,  2356
+  %doi:10.1140/epjc/s10052-013-2356-3
+  [arXiv:1210.7203 [hep-ph]].
+  %%CITATION = doi:10.1140/epjc/s10052-013-2356-3;%%
+  %5 citations counted in INSPIRE as of 10 Dec 2015
+
 
 \end{thebibliography}
 
