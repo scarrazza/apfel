@@ -1,4 +1,6 @@
 [![Build Status](http://apfel.mi.infn.it:8888/api/badges/scarrazza/apfel/status.svg)](http://apfel.mi.infn.it:8888/scarrazza/apfel)
+[![Join the chat at https://gitter.im/scarrazza/apfel](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/scarrazza/apfel?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 
 ![alt text](https://github.com/scarrazza/apfel/raw/master/resources/logoapfel.png "Logo APFEL")
 
