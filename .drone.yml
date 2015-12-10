@@ -10,7 +10,8 @@ build:
     - ./examples/CheckAPFEL
 
 notify:
-  slack:
-    webhook_url: https://hooks.slack.com/services/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 
-    channel: general
-    username: drone
+  webhook:
+    urls:
+      - https://webhooks.gitter.im/e/afff51501d00fd7ee142
+    on_success: true
+    on_failure: true
