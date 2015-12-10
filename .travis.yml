@@ -1,4 +1,6 @@
 sudo: false
+dist: precise
+group: edge
 
 addons:
   apt:
