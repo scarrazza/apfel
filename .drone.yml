@@ -12,6 +12,4 @@ build:
 notify:
   webhook:
     urls:
-      - https://webhooks.gitter.im/e/afff51501d00fd7ee142
-    on_success: true
-    on_failure: true
+      - "https://webhooks.gitter.im/e/b72232c0ea60ceee4673"
