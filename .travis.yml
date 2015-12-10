@@ -1,7 +1,7 @@
 before_install:
   - sudo apt-get install gfortran
-      
-script: 
+
+script:
   - ./configure --disable-lhapdf
   - make -j1
   - ./examples/Luminosity
@@ -13,3 +13,4 @@ script:
 notifications:
   email:
     - stefano.carrazza@cern.ch
+    - valerio.bertone@cern.ch
