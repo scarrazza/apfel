@@ -1144,25 +1144,25 @@ c     6                             3,pt,alpha,beta) )
                            c3ccIC = 0d0
                            do pt=0,ipt_FF
                               C2ccIC = C2ccIC + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SC2m0CC(jgrid,ixi(ihq),
+     1                             * ( c0(4)
+     2                             * SC2m0CC(jgrid,ixi(4),
      3                             2,pt,alpha,beta)
-     4                             + c1(ihq)
-     5                             * SC2m0CC(jgrid,ixi(ihq)+1,
+     4                             + c1(4)
+     5                             * SC2m0CC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
 c                              CLccIC = CLccIC + as(pt)
-c     1                             * ( c0(ihq)
-c     2                             * SCLm0CC(jgrid,ixi(ihq),
+c     1                             * ( c0(4)
+c     2                             * SCLm0CC(jgrid,ixi(4),
 c     3                             2,pt,alpha,beta)
-c     4                             + c1(ihq)
-c     5                             * SCLm0CC(jgrid,ixi(ihq)+1,
+c     4                             + c1(4)
+c     5                             * SCLm0CC(jgrid,ixi(4)+1,
 c     6                             2,pt,alpha,beta) )
                               C3ccIC = C3ccIC + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SC3m0CC(jgrid,ixi(ihq),
+     1                             * ( c0(4)
+     2                             * SC3m0CC(jgrid,ixi(4),
      3                             2,pt,alpha,beta)
-     4                             + c1(ihq)
-     5                             * SC3m0CC(jgrid,ixi(ihq)+1,
+     4                             + c1(4)
+     5                             * SC3m0CC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
                            enddo
                         endif
@@ -1279,25 +1279,25 @@ c     6                             2,pt,alpha,beta) )
                            c3ccIC = 0d0
                            do pt=0,ipt_FF
                               C2ccIC = C2ccIC + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SC2mCC(jgrid,ixi(ihq),
+     1                             * ( c0(4)
+     2                             * SC2mCC(jgrid,ixi(4),
      3                             2,pt,alpha,beta)
-     4                             + c1(ihq)
-     5                             * SC2mCC(jgrid,ixi(ihq)+1,
+     4                             + c1(4)
+     5                             * SC2mCC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
                               CLccIC = CLccIC + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SCLmCC(jgrid,ixi(ihq),
+     1                             * ( c0(4)
+     2                             * SCLmCC(jgrid,ixi(4),
      3                             2,pt,alpha,beta)
-     4                             + c1(ihq)
-     5                             * SCLmCC(jgrid,ixi(ihq)+1,
+     4                             + c1(4)
+     5                             * SCLmCC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
                               C3ccIC = C3ccIC + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SC3mCC(jgrid,ixi(ihq),
+     1                             * ( c0(4)
+     2                             * SC3mCC(jgrid,ixi(4),
      3                             2,pt,alpha,beta)
-     4                             + c1(ihq)
-     5                             * SC3mCC(jgrid,ixi(ihq)+1,
+     4                             + c1(4)
+     5                             * SC3mCC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
                            enddo
                         endif
@@ -1468,49 +1468,49 @@ c     6                             2,pt,alpha,beta) )
 *     FFNS
                            do pt=0,ipt_FF
                               C2ccIC = C2ccIC + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SC2mCC(jgrid,ixi(ihq),
+     1                             * ( c0(4)
+     2                             * SC2mCC(jgrid,ixi(4),
      3                             2,pt,alpha,beta)
-     4                             + c1(ihq)
-     5                             * SC2mCC(jgrid,ixi(ihq)+1,
+     4                             + c1(4)
+     5                             * SC2mCC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
                               CLccIC = CLccIC + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SCLmCC(jgrid,ixi(ihq),
+     1                             * ( c0(4)
+     2                             * SCLmCC(jgrid,ixi(4),
      3                             2,pt,alpha,beta)
-     4                             + c1(ihq)
-     5                             * SCLmCC(jgrid,ixi(ihq)+1,
+     4                             + c1(4)
+     5                             * SCLmCC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
                               C3ccIC = C3ccIC + as(pt)
-     1                             * ( c0(ihq)
-     2                             * SC3mCC(jgrid,ixi(ihq),
+     1                             * ( c0(4)
+     2                             * SC3mCC(jgrid,ixi(4),
      3                             2,pt,alpha,beta)
-     4                             + c1(ihq)
-     5                             * SC3mCC(jgrid,ixi(ihq)+1,
+     4                             + c1(4)
+     5                             * SC3mCC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
                            enddo
 *     FFN0
                            do pt=0,ipt_FF
                               C2ccIC = C2ccIC - as(pt)
-     1                             * damp(4) * ( c0(ihq)
-     2                             * SC2m0CC(jgrid,ixi(ihq),
+     1                             * damp(4) * ( c0(4)
+     2                             * SC2m0CC(jgrid,ixi(4),
      3                             2,pt,alpha,beta)
-     4                             + c1(ihq)
-     5                             * SC2m0CC(jgrid,ixi(ihq)+1,
+     4                             + c1(4)
+     5                             * SC2m0CC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
 c                              CLccIC = CLccIC - as(pt)
-c     1                             * damp(4) * ( c0(ihq)
-c     2                             * SCLm0CC(jgrid,ixi(ihq),
+c     1                             * damp(4) * ( c0(4)
+c     2                             * SCLm0CC(jgrid,ixi(4),
 c     3                             2,pt,alpha,beta)
-c     4                             + c1(ihq)
-c     5                             * SCLm0CC(jgrid,ixi(ihq)+1,
+c     4                             + c1(4)
+c     5                             * SCLm0CC(jgrid,ixi(4)+1,
 c     6                             2,pt,alpha,beta) )
                               C3ccIC = C3ccIC - as(pt)
-     1                             * damp(4) * ( c0(ihq)
-     2                             * SC3m0CC(jgrid,ixi(ihq),
+     1                             * damp(4) * ( c0(4)
+     2                             * SC3m0CC(jgrid,ixi(4),
      3                             2,pt,alpha,beta)
-     4                             + c1(ihq)
-     5                             * SC3m0CC(jgrid,ixi(ihq)+1,
+     4                             + c1(4)
+     5                             * SC3m0CC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
                            enddo
                         endif
@@ -1728,23 +1728,39 @@ c     6                             2,pt,alpha,beta) )
 *
 *     Include the intrinsic charm contributions if needed
 *
-                  if(IntrinsicCharm)then
+                  if(IntrinsicCharm.and.MassScheme.ne."ZM-VFNS")then
 *     Singlet
                      OpF2(jgrid,4,1,alpha,beta)  =
      1                    OpF2(jgrid,4,1,alpha,beta)  +
-     2                    Kc * c2ccIC / 12d0
+     2                    2d0 * Kc * c2ccIC / 12d0
 *     Valence
-                     OpF2(jgrid,4,3,alpha,beta)  = 
-     1                    OpF2(jgrid,4,3,alpha,beta)  + 
-     2                    ipr * Kc * c2ccIC / 12d0
+                     OpF2(jgrid,4,3,alpha,beta)  =
+     1                    OpF2(jgrid,4,3,alpha,beta)  +
+     2                    ipr * 2d0 * Kc * c2ccIC / 12d0
 *     V15
                      OpF2(jgrid,4,6,alpha,beta)  =
      1                    OpF2(jgrid,4,6,alpha,beta)  -
-     2                    ipr * Kc * c2ccIC / 12d0
+     2                    ipr * 2d0 * Kc * c2ccIC / 8d0
+*     V24
+                     OpF2(jgrid,4,7,alpha,beta)  =
+     1                    OpF2(jgrid,4,7,alpha,beta)  +
+     2                    ipr * 2d0 * Kc * c2ccIC / 40d0
+*     V35
+                     OpF2(jgrid,4,8,alpha,beta)  =
+     1                    OpF2(jgrid,4,8,alpha,beta)  +
+     2                    ipr * 2d0 * Kc * c2ccIC / 60d0
 *     T15
                      OpF2(jgrid,4,11,alpha,beta) =
      1                    OpF2(jgrid,4,11,alpha,beta) -
-     2                    Kc * c2ccIC / 12d0
+     2                    2d0 * Kc * c2ccIC / 8d0
+*     T24
+                     OpF2(jgrid,4,12,alpha,beta) =
+     1                    OpF2(jgrid,4,12,alpha,beta) +
+     2                    2d0 * Kc * c2ccIC / 40d0
+*     T35
+                     OpF2(jgrid,4,13,alpha,beta) =
+     1                    OpF2(jgrid,4,13,alpha,beta) +
+     2                    2d0 * Kc * c2ccIC / 60d0
                   endif
 *     
 *     Bottom Component
@@ -2375,23 +2391,39 @@ c     6                             2,pt,alpha,beta) )
 *
 *     Include the intrinsic charm contributions if needed
 *
-                  if(IntrinsicCharm)then
+                  if(IntrinsicCharm.and.MassScheme.ne."ZM-VFNS")then
 *     Singlet
                      OpFL(jgrid,4,1,alpha,beta)  =
      1                    OpFL(jgrid,4,1,alpha,beta)  +
-     2                    Kc * cLccIC / 12d0
+     2                    2d0 * Kc * cLccIC / 12d0
 *     Valence
-                     OpFL(jgrid,4,3,alpha,beta)  = 
-     1                    OpFL(jgrid,4,3,alpha,beta)  + 
-     2                    ipr * Kc * cLccIC / 12d0
+                     OpFL(jgrid,4,3,alpha,beta)  =
+     1                    OpFL(jgrid,4,3,alpha,beta)  +
+     2                    ipr * 2d0 * Kc * cLccIC / 12d0
 *     V15
                      OpFL(jgrid,4,6,alpha,beta)  =
      1                    OpFL(jgrid,4,6,alpha,beta)  -
-     2                    ipr * Kc * cLccIC / 12d0
+     2                    ipr * 2d0 * Kc * cLccIC / 8d0
+*     V24
+                     OpFL(jgrid,4,7,alpha,beta)  =
+     1                    OpFL(jgrid,4,7,alpha,beta)  +
+     2                    ipr * 2d0 * Kc * cLccIC / 40d0
+*     V35
+                     OpFL(jgrid,4,8,alpha,beta)  =
+     1                    OpFL(jgrid,4,8,alpha,beta)  +
+     2                    ipr * 2d0 * Kc * cLccIC / 60d0
 *     T15
                      OpFL(jgrid,4,11,alpha,beta) =
      1                    OpFL(jgrid,4,11,alpha,beta) -
-     2                    Kc * cLccIC / 12d0
+     2                    2d0 * Kc * cLccIC / 8d0
+*     T24
+                     OpFL(jgrid,4,12,alpha,beta) =
+     1                    OpFL(jgrid,4,12,alpha,beta) +
+     2                    2d0 * Kc * cLccIC / 40d0
+*     T35
+                     OpFL(jgrid,4,13,alpha,beta) =
+     1                    OpFL(jgrid,4,13,alpha,beta) +
+     2                    2d0 * Kc * cLccIC / 60d0
                   endif
 *     
 *     Bottom Component
@@ -3020,23 +3052,39 @@ c     6                             2,pt,alpha,beta) )
 *
 *     Include the intrinsic charm contributions if needed
 *
-                  if(IntrinsicCharm)then
+                  if(IntrinsicCharm.and.MassScheme.ne."ZM-VFNS")then
 *     Singlet
-                     OpF2(jgrid,4,1,alpha,beta)  =
-     1                    OpF2(jgrid,4,1,alpha,beta)  +
-     2                    ipr * Kc * c2ccIC / 12d0
+                     OpF3(jgrid,4,1,alpha,beta)  =
+     1                    OpF3(jgrid,4,1,alpha,beta)  +
+     2                    ipr * 2d0 * Kc * c3ccIC / 12d0
 *     Valence
-                     OpF2(jgrid,4,3,alpha,beta)  = 
-     1                    OpF2(jgrid,4,3,alpha,beta)  + 
-     2                    Kc * c2ccIC / 12d0
+                     OpF3(jgrid,4,3,alpha,beta)  = 
+     1                    OpF3(jgrid,4,3,alpha,beta)  + 
+     2                    2d0 * Kc * c3ccIC / 12d0
 *     V15
-                     OpF2(jgrid,4,6,alpha,beta)  =
-     1                    OpF2(jgrid,4,6,alpha,beta)  -
-     2                    Kc * c2ccIC / 12d0
+                     OpF3(jgrid,4,6,alpha,beta)  =
+     1                    OpF3(jgrid,4,6,alpha,beta)  -
+     2                    2d0 * Kc * c3ccIC / 8d0
+*     V24
+                     OpF3(jgrid,4,7,alpha,beta)  =
+     1                    OpF3(jgrid,4,7,alpha,beta)  +
+     2                    2d0 * Kc * c3ccIC / 40d0
+*     V35
+                     OpF3(jgrid,4,8,alpha,beta)  =
+     1                    OpF3(jgrid,4,8,alpha,beta)  +
+     2                    2d0 * Kc * c3ccIC / 60d0
 *     T15
-                     OpF2(jgrid,4,11,alpha,beta) =
-     1                    OpF2(jgrid,4,11,alpha,beta) -
-     2                    ipr * Kc * c2ccIC / 12d0
+                     OpF3(jgrid,4,11,alpha,beta) =
+     1                    OpF3(jgrid,4,11,alpha,beta) -
+     2                    ipr * 2d0 * Kc * c3ccIC / 8d0
+*     T24
+                     OpF3(jgrid,4,12,alpha,beta) =
+     1                    OpF3(jgrid,4,12,alpha,beta) +
+     2                    ipr * 2d0 * Kc * c3ccIC / 40d0
+*     T35
+                     OpF3(jgrid,4,13,alpha,beta) =
+     1                    OpF3(jgrid,4,13,alpha,beta) +
+     2                    ipr * 2d0 * Kc * c3ccIC / 60d0
                   endif
 *     
 *     Bottom Component

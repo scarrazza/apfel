@@ -6,6 +6,9 @@
 *     the intrinsic charm contributions to the massive coefficient
 *     functions computed in RSLintegralsDIS.f.
 *
+*     These contributions are in fact the difference between the massive
+*     intrinsic charm contributions and the massless ones.
+*
 ************************************************************************
       subroutine IncludeIntrinsicCharm
 *
@@ -58,7 +61,7 @@
 *
 *     Charged current
 *
-*     (even if the ICcontribution is a non-singlet one, put it in the 
+*     (even if the IC contribution is a non-singlet one, put it in the 
 *     pure-singlet slot (e.g. SC2mCC(igrid,ixi,2,0,beta,alpha) because
 *     for now this slot is never used. If one day there will be the 
 *     O(as^2) correction to CC, that contain a pure-singlet piece, I
@@ -66,12 +69,13 @@
 *
                if(alpha.eq.beta)then
 *     FFNS
-                  SC2mCC(igrid,ixi,2,0,beta,alpha) = ( 1d0 + lambda )
-                  SCLmCC(igrid,ixi,2,0,beta,alpha) = lambda
-                  SC3mCC(igrid,ixi,2,0,beta,alpha) = 1d0
+                  SC2mCC(igrid,ixi,2,0,beta,alpha) = lambda !( 1d0 + lambda )
+                  SCLmCC(igrid,ixi,2,0,beta,alpha) = lambda !lambda
+c                  SC3mCC(igrid,ixi,2,0,beta,alpha) = 0d0    !1d0
 *     FFN0
-                  SC2m0CC(igrid,ixi,2,0,beta,alpha) = 1d0
-                  SC3m0CC(igrid,ixi,2,0,beta,alpha) = 1d0
+c                  SC2m0CC(igrid,ixi,2,0,beta,alpha) = 0d0   !1d0
+c                  SCLm0CC(igrid,ixi,2,0,beta,alpha) = 0d0   !0d0
+c                  SC3m0CC(igrid,ixi,2,0,beta,alpha) = 0d0   !1d0
                endif
             enddo
          enddo

@@ -44,7 +44,7 @@
          pdfout(3,a) = 0d0
          do ipdf=1,6
             pdfout(3,a) = pdfout(3,a) + (pdfin(ipdf,a) - pdfin(-ipdf,a))
-        enddo
+         enddo
 *
          pdfout(4,a)  = ( pdfin(2,a) - pdfin(-2,a) ) 
      1                - ( pdfin(1,a) - pdfin(-1,a) )
