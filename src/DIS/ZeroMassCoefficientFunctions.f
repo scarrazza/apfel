@@ -612,7 +612,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
 *
 ************************************************************************
 *
-*     Order alphas coefficient functions (NLO) for the semi-inclusive
+*     Order alphas coefficient functions (NLO) for the single-inclusive
 *     e+e- annihilation. Expansion parameter alphas/4*pi
 *     Reference: hep-ph/0604160
 *
@@ -1562,190 +1562,102 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
        RETURN
        END
 *
-c$$$************************************************************************
-c$$$*
-c$$$*     Analytical terms neededed for the scale variations
-c$$$*
-c$$$************************************************************************
-c$$$      FUNCTION P0P0NSA(X)
-c$$$*
-c$$$      IMPLICIT NONE
-c$$$*
-c$$$      INCLUDE "../commons/ColorFactors.h"
-c$$$**
-c$$$*     Input Variables
-c$$$*
-c$$$      DOUBLE PRECISION X
-c$$$**
-c$$$*     Output Variables
-c$$$*
-c$$$      DOUBLE PRECISION P0P0NSA
-c$$$*
-c$$$      P0P0NSA = 4D0 * CF**2D0 * ( - 4D0 * DLOG(X) / ( 1D0 - X )
-c$$$     1     - 4D0 * ( 1D0 + X ) * DLOG( 1D0 - X )
-c$$$     2     + 3D0 * ( 1D0 + X ) * DLOG(X) - ( X + 5D0 ) )
-c$$$*
-c$$$      RETURN
-c$$$      END
-c$$$*
-c$$$************************************************************************
-c$$$      FUNCTION P0P0NSB(X)
-c$$$*
-c$$$      IMPLICIT NONE
-c$$$*
-c$$$      INCLUDE "../commons/ColorFactors.h"
-c$$$**
-c$$$*     Input Variables
-c$$$*
-c$$$      DOUBLE PRECISION X
-c$$$**
-c$$$*     Output Variables
-c$$$*
-c$$$      DOUBLE PRECISION P0P0NSB
-c$$$*
-c$$$      P0P0NSB = 4D0 * CF**2D0 * ( 8D0 * DLOG( 1D0 - X ) + 6D0 ) 
-c$$$     1     / ( 1D0 - X )
-c$$$*
-c$$$      RETURN
-c$$$      END
-c$$$*
-c$$$************************************************************************
-c$$$      FUNCTION P0P0NSC(X)
-c$$$*
-c$$$      IMPLICIT NONE
-c$$$*
-c$$$      INCLUDE "../commons/ColorFactors.h"
-c$$$      INCLUDE "../commons/consts.h"
-c$$$**
-c$$$*     Input Variables
-c$$$*
-c$$$      DOUBLE PRECISION X
-c$$$**
-c$$$*     Output Variables
-c$$$*
-c$$$      DOUBLE PRECISION P0P0NSC
-c$$$*
-c$$$      P0P0NSC = 4D0 * CF**2D0 * ( 4D0 * DLOG( 1D0 - X )**2D0 
-c$$$     1     + 6D0 * DLOG( 1D0 - X ) + ( 9D0 / 4D0 - 4D0 * ZETA2 ) )
-c$$$*
-c$$$      RETURN
-c$$$      END
-c$$$*
-c$$$************************************************************************
-c$$$      FUNCTION P0P0PSA(X,NF)
-c$$$*
-c$$$      IMPLICIT NONE
-c$$$*
-c$$$      INCLUDE "../commons/ColorFactors.h"
-c$$$**
-c$$$*     Input Variables
-c$$$*
-c$$$      INTEGER NF
-c$$$      DOUBLE PRECISION X
-c$$$**
-c$$$*     Output Variables
-c$$$*
-c$$$      DOUBLE PRECISION P0P0PSA
-c$$$*
-c$$$      P0P0PSA = NF * CF * TR * ( 8D0 * ( 3D0 + 4D0 / X - 3D0 * X 
-c$$$     1     - 4D0 * X**2D0 ) / 3D0 + 16D0 * ( 1D0 + X ) * DLOG(X) ) 
-c$$$*
-c$$$      RETURN
-c$$$      END
-c$$$*
-c$$$************************************************************************
-c$$$      FUNCTION P0P0GA(X,NF)
-c$$$*
-c$$$      IMPLICIT NONE
-c$$$*
-c$$$      INCLUDE "../commons/ColorFactors.h"
-c$$$**
-c$$$*     Input Variables
-c$$$*
-c$$$      INTEGER NF
-c$$$      DOUBLE PRECISION X
-c$$$**
-c$$$*     Output Variables
-c$$$*
-c$$$      DOUBLE PRECISION P0P0GA
-c$$$*
-c$$$      P0P0GA = CA * TR * NF * ( 16D0 * ( 2D0 * X**2D0 - 2D0 * X + 1D0 )
-c$$$     1     * DLOG( 1D0 - X ) + 16D0 * ( 4D0 * X + 1 D0 ) * DLOG(X)
-c$$$     2     + 4D0 * ( - 40D0 * X**2D0 + 26D0 * X + 17D0 + 8D0 / X )
-c$$$     3     / 3D0 )
-c$$$     4     + CF * TR * NF * ( ( 2D0 * X**2D0 - 2D0 * X + 1D0 )
-c$$$     5     * DLOG( 1D0 - X ) - 8D0 * ( 4D0 *X**2D0 - 2D0 * X + 1D0 )
-c$$$     6     * DLOG(X) + 4D0 * ( 4D0 * X - 1D0 ) )
-c$$$     7     + NF**2D0 * TR**2D0 * ( - 16D0 * ( 2D0 * X**2D0 - 2D0 * X
-c$$$     8     + 1D0 ) )
-c$$$*
-c$$$      RETURN
-c$$$      END
-c$$$*
-c$$$************************************************************************
-c$$$      FUNCTION CL1P0NSA(X)
-c$$$*
-c$$$      IMPLICIT NONE
-c$$$*
-c$$$      INCLUDE "../commons/ColorFactors.h"
-c$$$**
-c$$$*     Input Variables
-c$$$*
-c$$$      DOUBLE PRECISION X
-c$$$**
-c$$$*     Output Variables
-c$$$*
-c$$$      DOUBLE PRECISION CL1P0NSA
-c$$$*
-c$$$      CL1P0NSA = 4D0 * CF**2D0 * ( ( X + 2D0 ) + 4D0 * X
-c$$$     1     * DLOG( 1D0 - X ) - 2D0 * X * DLOG(X) )
-c$$$*
-c$$$      RETURN
-c$$$      END
-c$$$*
-c$$$************************************************************************
-c$$$      FUNCTION CL1P0PSA(X)
-c$$$*
-c$$$      IMPLICIT NONE
-c$$$*
-c$$$      INCLUDE "../commons/ColorFactors.h"
-c$$$**
-c$$$*     Input Variables
-c$$$*
-c$$$      DOUBLE PRECISION X
-c$$$**
-c$$$*     Output Variables
-c$$$*
-c$$$      DOUBLE PRECISION CL1P0PSA
-c$$$*
-c$$$      CL1P0PSA = CF * TR * ( 32D0 * ( 1D0 / X - 3D0 + 2D0 * X**2D0 ) 
-c$$$     1     / 3D0 - 32D0 * X * DLOG(X) )
-c$$$*
-c$$$      RETURN
-c$$$      END
-c$$$*
-c$$$************************************************************************
-c$$$      FUNCTION CL1P0GA(X,NF)
-c$$$*
-c$$$      IMPLICIT NONE
-c$$$*
-c$$$      INCLUDE "../commons/ColorFactors.h"
-c$$$**
-c$$$*     Input Variables
-c$$$*
-c$$$      INTEGER NF
-c$$$      DOUBLE PRECISION X
-c$$$**
-c$$$*     Output Variables
-c$$$*
-c$$$      DOUBLE PRECISION CL1P0GA
-c$$$*
-c$$$      CL1P0GA = CA * TR * ( 64D0 * X * ( 1D0 - X ) * DLOG( 1D0 - X )
-c$$$     1     - 128D0 * X * DLOG(X) + 16D0 * ( 23D0 * X**2D0 - 19D0 * X
-c$$$     2     - 6D0 + 2D0 / X ) / 3D0 )
-c$$$     3     + CF * TR * ( 16D0 * X * DLOG(X) / 3D0 - 8D0 * ( 2D0 * X**2D0 
-c$$$     4     - X - 1D0 ) / 3D0 )
-c$$$     5     + NF * TR**2D0 * ( - 64D0 * X * ( 1D0 - X ) / 3D0 )
-c$$$*
-c$$$      RETURN
-c$$$      END
+************************************************************************
+*
+*     Order alphas coefficient functions (NLO) for the polarized
+*     structure functions. Expansion parameter alphas/4*pi
+*     Reference: hep-ph/9603366
+*
+************************************************************************
+*     F2: quark non-singlet - regular term (A)
+************************************************************************
+      FUNCTION C2NS1PA(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C2NS1PA
+*
+      C2NS1PA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
+     1     - ( 1D0 + X**2D0 ) * DLOG(X) / ( 1D0 - X ) + 2D0 + X )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F2: quark non-singlet - singular term (B)
+************************************************************************
+      FUNCTION C2NS1PB(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C2NS1PB
+*
+      C2NS1PB = 2D0 * CF * ( 2D0 * DLOG( 1D0 - X ) - 3D0 / 2D0 ) 
+     1       / ( 1D0 - X )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F2: quark non-singlet - local term (C)
+************************************************************************
+      FUNCTION C2NS1PC(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+      INCLUDE "../commons/consts.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C2NS1PC
+*
+      C2NS1PC = 2D0 * CF * ( DLOG( 1D0 - X )**2D0 
+     1       - 3D0 * DLOG( 1D0 - X ) / 2D0 
+     2       - ( 2D0 * ZETA2 + 9D0 / 2D0 ) )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F2: gluon - regular term (A)
+************************************************************************
+      FUNCTION C2G1PA(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C2G1PA
+*
+      C2G1PA = 4D0 * TR * ( ( 2D0 * X - 1D0 ) * DLOG( ( 1D0 - X ) / X )
+     1     - 4D0 * X + 3D0 )
+*
+      RETURN
+      END

@@ -54,26 +54,24 @@
                SCLmNC(igrid,ixi,3,0,beta,alpha) = 4d0 * ( 1d0 - eta )
      1              / ( 2d0 - eta ) * win
 *     FFN0
-               SC2m0NC(igrid,ixi,3,0,beta,alpha) = 0d0
-               SCLm0NC(igrid,ixi,3,0,beta,alpha) = 0d0
                if(alpha.eq.beta) SC2m0NC(igrid,ixi,3,0,beta,alpha) = 1d0
 *
 *     Charged current
 *
+*     (even if the ICcontribution is a non-singlet one, put it in the 
+*     pure-singlet slot (e.g. SC2mCC(igrid,ixi,2,0,beta,alpha) because
+*     for now this slot is never used. If one day there will be the 
+*     O(as^2) correction to CC, that contain a pure-singlet piece, I
+*     will need to extend the CC arrays from 3 to 4.)
+*
                if(alpha.eq.beta)then
 *     FFNS
-                  SC2mCC(igrid,ixi,3,0,beta,alpha) =
-     1                 SC2mCC(igrid,ixi,3,0,beta,alpha)
-     2                 + ( 1d0 + lambda )
-                  SCLmCC(igrid,ixi,3,0,beta,alpha) =
-     1                 SCLmCC(igrid,ixi,3,0,beta,alpha) + lambda
-                  SC3mCC(igrid,ixi,3,0,beta,alpha) =
-     1                 SCLmCC(igrid,ixi,3,0,beta,alpha) + 1d0
+                  SC2mCC(igrid,ixi,2,0,beta,alpha) = ( 1d0 + lambda )
+                  SCLmCC(igrid,ixi,2,0,beta,alpha) = lambda
+                  SC3mCC(igrid,ixi,2,0,beta,alpha) = 1d0
 *     FFN0
-                  SC2m0CC(igrid,ixi,3,0,beta,alpha) =
-     1                 SC2mCC(igrid,ixi,3,0,beta,alpha) + 1d0
-                  SC3m0CC(igrid,ixi,3,0,beta,alpha) =
-     1                 SCLmCC(igrid,ixi,3,0,beta,alpha) + 1d0
+                  SC2m0CC(igrid,ixi,2,0,beta,alpha) = 1d0
+                  SC3m0CC(igrid,ixi,2,0,beta,alpha) = 1d0
                endif
             enddo
          enddo

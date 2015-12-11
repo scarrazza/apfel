@@ -59,6 +59,7 @@
       double precision sgn,diff(nxir),xi(4:6),c0(4:6),c1(4:6)
       double precision damp(4:6)
       double precision cFLIC
+      double precision c2ccIC,clccIC,c3ccIC
       double precision t1,t2
 *
       call cpu_time(t1)
@@ -706,85 +707,6 @@ c     6                             3,pt,alpha,beta) )
                         endif
                      endif
                   endif
-c$$$*     
-c$$$*     F2
-c$$$*     
-c$$$*     Light Component
-c$$$*     
-c$$$*     Singlet
-c$$$                  OpF2(jgrid,3,1,alpha,beta)  = 
-c$$$     1                 ( bq(1) + bq(2) + bq(3) )
-c$$$     2                 * ( C2ps(3) + C2nsp(3) / 6d0 )
-c$$$*     Gluon
-c$$$                  OpF2(jgrid,3,2,alpha,beta)  = 
-c$$$     1                 ( bq(1) + bq(2) + bq(3) ) * C2g(3)
-c$$$*     T3
-c$$$                  OpF2(jgrid,3,9,alpha,beta)  = 
-c$$$     1                 fr3 * ( bq(2) - bq(1) ) * C2nsp(3) / 2d0
-c$$$*     T8
-c$$$                  OpF2(jgrid,3,10,alpha,beta) = 
-c$$$     1                 ( bq(1) + bq(2) - 2d0 * bq(3) ) * C2nsp(3) / 6d0
-c$$$*     T15
-c$$$                  OpF2(jgrid,3,11,alpha,beta) = 
-c$$$     1                 ( bq(1) + bq(2) + bq(3) ) * C2nsp(3) / 12d0
-c$$$*     T24
-c$$$                  OpF2(jgrid,3,12,alpha,beta) = 
-c$$$     1                 ( bq(1) + bq(2) + bq(3) ) * C2nsp(3) / 20d0
-c$$$*     T35
-c$$$                  OpF2(jgrid,3,13,alpha,beta) = 
-c$$$     1                 ( bq(1) + bq(2) + bq(3) ) * C2nsp(3) / 30d0
-c$$$*     
-c$$$*     Charm Component
-c$$$*     
-c$$$*     Singlet
-c$$$                  OpF2(jgrid,4,1,alpha,beta)  = bq(4)
-c$$$     1                 * ( C2ps(4) + C2nsp(4) / 6d0 )
-c$$$*     Gluon
-c$$$                  OpF2(jgrid,4,2,alpha,beta)  = bq(4) * C2g(4)
-c$$$*     T15
-c$$$                  OpF2(jgrid,4,11,alpha,beta) = - bq(4) * C2nsp(4)
-c$$$     1                 / 4d0
-c$$$*     T24
-c$$$                  OpF2(jgrid,4,12,alpha,beta) = bq(4) * C2nsp(4)
-c$$$     1                 / 20d0
-c$$$*     T35
-c$$$                  OpF2(jgrid,4,13,alpha,beta) = bq(4) * C2nsp(4)
-c$$$     1                 / 30d0
-c$$$*     
-c$$$*     Bottom Component
-c$$$*     
-c$$$*     Singlet
-c$$$                  OpF2(jgrid,5,1,alpha,beta)  = bq(5)
-c$$$     1                 * ( C2ps(5) + C2nsp(5) / 6d0 )
-c$$$*     Gluon
-c$$$                  OpF2(jgrid,5,2,alpha,beta)  = bq(5) * C2g(5)
-c$$$*     T24
-c$$$                  OpF2(jgrid,5,12,alpha,beta) = - bq(5) * C2nsp(5)
-c$$$     1                 / 5d0
-c$$$*     T35
-c$$$                  OpF2(jgrid,5,13,alpha,beta) = bq(5) * C2nsp(5)
-c$$$     1                 / 30d0
-c$$$*     
-c$$$*     Top Component
-c$$$*     
-c$$$*     Singlet
-c$$$                  OpF2(jgrid,6,1,alpha,beta)  = bq(6)
-c$$$     1                 * ( C2ps(6) + C2nsp(6) / 6d0 )
-c$$$*     Gluon
-c$$$                  OpF2(jgrid,6,2,alpha,beta)  = bq(6) * C2g(6)
-c$$$*     T35
-c$$$                  OpF2(jgrid,6,13,alpha,beta) = - bq(6) * C2nsp(6)
-c$$$     1                 / 6d0
-c$$$*
-c$$$*     Total
-c$$$*
-c$$$                  do ipdf=0,13
-c$$$                     do ihq=3,6
-c$$$                        OpF2(jgrid,7,ipdf,alpha,beta) = 
-c$$$     1                       OpF2(jgrid,7,ipdf,alpha,beta)
-c$$$     2                       + OpF2(jgrid,ihq,ipdf,alpha,beta)
-c$$$                     enddo
-c$$$                  enddo
 *     
 *     F2
 *     
@@ -862,85 +784,6 @@ c$$$                  enddo
      2                       + OpF2(jgrid,ihq,ipdf,alpha,beta)
                      enddo
                   enddo
-c$$$*     
-c$$$*     FL
-c$$$*     
-c$$$*     Light Component
-c$$$*     
-c$$$*     Singlet
-c$$$                  OpFL(jgrid,3,1,alpha,beta)  = 
-c$$$     1                 ( bq(1) + bq(2) + bq(3) )
-c$$$     2                 * ( CLps(3) + CLnsp(3) / 6d0 )
-c$$$*     Gluon
-c$$$                  OpFL(jgrid,3,2,alpha,beta)  = 
-c$$$     1                 ( bq(1) + bq(2) + bq(3) ) * CLg(3)
-c$$$*     T3
-c$$$                  OpFL(jgrid,3,9,alpha,beta)  = 
-c$$$     1                 fr3 * ( bq(2) - bq(1) ) * CLnsp(3) / 2d0
-c$$$*     T8
-c$$$                  OpFL(jgrid,3,10,alpha,beta) = 
-c$$$     1                 ( bq(1) + bq(2) - 2d0 * bq(3) ) * CLnsp(3) / 6d0
-c$$$*     T15
-c$$$                  OpFL(jgrid,3,11,alpha,beta) = 
-c$$$     1                 ( bq(1) + bq(2) + bq(3) ) * CLnsp(3) / 12d0
-c$$$*     T24
-c$$$                  OpFL(jgrid,3,12,alpha,beta) = 
-c$$$     1                 ( bq(1) + bq(2) + bq(3) ) * CLnsp(3) / 20d0
-c$$$*     T35
-c$$$                  OpFL(jgrid,3,13,alpha,beta) = 
-c$$$     1                 ( bq(1) + bq(2) + bq(3) ) * CLnsp(3) / 30d0
-c$$$*     
-c$$$*     Charm Component
-c$$$*     
-c$$$*     Singlet
-c$$$                  OpFL(jgrid,4,1,alpha,beta)  = bq(4)
-c$$$     1                 * ( CLps(4) + CLnsp(4) / 6d0 )
-c$$$*     Gluon
-c$$$                  OpFL(jgrid,4,2,alpha,beta)  = bq(4) * CLg(4)
-c$$$*     T15
-c$$$                  OpFL(jgrid,4,11,alpha,beta) = - bq(4) * CLnsp(4)
-c$$$     1                 / 4d0
-c$$$*     T24
-c$$$                  OpFL(jgrid,4,12,alpha,beta) = bq(4) * CLnsp(4)
-c$$$     1                 / 20d0
-c$$$*     T35
-c$$$                  OpFL(jgrid,4,13,alpha,beta) = bq(4) * CLnsp(4)
-c$$$     1                 / 30d0
-c$$$*     
-c$$$*     Bottom Component
-c$$$*     
-c$$$*     Singlet
-c$$$                  OpFL(jgrid,5,1,alpha,beta)  = bq(5)
-c$$$     1                 * ( CLps(5) + CLnsp(5) / 6d0 )
-c$$$*     Gluon
-c$$$                  OpFL(jgrid,5,2,alpha,beta)  = bq(5) * CLg(5)
-c$$$*     T24
-c$$$                  OpFL(jgrid,5,12,alpha,beta) = - bq(5) * CLnsp(5)
-c$$$     1                 / 5d0
-c$$$*     T35
-c$$$                  OpFL(jgrid,5,13,alpha,beta) = bq(5) * CLnsp(5)
-c$$$     1                 / 30d0
-c$$$*     
-c$$$*     Top Component
-c$$$*     
-c$$$*     Singlet
-c$$$                  OpFL(jgrid,6,1,alpha,beta)  = bq(6)
-c$$$     1                 * ( CLps(6) + CLnsp(6) / 6d0 )
-c$$$*     Gluon
-c$$$                  OpFL(jgrid,6,2,alpha,beta)  = bq(6) * CLg(6)
-c$$$*     T35
-c$$$                  OpFL(jgrid,6,13,alpha,beta) = - bq(6) * CLnsp(6)
-c$$$     1                 / 6d0
-c$$$*     
-c$$$*     Total
-c$$$*     
-c$$$                  do ipdf=0,13
-c$$$                     do ihq=3,6
-c$$$                        OpFL(jgrid,7,ipdf,alpha,beta) = 
-c$$$     1                       OpFL(jgrid,7,ipdf,alpha,beta)
-c$$$     2                       + OpFL(jgrid,ihq,ipdf,alpha,beta)
-c$$$                     enddo
-c$$$                  enddo
 *     
 *     FL
 *     
@@ -1022,80 +865,6 @@ c$$$                  enddo
 *     F3 (Only for neutral current processes and always ZM)
 *     
                   if(ProcessDIS.eq."NC")then
-c$$$*     
-c$$$*     Light Component
-c$$$*     
-c$$$*     Valence
-c$$$                     OpF3(jgrid,3,3,alpha,beta) = 
-c$$$     1                    ( dq(1) + dq(2) + dq(3) ) * C3nsm(3) / 6d0
-c$$$*     V3
-c$$$                     OpF3(jgrid,3,4,alpha,beta) = 
-c$$$     1                    fr3 * ( dq(2) - dq(1) ) * C3nsm(3) / 2d0
-c$$$*     V8
-c$$$                     OpF3(jgrid,3,5,alpha,beta) = 
-c$$$     1                    ( dq(1) + dq(2) - 2d0 * dq(3) ) * C3nsm(3)
-c$$$     2                    / 6d0
-c$$$*     V15
-c$$$                     OpF3(jgrid,3,6,alpha,beta) = 
-c$$$     1                    ( dq(1) + dq(2) + dq(3) ) * C3nsm(3) / 12d0
-c$$$*     V24
-c$$$                     OpF3(jgrid,3,7,alpha,beta) = 
-c$$$     1                    ( dq(1) + dq(2) + dq(3) ) * C3nsm(3) / 20d0
-c$$$*     V35
-c$$$                     OpF3(jgrid,3,8,alpha,beta) = 
-c$$$     1                    ( dq(1) + dq(2) + dq(3) ) * C3nsm(3) / 30d0
-c$$$*     
-c$$$*     Charm Component
-c$$$*     
-c$$$                     if(nf.ge.4)then
-c$$$*     Valence
-c$$$                        OpF3(jgrid,4,3,alpha,beta) = dq(4) * C3nsm(4)
-c$$$     1                       / 6d0
-c$$$*     V15
-c$$$                        OpF3(jgrid,4,6,alpha,beta) = - dq(4) * C3nsm(4)
-c$$$     1                       / 4d0
-c$$$*     V24
-c$$$                        OpF3(jgrid,4,7,alpha,beta) = dq(4) * C3nsm(4)
-c$$$     1                       / 20d0
-c$$$*     V35
-c$$$                        OpF3(jgrid,4,8,alpha,beta) = dq(4) * C3nsm(4)
-c$$$     1                       / 30d0
-c$$$                     endif
-c$$$*     
-c$$$*     Bottom Component
-c$$$*     
-c$$$                     if(nf.ge.5)then
-c$$$*     Valence
-c$$$                        OpF3(jgrid,5,3,alpha,beta) = dq(5) * C3nsm(5)
-c$$$     1                       / 6d0
-c$$$*     V24
-c$$$                        OpF3(jgrid,5,7,alpha,beta) = - dq(5) * C3nsm(5)
-c$$$     1                       / 5d0
-c$$$*     V35
-c$$$                        OpF3(jgrid,5,8,alpha,beta) = dq(5) * C3nsm(5)
-c$$$     1                       / 30d0
-c$$$                     endif
-c$$$*     
-c$$$*     Top Component
-c$$$*     
-c$$$                     if(nf.ge.6)then
-c$$$*     Valence
-c$$$                        OpF3(jgrid,6,3,alpha,beta) = dq(6) * C3nsm(6)
-c$$$     1                       / 6d0
-c$$$*     V35
-c$$$                        OpF3(jgrid,6,8,alpha,beta) = - dq(6) * C3nsm(6)
-c$$$     1                       / 6d0
-c$$$                     endif
-c$$$*     
-c$$$*     Total
-c$$$*     
-c$$$                     do ipdf=0,13
-c$$$                        do ihq=3,nf
-c$$$                           OpF3(jgrid,7,ipdf,alpha,beta) = 
-c$$$     1                          OpF3(jgrid,7,ipdf,alpha,beta)
-c$$$     2                          + OpF3(jgrid,ihq,ipdf,alpha,beta)
-c$$$                        enddo
-c$$$                     enddo
 *     
 *     Light Component
 *     
@@ -1361,6 +1130,43 @@ c$$$                     enddo
                            endif
                         enddo
                      endif
+*
+*     If needed, compute the IC contributions.
+*     (Warning: such contributions are placed in the pure-singlet slot
+*     even if they are actually non-singlet contributions. The reason is
+*     that such slot is empty for now and I "borrow" it to avoid to extend
+*     the size of the coefficient function arrays)
+*
+                     if(IntrinsicCharm)then
+                        if(Nf_FF.lt.4)then
+                           c2ccIC = 0d0
+                           cLccIC = 0d0
+                           c3ccIC = 0d0
+                           do pt=0,ipt_FF
+                              C2ccIC = C2ccIC + as(pt)
+     1                             * ( c0(ihq)
+     2                             * SC2m0CC(jgrid,ixi(ihq),
+     3                             2,pt,alpha,beta)
+     4                             + c1(ihq)
+     5                             * SC2m0CC(jgrid,ixi(ihq)+1,
+     6                             2,pt,alpha,beta) )
+c                              CLccIC = CLccIC + as(pt)
+c     1                             * ( c0(ihq)
+c     2                             * SCLm0CC(jgrid,ixi(ihq),
+c     3                             2,pt,alpha,beta)
+c     4                             + c1(ihq)
+c     5                             * SCLm0CC(jgrid,ixi(ihq)+1,
+c     6                             2,pt,alpha,beta) )
+                              C3ccIC = C3ccIC + as(pt)
+     1                             * ( c0(ihq)
+     2                             * SC3m0CC(jgrid,ixi(ihq),
+     3                             2,pt,alpha,beta)
+     4                             + c1(ihq)
+     5                             * SC3m0CC(jgrid,ixi(ihq)+1,
+     6                             2,pt,alpha,beta) )
+                           enddo
+                        endif
+                     endif
                   elseif(MassScheme.eq."FFNS")then
                      do pt=0,ipt
                         C2g(3)   = C2g(3)
@@ -1458,6 +1264,43 @@ c$$$                     enddo
                               C3nsm(ihq) = C3nsp(ihq)
                            endif
                         enddo
+                     endif
+*
+*     If needed, compute the IC contributions.
+*     (Warning: such contributions are placed in the pure-singlet slot
+*     even if they are actually non-singlet contributions. The reason is
+*     that such slot is empty for now and I "borrow" it to avoid to extend
+*     the size of the coefficient function arrays)
+*
+                     if(IntrinsicCharm)then
+                        if(Nf_FF.lt.4)then
+                           c2ccIC = 0d0
+                           cLccIC = 0d0
+                           c3ccIC = 0d0
+                           do pt=0,ipt_FF
+                              C2ccIC = C2ccIC + as(pt)
+     1                             * ( c0(ihq)
+     2                             * SC2mCC(jgrid,ixi(ihq),
+     3                             2,pt,alpha,beta)
+     4                             + c1(ihq)
+     5                             * SC2mCC(jgrid,ixi(ihq)+1,
+     6                             2,pt,alpha,beta) )
+                              CLccIC = CLccIC + as(pt)
+     1                             * ( c0(ihq)
+     2                             * SCLmCC(jgrid,ixi(ihq),
+     3                             2,pt,alpha,beta)
+     4                             + c1(ihq)
+     5                             * SCLmCC(jgrid,ixi(ihq)+1,
+     6                             2,pt,alpha,beta) )
+                              C3ccIC = C3ccIC + as(pt)
+     1                             * ( c0(ihq)
+     2                             * SC3mCC(jgrid,ixi(ihq),
+     3                             2,pt,alpha,beta)
+     4                             + c1(ihq)
+     5                             * SC3mCC(jgrid,ixi(ihq)+1,
+     6                             2,pt,alpha,beta) )
+                           enddo
+                        endif
                      endif
                   elseif(MassScheme(1:5).eq."FONLL")then
                      do pt=0,ipt
@@ -1609,12 +1452,76 @@ c$$$                     enddo
                            endif
                         enddo
                      endif
+
+*
+*     If needed, compute the IC contributions.
+*     (Warning: such contributions are placed in the pure-singlet slot
+*     even if they are actually non-singlet contributions. The reason is
+*     that such slot is empty for now and I "borrow" it to avoid to extend
+*     the size of the coefficient function arrays)
+*
+                     if(IntrinsicCharm)then
+                        if(Nf_FF.lt.4)then
+                           c2ccIC = 0d0
+                           cLccIC = 0d0
+                           c3ccIC = 0d0
+*     FFNS
+                           do pt=0,ipt_FF
+                              C2ccIC = C2ccIC + as(pt)
+     1                             * ( c0(ihq)
+     2                             * SC2mCC(jgrid,ixi(ihq),
+     3                             2,pt,alpha,beta)
+     4                             + c1(ihq)
+     5                             * SC2mCC(jgrid,ixi(ihq)+1,
+     6                             2,pt,alpha,beta) )
+                              CLccIC = CLccIC + as(pt)
+     1                             * ( c0(ihq)
+     2                             * SCLmCC(jgrid,ixi(ihq),
+     3                             2,pt,alpha,beta)
+     4                             + c1(ihq)
+     5                             * SCLmCC(jgrid,ixi(ihq)+1,
+     6                             2,pt,alpha,beta) )
+                              C3ccIC = C3ccIC + as(pt)
+     1                             * ( c0(ihq)
+     2                             * SC3mCC(jgrid,ixi(ihq),
+     3                             2,pt,alpha,beta)
+     4                             + c1(ihq)
+     5                             * SC3mCC(jgrid,ixi(ihq)+1,
+     6                             2,pt,alpha,beta) )
+                           enddo
+*     FFN0
+                           do pt=0,ipt_FF
+                              C2ccIC = C2ccIC - as(pt)
+     1                             * damp(4) * ( c0(ihq)
+     2                             * SC2m0CC(jgrid,ixi(ihq),
+     3                             2,pt,alpha,beta)
+     4                             + c1(ihq)
+     5                             * SC2m0CC(jgrid,ixi(ihq)+1,
+     6                             2,pt,alpha,beta) )
+c                              CLccIC = CLccIC - as(pt)
+c     1                             * damp(4) * ( c0(ihq)
+c     2                             * SCLm0CC(jgrid,ixi(ihq),
+c     3                             2,pt,alpha,beta)
+c     4                             + c1(ihq)
+c     5                             * SCLm0CC(jgrid,ixi(ihq)+1,
+c     6                             2,pt,alpha,beta) )
+                              C3ccIC = C3ccIC - as(pt)
+     1                             * damp(4) * ( c0(ihq)
+     2                             * SC3m0CC(jgrid,ixi(ihq),
+     3                             2,pt,alpha,beta)
+     4                             + c1(ihq)
+     5                             * SC3m0CC(jgrid,ixi(ihq)+1,
+     6                             2,pt,alpha,beta) )
+                           enddo
+                        endif
+                     endif
+
                   endif
-*     
+*
 *     F2
-*     
+*
 *     Light Component
-*     
+*
 *     Singlet
                   OpF2(jgrid,3,1,alpha,beta)  = 
      1                 2d0 * Kl * ( C2ps(3) + C2nsp(3) / 6d0 )
@@ -1817,6 +1724,27 @@ c$$$                     enddo
      1                       OpF2(jgrid,4,13,alpha,beta)
      2                       + Kc * C2qm(4) / 15d0
                      endif
+                  endif
+*
+*     Include the intrinsic charm contributions if needed
+*
+                  if(IntrinsicCharm)then
+*     Singlet
+                     OpF2(jgrid,4,1,alpha,beta)  =
+     1                    OpF2(jgrid,4,1,alpha,beta)  +
+     2                    Kc * c2ccIC / 12d0
+*     Valence
+                     OpF2(jgrid,4,3,alpha,beta)  = 
+     1                    OpF2(jgrid,4,3,alpha,beta)  + 
+     2                    ipr * Kc * c2ccIC / 12d0
+*     V15
+                     OpF2(jgrid,4,6,alpha,beta)  =
+     1                    OpF2(jgrid,4,6,alpha,beta)  -
+     2                    ipr * Kc * c2ccIC / 12d0
+*     T15
+                     OpF2(jgrid,4,11,alpha,beta) =
+     1                    OpF2(jgrid,4,11,alpha,beta) -
+     2                    Kc * c2ccIC / 12d0
                   endif
 *     
 *     Bottom Component
@@ -2444,6 +2372,27 @@ c$$$                     enddo
      2                       + Kc * CLqm(4) / 15d0
                      endif
                   endif
+*
+*     Include the intrinsic charm contributions if needed
+*
+                  if(IntrinsicCharm)then
+*     Singlet
+                     OpFL(jgrid,4,1,alpha,beta)  =
+     1                    OpFL(jgrid,4,1,alpha,beta)  +
+     2                    Kc * cLccIC / 12d0
+*     Valence
+                     OpFL(jgrid,4,3,alpha,beta)  = 
+     1                    OpFL(jgrid,4,3,alpha,beta)  + 
+     2                    ipr * Kc * cLccIC / 12d0
+*     V15
+                     OpFL(jgrid,4,6,alpha,beta)  =
+     1                    OpFL(jgrid,4,6,alpha,beta)  -
+     2                    ipr * Kc * cLccIC / 12d0
+*     T15
+                     OpFL(jgrid,4,11,alpha,beta) =
+     1                    OpFL(jgrid,4,11,alpha,beta) -
+     2                    Kc * cLccIC / 12d0
+                  endif
 *     
 *     Bottom Component
 *     
@@ -3067,6 +3016,27 @@ c$$$                     enddo
      1                       OpF3(jgrid,4,11,alpha,beta)
      2                       + ipr * Kc * C3nsp(4) / 3d0
                      endif
+                  endif
+*
+*     Include the intrinsic charm contributions if needed
+*
+                  if(IntrinsicCharm)then
+*     Singlet
+                     OpF2(jgrid,4,1,alpha,beta)  =
+     1                    OpF2(jgrid,4,1,alpha,beta)  +
+     2                    ipr * Kc * c2ccIC / 12d0
+*     Valence
+                     OpF2(jgrid,4,3,alpha,beta)  = 
+     1                    OpF2(jgrid,4,3,alpha,beta)  + 
+     2                    Kc * c2ccIC / 12d0
+*     V15
+                     OpF2(jgrid,4,6,alpha,beta)  =
+     1                    OpF2(jgrid,4,6,alpha,beta)  -
+     2                    Kc * c2ccIC / 12d0
+*     T15
+                     OpF2(jgrid,4,11,alpha,beta) =
+     1                    OpF2(jgrid,4,11,alpha,beta) -
+     2                    ipr * Kc * c2ccIC / 12d0
                   endif
 *     
 *     Bottom Component

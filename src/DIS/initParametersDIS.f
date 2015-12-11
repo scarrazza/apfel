@@ -11,6 +11,7 @@
       implicit none
 *
       include "../commons/Welcome.h"
+      include "../commons/ipt.h"
       include "../commons/MassScheme.h"
       include "../commons/ProcessDIS.h"
       include "../commons/PolarizationDIS.h"
@@ -26,6 +27,7 @@
       include "../commons/TMC.h"
       include "../commons/DampingFONLL.h"
       include "../commons/TimeLike.h"
+      include "../commons/Polarized.h"
       include "../commons/SelectedCharge.h"
       include "../commons/krenQ.h"
       include "../commons/kfacQ.h"
@@ -212,17 +214,9 @@
      1                 "WARNING: Computation of the SIA structure ",
      2                 "functions possible only using electrons ",
      3                 "projectiles"
-            write(6,*) "         ... setting 'elelectron' projectile"
+            write(6,*) "         ... setting 'electron' projectile"
      1                 //achar(27)//"[0m"
             call SetProjectileDIS("electron")
-         endif
-         if(TargetDIS(1:6).ne."proton")then
-            write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: Computation of the SIA structure ",
-     2                 "functions possible only using protons targets"
-            write(6,*) "         ... setting 'proton' targets"
-     1                 //achar(27)//"[0m"
-            call SetTargetDIS("proton")
          endif
          if(PolarizationDIS.ne.0d0)then
             write(6,*) achar(27)//"[33m"//
@@ -232,15 +226,61 @@
      1                 //achar(27)//"[0m"
             call SetPolarizationDIS(0d0)
          endif
+         if(TargetDIS(1:6).ne."proton")then
+c            write(6,*) achar(27)//"[33m"//
+c     1                 "WARNING: Computation of the SIA structure ",
+c     2                 "functions possible only using protons targets"
+c            write(6,*) "         ... setting 'proton' targets"
+c     1                 //achar(27)//"[0m"
+            call SetTargetDIS("proton")
+         endif
          if(ProcessDIS.eq."CC")then
-            write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: Computation of the SIA structure ",
-     2                 "functions not available for CC processes"
-            write(6,*) "         ... setting EM process"
-     1                 //achar(27)//"[0m"
+c            write(6,*) achar(27)//"[33m"//
+c     1                 "WARNING: Computation of the SIA structure ",
+c     2                 "functions not available for CC processes"
+c            write(6,*) "         ... setting EM process"
+c     1                 //achar(27)//"[0m"
             call SetProcessDIS("EM")
          endif
       endif
+*
+*     Ensure that for the polarized structure functions only proper settings are used
+*
+      if(InPolarized.eq."done".and.Polarized)then
+         if(MassScheme.ne."ZM-VFNS")then
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: Computation of polarized structure ",
+     2                 "functions available only in the ZM-VFNS"
+            write(6,*) "         ... setting ZM-VFNS"
+     1                 //achar(27)//"[0m"
+            call SetMassScheme("ZM-VFNS")
+         endif
+         if(TMC)then
+            write(6,*) achar(27)//"[33m"//
+     1                 "WARNING: Computation of polarized structure ",
+     2                 "functions with target mass corrections ",
+     3                 "unavailable"
+            write(6,*) "         ... switching off TMCs"
+     1                 //achar(27)//"[0m"
+            call EnableTargetMassCorrections(.false.)
+         endif
+         if(InPt.eq."done")then
+            if(ipt.ge.2)then
+               write(6,*) achar(27)//"[33m"//
+     1                    "WARNING: Computation of polarized structure",
+     2                    " functions not available at NNLO accuracy"
+               write(6,*) "         ... setting NLO accuracy"
+     1                    //achar(27)//"[0m"
+               call SetPerturbativeOrder(1)
+            endif
+         else
+            call SetPerturbativeOrder(1)
+         endif
+      endif
+*
+*     In case the FFNS is to be used,, set the correct number
+*     of light flavours.
+*
       if(MassScheme(1:4).eq."FFNS".or.
      1   MassScheme(1:4).eq."FFN0")then
          write(6,*) achar(27)//"[33m"//
@@ -272,8 +312,10 @@
             call SetFFNS(3)
          endif
       else
+*
 *     If the number of active flavours has not been specified (by means of SetFFNS)
 *     set it automatically to 3.
+*
          if(Nf_FF.lt.3.or.Nf_FF.gt.6) Nf_FF = 3
          write(6,*) achar(27)//"[33m"//
      1              "WARNING: ",MassScheme," is a VFN scheme"
