@@ -457,16 +457,53 @@ and:
 c^-=\frac{1}{6}V - \frac{1}{4}V_{15}+\frac{1}{20}V_{24}+\frac{1}{30}V_{35}\,.
 \end{equation}
 In addition:
-\begin{equation}
+\begin{equation}\label{SingleCharms}
 c = \frac{1}{2}(c^+ + c^-)\quad\mbox{and}\quad \overline{c} = \frac{1}{2}(c^+ - c^-)\,.
 \end{equation}
 
-It should finally be noticed that the LO coefficient functions of the
-grid as written in qes.~(\ref{LONCgrid}) and~(\ref{LOCCgrid}) are
+It should finally be noticed that the LO coefficient functions on the
+grid as written in eqs.~(\ref{LONCgrid}) and~(\ref{LOCCgrid}) are
 non-singlet like and as such should be treated.
 
+In the NC sector, the IC contributions to the massive stucture
+functions represent the only possible non-singlet
+contribution(\footnote{This is essentially due to the fact that,
+  requiring that the incoming photon (or $Z$) only couples to the
+  charm, the photon vertex is never directly connected with the light
+  initial state.}). As a consequence, the IC fills the non-singlet
+``slot'' and does not interfere with the non-IC part making the
+implementation in {\tt APFEL} easier. Unfortunately this is not the
+case in the CC sector where instead the IC contribution overlaps with
+the non-IC one in a non-trivial way. In fact, even at LO the CC IC
+diagrams have a different kinematics as compared to the non-IC ones
+and thus their combination on the interpolation grid is not
+strightforward. What we need to do in {\tt APFEL} is creating a new
+\textit{ad hoc} slot for the IC contrbutions in such a way that it
+does not interfere with the other contributions(\footnote{In order not
+  to burden {\tt APFEL} with any additional big array, we exploit the
+  fact that the massive CC coefficient functions are presently known
+  up to $\mathcal{O}(\alpha_s)$ and up to this order no pure-singlet
+  contribution is present. We then ``artificially'' place the IC
+  contribution in the pure-singlet slot bearing in mind that if ever
+  the $\mathcal{O}(\alpha_s^2)$ corrections to this process, which
+  contain a pure-singlet contribution, will be computed, we will need
+  to move the IC contribution in a real new slot.}).
 
-
+To conclude the section on LO implementation, we mention that, since
+the contributions reported above are to be included to the $N_F=3$
+massive scheme (be it full or asymptotic), heavy quark PDFs different
+from charm, \textit{i.e.} bottom and top, do not contribute. As a
+consequence, it turns out that:
+\begin{equation}
+\begin{array}{l}
+T_{24} = T_{35} = \Sigma\,,\\
+V_{24} = V_{35} = V\,,
+\end{array}
+\end{equation}
+and thus eq.~(\ref{SingleCharms}) can be written as:
+\begin{equation}
+c = \frac{1}{12}(\Sigma - T_{15} + V - V_{15})\quad\mbox{and}\quad \overline{c} = \frac{1}{12}(\Sigma - T_{15} - V + V_{15})\,.
+\end{equation}
 
 
 
