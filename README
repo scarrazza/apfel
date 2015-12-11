@@ -1,4 +1,4 @@
-APFEL: A Partonic Function Evolution Equation
+APFEL: A Partonic Function Evolution Library
 
 APFEL is a library to perform the combined QCD+QED DGLAP 
 evolution of parton distributions. It is written and maintained 
