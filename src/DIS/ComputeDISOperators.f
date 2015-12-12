@@ -1549,12 +1549,12 @@ c     6                             2,pt,alpha,beta) )
 *     Charm Component
 *     
 *     Singlet
-                  OpF2(jgrid,4,1,alpha,beta)  = 
+                  OpF2(jgrid,4,1,alpha,beta)  =
      1                 2d0 * Kc * ( C2ps(4) + C2nsp(4) / 6d0 )
 *     Gluon
                   OpF2(jgrid,4,2,alpha,beta)  = 2d0 * Kc * C2g(4)
 *     V3
-                  OpF2(jgrid,4,4,alpha,beta)  = 
+                  OpF2(jgrid,4,4,alpha,beta)  =
      1                 - ipr * fr3 * V_cd2 * C2nsm(4) / 2d0
 *     V8
                   OpF2(jgrid,4,5,alpha,beta)  =
@@ -1563,10 +1563,10 @@ c     6                             2,pt,alpha,beta) )
                   OpF2(jgrid,4,6,alpha,beta)  =
      1                 ipr * Kc * C2nsm(4) / 3d0
 *     T3
-                  OpF2(jgrid,4,9,alpha,beta)  = 
+                  OpF2(jgrid,4,9,alpha,beta)  =
      1                 - fr3 * V_cd2 * C2nsp(4) / 2d0
 *     T8
-                  OpF2(jgrid,4,10,alpha,beta) = 
+                  OpF2(jgrid,4,10,alpha,beta) =
      1                 ( V_cd2 - 2d0 * V_cs2 ) * C2nsp(4) / 6d0
 *     T15
                   OpF2(jgrid,4,11,alpha,beta) = - Kc * C2nsp(4) / 6d0
@@ -1729,6 +1729,41 @@ c     6                             2,pt,alpha,beta) )
 *     Include the intrinsic charm contributions if needed
 *
                   if(IntrinsicCharm.and.MassScheme.ne."ZM-VFNS")then
+*     For any of the FFNSs, subtract the spurious charm contribution
+                     if(MassScheme(1:3).eq."FFN")then
+*     Singlet
+                        OpF2(jgrid,4,1,alpha,beta)  =
+     1                       OpF2(jgrid,4,1,alpha,beta)  -
+     2                       2d0 * Kc * C2nsp(4) / 12d0
+*     Valence
+                        OpF2(jgrid,4,3,alpha,beta)  =
+     1                       OpF2(jgrid,4,3,alpha,beta)  -
+     2                       ipr * 2d0 * Kc * C2nsm(4) / 12d0
+*     V15
+                        OpF2(jgrid,4,6,alpha,beta)  =
+     1                       OpF2(jgrid,4,6,alpha,beta)  +
+     2                       ipr * 2d0 * Kc * C2nsm(4) / 8d0
+*     V24
+                        OpF2(jgrid,4,7,alpha,beta)  =
+     1                       OpF2(jgrid,4,7,alpha,beta)  -
+     2                       ipr * 2d0 * Kc * C2nsm(4) / 40d0
+*     V35
+                        OpF2(jgrid,4,8,alpha,beta)  =
+     1                       OpF2(jgrid,4,8,alpha,beta)  -
+     2                       ipr * 2d0 * Kc * C2nsm(4) / 60d0
+*     T15
+                        OpF2(jgrid,4,11,alpha,beta) =
+     1                       OpF2(jgrid,4,11,alpha,beta) +
+     2                       2d0 * Kc * C2nsp(4) / 8d0
+*     T24
+                        OpF2(jgrid,4,12,alpha,beta) =
+     1                       OpF2(jgrid,4,12,alpha,beta) -
+     2                       2d0 * Kc * C2nsp(4) / 40d0
+*     T35
+                        OpF2(jgrid,4,13,alpha,beta) =
+     1                       OpF2(jgrid,4,13,alpha,beta) -
+     2                       2d0 * Kc * C2nsp(4) / 60d0
+                     endif
 *     Singlet
                      OpF2(jgrid,4,1,alpha,beta)  =
      1                    OpF2(jgrid,4,1,alpha,beta)  +
@@ -2392,6 +2427,41 @@ c     6                             2,pt,alpha,beta) )
 *     Include the intrinsic charm contributions if needed
 *
                   if(IntrinsicCharm.and.MassScheme.ne."ZM-VFNS")then
+*     For any of the FFNSs, subtract the spurious charm contribution
+                     if(MassScheme(1:3).eq."FFN")then
+*     Singlet
+                        OpFL(jgrid,4,1,alpha,beta)  =
+     1                       OpFL(jgrid,4,1,alpha,beta)  -
+     2                       2d0 * Kc * CLnsp(4) / 12d0
+*     Valence
+                        OpFL(jgrid,4,3,alpha,beta)  =
+     1                       OpFL(jgrid,4,3,alpha,beta)  -
+     2                       ipr * 2d0 * Kc * CLnsm(4) / 12d0
+*     V15
+                        OpFL(jgrid,4,6,alpha,beta)  =
+     1                       OpFL(jgrid,4,6,alpha,beta)  +
+     2                       ipr * 2d0 * Kc * CLnsm(4) / 8d0
+*     V24
+                        OpFL(jgrid,4,7,alpha,beta)  =
+     1                       OpFL(jgrid,4,7,alpha,beta)  -
+     2                       ipr * 2d0 * Kc * CLnsm(4) / 40d0
+*     V35
+                        OpFL(jgrid,4,8,alpha,beta)  =
+     1                       OpFL(jgrid,4,8,alpha,beta)  -
+     2                       ipr * 2d0 * Kc * CLnsm(4) / 60d0
+*     T15
+                        OpFL(jgrid,4,11,alpha,beta) =
+     1                       OpFL(jgrid,4,11,alpha,beta) +
+     2                       2d0 * Kc * CLnsp(4) / 8d0
+*     T24
+                        OpFL(jgrid,4,12,alpha,beta) =
+     1                       OpFL(jgrid,4,12,alpha,beta) -
+     2                       2d0 * Kc * CLnsp(4) / 40d0
+*     T35
+                        OpFL(jgrid,4,13,alpha,beta) =
+     1                       OpFL(jgrid,4,13,alpha,beta) -
+     2                       2d0 * Kc * CLnsp(4) / 60d0
+                     endif
 *     Singlet
                      OpFL(jgrid,4,1,alpha,beta)  =
      1                    OpFL(jgrid,4,1,alpha,beta)  +
@@ -3053,6 +3123,41 @@ c     6                             2,pt,alpha,beta) )
 *     Include the intrinsic charm contributions if needed
 *
                   if(IntrinsicCharm.and.MassScheme.ne."ZM-VFNS")then
+*     For any of the FFNSs, subtract the spurious charm contribution
+                     if(MassScheme(1:3).eq."FFN")then
+*     Singlet
+                     OpF3(jgrid,4,1,alpha,beta)  =
+     1                    OpF3(jgrid,4,1,alpha,beta)  -
+     2                    ipr * 2d0 * Kc * C3nsp(4) / 12d0
+*     Valence
+                     OpF3(jgrid,4,3,alpha,beta)  = 
+     1                    OpF3(jgrid,4,3,alpha,beta)  - 
+     2                    2d0 * Kc * C3nsm(4) / 12d0
+*     V15
+                     OpF3(jgrid,4,6,alpha,beta)  =
+     1                    OpF3(jgrid,4,6,alpha,beta)  +
+     2                    2d0 * Kc * C3nsm(4) / 8d0
+*     V24
+                     OpF3(jgrid,4,7,alpha,beta)  =
+     1                    OpF3(jgrid,4,7,alpha,beta)  -
+     2                    2d0 * Kc * C3nsm(4) / 40d0
+*     V35
+                     OpF3(jgrid,4,8,alpha,beta)  =
+     1                    OpF3(jgrid,4,8,alpha,beta)  -
+     2                    2d0 * Kc * C3nsm(4) / 60d0
+*     T15
+                     OpF3(jgrid,4,11,alpha,beta) =
+     1                    OpF3(jgrid,4,11,alpha,beta) +
+     2                    ipr * 2d0 * Kc * C3nsp(4) / 8d0
+*     T24
+                     OpF3(jgrid,4,12,alpha,beta) =
+     1                    OpF3(jgrid,4,12,alpha,beta) -
+     2                    ipr * 2d0 * Kc * C3nsp(4) / 40d0
+*     T35
+                     OpF3(jgrid,4,13,alpha,beta) =
+     1                    OpF3(jgrid,4,13,alpha,beta) -
+     2                    ipr * 2d0 * Kc * C3nsp(4) / 60d0
+                     endif
 *     Singlet
                      OpF3(jgrid,4,1,alpha,beta)  =
      1                    OpF3(jgrid,4,1,alpha,beta)  +
