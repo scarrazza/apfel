@@ -153,30 +153,30 @@
                do alpha=0,nin(igrid)
                   do beta=alpha,nin(igrid)
                      MatQCDns(alpha,beta)     =
-     1                    integralsMatching(alpha,beta,coup,1)
+     1                    integralsMatching(nf,alpha,beta,coup,1)
                      MatQCDsg(1,1,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,2)
+     1                    integralsMatching(nf,alpha,beta,coup,2)
                      MatQCDsg(1,2,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,3)
+     1                    integralsMatching(nf,alpha,beta,coup,3)
                      MatQCDsg(2,1,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,4)
+     1                    integralsMatching(nf,alpha,beta,coup,4)
                      MatQCDsg(2,2,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,5)
+     1                    integralsMatching(nf,alpha,beta,coup,5)
                   enddo
                enddo
             else
                do alpha=0,nin(igrid)
                   do beta=alpha,nin(igrid)
                      MatQCDns(alpha,beta)     =
-     1                    integralsMatching(0,beta-alpha,coup,1)
+     1                    integralsMatching(nf,0,beta-alpha,coup,1)
                      MatQCDsg(1,1,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,2)
+     1                    integralsMatching(nf,0,beta-alpha,coup,2)
                      MatQCDsg(1,2,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,3)
+     1                    integralsMatching(nf,0,beta-alpha,coup,3)
                      MatQCDsg(2,1,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,4)
+     1                    integralsMatching(nf,0,beta-alpha,coup,4)
                      MatQCDsg(2,2,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,5)
+     1                    integralsMatching(nf,0,beta-alpha,coup,5)
                   enddo
                enddo
             endif

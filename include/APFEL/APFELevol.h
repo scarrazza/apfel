@@ -180,6 +180,9 @@ namespace APFEL {
   /// Sets scales at which heavy quark masses are defined.
   /// No effect for the pole masses.
   void SetMassScaleReference(double Qc, double Qb, double Qt);
+
+  /// Sets ratios between heavy quark masses and thresholds 
+  void SetMassMatchingScales(double kmc, double kmb, double kmt);
   
   /// Sets the number of x-space grids that will be used in the computation
   void SetNumberOfGrids(int n);

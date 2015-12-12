@@ -52,7 +52,7 @@
             do beta=alpha,nin(igrid)
                do i=1,5
                   integ2(i,alpha,beta) =
-     1                 integralsMatching(alpha,beta,coup,i)
+     1                 integralsMatching(nf,alpha,beta,coup,i)
                enddo
             enddo
          enddo
@@ -143,7 +143,7 @@
 *
          do alpha=0,nin(igrid)
             do i=1,5
-               integ1(i,alpha) = integralsMatching(0,alpha,coup,i)
+               integ1(i,alpha) = integralsMatching(nf,0,alpha,coup,i)
             enddo
          enddo
 *

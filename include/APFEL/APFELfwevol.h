@@ -154,6 +154,9 @@ extern "C" {
 #define fsetmassscalereference FC_FUNC(setmassscalereference,SETMASSSCALEREFERENCE)
   void fsetmassscalereference(double*,double*,double*);
 
+#define fsetmassmatchingscales FC_FUNC(setmassmatchingscales,SETMASSMATCHINGSCALES)
+  void fsetmassmatchingscales(double*,double*,double*);
+
 #define fsetnumberofgrids FC_FUNC(setnumberofgrids,SETNUMBEROFGRIDS)
   void fsetnumberofgrids(int*);
 

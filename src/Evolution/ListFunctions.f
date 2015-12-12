@@ -78,6 +78,11 @@
       write(6,*) "    sets the reference scales in GeV at which heavy"
       write(6,*) "    quark masses are given. This has no effect if the"
       write(6,*) "    pole masses are used."
+      write(6,*) achar(27)//"[34m- SetMassMatchingScales(double kmc,",
+     1           " double kmb, double kmt):"//achar(27)//"[0m"
+      write(6,*) "    sets the ratios between heavy quark masses and"
+      write(6,*) "    heavy quark matching thresholds"
+      write(6,*) "    (default 'kmc' = 1, 'kmb' = 1, 'kmt' = 1)."
       write(6,*) achar(27)//"[34m- SetTauMass(double mtau):"//
      1           achar(27)//"[0m"
       write(6,*) "    sets the values of the tau lepton in GeV"

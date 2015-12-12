@@ -181,8 +181,8 @@
 *
          if(DampingFONLL)then
             if(ihq.gt.Nf_FF)then
-               if(Q2.gt.m2th(ihq))then
-                  damp(ihq) = ( 1d0 - m2th(ihq) / Q2 )**2d0
+               if(Q2.gt.m2ph(ihq))then
+                  damp(ihq) = ( 1d0 - m2ph(ihq) / Q2 )**2d0
                else
                   damp(ihq) = 0d0
                endif
@@ -316,7 +316,7 @@
                      if(ipt.ge.2)then
                         if(Nf_FF.lt.6)then
                            do ihq=Nf_FF+1,6
-                              if(Q2.ge.m2th(ihq))then
+                              if(Q2.ge.m2ph(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( c0(ihq)
      2                                * SC2m0NC(jgrid,ixi(ihq),
@@ -340,7 +340,7 @@
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(Q2.ge.m2th(ihq))then
+                           if(Q2.ge.m2ph(ihq))then
                               do pt=ipt_FF_min,ipt
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -434,7 +434,7 @@
                      if(ipt.ge.2)then
                         if(Nf_FF.lt.6)then
                            do ihq=Nf_FF+1,6
-                              if(W2.ge.4d0*m2th(ihq))then
+                              if(W2.ge.4d0*m2ph(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( c0(ihq)
      2                                * SC2mNC(jgrid,ixi(ihq),
@@ -458,7 +458,7 @@
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(W2.ge.4d0*m2th(ihq))then
+                           if(W2.ge.4d0*m2ph(ihq))then
                               do pt=ipt_FF_min,ipt
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -558,7 +558,7 @@
                      if(ipt_FF.ge.2)then
                         if(Nf_FF.lt.6)then
                            do ihq=Nf_FF+1,6
-                              if(W2.ge.4d0*m2th(ihq))then
+                              if(W2.ge.4d0*m2ph(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( c0(ihq)
      2                                * SC2mNC(jgrid,ixi(ihq),
@@ -574,7 +574,7 @@
      5                                * SCLmNC(jgrid,ixi(ihq)+1,
      6                                3,2,alpha,beta) )
                               endif
-                              if(Q2.ge.m2th(ihq))then
+                              if(Q2.ge.m2ph(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( - damp(ihq) * ( c0(ihq)
      2                                * SC2m0NC(jgrid,ixi(ihq),
@@ -598,7 +598,7 @@
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(W2.ge.4d0*m2th(ihq))then
+                           if(W2.ge.4d0*m2ph(ihq))then
                               do pt=ipt_FF_min,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -630,7 +630,7 @@
      6                                2,pt,alpha,beta) )
                               enddo
                            endif
-                           if(Q2.ge.m2th(ihq))then
+                           if(Q2.ge.m2ph(ihq))then
                               do pt=ipt_FF_min,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
@@ -1079,7 +1079,7 @@ c     6                             3,pt,alpha,beta) )
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(Q2.ge.m2th(ihq))then
+                           if(Q2.ge.m2ph(ihq))then
                               do pt=0,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -1214,7 +1214,7 @@ c     6                             2,pt,alpha,beta) )
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(W2.ge.m2th(ihq))then
+                           if(W2.ge.m2ph(ihq))then
                               do pt=0,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -1358,7 +1358,7 @@ c     6                             2,pt,alpha,beta) )
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(W2.ge.m2th(ihq))then
+                           if(W2.ge.m2ph(ihq))then
                               do pt=0,ipt_FF
                                  C2gm(ihq) = C2gm(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -1404,7 +1404,7 @@ c     6                             2,pt,alpha,beta) )
      6                                3,pt,alpha,beta) )
                               enddo
                            endif
-                           if(Q2.ge.m2th(ihq))then
+                           if(Q2.ge.m2ph(ihq))then
                               do pt=0,ipt_FF
                                  C2gm(ihq) = C2gm(ihq) - damp(ihq)
      1                                * as(pt) * ( c0(ihq)

@@ -319,6 +319,12 @@ ccccccccccccc
       end subroutine fsetmassscalereference
 
 ccccccccccccc      
+      subroutine fsetmassmatchingscales(kmc,kmb,kmt)
+      double precision kmc, kmb, kmt
+      call SetMassMatchingScales(kmc,kmb,kmt)
+      end subroutine fsetmassmatchingscales
+
+ccccccccccccc      
       subroutine fsetnumberofgrids(n)
       integer n
       call SetNumberOfGrids(n)

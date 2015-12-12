@@ -63,10 +63,12 @@
       if(InKren.ne."done")        call SetRenFacRatio(1d0)
       if(InMasses.ne."done")      call SetPoleMasses(dsqrt(2d0),4.5d0,
      1                                               175d0)
+      if(InThrRatios.ne."done")   call SetMassMatchingScales(1d0,1d0,
+     1                                                       1d0)
       if(InMassRef.ne."done")     call SetMassScaleReference(
-     1                                                   dsqrt(m2th(4)),
-     2                                                   dsqrt(m2th(5)),
-     3                                                   dsqrt(m2th(6)))
+     1                                                   dsqrt(m2ph(4)),
+     2                                                   dsqrt(m2ph(5)),
+     3                                                   dsqrt(m2ph(6)))
       if(InMTau.ne."done")        call SetTauMass(1.777d0)
       if(InMassRunning.ne."done") call EnableMassRunning(.true.)
       if(InMFP.ne."done")         call SetMaxFlavourPDFs(6)
@@ -247,45 +249,67 @@
 *     Check that there are no identical masses and that
 *     masses are correctly ordered
 *
-      if(m2th(4).eq.m2th(5).or.
-     1   m2th(4).eq.m2th(6).or.
-     2   m2th(5).eq.m2th(6))then
+      if(m2ph(4).eq.m2ph(5).or.
+     1   m2ph(4).eq.m2ph(6).or.
+     2   m2ph(5).eq.m2ph(6))then
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "There cannot be equal heavy quark masses:"
-         write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2th(4))," GeV"
-         write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2th(5))," GeV"
-         write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2th(6))," GeV"
+         write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2ph(4))," GeV"
+         write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2ph(5))," GeV"
+         write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2ph(6))," GeV"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
-      if(m2th(4).gt.m2th(5).or.
-     1   m2th(4).gt.m2th(6).or.
-     2   m2th(5).gt.m2th(6))then
+      if(m2ph(4).gt.m2ph(5).or.
+     1   m2ph(4).gt.m2ph(6).or.
+     2   m2ph(5).gt.m2ph(6))then
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "The heavy quark masses are not correctly",
      1              " ordered:"
-         write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2th(4))," GeV"
-         write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2th(5))," GeV"
-         write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2th(6))," GeV"
+         write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2ph(4))," GeV"
+         write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2ph(5))," GeV"
+         write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2ph(6))," GeV"
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
+      endif
+*
+*     Check that also the thresholds are correctly ordered
+*
+      if(k2th(4)*m2ph(4).gt.k2th(5)*m2ph(5).or.
+     1   k2th(4)*m2ph(4).gt.k2th(6)*m2ph(6).or.
+     2   k2th(5)*m2ph(5).gt.k2th(6)*m2ph(6))then
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "The heavy quark thresholds are not correctly",
+     1              " ordered:"
+         write(6,"(a,f8.3,a)") " Mthc = ",dsqrt(k2th(4)*m2ph(4))," GeV"
+         write(6,"(a,f8.3,a)") " Mthb = ",dsqrt(k2th(5)*m2ph(5))," GeV"
+         write(6,"(a,f8.3,a)") " Mtht = ",dsqrt(k2th(6)*m2ph(6))," GeV"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
 *     Check that each scale at which heavy quark masses have been defined
-*     is below the following mass (only for MSbar masses).
+*     above it's threshold and below the threshold above.
+*     This ensures that no threshold is crossed during the evolution to
+*     calculate the RGI masses. (only for MSbar masses).
 *
       if(mass_scheme.eq."MSbar")then
-         if(q2th(4).ge.m2th(5).or.q2th(5).ge.m2th(6).or.
-     1      q2th(4).lt.m2th(4)-1d-2.or.q2th(5).lt.m2th(5)-1d-2.or.
-     2      q2th(6).lt.m2th(6)-1d-2)then
+         if(q2th(4).ge.k2th(5)*m2ph(5).or.q2th(5).ge.k2th(6)*m2ph(6).or.
+     1      q2th(4).lt.k2th(4)*m2ph(4)-1d-2.or.
+     2      q2th(5).lt.k2th(5)*m2ph(5)-1d-2.or.
+     2      q2th(6).lt.k2th(6)*m2ph(6)-1d-2)then
             write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Each heavy quark mass reference scale must be"
-            write(6,*) "above quark mass itself and below the following"
+            write(6,*) "between its corresponding threshold and the"
+            write(6,*) "threshold immediately abovre"
             write(6,*) "one:"
-            write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2th(4))," GeV"
-            write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2th(5))," GeV"
-            write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2th(6))," GeV"
+            write(6,"(a,f8.3,a)") " Mthc = ",dsqrt(k2th(4)*m2ph(4)),
+     1                            " GeV"
+            write(6,"(a,f8.3,a)") " Mthb = ",dsqrt(k2th(5)*m2ph(5)),
+     1                            " GeV"
+            write(6,"(a,f8.3,a)") " Mtht = ",dsqrt(k2th(6)*m2ph(6)),
+     1                            " GeV"
             write(6,*) "   "
             write(6,"(a,f8.3,a)") " Qc = ",dsqrt(q2th(4))," GeV"
             write(6,"(a,f8.3,a)") " Qb = ",dsqrt(q2th(5))," GeV"
@@ -444,6 +468,16 @@
      1              //achar(27)//"[0m"
       endif
 *
+*     If the MSbar are used and the heavy quark masses are not given
+*     at the mass scales themselves, compute the RG invariant masses
+*     i.e. mc(mc), mb(mb) and mt(mt).
+*
+      if(mass_scheme.eq."MSbar") call ComputeRGInvariantMasses
+*
+*     Compute the heavy quark thresholds
+*
+      call ComputeHeavyQuarkThresholds
+*
 *     If the alpha solution is "lambda", compute values of LambdaQCD
 *     for all the number of flavours.     
 *
@@ -454,12 +488,6 @@
 *     the DGLAP equation different from 'exactmu').
 *
       call ThresholdAlphaQCD
-*
-*     If the MSbar are used and the heavy quark masses are not given
-*     at the mass scales themselves, compute the RG invariant masses
-*     i.e. mc(mc), mb(mb) and mt(mt).
-*
-      if(mass_scheme.eq."MSbar") call ComputeRGInvariantMasses
 *
       return
       end

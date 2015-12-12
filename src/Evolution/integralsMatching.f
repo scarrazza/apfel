@@ -10,7 +10,7 @@
 *            V   qq  qg  gq  gg
 * 
 ************************************************************************
-      function integralsMatching(alpha,beta,coup,kk)
+      function integralsMatching(nf,alpha,beta,coup,kk)
 *
       implicit none
 *
@@ -21,13 +21,13 @@
 **
 *     Input Variables
 *
-      integer alpha,beta,kk
-      integer ptstep
+      integer nf,alpha,beta,kk
       double precision coup
 **
 *     Internal Variables
 *
       integer pt
+      integer ptstep
 **
 *     Output Variables
 *
@@ -48,7 +48,7 @@
       if(TimeLike) ptstep = 1
       do pt=0,ipt,ptstep
          integralsMatching = integralsMatching 
-     1                     + coup**pt * SM(igrid,kk,pt,alpha,beta)
+     1                     + coup**pt * SM(igrid,nf,kk,pt,alpha,beta)
       enddo
 *
       return

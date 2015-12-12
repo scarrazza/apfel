@@ -279,6 +279,11 @@ namespace APFEL {
     fsetmassscalereference(&Qc,&Qb,&Qt);
   }
 
+  void SetMassMatchingScales(double kmc, double kmb, double kmt)
+  {
+    fsetmassmatchingscales(&kmc,&kmb,&kmt);
+  }
+
   void SetNumberOfGrids(int n)
   {
     fsetnumberofgrids(&n);

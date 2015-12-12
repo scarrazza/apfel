@@ -73,7 +73,17 @@
                nfi = 3
             endif
 *     Initialize matching conditions in case the theory is nor "QED"
-            if(Th.ne."QED") call initIntegralsMatching
+            if(Th.ne."QED")then
+               if(nfi.lt.nff)then
+                  do inf=nfi+1,nff
+                     call initIntegralsMatching(inf)
+                  enddo
+               elseif(nfi.gt.nff)then
+                  do inf=nfi,nff+1
+                     call initIntegralsMatching(inf)
+                  enddo
+               endif
+            endif
          endif
 *
 *     Evaluate evolution operators on the grid

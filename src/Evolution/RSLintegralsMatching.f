@@ -14,7 +14,7 @@
 *            V   qq  qg  gq  gg
 * 
 ************************************************************************
-      subroutine RSLintegralsMatching(beta,alpha)
+      subroutine RSLintegralsMatching(nf,beta,alpha)
 *
       implicit none
 *
@@ -25,7 +25,7 @@
 **
 *     Input Variables
 *
-      integer beta,alpha
+      integer nf,beta,alpha
 **
 *     Internal Variables
 *
@@ -41,13 +41,13 @@
 *
       do k=1,5
          do wipt=0,ipt
-            SM(igrid,k,wipt,beta,alpha) = 0d0
+            SM(igrid,nf,k,wipt,beta,alpha) = 0d0
          enddo
       enddo
       if(alpha.eq.beta)then
-         SM(igrid,1,0,beta,alpha) = 1d0
-         SM(igrid,2,0,beta,alpha) = 1d0
-         SM(igrid,5,0,beta,alpha) = 1d0
+         SM(igrid,nf,1,0,beta,alpha) = 1d0
+         SM(igrid,nf,2,0,beta,alpha) = 1d0
+         SM(igrid,nf,5,0,beta,alpha) = 1d0
       endif
       if(ipt.le.1) return
 *
@@ -91,8 +91,9 @@
 *
 *     Integrals
 *
-         SM(igrid,k,wipt,beta,alpha)= dgauss(integrandsMatching,a,b,eps) 
-     1                              + ML(k,wipt) * fL
+         SM(igrid,nf,k,wipt,beta,alpha)= 
+     1        dgauss(integrandsMatching,a,b,eps) 
+     2        + ML(k,wipt) * fL
       enddo
 *
       return
@@ -103,7 +104,7 @@
 *     Integrals for the time-like evolution.
 *
 ************************************************************************
-      subroutine RSLintegralsMatchingT(beta,alpha)
+      subroutine RSLintegralsMatchingT(nf,beta,alpha)
 *
       implicit none
 *
@@ -114,7 +115,7 @@
 **
 *     Input Variables
 *
-      integer beta,alpha
+      integer nf,beta,alpha
 **
 *     Internal Variables
 *
@@ -130,13 +131,13 @@
 *
       do k=1,5
          do wipt=0,ipt
-            SM(igrid,k,wipt,beta,alpha) = 0d0
+            SM(igrid,nf,k,wipt,beta,alpha) = 0d0
          enddo
       enddo
       if(alpha.eq.beta)then
-         SM(igrid,1,0,beta,alpha) = 1d0
-         SM(igrid,2,0,beta,alpha) = 1d0
-         SM(igrid,5,0,beta,alpha) = 1d0
+         SM(igrid,nf,1,0,beta,alpha) = 1d0
+         SM(igrid,nf,2,0,beta,alpha) = 1d0
+         SM(igrid,nf,5,0,beta,alpha) = 1d0
       endif
       if(ipt.lt.1) return
 *
@@ -161,7 +162,7 @@
 *
 c      do k=1,5
       do k=3,3
-         SM(igrid,k,wipt,beta,alpha) =
+         SM(igrid,nf,k,wipt,beta,alpha) =
      1        dgauss(integrandsMatchingT,a,b,eps) 
       enddo
 *

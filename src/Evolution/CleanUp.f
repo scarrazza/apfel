@@ -77,6 +77,7 @@
       InKren            = "xxxx"  
       InMasses          = "xxxx"
       InMassRef         = "xxxx"
+      InThrRatios       = "xxxx"
       InMTau            = "xxxx"
       InMassRunning     = "xxxx"
       InMFP             = "xxxx"

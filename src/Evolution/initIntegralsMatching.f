@@ -6,13 +6,16 @@
 *     and interpolation functions.
 *
 ************************************************************************
-      subroutine initIntegralsMatching
+      subroutine initIntegralsMatching(nf)
 *
       implicit none
 *
       include "../commons/grid.h"
       include "../commons/TimeLike.h"
-
+**
+*     Input Variables
+*
+      integer nf
 **
 *     Internal Variables
 *
@@ -22,24 +25,24 @@
          if(IsExt(igrid))then
             do alpha=0,nin(igrid)-1
                do beta=alpha,nin(igrid)-1
-                  call RSLintegralsMatchingT(alpha,beta)
+                  call RSLintegralsMatchingT(nf,alpha,beta)
                enddo
             enddo
          else
             do alpha=0,nin(igrid)-1
-               call RSLintegralsMatchingT(0,alpha)
+               call RSLintegralsMatchingT(nf,0,alpha)
             enddo
          endif
       else
          if(IsExt(igrid))then
             do alpha=0,nin(igrid)-1
                do beta=alpha,nin(igrid)-1
-                  call RSLintegralsMatching(alpha,beta)
+                  call RSLintegralsMatching(nf,alpha,beta)
                enddo
             enddo
          else
             do alpha=0,nin(igrid)-1
-               call RSLintegralsMatching(0,alpha)
+               call RSLintegralsMatching(nf,0,alpha)
             enddo
          endif
       endif

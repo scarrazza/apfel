@@ -6,7 +6,7 @@ INIT = 	Evolution/apfelversion.cc Evolution/lhapdfwrapper.cc Evolution/WelcomeMe
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
 	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
 	Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f Evolution/ExponentiatedEvolveAPFEL.f \
-	Evolution/ReportParameters.f Evolution/CheckAPFEL.f
+	Evolution/ReportParameters.f Evolution/CheckAPFEL.f Evolution/ComputeHeavyQuarkThresholds.f
 
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
 	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f Evolution/SetExternalGrid.f \
@@ -18,7 +18,8 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/SetLambdaQCDRef.f Evolution/SetPDFEvolution.f Evolution/LHAPDFgridDerivative.f \
 	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f Evolution/EnableMassRunning.f Evolution/ListFunctions.f \
 	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f Evolution/SetLHgridParameters.f \
-	Evolution/SetEpsilonTruncation.f Evolution/GetMuF.f Evolution/SetPolarizedEvolution.f
+	Evolution/SetEpsilonTruncation.f Evolution/GetMuF.f Evolution/SetPolarizedEvolution.f Evolution/SetMassMatchingScales.f \
+	Evolution/SetMassScaleReference.f
 
 INTER = Evolution/interpolants.f
 
@@ -33,7 +34,7 @@ EVOLUTIONQCD = Evolution/EvolutionQCD.f Evolution/EvolutionOperatorsQCD.f Evolut
 	Evolution/EvolutionUnified.f Evolution/EvolutionOperatorsUnified.f Evolution/IdentityOperatorsUnified.f \
 	Evolution/EqualOperatorsUnifiednf.f Evolution/EvolveUni.f Evolution/odeintnsUnified.f Evolution/odeintsgUnified.f \
 	Evolution/DerivativeOperatorsQCD.f Evolution/odeintnsQCDf.f Evolution/odeintsgQCDf.f \
-	Evolution/odeintnsUnifiedf.f Evolution/odeintsgUnifiedf.f Evolution/SetMassScaleReference.f
+	Evolution/odeintnsUnifiedf.f Evolution/odeintsgUnifiedf.f
 
 EVOLUTIONQED = Evolution/EvolutionQED.f Evolution/EvolutionOperatorsQED.f Evolution/IdentityOperatorsQED.f \
 	Evolution/EqualOperatorsQEDnf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f \
