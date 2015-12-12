@@ -1,0 +1,17 @@
+## Customize dependencies
+dependencies:
+  pre:
+    - sudo apt-get update
+  override:
+    - sudo apt-get install gfortran g++ gcc
+  post:
+    - ./configure --disable-lhapdf && make
+
+## Customize test commands
+test:
+  override:
+    - ./examples/Luminosity
+    - ./examples/Tabulation < examples/input.txt
+    - ./examples/SumRules < examples/input.txt
+    - ./examples/DISObservables < examples/input.txt
+    - ./examples/CheckAPFEL
