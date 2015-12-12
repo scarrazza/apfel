@@ -10,7 +10,7 @@
 *
 *     Space-like matching conditions (PDFs)
 *
-*     Reference: Appendix B of hep-ph/9612398 
+*     Reference: Appendix B of hep-ph/9612398
 *
 ************************************************************************
 *     Eq. (B.1)
@@ -20,6 +20,7 @@
       implicit none
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -27,12 +28,9 @@
 **
 *     Internal Variables
 *
-      double precision CF,TR
       double precision lnz,z2,Li21mz,S121mz
       double precision wgplg,ddilog
       double precision A0
-      parameter(CF=4d0/3d0)
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -65,6 +63,8 @@ c      Li21mz = wgplg(1,1,1d0-z)
       function AS1Hg(z)
 *
       implicit none
+*
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -72,9 +72,7 @@ c      Li21mz = wgplg(1,1,1d0-z)
 **
 *     Internal Variables
 *
-      double precision TR
       double precision B0
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -95,6 +93,7 @@ c      Li21mz = wgplg(1,1,1d0-z)
       implicit none
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
       include "../commons/mass_scheme.h"
 **
 *     Input Variables
@@ -103,7 +102,6 @@ c      Li21mz = wgplg(1,1,1d0-z)
 **
 *     Internal Variables
 *
-      double precision CF,CA,TR
       double precision z2
       double precision S121mz,S12mz,S211mz,S21mz,S111mz,S11mz
       double precision lnz,lnz2,lnz3
@@ -112,9 +110,6 @@ c      Li21mz = wgplg(1,1,1d0-z)
       double precision wgplg,ddilog
       double precision A01,A02,B01,B02
       double precision h1,AS1Hg
-      parameter(CF=4d0/3d0)
-      parameter(CA=3d0)
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -194,6 +189,8 @@ c      S11mz  = wgplg(1,1,-z)
       function ANS2qqH_R(z)
 *
       implicit none
+*
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -201,11 +198,8 @@ c      S11mz  = wgplg(1,1,-z)
 **
 *     Internal Variables
 *
-      double precision CF,TR
       double precision z2,lnz,lnz2,ln1mz
       double precision A0
-      parameter(CF=4d0/3d0)
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -234,6 +228,8 @@ c      S11mz  = wgplg(1,1,-z)
       function ANS2qqH_S(z)
 *
       implicit none
+*
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -241,10 +237,7 @@ c      S11mz  = wgplg(1,1,-z)
 **
 *     Internal Variables
 *
-      double precision CF,TR
       double precision A0
-      parameter(CF=4d0/3d0)
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -265,6 +258,7 @@ c      S11mz  = wgplg(1,1,-z)
       implicit none
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -272,11 +266,8 @@ c      S11mz  = wgplg(1,1,-z)
 **
 *     Internal Variables
 *
-      double precision CF,TR
       double precision ln1mz
       double precision A0
-      parameter(CF=4d0/3d0)
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -300,6 +291,8 @@ c      S11mz  = wgplg(1,1,-z)
       function AS2gqH(z)
 *
       implicit none
+*
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -307,11 +300,8 @@ c      S11mz  = wgplg(1,1,-z)
 **
 *     Internal Variables
 *
-      double precision CF,TR
       double precision ln1mz
       double precision A0
-      parameter(CF=4d0/3d0)
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -336,12 +326,12 @@ c      S11mz  = wgplg(1,1,-z)
       function AS1ggH_L()
 *
       implicit none
+*
+      include "../commons/ColorFactors.h"
 **
 *     Internal Variables
 *
-      double precision TR
       double precision B0
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -360,6 +350,8 @@ c      S11mz  = wgplg(1,1,-z)
       function AS2ggH_R(z)
 *
       implicit none
+*
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -367,12 +359,8 @@ c      S11mz  = wgplg(1,1,-z)
 **
 *     Internal Variables
 *
-      double precision CF,CA,TR
       double precision z2,lnz,lnz2,lnz3,ln1mz
       double precision A01,A02
-      parameter(CF=4d0/3d0)
-      parameter(CA=3d0)
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -406,6 +394,8 @@ c      S11mz  = wgplg(1,1,-z)
       function AS2ggH_S(z)
 *
       implicit none
+*
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -413,10 +403,7 @@ c      S11mz  = wgplg(1,1,-z)
 **
 *     Internal Variables
 *
-      double precision CA,TR
       double precision A0
-      parameter(CA=3d0)
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -437,6 +424,7 @@ c      S11mz  = wgplg(1,1,-z)
       implicit none
 *
       include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
       include "../commons/mass_scheme.h"
 **
 *     Input Variables
@@ -445,13 +433,9 @@ c      S11mz  = wgplg(1,1,-z)
 **
 *     Internal Variables
 *
-      double precision CF,CA,TR
       double precision ln1mz
       double precision A01,A02
       double precision h1,AS1ggH_L
-      parameter(CF=4d0/3d0)
-      parameter(CA=3d0)
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -490,6 +474,8 @@ c      S11mz  = wgplg(1,1,-z)
       function AS1HgT(z)
 *
       implicit none
+*
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -497,9 +483,7 @@ c      S11mz  = wgplg(1,1,-z)
 **
 *     Internal Variables
 *
-      double precision CF
       double precision B0
-      parameter(CF=4d0/3d0)
 **
 *     Output Variables
 *
