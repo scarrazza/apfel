@@ -71,7 +71,7 @@
 *     Log terms
          if(k2th(wnf).ne.1d0.and.k.eq.3)then
 *     Quark-Gluon
-            MR = AS1Hg_mass(y,wnf)
+            MR = AS1Hg_mass(wnf,y)
          else
             MR = 0d0
          endif
