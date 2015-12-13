@@ -1767,35 +1767,35 @@ c     6                             2,pt,alpha,beta) )
 *     Singlet
                      OpF2(jgrid,4,1,alpha,beta)  =
      1                    OpF2(jgrid,4,1,alpha,beta)  -
-     2                    2d0 * Kc * c2ccIC / 12d0
+     2                    2d0 * Kc * c3ccIC / 12d0
 *     Valence
                      OpF2(jgrid,4,3,alpha,beta)  =
      1                    OpF2(jgrid,4,3,alpha,beta)  -
-     2                    ipr * 2d0 * Kc * c2ccIC / 12d0
+     2                    ipr * 2d0 * Kc * c3ccIC / 12d0
 *     V15
                      OpF2(jgrid,4,6,alpha,beta)  =
      1                    OpF2(jgrid,4,6,alpha,beta)  +
-     2                    ipr * 2d0 * Kc * c2ccIC / 8d0
+     2                    ipr * 2d0 * Kc * c3ccIC / 8d0
 *     V24
                      OpF2(jgrid,4,7,alpha,beta)  =
      1                    OpF2(jgrid,4,7,alpha,beta)  -
-     2                    ipr * 2d0 * Kc * c2ccIC / 40d0
+     2                    ipr * 2d0 * Kc * c3ccIC / 40d0
 *     V35
                      OpF2(jgrid,4,8,alpha,beta)  =
      1                    OpF2(jgrid,4,8,alpha,beta)  -
-     2                    ipr * 2d0 * Kc * c2ccIC / 60d0
+     2                    ipr * 2d0 * Kc * c3ccIC / 60d0
 *     T15
                      OpF2(jgrid,4,11,alpha,beta) =
      1                    OpF2(jgrid,4,11,alpha,beta) +
-     2                    2d0 * Kc * c2ccIC / 8d0
+     2                    2d0 * Kc * c3ccIC / 8d0
 *     T24
                      OpF2(jgrid,4,12,alpha,beta) =
      1                    OpF2(jgrid,4,12,alpha,beta) -
-     2                    2d0 * Kc * c2ccIC / 40d0
+     2                    2d0 * Kc * c3ccIC / 40d0
 *     T35
                      OpF2(jgrid,4,13,alpha,beta) =
      1                    OpF2(jgrid,4,13,alpha,beta) -
-     2                    2d0 * Kc * c2ccIC / 60d0
+     2                    2d0 * Kc * c3ccIC / 60d0
                   endif
 *     
 *     Bottom Component
