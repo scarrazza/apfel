@@ -57,28 +57,29 @@
 *
 *     LO
 *
+      if(wipt.eq.0)then
 *     Plus, Minus, Valence, Quark-Quark
-      if(k.eq.1.or.k.eq.2.or.k.eq.3.or.k.eq.4)then
-         PR(k,0) = X0NSA(y)
-         PS(k,0) = X0NSB(y)
+         if(k.eq.1.or.k.eq.2.or.k.eq.3.or.k.eq.4)then
+            PR(k,0) = X0NSA(y)
+            PS(k,0) = X0NSB(y)
 *     Quark-Gluon
-      elseif(k.eq.5)then
-         PR(k,0) = X0QGA(y,wnf)
-         PS(k,0) = 0d0
+         elseif(k.eq.5)then
+            PR(k,0) = X0QGA(y,wnf)
+            PS(k,0) = 0d0
 *     Gluon-Quark
-      elseif(k.eq.6)then
-         PR(k,0) = X0GQA(y)
-         PS(k,0) = 0d0
+         elseif(k.eq.6)then
+            PR(k,0) = X0GQA(y)
+            PS(k,0) = 0d0
 *     Gluon-Gluon
-      elseif(k.eq.7)then
-         PR(k,0) = X0GGA(y)
-         PS(k,0) = X0GGB(y)
-      endif
+         elseif(k.eq.7)then
+            PR(k,0) = X0GGA(y)
+            PS(k,0) = X0GGB(y)
+         endif
 *
 *     NLO
 *
+      elseif(wipt.eq.1)then
 *     Plus
-      if(wipt.ge.1)then
          if(k.eq.1)then
             PR(k,1) = X1NSPA(y,wnf)
             PS(k,1) = X1NSB(y)
@@ -107,12 +108,11 @@
             PR(k,1) = X1GGA(y,wnf)
             PS(k,1) = X1GGB(y)
          endif
-      endif
 *
 *     NNLO
 *
+      elseif(wipt.eq.2)then
 *     Plus
-      if(wipt.ge.2)then
          if(k.eq.1)then
             PR(k,2) = P2NSPA(y,wnf)
             PS(k,2) = P2NSB(y,wnf)
@@ -193,28 +193,29 @@ c      integrandsQCD = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
 *
 *     LO
 *
+      if(wipt.eq.0)then
 *     Plus, Minus, Valence, Quark-Quark
-      if(k.eq.1.or.k.eq.2.or.k.eq.3.or.k.eq.4)then
-         PR(k,0) = X0NSA(y)
-         PS(k,0) = X0NSB(y)
+         if(k.eq.1.or.k.eq.2.or.k.eq.3.or.k.eq.4)then
+            PR(k,0) = X0NSA(y)
+            PS(k,0) = X0NSB(y)
 *     Quark-Gluon
-      elseif(k.eq.5)then
-         PR(k,0) = X0QGA(y,wnf)
-         PS(k,0) = 0d0
+         elseif(k.eq.5)then
+            PR(k,0) = X0QGA(y,wnf)
+            PS(k,0) = 0d0
 *     Gluon-Quark
-      elseif(k.eq.6)then
-         PR(k,0) = X0GQA(y)
-         PS(k,0) = 0d0
+         elseif(k.eq.6)then
+            PR(k,0) = X0GQA(y)
+            PS(k,0) = 0d0
 *     Gluon-Gluon
-      elseif(k.eq.7)then
-         PR(k,0) = X0GGA(y)
-         PS(k,0) = X0GGB(y)
-      endif
+         elseif(k.eq.7)then
+            PR(k,0) = X0GGA(y)
+            PS(k,0) = X0GGB(y)
+         endif
 *
 *     NLO
 *
+      elseif(wipt.eq.1)then
 *     Plus
-      if(wipt.ge.1)then
          if(k.eq.1)then
             PR(k,1) = X1NSPTA(y,wnf)
             PS(k,1) = X1NSTB(y)
@@ -243,12 +244,11 @@ c      integrandsQCD = z * ( PR(k,wipt) * fR + PS(k,wipt) * fS ) / y
             PR(k,1) = X1GGTA(y,wnf)
             PS(k,1) = X1GGTB(y)
          endif
-      endif
 *
 *     NNLO
 *
+      elseif(wipt.eq.2)then
 *     Plus
-      if(wipt.ge.2)then
          if(k.eq.1)then
             PR(k,2) = P2NSPTA(y,wnf)
             PS(k,2) = P2NSTB(y,wnf)
@@ -386,28 +386,29 @@ c      integrandsQCDRes = ( 1d0 - y ) * xDeltaP(k,alphas,y) * fR
 *
 *     LO
 *
+      if(wipt.eq.0)then
 *     Plus, Minus, Valence, Quark-Quark
-      if(k.eq.1.or.k.eq.2.or.k.eq.3.or.k.eq.4)then
-         PR(k,0) = X0NSPA(y)
-         PS(k,0) = X0NSPB(y)
+         if(k.eq.1.or.k.eq.2.or.k.eq.3.or.k.eq.4)then
+            PR(k,0) = X0NSPA(y)
+            PS(k,0) = X0NSPB(y)
 *     Quark-Gluon
-      elseif(k.eq.5)then
-         PR(k,0) = X0QGPA(y,wnf)
-         PS(k,0) = 0d0
+         elseif(k.eq.5)then
+            PR(k,0) = X0QGPA(y,wnf)
+            PS(k,0) = 0d0
 *     Gluon-Quark
-      elseif(k.eq.6)then
-         PR(k,0) = X0GQPA(y)
-         PS(k,0) = 0d0
+         elseif(k.eq.6)then
+            PR(k,0) = X0GQPA(y)
+            PS(k,0) = 0d0
 *     Gluon-Gluon
-      elseif(k.eq.7)then
-         PR(k,0) = X0GGPA(y)
-         PS(k,0) = X0GGPB(y)
-      endif
+         elseif(k.eq.7)then
+            PR(k,0) = X0GGPA(y)
+            PS(k,0) = X0GGPB(y)
+         endif
 *
 *     NLO
 *
+      elseif(wipt.eq.1)then
 *     Plus
-      if(wipt.ge.1)then
          if(k.eq.1)then
             PR(k,1) = X1NSPPA(y,wnf)
             PS(k,1) = X1NSPB(y)
@@ -436,12 +437,11 @@ c      integrandsQCDRes = ( 1d0 - y ) * xDeltaP(k,alphas,y) * fR
             PR(k,1) = X1GGPA(y,wnf)
             PS(k,1) = X1GGPB(y)
          endif
-      endif
 *
 *     NNLO
 *
+      elseif(wipt.eq.2)then
 *     Plus
-      if(wipt.ge.2)then
          if(k.eq.1)then
             PR(k,2) = P2NSPPA(y,wnf)
             PS(k,2) = P2NSPB(y,wnf)

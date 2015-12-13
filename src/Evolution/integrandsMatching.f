@@ -40,6 +40,13 @@
 *
       double precision integrandsMatching
 *
+*     LO and NLO always zero
+*
+      if(wipt.le.1)then
+         integrandsMatching  = 0d0
+         return
+      endif
+*
 *     Interpolant functions
 *
       z = xg(igrid,wbeta) / y
@@ -50,18 +57,9 @@
       fR = w_int(inter_degree(igrid),walpha,z)
       fS = fR - fL
 *
-*     Contructing integrands order by order
-*
-*     NLO (always zero for the space-like evolution)
-*
-      if(wipt.ge.1)then
-         MR(k,1) = 0d0
-         MS(k,1) = 0d0
-      endif
-*
 *     NNLO
 *
-      if(wipt.ge.2)then
+      if(wipt.eq.2)then
 *     Valence
          if(k.eq.1)then
             MR(k,2) = ANS2qqH_R(y)
@@ -86,7 +84,6 @@
       endif
 *
       integrandsMatching = MR(k,wipt) * fR + MS(k,wipt) * fS
-c      integrandsMatching = MR(k,wipt) * fR
 *
       return
       end
@@ -117,6 +114,14 @@ c      integrandsMatching = MR(k,wipt) * fR
 *
       double precision integrandsMatchingT
 *
+*     At LO always zero.
+*     At NNLO they are not known and we set them to zero.
+*
+      if(wipt.eq.0.or.wipt.eq.2)then
+         integrandsMatchingT = 0d0
+         return
+      endif
+*
 *     Interpolant functions
 *
       z = xg(igrid,wbeta) / y
@@ -131,7 +136,7 @@ c      fS = fR - fL
 *
 *     NLO
 *
-      if(wipt.ge.1)then
+      if(wipt.eq.1)then
 *     Quark-Gluon
          if(k.eq.3)then
             MR(k,1) = AS1HgT(y)
