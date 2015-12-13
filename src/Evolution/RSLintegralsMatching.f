@@ -32,6 +32,9 @@
       integer bound
       double precision ML(5,0:2),fL
       double precision ANS2qqH_L,AS2ggH_L
+
+      double precision AS1ggH_mass_L,ANS2qqH_mass_L,AS2ggH_mass_L
+
       double precision dgauss,a,b,eps
       double precision integrandsMatching
       external integrandsMatching
@@ -67,6 +70,7 @@
 *
 *     Variables needed for wrapping the integrand functions
 *
+      wnf    = nf
       walpha = alpha
       wbeta  = beta
       wipt   = 2

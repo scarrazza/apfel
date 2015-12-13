@@ -18,6 +18,7 @@
       include "../commons/grid.h"
       include "../commons/integrals.h"
       include "../commons/TimeLike.h"
+      include "../commons/m2th.h"
 **
 *     Input Variables
 *
@@ -45,7 +46,7 @@
 *     always equal to zero but this can't be done for the time-like evolution 
 *
       ptstep = 2
-      if(TimeLike) ptstep = 1
+      if(TimeLike.or.k2th(nf).ne.1d0) ptstep = 1
       do pt=0,ipt,ptstep
          integralsMatching = integralsMatching 
      1                     + coup**pt * SM(igrid,nf,kk,pt,alpha,beta)
