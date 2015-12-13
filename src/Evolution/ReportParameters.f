@@ -117,7 +117,7 @@
          endif
 *
          if(mass_scheme.eq."MSbar")then
-            write(6,*) "MSbar heavy quark reference values:"
+            write(6,*) "MSbar heavy quark reference masses:"
             write(6,"(a,f7.3,a,f7.3,a)") " - mc(",dsqrt(Q2th(4)),
      1           " GeV) = ",dsqrt(m2q(4))," GeV"
             write(6,"(a,f7.3,a,f7.3,a)") " - mb(",dsqrt(Q2th(5)),
@@ -147,7 +147,7 @@
             write(6,"(a,f7.3,a)") " - Mtht = ",dsqrt(m2th(6))," GeV"
          else
             write(6,*) "The matching thresholds coincide",
-     1                 " with the masses"
+     1                 " with the physical masses"
          endif
 *
          write(6,"(a,f7.4)") " muR / muF = ",dsqrt(kren)

@@ -2,14 +2,12 @@
 *
 *     MatchingConditions.f:
 *
-*     This is a collection of funtions that are used to match PDFs or FF
-*     at the heavy quark theresholds with the assumption MH = mu 
-*     (no log terms).
+*     This is a collection of funtions that are used to match PDFs and
+*     FFs.
 *
 ************************************************************************
 *
 *     Space-like matching conditions (PDFs)
-*
 *     Reference: Appendix B of hep-ph/9612398
 *
 ************************************************************************
@@ -41,7 +39,6 @@
       lnz    = dlog(z)
       z2     = z**2d0
       Li21mz = ddilog(1d0-z)
-c      Li21mz = wgplg(1,1,1d0-z)
       S121mz = wgplg(1,2,1d0-z)
 *
       A0 = ( 1d0 + z ) * ( 32d0 * S121mz + 16d0 * lnz * Li21mz 
@@ -123,8 +120,6 @@ c      Li21mz = wgplg(1,1,1d0-z)
       S21mz  = wgplg(2,1,-z) 
       S111mz = ddilog(1d0-z)
       S11mz  = ddilog(-z)
-c      S111mz = wgplg(1,1,1d0-z) 
-c      S11mz  = wgplg(1,1,-z) 
 *
       z2     = z * z
       lnz    = dlog(z)
@@ -495,23 +490,6 @@ c      S11mz  = wgplg(1,1,-z)
 *
       return
       end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-!-------------
 *
 ************************************************************************
 *                                                                      *
@@ -656,8 +634,8 @@ c      S11mz  = wgplg(1,1,-z)
       double precision ln1mz,ln1mz2,ln1pz
       double precision ddilog
       double precision lnk,lnk2
-      double precision omeL1,omeL1p1,omeL1p2,
-     1                 omeL2,omeL2p1,omeL2p2,omeL2p3
+      double precision omeL1,omeL1p1,omeL1p2
+      double precision omeL2,omeL2p1,omeL2p2,omeL2p3
 **
 *     Output Variables
 *
@@ -1019,9 +997,6 @@ c      S11mz  = wgplg(1,1,-z)
 *
       return
       end
-
-
-
 *
 ************************************************************************
 *
