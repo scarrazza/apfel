@@ -584,8 +584,8 @@ c               endif
      1                 + C2L(wipt) * fL_CCm
                   SCLmCC(igrid,ixi,k,wipt,beta,alpha) = integCL(wipt)
      1                 + CLL(wipt) * fL_CCm 
-                  SC3mCC(igrid,ixi,k,wipt,beta,alpha) = integC3(wipt)
-     1                 + C3L(wipt) * fL_CCm
+                  SC3mCC(igrid,ixi,k,wipt,beta,alpha) = ( integC3(wipt)
+     1                 + C3L(wipt) * fL_CCm ) * lambda
                enddo
             enddo
 *
@@ -604,6 +604,7 @@ c               endif
                SC3mCC(igrid,ixi,3,1,beta,alpha) = 
      1              SC3mCC(igrid,ixi,3,1,beta,alpha)
      2              + 2d0 * h1 * ( 1d0 - lambda ) * ( dfL_CCm - fL_CCm )
+     3              * lambda
             endif
          enddo
       endif
