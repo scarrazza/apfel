@@ -605,6 +605,7 @@ c               endif
                SC3mCC(igrid,ixi,3,1,beta,alpha) = 
      1              SC3mCC(igrid,ixi,3,1,beta,alpha)
      2              + 2d0 * h1 * ( 1d0 - lambda ) * ( dfL_CCm - fL_CCm )
+     3              * lambda
             endif
          enddo
       endif
