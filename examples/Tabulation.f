@@ -23,7 +23,7 @@
 *
 *     Some examples ...
 *
-c      call SetMassMatchingScales(2d0,1d0,1d0)
+      call SetMassMatchingScales(2d0,1d0,1d0)
 c      call SetMSbarMasses(1.275d0,4.18d0,173.03d0)
 c      call SetFastEvolution(.true.)
 c      call LockGrids(.true.)
