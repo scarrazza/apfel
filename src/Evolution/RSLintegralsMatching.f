@@ -22,6 +22,7 @@
       include "../commons/wrap.h"
       include "../commons/grid.h"
       include "../commons/integrals.h"
+      include "../commons/m2th.h"
 **
 *     Input Variables
 *
@@ -30,11 +31,9 @@
 *     Internal Variables
 *
       integer bound
-      double precision ML(5,0:2),fL
+      double precision ML(2),fL
       double precision ANS2qqH_L,AS2ggH_L
-
       double precision AS1ggH_mass_L,ANS2qqH_mass_L,AS2ggH_mass_L
-
       double precision dgauss,a,b,eps
       double precision integrandsMatching
       external integrandsMatching
@@ -52,7 +51,8 @@
          SM(igrid,nf,2,0,beta,alpha) = 1d0
          SM(igrid,nf,5,0,beta,alpha) = 1d0
       endif
-      if(ipt.le.1) return
+      if(ipt.eq.0) return
+      if(ipt.eq.1.and.k2th(nf).eq.1d0) return
 *
 *     Adjustment od the bounds of the integrals
 *
@@ -73,31 +73,54 @@
       wnf    = nf
       walpha = alpha
       wbeta  = beta
-      wipt   = 2
-*
-      do k=1,5
 *
 *     Local contributions
 *
+      do k=1,5
+*
+*     NLO
+*
+*     Gluon-Gluon
+         if(k.eq.5.and.k2th(nf).ne.1d0)then
+            ML(1) = AS1ggH_mass_L(wnf,a)
+         else
+            ML(1) = 0d0
+         endif
 *
 *     NNLO
 *
 *     Valence, Quark-Quark
          if(k.eq.1.or.k.eq.2)then
-            ML(k,2) = ANS2qqH_L(a)
+            ML(2) = ANS2qqH_L(a)
 *     Quark-Gluon, Gluon-Quark
          elseif(k.eq.3.or.k.eq.4)then
-            ML(k,2) = 0d0
+            ML(2) = 0d0
 *     Gluon-Gluon
          elseif(k.eq.5)then
-            ML(k,2) = AS2ggH_L(a)
+            ML(2) = AS2ggH_L(a)
+         endif
+         if(k2th(nf).ne.1d0)then
+            if(k.eq.1.or.k.eq.2)then
+               ML(2) = ML(2) + ANS2qqH_L(wnf,a)
+*     Gluon-Gluon
+            elseif(k.eq.5)then
+               ML(2) = ML(2) + AS2ggH_L(wnf,a)
+            endif
          endif
 *
 *     Integrals
 *
-         SM(igrid,nf,k,wipt,beta,alpha)= 
+         if(k2th(nf).ne.1d0.and.k.eq.3)then
+            wipt = 1
+            SM(igrid,nf,k,1,beta,alpha)= 
+     1           dgauss(integrandsMatching,a,b,eps) 
+     2           + ML(1) * fL
+         endif
+*
+         wipt = 2
+         SM(igrid,nf,k,2,beta,alpha)= 
      1        dgauss(integrandsMatching,a,b,eps) 
-     2        + ML(k,wipt) * fL
+     2        + ML(2) * fL
       enddo
 *
       return
@@ -124,7 +147,6 @@
 *     Internal Variables
 *
       integer bound
-      double precision ML(5,0:2)
       double precision ANS2qqH_L,AS2ggH_L
       double precision dgauss,a,b,eps
       double precision integrandsMatchingT
@@ -143,7 +165,7 @@
          SM(igrid,nf,2,0,beta,alpha) = 1d0
          SM(igrid,nf,5,0,beta,alpha) = 1d0
       endif
-      if(ipt.lt.1) return
+      if(ipt.eq.0) return
 *
 *     Adjustment od the bounds of the integrals
 *
@@ -164,7 +186,6 @@
 *
 *     Integrals
 *
-c      do k=1,5
       do k=3,3
          SM(igrid,nf,k,wipt,beta,alpha) =
      1        dgauss(integrandsMatchingT,a,b,eps) 

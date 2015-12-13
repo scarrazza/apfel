@@ -30,7 +30,7 @@
 *     Internal Variables
 *
       integer bound
-      double precision PL(7,0:2),fL
+      double precision PL(0:2),fL
       double precision X0NSC,X1NSC,P2NSPC,P2NSMC,X0GGC,X1GGC,P2GGC
       double precision dgauss,a,b,eps(0:2),fsg,fns
       double precision integrandsQCD
@@ -136,18 +136,18 @@ c      fns = 1d0
 *
 *     Plus, Minus, Valence, Quark-Quark
          if(k.eq.1.or.k.eq.2.or.k.eq.3.or.k.eq.4)then
-            PL(k,0)  = ns0L
+            PL(0)    = ns0L
             integ(0) = ns0RS
 *     Quark-Gluon, Gluon-Quark
          elseif(k.eq.5)then
-            PL(k,0)  = 0d0
+            PL(0)    = 0d0
             integ(0) = qg0R
          elseif(k.eq.6)then
-            PL(k,0)  = 0d0
+            PL(0)    = 0d0
             integ(0) = gq0R
 *     Gluon-Gluon
          elseif(k.eq.7)then
-            PL(k,0)  = gg0L
+            PL(0)    = gg0L
             integ(0) = gg0RS
          endif
 *
@@ -156,27 +156,27 @@ c      fns = 1d0
          if(ipt.ge.1)then
 *     Plus
             if(k.eq.1)then
-               PL(k,1)  = ns1L
+               PL(1)    = ns1L
                integ(1) = ns1RSp
 *     Minus, Valence
             elseif(k.eq.2.or.k.eq.3)then
-               PL(k,1)  = ns1L
+               PL(1)    = ns1L
                integ(1) = ns1RSm
 *     Quark-Quark
             elseif(k.eq.4)then
-               PL(k,1)  = ns1L
+               PL(1)    = ns1L
                integ(1) = qq1RS
 *     Quark-Gluon
            elseif(k.eq.5)then
-               PL(k,1)  = 0d0
+               PL(1)    = 0d0
                integ(1) = qg1RS
 *     Gluon-Quark
            elseif(k.eq.6)then
-               PL(k,1)  = 0d0
+               PL(1)    = 0d0
                integ(1) = gq1RS
 *     Gluon-Gluon
             elseif(k.eq.7)then
-               PL(k,1)  = gg1L
+               PL(1)    = gg1L
                integ(1) = gg1RS
             endif
          endif
@@ -186,31 +186,31 @@ c      fns = 1d0
          if(ipt.ge.2)then
 *     Plus
             if(k.eq.1)then
-               PL(k,2)  = ns2Lp
+               PL(2)  = ns2Lp
                integ(2) = ns2RSp
 *     Minus
             elseif(k.eq.2)then
-               PL(k,2) = ns2Lm
+               PL(2)    = ns2Lm
                integ(2) = ns2RSm
 *     Valence
             elseif(k.eq.3)then
-               PL(k,2) = ns2Lm
+               PL(2)    = ns2Lm
                integ(2) = ns2RSv
 *     Quark-Quark
             elseif(k.eq.4)then
-               PL(k,2) = ns2Lp
+               PL(2)    = ns2Lp
                integ(2) = qq2RS
 *     Quark-Gluon
             elseif(k.eq.5)then
-               PL(k,2) = 0d0
+               PL(2)    = 0d0
                integ(2) = qg2RS
 *     Gluon-Quark
             elseif(k.eq.6)then
-               PL(k,2) = 0d0
+               PL(2)    = 0d0
                integ(2) = gq2RS
 *     Gluon-Gluon
             elseif(k.eq.7)then
-               PL(k,2) = gg2L
+               PL(2)    = gg2L
                integ(2) = gg2RS
             endif
          endif
@@ -218,8 +218,7 @@ c      fns = 1d0
 *     Integrals
 *
          do wipt=0,ipt
-            SP(igrid,nf,k,wipt,beta,alpha) = integ(wipt) 
-     1                                     + PL(k,wipt) * fL
+            SP(igrid,nf,k,wipt,beta,alpha) = integ(wipt) + PL(wipt) * fL
          enddo
 *
 *     In case of muR.ne.muF...
@@ -266,7 +265,7 @@ c      fns = 1d0
 *     Internal Variables
 *
       integer bound
-      double precision PL(7,0:2),fL
+      double precision PL(0:2),fL
       double precision X0NSC,X1NSTC,P2NSPTC,P2NSMTC,X0GGC,X1GGTC,P2GGTC
       double precision dgauss,a,b,eps(0:2),fsg,fns
       double precision integrandsQCDT
@@ -372,18 +371,18 @@ c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
 *
 *     Plus, Minus, Valence, Quark-Quark
          if(k.eq.1.or.k.eq.2.or.k.eq.3.or.k.eq.4)then
-            PL(k,0)  = ns0L
+            PL(0)    = ns0L
             integ(0) = ns0RS
 *     Quark-Gluon, Gluon-Quark
          elseif(k.eq.6)then
-            PL(k,0)  = 0d0
+            PL(0)    = 0d0
             integ(0) = qg0R / 2d0 / nf
          elseif(k.eq.5)then
-            PL(k,0)  = 0d0
+            PL(0)    = 0d0
             integ(0) = 2d0 * nf * gq0R
 *     Gluon-Gluon
          elseif(k.eq.7)then
-            PL(k,0)  = gg0L
+            PL(0)    = gg0L
             integ(0) = gg0RS
          endif
 *
@@ -392,27 +391,27 @@ c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
          if(ipt.ge.1)then
 *     Plus
             if(k.eq.1)then
-               PL(k,1)  = ns1L
+               PL(1)    = ns1L
                integ(1) = ns1RSp
 *     Minus, Valence
             elseif(k.eq.2.or.k.eq.3)then
-               PL(k,1)  = ns1L
+               PL(1)    = ns1L
                integ(1) = ns1RSm
 *     Quark-Quark
             elseif(k.eq.4)then
-               PL(k,1)  = ns1L
+               PL(1)    = ns1L
                integ(1) = qq1RS
 *     Quark-Gluon
            elseif(k.eq.6)then
-               PL(k,1)  = 0d0
+               PL(1)    = 0d0
                integ(1) = qg1RS
 *     Gluon-Quark
            elseif(k.eq.5)then
-               PL(k,1)  = 0d0
+               PL(1)    = 0d0
                integ(1) = gq1RS
 *     Gluon-Gluon
             elseif(k.eq.7)then
-               PL(k,1)  = gg1L
+               PL(1)    = gg1L
                integ(1) = gg1RS
             endif
          endif
@@ -422,31 +421,31 @@ c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
          if(ipt.ge.2)then
 *     Plus
             if(k.eq.1)then
-               PL(k,2)  = ns2Lp
+               PL(2)  = ns2Lp
                integ(2) = ns2RSp
 *     Minus
             elseif(k.eq.2)then
-               PL(k,2) = ns2Lm
+               PL(2)    = ns2Lm
                integ(2) = ns2RSm
 *     Valence
             elseif(k.eq.3)then
-               PL(k,2) = ns2Lm
+               PL(2)    = ns2Lm
                integ(2) = ns2RSv
 *     Quark-Quark
             elseif(k.eq.4)then
-               PL(k,2) = ns2Lp
+               PL(2)    = ns2Lp
                integ(2) = qq2RS
 *     Quark-Gluon
             elseif(k.eq.6)then
-               PL(k,2) = 0d0
+               PL(2)    = 0d0
                integ(2) = qg2RS
 *     Gluon-Quark
             elseif(k.eq.5)then
-               PL(k,2) = 0d0
+               PL(2)    = 0d0
                integ(2) = gq2RS
 *     Gluon-Gluon
             elseif(k.eq.7)then
-               PL(k,2) = gg2L
+               PL(2)    = gg2L
                integ(2) = gg2RS
             endif
          endif
@@ -454,8 +453,7 @@ c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
 *     Integrals
 *
          do wipt=0,ipt
-            SP(igrid,nf,k,wipt,beta,alpha) = integ(wipt) 
-     1                                     + PL(k,wipt) * fL
+            SP(igrid,nf,k,wipt,beta,alpha) = integ(wipt) + PL(wipt) * fL
          enddo
 *
 *     In case of muR.ne.muF...
@@ -566,7 +564,7 @@ c      fsg = 1d0
 *     Internal Variables
 *
       integer bound
-      double precision PL(7,0:2),fL
+      double precision PL(0:2),fL
       double precision X0NSPC,X1NSPC,P2NSPPC,P2NSMPC,X0GGPC,X1GGPC
       double precision P2GGPC
       double precision dgauss,a,b,eps(0:2),fsg,fns
@@ -673,18 +671,18 @@ c      fns = 1d0
 *
 *     Plus, Minus, Valence, Quark-Quark
          if(k.eq.1.or.k.eq.2.or.k.eq.3.or.k.eq.4)then
-            PL(k,0)  = ns0L
+            PL(0)    = ns0L
             integ(0) = ns0RS
 *     Quark-Gluon, Gluon-Quark
          elseif(k.eq.5)then
-            PL(k,0)  = 0d0
+            PL(0)    = 0d0
             integ(0) = qg0R
          elseif(k.eq.6)then
-            PL(k,0)  = 0d0
+            PL(0)    = 0d0
             integ(0) = gq0R
 *     Gluon-Gluon
          elseif(k.eq.7)then
-            PL(k,0)  = gg0L
+            PL(0)    = gg0L
             integ(0) = gg0RS
          endif
 *
@@ -693,27 +691,27 @@ c      fns = 1d0
          if(ipt.ge.1)then
 *     Plus
             if(k.eq.1)then
-               PL(k,1)  = ns1L
+               PL(1)    = ns1L
                integ(1) = ns1RSp
 *     Minus, Valence
             elseif(k.eq.2.or.k.eq.3)then
-               PL(k,1)  = ns1L
+               PL(1)    = ns1L
                integ(1) = ns1RSm
 *     Quark-Quark
             elseif(k.eq.4)then
-               PL(k,1)  = ns1L
+               PL(1)    = ns1L
                integ(1) = qq1RS
 *     Quark-Gluon
            elseif(k.eq.5)then
-               PL(k,1)  = 0d0
+               PL(1)    = 0d0
                integ(1) = qg1RS
 *     Gluon-Quark
            elseif(k.eq.6)then
-               PL(k,1)  = 0d0
+               PL(1)    = 0d0
                integ(1) = gq1RS
 *     Gluon-Gluon
             elseif(k.eq.7)then
-               PL(k,1)  = gg1L
+               PL(1)    = gg1L
                integ(1) = gg1RS
             endif
          endif
@@ -723,31 +721,31 @@ c      fns = 1d0
          if(ipt.ge.2)then
 *     Plus
             if(k.eq.1)then
-               PL(k,2)  = ns2Lp
+               PL(2)  = ns2Lp
                integ(2) = ns2RSp
 *     Minus
             elseif(k.eq.2)then
-               PL(k,2) = ns2Lm
+               PL(2)    = ns2Lm
                integ(2) = ns2RSm
 *     Valence
             elseif(k.eq.3)then
-               PL(k,2) = ns2Lm
+               PL(2)    = ns2Lm
                integ(2) = ns2RSv
 *     Quark-Quark
             elseif(k.eq.4)then
-               PL(k,2) = ns2Lp
+               PL(2)    = ns2Lp
                integ(2) = qq2RS
 *     Quark-Gluon
             elseif(k.eq.5)then
-               PL(k,2) = 0d0
+               PL(2)    = 0d0
                integ(2) = qg2RS
 *     Gluon-Quark
             elseif(k.eq.6)then
-               PL(k,2) = 0d0
+               PL(2)    = 0d0
                integ(2) = gq2RS
 *     Gluon-Gluon
             elseif(k.eq.7)then
-               PL(k,2) = gg2L
+               PL(2)    = gg2L
                integ(2) = gg2RS
             endif
          endif
@@ -755,8 +753,7 @@ c      fns = 1d0
 *     Integrals
 *
          do wipt=0,ipt
-            SP(igrid,nf,k,wipt,beta,alpha) = integ(wipt) 
-     1                                     + PL(k,wipt) * fL
+            SP(igrid,nf,k,wipt,beta,alpha) = integ(wipt) + PL(wipt) * fL
          enddo
 *
 *     In case of muR.ne.muF...
