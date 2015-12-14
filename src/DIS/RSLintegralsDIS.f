@@ -847,7 +847,7 @@ c               endif
                      SC2mNC(igrid,ixi,k,2,beta,alpha) =
      1                    sig1 * SC2mNC(igrid,ixi,k,2,beta,alpha)
      2                    + sig2 * SC2m0NC(igrid,ixi,k,2,beta,alpha)
-                      SCLmNC(igrid,ixi,k,2,beta,alpha) =
+                     SCLmNC(igrid,ixi,k,2,beta,alpha) =
      1                    sig1 * SCLmNC(igrid,ixi,k,2,beta,alpha)
      2                    + sig2 * SCLm0NC(igrid,ixi,k,2,beta,alpha)
                   enddo
