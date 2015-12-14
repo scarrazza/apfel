@@ -668,7 +668,7 @@
                         if(Nf_FF.lt.4)then
 *     FFNS
                            do pt=0,ipt_max_IC
-                              CLnsp(4) = CLnsp(4) + as(pt)
+                              CLnsp(4) = CLnsp(4) + cFLIC * as(pt)
      1                             * ( c0(4)
      2                             * SCLmNC(jgrid,ixi(4),
      3                             3,pt,alpha,beta)
@@ -683,10 +683,9 @@
      5                             * SC2mNC(jgrid,ixi(4)+1,
      6                             3,pt,alpha,beta) )
                            enddo
-                           CLnsp(4) = cFLIC * CLnsp(4)
 *     FFN0
                            do pt=0,ipt_max_IC
-c                              CLnsp(4) = CLnsp(4) - as(pt)
+c                              CLnsp(4) = CLnsp(4) - cFLIC * as(pt)
 c     1                             *  damp(4) * ( c0(4)
 c     2                             * SCLm0NC(jgrid,ixi(4),
 c     3                             3,pt,alpha,beta)
