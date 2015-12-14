@@ -18,6 +18,12 @@ ccccccccccccc
       end subroutine
 
 ccccccccccccc      
+      subroutine fcachepdfsapfel(Q0)
+      double precision Q0
+      call CachePDFsAPFEL(Q0)
+      end subroutine
+
+ccccccccccccc      
       function fxpdf(i,x)
       integer i
       double precision x, fxpdf

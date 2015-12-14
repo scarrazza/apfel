@@ -31,6 +31,11 @@ namespace APFEL {
     fderiveapfel(&Q);
   }
 
+  void CachePDFsAPFEL(double Q0)
+  {
+    fcachepdfsapfel(&Q0);
+  }
+
   double xPDF(int i, double x)
   {
     return fxpdf(&i, &x);

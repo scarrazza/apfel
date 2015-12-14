@@ -32,6 +32,11 @@
      1           achar(27)//"[0m"
       write(6,*) "    computes the logarithmic derivative with respect"
       write(6,*) "    of 'Q' of PDFs at the scale 'Q' [GeV]."
+
+      write(6,*) achar(27)//"[34m- CachePDFsAPFEL(double Q0):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    evolves PDFs and cache them on an (x,Q2)-grid"
+      write(6,*) "    starting from the scale 'Q0' [GeV]."
       write(6,*) "  "
 *
       write(6,*) achar(27)//"[33mSetting functions:"

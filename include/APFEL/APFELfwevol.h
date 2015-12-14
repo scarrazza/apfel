@@ -16,6 +16,9 @@ extern "C" {
 #define fderiveapfel FC_FUNC(deriveapfel,DERIVEAPFEL)
   void fderiveapfel(double*);
 
+#define fcachepdfsapfel FC_FUNC(cachepdfsapfel,CACHEPDFSAPFEL)
+  void fcachepdfsapfel(double*);
+
 #define fxpdf FC_FUNC(xpdf,XPDF)
   double fxpdf(int*, double*);
 

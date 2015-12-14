@@ -29,6 +29,9 @@ namespace APFEL {
   /// Computes the derivative of PDFs 
   void DeriveAPFEL(double Q);
 
+  /// Cache PDFs on a (x,Q2)-grid
+  void CachePDFsAPFEL(double Q0);
+
   /// Returns x*PDF
   double xPDF(int i, double x);
 

@@ -6,7 +6,8 @@ INIT = 	Evolution/apfelversion.cc Evolution/lhapdfwrapper.cc Evolution/WelcomeMe
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
 	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
 	Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f Evolution/ExponentiatedEvolveAPFEL.f \
-	Evolution/ReportParameters.f Evolution/CheckAPFEL.f Evolution/ComputeHeavyQuarkThresholds.f
+	Evolution/ReportParameters.f Evolution/CheckAPFEL.f Evolution/ComputeHeavyQuarkThresholds.f \
+	Evolution/CachePDFsAPFEL.f
 
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
 	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f Evolution/SetExternalGrid.f \

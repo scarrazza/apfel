@@ -146,7 +146,8 @@ am__objects_1 = Evolution/apfelversion.lo Evolution/lhapdfwrapper.lo \
 	Evolution/TruncatedEvolveAPFEL.lo \
 	Evolution/ExponentiatedEvolveAPFEL.lo \
 	Evolution/ReportParameters.lo Evolution/CheckAPFEL.lo \
-	Evolution/ComputeHeavyQuarkThresholds.lo
+	Evolution/ComputeHeavyQuarkThresholds.lo \
+	Evolution/CachePDFsAPFEL.lo
 am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetAlphaQEDRef.lo Evolution/SetQLimits.lo \
 	Evolution/SetPerturbativeOrder.lo Evolution/SetFFNS.lo \
@@ -512,7 +513,8 @@ INIT = Evolution/apfelversion.cc Evolution/lhapdfwrapper.cc Evolution/WelcomeMes
 	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
 	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
 	Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f Evolution/ExponentiatedEvolveAPFEL.f \
-	Evolution/ReportParameters.f Evolution/CheckAPFEL.f Evolution/ComputeHeavyQuarkThresholds.f
+	Evolution/ReportParameters.f Evolution/CheckAPFEL.f Evolution/ComputeHeavyQuarkThresholds.f \
+	Evolution/CachePDFsAPFEL.f
 
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
 	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f Evolution/SetExternalGrid.f \
@@ -700,6 +702,8 @@ Evolution/ReportParameters.lo: Evolution/$(am__dirstamp) \
 Evolution/CheckAPFEL.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/ComputeHeavyQuarkThresholds.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/CachePDFsAPFEL.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetAlphaQCDRef.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)

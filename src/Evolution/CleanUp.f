@@ -61,11 +61,13 @@
       include "../commons/EWCouplings.h"
       include "../commons/DynScVar.h"
       include "../commons/IntrinsicCharm.h"
+      include "../commons/CacheParams.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
 *
       InAPFEL           = "xxxx"
+      InCachePDFs       = "xxxx"
 *
       InWelcome         = "xxxx"
       InScales          = "xxxx"

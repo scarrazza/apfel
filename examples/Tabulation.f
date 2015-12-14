@@ -62,6 +62,10 @@ c      call SetMaxFlavourAlpha(5)
 *
       Q0 = dsqrt(Q02) - eps
       Q  = dsqrt(Q2)
+*
+*     Cache PDFs
+*
+      call CachePDFsAPFEL(Q0)
       call EvolveAPFEL(Q0,Q)
 *
 *     Tabulate PDFs for the LHA x values

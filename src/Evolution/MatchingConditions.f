@@ -154,8 +154,7 @@
      6    + lnz * s111mz ) - ( 4d0 + 8d0 * z ) * lnz3 / 3d0 
      7    + ( 8d0 - 32d0 * z + 16d0 * z2 ) * zeta3 
      8    - ( 16d0 + 64d0 * z ) * zeta2 * lnz
-      B02 = ( 16d0 * z + 16d0 * z2 ) * ( s11mz + lnz * ln1pz ) ! This seems to be wrong (same also in HOPPET)
-c      B02 = ( 16d0 + 16d0 * z2 ) * ( s11mz + lnz * ln1pz )    ! This seems to be the correct one
+      B02 = ( 16d0 * z + 16d0 * z2 ) * ( s11mz + lnz * ln1pz ) ! There is a typo here in the e-Print ( 16 -> 16z )
      1    + ( 32d0 / z / 3d0 + 12d0 + 64d0 * z - 272d0 * z2 / 3d0 ) 
      2    * s111mz - ( 12d0 + 48d0 * z - 260d0 * z2 / 3d0 
      3    + 32d0 / z / 3d0 ) * zeta2 - 4d0 * z2 * lnz * ln1mz 
