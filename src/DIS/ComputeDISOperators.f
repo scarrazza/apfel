@@ -38,7 +38,7 @@
 *     Internal Variables
 *
       integer jgrid,ipdf,ihq
-      integer pt,ipt_FF,ipt_FF_min,iptbkp
+      integer pt,ipt_FF,iptbkp,ipt_max_IC
       integer alpha,beta,gamma
       integer nf
       integer gbound
@@ -94,13 +94,7 @@
 *     (Remember that a_QCD takes as an argument the factorization scale
 *     and converts it internally into the renormalization scale).
 *
-      muF = kfacQ*Q2
-*
-*     Normally the NC coefficient functions in the FFNS start at O(alpha_s).
-*     In the presence of intrinsic charm insted they start at O(1).
-*
-      ipt_FF_min = 1
-      if(IntrinsicCharm) ipt_FF_min = 0
+      muF = kfacQ * Q2
 *
 *     Scale down the perturbative order of the alphas evolution if one
 *     of the FFNSs has been chosen
@@ -181,8 +175,8 @@
 *
          if(DampingFONLL)then
             if(ihq.gt.Nf_FF)then
-               if(Q2.gt.m2ph(ihq))then
-                  damp(ihq) = ( 1d0 - m2ph(ihq) / Q2 )**2d0
+               if(Q2.gt.m2th(ihq))then
+                  damp(ihq) = ( 1d0 - m2th(ihq) / Q2 )**2d0
                else
                   damp(ihq) = 0d0
                endif
@@ -212,10 +206,13 @@
          call ComputeChargesDIS(Q2,bq,dq,bqt)
 *
 *     In case of intrinsic charm, compute the correction to apply
-*     to the non-singlet part of the massive F_L
+*     to the non-singlet part of the massive F_L and also limit the
+*     compuation of the IC component to NLO.
 *
-         if(IntrinsicCharm)
-     1        cFLIC = ( 1d0 - ( 1d0 - bqt(4) / bq(4) ) / 2d0 )
+         if(IntrinsicCharm)then
+            cFLIC = ( 1d0 - ( 1d0 - bqt(4) / bq(4) ) / 2d0 )
+            ipt_max_IC = min(ipt,1)
+         endif
 *     
          do jgrid=1,ngrid
 *     
@@ -316,7 +313,7 @@
                      if(ipt.ge.2)then
                         if(Nf_FF.lt.6)then
                            do ihq=Nf_FF+1,6
-                              if(Q2.ge.m2ph(ihq))then
+                              if(Q2.ge.m2th(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( c0(ihq)
      2                                * SC2m0NC(jgrid,ixi(ihq),
@@ -340,8 +337,8 @@
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(Q2.ge.m2ph(ihq))then
-                              do pt=ipt_FF_min,ipt
+                           if(Q2.ge.m2th(ihq))then
+                              do pt=1,ipt
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
      2                                * SC2m0NC(jgrid,ixi(ihq),
@@ -379,7 +376,7 @@
 *
                      if(IntrinsicCharm)then
                         if(Nf_FF.lt.4)then
-                           do pt=ipt_FF_min,ipt
+                           do pt=0,ipt_max_IC
                               CLnsp(4) = CLnsp(4) + as(pt)
      1                             * ( c0(4)
      2                             * SCLm0NC(jgrid,ixi(4),
@@ -434,7 +431,7 @@
                      if(ipt.ge.2)then
                         if(Nf_FF.lt.6)then
                            do ihq=Nf_FF+1,6
-                              if(W2.ge.4d0*m2ph(ihq))then
+                              if(W2.ge.4d0*m2th(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( c0(ihq)
      2                                * SC2mNC(jgrid,ixi(ihq),
@@ -458,8 +455,8 @@
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(W2.ge.4d0*m2ph(ihq))then
-                              do pt=ipt_FF_min,ipt
+                           if(W2.ge.4d0*m2th(ihq))then
+                              do pt=1,ipt
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
      2                                * SC2mNC(jgrid,ixi(ihq),
@@ -497,7 +494,7 @@
 *
                      if(IntrinsicCharm)then
                         if(Nf_FF.lt.4)then
-                           do pt=ipt_FF_min,ipt
+                           do pt=0,ipt_max_IC
                               CLnsp(4) = CLnsp(4) + as(pt)
      1                             * ( c0(4)
      2                             * SCLmNC(jgrid,ixi(4),
@@ -558,7 +555,7 @@
                      if(ipt_FF.ge.2)then
                         if(Nf_FF.lt.6)then
                            do ihq=Nf_FF+1,6
-                              if(W2.ge.4d0*m2ph(ihq))then
+                              if(W2.ge.4d0*m2th(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( c0(ihq)
      2                                * SC2mNC(jgrid,ixi(ihq),
@@ -574,7 +571,7 @@
      5                                * SCLmNC(jgrid,ixi(ihq)+1,
      6                                3,2,alpha,beta) )
                               endif
-                              if(Q2.ge.m2ph(ihq))then
+                              if(Q2.ge.m2th(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( - damp(ihq) * ( c0(ihq)
      2                                * SC2m0NC(jgrid,ixi(ihq),
@@ -598,8 +595,8 @@
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(W2.ge.4d0*m2ph(ihq))then
-                              do pt=ipt_FF_min,ipt_FF
+                           if(W2.ge.4d0*m2th(ihq))then
+                              do pt=1,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
      2                                * SC2mNC(jgrid,ixi(ihq),
@@ -630,8 +627,8 @@
      6                                2,pt,alpha,beta) )
                               enddo
                            endif
-                           if(Q2.ge.m2ph(ihq))then
-                              do pt=ipt_FF_min,ipt_FF
+                           if(Q2.ge.m2th(ihq))then
+                              do pt=1,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
      2                                * SC2m0NC(jgrid,ixi(ihq),
@@ -670,7 +667,7 @@
                      if(IntrinsicCharm)then
                         if(Nf_FF.lt.4)then
 *     FFNS
-                           do pt=ipt_FF_min,ipt
+                           do pt=0,ipt_max_IC
                               CLnsp(4) = CLnsp(4) + as(pt)
      1                             * ( c0(4)
      2                             * SCLmNC(jgrid,ixi(4),
@@ -688,16 +685,16 @@
                            enddo
                            CLnsp(4) = cFLIC * CLnsp(4)
 *     FFN0
-                           do pt=ipt_FF_min,ipt
+                           do pt=0,ipt_max_IC
 c                              CLnsp(4) = CLnsp(4) - as(pt)
-c     1                             *  damp(ihq) * ( c0(4)
+c     1                             *  damp(4) * ( c0(4)
 c     2                             * SCLm0NC(jgrid,ixi(4),
 c     3                             3,pt,alpha,beta)
 c     4                             + c1(4)
 c     5                             * SCLm0NC(jgrid,ixi(4)+1,
 c     6                             3,pt,alpha,beta) )
                               C2nsp(4) = C2nsp(4) - as(pt)
-     1                             *  damp(ihq) * ( c0(4)
+     1                             *  damp(4) * ( c0(4)
      2                             * SC2m0NC(jgrid,ixi(4),
      3                             3,pt,alpha,beta)
      4                             + c1(4)
@@ -941,13 +938,13 @@ c     6                             3,pt,alpha,beta) )
                enddo
             enddo
          enddo
-*     
+*
 *     Charged current structure functions
-*     
+*
       elseif(ProcessDIS.eq."CC")then
-*     
+*
 *     Different projectiles
-*     
+*
          if(ProjectileDIS(1:8).eq."neutrino".or.
      1        ProjectileDIS(1:8).eq."positron")then
             ipr = 1
@@ -955,30 +952,30 @@ c     6                             3,pt,alpha,beta) )
      1           ProjectileDIS(1:8).eq."electron")then
             ipr = - 1
          endif
-*     
+*
 *     Define useful constants
-*     
+*
          Kl = V_ud2 + V_us2
          Kc = V_cd2 + V_cs2
          Kb = V_ub2 + V_cb2
          Kt = V_td2 + V_ts2 + V_tb2
-*     
+*
          do jgrid=1,ngrid
-*     
+*
 *     If an external grid is found compute the whole operator
-*     
+*
             gbound = 0
             if(IsExt(jgrid)) gbound = nin(jgrid)
-*     
+*
             do alpha=0,gbound
                do beta=alpha,nin(jgrid)
 *
 *     Final state energy
 *
                   W2 = Q2 * ( 1d0 - xg(jgrid,alpha) ) / xg(jgrid,alpha)
-*     
+*
 *     Put together coefficient functions
-*     
+*
                   do ihq=3,6
                      C2g(ihq)   = 0d0
                      C2ps(ihq)  = 0d0
@@ -992,9 +989,9 @@ c     6                             3,pt,alpha,beta) )
                      C3nsp(ihq) = 0d0
                      C3nsm(ihq) = 0d0
                   enddo
-*     
+*
 *     Construct coefficient functions according to the scheme chosen
-*     
+*
                   if(MassScheme.eq."ZM-VFNS")then
                      do pt=0,ipt
                         C2g(3)   = C2g(3)
@@ -1072,14 +1069,13 @@ c     6                             3,pt,alpha,beta) )
 *
 *     FFNS is NLO at most
 *
-                     ipt_FF = ipt
-                     if(ipt.gt.1) ipt_FF = 1
+                     ipt_FF = min(ipt,1)
 *
 *     Heavy quark coefficient functions
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(Q2.ge.m2ph(ihq))then
+                           if(Q2.ge.m2th(ihq))then
                               do pt=0,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -1205,7 +1201,7 @@ c     6                             2,pt,alpha,beta) )
                         enddo
                      endif
 *
-*     FFNS is NLO at most
+*     FNNS is NLO at most
 *
                      ipt_FF = ipt
                      if(ipt.gt.1) ipt_FF = 1
@@ -1214,7 +1210,7 @@ c     6                             2,pt,alpha,beta) )
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(W2.ge.m2ph(ihq))then
+                           if(W2.ge.m2th(ihq))then
                               do pt=0,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -1358,7 +1354,7 @@ c     6                             2,pt,alpha,beta) )
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(W2.ge.m2ph(ihq))then
+                           if(W2.ge.m2th(ihq))then
                               do pt=0,ipt_FF
                                  C2gm(ihq) = C2gm(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -1404,7 +1400,7 @@ c     6                             2,pt,alpha,beta) )
      6                                3,pt,alpha,beta) )
                               enddo
                            endif
-                           if(Q2.ge.m2ph(ihq))then
+                           if(Q2.ge.m2th(ihq))then
                               do pt=0,ipt_FF
                                  C2gm(ihq) = C2gm(ihq) - damp(ihq)
      1                                * as(pt) * ( c0(ihq)
@@ -1545,9 +1541,9 @@ c     6                             2,pt,alpha,beta) )
                   OpF2(jgrid,3,12,alpha,beta) = Kl * C2nsp(3) / 10d0
 *     T35
                   OpF2(jgrid,3,13,alpha,beta) = Kl * C2nsp(3) / 15d0
-*     
+*
 *     Charm Component
-*     
+*
 *     Singlet
                   OpF2(jgrid,4,1,alpha,beta)  =
      1                 2d0 * Kc * ( C2ps(4) + C2nsp(4) / 6d0 )
@@ -1797,9 +1793,9 @@ c     6                             2,pt,alpha,beta) )
      1                    OpF2(jgrid,4,13,alpha,beta) +
      2                    2d0 * Kc * c2ccIC / 60d0
                   endif
-*     
+*
 *     Bottom Component
-*     
+*
 *     Singlet
                   OpF2(jgrid,5,1,alpha,beta)  = 
      1                 2d0 * Kb * ( C2ps(5) + C2nsp(5) / 6d0 )
@@ -1993,9 +1989,9 @@ c     6                             2,pt,alpha,beta) )
      2                       + Kb * C2qm(5) / 15d0
                      endif
                   endif
-*     
+*
 *     Top Component
-*     
+*
 *     Singlet
                   OpF2(jgrid,6,1,alpha,beta)  = 
      1                 2d0 * Kt * ( C2ps(6) + C2nsp(6) / 6d0 )
@@ -2215,9 +2211,9 @@ c     6                             2,pt,alpha,beta) )
      2                       - 2d0 * Kt * C2qm(6) / 15d0
                      endif
                   endif
-*     
+*
 *     Total
-*     
+*
                   do ipdf=0,13
                      do ihq=3,6
                         OpF2(jgrid,7,ipdf,alpha,beta) = 
@@ -2225,11 +2221,11 @@ c     6                             2,pt,alpha,beta) )
      2                       + OpF2(jgrid,ihq,ipdf,alpha,beta)
                      enddo
                   enddo
-*     
+*
 *     FL
-*     
+*
 *     Light Component
-*     
+*
 *     Singlet
                   OpFL(jgrid,3,1,alpha,beta)  = 
      1                 2d0 * Kl * ( CLps(3) + CLnsp(3) / 6d0 )
@@ -2253,9 +2249,9 @@ c     6                             2,pt,alpha,beta) )
                   OpFL(jgrid,3,12,alpha,beta) = Kl * CLnsp(3) / 10d0
 *     T35
                   OpFL(jgrid,3,13,alpha,beta) = Kl * CLnsp(3) / 15d0
-*     
+*
 *     Charm Component
-*     
+*
 *     Singlet
                   OpFL(jgrid,4,1,alpha,beta)  = 
      1                 2d0 * Kc * ( CLps(4) + CLnsp(4) / 6d0 )
@@ -2495,9 +2491,9 @@ c     6                             2,pt,alpha,beta) )
      1                    OpFL(jgrid,4,13,alpha,beta) +
      2                    2d0 * Kc * cLccIC / 60d0
                   endif
-*     
+*
 *     Bottom Component
-*     
+*
 *     Singlet
                   OpFL(jgrid,5,1,alpha,beta)  = 
      1                 2d0 * Kb * ( CLps(5) + CLnsp(5) / 6d0 )
@@ -2691,9 +2687,9 @@ c     6                             2,pt,alpha,beta) )
      2                       + Kb * CLqm(5) / 15d0
                      endif
                   endif
-*     
+*
 *     Top Component
-*     
+*
 *     Singlet
                   OpFL(jgrid,6,1,alpha,beta)  = 
      1                 2d0 * Kt * ( CLps(6) + CLnsp(6) / 6d0 )
@@ -2913,9 +2909,9 @@ c     6                             2,pt,alpha,beta) )
      2                       - 2d0 * Kt * CLqm(6) / 15d0
                      endif
                   endif
-*     
+*
 *     Total
-*     
+*
                   do ipdf=0,13
                      do ihq=3,6
                         OpFL(jgrid,7,ipdf,alpha,beta) = 
@@ -2923,11 +2919,11 @@ c     6                             2,pt,alpha,beta) )
      2                       + OpFL(jgrid,ihq,ipdf,alpha,beta)
                      enddo
                   enddo
-*     
+*
 *     F3
-*     
+*
 *     Light Component
-*     
+*
 *     Gluon
                   OpF3(jgrid,3,2,alpha,beta)  = ipr * 2d0 * Kl * C3g(3)
 *     Valence
@@ -2950,9 +2946,9 @@ c     6                             2,pt,alpha,beta) )
 *     T8
                   OpF3(jgrid,3,10,alpha,beta) = - ipr
      1                 * V_us2 * C3nsp(3) / 2d0
-*     
+*
 *     Charm Component
-*     
+*
 *     Gluon
                   OpF3(jgrid,4,2,alpha,beta)  = ipr * 2d0 * Kc * C3g(4)
 *     Valence
@@ -3191,9 +3187,9 @@ c     6                             2,pt,alpha,beta) )
      1                    OpF3(jgrid,4,13,alpha,beta) -
      2                    ipr * 2d0 * Kc * c3ccIC / 60d0
                   endif
-*     
+*
 *     Bottom Component
-*     
+*
 *     Gluon
                   OpF3(jgrid,5,2,alpha,beta)  = ipr * 2d0 * Kb * C3g(5)
 *     Valence
@@ -3386,9 +3382,9 @@ c     6                             2,pt,alpha,beta) )
      2                       - ipr * Kb * C3qm(5) / 4d0
                      endif
                   endif
-*     
+*
 *     Top Component
-*     
+*
 *     Gluon
                   OpF3(jgrid,6,2,alpha,beta)  = ipr * 2d0 * Kt * C3g(6)
 *     Valence
@@ -3608,9 +3604,9 @@ c     6                             2,pt,alpha,beta) )
      2                       + ipr * Kt * C3qm(6) / 5d0
                      endif
                   endif
-*     
+*
 *     Total
-*     
+*
                   do ipdf=0,13
                      do ihq=3,6
                         OpF3(jgrid,7,ipdf,alpha,beta) = 
