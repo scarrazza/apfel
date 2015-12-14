@@ -37,7 +37,7 @@
 *     some definitions
 *
       lnz    = dlog(z)
-      z2     = z**2d0
+      z2     = z * z
       Li21mz = ddilog(1d0-z)
       S121mz = wgplg(1,2,1d0-z)
 *
@@ -153,14 +153,15 @@
      5    - 16d0 * s12mz ) + ( 16d0 + 64d0 * z ) * ( 2d0 * s121mz 
      6    + lnz * s111mz ) - ( 4d0 + 8d0 * z ) * lnz3 / 3d0 
      7    + ( 8d0 - 32d0 * z + 16d0 * z2 ) * zeta3 
-     8    - ( 16d0 + 64d0 * z ) * zeta2 * lnz                    
-      B02 = ( 16d0 * z + 16d0 * z2 ) * ( s11mz + lnz * ln1pz ) 
+     8    - ( 16d0 + 64d0 * z ) * zeta2 * lnz
+      B02 = ( 16d0 * z + 16d0 * z2 ) * ( s11mz + lnz * ln1pz ) ! This seems to be wrong (same also in HOPPET)
+c      B02 = ( 16d0 + 16d0 * z2 ) * ( s11mz + lnz * ln1pz )    ! This seems to be the correct one
      1    + ( 32d0 / z / 3d0 + 12d0 + 64d0 * z - 272d0 * z2 / 3d0 ) 
      2    * s111mz - ( 12d0 + 48d0 * z - 260d0 * z2 / 3d0 
      3    + 32d0 / z / 3d0 ) * zeta2 - 4d0 * z2 * lnz * ln1mz 
      4    - ( 2d0 + 8d0 * z - 10d0 * z2 ) * ln1mz2 
      5    + ( 2d0 + 8d0 * z + 46d0 * z2 / 3d0 ) * lnz2 
-     6    + (4d0 + 16d0 * z - 16d0 * z2 ) * ln1mz 
+     6    + ( 4d0 + 16d0 * z - 16d0 * z2 ) * ln1mz
      7    - ( 56d0 / 3d0 + 172d0 * z / 3d0 + 1600d0 * z2 / 9d0 ) * lnz 
      8    - 448d0 / z / 27d0 - 4d0 / 3d0 - 628d0 * z / 3d0 
      9    + 6352d0 * z2 / 27d0
@@ -369,7 +370,7 @@
       lnz3  = lnz2 * lnz
       ln1mz = log(1d0 - z)
 *     CF * TR part
-      A01 = 4d0 * ( 1d0 + z ) * lnz3 /3d0 + ( 6d0 + 10d0 * z) * lnz2 
+      A01 = 4d0 * ( 1d0 + z ) * lnz3 / 3d0 + ( 6d0 + 10d0 * z) * lnz2 
      1    + ( 32d0 + 48d0 * z ) * lnz - 8d0 / z + 80d0 - 48d0 * z 
      2    - 24 * z2 
 *     CA * TR part
@@ -601,7 +602,7 @@
      2      - 160d0 / 9d0 / z + 16d0 - 48d0 * z + 448d0 * z2 / 9d0
       omeL1 = omeL1 * lnk
 *
-      omeL2 = -8d0 * ( 1d0 + z ) * lnz - 16d0 / 3d0 / z - 4d0 + 4d0 * z
+      omeL2 = - 8d0 * ( 1d0 + z ) * lnz - 16d0 / 3d0 / z - 4d0 + 4d0 * z
      1      + 16d0 * z2 / 3d0
       omeL2 = omeL2 * lnk2
 *
@@ -662,7 +663,7 @@
      5        - 80d0 * z2 )
 *
       omeL1p2 = CA * TR * ( ( 16d0 + 32d0 * z + 32d0 * z2 )
-     1        * ( S11mz + lnz * ln1pz ) + ( 8d0 - 16d0*z + 16d0 * z2)
+     1        * ( S11mz + lnz * ln1pz ) + ( 8d0 - 16d0 * z + 16d0 * z2)
      2        * ln1mz2 + ( 8d0 + 16d0 * z ) * lnz2
      3        + 32d0 * z * zeta2 + 32d0 * z * ( 1d0 - z ) * ln1mz 
      4        - ( 8d0 + 64d0 * z + 352d0 * z2 / 3d0 ) * lnz
