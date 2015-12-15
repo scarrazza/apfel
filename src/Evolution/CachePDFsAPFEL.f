@@ -84,9 +84,9 @@
          enddo
 *
          isg = nfin
-         do iq2=1,nQ2g
+         do iq2=0,nQ2g
             Q2g(iq2) = Lam2 * dexp( lnQmin
-     1                 * dexp( dble( iq2 - 1 ) / dble( nQ2g - 1 )
+     1                 * dexp( dble( iq2 ) / dble( nQ2g )
      2                 * dlog( lnQmax / lnQmin ) ) )
             if(Q2g(iq2).lt.m2th(isg+1)+eps)then
                nQ(isg) = nQ(isg) + 1
@@ -115,7 +115,7 @@
             lnQmax = dlog( m2th(nfin+1) / Lam2 )
          endif
 *
-         iq2c = 0
+         iq2c = -1
          do isg=nfin,nffi
             do iq2=1,nQ(isg)
                iq2c = iq2c + 1
@@ -136,8 +136,8 @@
          if(iq2c.ne.nQ2g)then
             write(6,*) "In CachePDFs.f:"
             write(6,*) "Mismatch in the Number of Q2 nodes"
-            write(6,*) "- Expected = ",nQ2g
-            write(6,*) "- Found = ",iq2c
+            write(6,*) "- Expected = ",nQ2g+1
+            write(6,*) "- Found = ",iq2c+1
             call exit(-10)
          endif
       endif
@@ -146,8 +146,8 @@
  
 *     Evolve PDFs on the Q2-grid
 *
-      Q2g(0) = Q0 * Q0
-      do iq2=1,nQ2g
+      Q2g(-1) = Q0 * Q0
+      do iq2=0,nQ2g
 c         write(6,*) iq2,Q2g(iq2)
          if(PDFevol(1:9).eq."truncated")then
             call EvolveAPFEL(Q0,dsqrt(Q2g(iq2)))
@@ -165,6 +165,9 @@ c         write(6,*) iq2,Q2g(iq2)
             enddo
          enddo
       enddo
+c      do isg=nfin,nffi
+c         write(6,*) isg,nQ(isg)
+c      enddo
 *     Restore PDF name
       call SetPDFSet(pdfsetbkp)
 *

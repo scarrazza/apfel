@@ -32,6 +32,14 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      function fxpdfxq(i,x,Q)
+      integer i
+      double precision x, Q, fxpdfxq
+      fxpdfxq = xPDFxQ(i,x,Q)
+      return
+      end
+
+ccccccccccccc      
       function fxpdfj(i,x)
       integer i
       double precision x, fxpdfj

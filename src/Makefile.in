@@ -215,7 +215,7 @@ am__objects_8 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
 	Evolution/dxgamma.lo Evolution/DeriveQCD.lo \
 	Evolution/DeriveQED.lo Evolution/DerivePDFs.lo \
 	Evolution/xGrid.lo Evolution/nIntervals.lo \
-	Evolution/xLepton.lo
+	Evolution/xLepton.lo Evolution/xPDFxQ.lo
 am__objects_9 = core/dgauss.lo core/wgplg.lo core/ddilog.lo \
 	core/gamma.lo core/beta.lo core/hplog.lo
 am__objects_10 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
@@ -551,7 +551,7 @@ PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQE
 	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f Evolution/JoinGrids.f \
 	Evolution/PDFevUni2evQCD.f Evolution/PDFevQCD2evUni.f Evolution/PDFevUni2phys.f Evolution/PDFphys2evUni.f \
 	Evolution/dxPDF.f Evolution/dxgamma.f Evolution/DeriveQCD.f Evolution/DeriveQED.f Evolution/DerivePDFs.f \
-	Evolution/xGrid.f Evolution/nIntervals.f Evolution/xLepton.f
+	Evolution/xGrid.f Evolution/nIntervals.f Evolution/xLepton.f Evolution/xPDFxQ.f
 
 UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f core/gamma.f core/beta.f core/hplog.f
 DIS = DIS/InitializeAPFEL_DIS.f DIS/initParametersDIS.f DIS/SetMassScheme.f DIS/initIntegralsDIS.f \
@@ -938,6 +938,8 @@ Evolution/xGrid.lo: Evolution/$(am__dirstamp) \
 Evolution/nIntervals.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/xLepton.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/xPDFxQ.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 core/$(am__dirstamp):
 	@$(MKDIR_P) core

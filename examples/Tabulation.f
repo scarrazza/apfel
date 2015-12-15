@@ -13,7 +13,7 @@
       double precision Q0,Q
       double precision Q02,Q2
       double precision AlphaQCD,AlphaQED
-      double precision xPDFj,xgamma,xLepton,xf(-6:6)
+      double precision xPDFj,xgamma,xLepton,xf(-6:6),xPDFxQ
       double precision eps
       double precision xlha(11)
 
@@ -62,10 +62,6 @@ c      call SetMaxFlavourAlpha(5)
 *
       Q0 = dsqrt(Q02) - eps
       Q  = dsqrt(Q2)
-*
-*     Cache PDFs
-*
-      call CachePDFsAPFEL(Q0)
       call EvolveAPFEL(Q0,Q)
 *
 *     Tabulate PDFs for the LHA x values
@@ -90,6 +86,29 @@ c      call SetMaxFlavourAlpha(5)
      8         xLepton(1,xlha(ilha))+xLepton(-1,xlha(ilha)),
      9         xLepton(2,xlha(ilha))+xLepton(-2,xlha(ilha)),
      1         xLepton(3,xlha(ilha))+xLepton(-3,xlha(ilha))
+      enddo
+      write(*,*) "  "
+*
+*     Cache PDFs
+*
+      call CachePDFsAPFEL(Q0)
+*
+      write(6,*) "Cached evolution:"
+      write(6,'(a5,2a12,a14,a10,3a12,a13,a14)') "x",
+     1         "u-ubar","d-dbar","2(ubr+dbr)","c+cbar","gluon","photon",
+     2         "e^-+e^+","mu^-+mu^+","tau^-+tau^+"
+      do ilha=3,11
+         write(6,'(es7.1,9es12.4)') 
+     1         xlha(ilha),
+     2         xPDFxQ(2,xlha(ilha),Q) - xPDFxQ(-2,xlha(ilha),Q),
+     3         xPDFxQ(1,xlha(ilha),Q) - xPDFxQ(-1,xlha(ilha),Q),
+     4         2d0*(xPDFxQ(-1,xlha(ilha),Q) + xPDFxQ(-2,xlha(ilha),Q)),
+     5         xPDFxQ(4,xlha(ilha),Q) + xPDFxQ(-4,xlha(ilha),Q),
+     6         xPDFxQ(0,xlha(ilha),Q),
+     7         xPDFxQ(22,xlha(ilha),Q),
+     8         xPDFxQ(11,xlha(ilha),Q)+xPDFxQ(-11,xlha(ilha),Q),
+     9         xPDFxQ(13,xlha(ilha),Q)+xPDFxQ(-13,xlha(ilha),Q),
+     1         xPDFxQ(15,xlha(ilha),Q)+xPDFxQ(-15,xlha(ilha),Q)
       enddo
       write(*,*) "  "
 c$$$*

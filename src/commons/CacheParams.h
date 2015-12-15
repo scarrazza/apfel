@@ -10,9 +10,13 @@
       double precision Lam2
       parameter(Lam2 = 0.0625d0)
 
+*     Interpolation degree
+      integer inter_degreeQ
+      parameter(inter_degreeQ = 3)
+
       integer nfin,nffi
       integer nQ(3:7)
-      double precision Q2g(0:nQ2g)
+      double precision Q2g(-1:nQ2g)
 *
       double precision fphxQ(-6:6,0:nint_max,nQ2g)
       double precision fgammaxQ(0:nint_max,nQ2g)

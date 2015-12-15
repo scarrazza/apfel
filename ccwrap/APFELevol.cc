@@ -41,6 +41,11 @@ namespace APFEL {
     return fxpdf(&i, &x);
   }
 
+  double xPDFxQ(int i, double x, double Q)
+  {
+    return fxpdfxq(&i, &x, &Q);
+  }
+
   double dxPDF(int i, double x)
   {
     return fdxpdf(&i, &x);

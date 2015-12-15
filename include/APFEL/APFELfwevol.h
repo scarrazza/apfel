@@ -22,6 +22,9 @@ extern "C" {
 #define fxpdf FC_FUNC(xpdf,XPDF)
   double fxpdf(int*, double*);
 
+#define fxpdfxq FC_FUNC(xpdfxq,XPDFXQ)
+  double fxpdfxq(int*, double*, double *);
+
 #define fxpdfj FC_FUNC(xpdfj,XPDFJ)
   double fxpdfj(int*, double*);
 

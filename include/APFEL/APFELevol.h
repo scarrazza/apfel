@@ -35,6 +35,9 @@ namespace APFEL {
   /// Returns x*PDF
   double xPDF(int i, double x);
 
+  /// Returns x*PDF has functions of x and Q using the cached evolution
+  double xPDFxQ(int i, double x, double Q);
+
   /// Returns the derivative of x*PDF
   double dxPDF(int i, double x);
 
