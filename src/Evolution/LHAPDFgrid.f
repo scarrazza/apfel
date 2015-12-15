@@ -43,7 +43,6 @@
       integer isg,nQ(3:7)
       integer nfmax
       integer alpha
-      double precision qref,mth(4:6)
       double precision lambda3,lambda4,lambda5,lambdaNF
       double precision xbLHA(nxmax),q2LHA(nq2max)
       double precision lnQmin,lnQmax
@@ -260,9 +259,9 @@
       write(13,*) "MUp: 0"
       write(13,*) "MDown: 0"
       write(13,*) "MStrange: 0"
-      write(13,*) "MCharm:",dsqrt(m2th(4))
-      write(13,*) "MBottom:",dsqrt(m2th(5))
-      write(13,*) "MTop:",dsqrt(m2th(6))
+      write(13,*) "MCharm:",dsqrt(m2ph(4))
+      write(13,*) "MBottom:",dsqrt(m2ph(5))
+      write(13,*) "MTop:",dsqrt(m2ph(6))
       write(13,*) "AlphaS_MZ:",alpha_ref_qcd
       write(13,*) "AlphaS_OrderQCD:",ipt
       write(13,*) "AlphaS_Type: ipol"

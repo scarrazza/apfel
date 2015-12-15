@@ -86,34 +86,6 @@ c         mur2th(i) = m2th(i)
          if(nfi.gt.nfMaxAlpha) nfi = nfMaxAlpha
       endif
 *
-*     c1 and c2 are the same coefficients used in eq. (2.42) of hep-ph/0408244 and 
-*     obtained in eq. (10) of hep-ph/9706430. In the following they are divided by 
-*     (4*pi) and (4*pi)^2 respectively to match the notations. Note that in terms 
-*     of the MSbar mass this coefficients change.
-*
-      kappa = kren         ! mu_R / mu_F
-c      kappa = 1d0          ! mu_R / mu_F
-      ln = dlog(kappa)
-*     Pole Mass
-      if(mass_scheme.eq."Pole")then
-         if(nff.gt.nfi)then
-            c1 = 2d0 / 3d0 * ln
-            c2 = 4d0 / 9d0 * ln**2d0 + 38d0 / 3d0 * ln + 14d0 / 3d0
-         elseif(nff.lt.nfi)then
-            c1 = - 2d0 / 3d0 * ln
-            c2 = 4d0 / 9d0 * ln**2d0 - 38d0 / 3d0 * ln - 14d0 / 3d0
-         endif
-*     MSbar mass
-      elseif(mass_scheme.eq."MSbar")then
-         if(nff.gt.nfi)then
-            c1 = 2d0 / 3d0 * ln
-            c2 = 4d0 / 9d0 * ln**2d0 + 22d0 / 3d0 * ln - 22d0 / 9d0
-         elseif(nff.lt.nfi)then
-            c1 = - 2d0 / 3d0 * ln
-            c2 = 4d0 / 9d0 * ln**2d0 - 22d0 / 3d0 * ln + 22d0 / 9d0
-         endif
-      endif
-*
  10   if(nff.eq.nfi) then
          if(AlphaEvol(1:5).eq."exact")
      1        a_QCD = as_exact(nfi,mur20,asr0,mur2,ipt)
@@ -137,6 +109,35 @@ c      kappa = 1d0          ! mu_R / mu_F
      1        asi = as_expanded(nfi,mur20,asr0,mur2th(nfi+snf),ipt)
          if(AlphaEvol(1:6).eq."lambda")
      1        asi = as_lambda(nfi,lambda2(nfi),mur2th(nfi+snf),ipt)
+*
+*     c1 and c2 are the same coefficients used in eq. (2.42) of hep-ph/0408244 and 
+*     obtained in eq. (10) of hep-ph/9706430. In the following they are divided by 
+*     (4*pi) and (4*pi)^2 respectively to match the notations. Note that in terms 
+*     of the MSbar mass this coefficients change.
+*
+         kappa = kren * k2th(nfi+snf)          ! mu_R / mu_F
+c         kappa = kren                         ! mu_R / mu_F
+c         kappa = 1d0                          ! mu_R / mu_F
+         ln = dlog(kappa)
+*     Pole Mass
+         if(mass_scheme.eq."Pole")then
+            if(nff.gt.nfi)then
+               c1 = 2d0 / 3d0 * ln
+               c2 = 4d0 / 9d0 * ln**2d0 + 38d0 / 3d0 * ln + 14d0 / 3d0
+            elseif(nff.lt.nfi)then
+               c1 = - 2d0 / 3d0 * ln
+               c2 = 4d0 / 9d0 * ln**2d0 - 38d0 / 3d0 * ln - 14d0 / 3d0
+            endif
+*     MSbar mass
+         elseif(mass_scheme.eq."MSbar")then
+            if(nff.gt.nfi)then
+               c1 = 2d0 / 3d0 * ln
+               c2 = 4d0 / 9d0 * ln**2d0 + 22d0 / 3d0 * ln - 22d0 / 9d0
+            elseif(nff.lt.nfi)then
+               c1 = - 2d0 / 3d0 * ln
+               c2 = 4d0 / 9d0 * ln**2d0 - 22d0 / 3d0 * ln + 22d0 / 9d0
+            endif
+         endif
 *
 *     NLO and NNLO threshold matchings
 *
@@ -507,7 +508,7 @@ c      kappa = 1d0          ! mu_R / mu_F
 *
 *     Matching condition
 *
-      ln = dlog(kren)
+      ln = dlog( kren * k2th(i) )
 *     Pole Mass
       if(mass_scheme.eq."Pole")then
          c1 = 2d0 / 3d0 * ln
@@ -561,7 +562,7 @@ c      kappa = 1d0          ! mu_R / mu_F
 *
       double precision LambdaMatchDown
 *
-      ln = dlog(kren)
+      ln = dlog( kren * k2th(i) )
 *     Pole Mass
       if(mass_scheme.eq."Pole")then
          c1 = - 2d0 / 3d0 * ln
@@ -670,8 +671,8 @@ c      kappa = 1d0          ! mu_R / mu_F
       parameter(eps=1d-10)
 *
       do inf=4,6
-         asthUp(inf)   = a_QCD(kren * m2th(inf) * ( 1d0 + eps ) )
-         asthDown(inf) = a_QCD(kren * m2th(inf) * ( 1d0 - eps ) )
+         asthUp(inf)   = a_QCD( kren * m2th(inf) * ( 1d0 + eps ) )
+         asthDown(inf) = a_QCD( kren * m2th(inf) * ( 1d0 - eps ) )
       enddo
 *
       return
@@ -685,7 +686,6 @@ c      kappa = 1d0          ! mu_R / mu_F
       include "../commons/consts.h"
       include "../commons/alpha_ref_QCD.h"
       include "../commons/AlphaEvolution.h"
-      include "../commons/kren.h"
       include "../commons/m2th.h"
       include "../commons/ThresholdAlphaQCD.h"
       include "../commons/Nf_FF.h"
