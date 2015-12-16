@@ -110,15 +110,15 @@
 *
 *     Integrals
 *
-         if(k2th(nf).ne.1d0.and.k.eq.3)then
+         if(k2th(nf).ne.1d0.and.(k.eq.3.or.k.eq.5))then
             wipt = 1
-            SM(igrid,nf,k,1,beta,alpha)= 
+            SM(igrid,nf,k,1,beta,alpha) =
      1           dgauss(integrandsMatching,a,b,eps) 
      2           + ML(1) * fL
          endif
 *
          wipt = 2
-         SM(igrid,nf,k,2,beta,alpha)= 
+         SM(igrid,nf,k,2,beta,alpha) =
      1        dgauss(integrandsMatching,a,b,eps) 
      2        + ML(2) * fL
       enddo

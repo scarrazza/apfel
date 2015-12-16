@@ -1447,7 +1447,6 @@ c     6                             2,pt,alpha,beta) )
                            endif
                         enddo
                      endif
-
 *
 *     If needed, compute the IC contributions.
 *     (Warning: such contributions are placed in the pure-singlet slot

@@ -231,6 +231,22 @@
       write(6,*) "    return the N-th moment of the i-th and the"
       write(6,*) "    photon PDF the final scale 'Q' [GeV] defined in"
       write(6,*) "    'EvolveAPFEL'."
+      write(6,*) achar(27)//"[34m- xLepton(int i, double x):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return 'x' times the i-th lepton PDF in 'x'"
+      write(6,*) "    at the final scale 'Q' [GeV] defined in"
+      write(6,*) "    'EvolveAPFEL'."
+      write(6,*) achar(27)//"[34m- xLeptonj(int i, double x):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return 'x' times the i-th lepton PDF in 'x'"
+      write(6,*) "    at the final scale 'Q' [GeV] defined in"
+      write(6,*) "    'EvolveAPFEL' interpolated on the joint grid."
+      write(6,*) achar(27)//"[34m- xPDFxQ(int i, double x, double Q):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return 'x' times the i-th PDF (inclunding quarks,"
+      write(6,*) "    gluon, photon and leptons) in 'x' at the final"
+      write(6,*) "    scale 'Q' [GeV]. This function requires that"
+      write(6,*) "    'CachePDFsAPFEL' to be called in advance."
       write(6,*) achar(27)//"[34m- LUMI(int i, int j, double S):"//
      1           achar(27)//"[0m"
       write(6,*) "    returns the partonic luminosity of the i-th and"

@@ -44,7 +44,7 @@
       integer nfmax
       integer alpha
       double precision lambda3,lambda4,lambda5,lambdaNF
-      double precision xbLHA(nxmax),q2LHA(nq2max)
+      double precision xbLHA(nxmax),q2LHA(nq2max),as(nxmax)
       double precision lnQmin,lnQmax
       double precision eps,eps2,offset
       double precision xpdfLHA(-6:6,nxmax,nq2max)
@@ -161,6 +161,15 @@
             endif
          enddo
 *
+*     Make sure that all subgrids have at least two points.
+*
+         do isg=nfin,nffi-1
+            if(nQ(isg).lt.2)then
+               nQ(isg) = nQ(isg) + 1
+               nQ(isg+1) = nQ(isg+1) - 1
+            endif
+         enddo
+*
 *     Redefine the grid with the subgrids
 *
          lnQmin = dlog( ( q2minLHA ) / Lambda2 )
@@ -195,6 +204,24 @@
             call exit(-10)
          endif
       endif
+*
+*     Compute alphas on the grid being careful with the grids
+*
+      iq2in = 1
+      iq2fi = nQ(nfin)
+      do isg=nfin,nffi
+         do iq2=iq2in,iq2fi
+            if(iq2.eq.iq2in.and.isg.ne.nfin)then
+               as(iq2) = AlphaQCD(dsqrt(q2LHA(iq2)+eps2))
+            elseif(iq2.eq.iq2fi.and.isg.ne.nffi)then
+               as(iq2) = AlphaQCD(dsqrt(q2LHA(iq2)-eps2))
+            else
+               as(iq2) = AlphaQCD(dsqrt(q2LHA(iq2)))
+            endif
+         enddo
+         iq2in = iq2in + nQ(isg)
+         iq2fi = iq2fi + nQ(isg+1)
+      enddo
 *
 *     Define quark IDs
 *
@@ -265,9 +292,9 @@
       write(13,*) "AlphaS_MZ:",alpha_ref_qcd
       write(13,*) "AlphaS_OrderQCD:",ipt
       write(13,*) "AlphaS_Type: ipol"
-      write(13,*)"AlphaS_Qs: [",(dsqrt(q2LHA(iq2)),",",iq2=1,nq2LHA),"]"
-      write(13,*) "AlphaS_Vals: [",(AlphaQCD(dsqrt(q2LHA(iq2))),",",
-     1     iq2=1,nq2LHA), "]"
+      write(13,*) "AlphaS_Qs: [",(dsqrt(q2LHA(iq2)),",",
+     1     iq2=1,nq2LHA),"]"
+      write(13,*) "AlphaS_Vals: [",(as(iq2),",",iq2=1,nq2LHA),"]"
       write(13,*) "AlphaS_Lambda4:", lambda4
       write(13,*) "AlphaS_Lambda5:", lambda5
       close(13)
@@ -411,8 +438,9 @@
          call SetPDFSet(pdfsetbkp)
       enddo
 *
-      write(6,*) "File ",fname(1:ln)," grid produced!"
-      write(6,*) "  "
+      write(6,*) achar(27)//"[1;32m"
+      write(6,*) "File ",fname(1:ln)," grid produced"
+      write(6,*) achar(27)//"[0m"
 *
  40   format(13(es14.7,1x))
  50   format(14(es14.7,1x))

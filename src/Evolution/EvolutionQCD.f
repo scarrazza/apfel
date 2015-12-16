@@ -68,7 +68,8 @@
 *
       if(Evs.eq."FF")then
          wnf = Nf_FF
-*     If initial and final energies are equal, return immediately the intial conditions
+*     If initial and final energies are equal,
+*     return immediately the intial conditions
          if(muF2.eq.muF20)then
             do alpha=0,nin(igrid)
                do i=0,13
