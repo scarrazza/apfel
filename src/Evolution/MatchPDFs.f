@@ -7,7 +7,7 @@
 *     the output one.
 *
 ************************************************************************
-      subroutine MatchPDFs(nf,fevQCD)
+      subroutine MatchPDFs(nf,sgn,fevQCD)
 *
       implicit none
 *
@@ -16,7 +16,7 @@
 **
 *     Input Variables
 *
-      integer nf
+      integer nf,sgn
 **
 *     Internal Variables
 *
@@ -53,7 +53,7 @@ c      coup = asthUp(nf)
             do beta=alpha,nin(igrid)
                do i=1,5
                   integ2(i,alpha,beta) =
-     1                 integralsMatching(nf,alpha,beta,coup,i)
+     1                 integralsMatching(nf,alpha,beta,coup,i,sgn)
                enddo
             enddo
          enddo
@@ -144,7 +144,8 @@ c      coup = asthUp(nf)
 *
          do alpha=0,nin(igrid)
             do i=1,5
-               integ1(i,alpha) = integralsMatching(nf,0,alpha,coup,i)
+               integ1(i,alpha) = 
+     1              integralsMatching(nf,0,alpha,coup,i,sgn)
             enddo
          enddo
 *

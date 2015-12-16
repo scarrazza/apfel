@@ -37,7 +37,7 @@
 *     Apply matching conditions for the backward evolution
 *
       if(sgn.eq.-1.and.nf.lt.nfi.and.nf.lt.nfMaxPDFs)then
-         call MatchPDFs(nf+1,fevQCD)
+         call MatchPDFs(nf+1,sgn,fevQCD)
       endif
 *
       do alpha=0,nin(igrid)
@@ -128,7 +128,7 @@
 *     Apply matching conditions for the forward evolution
 *
       if(sgn.eq.1.and.nf.lt.nff.and.nf.lt.nfMaxPDFs)then
-         call MatchPDFs(nf+1,fevQCDb)
+         call MatchPDFs(nf+1,sgn,fevQCDb)
       endif
 *
 *     Copy backup PDFs into main PDFs

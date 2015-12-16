@@ -10,7 +10,7 @@
 *            V   qq  qg  gq  gg
 * 
 ************************************************************************
-      function integralsMatching(nf,alpha,beta,coup,kk)
+      function integralsMatching(nf,alpha,beta,coup,kk,sgn)
 *
       implicit none
 *
@@ -22,7 +22,7 @@
 **
 *     Input Variables
 *
-      integer nf,alpha,beta,kk
+      integer nf,alpha,beta,kk,sgn
       double precision coup
 **
 *     Internal Variables
@@ -49,8 +49,19 @@
       if(TimeLike.or.k2th(nf).ne.1d0) ptstep = 1
       do pt=0,ipt,ptstep
          integralsMatching = integralsMatching 
-     1                     + coup**pt * SM(igrid,nf,kk,pt,alpha,beta)
+     1                     + sgn * coup**pt
+     2                     * SM(igrid,nf,kk,pt,alpha,beta)
       enddo
+*
+*     In case of backwards evolution, a part from changing the sign of corrections,
+*     an additional term to the NNLO should be added, because:
+*
+*     ( 1 + a A1 + a^2 A2 )^{-1} = 1 - a A1 + a^2 ( 2 A1 - A2 ) + O(a^3)
+*
+      if(sgn.eq.-1.and.ipt.ge.2.and.k2th(nf).ne.1d0)then
+         integralsMatching = integralsMatching
+     1        + 2d0 * coup**2 * SM(igrid,nf,kk,1,alpha,beta)
+      endif
 *
       return
       end

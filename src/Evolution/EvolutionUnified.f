@@ -256,7 +256,7 @@
 *     Rotate to the QCD evolution basis
                   call PDFevUni2evQCD(f0ev,fevQCD)
 *     Apply matching conditions
-                  call MatchPDFs(inf+1,fevQCD)
+                  call MatchPDFs(inf+1,sgn,fevQCD)
 *     Rotate back to the unified evolution basis
                   call PDFevQCD2evUni(fevQCD,f0ev)
                endif
@@ -378,7 +378,7 @@
 *     Rotate to the QCD evolution basis
                   call PDFevUni2evQCD(f0ev,fevQCD)
 *     Apply matching conditions
-                  call MatchPDFs(inf+1,fevQCD)
+                  call MatchPDFs(inf+1,sgn,fevQCD)
 *     Rotate back to the unified evolution basis
                   call PDFevQCD2evUni(fevQCD,f0ev)
                endif
