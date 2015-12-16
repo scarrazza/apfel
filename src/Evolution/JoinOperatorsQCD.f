@@ -15,7 +15,7 @@
       implicit none
 *
       include "../commons/grid.h"
-      include "../commons/m2th.h"
+      include "../commons/ThresholdAlphaQCD.h"
       include "../commons/EvolutionMatrices.h"
       include "../commons/transQCD.h"
       include "../commons/EvolutionOperator.h"
@@ -147,7 +147,8 @@
 *     
             nfm = nf + 1
 *     Get alphas value at the heavy quark threshold (with nfm active flavours)
-            coup = a_QCD(m2th(nfm))
+c            coup = asthUp(nfm)
+            coup = asthDown(nfm)
 *     Contruct matching conditions at this threshod
             if(IsExt(igrid))then
                do alpha=0,nin(igrid)

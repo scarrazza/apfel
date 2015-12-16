@@ -12,7 +12,7 @@
       implicit none
 *
       include "../commons/grid.h"
-      include "../commons/m2th.h"
+      include "../commons/ThresholdAlphaQCD.h"
 **
 *     Input Variables
 *
@@ -35,7 +35,8 @@
 *
 *     Get alphas value at the heavy quark threshold (with nf active flavours)
 *
-      coup = a_QCD(m2th(nf))
+c      coup = asthUp(nf)
+      coup = asthDown(nf)
 *
 *     Singlet map
 *
