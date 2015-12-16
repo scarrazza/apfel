@@ -168,8 +168,9 @@ c         write(6,*) iq2,Q2g(iq2)
 c      do isg=nfin,nffi
 c         write(6,*) isg,nQ(isg)
 c      enddo
-*     Restore PDF name
+*     Restore PDF name and reset PDFs at the initial scale
       call SetPDFSet(pdfsetbkp)
+      call EvolveAPFEL(Q0,Q0)
 *
 *     Caching complete
 *

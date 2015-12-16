@@ -111,7 +111,8 @@ c      call SetMaxFlavourAlpha(5)
      1         xPDFxQ(15,xlha(ilha),Q)+xPDFxQ(-15,xlha(ilha),Q)
       enddo
       write(*,*) "  "
-c$$$*
+*
+c$$$      call EvolveAPFEL(Q0,Q)
 c$$$      write(6,*) "Standard evolution using the xPDFall function:"
 c$$$      write(6,'(a5,2a12,a14,a10,2a12)') "x",
 c$$$     1         "u-ubar","d-dbar","2(ubr+dbr)","c+cbar","gluon","photon"
