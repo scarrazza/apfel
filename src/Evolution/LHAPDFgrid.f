@@ -354,13 +354,16 @@
             write(13,*) (dsqrt(q2LHA(iq2)),iq2=iq2in,iq2fi)
 *
             if(Th.eq."QCD") then
-               write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs)
+c               write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs)
+               write(13,*) (ids(ipdf),ipdf=-isg,isg)
             else
                if(LeptEvol)then
-                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
+c                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
+                  write(13,*) (ids(ipdf),ipdf=-isg,isg),
      2                 " 22 11 -11 13 -13 15 -15"
                else
-                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
+c                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
+                  write(13,*) (ids(ipdf),ipdf=-isg,isg),
      1                 " 22"
                endif
             endif
@@ -401,7 +404,7 @@
                do ix=1,nxLHA
                   do iq2=iq2in,iq2fi
                      write(13,40) (xpdfLHA(ipdf,ix,iq2),
-     1                    ipdf=-nfMaxPDFs,nfMaxPDFs)
+     1                    ipdf=-isg,isg)
                   enddo
                enddo
             else
@@ -409,7 +412,7 @@
                   do ix=1,nxLHA
                      do iq2=iq2in,iq2fi
                         write(13,60)(xpdfLHA(ipdf,ix,iq2),
-     1                       ipdf=-nfMaxPDFs,nfMaxPDFs),
+     1                       ipdf=-isg,isg),
      2                       xgammaLHA(ix,iq2),
      3                       xlepLHA(1,ix,iq2),
      4                       xlepLHA(-1,ix,iq2),
@@ -423,7 +426,7 @@
                   do ix=1,nxLHA
                      do iq2=iq2in,iq2fi
                         write(13,50)(xpdfLHA(ipdf,ix,iq2),
-     1                       ipdf=-nfMaxPDFs,nfMaxPDFs),
+     1                       ipdf=-isg,isg),
      2                       xgammaLHA(ix,iq2)
                      enddo
                   enddo
