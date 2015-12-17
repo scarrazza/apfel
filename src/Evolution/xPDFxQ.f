@@ -142,6 +142,7 @@
 **
 *     Input Variables
 *
+      integer t
       integer kx,kQ,beta,tau
       double precision x,Q2
 **
@@ -154,15 +155,17 @@
 *
       double precision w_int_xQ
 *
+      t = 0
+*
       w_int_xQ = 0d0
       xbound = beta - kx
-      Qbound = tau  - kQ
+      Qbound = tau  - kQ + t
 *
       if(kx.gt.beta) xbound = 0
       if(kQ.gt.tau)  Qbound = 0
 *
       if(x.lt.xg(0,xbound).or.x.ge.xg(0,beta+1)) return
-      if(Q2.lt.Q2g(Qbound).or.Q2.ge.Q2g(tau+1)) return
+      if(Q2.lt.Q2g(Qbound).or.Q2.ge.Q2g(tau+1+t)) return
 *
 *     x-grid
 *
@@ -179,8 +182,8 @@
 *
 *     Q2 grid
 *
-      do j=0,tau-Qbound
-         if(Q2.ge.Q2g(tau-j).and.Q2.lt.Q2g(tau-j+1))then
+      do j=0,tau+t-Qbound
+         if(Q2.ge.Q2g(tau-j+t).and.Q2.lt.Q2g(tau-j+t+1))then
             do delta=0,kQ
                if(delta.ne.j) w_int_xQ = w_int_xQ
      1              * dlog(Q2/Q2g(tau-j+delta)) 
