@@ -354,16 +354,13 @@
             write(13,*) (dsqrt(q2LHA(iq2)),iq2=iq2in,iq2fi)
 *
             if(Th.eq."QCD") then
-c               write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs)
-               write(13,*) (ids(ipdf),ipdf=-isg,isg)
+               write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs)
             else
                if(LeptEvol)then
-c                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
-                  write(13,*) (ids(ipdf),ipdf=-isg,isg),
+                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
      2                 " 22 11 -11 13 -13 15 -15"
                else
-c                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
-                  write(13,*) (ids(ipdf),ipdf=-isg,isg),
+                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
      1                 " 22"
                endif
             endif
@@ -404,7 +401,7 @@ c                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
                do ix=1,nxLHA
                   do iq2=iq2in,iq2fi
                      write(13,40) (xpdfLHA(ipdf,ix,iq2),
-     1                    ipdf=-isg,isg)
+     1                    ipdf=-nfMaxPDFs,nfMaxPDFs)
                   enddo
                enddo
             else
@@ -412,7 +409,7 @@ c                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
                   do ix=1,nxLHA
                      do iq2=iq2in,iq2fi
                         write(13,60)(xpdfLHA(ipdf,ix,iq2),
-     1                       ipdf=-isg,isg),
+     1                       ipdf=-nfMaxPDFs,nfMaxPDFs),
      2                       xgammaLHA(ix,iq2),
      3                       xlepLHA(1,ix,iq2),
      4                       xlepLHA(-1,ix,iq2),
@@ -426,7 +423,7 @@ c                  write(13,*) (ids(ipdf),ipdf=-nfMaxPDFs,nfMaxPDFs),
                   do ix=1,nxLHA
                      do iq2=iq2in,iq2fi
                         write(13,50)(xpdfLHA(ipdf,ix,iq2),
-     1                       ipdf=-isg,isg),
+     1                       ipdf=-nfMaxPDFs,nfMaxPDFs),
      2                       xgammaLHA(ix,iq2)
                      enddo
                   enddo
