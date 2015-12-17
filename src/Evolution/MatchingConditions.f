@@ -143,7 +143,7 @@
      5    - ( 52d0 * z - 48d0 * z2 ) * ln1mz 
      6    - ( 16d0 + 18d0 * z + 48d0 * z2 ) * lnz 
      7    + 26d0 - 82d0 * z + 80d0 * z2 + z2 * ( - 16d0 * zeta2 * lnz 
-     8    + 4d0 * lnz3 / 3d0 +  16d0 * lnz * s111mz +  32d0 * s121mz )              
+     8    + 4d0 * lnz3 / 3d0 +  16d0 * lnz * s111mz +  32d0 * s121mz )
 *     CA * TR  part
       A02 = ( 1d0 - 2d0 * z + 2d0 * z2 ) * ( - 4d0 * ln1mz3 / 3d0 
      1    + 8d0 * ln1mz * s111mz - 8d0 * s211mz ) 
@@ -272,7 +272,7 @@
 *
       ln1mz = dlog(1d0 - z)
 *
-      A0 = - 8d0 * zeta3 /3d0 + 40d0 * zeta2 / 9d0 + 73d0 / 18d0
+      A0 = - 8d0 * zeta3 / 3d0 + 40d0 * zeta2 / 9d0 + 73d0 / 18d0
      1   + 224d0 * ln1mz / 27d0
 *
       ANS2qqH_L = CF * TR * A0
@@ -308,7 +308,7 @@
 *
       A0 = 4d0 * ( 2d0 / z - 2d0 + z ) * ln1mz**2d0 / 3d0 
      1   + 8d0 * ( 10d0 / z - 10d0 + 8d0 * z ) * ln1mz / 9d0 
-     2   + ( 448d0 / z - 448d0 + 344d0 * z )/ 27d0
+     2   + ( 448d0 / z - 448d0 + 344d0 * z ) / 27d0
 *
       AS2gqH = CF * TR * A0
 *
@@ -945,7 +945,7 @@
       omeL1 = 80d0 / 9d0 / ( 1d0 - z )
       omeL1 = omeL1 * lnk 
 *
-      omeL2 = 8d0 / 3d0 / ( 1d0 -z )
+      omeL2 = 8d0 / 3d0 / ( 1d0 - z )
       omeL2 = omeL2 * lnk2
 *
       AS2ggH_mass_S = CA * TR * ( omeL2 + omeL1 )

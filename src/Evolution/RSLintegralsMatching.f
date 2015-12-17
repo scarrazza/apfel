@@ -80,6 +80,7 @@
 *
 *     NLO
 *
+         wipt = 1
 *     Gluon-Gluon
          if(k.eq.5.and.k2th(nf).ne.1d0)then
             ML(1) = AS1ggH_mass_L(wnf,a)
@@ -87,40 +88,41 @@
             ML(1) = 0d0
          endif
 *
-*     NNLO
-*
-*     Valence, Quark-Quark
-         if(k.eq.1.or.k.eq.2)then
-            ML(2) = ANS2qqH_L(a)
-*     Quark-Gluon, Gluon-Quark
-         elseif(k.eq.3.or.k.eq.4)then
-            ML(2) = 0d0
-*     Gluon-Gluon
-         elseif(k.eq.5)then
-            ML(2) = AS2ggH_L(a)
-         endif
-         if(k2th(nf).ne.1d0)then
-            if(k.eq.1.or.k.eq.2)then
-               ML(2) = ML(2) + ANS2qqH_L(wnf,a)
-*     Gluon-Gluon
-            elseif(k.eq.5)then
-               ML(2) = ML(2) + AS2ggH_L(wnf,a)
-            endif
-         endif
-*
 *     Integrals
 *
          if(k2th(nf).ne.1d0.and.(k.eq.3.or.k.eq.5))then
-            wipt = 1
             SM(igrid,nf,k,1,beta,alpha) =
-     1           dgauss(integrandsMatching,a,b,eps) 
+     1           dgauss(integrandsMatching,a,b,eps)
      2           + ML(1) * fL
          endif
 *
-         wipt = 2
-         SM(igrid,nf,k,2,beta,alpha) =
-     1        dgauss(integrandsMatching,a,b,eps) 
-     2        + ML(2) * fL
+*     NNLO
+*
+         if(ipt.ge.2)then
+            wipt = 2
+*     Valence, Quark-Quark
+            if(k.eq.1.or.k.eq.2)then
+               ML(2) = ANS2qqH_L(a)
+*     Quark-Gluon, Gluon-Quark
+            elseif(k.eq.3.or.k.eq.4)then
+               ML(2) = 0d0
+*     Gluon-Gluon
+            elseif(k.eq.5)then
+               ML(2) = AS2ggH_L(a)
+            endif
+            if(k2th(nf).ne.1d0)then
+               if(k.eq.1.or.k.eq.2)then
+                  ML(2) = ML(2) + ANS2qqH_mass_L(wnf,a)
+*     Gluon-Gluon
+               elseif(k.eq.5)then
+                  ML(2) = ML(2) + AS2ggH_mass_L(wnf,a)
+               endif
+            endif
+*
+            SM(igrid,nf,k,2,beta,alpha) =
+     1           dgauss(integrandsMatching,a,b,eps)
+     2           + ML(2) * fL
+         endif
       enddo
 *
       return
