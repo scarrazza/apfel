@@ -329,16 +329,41 @@ m_i^{(N_f)}(\mu) = m_i(m_i)E_m^{(N_f)}(m_i,\mu)\,.
 
 \subsection{PDFs}
 
-Now we see how to replace the pole mass with the $\overline{\mbox{MS}}$ mass in the matching conditions for the PDFs. One can write the singlet and the gluon in the $N_f+1$ scheme in terms of singlet and gluon in $N_f$ scheme at any scale $\mu$ as follows:
+Now we see how to replace the pole mass with the
+$\overline{\mbox{MS}}$ mass in the matching conditions for the
+PDFs. One can write the singlet and the gluon in the $N_f+1$ scheme in
+terms of singlet and gluon in $N_f$ scheme at any scale $\mu$ as
+follows(\footnote{It should be noticed that $a_s$ enetring
+  eq.~(\ref{couple1})} is undersato to be in the $N_f$ scheme.):
 \begin{equation}\label{couple1}
 \begin{array}{c}
 \displaystyle {\Sigma^{(N_f+1)}(\mu) \choose g^{(N_f+1)}(\mu)}=\begin{pmatrix}1+a_s^2[A_{qq,h}^{N\!S,(2)}+\tilde{A}^{S,(2)}_{hq}] & a_s\tilde{A}^{S,(1)}_{hg}+a_s^2\tilde{A}^{S,(2)}_{hg}\\
 a_s^2A^{S,(2)}_{gq,h} & 1+a_sA_{gg,h}^{S,(1)}+a_s^2A_{gg,h}^{S,(2)}\end{pmatrix}\left(x,\frac{\mu^2}{M^2}\right){\Sigma^{(N_f)}(\mu) \choose g^{(N_f)}(\mu)}\,,
 \end{array}
 \end{equation}
-where the form of the ($x$-space) functions entering the transformation matrix above are given in Appendix B of \cite{Buza:1996wv}. We notice here that, at the generic scale $\mu$, also the $\mathcal{O}(a_s)$ functions $\tilde{A}^{S,(1)}_{hg}$ and $A_{gg,h}^{S,(1)}$ are there. But given that they are both proportional to $\ln(\mu^2/M^2)$, they disappear if one chooses to perform the matching at the threshold $\mu=M$. We omit the matching conditions for the non-singlet PDFs because such $\mathcal{O}(a_s)$ functions are not present there and they are the point of the discussion.
+where the form of the ($x$-space) functions entering the
+transformation matrix above are given in Appendix B of
+\cite{Buza:1996wv} and where the "1"s are indeed delta functions. We
+notice here that, at the generic scale $\mu$, also the
+$\mathcal{O}(a_s)$ functions $\tilde{A}^{S,(1)}_{hg}$ and
+$A_{gg,h}^{S,(1)}$ are there. But given that they are both
+proportional to $\ln(\mu^2/M^2)$, they disappear if one chooses to
+perform the matching at the threshold $\mu=M$. We omit the matching
+conditions for the non-singlet PDFs because such $\mathcal{O}(a_s)$
+functions are not present there and they are the point of the
+discussion.
 
-Now, if we want to replace the pole mass $M$ with the $\overline{\mbox{MS}}$ mass $m(\mu)$, we just have to plug eq. (\ref{cacchiocacchio}) into eq. (\ref{couple1}). In the $\mathcal{O}(a_s^2)$ functions the second term in the l.h.s. of eq. (\ref{cacchiocacchio}) would give rise to subleading terms. Therefore in those functions it is enough to replace $M$ with $m(\mu)$. On the other hand, the second term in the l.h.s. of eq. (\ref{cacchiocacchio}) is important in the $\mathcal{O}(a_s)$ functions. Since both the functions $\tilde{A}^{S,(1)}_{hg}$ and $A_{gg,h}^{S,(1)}$ are proportional to $\ln(\mu^2/M^2)$, they can be written as:
+Now, if we want to replace the pole mass $M$ with the
+$\overline{\mbox{MS}}$ mass $m(\mu)$, we just have to plug
+eq. (\ref{cacchiocacchio}) into eq. (\ref{couple1}). In the
+$\mathcal{O}(a_s^2)$ functions the second term in the l.h.s. of
+eq. (\ref{cacchiocacchio}) would give rise to subleading
+terms. Therefore in those functions it is enough to replace $M$ with
+$m(\mu)$. On the other hand, the second term in the l.h.s. of
+eq. (\ref{cacchiocacchio}) is important in the $\mathcal{O}(a_s)$
+functions. Since both the functions $\tilde{A}^{S,(1)}_{hg}$ and
+$A_{gg,h}^{S,(1)}$ are proportional to $\ln(\mu^2/M^2)$, they can be
+written as:
 \begin{equation}\label{ahciccio!}
 \begin{array}{l}
 \displaystyle \tilde{A}^{S,(1)}_{hg}\left(x,\frac{\mu^2}{M^2}\right) = f_1(x)\ln\frac{\mu^2}{M^2}\\
@@ -387,7 +412,72 @@ a_s^2A^{S,(2)}_{gq,h} & 1+a_s^2[A_{gg,h}^{S,(2)}-2h^{(1)}f_2]\end{pmatrix}(x){\S
 \end{array}
 \end{equation}
 
-Again, as it happened in the the pole mass case, if one chooses cleverly the matching point also in the $\overline{\mbox{MS}}$ mass case the matching conditions for PDFs start to play a role only at NNLO, but the difference now is that some coefficients of the matching matrix for gluon and singlet result modified by some simple functions.
+Again, as it happened in the the pole mass case, if one chooses
+cleverly the matching point also in the $\overline{\mbox{MS}}$ mass
+case the matching conditions for PDFs start to play a role only at
+NNLO, but the difference now is that some coefficients of the matching
+matrix for gluon and singlet result modified by some simple functions.
+
+One might want to invert the matching conditions for PDFs and
+considerig that eq~(\ref{couple1}) can be written as:
+\begin{equation}\label{couple1exp}
+\begin{array}{c}
+\displaystyle {\Sigma^{(N_f+1)}(\mu) \choose g^{(N_f+1)}(\mu)}=\left[
+\begin{pmatrix}
+1 & 0 \\
+0 &1
+\end{pmatrix}
++a_s
+\begin{pmatrix}
+0 & \tilde{A}^{S,(1)}_{hg}\\
+0 & A_{gg,h}^{S,(1)}
+\end{pmatrix}
++a_s^2
+\begin{pmatrix}
+[A_{qq,h}^{N\!S,(2)}+\tilde{A}^{S,(2)}_{hq}] & \tilde{A}^{S,(2)}_{hg}\\
+A^{S,(2)}_{gq,h} & A_{gg,h}^{S,(2)}
+\end{pmatrix}
+\right]
+{\Sigma^{(N_f)}(\mu) \choose g^{(N_f)}(\mu)}\,,
+\end{array}
+\end{equation}
+and using the expansion:
+\begin{equation}
+\frac{1}{1+b_1x+b_2x^2} =  1-b_1x-(b_2-b_1^2)x^2 + \mathcal{O}(x^3)\,,
+\end{equation}
+we can immediately write:
+\begin{equation}\label{couple1expInv}
+\begin{array}{c}
+\displaystyle {\Sigma^{(N_f)}(\mu) \choose g^{(N_f)}(\mu)}=\left[
+\begin{pmatrix}
+1 & 0 \\
+0 &1
+\end{pmatrix}
+-a_s
+\begin{pmatrix}
+0 & \tilde{A}^{S,(1)}_{hg}\\
+0 & A_{gg,h}^{S,(1)}
+\end{pmatrix}
+-a_s^2
+\begin{pmatrix}
+[A_{qq,h}^{N\!S,(2)}+\tilde{A}^{S,(2)}_{hq}] & \tilde{A}^{S,(2)}_{hg}
+- \tilde{A}^{S,(1)}_{hg} \otimes A_{gg,h}^{S,(1)} \\
+A^{S,(2)}_{gq,h} & A_{gg,h}^{S,(2)} - A_{gg,h}^{S,(1)} \otimes A_{gg,h}^{S,(1)}
+\end{pmatrix}
+\right]
+{\Sigma^{(N_f+1)}(\mu) \choose g^{(N_f+1)}(\mu)}\,,
+\end{array}
+\end{equation}
+and using eqs.~(\ref{ahciccio!}) and~(\ref{ahbelli!}), we get:
+\begin{equation}
+ \begin{array}{l}
+\displaystyle   - \tilde{A}^{S,(1)}_{hg} \otimes A_{gg,h}^{S,(1)} =
+   \frac{16}{3}T_R^2\left[x^2+(1-x)^2\right]\ln^2\frac{\mu^2}{M^2} = \frac{4}{3}T_R \ln\frac{\mu^2}{M^2}\tilde{A}^{S,(1)}_{hg}\\
+\\
+\displaystyle - A_{gg,h}^{S,(1)} \otimes A_{gg,h}^{S,(1)} =
+   - \frac{16}{9}T_R^2\delta(1-x) \ln^2\frac{\mu^2}{M^2} = \frac{4}{3}T_R \ln\frac{\mu^2}{M^2}A_{gg,h}^{S,(1)}
+   \end{array}
+\end{equation}
 
 \subsection{Renormalization Scale Variation}
 
@@ -403,7 +493,17 @@ from the redefinition of the splitting functions that in turn derives
 from the expansion of $\alpha_s(\mu_R)$ around $\mu_R=\mu_F$ that
 appears in the DGLAP equation.}).
 
-What one usually does for the choice of the matching points is to set $\mu_F$ to heavy quark thresholds ($M_c$, $M_b$ and $M_t$ in the Pole Mass scheme and $m_c(m_c)$, $m_b(m_b)$ and $m_t(m_t)$ in the $\overline{\mbox{MS}}$ scheme). In this way the logarithmic terms in the PDF matching conditions are assured to vanish guaranteeing the same matching pattern for PDFs. But if $\kappa$ is different from one, the logarithmic terms in the matching conditions for $a_s(\mu_R)$ and $m_q(\mu_R)$ don't vanish anymore. This is exactly the case when one wants to perform the renormalization scale variation and in the following we will just show how to implement the matching condition for $a_s$ and $m_q$ in terms of $\kappa$.
+What one usually does for the choice of the matching points is to set
+$\mu_F$ to heavy quark thresholds ($M_c$, $M_b$ and $M_t$ in the Pole
+Mass scheme and $m_c(m_c)$, $m_b(m_b)$ and $m_t(m_t)$ in the
+$\overline{\mbox{MS}}$ scheme). In this way the logarithmic terms in
+the PDF matching conditions are assured to vanish guaranteeing the
+same matching pattern for PDFs. But if $\kappa$ is different from one,
+the logarithmic terms in the matching conditions for $a_s(\mu_R)$ and
+$m_q(\mu_R)$ don't vanish anymore. This is exactly the case when one
+wants to perform the renormalization scale variation and in the
+following we will just show how to implement the matching condition
+for $a_s$ and $m_q$ in terms of $\kappa$.
 
 \subsection{$\alpha_s$}
 Let us start with $\alpha_s$. Using the expansion:
