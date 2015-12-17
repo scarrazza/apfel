@@ -20,11 +20,15 @@ Now let us make the following definitions $t=\ln(\mu^{2})$, $\tilde{q}(x,t)=xq(x
 \end{equation}
 
 \section{Interpolation}
-In order to numerically solve the above equation, we need to write PDFs as interpolated functions over an $x$ grid. In particular we want to have something like this:
+
+In order to numerically solve the above equation, we need to write
+PDFs as interpolated functions over an $x$ grid. In particular we want
+to have something like this:
 \begin{equation}
 \tilde{q}(y,t)=\sum^{N_{x}}_{\alpha=0}w_{\alpha}^{(k)}(y)\tilde{q}(x_{\alpha},t)\,,
 \end{equation}
-where $w_{\alpha}^{(k)}$ are the interpolation functions of degree $k$ we are looking for.
+where $w_{\alpha}^{(k)}$ are the interpolation functions of degree $k$
+we are looking for.
 
 Using the Lagrange formula, we find that:
 \begin{equation}\label{LagrangeFormula}
@@ -426,6 +430,85 @@ values $\alpha_s^{(\tau)}=\alpha_s(m_h-\varepsilon)$ and
 $\alpha_s^{(\tau+1)}=\alpha_s(m_h)$. This trick, in conjuction with
 the linear interpolation, does to job without any further assumption.
 
+\appendix
 
+\section{A Remark on the Interpolation Functions}
+
+Just for the record, it is useful to derive the expression for the
+interpolation functions given in eq.~(\ref{LagrangeFormula}) and show
+how this is not the only possible choice.
+
+Suppose we want to perform an interpolation of degree $k$ of the test
+function $g$ in the point $x$. As is well known, we will need a
+subset of $k+1$ consecutive points on the total interpolation grids
+$\{x_{\alpha},\dots,x_{\alpha+k}\}$. However, the relative position
+between the point $x$ and the subset of points used for the
+interpolation is arbitrary. In principle, it is not even required that
+$x$ is somewhere between $x_\alpha$ and $x_{\alpha+k}$. However, in
+this case one would talk about extrapolation rather than interpolation
+and this is clearly not a convenient option because it would lead to a
+substantial deteriotation in the accuracy with which $g(x)$ is
+determined. As a consequence, it is convenient to choose the subset of
+points in such a way that $x_\alpha < x \leq x_{\alpha+k}$. However,
+the ambiguity remains because there are $k$ possible choices of the
+subset of points accordind to which $x_\alpha < x \leq x_{\alpha+1}$,
+or $x_{\alpha+1} < x \leq x_{\alpha+2}$, and so on.
+
+In particular, to derive eq.~(\ref{LagrangeFormula}) we have assumed
+that:
+\begin{equation}\label{IntAssumption1}
+x_\alpha < x \leq x_{\alpha+1}\,.
+\end{equation}
+
+Let's see how eq.~(\ref{LagrangeFormula}) comes out. Using the
+standard Lagrange interpolation procedure, we can approximate the
+function $g$ in $x$ as:
+\begin{equation}\label{particularCase}
+g(x) = \sum_{i=0}^k\ell_i^{(k)}(x)g(x_{\alpha+i})
+\end{equation}
+where $\ell_i^{(k)}$ is the $i$-th Lagrange polynomial of degree $k$
+which can be written as:
+\begin{equation}
+\ell_i^{(k)}(x) = \prod^{k}_{m=0,m\ne i}\frac{x-x_{\alpha+m}}{x_{\alpha+i}-x_{\alpha+m}}\,.
+\end{equation}
+
+However, as we said, we impose that eq.~(\ref{particularCase}) applies
+only for the assumption in eq.~(\ref{IntAssumption1}) is fulfilled. We
+can then generalize it by writing:
+\begin{equation}\label{particularCaseTheta}
+g(x) = \theta(x-x_{\alpha})\theta(x_{\alpha+1}-x)\sum_{i=0}^k g(x_{\alpha+i})\prod^{k}_{m=0,m\ne i}\frac{x-x_{\alpha+m}}{x_{\alpha+i}-x_{\alpha+m}}\,.
+\end{equation}
+Now, if we want to relax the restriction in eq.~(\ref{IntAssumption1}), we just have to sum over all nodes of the global interpolation grid, that is:
+\begin{equation}\label{generalCase}
+g(x) = \sum_{\alpha=0}^{N_x}\theta(x-x_{\alpha})\theta(x_{\alpha+1}-x)\sum_{i=0}^k g(x_{\alpha+i})\prod^{k}_{m=0,m\ne i}\frac{x-x_{\alpha+m}}{x_{\alpha+i}-x_{\alpha+m}}\,.
+\end{equation}
+Defining $\beta=\alpha+i$, we can rewrite the equation above as:
+\begin{equation}\label{generalCase2}
+g(x) = \sum_{\beta=0}^{N_x}g(x_{\beta}) \sum_{i=0,i\leq\beta}^k \theta(x-x_{\beta-i})\theta(x_{\beta-i+1}-x) \prod^{k}_{m=0,m\ne i}\frac{x-x_{\beta-i+m}}{x_{\beta}-x_{\beta-i+m}}\,,
+\end{equation}
+where the additional condition $i\leq\beta$ comes from the condition
+$\alpha\geq 0$. Eq.~(\ref{generalCase2}) is clearly equivalent to
+eq.~(\ref{LagrangeFormula}), assuming that:
+\begin{equation}
+w_\beta^{(k)}(x) = \sum_{i=0,i\leq\beta}^k \theta(x-x_{\beta-i})\theta(x_{\beta-i+1}-x) \prod^{k}_{m=0,m\ne i}\frac{x-x_{\beta-i+m}}{x_{\beta}-x_{\beta-i+m}}\,.
+\end{equation}
+
+Now, instead of starting from the assumption in
+eq.~(\ref{IntAssumption1}), we start from the more general condition:
+\begin{equation}\label{IntAssumptionGen}
+x_{\alpha+t} < x \leq x_{\alpha+t+1}\quad\mbox{with}\quad t = 0,\dots,k-1\,,
+\end{equation}
+we have that the interpolation formula would look like this:
+\begin{equation}\label{MoreGeneralCase}
+g(x) = \sum_{\alpha=0}^{N_x}\theta(x-x_{\alpha+t})\theta(x_{\alpha+t+1}-x)\sum_{i=0}^k g(x_{\alpha+i})\prod^{k}_{m=0,m\ne i}\frac{x-x_{\alpha+m}}{x_{\alpha+i}-x_{\alpha+m}}\,,
+\end{equation}
+that can be rearranged as:
+\begin{equation}\label{generalCase2}
+g(x) = \sum_{\beta=0}^{N_x}g(x_{\beta}) \sum_{i=0,i\leq\beta}^k \theta(x-x_{\beta-i+t})\theta(x_{\beta-i+t+1}-x) \prod^{k}_{m=0,m\ne i}\frac{x-x_{\beta-i+m}}{x_{\beta}-x_{\beta-i+m}}\,.
+\end{equation}
+Therefore the ``generalized'' interpolation functions are:
+\begin{equation}
+w_{\beta,t}^{(k)}(x) = \sum_{i=0,i\leq\beta}^k \theta(x-x_{\beta-i+t})\theta(x_{\beta-i+t+1}-x) \prod^{k}_{m=0,m\ne i}\frac{x-x_{\beta-i+m}}{x_{\beta}-x_{\beta-i+m}}\,.
+\end{equation}
 
 \end{document}
