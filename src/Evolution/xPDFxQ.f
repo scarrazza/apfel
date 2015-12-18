@@ -26,7 +26,8 @@
       integer i
       integer idx,idQ
       integer alpha,tau
-      integer isg,iQtrans
+      integer isg,iQtrans,iQtransp
+      integer tQ,ideg
       double precision Q2
       double precision w_int_xQ
       double precision tol
@@ -87,42 +88,57 @@
       if(Q2.lt.Q2min)  Q2 = Q2min
       if(Q2.gt.Q2max)  Q2 = Q2max
 *
-*     If the value of Q2 happens to fall in the tiny gap
+*     1) If the value of Q2 happens to fall in the tiny gap
 *     between two subsequent subgrids, push it on the first
 *     node of the second grid.
+*     2) Check that the Q2-subgrid has enough points for the
+*     interpolation, otherwise reduce the interpolation degree.
+*     3) Determine tQ, i.e. the parameter to avoid to interpolate
+*     over the thresholds.
 *
-      iQtrans = nQ(nfin)
-      do isg=nfin,nffi-1
-         if(Q2.gt.Q2g(iQtrans).and.Q2.lt.Q2g(iQtrans+1))then
-            Q2 = Q2g(iQtrans+1)
-            goto 101
+      idQ      = inter_degreeQ
+      tQ       = 0
+      iQtransp = 0
+      iQtrans  = nQ(nfin)
+      do isg=nfin,nffi
+*     1)
+         if(Q2.gt.Q2g(iQtrans-1).and.Q2.lt.Q2g(iQtrans))then
+            Q2 = Q2g(iQtrans)
          endif
-         iQtrans = iQtrans + nQ(isg+1)
+*     2)
+         if(Q2.ge.Q2g(iQtransp).and.Q2.lt.Q2g(iQtrans).and.
+     1      nQ(nfin).lt.idQ+1) idQ = nQ(nfin) - 1
+*     3)
+         do ideg=2,idQ
+            if(Q2.gt.Q2g(iQtrans-ideg).and.Q2.le.Q2g(iQtrans-1))
+     1           tQ = ideg - 1
+         enddo
+         iQtransp = iQtransp + nQ(isg)
+         iQtrans  = iQtrans  + nQ(isg+1)
       enddo
 *
 *     Interpolation
 *
- 101  xPDFxQ = 0d0
+      xPDFxQ = 0d0
       idx = inter_degree(0)
-      idQ = inter_degreeQ
       if(abs(id).le.6)then
-         do tau=1,nQ2g
+         do tau=0,nQ2g
             do alpha=0,nin(0)
-               xPDFxQ = xPDFxQ + w_int_xQ(idx,idQ,alpha,tau,x,Q2)
+               xPDFxQ = xPDFxQ + w_int_xQ(tQ,idx,idQ,alpha,tau,x,Q2)
      1                * fphxQ(i,alpha,tau)
             enddo
          enddo
       elseif(abs(id).eq.11.or.abs(id).eq.13.or.abs(id).eq.15)then
-         do tau=1,nQ2g
+         do tau=0,nQ2g
             do alpha=0,nin(0)
-               xPDFxQ = xPDFxQ + w_int_xQ(idx,idQ,alpha,tau,x,Q2)
+               xPDFxQ = xPDFxQ + w_int_xQ(tQ,idx,idQ,alpha,tau,x,Q2)
      1                * fleptonxQ(i,alpha,tau)
             enddo
          enddo
       elseif(id.eq.22)then
-         do tau=1,nQ2g
+         do tau=0,nQ2g
             do alpha=0,nin(0)
-               xPDFxQ = xPDFxQ + w_int_xQ(idx,idQ,alpha,tau,x,Q2)
+               xPDFxQ = xPDFxQ + w_int_xQ(tQ,idx,idQ,alpha,tau,x,Q2)
      1                * fgammaxQ(alpha,tau)
             enddo
          enddo
@@ -131,66 +147,64 @@
 *
       return
       end
-*
-************************************************************************
-      function w_int_xQ(kx,kQ,beta,tau,x,Q2)
-*
-      implicit none
-*
-      include "../commons/grid.h"
-      include "../commons/CacheParams.h"
-**
-*     Input Variables
-*
-      integer t
-      integer kx,kQ,beta,tau
-      double precision x,Q2
-**
-*     Internal Variables
-*
-      integer j
-      integer delta,xbound,Qbound
-**
-*     Output Variables
-*
-      double precision w_int_xQ
-*
-      t = 0
-*
-      w_int_xQ = 0d0
-      xbound = beta - kx
-      Qbound = tau  - kQ + t
-*
-      if(kx.gt.beta) xbound = 0
-      if(kQ.gt.tau)  Qbound = 0
-*
-      if(x.lt.xg(0,xbound).or.x.ge.xg(0,beta+1)) return
-      if(Q2.lt.Q2g(Qbound).or.Q2.ge.Q2g(tau+1+t)) return
-*
-*     x-grid
-*
-      do j=0,beta-xbound
-         if(x.ge.xg(0,beta-j).and.x.lt.xg(0,beta-j+1))then
-            w_int_xQ = 1d0
-            do delta=0,kx
-               if(delta.ne.j) w_int_xQ = w_int_xQ
-     1              * dlog(x/xg(0,beta-j+delta)) 
-     2              / dlog(xg(0,beta)/xg(0,beta-j+delta))
-            enddo
-         endif
-      enddo
-*
-*     Q2 grid
-*
-      do j=0,tau+t-Qbound
-         if(Q2.ge.Q2g(tau-j+t).and.Q2.lt.Q2g(tau-j+t+1))then
-            do delta=0,kQ
-               if(delta.ne.j) w_int_xQ = w_int_xQ
-     1              * dlog(Q2/Q2g(tau-j+delta)) 
-     2              / dlog(Q2g(tau)/Q2g(tau-j+delta))
-            enddo
-         endif
-      enddo
-*
-      return
-      end
+c$$$*
+c$$$************************************************************************
+c$$$      function w_int_xQ(tQ,kx,kQ,beta,tau,x,Q2)
+c$$$*
+c$$$      implicit none
+c$$$*
+c$$$      include "../commons/grid.h"
+c$$$      include "../commons/CacheParams.h"
+c$$$**
+c$$$*     Input Variables
+c$$$*
+c$$$      integer tQ
+c$$$      integer kx,kQ,beta,tau
+c$$$      double precision x,Q2
+c$$$**
+c$$$*     Internal Variables
+c$$$*
+c$$$      integer j
+c$$$      integer delta,xbound,Qbound
+c$$$**
+c$$$*     Output Variables
+c$$$*
+c$$$      double precision w_int_xQ
+c$$$*
+c$$$      w_int_xQ = 0d0
+c$$$      xbound = beta - kx
+c$$$      Qbound = tau  - kQ + tQ
+c$$$*
+c$$$      if(kx.gt.beta) xbound = 0
+c$$$      if(kQ.gt.tau)  Qbound = 0
+c$$$*
+c$$$      if(x.lt.xg(0,xbound).or.x.ge.xg(0,beta+1)) return
+c$$$      if(Q2.lt.Q2g(Qbound).or.Q2.ge.Q2g(tau+1+tQ)) return
+c$$$*
+c$$$*     x-grid
+c$$$*
+c$$$      do j=0,beta-xbound
+c$$$         if(x.ge.xg(0,beta-j).and.x.lt.xg(0,beta-j+1))then
+c$$$            w_int_xQ = 1d0
+c$$$            do delta=0,kx
+c$$$               if(delta.ne.j) w_int_xQ = w_int_xQ
+c$$$     1              * dlog(x/xg(0,beta-j+delta)) 
+c$$$     2              / dlog(xg(0,beta)/xg(0,beta-j+delta))
+c$$$            enddo
+c$$$         endif
+c$$$      enddo
+c$$$*
+c$$$*     Q2 grid
+c$$$*
+c$$$      do j=0,tau+tQ-Qbound
+c$$$         if(Q2.ge.Q2g(tau-j+tQ).and.Q2.lt.Q2g(tau-j+tQ+1))then
+c$$$            do delta=0,kQ
+c$$$               if(delta.ne.j) w_int_xQ = w_int_xQ
+c$$$     1              * dlog(Q2/Q2g(tau-j+delta)) 
+c$$$     2              / dlog(Q2g(tau)/Q2g(tau-j+delta))
+c$$$            enddo
+c$$$         endif
+c$$$      enddo
+c$$$*
+c$$$      return
+c$$$      end

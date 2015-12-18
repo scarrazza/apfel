@@ -508,7 +508,11 @@ g(x) = \sum_{\beta=0}^{N_x}g(x_{\beta}) \sum_{i=0,i\leq\beta}^k \theta(x-x_{\bet
 \end{equation}
 Therefore the ``generalized'' interpolation functions are:
 \begin{equation}
-w_{\beta,t}^{(k)}(x) = \sum_{i=0,i\leq\beta}^k \theta(x-x_{\beta-i+t})\theta(x_{\beta-i+t+1}-x) \prod^{k}_{m=0,m\ne i}\frac{x-x_{\beta-i+m}}{x_{\beta}-x_{\beta-i+m}}\,.
+w_{\beta,t}^{(k)}(x) = \sum_{i=0,i\leq\beta}^k \theta(x-x_{\beta-i+t})\theta(x_{\beta-i+t+1}-x) \prod^{k}_{m=0,m\ne i}\frac{x-x_{\beta-i+m}}{x_{\beta}-x_{\beta-i+m}}\,,
+\end{equation}
+and they assume that:
+\begin{equation}
+x_{\alpha+t} < x \leq x_{\alpha+t+1}\quad\mbox{with}\quad t = 0,\dots,k-1\,.
 \end{equation}
 
 \end{document}

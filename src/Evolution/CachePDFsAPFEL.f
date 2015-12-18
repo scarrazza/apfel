@@ -40,6 +40,8 @@
       character*100 pdfsetbkp
 
       parameter(eps=1d-14)
+
+      double precision xPDFj
 *
       call cpu_time(t1)
 *

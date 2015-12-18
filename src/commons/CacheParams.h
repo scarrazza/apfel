@@ -18,9 +18,9 @@
       integer nQ(3:7)
       double precision Q2g(-1:nQ2g)
 *
-      double precision fphxQ(-6:6,0:nint_max,nQ2g)
-      double precision fgammaxQ(0:nint_max,nQ2g)
-      double precision fleptonxQ(-3:3,0:nint_max,nQ2g)
+      double precision fphxQ(-6:6,0:nint_max,0:nQ2g)
+      double precision fgammaxQ(0:nint_max,0:nQ2g)
+      double precision fleptonxQ(-3:3,0:nint_max,0:nQ2g)
 *
       character*4 InCachePDFs
 *

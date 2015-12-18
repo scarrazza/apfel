@@ -22,6 +22,8 @@
 *
 *     "dw_int_nodes" n-th derivative of "w_int" in the nodes.
 *
+*     "w_int_xQ" 2-dimensional interpolation functions in x and Q.
+*
 ************************************************************************
       function w_int(k,beta,x)
 *
@@ -469,6 +471,71 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
          dw_int_node = dw_int_node 
      1               / ( xg(igrid,alpha) - xg(igrid,rho) )**n
       endif
+*
+      return
+      end
+*
+************************************************************************
+*
+*     2-dimensional interpolation functions in x and Q.
+*
+************************************************************************
+      function w_int_xQ(tQ,kx,kQ,beta,tau,x,Q2)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/CacheParams.h"
+**
+*     Input Variables
+*
+      integer tQ
+      integer kx,kQ,beta,tau
+      double precision x,Q2
+**
+*     Internal Variables
+*
+      integer j
+      integer delta,xbound,Qbound
+**
+*     Output Variables
+*
+      double precision w_int_xQ
+*
+      w_int_xQ = 0d0
+      xbound = beta - kx
+      Qbound = tau  - kQ + tQ
+*
+      if(kx.gt.beta) xbound = 0
+      if(kQ.gt.tau)  Qbound = 0
+*
+      if(x.lt.xg(0,xbound).or.x.ge.xg(0,beta+1)) return
+      if(Q2.lt.Q2g(Qbound).or.Q2.ge.Q2g(tau+1+tQ)) return
+*
+*     x-grid
+*
+      do j=0,beta-xbound
+         if(x.ge.xg(0,beta-j).and.x.lt.xg(0,beta-j+1))then
+            w_int_xQ = 1d0
+            do delta=0,kx
+               if(delta.ne.j) w_int_xQ = w_int_xQ
+     1              * dlog(x/xg(0,beta-j+delta)) 
+     2              / dlog(xg(0,beta)/xg(0,beta-j+delta))
+            enddo
+         endif
+      enddo
+*
+*     Q2 grid
+*
+      do j=0,tau+tQ-Qbound
+         if(Q2.ge.Q2g(tau-j+tQ).and.Q2.lt.Q2g(tau-j+tQ+1))then
+            do delta=0,kQ
+               if(delta.ne.j) w_int_xQ = w_int_xQ
+     1              * dlog(Q2/Q2g(tau-j+delta)) 
+     2              / dlog(Q2g(tau)/Q2g(tau-j+delta))
+            enddo
+         endif
+      enddo
 *
       return
       end
