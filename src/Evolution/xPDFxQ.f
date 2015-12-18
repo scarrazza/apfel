@@ -12,9 +12,10 @@
       implicit none
 *
       include "../commons/grid.h"
-      include "../commons/CacheParams.h"
+      include "../commons/gridQ.h"
       include "../commons/scales.h"
       include "../commons/fph.h"
+      include "../commons/fphxQ.h"
 **
 *     Input Variables
 *

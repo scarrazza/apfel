@@ -302,6 +302,12 @@ ccccccccccccc
       end subroutine fsetgridparameters
 
 ccccccccccccc
+      subroutine fsetqgridparameters(npq,degq)
+      integer npq, degq
+      call SetQGridParameters(npq,degq)
+      end subroutine fsetqgridparameters
+
+ccccccccccccc
       subroutine fsetexternalgrid(i,np,deg,x)
       integer i, np, deg
       double precision x(0:np)

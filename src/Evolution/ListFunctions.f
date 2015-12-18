@@ -155,10 +155,16 @@
       write(6,*) "    sets the number of subgrids 'n' (default 3)"
       write(6,*) achar(27)//"[34m- SetGridParameters(int i, int n,",
      1           " int deg, double x):"//achar(27)//"[0m"
-      write(6,*) "    sets the parameter of the i-th subgrid. 'n' ="
-      write(6,*) "    number intevals, 'deg' = interpolation order,"
+      write(6,*) "    sets the parameters of the i-th subgrid. 'n' ="
+      write(6,*) "    number of intevals, 'deg' = interpolation order,"
       write(6,*) "    'x' lower bound of the grid (the upper bound is"
       write(6,*) "    always 1)."
+      write(6,*) achar(27)//"[34m- SetQGridParameters(int nQ,",
+     1           " int degQ):"//achar(27)//"[0m"
+      write(6,*) "    sets the parameters of the Q-grid. 'nQ' = number"
+      write(6,*) "    of intevals and 'degQ' = interpolation order."
+      write(6,*) "    (default: 'nQ' = 100, 'degQ' = 3, relevant only"
+      write(6,*) "    for the cached evolution)."
       write(6,*) achar(27)//"[34m- SetExternalGrid(int i, int np,",
      1           " int deg, double *x):"//achar(27)//"[0m"
       write(6,*) "    sets the external grid in the position 'i' with"

@@ -164,6 +164,9 @@ namespace APFEL {
   /// Sets the parameters of the i-th x-space grid
   void SetGridParameters(int i, int np, int deg, double x);
 
+  /// Sets the parameters of the Q-space grid
+  void SetQGridParameters(int npq, int degq);
+
   /// Sets the parameters of the grid over which PDFs in the LHAPDF
   /// format will be witten
   void SetLHgridParameters(int nx, int nxm, double xmin, double xm, double xmax,

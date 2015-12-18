@@ -61,7 +61,8 @@
       include "../commons/EWCouplings.h"
       include "../commons/DynScVar.h"
       include "../commons/IntrinsicCharm.h"
-      include "../commons/CacheParams.h"
+      include "../commons/gridQ.h"
+      include "../commons/fphxQ.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -90,6 +91,7 @@
       InLeptEvol        = "xxxx"
       InLock            = "xxxx"
       InGrid            = "xxxx"
+      InQGrid           = "xxxx"
       InTimeLike        = "xxxx"
       InPolarized       = "xxxx"
       InSmallx          = "xxxx"

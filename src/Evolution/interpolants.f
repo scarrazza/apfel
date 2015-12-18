@@ -485,7 +485,7 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
       implicit none
 *
       include "../commons/grid.h"
-      include "../commons/CacheParams.h"
+      include "../commons/gridQ.h"
 **
 *     Input Variables
 *

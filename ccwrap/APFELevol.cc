@@ -258,6 +258,11 @@ namespace APFEL {
     fsetgridparameters(&i,&np,&deg,&x);
   }
 
+  void SetQGridParameters(int npq, int degq)
+  {
+    fsetqgridparameters(&npq,&degq);
+  }
+
   void SetLHgridParameters(int nx, int nxm, double xmin, double xm, double xmax,
 			   int nq2, double q2min, double q2max)
   {

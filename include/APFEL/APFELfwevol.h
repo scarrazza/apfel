@@ -142,6 +142,9 @@ extern "C" {
 #define fsetgridparameters FC_FUNC(setgridparameters,SETGRIDPARAMETERS)
   void fsetgridparameters(int*,int*,int*,double*);
 
+#define fsetqgridparameters FC_FUNC(setqgridparameters,SETQGRIDPARAMETERS)
+  void fsetqgridparameters(int*,int*);
+
 #define fsetlhgridparameters FC_FUNC(setlhgridparameters,SETLHGRIDPARAMETERS)
   void fsetlhgridparameters(int*,int*,double*,double*,double*,int*,double*,double*);
 
