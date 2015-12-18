@@ -81,7 +81,7 @@
       if(InLock.ne."done")        call LockGrids(.false.)
       if(InLHgrid.ne."done")      call SetLHgridParameters(100,50,1d-9,
      1                                            1d-1,1d0,50,1d0,1d10)
-      if(InQGrid.ne."done")       call SetQGridParameters(100,3)
+      if(InQGrid.ne."done")       call SetQGridParameters(70,3)
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,80,3,1d-5)
