@@ -59,7 +59,7 @@
 *
       if(PDFEvol.eq."exactmu")then
          do pt=1,ipt+1
-            integralsQCD = integralsQCD 
+            integralsQCD = integralsQCD
      1                   + coup**pt * SP(igrid,pnf,kk,pt-1,alpha,beta)
          enddo
 *
@@ -73,13 +73,13 @@
  102        c1 = ( ag(tau+1) - coup ) / ( ag(tau+1) - ag(tau) )
             c2 = ( coup - ag(tau) ) / ( ag(tau+1) - ag(tau) )
 *
-            integralsQCD = integralsQCD 
-     1                   + c1 * SPRes(igrid,kk,alpha,beta,tau)
-     2                   + c2 * SPRes(igrid,kk,alpha,beta,tau+1)
+            integralsQCD = integralsQCD
+     1                   + c1 * SPRes(igrid,kk,ipt,alpha,beta,tau)
+     2                   + c2 * SPRes(igrid,kk,ipt,alpha,beta,tau+1)
          endif
       elseif(PDFEvol.eq."exactalpha")then
          do pt=1,ipt+1
-            integralsQCD = integralsQCD 
+            integralsQCD = integralsQCD
      1                   + coup**pt * SP(igrid,pnf,kk,pt-1,alpha,beta)
          enddo
          if(Smallx.and.kk.ge.4)then
@@ -92,43 +92,79 @@
  103        c1 = ( ag(tau+1) - coup ) / ( ag(tau+1) - ag(tau) )
             c2 = ( coup - ag(tau) ) / ( ag(tau+1) - ag(tau) )
 *
-            integralsQCD = integralsQCD 
-     1                   + c1 * SPRes(igrid,kk,alpha,beta,tau)
-     2                   + c2 * SPRes(igrid,kk,alpha,beta,tau+1)
+            integralsQCD = integralsQCD
+     1                   + c1 * SPRes(igrid,kk,ipt,alpha,beta,tau)
+     2                   + c2 * SPRes(igrid,kk,ipt,alpha,beta,tau+1)
          endif
          integralsQCD = integralsQCD / fbeta(coup,bnf,ipt)
       elseif(PDFEvol.eq."expandalpha")then
          integralsQCD = SP(igrid,pnf,kk,0,alpha,beta)
          if(ipt.ge.1)then
             b1 = beta1apf(bnf) / beta0apf(bnf)
-            integralsQCD = integralsQCD 
+            integralsQCD = integralsQCD
      1                   + coup * ( SP(igrid,pnf,kk,1,alpha,beta) 
      2                   - b1 * SP(igrid,pnf,kk,0,alpha,beta) )
          endif
          if(ipt.ge.2)then
             b2 = beta2apf(bnf) / beta0apf(bnf)
-            integralsQCD = integralsQCD 
+            integralsQCD = integralsQCD
      1           + coup**2d0 * ( SP(igrid,pnf,kk,2,alpha,beta) 
      2           - b1 * SP(igrid,pnf,kk,1,alpha,beta)
      3           + ( b1**2d0 - b2 ) * SP(igrid,pnf,kk,0,alpha,beta) )
+         endif
+         if(Smallx.and.kk.ge.4)then
+*     find "tau" such that ag(tau) <= coup < ag(tau+1)
+            do tau=0,na-1
+               if(nfg(tau).eq.bnf.and.
+     1            ag(tau).ge.coup.and.ag(tau+1).lt.coup) goto 104
+            enddo
+*     interpolation coefficient
+ 104        c1 = ( ag(tau+1) - coup ) / ( ag(tau+1) - ag(tau) )
+            c2 = ( coup - ag(tau) ) / ( ag(tau+1) - ag(tau) )
+*
+            integralsQCD = integralsQCD
+     1                   + c1 * SPRes(igrid,kk,ipt,alpha,beta,tau)
+     2                   + c2 * SPRes(igrid,kk,ipt,alpha,beta,tau+1)
          endif
          integralsQCD = - integralsQCD / beta0apf(bnf) / coup
       elseif(PDFEvol.eq."truncated")then
          integralsQCD = SP(igrid,pnf,kk,0,alpha,beta)
          if(ipt.ge.1)then
             b1 = beta1apf(bnf) / beta0apf(bnf)
-            integralsQCD = integralsQCD 
+            integralsQCD = integralsQCD
      1                   + EpsEff * coup
      2                   * ( SP(igrid,pnf,kk,1,alpha,beta) 
      3                   - b1 * SP(igrid,pnf,kk,0,alpha,beta) )
          endif
          if(ipt.ge.2)then
             b2 = beta2apf(bnf) / beta0apf(bnf)
-            integralsQCD = integralsQCD 
+            integralsQCD = integralsQCD
      1           + ( EpsEff * coup )**2d0
      2           * ( SP(igrid,pnf,kk,2,alpha,beta) 
      3           - b1 * SP(igrid,pnf,kk,1,alpha,beta)
      4           + ( b1**2d0 - b2 ) * SP(igrid,pnf,kk,0,alpha,beta) )
+         endif
+         if(Smallx.and.kk.ge.4)then
+*     find "tau" such that ag(tau) <= coup < ag(tau+1)
+            do tau=0,na-1
+               if(nfg(tau).eq.bnf.and.
+     1            ag(tau).ge.coup.and.ag(tau+1).lt.coup) goto 105
+            enddo
+*     interpolation coefficient
+ 105        c1 = ( ag(tau+1) - coup ) / ( ag(tau+1) - ag(tau) )
+            c2 = ( coup - ag(tau) ) / ( ag(tau+1) - ag(tau) )
+*     LL
+            integralsQCD = integralsQCD
+     1                   + c1 * SPRes(igrid,kk,0,alpha,beta,tau)
+     2                   + c2 * SPRes(igrid,kk,0,alpha,beta,tau+1)
+*     NLL
+            if(ipt.ge.1)then
+               integralsQCD = integralsQCD
+     1              + c1 * ( SPRes(igrid,kk,1,alpha,beta,tau)
+     2                     - SPRes(igrid,kk,0,alpha,beta,tau) )
+     3              + c2 * ( SPRes(igrid,kk,1,alpha,beta,tau+1)
+     4                     - SPRes(igrid,kk,0,alpha,beta,tau+1) )
+            endif
          endif
          integralsQCD = - integralsQCD / beta0apf(bnf) / coup
       endif

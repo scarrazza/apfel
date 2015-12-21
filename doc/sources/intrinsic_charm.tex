@@ -68,18 +68,18 @@ matching conditions at the charm threshold.
 
 \section{Intrinsic Charm Contribution to the Massive Structure Functions}
 
-\subsection{Order $\alpha_s^0$ Contributions}
-
-Assuming the presence of IC in the proton, the massive structure
-functions with $N_f=3$ light flavours acquire a further contribution
-coming from the presence of a massive charm in the initial state. As a
-consequence, the massive structure functions get a term that is
-proportional to a \textit{static} charm PDF, $i.e.$ a PDF that, being
-massive, does not evolve according to the DGLAP equantion. Such a
-contribution starts already at order $\alpha_s^0$ and has the novel
-effect to ``allign'' the massive scheme to the massless scheme in
+Assuming the presence of IC in the proton, the massive structure 
+functions with $N_f=3$ light flavours acquire a further contribution 
+coming from the presence of a massive charm in the initial state. As a 
+consequence, the massive structure functions get a term that is 
+proportional to a \textit{static} charm PDF, $i.e.$ a PDF that, being 
+massive, does not evolve according to the DGLAP equantion. Such a 
+contribution starts already at order $\alpha_s^0$ and has the novel 
+effect to ``allign'' the massive scheme to the massless scheme in 
 terms of power counting because, contrary to what happens without IC,
-the two sectors start at $\alpha_s^0$.
+the two sectors start at $\alpha_s^0$. 
+
+\subsection{Order $\alpha_s^0$ Contributions}
 
 In order to write explicitly the form of such LO contributions to the
 DIS structure functions, I consider eq.~(2) of \cite{Kretzer:1998ju}
@@ -337,6 +337,67 @@ xF_3^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)xc(x)
 F_L^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 0
 \end{equation}
 \end{subequations}
+
+\subsection{Order $\alpha_s$ Contributions}
+
+We can now turn to describe the NLO contributions to the IC component
+of the DIS structure functions. The explicit expressions can be found
+in Appendix C of Ref.~\cite{Kretzer:1998ju}. The main difficulty here
+is the fact that are particularly involved and it is not possible to
+identify the singular terms from the regular ones. As a consequence,
+in this case we have to adopt a different strategy.
+
+The kind of expressions we have to deal with have this apparently
+simple form:
+\begin{equation}\label{CoeffFuncs}
+C(y,m_1,m_2) = L(m_1,m_2)\delta(1-y)+\frac{R(y,m_1,m_2)}{(1-y)_+}\,,
+\end{equation}
+where $R$ is a regular function of $x$, that is:
+\begin{equation}
+R(1,m_1,m_2) =  \lim_{y\rightarrow 1} R(y,m_1,m_2) = C(m_1,m_2)\,,
+\end{equation}
+$C$ being a finite function of $m_1$ and $m_2$.
+
+As we know, when convoluting coefficient functions like that in
+eq.~(\ref{CoeffFuncs}) with a PDF, say, $f(y)$ interpolated over an
+$x$-space grid to obtaing the structure function $F(x,m_1,m_2)$ the
+resulting expression is:
+\begin{equation}
+F(x_\beta,m_1,m_2) =
+\int_{x_\beta}^1\frac{dy}{y}C\left(\frac{x_\beta}{y},m_1,m_2\right)f(y)
+= \sum^{N_{x}}_{\alpha=0} \Gamma_{\beta\alpha}(m_1,m_2)x_\alpha f(x_{\alpha},t)\,,
+\end{equation}
+with:
+\begin{equation}
+\Gamma_{\beta\alpha}(m_1,m_2) = \int_c^d dy C\left(y,m_1,m_2\right)
+  w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)\,,
+\end{equation}
+where $w_{\alpha}^{(k)}$ is the order $k$ interpolation functions in
+the grid node $\alpha$ and:
+\begin{equation}
+  c =
+  \mbox{max}(x_\beta,x_\beta/x_{\alpha+1}) \quad\mbox{and}\quad d =
+  \mbox{min}(1,x_\beta/x_{\alpha-k}) \,.
+\end{equation}
+Taking into account eq.~(\ref{CoeffFuncs}) and dropping all the mass
+dependencies we have that:
+\begin{equation}
+\Gamma_{\beta\alpha} = \int^{d}_{c} \frac{dy}{1-y}\left[R\left(y\right) w_{\alpha}\left(\frac{x_\beta}{y}\right)-R\left(1\right)\delta_{\beta\alpha}\theta(d-1)\right]+\left[R(1)\ln(1-c)\theta(d-1)+L\right]\delta_{\beta\alpha}\,,
+\end{equation}
+
+
+It can be shown that:
+\begin{equation}
+\left[g(x)f(x)\right]_+= \left[g(x) \right]_+ f(x) -
+\delta(1-x)\int_0^1 dy \left[g(y) \right]_+ f(y)
+\end{equation}
+
+
+
+
+
+
+
 
 \section{The FONLL Structure Functions}\label{FONNLSF}
 

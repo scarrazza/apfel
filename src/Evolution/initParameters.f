@@ -227,14 +227,6 @@
             write(6,*) achar(27)//"[0m"
             call exit(-10)
          endif
-         if(PDFEvol.eq."expandalpha".or.PDFEvol(1:9).eq."truncated")then
-            write(6,*) achar(27)//"[31mERROR:"
-            write(6,*) "The 'expandalpha' and 'truncated' solutions"
-            write(6,*) "of the DGLAP equation cannot be used if the"
-            write(6,*) "small-x resummation is enabled."
-            write(6,*) achar(27)//"[0m"
-            call exit(-10)
-         endif
          if(LogAcc.ne.0.and.LogAcc.ne.1)then
             write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Logarithmic accuracy not allowed:"

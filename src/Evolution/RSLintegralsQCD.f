@@ -483,7 +483,7 @@ c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
 *     Integrals of the small-x resummed splitting functions.
 *
 ************************************************************************
-      subroutine RSLintegralsQCDRes(beta,alpha,tau)
+      subroutine RSLintegralsQCDRes(pt,beta,alpha,tau)
 *
       implicit none
 *
@@ -494,7 +494,7 @@ c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
 **
 *     Input Variables
 *
-      integer beta,alpha,tau
+      integer pt,beta,alpha,tau
 **
 *     Internal Variables
 *
@@ -507,7 +507,7 @@ c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
 *     Initialize Integrals
 *
       do k=4,7
-         SPRes(igrid,k,beta,alpha,tau) = 0d0
+         SPRes(igrid,k,pt,beta,alpha,tau) = 0d0
       enddo
 *
 *     Adjustment od the bounds of the integrals
@@ -535,7 +535,7 @@ c      fsg = 1d0
 *     Integrals
 *
       do k=4,7
-         SPRes(igrid,k,beta,alpha,tau) = 
+         SPRes(igrid,k,pt,beta,alpha,tau) =
      1        dgauss(integrandsQCDRes,a,b,fsg*eps)
       enddo
 *
