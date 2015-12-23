@@ -346,7 +346,7 @@ be matched.
 With the inclusion of the small-$x$ resummation, the splitting
 functions ${P}_{ij}$ in eq. (\ref{dglap}) should be interpreted
 as:
-\begin{equation}
+\begin{equation}\label{ResummedSplittings}
 {P}_{ij}(x,\alpha_s) = \underbrace{{P}_{ij}^{\rm
     FO}(x,\alpha_s)}_{\mbox{\tiny Already present in {\tt APFEL}}} +
 \underbrace{{P}_{ij}^{\rm Res-FO}(x,\alpha_s)}_{\mbox{\tiny Provided
@@ -411,24 +411,32 @@ that $\alpha_s^{(\tau)}\leq\alpha_s<\alpha_s^{(\tau+1)}$, we have that:
 
 There is a further complication that we need to deal with that is the
 number of active flavours. In fact, any integral must be computed with
-the correct number $n_f$ of active flavours. Assuming to be working
-in the VFNS (the FFNS is instead trivial), what we need then is a grid in $\alpha_s$ that has a node
-for each crossing point, that is there must be one value of the index
-$\tau$ such that $\alpha_s^{(\tau)}=\alpha_s(m_h)$ where $m_h$ is the
-mass of any heavy flavour and such that for $\alpha_s<\alpha_s^{(\tau)}$
-there are, say, $n_f$ active flavours, while for
-$\alpha_s\geq\alpha_s^{(\tau)}$ there are $n_f+1$ active flavours. This in practice means that the grid in
+the correct number $n_f$ of active flavours. Assuming to be working in
+the VFNS (the FFNS is instead trivial), what we need then is a grid in
+$\alpha_s$ that has a node for each crossing point, that is there must
+be one value of the index $\tau$ such that
+$\alpha_s^{(\tau)}=\alpha_s(m_h)$ where $m_h$ is the mass of any heavy
+flavour and such that for $\alpha_s<\alpha_s^{(\tau)}$ there are, say,
+$n_f$ active flavours, while for $\alpha_s\geq\alpha_s^{(\tau)}$ there
+are $n_f+1$ active flavours. This in practice means that the grid in
 $\alpha_s$ has as many fixed points as potentially active
 flavours. Unfortunately this is not enough because, when considering
-the NNLO evolution in the VFNS, the evolution of $\alpha_s$, as well as
-that of PDFs, has a discontinuity in correspondence of the heavy quark
-thresholds(\footnote{A discontinuity appears also at NLO if
+the NNLO evolution in the VFNS, the evolution of $\alpha_s$, as well
+as that of PDFs, has a discontinuity in correspondence of the heavy
+quark thresholds(\footnote{A discontinuity appears also at NLO if
   factorization and renormalization scales are not equal.}). To
 overcome this problem we may assign to the point of the grid
 corresponding to the heavy threshold $m_h$ two value, $i.e.$ the
 values $\alpha_s^{(\tau)}=\alpha_s(m_h-\varepsilon)$ and
 $\alpha_s^{(\tau+1)}=\alpha_s(m_h)$. This trick, in conjuction with
 the linear interpolation, does to job without any further assumption.
+
+We will now try to derive the form of the ``expanded'' solution in the
+presence of small-$x$ resummation. In order to do so, we need to
+recognise that the resummed spliiting functions in
+eq.~(\ref{ResummedSplittings}) admit an expansion in $\alpha_s$ for fixed
+
+
 
 \appendix
 
@@ -439,8 +447,8 @@ interpolation functions given in eq.~(\ref{LagrangeFormula}) and show
 how this is not the only possible choice.
 
 Suppose we want to perform an interpolation of degree $k$ of the test
-function $g$ in the point $x$. As is well known, we will need a
-subset of $k+1$ consecutive points on the total interpolation grids
+function $g$ in the point $x$. As is well known, we will need a subset
+of $k+1$ consecutive points on the total interpolation grids
 $\{x_{\alpha},\dots,x_{\alpha+k}\}$. However, the relative position
 between the point $x$ and the subset of points used for the
 interpolation is arbitrary. In principle, it is not even required that

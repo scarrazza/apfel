@@ -350,26 +350,30 @@ in this case we have to adopt a different strategy.
 The kind of expressions we have to deal with have this apparently
 simple form:
 \begin{equation}\label{CoeffFuncs}
-C(y,m_1,m_2) = L(m_1,m_2)\delta(1-y)+\frac{R(y,m_1,m_2)}{(1-y)_+}\,,
+\widetilde{C}(y,m_1,m_2) = \frac{R(y,m_1,m_2)}{(1-y)_+}+ L(m_1,m_2)\delta(1-y)\,,
 \end{equation}
 where $R$ is a regular function of $x$, that is:
 \begin{equation}
-R(1,m_1,m_2) =  \lim_{y\rightarrow 1} R(y,m_1,m_2) = C(m_1,m_2)\,,
+R(1,m_1,m_2) =  \lim_{y\rightarrow 1} R(y,m_1,m_2) = K(m_1,m_2)\,,
 \end{equation}
-$C$ being a finite function of $m_1$ and $m_2$.
+$K$ being a finite function of $m_1$ and $m_2$.
 
 As we know, when convoluting coefficient functions like that in
 eq.~(\ref{CoeffFuncs}) with a PDF, say, $f(y)$ interpolated over an
 $x$-space grid to obtaing the structure function $F(x,m_1,m_2)$ the
-resulting expression is:
-\begin{equation}
-F(x_\beta,m_1,m_2) =
-\int_{x_\beta}^1\frac{dy}{y}C\left(\frac{x_\beta}{y},m_1,m_2\right)f(y)
+resulting expression is(\footnote{Note that the factor $x_\beta$ in
+  front of the intergral in eq.~(\ref{ConvolutionGrid}) is not always
+  included in the definition of the structure functions. In
+  particular, while $F_2$ and $F_L$ include it, $F_1$ and and $F_3$ do
+  not so we need to keep it in mind in what follows.}):
+\begin{equation}\label{ConvolutionGrid}
+F(x_\beta,m_1,m_2) =x_\beta
+\int_{x_\beta}^1\frac{dy}{y}\widetilde{C}\left(\frac{x_\beta}{y},m_1,m_2\right)f(y)
 = \sum^{N_{x}}_{\alpha=0} \Gamma_{\beta\alpha}(m_1,m_2)x_\alpha f(x_{\alpha},t)\,,
 \end{equation}
 with:
-\begin{equation}
-\Gamma_{\beta\alpha}(m_1,m_2) = \int_c^d dy C\left(y,m_1,m_2\right)
+\begin{equation}\label{GridKernel}
+\Gamma_{\beta\alpha}(m_1,m_2) = \int_c^d dy\,\widetilde{C}\left(y,m_1,m_2\right)
   w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)\,,
 \end{equation}
 where $w_{\alpha}^{(k)}$ is the order $k$ interpolation functions in
@@ -379,18 +383,77 @@ the grid node $\alpha$ and:
   \mbox{max}(x_\beta,x_\beta/x_{\alpha+1}) \quad\mbox{and}\quad d =
   \mbox{min}(1,x_\beta/x_{\alpha-k}) \,.
 \end{equation}
-Taking into account eq.~(\ref{CoeffFuncs}) and dropping all the mass
-dependencies we have that:
+
+As it usually happens when mass effects are taken into account, the
+phase-space available to the process gets reduced and this is
+reflected by the fact that the convolution between coeffient functions
+and PDFs needed to obtain the structure functions takes the following form:
 \begin{equation}
-\Gamma_{\beta\alpha} = \int^{d}_{c} \frac{dy}{1-y}\left[R\left(y\right) w_{\alpha}\left(\frac{x_\beta}{y}\right)-R\left(1\right)\delta_{\beta\alpha}\theta(d-1)\right]+\left[R(1)\ln(1-c)\theta(d-1)+L\right]\delta_{\beta\alpha}\,,
+  F(x)=x\int_\chi^1\frac{dz}{z}
+  C(z)f\left(\frac{\chi}{z}\right)=x\int_\chi^1\frac{dz}{z}
+  C\left(\frac{\chi}{z}\right)f(z)\,,
+\end{equation}
+where $\chi=x/\eta$ with $\eta\leq 1$ given in eq.~(\ref{Rescaledx})
+and usually expression for the coefficient functions are given in this
+form. However, in order to write this integral in the form given in
+eq.~(\ref{ConvolutionGrid}), that is with lower bound of the integral
+is not the rescaled variable $\chi$ but the physical Bjorken $x$, one
+needs to perform the change of variable $y=\eta z$, so that:
+\begin{equation}\label{MassiveIntegral}
+  F(x)=x\int_x^\eta\frac{dy}{y}
+  C\left(\frac{y}{\eta}\right)f\left(\frac{x}{y}\right)=x\int_x^1 \frac{dy}{y}\,
+  \widetilde{C}(y)f\left(\frac{x}{y}\right)\,,
+\end{equation}
+with:
+\begin{equation}\label{RescaledIntegrand}
+\widetilde{C}(y) = \theta\left(1-\frac{y}{\eta}\right)C\left(\frac{y}{\eta}\right)\,.
+\end{equation}
+Now, plugging eq.~(\ref{RescaledIntegrand}) into
+eq.~(\ref{GridKernel}), taking into account eq.~(\ref{CoeffFuncs}) and
+dropping all the mass dependencies we have that:
+\begin{equation}
+\begin{array}{rcl}
+\Gamma_{\beta\alpha} &=&\displaystyle \int_c^d dy\,\theta\left(1-\frac{y}{\eta}\right) C\left(\frac{y}{\eta}\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)=\int_c^{\bar{d}} dy\,C\left(\frac{y}{\eta}\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)\\
+\\
+ &=&\displaystyle 
+\int_c^{\bar{d}} dy\,\left[\frac{1}{(1-y/\eta)_+}R\left(\frac{y}{\eta}\right)+\delta\left(1-\frac{y}{\eta}\right)L\right] w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)\\
+\\
+&=& \displaystyle \int_c^{\bar{d}} dy\frac{1}{1-y/\eta}\left[R\left(\frac{y}{\eta}\right)w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)-R(1)w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta}\right)\theta(\bar{d}-\eta)\right]\\
+\\
+&+&\displaystyle \left[R(1)\ln\left(1-\frac{c}{\eta}\right)\theta(\bar{d}-\eta)+L \right]\eta w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta}\right)\,.
+\end{array}
+\end{equation}
+where we have redefined:
+\begin{equation}
+\bar{d} = \mbox{min}(\eta,x_\beta/x_{\alpha-k})\,.
+\end{equation}
+Finally, changing the integration variable in $z=y/\eta$, we have:
+\begin{equation}
+\begin{array}{rcl}
+\Gamma_{\beta\alpha} &=& \eta\displaystyle \int_{c/\eta}^{\bar{d}/\eta} dz\frac{1}{1-z}\left[R\left(z\right)w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta z}\right)-R(1)w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta}\right)\theta(\bar{d}-\eta)\right]\\
+\\
+&+&\displaystyle \eta\left[R(1)\ln\left(1-\frac{c}{\eta}\right)\theta(\bar{d}-\eta)+L \right]w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta}\right)\,.
+\end{array}
 \end{equation}
 
-
-It can be shown that:
+Explicit expressions for the functions $R$ and $L$ for the structure
+functions $xF_1$, $F_2$ and $xF_3$ can be extracted Appendix C of
+Ref.~\cite{Kretzer:1998ju}. The relative expressions for $F_L$ can be
+constructed using the usual relation:
 \begin{equation}
-\left[g(x)f(x)\right]_+= \left[g(x) \right]_+ f(x) -
-\delta(1-x)\int_0^1 dy \left[g(y) \right]_+ f(y)
+F_L(x,Q) = F_2(x,Q) - 2xF_1(x,Q)\,.
 \end{equation}
+
+In the following, we will treat the NC and the CC cases separately,
+showing how to implement the $\mathcal{O}(\alpha_s)$ corrections to
+the relative structure functions keeping into account all the relevant
+kinematic factors.
+
+%It can be shown that:
+%\begin{equation}
+%\left[g(x)f(x)\right]_+= \left[g(x) \right]_+ f(x) -
+%\delta(1-x)\int_0^1 dy \left[g(y) \right]_+ f(y)
+%\end{equation}
 
 
 
