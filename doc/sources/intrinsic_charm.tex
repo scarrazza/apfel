@@ -388,7 +388,7 @@ As it usually happens when mass effects are taken into account, the
 phase-space available to the process gets reduced and this is
 reflected by the fact that the convolution between coeffient functions
 and PDFs needed to obtain the structure functions takes the following form:
-\begin{equation}
+\begin{equation}\label{MassiveIntegral0}
   F(x)=x\int_\chi^1\frac{dz}{z}
   C(z)f\left(\frac{\chi}{z}\right)=x\int_\chi^1\frac{dz}{z}
   C\left(\frac{\chi}{z}\right)f(z)\,,
@@ -443,6 +443,43 @@ constructed using the usual relation:
 \begin{equation}
 F_L(x,Q) = F_2(x,Q) - 2xF_1(x,Q)\,.
 \end{equation}
+
+Using the same notation of Ref.~\cite{Kretzer:1998ju} and dropping an
+overall factor $\alpha_s/4\pi$, we can write the
+$\mathcal{O}(\alpha_s)$ contribution to the ``reduced'' structure
+functions as:
+\begin{equation}
+x\hat{\mathcal{F}}_i^{QS^{(1)}} = x
+\int_\chi^1\frac{dz}{z}
+2\hat{H}_i^{q}(z)c\left(\frac{\chi}{z}\right)\quad\mbox{with}\quad i=1,2,3\,,
+\end{equation}
+and:
+\begin{equation}\label{KretzerCFs}
+2\hat{H}_i^{q}(z)= 2C_F\left[(S_i+V_i)\delta(1-z)+\frac{(1-z)}{(1-z)_+}\frac{\hat{s}-m_2^2}{8 \hat{s}}N_i^{-1}\hat{f}_i^{Q}(z)\right]\,.
+\end{equation}
+The standard structrure functions can be recovered just by applying
+the correct kinematic factors. We will do this in the next section
+where we will consider the NC and the CC sectors separately.
+
+It is now easy to identify the function $C(z)$ in
+eq.~(\ref{MassiveIntegral0}) with $2\hat{H}_i^{q}(z)$. As a
+consequence, we also have that the function $\widetilde{C}(y)$ in
+eq.~(\ref{MassiveIntegral}) is equal to:
+\begin{equation}
+\widetilde{C}(y) = \theta\left(1-\frac{y}{\eta}\right) 2\hat{H}_i^{q}\left(\frac{y}{\eta}\right)\,.
+\end{equation}
+Finally, comparing eq.~(\ref{KretzerCFs}) to eq.~(\ref{CoeffFuncs}),
+we can easily make the following identifications:
+\begin{equation}
+\begin{array}{l}
+\displaystyle R(z) = 2C_F (1-z)\frac{\hat{s}-m_2^2}{8
+  \hat{s}}N_i^{-1}\hat{f}_i^{Q}(z)\,,\\
+\\
+\displaystyle L = 2C_F (S_i+V_i)\,.
+\end{array}
+\end{equation}
+
+
 
 In the following, we will treat the NC and the CC cases separately,
 showing how to implement the $\mathcal{O}(\alpha_s)$ corrections to
