@@ -210,7 +210,7 @@
 *     compuation of the IC component to NLO.
 *
          if(IntrinsicCharm)then
-            cFLIC = ( 1d0 - ( 1d0 - bqt(4) / bq(4) ) / 2d0 )
+            cFLIC = ( 1d0 + bqt(4) / bq(4) ) / 2d0
             ipt_max_IC = min(ipt,1)
          endif
 *     

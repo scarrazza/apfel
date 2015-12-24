@@ -12,19 +12,34 @@
       implicit none
 *
       include "../commons/ipt.h"
+      include "../commons/m2th.h"
       include "../commons/grid.h"
       include "../commons/coeffhqmellin.h"
       include "../commons/integralsDIS.h"
       include "../commons/MassScheme.h"
       include "../commons/Nf_FF.h"
+      include "../commons/CKM.h"
+      include "../commons/wrapIC.h"
+      include "../commons/wrapDIS.h"
 **
 *     Internal Variables
 *
       integer ixi
       integer gbound
       integer alpha,beta
+      integer bound
       double precision lambda,eta
       double precision w_int,win
+      double precision bq(0:6),dq(0:6),bqt(0:6)
+      double precision ddilog,DeltaFun
+      double precision fL
+      double precision dgauss,c,d,eps
+      double precision C2RS,C2L,CLRS,CLL,C3RS,C3L
+      double precision c21ICL,cL1ICL,c31ICL
+      double precision integrandsICm
+      external integrandsICm
+
+      parameter(eps=1d-6)
 *
 *     if the ZM-VFNS has been selected no IC contribution
 *     has to be included.
@@ -36,9 +51,10 @@
       gbound = 0
       if(IsExt(igrid)) gbound = nin(igrid) - 1
 *
+      do ixi=1,nxir
+*
 *     LO
 *
-      do ixi=1,nxir
          lambda = 1d0 / xigrid(ixi*xistep)
          eta    = 2d0 / ( 1d0 + dsqrt( 1d0 + 4d0 * lambda ) )
          do beta=0,gbound
@@ -75,7 +91,174 @@
                endif
             enddo
          enddo
+*
+*     NLO
+*
+         if(ipt.ge.1)then
+*     Charm mass and scale (Only pole mass for now)
+            m12 = m2ph(4)
+            Q2IC  = m22 / lambda
+*
+*     Neutral current
+*
+*     Mass of the outcoming particle (charm)
+            m22 = m12
+*     Couplings
+            call ComputeChargesDIS(Q2IC,bq,dq,bqt)
+            Splus  = bq(4)
+            Sminus = bqt(4)
+            Rplus  = dq(4)        ! Needed only for F3 (never used)
+            Rminus = 0d0          ! Needed only for F3 (never used)
+*     Compute the needed IC factors according to hep-ph/9805233
+            call ComputeICFactors("NC")
+*
+            do beta=0,gbound
+               do alpha=beta,nin(igrid)-1
+*
+                  bound = alpha-inter_degree(igrid)
+                  if(alpha.lt.inter_degree(igrid)) bound = 0
+*
+                  c = max(xg(igrid,beta),
+     1                 xg(igrid,beta)/xg(igrid,alpha+1)) / eta
+                  d = min(eta,xg(igrid,beta)/xg(igrid,bound)) / eta
+*
+                  fL = w_int(inter_degree(igrid),alpha,
+     1                 xg(igrid,beta)/eta)
+*
+                  wixi   = ixi * xistep
+                  walpha = alpha
+                  wbeta  = beta
+*
+                  sf = 1
+                  C2RS = eta * dgauss(integrandsICm,c,d,eps)
+                  C2L  = eta * c21ICL(c/eta)
+*
+                  sf = 2
+                  CLRS = eta * dgauss(integrandsICm,c,d,eps)
+                  CLL  = eta * cL1ICL(c/eta)
+*
+                  SC2mNC(igrid,ixi,3,1,beta,alpha) = C2RS + C2L * fL
+                  SCLmNC(igrid,ixi,3,1,beta,alpha) = CLRS + CLL * fL
+               enddo
+            enddo
+*
+*     Charged current
+*
+*     Mass of the outcoming particle (strange or down (massless))
+            m22 = m2strange
+*     Couplings
+            Splus  = 2d0 * ( V_cd2 + V_cs2 )
+            Sminus = 0d0
+            Rplus  = V_cd2 + V_cs2
+            Rminus = 0d0
+*     Compute the needed IC factors according to hep-ph/9805233
+            call ComputeICFactors("CC")
+*
+            do beta=0,gbound
+               do alpha=beta,nin(igrid)-1
+*
+                  bound = alpha-inter_degree(igrid)
+                  if(alpha.lt.inter_degree(igrid)) bound = 0
+*
+                  c = max(xg(igrid,beta),
+     1                 xg(igrid,beta)/xg(igrid,alpha+1))
+                  d = min(1d0,xg(igrid,beta)/xg(igrid,bound))
+*
+                  fL = 0d0
+                  if(alpha.eq.beta) fL = 1d0
+*
+                  wixi   = ixi * xistep
+                  walpha = alpha
+                  wbeta  = beta
+*
+                  sf = 1
+                  C2RS = dgauss(integrandsICm,c,d,eps)
+                  C2L  = c21ICL(c)
+*
+                  sf = 2
+                  CLRS = dgauss(integrandsICm,c,d,eps)
+                  CLL  = cL1ICL(c)
+*
+                  sf = 3
+                  C3RS = dgauss(integrandsICm,c,d,eps)
+                  C3L  = c31ICL(c)
+*
+                  SC2mCC(igrid,ixi,2,1,beta,alpha) = C2RS + C2L * fL
+                  SCLmCC(igrid,ixi,2,1,beta,alpha) = CLRS + CLL * fL
+                  SC3mCC(igrid,ixi,2,1,beta,alpha) = C3RS + C3L * fL
+               enddo
+            enddo
+
+         endif
       enddo
+*
+      return
+      end
+*
+************************************************************************
+      subroutine ComputeICFactors(proc)
+*
+      implicit none
+*
+      include "../commons/wrapIC.h"
+**
+*     Input Variables
+*
+      character*2 proc
+**
+*     Internal Variables
+*
+      double precision DeltaFun
+      double precision ddilog
+*
+      m1  = dsqrt(m12)
+      m2  = dsqrt(m22)
+*
+      Del = DeltaFun(m12,m22,-Q2IC)
+      Spp = Q2IC + m22 + m12
+      Spm = Q2IC + m22 - m12
+      Smp = Q2IC - m22 + m12
+*
+      I1     = dlog( ( Spp + Del ) / ( Spp - Del ) ) / Del
+      Cplus  = 2d0 * m1 * m2 * I1
+      C1m    = - ( Smp * I1 - dlog( m12 / m22 ) ) / Q2IC
+      C1p    = - ( Spm * I1 + dlog( m12 / m22 ) ) / Q2IC
+      CRm    = ( Del**2d0 / 2d0 / Q2IC
+     1     + Spp * ( 1d0 + dlog(Q2IC / Del) ) ) * I1
+     2     + ( m22 - m12 ) / 2d0 / Q2IC * dlog( m12 / m22 )
+     3     - dlog( Q2IC / m12 ) - dlog( Q2IC / m22 ) - 4d0
+     4     + Spp / Del * ( 
+     5     + dlog( dabs( ( Del - Spm ) / 2d0 / Q2IC ) )**2d0 / 2d0
+     6     + dlog( dabs( ( Del - Smp ) / 2d0 / Q2IC ) )**2d0 / 2d0
+     7     - dlog( dabs( ( Del + Spm ) / 2d0 / Q2IC ) )**2d0 / 2d0
+     8     - dlog( dabs( ( Del + Smp ) / 2d0 / Q2IC ) )**2d0 / 2d0
+     9     - ddilog( ( Del - Spm ) / 2d0 / Del )
+     1     - ddilog( ( Del - Smp ) / 2d0 / Del )
+     2     + ddilog( ( Del + Spm ) / 2d0 / Del )
+     3     + ddilog( ( Del + Smp ) / 2d0 / Del ) )
+*     
+      S1 = 2d0 + Spp / Del * ( Del * I1
+     1     + ddilog( 2d0 * Del / ( Del - Spp ) )
+     2     - ddilog( 2d0 * Del / ( Del + Spp ) ) )
+     3     + dlog( Del**2d0 / m22 / Q2IC ) * ( - 2d0 + Spp * I1 )
+      S2 = S1
+      S3 = S1
+      V1 = CRm
+     1     + ( Sminus * Spp - 2d0 * Splus * m1 * m2 )
+     2     / ( Splus * Spp - 2d0 * Sminus * m1 * m2 ) * Cplus
+      V2 = CRm + ( m12 * C1p + m22 * C1m ) / 2d0 
+     1     + Sminus / Splus * ( Cplus + m1 * m2 / 2d0
+     2     * ( C1p + C1m ) )
+      V3 = CRm + Rminus / Rplus * Cplus
+*
+      fact1 = ( Spp - 2d0 * m1 * m2 * Sminus / Splus ) / Del
+      fact2 = Del / Q2IC
+      fact3 = Rplus
+      if(proc.eq."NC")then
+         factL = 2d0 * Splus / ( Splus + Sminus )
+      elseif(proc.eq."CC")then
+         factL = 1d0
+      endif
 *
       return
       end
