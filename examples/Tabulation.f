@@ -46,7 +46,7 @@ c      call SetGridParameters(3,30,3,8d-1)
 c      call SetPDFSet("NNPDF30_nnlo_as_0118.LHgrid")
 c      call SetAlphaQCDRef(0.118d0,91.2d0)
 c      call SetAlphaEvolution("expanded")
-c      call SetPDFEvolution("expandalpha")
+      call SetPDFEvolution("exactalpha")
 c      call SetPoleMasses(1.275d0,4.18d0,173.03d0)
 c      call SetMaxFlavourPDFs(5)
 c      call SetMaxFlavourAlpha(5)
@@ -112,21 +112,21 @@ c      call SetMaxFlavourAlpha(5)
       enddo
       write(*,*) "  "
 *
-c$$$      call EvolveAPFEL(Q0,Q)
-c$$$      write(6,*) "Standard evolution using the xPDFall function:"
-c$$$      write(6,'(a5,2a12,a14,a10,2a12)') "x",
-c$$$     1         "u-ubar","d-dbar","2(ubr+dbr)","c+cbar","gluon","photon"
-c$$$      do ilha=3,11
-c$$$         call xPDFall(xlha(ilha),xf)
-c$$$         write(6,'(es7.1,6es12.4)') 
-c$$$     1         xlha(ilha),
-c$$$     2         xf(2) - xf(-2),
-c$$$     3         xf(1) - xf(-1),
-c$$$     4         2d0 * ( xf(-1) + xf(-2) ),
-c$$$     5         xf(4) + xf(-4),
-c$$$     6         xf(0),
-c$$$     7         xgamma(xlha(ilha))
-c$$$      enddo
-c$$$      write(*,*) "  "
+      call EvolveAPFEL(Q0,Q)
+      write(6,*) "Standard evolution using the xPDFall function:"
+      write(6,'(a5,2a12,a14,a10,2a12)') "x",
+     1         "u-ubar","d-dbar","2(ubr+dbr)","c+cbar","gluon","photon"
+      do ilha=3,11
+         call xPDFall(xlha(ilha),xf)
+         write(6,'(es7.1,6es12.4)') 
+     1         xlha(ilha),
+     2         xf(2) - xf(-2),
+     3         xf(1) - xf(-1),
+     4         2d0 * ( xf(-1) + xf(-2) ),
+     5         xf(4) + xf(-4),
+     6         xf(0),
+     7         xgamma(xlha(ilha))
+      enddo
+      write(*,*) "  "
 *
       end

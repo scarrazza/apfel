@@ -39,7 +39,6 @@
       integer nfin,nffi
       integer isg,nQ(3:7)
       integer nfmax
-      integer alpha
       double precision qref,mth(4:6)
       double precision lambda3,lambda4,lambda5,lambdaNF
       double precision xbLHA(nxmax),q2LHA(nq2max)

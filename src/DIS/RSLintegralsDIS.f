@@ -50,7 +50,6 @@
       double precision C2L(0:2),CLL(0:2),C3L(0:2)
       double precision fL,fL_CCm,dfL_CCm,w_int,dw_int
       double precision dgauss,a,b,eps(2),b_CCm
-      double precision c,d
       double precision integrandsDISzm
       double precision integrandsDISNCm,integrandsDISNCm0
       double precision integrandsDISCCm,integrandsDISCCm0

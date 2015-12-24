@@ -23,7 +23,7 @@
       integer i,j
       integer alpha,beta
       integer mapp(2,2)
-      double precision coup,a_QCD
+      double precision coup
       double precision integralsMatching
       double precision integ1(5,0:nint_max)
       double precision integ2(5,0:nint_max,0:nint_max)

@@ -103,9 +103,10 @@ ccccccccccccc
       function fexternalevolutionoperator(fname,i,j,x,beta)
       integer i,j,beta
       double precision x,fexternalevolutionoperator
+      double precision ExternalEvolutionOperator
       character fname*(*)
       fexternalevolutionoperator = 
-     1     ExternalEvolutionOperator(fname,i,j,alpha,x)
+     1     ExternalEvolutionOperator(fname,i,j,x,beta)
       return
       end
 
@@ -365,20 +366,23 @@ ccccccccccccc
 ccccccccccccc      
       function fgetperturbativeorder()
       integer fgetperturbativeorder
+      integer GetPerturbativeOrder
       fgetperturbativeorder = GetPerturbativeOrder()
       return
       end
 
 ccccccccccccc      
       function fgetmuf()
-      integer fgetmuf
+      double precision fgetmuf
+      double precision GetMuF
       fgetmuf = GetMuF()
       return
       end
 
 ccccccccccccc      
       function fgetmuf0()
-      integer fgetmuf0
+      double precision fgetmuf0
+      double precision GetMuF0
       fgetmuf0 = GetMuF0()
       return
       end

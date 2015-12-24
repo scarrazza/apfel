@@ -31,7 +31,6 @@
       double precision lambda,eta
       double precision w_int,win
       double precision bq(0:6),dq(0:6),bqt(0:6)
-      double precision ddilog,DeltaFun
       double precision fL
       double precision dgauss,c,d,eps
       double precision C2RS,C2L,CLRS,CLL,C3RS,C3L

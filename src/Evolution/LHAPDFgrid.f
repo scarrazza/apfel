@@ -31,14 +31,13 @@
 *     Input Variables
 *
       integer Nrep
-      logical islhapdf6
       double precision Qin
       character*50 fname
 **
 *     Intenal Variables
 *
       integer ln
-      integer i,ix,iq2,iq2c,ipdf,ilep,krep,iq2in,iq2fi
+      integer ix,iq2,iq2c,ipdf,ilep,krep,iq2in,iq2fi
       integer nfin,nffi
       integer isg,nQ(3:7)
       integer nfmax

@@ -29,7 +29,7 @@
       integer i,j,k,l
       integer nf,nfm
       integer alpha,beta,gamma,delta
-      double precision coup,a_QCD,integralsMatching
+      double precision coup,integralsMatching
       double precision MatQCDns(0:nint_max,0:nint_max),Match(2)
       double precision MatQCDsg(2,2,0:nint_max,0:nint_max)
       double precision EvQCDb(0:13,0:13,0:nint_max,0:nint_max)

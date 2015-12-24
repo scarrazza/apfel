@@ -19,7 +19,7 @@
       double precision xlha(9)
       double precision eps
       double precision toll
-      double precision AlphaQCD,AlphaQED
+      double precision AlphaQCD
       double precision xPDFj
       double precision F2light,F2charm,F2bottom,F2total
       double precision FLlight,FLcharm,FLbottom,FLtotal

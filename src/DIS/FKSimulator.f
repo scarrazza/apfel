@@ -21,7 +21,7 @@
 *     Internal Variables
 *
       double precision ExternalDISOperator
-      double precision GetWMass,GetZMass,GetGFermi,GetProtonMass
+      double precision GetWMass,GetGFermi,GetProtonMass
       double precision GetSIATotalCrossSection
       double precision yp,ym,y2,ypc
       double precision Q2,MW,MW2,GF,GF2,MN

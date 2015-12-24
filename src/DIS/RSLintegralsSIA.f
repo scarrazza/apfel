@@ -50,16 +50,13 @@
       double precision integrandsSIAzm
       double precision integC2(0:2),integCL(0:2),integC3(0:2)
       double precision C2ns1RS,C2ns1L,C2g1R,CLns1RS,CLg1R,C3ns1RS,C3ns1L
-      double precision CLns1L,C3g1R
       double precision C2g2R,CLg2R,C2ps2R,CLps2R,C3ps2R
-      double precision C2ns2RS,CLns2RS,C3ns2RS
-      double precision C2ns2L,C3ns2L
       double precision C2nsp2RS,CLnsp2RS,C3nsp2RS
       double precision C2nsp2L,C3nsp2L
       double precision C2nsm2RS,CLnsm2RS,C3nsm2RS
       double precision C2nsm2L,C3nsm2L
       double precision C2NS1TC,C3NS1TC
-      double precision C2NSP2TC,CLNSP2TC,C3NSP2TC
+      double precision C2NSP2TC,C3NSP2TC
       external integrandsSIAzm
 c      data eps / 5d-8, 1d-3 /
 c      data eps / 5d-8, 1d-5 /

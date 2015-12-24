@@ -26,7 +26,7 @@
 **
 *     Input Variables
 *
-      double precision Q0,Q
+      double precision Q0
 **
 *     Internal Variables
 *
@@ -39,10 +39,7 @@
       double precision eps
       double precision t1,t2
       character*100 pdfsetbkp
-
       parameter(eps=1d-14)
-
-      double precision xPDFj
 *
       call cpu_time(t1)
 *

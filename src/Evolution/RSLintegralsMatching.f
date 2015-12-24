@@ -149,7 +149,6 @@
 *     Internal Variables
 *
       integer bound
-      double precision ANS2qqH_L,AS2ggH_L
       double precision dgauss,a,b,eps
       double precision integrandsMatchingT
       external integrandsMatchingT

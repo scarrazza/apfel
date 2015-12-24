@@ -699,7 +699,6 @@ c         kappa = 1d0                          ! mu_R / mu_F
 **
 *     Internal Variables
 *
-      integer i
       integer nfi,nff
       integer dnf,snf
       double precision as0,muR20
