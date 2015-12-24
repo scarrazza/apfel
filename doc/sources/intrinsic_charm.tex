@@ -196,11 +196,11 @@ xF_3^{\rm FF,IC}(x,Q^2)= 2D_cxc(\chi)\,.
 Finally, for a \textit{charged current} process, where a charged boson
 $W^\pm$ strikes the charm, one has:
 \begin{equation}
-S_+=S_-=2|V_{cs}|^2\quad\mbox{and}\quad R_+=|V_{cs}|^2
+S_+=2|V_{cs}|^2\,,\quad S_-=0\,,\quad\mbox{and}\quad R_+=|V_{cs}|^2
 \end{equation}
 if the outcoming quark is a strange or an anti-strange, and:
 \begin{equation}
-S_+=S_-=2|V_{cd}|^2\quad\mbox{and}\quad R_+=|V_{cd}|^2
+S_+=2|V_{cd}|^2\,,\quad S_-=0\,,\quad\mbox{and}\quad R_+=|V_{cd}|^2
 \end{equation}
 if the outcoming quark is a down or an anti-down. 
 
@@ -239,7 +239,7 @@ where:
 c^{\pm}=c\pm\overline{c}
 \end{equation}
 therefore:
-\begin{equation}
+\begin{equation}\label{FLLOIC}
 F_L^{\rm FF,IC}(x,Q^2) = F_2^{\rm FF,IC}(x,Q^2) -2x F_1^{\rm
 FF,IC}(x,Q^2)  = \frac{1}{2}\left(1+\frac{\tilde{B}_c}{B_c}\right)4\frac{1-\eta}{2-\eta}
 B_c\chi c^+(\chi)
@@ -450,8 +450,6 @@ As a remark, it should be noted that the Heaviside function $\theta(\bar{d}-\eta
 \end{array}
 \end{equation}
 
-
-
 Explicit expressions for the functions $R$ and $L$ for the structure
 functions $xF_1$, $F_2$ and $xF_3$ can be extracted Appendix C of
 Ref.~\cite{Kretzer:1998ju}. The relative expressions for $F_L$ can be
@@ -504,25 +502,31 @@ between the standard and the reduced structure functions that holds at
 all orders in perturbation theory:
 \begin{equation}
 \begin{array}{rcl}
-2xF_1 &=& \displaystyle \frac{S_+\Sigma_{++}-2m_1m_2S_-}{\Delta}\,x\hat{\mathcal{F}}_1^{QS}\,, \\
+2xF_1 &=& \displaystyle S_+ \left[\frac{\Sigma_{++}-2m_1m_2\frac{S_-}{S_+}}{\Delta}\right]\,x\hat{\mathcal{F}}_1^{QS}\,, \\
 \\
-F_2 &=& \displaystyle \frac{S_+\Delta}{Q^2} \, x\hat{\mathcal{F}}_2^{QS}\,,\\
+F_2 &=& \displaystyle S_+\left[\frac{\Delta}{Q^2}\right] \, x\hat{\mathcal{F}}_2^{QS}\,,\\
 \\
-xF_3 &=& \displaystyle 2R_+ \,x\hat{\mathcal{F}}_3^{QS}\,.
+xF_3 &=& \displaystyle R_+
+         \left[2\right]\,x\hat{\mathcal{F}}_3^{QS}\,,\\
+\\
+F_L &=& \displaystyle \left[\frac{2S_+}{S_++S_-}\right]_{\mbox{\tiny NC only}}\left(F_2 - 2xF_1\right)
 \end{array}
 \end{equation}
+Notice that we have factorized a factor which in {\tt APFEL} is
+included \textit{a posteriori} when constructing the structure
+functions and that thus does not go into the coefficient
+functions. The factors in the square bracket goes into the coefficient
+functions with the exception of the factor in front of $F_L$ that must
+be included only the NC case to balance the factor in the r.h.s. of
+eq.~(\ref{FLLOIC})
 
-In the NC case, where $m_1=m_2=m_c$, $S_+=B_q$, $S_-=\widetilde{B}_q$ and
-$R_+=D_q$, the $\mathcal{O}(\alpha_s)$ contributions read:
+In the NC case, we have:
 \begin{equation}
-\begin{array}{rcl}
-2xF_1^{(1)}(x,Q) &=&\displaystyle \left[1+2\lambda\left(1-\frac{\tilde{B}_c}{B_c}\right)\right] \frac{B_c}{\sqrt{1+4\lambda}}\,x\hat{\mathcal{F}}_1^{QS^{(1)}} \,,\\
-\\
-F_2^{(1)}(x,Q)&=&\displaystyle B_c\left(\sqrt{1+4\lambda}\right)\,x\hat{\mathcal{F}}_2^{QS^{(1)}}\,,\\
-\\
-xF_3^{(1)}(x,Q)&=&\displaystyle 2D_c \, x\hat{\mathcal{F}}_3^{QS^{(1)}}\,,\\
-\\
-F_L^{(1)}(x,Q) &=&\displaystyle \frac{B_c}{\sqrt{1+4\lambda}}\left\{(1+4\lambda)\,x\hat{\mathcal{F}}_2^{QS^{(1)}}-\left[1+2\lambda\left(1-\frac{\tilde{B}_c}{B_c}\right)\right]\,x\hat{\mathcal{F}}_1^{QS^{(1)}} \right\}\,.
+\begin{array}{l}
+m_1=m_2=m_c\\
+S_+=B_q\\
+S_-=\widetilde{B}_q\\
+R_+=D_q
 \end{array}
 \end{equation}
 In addition, the parameter $\eta$ to be used in eq.~(\ref{FinalCFonTheGrid}) takes the form:
@@ -540,25 +544,21 @@ strange or a down quark), the kinematics is simpler than in the NC
 case. In addition, no mass singularies are caused by the masslessness
 of the outcoming parton. Therefore the limit $m_2\rightarrow 0$ can
 safely be taken. In fact, in the CC case for a strange+down quark in
-the final state,we have $m_1=m_c$ and $m_2=0$, $S_\pm=2(|V_{cs}|^2
-+|V_{cd}|^2)$, and $R_+=|V_{cs}|^2+|V_{cd}|^2$, the
-$\mathcal{O}(\alpha_s)$ contributions read:
+the final state,we have:
 \begin{equation}
-\begin{array}{rcl}
-2xF_1^{(1)}(x,Q) &=&\displaystyle 2(|V_{cs}|^2
-+|V_{cd}|^2)\,x\hat{\mathcal{F}}_1^{QS^{(1)}} \,,\\
-\\
-F_2^{(1)}(x,Q)&=&\displaystyle 2(|V_{cs}|^2
-+|V_{cd}|^2)(1+\lambda)\,x\hat{\mathcal{F}}_2^{QS^{(1)}}\,,\\
-\\
-xF_3^{(1)}(x,Q)&=&2(|V_{cs}|^2
-+|V_{cd}|^2)\, x\hat{\mathcal{F}}_3^{QS^{(1)}}\,,\\
-\\
-F_L^{(1)}(x,Q) &=&\displaystyle 2(|V_{cs}|^2
-+|V_{cd}|^2)\left[(1+\lambda)\,x\hat{\mathcal{F}}_2^{QS^{(1)}}-x\hat{\mathcal{F}}_1^{QS^{(1)}} \right]\,.
+\begin{array}{l}
+  m_1=m_c\\
+  m_2=0\\
+  S_+=2(|V_{cs}|^2+|V_{cd}|^2)\\
+  S_-=0\\
+  R_+=|V_{cs}|^2+|V_{cd}|^2
 \end{array}
 \end{equation}
-As a further simplification, the parameter $\eta$ to be used in eq.~(\ref{FinalCFonTheGrid}) is equal to one. As a consequence, eq.~(\ref{FinalCFonTheGrid}) reduces to:
+As a further simplification:
+\begin{equation}
+\eta = 1
+\end{equation}
+As a consequence, eq.~(\ref{FinalCFonTheGrid}) reduces to:
 \begin{equation}
 \Gamma_{\beta\alpha} =\int_{c}^{d} dz\frac{1}{1-z}\left[R\left(z\right)w_{\alpha}^{(k)}\left(\frac{x_\beta}{z}\right)-R(1)\delta_{\alpha\beta}\right]+\left[R(1)\ln\left(1-c\right)+L \right]\delta_{\alpha\beta}\,.
 \end{equation}
