@@ -1381,7 +1381,7 @@ c$$$*
       Del2  = Del * Del
       s1h   = ( 1d0 - z ) * ( ( Del - Spm ) * z + Del + Spm ) / 2d0 / z
       s1h2  = s1h * s1h
-      Delp  = DeltaFun(m12,s1h+m12,-Q2IC)
+      Delp  = DeltaFun(m12,s1h+m22,-Q2IC)
       Delp2 = Delp * Delp
       Lxi   = dlog( ( Spp + s1h - Delp ) / ( Spp + s1h + Delp ) )
       Ixi   = ( ( s1h + 2d0 * m22 ) / s1h2 + ( s1h + m22 )
@@ -1411,7 +1411,7 @@ c$$$*
 *
       N1 = ( Splus * Spp - 2d0 * m1 * m2 * Sminus ) / 2d0 /  Del
 *
-      c11ICR = fact1 * 2d0 * CF * ( 1 - z ) * s1h * f1hat / N1 / 8d0 
+      c11ICR = fact1 * 2d0 * CF * ( 1d0 - z ) * s1h * f1hat / N1 / 8d0
      1       / ( s1h + m22 )
 *
       return
@@ -1443,7 +1443,7 @@ c$$$*
       Del2  = Del * Del
       s1h   = ( 1d0 - z ) * ( ( Del - Spm ) * z + Del + Spm ) / 2d0 / z
       s1h2  = s1h * s1h
-      Delp  = DeltaFun(m12,s1h+m12,-Q2IC)
+      Delp  = DeltaFun(m12,s1h+m22,-Q2IC)
       Delp2 = Delp * Delp
       Lxi   = dlog( ( Spp + s1h - Delp ) / ( Spp + s1h + Delp ) )
       Ixi   = ( ( s1h + 2d0 * m22 ) / s1h2 + ( s1h + m22 )
@@ -1470,8 +1470,9 @@ c$$$*
 *
       N2 = 2d0 * Splus * Del / Delp2
 *
-      c21ICR = fact2 * 2d0 * CF * ( 1 - z ) * s1h * f2hat / N2 / 8d0 
+      c21ICR = fact2 * 2d0 * CF * ( 1d0 - z ) * s1h * f2hat / N2 / 8d0
      1       / ( s1h + m22 ) 
+*
       return
       end
 *
@@ -1501,7 +1502,7 @@ c$$$*
       Del2  = Del * Del
       s1h   = ( 1d0 - z ) * ( ( Del - Spm ) * z + Del + Spm ) / 2d0 / z
       s1h2  = s1h * s1h
-      Delp  = DeltaFun(m12,s1h+m12,-Q2IC)
+      Delp  = DeltaFun(m12,s1h+m22,-Q2IC)
       Delp2 = Delp * Delp
       Lxi   = dlog( ( Spp + s1h - Delp ) / ( Spp + s1h + Delp ) )
       Ixi   = ( ( s1h + 2d0 * m22 ) / s1h2 + ( s1h + m22 )
@@ -1517,7 +1518,7 @@ c$$$*
 *
       N3 = 2d0 * Rplus / Delp
 *
-      c31ICR = fact3 * 2d0 * CF * ( 1 - z ) * s1h * f3hat / N3 / 8d0 
+      c31ICR = fact3 * 2d0 * CF * ( 1d0 - z ) * s1h * f3hat / N3 / 8d0
      1       / ( s1h + m22 ) 
       return
       end

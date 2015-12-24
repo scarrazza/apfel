@@ -4,7 +4,7 @@
 *     to the intrinsic charm components
 *
       double precision m2strange
-      parameter(m2strange = 0d0)
+      parameter(m2strange = 0.01d0)
 *
       double precision Q2IC,m12,m22,m1,m2
       double precision Splus,Sminus,Rplus,Rminus

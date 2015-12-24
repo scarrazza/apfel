@@ -96,7 +96,7 @@
          if(ipt.ge.1)then
 *     Charm mass and scale (Only pole mass for now)
             m12 = m2ph(4)
-            Q2IC  = m22 / lambda
+            Q2IC  = m12 / lambda
 *
 *     Neutral current
 *
@@ -120,6 +120,8 @@
                   c = max(xg(igrid,beta),
      1                 xg(igrid,beta)/xg(igrid,alpha+1)) / eta
                   d = min(eta,xg(igrid,beta)/xg(igrid,bound)) / eta
+*
+                  if(c.ge.eta) cycle
 *
                   fL = w_int(inter_degree(igrid),alpha,
      1                 xg(igrid,beta)/eta)
@@ -235,7 +237,7 @@
      1     - ddilog( ( Del - Smp ) / 2d0 / Del )
      2     + ddilog( ( Del + Spm ) / 2d0 / Del )
      3     + ddilog( ( Del + Smp ) / 2d0 / Del ) )
-*     
+*
       S1 = 2d0 + Spp / Del * ( Del * I1
      1     + ddilog( 2d0 * Del / ( Del - Spp ) )
      2     - ddilog( 2d0 * Del / ( Del + Spp ) ) )
