@@ -238,7 +238,8 @@ am__objects_10 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
 	DIS/ExcludeScaleVariation.lo DIS/ReportParametersDIS.lo \
 	DIS/EnableDampingFONLL.lo DIS/SetPropagatorCorrection.lo \
 	DIS/SetEWCouplings.lo DIS/EnableDynamicalScaleVariations.lo \
-	DIS/EnableIntrinsicCharm.lo DIS/IncludeIntrinsicCharm.lo
+	DIS/EnableIntrinsicCharm.lo DIS/IncludeIntrinsicCharm.lo \
+	DIS/integrandsIC.lo
 am__objects_11 = HELL/src/hell.lo HELL/src/hell_wrapper.lo
 am__objects_12 = FTDY/src/ComputeFKTables.lo \
 	FTDY/src/ComputeHardCrossSectionsDY.lo FTDY/src/gauleg.lo \
@@ -557,7 +558,8 @@ DIS = DIS/InitializeAPFEL_DIS.f DIS/initParametersDIS.f DIS/SetMassScheme.f DIS/
 	DIS/GetWMass.f DIS/GetZMass.f DIS/RSLintegralsSIA.f DIS/integrandsSIA.f DIS/initIntegralsSIA.f DIS/SelectCharge.f \
 	DIS/SetRenQRatio.f DIS/SetFacQRatio.f DIS/GetSIATotalCrossSection.f DIS/IncludeScaleVariation.f \
 	DIS/ExcludeScaleVariation.f DIS/ReportParametersDIS.f DIS/EnableDampingFONLL.f DIS/SetPropagatorCorrection.f \
-	DIS/SetEWCouplings.f DIS/EnableDynamicalScaleVariations.f DIS/EnableIntrinsicCharm.f DIS/IncludeIntrinsicCharm.f
+	DIS/SetEWCouplings.f DIS/EnableDynamicalScaleVariations.f DIS/EnableIntrinsicCharm.f DIS/IncludeIntrinsicCharm.f \
+	DIS/integrandsIC.f
 
 FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src/gauleg.f FTDY/src/initDYcouplings.f FTDY/src/initxGridDY.f \
 	FTDY/src/readcDY.f FTDY/src/ReadDataFile.f FTDY/src/sigmafk_dy.f FTDY/src/wcDYlo.f FTDY/src/wcDYqg.f FTDY/src/wcDYqq.f FTDY/src/wcoeffDY.f \
@@ -1060,6 +1062,7 @@ DIS/EnableIntrinsicCharm.lo: DIS/$(am__dirstamp) \
 	DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/IncludeIntrinsicCharm.lo: DIS/$(am__dirstamp) \
 	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/integrandsIC.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 HELL/src/$(am__dirstamp):
 	@$(MKDIR_P) HELL/src
 	@: > HELL/src/$(am__dirstamp)
