@@ -35,8 +35,11 @@
       double precision dgauss,c,d,eps
       double precision C2RS,C2L,CLRS,CLL,C3RS,C3L
       double precision c21ICL,cL1ICL,c31ICL
+      double precision DIC,DICc
       double precision integrandsICm
       external integrandsICm
+      double precision integrandsICm0
+      external integrandsICm0
 
       parameter(eps=1d-6)
 *
@@ -94,6 +97,11 @@
 *     NLO
 *
          if(ipt.ge.1)then
+*
+            wixi   = ixi * xistep
+*
+*     FFNS
+*
 *     Charm mass and scale (Only pole mass for now)
             m12 = m2ph(4)
             Q2IC  = m12 / lambda
@@ -126,7 +134,6 @@
                   fL = w_int(inter_degree(igrid),alpha,
      1                 xg(igrid,beta)/eta)
 *
-                  wixi   = ixi * xistep
                   walpha = alpha
                   wbeta  = beta
 *
@@ -168,7 +175,6 @@
                   fL = 0d0
                   if(alpha.eq.beta) fL = 1d0
 *
-                  wixi   = ixi * xistep
                   walpha = alpha
                   wbeta  = beta
 *
@@ -189,7 +195,39 @@
                   SC3mCC(igrid,ixi,2,1,beta,alpha) = C3RS + C3L * fL
                enddo
             enddo
-
+*
+*     FFN0
+*
+            do beta=0,gbound
+               do alpha=beta,nin(igrid)-1
+                  bound = alpha-inter_degree(igrid)
+                  if(alpha.lt.inter_degree(igrid)) bound = 0
+*
+                  c = max(xg(igrid,beta),
+     1                 xg(igrid,beta)/xg(igrid,alpha+1))
+                  d = min(1d0,xg(igrid,beta)/xg(igrid,bound))
+*
+                  fL = 0d0
+                  if(alpha.eq.beta) fL = 1d0
+*
+                  walpha = alpha
+                  wbeta  = beta
+*
+                  DIC = dgauss(integrandsICm0,c,d,eps) + DICc(c) * fL
+*     Neutral Current
+                  SC2m0NC(igrid,ixi,3,1,beta,alpha) =
+     1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+                  SCLm0NC(igrid,ixi,3,1,beta,alpha) =
+     1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+*     Charged Current
+                  SC2mCC(igrid,ixi,2,1,beta,alpha) =
+     1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+                  SCLmCC(igrid,ixi,2,1,beta,alpha) =
+     1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+                  SC3mCC(igrid,ixi,2,1,beta,alpha) =
+     1                 SC3zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+               enddo
+            enddo
          endif
       enddo
 *

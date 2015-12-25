@@ -1103,3 +1103,91 @@
 *
       RETURN
       END
+*
+************************************************************************
+*     Logarithmically divergents term to be added to the MSbar ZM
+*     coefficient functions to obtain the massless limit of the IC
+*     contributions.
+************************************************************************
+      function DICa(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lnk
+**
+*     Output Variables
+*
+      double precision DICa
+*
+      lnk = dlog(xi/kfacQ)                ! ln(muF2/mh2)
+*
+      DICa = 2d0 * CF * ( 1d0 + z ) * ( - lnk + 1d0
+     1     + 2d0 * dlog( 1d0 - z ) )
+*
+      return
+      end
+*
+************************************************************************
+      function DICb(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lnk
+**
+*     Output Variables
+*
+      double precision DICb
+*
+      lnk = dlog(xi/kfacQ)                ! ln(muF2/mh2)
+*
+      DICb = 4d0 * CF * ( lnk - 1d0 - 2d0 * dlog( 1d0 - z ) )
+     1     / ( 1d0 - z )
+*
+      return
+      end
+*
+************************************************************************
+      function DICc(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lnk
+**
+*     Output Variables
+*
+      double precision DICc
+*
+      lnk = dlog(xi/kfacQ)                ! ln(muF2/mh2)
+*
+      DICc = 4d0 * CF * ( 3d0 * lnk / 4d0 + 1d0 
+     1     + ( lnk - 1d0 ) * dlog( 1d0 - z ) - dlog( 1d0 - z )**2d0 )
+*
+      return
+      end

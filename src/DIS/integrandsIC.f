@@ -85,3 +85,45 @@
 *
       return
       end
+*
+************************************************************************
+      function integrandsICm0(y)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/wrapDIS.h"
+      include "../commons/coeffhqmellin.h"
+**
+*     Input Variables
+*
+      double precision y
+**
+*     Internal Variables
+*
+      double precision z,w_int,fR,fS,fL
+      double precision xi
+      double precision DICa,DICb
+**
+*     Output Variables
+*
+      double precision integrandsICm0
+*
+*     Interpolant functions
+*
+      z = xg(igrid,wbeta) / y
+*
+      fL = 0d0
+      if(walpha.eq.wbeta) fL = 1d0
+*
+      fR = w_int(inter_degree(igrid),walpha,z)
+      fS = fR - fL
+*
+      xi = xigrid(wixi)
+*
+*     Contructing integrands
+*
+      integrandsICm0 = DICa(xi,y) * fR + DICb(xi,y) * fS
+*
+      return
+      end
