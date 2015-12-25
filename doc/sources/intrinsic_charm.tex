@@ -82,12 +82,13 @@ the two sectors start at $\alpha_s^0$.
 \subsection{Order $\alpha_s^0$ Contributions}
 
 In order to write explicitly the form of such LO contributions to the
-DIS structure functions, I consider eq.~(2) of \cite{Kretzer:1998ju}
-where the function $Q_1$ schould be indentified with the charm PDF. It
-should be noticed that in the $N_f=3$ scheme, such PDF does not obey
-the DGLAP equation because, due to the presence of the mass of the
-charm $m_c$, no large collinear logarithms appear in the calculation
-and thus there is no need to resum them.
+DIS structure functions, I consider eq.~(2) of
+Ref.~\cite{Kretzer:1998ju} where the function $Q_1$ schould be
+indentified with the charm PDF. It should be noticed that in the
+$N_f=3$ scheme, such PDF does not obey the DGLAP equation because, due
+to the presence of the mass of the charm $m_c$, no large collinear
+logarithms appear in the calculation and thus there is no need to
+resum them.
 
 From eq.~(2) of \cite{Kretzer:1998ju} one reads that the
 $\mathcal{O}(\alpha_s^0)$ IC contributions to the massive structrure
@@ -554,7 +555,8 @@ the final state,we have:
   R_+=|V_{cs}|^2+|V_{cd}|^2
 \end{array}
 \end{equation}
-As a further simplification:
+However, for numerical reasons we cannot really set $m_2=0$. We set it
+instead to a small number.  As a further simplification:
 \begin{equation}
 \eta = 1
 \end{equation}
@@ -563,17 +565,45 @@ As a consequence, eq.~(\ref{FinalCFonTheGrid}) reduces to:
 \Gamma_{\beta\alpha} =\int_{c}^{d} dz\frac{1}{1-z}\left[R\left(z\right)w_{\alpha}^{(k)}\left(\frac{x_\beta}{z}\right)-R(1)\delta_{\alpha\beta}\right]+\left[R(1)\ln\left(1-c\right)+L \right]\delta_{\alpha\beta}\,.
 \end{equation}
 
+\subsection{Massless Limit}
 
+What is left to be done to allow us to implement the FONLL scheme with
+IC to $\mathcal{O}(\alpha_s)$ is to compute and implement the massless
+limit, $i.e.$ $m_1=m_c\rightarrow 0$, of the $\mathcal{O}(\alpha_s)$
+coeffient functions. We do not really need to compute these coeffient
+functions because in Ref.~\cite{Kretzer:1998ju} the authors show that
+the logarithmically divergent part of all coefficient functions is
+equal to:
+\begin{equation}
+\begin{array}{rcl}
+D(x,m_1^2)&=&\displaystyle
+     2C_F\left[\frac{1+x^2}{1-x}\left(\ln\frac{\mu_F^2}{m_1^2}-1-2\ln(1-x)\right)\right]_+\\
+\\
+&=&\displaystyle 2C_F\left\{
+  \left(\ln\frac{\mu_F^2}{m_1^2}-1\right)\left[(1+x^2)\frac{1}{1-x}\right]_+-2\left[(1+x^2)\frac{\ln(1-x)}{1-x}\right]_+\right\}\,.
+\end{array}
+\end{equation}
+We can now manipulate this expression using the following property of
+the plus-prescripted distributions:
+\begin{equation}
+\left[g(x)f(x)\right]_+= \left[g(x) \right]_+ f(x) -
+\delta(1-x)\int_0^1 dy \left[g(y) \right]_+ f(y)\,,
+\end{equation}
+so that:
+\begin{equation}\label{LogDivergence}
+\begin{array}{rcl}
+D(x,m_1^2) &=& \displaystyle  2C_F\Bigg\{
+  \ln\frac{\mu_F^2}{m_1^2}
+ \left( 2\left[\frac{1}{1-x}\right]_+-(1+x)+\frac32\delta(1-x)\right)\\
+\\
+&&\displaystyle 
+  - 4 \left[\frac{\ln(1-x)}{1-x}\right]_+-2\left[\frac{1}{1-x}\right]_++2(1+x)\ln(1-x) +(1+x)+2\delta(1-x) \Bigg\}\,.
+\end{array}
+\end{equation}
 
-%It can be shown that:
-%\begin{equation}
-%\left[g(x)f(x)\right]_+= \left[g(x) \right]_+ f(x) -
-%\delta(1-x)\int_0^1 dy \left[g(y) \right]_+ f(y)
-%\end{equation}
-
-
-
-
+Finally, what we need to do to obtain the massless limit is to add to
+the $\overline{\mbox{MS}}$ zero-mass coeffient functions the term in
+eq.~(\ref{LogDivergence}).
 
 
 
