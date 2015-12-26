@@ -32,7 +32,7 @@
       integer bound
       double precision PL(0:2),fL
       double precision X0NSC,X1NSC,P2NSPC,P2NSMC,X0GGC,X1GGC,P2GGC
-      double precision dgauss,a,b,eps(0:2),fsg,fns
+      double precision dgauss,a,b,eps(0:2)
       double precision integrandsQCD
       double precision integ(0:2)
       double precision ns0L,gg0L,ns0RS,qg0R,gq0R,gg0RS
@@ -41,9 +41,7 @@
       double precision qq2RS,qg2RS,gq2RS,gg2RS
       double precision lnk,beta0apf,beta1apf
       external integrandsQCD
-c      data eps / 1d-9, 5d-8, 1d-3 /
-      data eps / 1d-9, 5d-8, 1d-4 /
-c      data eps / 1d-9, 1d-7, 1d-5 /
+      data eps / 1d-6, 1d-5, 1d-4 /
 *
 *     Initialize Integrals
 *
@@ -75,39 +73,33 @@ c      data eps / 1d-9, 1d-7, 1d-5 /
 *
 *     Precompute integrals
 *
-      fsg = ( dlog(1d-5) / dlog(xg(igrid,alpha)) )**2d0
-      fns = 1d0 / ( 1d0 - ( ( xg(igrid,alpha) - 2d-1 ) 
-     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
-c      fsg = 1d0
-c      fns = 1d0
-*
       wipt = 0
       ns0L = X0NSC(a)
       gg0L = X0GGC(a,nf)
       k = 1
-      ns0RS = dgauss(integrandsQCD,a,b,fsg*eps(wipt))
+      ns0RS = dgauss(integrandsQCD,a,b,eps(wipt))
       k = 5
-      qg0R  = dgauss(integrandsQCD,a,b,fsg*eps(wipt))
+      qg0R  = dgauss(integrandsQCD,a,b,eps(wipt))
       k = 6
-      gq0R  = dgauss(integrandsQCD,a,b,fsg*eps(wipt))
+      gq0R  = dgauss(integrandsQCD,a,b,eps(wipt))
       k = 7
-      gg0RS = dgauss(integrandsQCD,a,b,fsg*eps(wipt))
+      gg0RS = dgauss(integrandsQCD,a,b,eps(wipt))
       if(ipt.ge.1)then
          wipt = 1
          ns1L = X1NSC(a,nf)
          gg1L = X1GGC(a,nf)
          k = 1
-         ns1RSp = dgauss(integrandsQCD,a,b,fns*eps(wipt))
+         ns1RSp = dgauss(integrandsQCD,a,b,eps(wipt))
          k = 2
-         ns1RSm = dgauss(integrandsQCD,a,b,fns*eps(wipt))
+         ns1RSm = dgauss(integrandsQCD,a,b,eps(wipt))
          k = 4
-         qq1RS  = dgauss(integrandsQCD,a,b,fsg*eps(wipt))
+         qq1RS  = dgauss(integrandsQCD,a,b,eps(wipt))
          k = 5
-         qg1RS  = dgauss(integrandsQCD,a,b,fsg*eps(wipt))
+         qg1RS  = dgauss(integrandsQCD,a,b,eps(wipt))
          k = 6
-         gq1RS  = dgauss(integrandsQCD,a,b,fsg*eps(wipt))
+         gq1RS  = dgauss(integrandsQCD,a,b,eps(wipt))
          k = 7
-         gg1RS  = dgauss(integrandsQCD,a,b,fsg*eps(wipt))
+         gg1RS  = dgauss(integrandsQCD,a,b,eps(wipt))
       endif
       if(ipt.ge.2)then
          wipt = 2
@@ -186,7 +178,7 @@ c      fns = 1d0
          if(ipt.ge.2)then
 *     Plus
             if(k.eq.1)then
-               PL(2)  = ns2Lp
+               PL(2)    = ns2Lp
                integ(2) = ns2RSp
 *     Minus
             elseif(k.eq.2)then
@@ -267,7 +259,7 @@ c      fns = 1d0
       integer bound
       double precision PL(0:2),fL
       double precision X0NSC,X1NSTC,P2NSPTC,P2NSMTC,X0GGC,X1GGTC,P2GGTC
-      double precision dgauss,a,b,eps(0:2),fsg,fns
+      double precision dgauss,a,b,eps(0:2)
       double precision integrandsQCDT
       double precision integ(0:2)
       double precision ns0L,gg0L,ns0RS,qg0R,gq0R,gg0RS
@@ -276,9 +268,7 @@ c      fns = 1d0
       double precision qq2RS,qg2RS,gq2RS,gg2RS
       double precision lnk,beta0apf,beta1apf
       external integrandsQCDT
-c      data eps / 1d-9, 5d-8, 1d-3 /
-      data eps / 1d-9, 5d-8, 1d-4 /
-c      data eps / 1d-9, 1d-7, 1d-5 /
+      data eps / 1d-7, 1d-6, 1d-5 /
 *
 *     Initialize Integrals
 *
@@ -310,39 +300,33 @@ c      data eps / 1d-9, 1d-7, 1d-5 /
 *
 *     Precompute integrals
 *
-c      fsg = ( dlog(1d-5) / dlog(xg(igrid,alpha)) )**2d0
-c      fns = 1d0 / ( 1d0 - ( ( xg(igrid,alpha) - 2d-1 ) 
-c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
-      fsg = 1d0
-      fns = 1d0
-*
       wipt = 0
       ns0L = X0NSC(a)
       gg0L = X0GGC(a,nf)
       k = 1
-      ns0RS = dgauss(integrandsQCDT,a,b,fsg*eps(wipt))
+      ns0RS = dgauss(integrandsQCDT,a,b,eps(wipt))
       k = 5
-      qg0R  = dgauss(integrandsQCDT,a,b,fsg*eps(wipt))
+      qg0R  = dgauss(integrandsQCDT,a,b,eps(wipt))
       k = 6
-      gq0R  = dgauss(integrandsQCDT,a,b,fsg*eps(wipt))
+      gq0R  = dgauss(integrandsQCDT,a,b,eps(wipt))
       k = 7
-      gg0RS = dgauss(integrandsQCDT,a,b,fsg*eps(wipt))
+      gg0RS = dgauss(integrandsQCDT,a,b,eps(wipt))
       if(ipt.ge.1)then
          wipt = 1
          ns1L = X1NSTC(a,nf)
          gg1L = X1GGTC(a,nf)
          k = 1
-         ns1RSp = dgauss(integrandsQCDT,a,b,fns*eps(wipt))
+         ns1RSp = dgauss(integrandsQCDT,a,b,eps(wipt))
          k = 2
-         ns1RSm = dgauss(integrandsQCDT,a,b,fns*eps(wipt))
+         ns1RSm = dgauss(integrandsQCDT,a,b,eps(wipt))
          k = 4
-         qq1RS  = dgauss(integrandsQCDT,a,b,fsg*eps(wipt))
+         qq1RS  = dgauss(integrandsQCDT,a,b,eps(wipt))
          k = 5
-         qg1RS  = dgauss(integrandsQCDT,a,b,fsg*eps(wipt))
+         qg1RS  = dgauss(integrandsQCDT,a,b,eps(wipt))
          k = 6
-         gq1RS  = dgauss(integrandsQCDT,a,b,fsg*eps(wipt))
+         gq1RS  = dgauss(integrandsQCDT,a,b,eps(wipt))
          k = 7
-         gg1RS  = dgauss(integrandsQCDT,a,b,fsg*eps(wipt))
+         gg1RS  = dgauss(integrandsQCDT,a,b,eps(wipt))
       endif
       if(ipt.ge.2)then
          wipt = 2
@@ -421,7 +405,7 @@ c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
          if(ipt.ge.2)then
 *     Plus
             if(k.eq.1)then
-               PL(2)  = ns2Lp
+               PL(2)    = ns2Lp
                integ(2) = ns2RSp
 *     Minus
             elseif(k.eq.2)then
@@ -499,10 +483,10 @@ c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
 *     Internal Variables
 *
       integer bound
-      double precision dgauss,a,b,eps,fsg
+      double precision dgauss,a,b,eps
       double precision integrandsQCDRes
       external integrandsQCDRes
-      parameter(eps=1d-9)
+      parameter(eps=1d-7)
 *
 *     Initialize Integrals
 *
@@ -529,14 +513,9 @@ c     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
 *
 *     Precompute integrals
 *
-      fsg = ( dlog(1d-5) / dlog(xg(igrid,alpha)) )**2d0
-c      fsg = 1d0
-*
-*     Integrals
-*
       do k=4,7
          SPRes(igrid,k,la,beta,alpha,tau) =
-     1        dgauss(integrandsQCDRes,a,b,fsg*eps)
+     1        dgauss(integrandsQCDRes,a,b,eps)
       enddo
 *
       return
@@ -567,7 +546,7 @@ c      fsg = 1d0
       double precision PL(0:2),fL
       double precision X0NSPC,X1NSPC,P2NSPPC,P2NSMPC,X0GGPC,X1GGPC
       double precision P2GGPC
-      double precision dgauss,a,b,eps(0:2),fsg,fns
+      double precision dgauss,a,b,eps(0:2)
       double precision integrandsQCDPol
       double precision integ(0:2)
       double precision ns0L,gg0L,ns0RS,qg0R,gq0R,gg0RS
@@ -576,9 +555,7 @@ c      fsg = 1d0
       double precision qq2RS,qg2RS,gq2RS,gg2RS
       double precision lnk,beta0apf,beta1apf
       external integrandsQCDPol
-c      data eps / 1d-9, 5d-8, 1d-3 /
-      data eps / 1d-9, 5d-8, 1d-4 /
-c      data eps / 1d-9, 1d-7, 1d-5 /
+      data eps / 1d-6, 1d-5, 1d-4 /
 *
 *     Initialize Integrals
 *
@@ -610,39 +587,33 @@ c      data eps / 1d-9, 1d-7, 1d-5 /
 *
 *     Precompute integrals
 *
-      fsg = ( dlog(1d-5) / dlog(xg(igrid,alpha)) )**2d0
-      fns = 1d0 / ( 1d0 - ( ( xg(igrid,alpha) - 2d-1 ) 
-     1    / ( 1d0 - 2d-1 ) )**2d0 )**4d0
-c      fsg = 1d0
-c      fns = 1d0
-*
       wipt = 0
       ns0L = X0NSPC(a)
       gg0L = X0GGPC(a,nf)
       k = 1
-      ns0RS = dgauss(integrandsQCDPol,a,b,fsg*eps(wipt))
+      ns0RS = dgauss(integrandsQCDPol,a,b,eps(wipt))
       k = 5
-      qg0R  = dgauss(integrandsQCDPol,a,b,fsg*eps(wipt))
+      qg0R  = dgauss(integrandsQCDPol,a,b,eps(wipt))
       k = 6
-      gq0R  = dgauss(integrandsQCDPol,a,b,fsg*eps(wipt))
+      gq0R  = dgauss(integrandsQCDPol,a,b,eps(wipt))
       k = 7
-      gg0RS = dgauss(integrandsQCDPol,a,b,fsg*eps(wipt))
+      gg0RS = dgauss(integrandsQCDPol,a,b,eps(wipt))
       if(ipt.ge.1)then
          wipt = 1
          ns1L = X1NSPC(a,nf)
          gg1L = X1GGPC(a,nf)
          k = 1
-         ns1RSp = dgauss(integrandsQCDPol,a,b,fns*eps(wipt))
+         ns1RSp = dgauss(integrandsQCDPol,a,b,eps(wipt))
          k = 2
-         ns1RSm = dgauss(integrandsQCDPol,a,b,fns*eps(wipt))
+         ns1RSm = dgauss(integrandsQCDPol,a,b,eps(wipt))
          k = 4
-         qq1RS  = dgauss(integrandsQCDPol,a,b,fsg*eps(wipt))
+         qq1RS  = dgauss(integrandsQCDPol,a,b,eps(wipt))
          k = 5
-         qg1RS  = dgauss(integrandsQCDPol,a,b,fsg*eps(wipt))
+         qg1RS  = dgauss(integrandsQCDPol,a,b,eps(wipt))
          k = 6
-         gq1RS  = dgauss(integrandsQCDPol,a,b,fsg*eps(wipt))
+         gq1RS  = dgauss(integrandsQCDPol,a,b,eps(wipt))
          k = 7
-         gg1RS  = dgauss(integrandsQCDPol,a,b,fsg*eps(wipt))
+         gg1RS  = dgauss(integrandsQCDPol,a,b,eps(wipt))
       endif
       if(ipt.ge.2)then
          wipt = 2

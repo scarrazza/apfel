@@ -60,7 +60,7 @@
       if(InLambdaQCD.ne."done")   call SetLambdaQCDRef(0.220d0,5)
       if(InEpsTrunc.ne."done")    call SetEpsilonTruncation(1d-2)
       if(InAlphaEvol.ne."done")   call SetAlphaEvolution("exact")
-      if(InPDFEvol.ne."done")     call SetPDFEvolution("exactmu")
+      if(InPDFEvol.ne."done")     call SetPDFEvolution("exactalpha")
       if(InKren.ne."done")        call SetRenFacRatio(1d0)
       if(InMasses.ne."done")      call SetPoleMasses(dsqrt(2d0),4.5d0,
      1                                               175d0)
@@ -78,7 +78,7 @@
       if(InRep.ne."done")         call SetReplica(0)
       if(InEvolOp.ne."done")      call EnableEvolutionOperator(.false.)
       if(InLeptEvol.ne."done")    call EnableLeptonEvolution(.false.)
-      if(InLock.ne."done")        call LockGrids(.false.)
+      if(InLock.ne."done")        call LockGrids(.true.)
       if(InLHgrid.ne."done")      call SetLHgridParameters(100,50,1d-9,
      1                                            1d-1,1d0,50,1d0,1d10)
       if(InQGrid.ne."done")       call SetQGridParameters(70,3)
