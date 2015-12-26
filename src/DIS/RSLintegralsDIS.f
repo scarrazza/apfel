@@ -89,7 +89,7 @@
       external cm22q_adler
 c      data eps / 5d-8, 1d-3 /
 c      data eps / 5d-8, 1d-5 /
-      data eps / 1d-6, 1d-3 /
+      data eps / 1d-5, 1d-3 /
 c      data eps / 1d-7, 1d-5 /
 *
 *     Adjustment of the bounds of the integrals
@@ -931,7 +931,7 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
       double precision dgauss,c,d,eps
       double precision integrandsDISTMC
       external integrandsDISTMC
-      data eps / 1d-6 /
+      data eps / 1d-5 /
 *
       if(alpha.lt.beta) return
 *

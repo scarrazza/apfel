@@ -60,7 +60,7 @@
       external integrandsSIAzm
 c      data eps / 5d-8, 1d-3 /
 c      data eps / 5d-8, 1d-5 /
-      data eps / 1d-6, 1d-3 /
+      data eps / 1d-5, 1d-3 /
 c      data eps / 1d-7, 1d-5 /
 *
 *     Adjustment of the bounds of the integrals
