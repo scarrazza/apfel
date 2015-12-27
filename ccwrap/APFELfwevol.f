@@ -77,11 +77,16 @@ ccccccccccccc
       end
 
 ccccccccccccc      
-      function fxpdfall(x,xf)
-      double precision x, xf(-6:6), fxpdfall
-      fxpdfall = xPDFall(x,xf)
-      return
-      end
+      subroutine fxpdfall(x,xf)
+      double precision x, xf(-6:6)
+      call xPDFall(x,xf)
+      end subroutine fxpdfall
+
+ccccccccccccc      
+      subroutine fxpdfxqall(x,Q,xf)
+      double precision x, Q, xf(-6:6)
+      call xPDFxQall(x,Q,xf)
+      end subroutine fxpdfxqall
 
 ccccccccccccc      
       function fxlepton(i,x)

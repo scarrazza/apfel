@@ -13,7 +13,7 @@
       double precision Q0,Q
       double precision Q02,Q2
       double precision AlphaQCD,AlphaQED
-      double precision xPDFj,xgamma,xLepton,xf(-6:6),xPDFxQ
+      double precision xPDFj,xgammaj,xLeptonj,xf(-6:6),xPDFxQ
       double precision eps
       double precision xlha(11)
 
@@ -46,7 +46,7 @@ c      call SetGridParameters(3,30,3,8d-1)
 c      call SetPDFSet("NNPDF30_nnlo_as_0118.LHgrid")
 c      call SetAlphaQCDRef(0.118d0,91.2d0)
 c      call SetAlphaEvolution("expanded")
-      call SetPDFEvolution("exactalpha")
+c      call SetPDFEvolution("exactalpha")
 c      call SetPoleMasses(1.275d0,4.18d0,173.03d0)
 c      call SetMaxFlavourPDFs(5)
 c      call SetMaxFlavourAlpha(5)
@@ -82,14 +82,29 @@ c      call SetMaxFlavourAlpha(5)
      4         2d0 * ( xPDFj(-1,xlha(ilha)) + xPDFj(-2,xlha(ilha)) ),
      5         xPDFj(4,xlha(ilha)) + xPDFj(-4,xlha(ilha)),
      6         xPDFj(0,xlha(ilha)),
-     7         xgamma(xlha(ilha)),
-     8         xLepton(1,xlha(ilha))+xLepton(-1,xlha(ilha)),
-     9         xLepton(2,xlha(ilha))+xLepton(-2,xlha(ilha)),
-     1         xLepton(3,xlha(ilha))+xLepton(-3,xlha(ilha))
+     7         xgammaj(xlha(ilha)),
+     8         xLeptonj(1,xlha(ilha))+xLeptonj(-1,xlha(ilha)),
+     9         xLeptonj(2,xlha(ilha))+xLeptonj(-2,xlha(ilha)),
+     1         xLeptonj(3,xlha(ilha))+xLeptonj(-3,xlha(ilha))
       enddo
       write(*,*) "  "
 *
-*     Cache PDFs
+      write(6,*) "Standard evolution using the xPDFall function:"
+      write(6,'(a5,2a12,a14,a10,2a12)') "x",
+     1         "u-ubar","d-dbar","2(ubr+dbr)","c+cbar","gluon"
+      do ilha=3,11
+         call xPDFall(xlha(ilha),xf)
+         write(6,'(es7.1,6es12.4)') 
+     1         xlha(ilha),
+     2         xf(2) - xf(-2),
+     3         xf(1) - xf(-1),
+     4         2d0 * ( xf(-1) + xf(-2) ),
+     5         xf(4) + xf(-4),
+     6         xf(0)
+      enddo
+      write(*,*) "  "
+*
+*     Cached PDFs
 *
       call CachePDFsAPFEL(Q0)
 *
@@ -112,20 +127,18 @@ c      call SetMaxFlavourAlpha(5)
       enddo
       write(*,*) "  "
 *
-      call EvolveAPFEL(Q0,Q)
-      write(6,*) "Standard evolution using the xPDFall function:"
+      write(6,*) "Cached evolution using the xPDFxQall function:"
       write(6,'(a5,2a12,a14,a10,2a12)') "x",
-     1         "u-ubar","d-dbar","2(ubr+dbr)","c+cbar","gluon","photon"
+     1         "u-ubar","d-dbar","2(ubr+dbr)","c+cbar","gluon"
       do ilha=3,11
-         call xPDFall(xlha(ilha),xf)
+         call xPDFxQall(xlha(ilha),Q,xf)
          write(6,'(es7.1,6es12.4)') 
      1         xlha(ilha),
      2         xf(2) - xf(-2),
      3         xf(1) - xf(-1),
      4         2d0 * ( xf(-1) + xf(-2) ),
      5         xf(4) + xf(-4),
-     6         xf(0),
-     7         xgamma(xlha(ilha))
+     6         xf(0)
       enddo
       write(*,*) "  "
 *

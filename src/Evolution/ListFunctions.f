@@ -253,6 +253,12 @@
       write(6,*) "    gluon, photon and leptons) in 'x' at the final"
       write(6,*) "    scale 'Q' [GeV]. This function requires that"
       write(6,*) "    'CachePDFsAPFEL' to be called in advance."
+      write(6,*) achar(27)//"[34m- xPDFxQall(double x, double Q,",
+     1           " double *xf):"//achar(27)//"[0m"
+      write(6,*) "    returns at once 'x' times all the PDF in the"
+      write(6,*) "    array xf[-6:6] computed in 'x' at the scale"
+      write(6,*) "    'Q' [GeV]. This function requires that"
+      write(6,*) "    'CachePDFsAPFEL' to be called in advance."
       write(6,*) achar(27)//"[34m- LUMI(int i, int j, double S):"//
      1           achar(27)//"[0m"
       write(6,*) "    returns the partonic luminosity of the i-th and"
