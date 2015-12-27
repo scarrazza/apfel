@@ -11,6 +11,12 @@ ccccccccccccc
       call ComputeStructureFunctionsAPFEL(Q0,Q)
       end subroutine fcomputestructurefunctionsapfel
 
+ccccccccccccc      
+      subroutine fcachestructurefunctionsapfel(Q0)
+      double precision Q0
+      call CacheStructureFunctionsAPFEL(Q0)
+      end subroutine fcachestructurefunctionsapfel
+
 ccccccccccccc
       subroutine fsetmassscheme(ms)
       character ms*(*)
@@ -184,6 +190,14 @@ ccccccccccccc
       function ff3total(x)
       double precision x,ff3total
       ff3total = F3total(x)
+      return
+      end
+
+ccccccccccccc      
+      function fstructurefunctionxq(proc,sf,comp,x,Q)
+      double precision x,Q,fstructurefunctionxq
+      character proc*(*),sf*(*),comp*(*)
+      fstructurefunctionxq = StructureFunctionxQ(proc,sf,comp,x,Q)
       return
       end
 

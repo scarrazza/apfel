@@ -18,8 +18,10 @@
       double precision F2light,F2charm,F2bottom,F2total
       double precision FLlight,FLcharm,FLbottom,FLtotal
       double precision F3light,F3charm,F3bottom,F3total
+      double precision StructureFunctionxQ
       double precision eps
       double precision xlha(11)
+      character*2 proc
 
       parameter(eps=1d-10)
       data xlha / 1d-7, 1d-6, 1d-5, 1d-4, 1d-3, 1d-2,
@@ -27,8 +29,11 @@
 *
 *     Settings
 *
+      proc = "NC"
 c      call SetMassScheme("ZM-VFNS")
-      call SetProcessDIS("NC")
+      call SetMassScheme("FONLL-C")
+      call SetProcessDIS(proc)
+      call SetQLimits(1.4d0,250d0)
 c      call EnableDynamicalScaleVariations(.true.)
 c      call SetRenQRatio(0.5d0)
 c      call SetFacQRatio(0.5d0)
@@ -60,9 +65,10 @@ c      call SetPDFSet("NNPDF30_nnlo_as_0118.LHgrid")
 c      call SetAlphaQCDRef(0.118d0,91.2d0)
 c      call SetAlphaEvolution("expanded")
 c      call SetPDFEvolution("expandalpha")
-c      call SetPoleMasses(1.275d0,4.18d0,173.03d0)
+c      call SetPoleMasses(dsqrt(2d0),4.5d0,100000d0)
 c      call SetMaxFlavourPDFs(5)
 c      call SetMaxFlavourAlpha(5)
+c      call SetQGridParameters(100,2)
 *
 *     Initializes integrals on the grids
 *
@@ -113,6 +119,43 @@ c      call SetMaxFlavourAlpha(5)
      3         F3charm(xlha(ilha)),
      4         F3bottom(xlha(ilha)),
      5         F3total(xlha(ilha))
+      enddo
+      write(*,*) "  "
+*
+*     Cache Structure functions
+*
+      call CacheStructureFunctionsAPFEL(Q0)
+*
+      write(6,'(a5,4a12)') "x","F2light","F2charm","F2bottom","F2total"
+      do ilha=3,11
+         write(6,'(es7.1,9es12.4)') 
+     1         xlha(ilha),
+     2         StructureFunctionxQ(proc,"F2","light",xlha(ilha),Q),
+     3         StructureFunctionxQ(proc,"F2","charm",xlha(ilha),Q),
+     4         StructureFunctionxQ(proc,"F2","bottom",xlha(ilha),Q),
+     5         StructureFunctionxQ(proc,"F2","total",xlha(ilha),Q)
+      enddo
+      write(*,*) "  "
+*
+      write(6,'(a5,4a12)') "x","FLlight","FLcharm","FLbottom","FLtotal"
+      do ilha=3,11
+         write(6,'(es7.1,9es12.4)') 
+     1         xlha(ilha),
+     2         StructureFunctionxQ(proc,"FL","light",xlha(ilha),Q),
+     3         StructureFunctionxQ(proc,"FL","charm",xlha(ilha),Q),
+     4         StructureFunctionxQ(proc,"FL","bottom",xlha(ilha),Q),
+     5         StructureFunctionxQ(proc,"FL","total",xlha(ilha),Q)
+      enddo
+      write(*,*) "  "
+*
+      write(6,'(a5,4a12)') "x","F3light","F3charm","F3bottom","F3total"
+      do ilha=3,11
+         write(6,'(es7.1,9es12.4)') 
+     1         xlha(ilha),
+     2         StructureFunctionxQ(proc,"F3","light",xlha(ilha),Q),
+     3         StructureFunctionxQ(proc,"F3","charm",xlha(ilha),Q),
+     4         StructureFunctionxQ(proc,"F3","bottom",xlha(ilha),Q),
+     5         StructureFunctionxQ(proc,"F3","total",xlha(ilha),Q)
       enddo
       write(*,*) "  "
 *

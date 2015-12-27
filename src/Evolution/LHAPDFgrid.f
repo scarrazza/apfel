@@ -117,6 +117,12 @@
       lnQmin = dlog( q2minLHA / Lambda2 )
       lnQmax = dlog( q2maxLHA / Lambda2 )
 *
+*     Initialize number of points per subgrid
+*
+      do isg=3,7
+         nQ(isg) = 0
+      enddo
+*
       if(Evs.eq."VF")then
          if(q2minLHA.gt.m2th(6))then
             nfin = 6
@@ -139,12 +145,6 @@
             nffi = 3
          endif
          if(nffi.gt.nfmax) nffi = nfmax
-*
-*     Number of points per subgrid
-*
-         do isg=3,7
-            nQ(isg) = 0
-         enddo
 *
          isg = nfin
          do iq2=1,nq2LHA
@@ -202,6 +202,17 @@
             write(6,*) "- Found = ",iq2c
             call exit(-10)
          endif
+      else
+         nfin = Nf_FF
+         nffi = Nf_FF
+*
+         nQ(Nf_FF) = nq2LHA
+*
+         do iq2=1,nq2LHA
+            q2LHA(iq2) = Lambda2 * dexp( lnQmin
+     1                 * dexp( dble( iq2 - 1 ) / dble( nq2LHA - 1 )
+     2                 * dlog( lnQmax / lnQmin ) ) )
+         enddo
       endif
 *
 *     Compute alphas on the grid being careful with the grids

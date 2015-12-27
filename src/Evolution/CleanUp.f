@@ -63,12 +63,14 @@
       include "../commons/IntrinsicCharm.h"
       include "../commons/gridQ.h"
       include "../commons/fphxQ.h"
+      include "../commons/StructureFunctionsxQ.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
 *
       InAPFEL           = "xxxx"
       InCachePDFs       = "xxxx"
+      InCacheSFs        = "xxxx"
 *
       InWelcome         = "xxxx"
       InScales          = "xxxx"

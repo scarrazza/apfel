@@ -25,6 +25,9 @@ namespace APFEL {
   /// Precompute the structure functions
   void ComputeStructureFunctionsAPFEL(double Q0, double Q);
 
+  /// Cache structure functions on a (x,Q2)-grid
+  void CacheStructureFunctionsAPFEL(double Q0);
+
   /// Set the mass scheme for the structure functions
   void SetMassScheme(const std::string& ms);
 
@@ -64,6 +67,9 @@ namespace APFEL {
   double F3bottom(double x);
   double F3top(double x);
   double F3total(double x);
+
+  /// Chached structure functions
+  double StructureFunctionxQ(const std::string& proc,const std::string& sf,const std::string& comp,double x,double Q);
 
   /// Set the value of the Z mass in GeV
   void SetZMass(double massz);

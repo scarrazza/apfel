@@ -1,13 +1,13 @@
 ************************************************************************
 *
-*     CachePDFsAPFEL.f
+*     CacheStructureFunctionsAPFEL.f
 *
 *     This subroutine chaces the evolved PDFs over a grid in x and Q2
 *     in such a way that the DGLAP evolution is done offline only once
 *     and PDFs at generic values of Q are obtained by interpolation.
 *
 ************************************************************************
-      subroutine CachePDFsAPFEL(Q0)
+      subroutine CacheStructureFunctionsAPFEL(Q0)
 *
       implicit none
 *
@@ -20,10 +20,11 @@
       include "../commons/MaxFlavourPDFs.h"
       include "../commons/MaxFlavourAlpha.h"
       include "../commons/pdfset.h"
-      include "../commons/fph.h"
-      include "../commons/fphxQ.h"
+      include "../commons/StructureFunctions.h"
+      include "../commons/StructureFunctionsxQ.h"
       include "../commons/m2th.h"
       include "../commons/Nf_FF.h"
+      include "../commons/TMC.h"
 **
 *     Input Variables
 *
@@ -35,7 +36,8 @@
       integer isg
       integer iq2,iq2c
       integer alpha
-      integer ipdf
+      integer iproc
+      integer icomp
       double precision lnQmin,lnQmax
       double precision eps
       double precision t1,t2
@@ -55,7 +57,7 @@
       lnQmin = dlog( Q2min / Lam2 )
       lnQmax = dlog( Q2max / Lam2 )
 *
-*     Initializing number of points per subgrid
+*     Initialize number of points per subgrid
 *
       do isg=3,7
          nQ(isg) = 0
@@ -135,7 +137,7 @@
          enddo
 *
          if(iq2c.ne.nQ2g)then
-            write(6,*) "In CachePDFsAPFEL.f:"
+            write(6,*) "In CacheStructureFunctionsAPFEL.f:"
             write(6,*) "Mismatch in the Number of Q2 nodes"
             write(6,*) "- Expected = ",nQ2g+1
             write(6,*) "- Found = ",iq2c+1
@@ -160,34 +162,51 @@
 *
       Q2g(-1) = Q0 * Q0
       do iq2=0,nQ2g
-         if(PDFevol(1:9).eq."truncated")then
-            call EvolveAPFEL(Q0,dsqrt(Q2g(iq2)))
-         else
-            call EvolveAPFEL(dsqrt(Q2g(iq2-1)),dsqrt(Q2g(iq2)))
-            call SetPDFSet("apfel")
-         endif
-         do alpha=0,nin(0)
-            do ipdf=-6,6
-               fphxQ(ipdf,alpha,iq2) = fph(0,ipdf,alpha)
-            enddo
-            fgammaxQ(alpha,iq2) = fgamma(0,alpha)
-            do ipdf=-3,3
-               fleptonxQ(ipdf,alpha,iq2) = flepton(0,ipdf,alpha)
-            enddo
+         do iproc=0,2
+            if(iproc.eq.0) call SetProcessDIS("EM")
+            if(iproc.eq.1) call SetProcessDIS("NC")
+            if(iproc.eq.2) call SetProcessDIS("CC")
+            if(Q0.lt.0d0.or.iproc.gt.0)then
+               call ComputeStructureFunctionsAPFEL(dsqrt(Q2g(iq2)),
+     1                                             dsqrt(Q2g(iq2)))
+            else
+               if(PDFevol(1:9).eq."truncated")then
+                  call ComputeStructureFunctionsAPFEL(Q0,
+     1                                                dsqrt(Q2g(iq2)))
+               else
+                  call ComputeStructureFunctionsAPFEL(dsqrt(Q2g(iq2-1)),
+     1                                                dsqrt(Q2g(iq2)))
+                  call SetPDFSet("apfel")
+               endif
+            endif
+            if(TMC)then
+               
+            else
+               do alpha=0,nin(0)
+                  do icomp=3,7
+                     SFxQ(iproc,1,icomp,alpha,iq2) = F2(icomp,0,alpha)
+                     SFxQ(iproc,2,icomp,alpha,iq2) = FL(icomp,0,alpha)
+                     SFxQ(iproc,3,icomp,alpha,iq2) = F3(icomp,0,alpha)
+                  enddo
+c                  write(6,*) "... ",iproc,dsqrt(Q2g(iq2),
+c     1                 SFxQ(iproc,1,6,alpha,iq2)
+               enddo
+            endif
          enddo
       enddo
 *     Restore PDF name and reset PDFs at the initial scale
       call SetPDFSet(pdfsetbkp)
-      call EvolveAPFEL(Q0,Q0)
+      call ComputeStructureFunctionsAPFEL(Q0,Q0)
 *
 *     Caching complete
 *
-      InCachePDFs = "done"
+      InCacheSFs = "done"
 *
       call cpu_time(t2)
 *
       if(Welcome)then
-         write(6,*) achar(27)//"[34m"//"PDFs have been cached"
+         write(6,*) achar(27)//"[34m"//"Structure functions",
+     1                         " have been cached"
          write(6,*) achar(27)//"[0m"
          write(6,"(a,f7.3,a)") " Caching completed in",t2-t1," s"
          write(6,*) " "
