@@ -64,7 +64,7 @@ MODULES = dummy WelcomeMessage initParameters \
 	SetRenQRatio SetFacQRatio GetSIATotalCrossSection IncludeScaleVariation \
 	ExcludeScaleVariation ReportParametersDIS EnableDampingFONLL SetPropagatorCorrection \
 	SetEWCouplings EnableDynamicalScaleVariations EnableIntrinsicCharm IncludeIntrinsicCharm \
-	integrandsIC
+	integrandsIC CacheStructureFunctionsAPFEL StructureFunctionxQ
 
 # Path with all the directories where modules should be searched by the Makefile
 MDIR 	= ../src

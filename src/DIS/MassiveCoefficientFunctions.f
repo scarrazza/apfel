@@ -1371,14 +1371,13 @@ c$$$*
 *
       double precision s1h,s1h2
       double precision Lxi,Ixi
-      double precision DeltaFun,Delp,Del2,Delp2
+      double precision DeltaFun,Delp,Delp2
       double precision f1hat,N1
 **
 *     Output Variables
 *
       double precision c11ICR
 *
-      Del2  = Del * Del
       s1h   = ( 1d0 - z ) * ( ( Del - Spm ) * z + Del + Spm ) / 2d0 / z
       s1h2  = s1h * s1h
       Delp  = DeltaFun(m12,s1h+m22,-Q2IC)
@@ -1433,14 +1432,13 @@ c$$$*
 *
       double precision s1h,s1h2
       double precision Lxi,Ixi
-      double precision DeltaFun,Delp,Del2,Delp2
+      double precision DeltaFun,Delp,Delp2
       double precision f2hat,N2
 **
 *     Output Variables
 *
       double precision c21ICR
 *
-      Del2  = Del * Del
       s1h   = ( 1d0 - z ) * ( ( Del - Spm ) * z + Del + Spm ) / 2d0 / z
       s1h2  = s1h * s1h
       Delp  = DeltaFun(m12,s1h+m22,-Q2IC)
@@ -1449,7 +1447,7 @@ c$$$*
       Ixi   = ( ( s1h + 2d0 * m22 ) / s1h2 + ( s1h + m22 )
      1      / Delp / s1h2 * Spp * Lxi )
 *
-      f2hat = 16d0 / Delp**4d0 * ( - 2d0 * Del2**4d0 * Splus * Ixi
+      f2hat = 16d0 / Delp**4d0 * ( - 2d0 * Del**4d0 * Splus * Ixi
      1     + 2d0 * m1 * m2 * Sminus * ( ( ( s1h + m22 ) / Delp )
      2     * ( Delp2 - 6d0 * m12 * Q2IC ) * Lxi
      3     - Delp2 * ( s1h + Spp ) / 2d0 / ( s1h + m22 )
@@ -1471,7 +1469,7 @@ c$$$*
       N2 = 2d0 * Splus * Del / Delp2
 *
       c21ICR = fact2 * 2d0 * CF * ( 1d0 - z ) * s1h * f2hat / N2 / 8d0
-     1       / ( s1h + m22 ) 
+     1       / ( s1h + m22 )
 *
       return
       end
@@ -1492,14 +1490,13 @@ c$$$*
 *
       double precision s1h,s1h2
       double precision Lxi,Ixi
-      double precision DeltaFun,Delp,Del2,Delp2
+      double precision DeltaFun,Delp,Delp2
       double precision f3hat,N3
 **
 *     Output Variables
 *
       double precision c31ICR
 *
-      Del2  = Del * Del
       s1h   = ( 1d0 - z ) * ( ( Del - Spm ) * z + Del + Spm ) / 2d0 / z
       s1h2  = s1h * s1h
       Delp  = DeltaFun(m12,s1h+m22,-Q2IC)
@@ -1519,7 +1516,7 @@ c$$$*
       N3 = 2d0 * Rplus / Delp
 *
       c31ICR = fact3 * 2d0 * CF * ( 1d0 - z ) * s1h * f3hat / N3 / 8d0
-     1       / ( s1h + m22 ) 
+     1       / ( s1h + m22 )
       return
       end
 *

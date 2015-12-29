@@ -40,8 +40,7 @@
       external integrandsICm
       double precision integrandsICm0
       external integrandsICm0
-
-      parameter(eps=1d-6)
+      parameter(eps=1d-5)
 *
 *     if the ZM-VFNS has been selected no IC contribution
 *     has to be included.
@@ -253,10 +252,11 @@
       m1  = dsqrt(m12)
       m2  = dsqrt(m22)
 *
-      Del = DeltaFun(m12,m22,-Q2IC)
-      Spp = Q2IC + m22 + m12
-      Spm = Q2IC + m22 - m12
-      Smp = Q2IC - m22 + m12
+      Del  = DeltaFun(m12,m22,-Q2IC)
+      Del2 = Del * Del
+      Spp  = Q2IC + m22 + m12
+      Spm  = Q2IC + m22 - m12
+      Smp  = Q2IC - m22 + m12
 *
       I1     = dlog( ( Spp + Del ) / ( Spp - Del ) ) / Del
       Cplus  = 2d0 * m1 * m2 * I1
@@ -282,6 +282,7 @@
      3     + dlog( Del**2d0 / m22 / Q2IC ) * ( - 2d0 + Spp * I1 )
       S2 = S1
       S3 = S1
+*
       V1 = CRm
      1     + ( Sminus * Spp - 2d0 * Splus * m1 * m2 )
      2     / ( Splus * Spp - 2d0 * Sminus * m1 * m2 ) * Cplus
