@@ -13,6 +13,6 @@ APFEL Web:
 
 Integration with VAI
 vai: ./configure
-vai: make
+vai: make -j4
 vai: sudo make install
 
