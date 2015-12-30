@@ -97,13 +97,13 @@
 *
          if(ipt.ge.1)then
 *
-            wixi   = ixi * xistep
+            wixi = ixi * xistep
 *
 *     FFNS
 *
 *     Charm mass and scale (Only pole mass for now)
-            m12 = m2ph(4)
-            Q2IC  = m12 / lambda
+            m12  = m2ph(4)
+            Q2IC = m12 / lambda
 *
 *     Neutral current
 *
@@ -260,10 +260,10 @@
 *
       I1     = dlog( ( Spp + Del ) / ( Spp - Del ) ) / Del
       Cplus  = 2d0 * m1 * m2 * I1
-      C1m    = - ( Smp * I1 - dlog( m12 / m22 ) ) / Q2IC
-      C1p    = - ( Spm * I1 + dlog( m12 / m22 ) ) / Q2IC
-      CRm    = ( Del**2d0 / 2d0 / Q2IC
-     1     + Spp * ( 1d0 + dlog(Q2IC / Del) ) ) * I1
+      C1m    = - ( Spm * I1 + dlog( m12 / m22 ) ) / Q2IC
+      C1p    = - ( Smp * I1 - dlog( m12 / m22 ) ) / Q2IC
+      CRm    = ( Del2 / 2d0 / Q2IC
+     1     + Spp * ( 1d0 + dlog( Q2IC / Del ) ) ) * I1
      2     + ( m22 - m12 ) / 2d0 / Q2IC * dlog( m12 / m22 )
      3     - dlog( Q2IC / m12 ) - dlog( Q2IC / m22 ) - 4d0
      4     + Spp / Del * ( 
@@ -279,7 +279,7 @@
       S1 = 2d0 + Spp / Del * ( Del * I1
      1     + ddilog( 2d0 * Del / ( Del - Spp ) )
      2     - ddilog( 2d0 * Del / ( Del + Spp ) ) )
-     3     + dlog( Del**2d0 / m22 / Q2IC ) * ( - 2d0 + Spp * I1 )
+     3     + dlog( Del2 / m22 / Q2IC ) * ( - 2d0 + Spp * I1 )
       S2 = S1
       S3 = S1
 *
