@@ -303,7 +303,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = FortranWrappers.h.in
 PKGincludedir = $(includedir)/APFEL
-PKGinclude_HEADERS = APFEL.h APFELfwevol.h APFELfwobs.h APFELevol.h APFELobs.h
+PKGinclude_HEADERS = APFEL.h APFELfwevol.h APFELfwobs.h APFELevol.h APFELobs.h APFELinit.h
 nodist_PKGinclude_HEADERS = FortranWrappers.h
 all: FortranWrappers.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am

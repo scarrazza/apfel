@@ -97,7 +97,8 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libAPFELCCWrapEvol_la_LIBADD =
-am_libAPFELCCWrapEvol_la_OBJECTS = APFELfwevol.lo APFELevol.lo
+am_libAPFELCCWrapEvol_la_OBJECTS = APFELfwevol.lo APFELevol.lo \
+	APFELinit.lo
 libAPFELCCWrapEvol_la_OBJECTS = $(am_libAPFELCCWrapEvol_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -341,7 +342,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = Doxyfile
 noinst_LTLIBRARIES = libAPFELCCWrapEvol.la libAPFELCCWrapObs.la
-libAPFELCCWrapEvol_la_SOURCES = APFELfwevol.f APFELevol.cc
+libAPFELCCWrapEvol_la_SOURCES = APFELfwevol.f APFELevol.cc APFELinit.cc
 libAPFELCCWrapObs_la_SOURCES = APFELfwobs.f APFELobs.cc
 all: all-am
 
@@ -402,6 +403,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/APFELevol.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/APFELinit.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/APFELobs.Plo@am__quote@
 
 .cc.o:
