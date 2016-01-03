@@ -129,7 +129,7 @@
      1                 xg(igrid,beta)/xg(igrid,alpha+1)) / eta
                   d = min(eta,xg(igrid,beta)/xg(igrid,bound)) / eta
 *
-                  if(c.ge.eta) cycle
+                  if(c.ge.1d0) cycle
 *
                   fL = w_int(inter_degree(igrid),alpha,
      1                 xg(igrid,beta)/eta)
@@ -139,11 +139,11 @@
 *
                   sf = 1
                   C2RS = eta * dgauss(integrandsICm,c,d,eps)
-                  C2L  = eta * c21ICL(c/eta)
+                  C2L  = eta * c21ICL(c)
 *
                   sf = 2
                   CLRS = eta * dgauss(integrandsICm,c,d,eps)
-                  CLL  = eta * cL1ICL(c/eta)
+                  CLL  = eta * cL1ICL(c)
 *
                   SC2mNC(igrid,ixi,3,1,beta,alpha) = fact2
      1                                             * ( C2RS + C2L * fL )

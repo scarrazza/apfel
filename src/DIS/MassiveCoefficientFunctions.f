@@ -1554,8 +1554,6 @@ c$$$*
 *     Internal Variables
 *
       double precision c11ICR
-      double precision one
-      parameter(one=0.99999999d0)
 **
 *     Output Variables
 *
@@ -1581,9 +1579,6 @@ c$$$*
 *     Internal Variables
 *
       double precision c21ICR
-      double precision one
-      parameter(one=0.99999999d0)
-
 **
 *     Output Variables
 *
@@ -1609,14 +1604,12 @@ c$$$*
 *     Internal Variables
 *
       double precision c31ICR
-      double precision one
-      parameter(one=0.99999999d0)
 **
 *     Output Variables
 *
       double precision c31ICL
 *
-      c31ICL = S3 + V3 + c31ICR(one) * dlog(1d0-z)
+      c31ICL = S3 + V3 + c31ICR(one) * dlog( 1d0 - z )
 *
       return
       end

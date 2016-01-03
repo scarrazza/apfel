@@ -43,8 +43,6 @@
       double precision lambda,eta
       double precision CR,CL
       double precision c21ICR,cL1ICR,c31ICR
-      double precision one
-      parameter(one=0.99999999d0)
 **
 *     Output Variables
 *
@@ -56,7 +54,7 @@
       eta = 2d0 / ( 1d0 + dsqrt( 1d0 + 4d0 * lambda ) )
 *
       integrandsICm = 0d0
-      if(y.ge.eta) return
+      if(y.ge.1d0) return
 *
 *     Interpolant functions
 *

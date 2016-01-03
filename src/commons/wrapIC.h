@@ -5,6 +5,8 @@
 *
       double precision m2strange
       parameter(m2strange = 0.01d0)
+      double precision one
+      parameter(one=0.9999999999999999d0)
 *
       double precision Q2IC,m12,m22,m1,m2
       double precision Splus,Sminus,Rplus,Rminus
