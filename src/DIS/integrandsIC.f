@@ -81,7 +81,7 @@
          CL = c31ICR(one)
       endif
 *
-      integrandsICm = ( CR * fR + CL * fL ) / ( 1d0 - y )
+      integrandsICm = ( CR * fR - CL * fL ) / ( 1d0 - y )
 *
       return
       end

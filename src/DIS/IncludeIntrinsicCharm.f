@@ -28,7 +28,7 @@
       integer gbound
       integer alpha,beta
       integer bound
-      double precision lambda,eta
+      double precision xi,lambda,eta
       double precision w_int,win
       double precision bq(0:6),dq(0:6),bqt(0:6)
       double precision fL
@@ -53,11 +53,12 @@
       if(IsExt(igrid)) gbound = nin(igrid) - 1
 *
       do ixi=1,nxir
+         xi     = xigrid(ixi*xistep)
+         lambda = 1d0 / xi
+         eta    = 2d0 / ( 1d0 + dsqrt( 1d0 + 4d0 * lambda ) )
 *
 *     LO
 *
-         lambda = 1d0 / xigrid(ixi*xistep)
-         eta    = 2d0 / ( 1d0 + dsqrt( 1d0 + 4d0 * lambda ) )
          do beta=0,gbound
             do alpha=beta,nin(igrid)-1
 *
@@ -144,8 +145,10 @@
                   CLRS = eta * dgauss(integrandsICm,c,d,eps)
                   CLL  = eta * cL1ICL(c/eta)
 *
-                  SC2mNC(igrid,ixi,3,1,beta,alpha) = C2RS + C2L * fL
-                  SCLmNC(igrid,ixi,3,1,beta,alpha) = CLRS + CLL * fL
+                  SC2mNC(igrid,ixi,3,1,beta,alpha) = fact2
+     1                                             * ( C2RS + C2L * fL )
+                  SCLmNC(igrid,ixi,3,1,beta,alpha) = factL
+     1                                             * ( CLRS + CLL * fL )
                enddo
             enddo
 *
@@ -189,9 +192,12 @@
                   C3RS = dgauss(integrandsICm,c,d,eps)
                   C3L  = c31ICL(c)
 *
-                  SC2mCC(igrid,ixi,2,1,beta,alpha) = C2RS + C2L * fL
-                  SCLmCC(igrid,ixi,2,1,beta,alpha) = CLRS + CLL * fL
-                  SC3mCC(igrid,ixi,2,1,beta,alpha) = C3RS + C3L * fL
+                  SC2mCC(igrid,ixi,2,1,beta,alpha) = fact2
+     1                                             * ( C2RS + C2L * fL )
+                  SCLmCC(igrid,ixi,2,1,beta,alpha) = factL
+     1                                             * ( CLRS + CLL * fL )
+                  SC3mCC(igrid,ixi,2,1,beta,alpha) = fact3
+     1                                             * ( C3RS + C3L * fL )
                enddo
             enddo
 *
@@ -212,7 +218,7 @@
                   walpha = alpha
                   wbeta  = beta
 *
-                  DIC = dgauss(integrandsICm0,c,d,eps) + DICc(c) * fL
+                  DIC = dgauss(integrandsICm0,c,d,eps) + DICc(xi,c) * fL
 *     Neutral Current
                   SC2m0NC(igrid,ixi,3,1,beta,alpha) =
      1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
@@ -239,6 +245,7 @@
       implicit none
 *
       include "../commons/wrapIC.h"
+      include "../commons/ColorFactors.h"
 **
 *     Input Variables
 *
@@ -291,9 +298,9 @@
      2     * ( C1p + C1m ) )
       V3 = CRm + Rminus / Rplus * Cplus
 *
-      fact1 = ( Spp - 2d0 * m1 * m2 * Sminus / Splus ) / Del
-      fact2 = Del / Q2IC
-      fact3 = Rplus
+      fact1 = 2d0 * CF * ( Spp - 2d0 * m1 * m2 * Sminus / Splus ) / Del
+      fact2 = 2d0 * CF * Del / Q2IC
+      fact3 = 4d0 * CF
       if(proc.eq."NC")then
          factL = 2d0 * Splus / ( Splus + Sminus )
       elseif(proc.eq."CC")then

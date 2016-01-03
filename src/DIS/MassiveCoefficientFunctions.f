@@ -1360,7 +1360,6 @@ c$$$*
 *
       implicit none
 *
-      include "../commons/ColorFactors.h"
       include "../commons/wrapIC.h"
 **
 *     Input Variables
@@ -1410,8 +1409,7 @@ c$$$*
 *
       N1 = ( Splus * Spp - 2d0 * m1 * m2 * Sminus ) / 2d0 /  Del
 *
-      c11ICR = fact1 * 2d0 * CF * ( 1d0 - z ) * s1h * f1hat / N1 / 8d0
-     1       / ( s1h + m22 )
+      c11ICR = ( 1d0 - z ) * s1h * f1hat / N1 / 8d0 / ( s1h + m22 )
 *
       return
       end
@@ -1421,7 +1419,6 @@ c$$$*
 *
       implicit none
 *
-      include "../commons/ColorFactors.h"
       include "../commons/wrapIC.h"
 **
 *     Input Variables
@@ -1468,8 +1465,7 @@ c$$$*
 *
       N2 = 2d0 * Splus * Del / Delp2
 *
-      c21ICR = fact2 * 2d0 * CF * ( 1d0 - z ) * s1h * f2hat / N2 / 8d0
-     1       / ( s1h + m22 )
+      c21ICR = ( 1d0 - z ) * s1h * f2hat / N2 / 8d0 / ( s1h + m22 )
 *
       return
       end
@@ -1479,7 +1475,6 @@ c$$$*
 *
       implicit none
 *
-      include "../commons/ColorFactors.h"
       include "../commons/wrapIC.h"
 **
 *     Input Variables
@@ -1515,8 +1510,7 @@ c$$$*
 *
       N3 = 2d0 * Rplus / Delp
 *
-      c31ICR = fact3 * 2d0 * CF * ( 1d0 - z ) * s1h * f3hat / N3 / 8d0
-     1       / ( s1h + m22 )
+      c31ICR = ( 1d0 - z ) * s1h * f3hat / N3 / 8d0 / ( s1h + m22 )
       return
       end
 *
@@ -1524,8 +1518,6 @@ c$$$*
       function cL1ICR(z)
 *
       implicit none
-*
-      include "../commons/wrapIC.h"
 **
 *     Input Variables
 *
@@ -1539,7 +1531,7 @@ c$$$*
 *
       double precision cL1ICR
 *
-      cL1ICR = factL * ( c21ICR(z) - c11ICR(z) )
+      cL1ICR = c21ICR(z) - c11ICR(z)
 *
       return
       end
@@ -1569,7 +1561,7 @@ c$$$*
 *
       double precision c11ICL
 *
-      c11ICL = fact1 * ( S1 + V1 ) + c11ICR(one) * dlog(1d0-z)
+      c11ICL = S1 + V1 + c11ICR(one) * dlog( 1d0 - z )
 *
       return
       end
@@ -1597,7 +1589,7 @@ c$$$*
 *
       double precision c21ICL
 *
-      c21ICL = fact2 * ( S2 + V2 ) + c21ICR(one) * dlog(1d0-z)
+      c21ICL = S2 + V2 + c21ICR(one) * dlog( 1d0 - z )
 *
       return
       end
@@ -1624,7 +1616,7 @@ c$$$*
 *
       double precision c31ICL
 *
-      c31ICL = fact3 * ( S3 + V3 ) + c31ICR(one) * dlog(1d0-z)
+      c31ICL = S3 + V3 + c31ICR(one) * dlog(1d0-z)
 *
       return
       end
@@ -1633,8 +1625,6 @@ c$$$*
       function cL1ICL(z)
 *
       implicit none
-*
-      include "../commons/wrapIC.h"
 **
 *     Input Variables
 *
@@ -1648,7 +1638,7 @@ c$$$*
 *
       double precision cL1ICL
 *
-      cL1ICL = factL * ( c21ICL(z) - c11ICL(z) )
+      cL1ICL = c21ICL(z) - c11ICL(z)
 *
       return
       end
