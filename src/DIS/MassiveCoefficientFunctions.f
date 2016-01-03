@@ -1518,6 +1518,8 @@ c$$$*
       function cL1ICR(z)
 *
       implicit none
+*
+      include "../commons/wrapIC.h"
 **
 *     Input Variables
 *
@@ -1531,7 +1533,7 @@ c$$$*
 *
       double precision cL1ICR
 *
-      cL1ICR = c21ICR(z) - c11ICR(z)
+      cL1ICR = fact2 * c21ICR(z) - fact1 * c11ICR(z)
 *
       return
       end
@@ -1618,6 +1620,8 @@ c$$$*
       function cL1ICL(z)
 *
       implicit none
+*
+      include "../commons/wrapIC.h"
 **
 *     Input Variables
 *
@@ -1631,7 +1635,7 @@ c$$$*
 *
       double precision cL1ICL
 *
-      cL1ICL = c21ICL(z) - c11ICL(z)
+      cL1ICL = fact2 * c21ICL(z) - fact1 * c11ICL(z)
 *
       return
       end
