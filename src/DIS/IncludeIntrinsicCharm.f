@@ -223,12 +223,12 @@
                   SC2m0NC(igrid,ixi,3,1,beta,alpha) =
      1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
                   SCLm0NC(igrid,ixi,3,1,beta,alpha) =
-     1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+     1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha)
 *     Charged Current
                   SC2mCC(igrid,ixi,2,1,beta,alpha) =
      1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
                   SCLmCC(igrid,ixi,2,1,beta,alpha) =
-     1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+     1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha)
                   SC3mCC(igrid,ixi,2,1,beta,alpha) =
      1                 SC3zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
                enddo
