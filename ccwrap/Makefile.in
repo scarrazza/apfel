@@ -82,12 +82,12 @@ subdir = ccwrap
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(top_srcdir)/config/depcomp
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/binreloc.m4 \
-	$(top_srcdir)/m4/compilerflags.m4 $(top_srcdir)/m4/lhapdf.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/python.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/ax_cxx_compile_stdcxx_11.m4 \
+	$(top_srcdir)/m4/binreloc.m4 $(top_srcdir)/m4/compilerflags.m4 \
+	$(top_srcdir)/m4/lhapdf.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/m4/python.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -104,7 +104,8 @@ am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
 libAPFELCCWrapObs_la_LIBADD =
-am_libAPFELCCWrapObs_la_OBJECTS = APFELfwobs.lo APFELobs.lo
+am_libAPFELCCWrapObs_la_OBJECTS = APFELfwobs.lo APFELobs.lo \
+	APFELdev.lo
 libAPFELCCWrapObs_la_OBJECTS = $(am_libAPFELCCWrapObs_la_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -242,6 +243,7 @@ FCLIBS = @FCLIBS@
 FFLAGS = @FFLAGS@
 FGREP = @FGREP@
 GREP = @GREP@
+HAVE_CXX11 = @HAVE_CXX11@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -341,8 +343,8 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = Doxyfile
 noinst_LTLIBRARIES = libAPFELCCWrapEvol.la libAPFELCCWrapObs.la
-libAPFELCCWrapEvol_la_SOURCES = APFELfwevol.f APFELevol.cc
-libAPFELCCWrapObs_la_SOURCES = APFELfwobs.f APFELobs.cc
+libAPFELCCWrapEvol_la_SOURCES = APFELfwevol.f APFELevol.cc 
+libAPFELCCWrapObs_la_SOURCES = APFELfwobs.f APFELobs.cc APFELdev.cc
 all: all-am
 
 .SUFFIXES:
@@ -401,6 +403,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/APFELdev.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/APFELevol.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/APFELobs.Plo@am__quote@
 
