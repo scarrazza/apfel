@@ -9,6 +9,7 @@ AM_MAINTAINER_MODE([disable])
 AC_DEFINE_UNQUOTED(APFEL_VERSION, "$PACKAGE_VERSION", "APFEL version string")
 
 AC_PROG_CXX
+AX_CXX_COMPILE_STDCXX_11([noext])
 AC_CONFIG_HEADERS([config/config.h include/APFEL/FortranWrappers.h])
 
 ## Set Fortran compiler behaviour

@@ -82,12 +82,12 @@ subdir = include/APFEL
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	$(srcdir)/FortranWrappers.h.in $(PKGinclude_HEADERS)
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/binreloc.m4 \
-	$(top_srcdir)/m4/compilerflags.m4 $(top_srcdir)/m4/lhapdf.m4 \
-	$(top_srcdir)/m4/libtool.m4 $(top_srcdir)/m4/ltoptions.m4 \
-	$(top_srcdir)/m4/ltsugar.m4 $(top_srcdir)/m4/ltversion.m4 \
-	$(top_srcdir)/m4/lt~obsolete.m4 $(top_srcdir)/m4/python.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/ax_cxx_compile_stdcxx_11.m4 \
+	$(top_srcdir)/m4/binreloc.m4 $(top_srcdir)/m4/compilerflags.m4 \
+	$(top_srcdir)/m4/lhapdf.m4 $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/m4/python.m4 $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -204,6 +204,7 @@ FCLIBS = @FCLIBS@
 FFLAGS = @FFLAGS@
 FGREP = @FGREP@
 GREP = @GREP@
+HAVE_CXX11 = @HAVE_CXX11@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -303,7 +304,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 EXTRA_DIST = FortranWrappers.h.in
 PKGincludedir = $(includedir)/APFEL
-PKGinclude_HEADERS = APFEL.h APFELfwevol.h APFELfwobs.h APFELevol.h APFELobs.h APFELinit.h
+PKGinclude_HEADERS = APFEL.h APFELfwevol.h APFELfwobs.h APFELevol.h APFELobs.h APFELdev.h
 nodist_PKGinclude_HEADERS = FortranWrappers.h
 all: FortranWrappers.h
 	$(MAKE) $(AM_MAKEFLAGS) all-am
