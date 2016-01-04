@@ -171,8 +171,10 @@
                   if(alpha.lt.inter_degree(igrid)) bound = 0
 *
                   c = max(xg(igrid,beta),
-     1                 xg(igrid,beta)/xg(igrid,alpha+1))
+     1                    xg(igrid,beta)/xg(igrid,alpha+1))
                   d = min(1d0,xg(igrid,beta)/xg(igrid,bound))
+*
+                  if(c.ge.1d0) cycle
 *
                   fL = 0d0
                   if(alpha.eq.beta) fL = 1d0
@@ -225,11 +227,11 @@
                   SCLm0NC(igrid,ixi,3,1,beta,alpha) =
      1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha)
 *     Charged Current
-                  SC2mCC(igrid,ixi,2,1,beta,alpha) =
+                  SC2m0CC(igrid,ixi,2,1,beta,alpha) =
      1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
-                  SCLmCC(igrid,ixi,2,1,beta,alpha) =
+                  SCLm0CC(igrid,ixi,2,1,beta,alpha) =
      1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha)
-                  SC3mCC(igrid,ixi,2,1,beta,alpha) =
+                  SC3m0CC(igrid,ixi,2,1,beta,alpha) =
      1                 SC3zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
                enddo
             enddo

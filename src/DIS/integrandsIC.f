@@ -40,7 +40,7 @@
 *     Internal Variables
 *
       double precision z,w_int,fR,fL
-      double precision lambda,eta
+      double precision eta
       double precision CR,CL
       double precision c21ICR,cL1ICR,c31ICR
 **
@@ -48,13 +48,10 @@
 *
       double precision integrandsICm
 *
-*     Interpolant functions
-*
-      lambda = 1d0 / xigrid(wixi)
-      eta = 2d0 / ( 1d0 + dsqrt( 1d0 + 4d0 * lambda ) )
-*
       integrandsICm = 0d0
       if(y.ge.1d0) return
+*
+      eta = 2d0 * Q2IC / ( Spm + Del )
 *
 *     Interpolant functions
 *
