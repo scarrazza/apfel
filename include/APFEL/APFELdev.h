@@ -50,12 +50,13 @@ namespace APFEL
   const string kTMC      = "TMC";
   const string kMP       = "MP";
   const string kComments = "Comments";
-  const vector<string> kValues = { kID, kPTO, kFNS, kDAMP, kIC,
-                                   kModEv, kXIR, kXIF, kNfFF, kMaxNfAs,
-                                   kMaxNfPdf, kQ0, kalphas, kQref, kQED,
-                                   kalphaqed, kQedref, kSxRes, kSxOrd, kHQ,
-                                   kmc, kQmc, kmb, kQmb, kmt, kQmt,
-                                   kCKM, kMZ, kMW, kGF, kSIN2TW, kTMC, kMP, kComments };
+
+  const string values[] = { kID, kPTO, kFNS, kDAMP, kIC, kModEv, kXIR, kXIF, kNfFF, kMaxNfAs,
+                            kMaxNfPdf, kQ0, kalphas, kQref, kQED, kalphaqed, kQedref, kSxRes,
+                            kSxOrd, kHQ, kmc, kQmc, kmb, kQmb, kmt, kQmt, kCKM, kMZ, kMW, kGF,
+                            kSIN2TW, kTMC, kMP, kComments };
+
+  const vector<string> kValues(values,  values + sizeof values/sizeof values[0]);
 
   //! Setup APFEL with the previous data structure - first item is the string key see kvalues
   void SetParam(map<string,string> const& par);

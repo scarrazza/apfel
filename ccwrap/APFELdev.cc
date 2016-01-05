@@ -3,6 +3,7 @@
 #include "APFEL/APFELdev.h"
 #include "APFEL/APFELevol.h"
 #include "APFEL/APFELobs.h"
+#include <cstdlib>
 #include <iostream>
 #include <sstream>
 using std::cerr;
@@ -28,11 +29,11 @@ namespace APFEL
     APFEL::CleanUp();
 
     // Theory, perturbative order of evolution
-    if (!stoi(par.at(kQED)))
+    if (!atoi(par.at(kQED).c_str()))
       APFEL::SetTheory(string("QCD"));
     else
       APFEL::SetTheory(string("QUniD"));
-    APFEL::SetPerturbativeOrder(stoi(par.at(kPTO)));
+    APFEL::SetPerturbativeOrder(atoi(par.at(kPTO).c_str()));
 
     if (par.at(kModEv).compare("EXA") == 0)
     {
@@ -56,32 +57,32 @@ namespace APFEL
     }
         
     // Coupling
-    APFEL::SetAlphaQCDRef(stod(par.at(kalphas)), stod(par.at(kQref)));
-    if (stoi(par.at(kQED))) APFEL::SetAlphaQEDRef(stod(par.at(kalphaqed)),stod(par.at(kQedref)));
+    APFEL::SetAlphaQCDRef(atof(par.at(kalphas).c_str()), atof(par.at(kQref).c_str()));
+    if (atoi(par.at(kQED).c_str())) APFEL::SetAlphaQEDRef(atof(par.at(kalphaqed).c_str()),atof(par.at(kQedref).c_str()));
     
     // EW
-    APFEL::SetWMass(stod(par.at(kMW)));
-    APFEL::SetZMass(stod(par.at(kMZ)));
-    APFEL::SetGFermi(stod(par.at(kGF)));
-    APFEL::SetSin2ThetaW(stod(par.at(kSIN2TW)));
+    APFEL::SetWMass(atof(par.at(kMW).c_str()));
+    APFEL::SetZMass(atof(par.at(kMZ).c_str()));
+    APFEL::SetGFermi(atof(par.at(kGF).c_str()));
+    APFEL::SetSin2ThetaW(atof(par.at(kSIN2TW).c_str()));
 
     vector<string> ckm = split(par.at(kCKM));
 
-    APFEL::SetCKM(stod(ckm[0]), stod(ckm[1]), stod(ckm[2]),
-                  stod(ckm[3]), stod(ckm[4]), stod(ckm[5]),
-                  stod(ckm[6]), stod(ckm[7]), stod(ckm[8]));
+    APFEL::SetCKM(atof(ckm[0].c_str()), atof(ckm[1].c_str()), atof(ckm[2].c_str()),
+                  atof(ckm[3].c_str()), atof(ckm[4].c_str()), atof(ckm[5].c_str()),
+                  atof(ckm[6].c_str()), atof(ckm[7].c_str()), atof(ckm[8].c_str()));
 
     // TMCs
-    APFEL::SetProtonMass(stod(par.at(kMP)));
-    if (stoi(par.at(kTMC))) APFEL::EnableTargetMassCorrections(true);
+    APFEL::SetProtonMass(atof(par.at(kMP).c_str()));
+    if (atoi(par.at(kTMC).c_str())) APFEL::EnableTargetMassCorrections(true);
 
     // Heavy Quark Masses
     if (par.at(kHQ).compare("POLE") == 0 )
-      APFEL::SetPoleMasses(stod(par.at(kmc)), stod(par.at(kmb)), stod(par.at(kmt)));
+      APFEL::SetPoleMasses(atof(par.at(kmc).c_str()), atof(par.at(kmb).c_str()), atof(par.at(kmt).c_str()));
     else if (par.at(kHQ).compare("MSBAR") == 0 )
     {
-      APFEL::SetMSbarMasses(stod(par.at(kmc)), stod(par.at(kmb)), stod(par.at(kmt)));
-      APFEL::SetMassScaleReference(stod(par.at(kQmc)), stod(par.at(kQmb)), stod(par.at(kQmt)));
+      APFEL::SetMSbarMasses(atof(par.at(kmc).c_str()), atof(par.at(kmb).c_str()), atof(par.at(kmt).c_str()));
+      APFEL::SetMassScaleReference(atof(par.at(kQmc).c_str()), atof(par.at(kQmb).c_str()), atof(par.at(kQmt).c_str()));
     }
     else
     {
@@ -91,22 +92,22 @@ namespace APFEL
 
     // Heavy Quark schemes
     APFEL::SetMassScheme(par.at(kFNS));
-    APFEL::EnableDampingFONLL(stoi(par.at(kDAMP)));
+    APFEL::EnableDampingFONLL(atoi(par.at(kDAMP).c_str()));
     if (par.at(kFNS).compare("FFNS") == 0)
-      APFEL::SetFFNS(stoi(par.at(kNfFF)));
+      APFEL::SetFFNS(atoi(par.at(kNfFF).c_str()));
     else
       APFEL::SetVFNS();
     
-    APFEL::SetMaxFlavourAlpha(stoi(par.at(kMaxNfAs)));
-    APFEL::SetMaxFlavourPDFs(stoi(par.at(kMaxNfPdf)));
+    APFEL::SetMaxFlavourAlpha(atoi(par.at(kMaxNfAs).c_str()));
+    APFEL::SetMaxFlavourPDFs(atoi(par.at(kMaxNfPdf).c_str()));
 
     // Scale ratios
-    APFEL::SetRenFacRatio(stod(par.at(kXIR))/stod(par.at(kXIF)));
-    APFEL::SetRenQRatio(stod(par.at(kXIR)));
-    APFEL::SetFacQRatio(stod(par.at(kXIF)));
+    APFEL::SetRenFacRatio(atof(par.at(kXIR).c_str())/atof(par.at(kXIF).c_str()));
+    APFEL::SetRenQRatio(atof(par.at(kXIR).c_str()));
+    APFEL::SetFacQRatio(atof(par.at(kXIF).c_str()));
 
     // Small-x resummation
-    APFEL::SetSmallxResummation(stoi(par.at(kSxRes)), par.at(kSxOrd));
+    APFEL::SetSmallxResummation(atoi(par.at(kSxRes).c_str()), par.at(kSxOrd));
 
     // Not included in the map
     /*
