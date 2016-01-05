@@ -302,7 +302,7 @@
 *
       fact1 = 2d0 * CF * ( Spp - 2d0 * m1 * m2 * Sminus / Splus ) / Del
       fact2 = 2d0 * CF * Del / Q2IC
-      fact3 = 4d0 * CF
+      fact3 = 2d0 * CF
       if(proc.eq."NC")then
          factL = 2d0 * Splus / ( Splus + Sminus )
       elseif(proc.eq."CC")then
