@@ -303,8 +303,9 @@
       write(13,*) "AlphaS_OrderQCD:",ipt
       write(13,*) "AlphaS_Type: ipol"
       write(13,*) "AlphaS_Qs: [",(dsqrt(q2LHA(iq2)),",",
-     1     iq2=1,nq2LHA),"]"
-      write(13,*) "AlphaS_Vals: [",(as(iq2),",",iq2=1,nq2LHA),"]"
+     1     iq2=1,nq2LHA-1),dsqrt(q2LHA(nq2LHA)),"]"
+      write(13,*) "AlphaS_Vals: [",(as(iq2),",",
+     1     iq2=1,nq2LHA-1),as(nq2LHA),"]"
       write(13,*) "AlphaS_Lambda4:", lambda4
       write(13,*) "AlphaS_Lambda5:", lambda5
       close(13)
@@ -342,20 +343,22 @@
 *
 *     Tabulate PDFs at the initial scale on the grid
 *
-         do igrid=1,ngrid
-            call initPDFs(Qin**2d0)
-            do alpha=0,nin(igrid)
-               do ipdf=-6,6
-                  fqpre1(igrid,ipdf,alpha) = f0ph(ipdf,alpha)
-               enddo
-               do ipdf=-3,3
-                  flpre1(igrid,ipdf,alpha) = f0lep(ipdf,alpha)
+         if(Qin.gt.0d0)then
+            do igrid=1,ngrid
+               call initPDFs(Qin**2d0)
+               do alpha=0,nin(igrid)
+                  do ipdf=-6,6
+                     fqpre1(igrid,ipdf,alpha) = f0ph(ipdf,alpha)
+                  enddo
+                  do ipdf=-3,3
+                     flpre1(igrid,ipdf,alpha) = f0lep(ipdf,alpha)
+                  enddo
                enddo
             enddo
-         enddo
 *     Back up PDF name and set pretabulated PDFs as input
-         pdfsetbkp = pdfset
-         call SetPDFSet("pretabulated1")
+            pdfsetbkp = pdfset
+            call SetPDFSet("pretabulated1")
+         endif
 *
          iq2in = 1
          iq2fi = nQ(nfin)
@@ -445,7 +448,7 @@
          enddo
          close(13)
 *     Restore PDF name
-         call SetPDFSet(pdfsetbkp)
+         if(Qin.gt.0d0) call SetPDFSet(pdfsetbkp)
       enddo
 *
       write(6,*) achar(27)//"[1;32m"
