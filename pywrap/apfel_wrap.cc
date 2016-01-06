@@ -4516,6 +4516,27 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_CachePDFsAPFEL(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CachePDFsAPFEL",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "CachePDFsAPFEL" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  APFEL::CachePDFsAPFEL(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_xPDF(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
@@ -4540,6 +4561,46 @@ SWIGINTERN PyObject *_wrap_xPDF(PyObject *SWIGUNUSEDPARM(self), PyObject *args) 
   } 
   arg2 = static_cast< double >(val2);
   result = (double)APFEL::xPDF(arg1,arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_xPDFxQ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  double arg2 ;
+  double arg3 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:xPDFxQ",&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "xPDFxQ" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "xPDFxQ" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "xPDFxQ" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  result = (double)APFEL::xPDFxQ(arg1,arg2,arg3);
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
@@ -4728,6 +4789,45 @@ SWIGINTERN PyObject *_wrap_xPDFallPhoton(PyObject *SWIGUNUSEDPARM(self), PyObjec
   }
   arg2 = reinterpret_cast< double * >(argp2);
   APFEL::xPDFallPhoton(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_xPDFxQall(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double *arg3 = (double *) 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:xPDFxQall",&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "xPDFxQall" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "xPDFxQall" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "xPDFxQall" "', argument " "3"" of type '" "double *""'"); 
+  }
+  arg3 = reinterpret_cast< double * >(argp3);
+  APFEL::xPDFxQall(arg1,arg2,arg3);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -5644,6 +5744,36 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_SetQGridParameters(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int arg2 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:SetQGridParameters",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetQGridParameters" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SetQGridParameters" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  APFEL::SetQGridParameters(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_SetLHgridParameters(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
@@ -5889,6 +6019,45 @@ SWIGINTERN PyObject *_wrap_SetMassScaleReference(PyObject *SWIGUNUSEDPARM(self),
   } 
   arg3 = static_cast< double >(val3);
   APFEL::SetMassScaleReference(arg1,arg2,arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SetMassMatchingScales(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double arg3 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  double val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:SetMassMatchingScales",&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetMassMatchingScales" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SetMassMatchingScales" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  ecode3 = SWIG_AsVal_double(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SetMassMatchingScales" "', argument " "3"" of type '" "double""'");
+  } 
+  arg3 = static_cast< double >(val3);
+  APFEL::SetMassMatchingScales(arg1,arg2,arg3);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -6207,6 +6376,27 @@ SWIGINTERN PyObject *_wrap_ComputeStructureFunctionsAPFEL(PyObject *SWIGUNUSEDPA
   } 
   arg2 = static_cast< double >(val2);
   APFEL::ComputeStructureFunctionsAPFEL(arg1,arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_CacheStructureFunctionsAPFEL(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:CacheStructureFunctionsAPFEL",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "CacheStructureFunctionsAPFEL" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  APFEL::CacheStructureFunctionsAPFEL(arg1);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -6766,6 +6956,85 @@ SWIGINTERN PyObject *_wrap_F3total(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_StructureFunctionxQ(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
+  double arg4 ;
+  double arg5 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
+  double val4 ;
+  int ecode4 = 0 ;
+  double val5 ;
+  int ecode5 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOOO:StructureFunctionxQ",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  {
+    std::string *ptr = (std::string *)0;
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "StructureFunctionxQ" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "StructureFunctionxQ" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "StructureFunctionxQ" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "StructureFunctionxQ" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "StructureFunctionxQ" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "StructureFunctionxQ" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  ecode4 = SWIG_AsVal_double(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "StructureFunctionxQ" "', argument " "4"" of type '" "double""'");
+  } 
+  arg4 = static_cast< double >(val4);
+  ecode5 = SWIG_AsVal_double(obj4, &val5);
+  if (!SWIG_IsOK(ecode5)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "StructureFunctionxQ" "', argument " "5"" of type '" "double""'");
+  } 
+  arg5 = static_cast< double >(val5);
+  result = (double)APFEL::StructureFunctionxQ((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,arg4,arg5);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
   return NULL;
 }
 
@@ -7557,7 +7826,9 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"InitializeAPFEL", _wrap_InitializeAPFEL, METH_VARARGS, NULL},
 	 { (char *)"EvolveAPFEL", _wrap_EvolveAPFEL, METH_VARARGS, NULL},
 	 { (char *)"DeriveAPFEL", _wrap_DeriveAPFEL, METH_VARARGS, NULL},
+	 { (char *)"CachePDFsAPFEL", _wrap_CachePDFsAPFEL, METH_VARARGS, NULL},
 	 { (char *)"xPDF", _wrap_xPDF, METH_VARARGS, NULL},
+	 { (char *)"xPDFxQ", _wrap_xPDFxQ, METH_VARARGS, NULL},
 	 { (char *)"dxPDF", _wrap_dxPDF, METH_VARARGS, NULL},
 	 { (char *)"xPDFj", _wrap_xPDFj, METH_VARARGS, NULL},
 	 { (char *)"xgamma", _wrap_xgamma, METH_VARARGS, NULL},
@@ -7565,6 +7836,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"dxgamma", _wrap_dxgamma, METH_VARARGS, NULL},
 	 { (char *)"xPDFall", _wrap_xPDFall, METH_VARARGS, NULL},
 	 { (char *)"xPDFallPhoton", _wrap_xPDFallPhoton, METH_VARARGS, NULL},
+	 { (char *)"xPDFxQall", _wrap_xPDFxQall, METH_VARARGS, NULL},
 	 { (char *)"xLepton", _wrap_xLepton, METH_VARARGS, NULL},
 	 { (char *)"xLeptonj", _wrap_xLeptonj, METH_VARARGS, NULL},
 	 { (char *)"ExternalEvolutionOperator", _wrap_ExternalEvolutionOperator, METH_VARARGS, NULL},
@@ -7598,12 +7870,14 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SetQLimits", _wrap_SetQLimits, METH_VARARGS, NULL},
 	 { (char *)"SetFFNS", _wrap_SetFFNS, METH_VARARGS, NULL},
 	 { (char *)"SetGridParameters", _wrap_SetGridParameters, METH_VARARGS, NULL},
+	 { (char *)"SetQGridParameters", _wrap_SetQGridParameters, METH_VARARGS, NULL},
 	 { (char *)"SetLHgridParameters", _wrap_SetLHgridParameters, METH_VARARGS, NULL},
 	 { (char *)"SetExternalGrid", _wrap_SetExternalGrid, METH_VARARGS, NULL},
 	 { (char *)"SetMaxFlavourAlpha", _wrap_SetMaxFlavourAlpha, METH_VARARGS, NULL},
 	 { (char *)"SetMaxFlavourPDFs", _wrap_SetMaxFlavourPDFs, METH_VARARGS, NULL},
 	 { (char *)"SetMSbarMasses", _wrap_SetMSbarMasses, METH_VARARGS, NULL},
 	 { (char *)"SetMassScaleReference", _wrap_SetMassScaleReference, METH_VARARGS, NULL},
+	 { (char *)"SetMassMatchingScales", _wrap_SetMassMatchingScales, METH_VARARGS, NULL},
 	 { (char *)"SetNumberOfGrids", _wrap_SetNumberOfGrids, METH_VARARGS, NULL},
 	 { (char *)"SetPDFSet", _wrap_SetPDFSet, METH_VARARGS, NULL},
 	 { (char *)"SetPerturbativeOrder", _wrap_SetPerturbativeOrder, METH_VARARGS, NULL},
@@ -7620,6 +7894,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"CheckAPFEL", _wrap_CheckAPFEL, METH_VARARGS, NULL},
 	 { (char *)"InitializeAPFEL_DIS", _wrap_InitializeAPFEL_DIS, METH_VARARGS, NULL},
 	 { (char *)"ComputeStructureFunctionsAPFEL", _wrap_ComputeStructureFunctionsAPFEL, METH_VARARGS, NULL},
+	 { (char *)"CacheStructureFunctionsAPFEL", _wrap_CacheStructureFunctionsAPFEL, METH_VARARGS, NULL},
 	 { (char *)"SetMassScheme", _wrap_SetMassScheme, METH_VARARGS, NULL},
 	 { (char *)"SetPolarizationDIS", _wrap_SetPolarizationDIS, METH_VARARGS, NULL},
 	 { (char *)"SetProcessDIS", _wrap_SetProcessDIS, METH_VARARGS, NULL},
@@ -7642,6 +7917,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"F3bottom", _wrap_F3bottom, METH_VARARGS, NULL},
 	 { (char *)"F3top", _wrap_F3top, METH_VARARGS, NULL},
 	 { (char *)"F3total", _wrap_F3total, METH_VARARGS, NULL},
+	 { (char *)"StructureFunctionxQ", _wrap_StructureFunctionxQ, METH_VARARGS, NULL},
 	 { (char *)"SetZMass", _wrap_SetZMass, METH_VARARGS, NULL},
 	 { (char *)"SetWMass", _wrap_SetWMass, METH_VARARGS, NULL},
 	 { (char *)"SetProtonMass", _wrap_SetProtonMass, METH_VARARGS, NULL},
