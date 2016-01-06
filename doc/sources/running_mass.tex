@@ -33,13 +33,32 @@
 
 \section{Introduction}
 
-In these notes we will present the strategy for implementing the $\overline{\mbox{MS}}$ running masses for the heavy flavours. We recall that in the present code the heavy quark masses enter as pole masses, therefore our goal is to consistently replace them with the $\overline{\mbox{MS}}$ masses.
+Until recently, heavy quark masses in PDF fits were mostly treated in
+the pole-mass (or on-shell) renormalization scheme
+(REFERENCE). However, in a recent paper \cite{Alekhin:2010sv} it has
+been shown that the implementation of the $\overline{\mbox{MS}}$
+masses results in an improvement of the perturbative stability and in
+the consequent reduction of the theoretical uncertainty due to
+variations of renormalization and factorization scales.  As a
+consequence, this allows one to a more reliabe determination of the
+numerical value of the heavy quark masses themselves.
 
-The reason for this is that in a recent paper \cite{Alekhin:2010sv} it has been claimed that the implementation of the $\overline{\mbox{MS}}$ masses results in an improvement of the perturbative stability and in a reduction of the theoretical uncertainty do to variations of the renormalization and factorization scales.
+In this set of notes we will describe the implemntation of the
+$\overline{\mbox{MS}}$ heavy-quark running masses in {\tt APFEL}.
+Strarting from the more used defition of structure functions and in
+terms of pole masses, our goal is to consistently replace them with
+the $\overline{\mbox{MS}}$ mass definition.
 
 \section{$\overline{\mbox{MS}}$ Running Mass vs. Pole Mass}
 
-The (scale independent) pole mass $M$ and the (scale dependent) $\overline{\mbox{MS}}$ mass $m(\mu)$ come from two different renormalization procedures and in perturbation theory they can be linked by a perturbative expansion. This is exactly what has been done in \cite{Chetyrkin:1999qi}, and in particular from eq. (8) of that paper we read the ratio between $M$ and $m(\mu)$:
+The (scale independent) pole mass $M$ and the (scale dependent)
+$\overline{\mbox{MS}}$ mass $m(\mu)$ arise from two different
+renormalization procedures and in perturbation theory they can be
+expressed on in terms of the other. The relation connecting pole and
+$\overline{\mbox{MS}}$ mass definitions has been computed in
+Ref.~\cite{Chetyrkin:1999qi} up to four loops.
+, and in particular from eq. (8) of that paper
+we read the ratio between $M$ and $m(\mu)$:
 \begin{equation}\label{straight}
 \frac{m(\mu)}{M} = 1 + z^{(1)}a_s+\underbrace{C_F\left[C_Fz_1^{(2)}+C_Az_2^{(2)}+T_R\left(N_Lz_3^{(2)}+z_4^{(2)}\right)\right]}_{z^{(2)}}a_s^2+\mathcal{O}(a_s^3)\,,
 \end{equation}
@@ -158,7 +177,10 @@ where  $a\equiv a_s(\mu)$ and $a_0\equiv a_s(\mu_0)$. After that, we put it in t
 \begin{equation}\label{ansol}
 m(\mu)=m(\mu_0)\left(\frac{a}{a_0}\right)^{c_0}\frac{1+(c_1-b_1c_0)a+\frac12[c_2-c_1b_1-b_2c_0+b_1^2c_0+(c_1-b_1c_0)^2]a^2}{1+(c_1-b_1c_0)a_0+\frac12[c_2-c_1b_1-b_2c_0+b_1^2c_0+(c_1-b_1c_0)^2]a_0^2}\,,
 \end{equation}
-which gives the NNLO running of $m(\mu)$. Of course, to obatin the NLO running one has just to disregard the terms proportional to $a^2$ and $a_0^2$, while at LO $m(\mu)=m(\mu_0)$, i.e. there is no running at all(\footnote{Note that, to be consistent, the evaluation of $a$ and $a_0$ must be done at the same perturbative order of $m(\mu)$. So, for instance, if we want to evaluate the NNLO running of $m(\mu)$ also the value of $a$ and $a_0$ must be computed using the NNLO running.}).
+which gives the NNLO running of $m(\mu)$. Of course, to obatin the NLO
+running one has just to disregard the terms proportional to $a^2$ and
+$a_0^2$ in the ration, while at LO also the terms proportional to $a$
+and $a_0$ should be omitted(\footnote{Note that, to be consistent, the evaluation of $a$ and $a_0$ must be done at the same perturbative order of $m(\mu)$. So, for instance, if we want to evaluate the NNLO running of $m(\mu)$ also the value of $a$ and $a_0$ must be computed using the NNLO running.}).
 
 \section{Matching Conditions}
 
@@ -289,7 +311,17 @@ m_t^{(n)}(\mu)=\left\{
 
 As one can see from the above equations, having the evolution equation for a given number of active flavours, having the matching conditions and having the input parameters $m_i^{(n)}(m_i)$ we can evaluate the value of $m_i(\mu)$ in the VFN scheme for any value of $\mu$. Notice that we are assuming that the input parameters $m_i(m_i)$ are always given just beyond the threshold, i.e. we assume them to be equal to $m_c^{(4)}(m_c)$, $m_b^{(5)}(m_b)$ and $m_t^{(6)}(m_t)$. 
 
-In the FFN scheme with $N_f$ flavours, instead, the situation is much easier. In fact, the evolution reduces to:
+In the FFN scheme with $N_f$ flavours, instead, the situation is much
+easier. In fact, the evolution reduces to(\footnote{It should be
+  noticed that when considering the FFNS the number of active flavours
+  stays the same for all scales. In particular, given that in the
+  approach discussed above the number of active flavours for each of
+  the input masses $m_i(m_i)$ is assumed to be equal to the number of
+  flavours right above the tresholds ($e.g.$ $m_c^{(4)}(m_c)$), this
+  is not the same parameter as $m_c^{(3)}(m_c)$ that instead would be
+  used in the $N_f=3$ FFNS. In fact, beyond NLO, due to the presence
+  of the matching conditions, they differ by $\mathcal{O}(\alpha_s)$
+  terms.}):
 \begin{equation}
 m_i^{(N_f)}(\mu) = m_i(m_i)E_m^{(N_f)}(m_i,\mu)\,.
 \end{equation} 
@@ -297,16 +329,41 @@ m_i^{(N_f)}(\mu) = m_i(m_i)E_m^{(N_f)}(m_i,\mu)\,.
 
 \subsection{PDFs}
 
-Now we see how to replace the pole mass with the $\overline{\mbox{MS}}$ mass in the matching conditions for the PDFs. One can write the singlet and the gluon in the $N_f+1$ scheme in terms of singlet and gluon in $N_f$ scheme at any scale $\mu$ as follows:
+Now we see how to replace the pole mass with the
+$\overline{\mbox{MS}}$ mass in the matching conditions for the
+PDFs. One can write the singlet and the gluon in the $N_f+1$ scheme in
+terms of singlet and gluon in $N_f$ scheme at any scale $\mu$ as
+follows(\footnote{It should be noticed that $a_s$ enetring
+  eq.~(\ref{couple1})} is undersato to be in the $N_f$ scheme.):
 \begin{equation}\label{couple1}
 \begin{array}{c}
 \displaystyle {\Sigma^{(N_f+1)}(\mu) \choose g^{(N_f+1)}(\mu)}=\begin{pmatrix}1+a_s^2[A_{qq,h}^{N\!S,(2)}+\tilde{A}^{S,(2)}_{hq}] & a_s\tilde{A}^{S,(1)}_{hg}+a_s^2\tilde{A}^{S,(2)}_{hg}\\
 a_s^2A^{S,(2)}_{gq,h} & 1+a_sA_{gg,h}^{S,(1)}+a_s^2A_{gg,h}^{S,(2)}\end{pmatrix}\left(x,\frac{\mu^2}{M^2}\right){\Sigma^{(N_f)}(\mu) \choose g^{(N_f)}(\mu)}\,,
 \end{array}
 \end{equation}
-where the form of the ($x$-space) functions entering the transformation matrix above are given in Appendix B of \cite{Buza:1996wv}. We notice here that, at the generic scale $\mu$, also the $\mathcal{O}(a_s)$ functions $\tilde{A}^{S,(1)}_{hg}$ and $A_{gg,h}^{S,(1)}$ are there. But given that they are both proportional to $\ln(\mu^2/M^2)$, they disappear if one chooses to perform the matching at the threshold $\mu=M$. We omit the matching conditions for the non-singlet PDFs because such $\mathcal{O}(a_s)$ functions are not present there and they are the point of the discussion.
+where the form of the ($x$-space) functions entering the
+transformation matrix above are given in Appendix B of
+\cite{Buza:1996wv} and where the "1"s are indeed delta functions. We
+notice here that, at the generic scale $\mu$, also the
+$\mathcal{O}(a_s)$ functions $\tilde{A}^{S,(1)}_{hg}$ and
+$A_{gg,h}^{S,(1)}$ are there. But given that they are both
+proportional to $\ln(\mu^2/M^2)$, they disappear if one chooses to
+perform the matching at the threshold $\mu=M$. We omit the matching
+conditions for the non-singlet PDFs because such $\mathcal{O}(a_s)$
+functions are not present there and they are the point of the
+discussion.
 
-Now, if we want to replace the pole mass $M$ with the $\overline{\mbox{MS}}$ mass $m(\mu)$, we just have to plug eq. (\ref{cacchiocacchio}) into eq. (\ref{couple1}). In the $\mathcal{O}(a_s^2)$ functions the second term in the l.h.s. of eq. (\ref{cacchiocacchio}) would give rise to subleading terms. Therefore in those functions it is enough to replace $M$ with $m(\mu)$. On the other hand, the second term in the l.h.s. of eq. (\ref{cacchiocacchio}) is important in the $\mathcal{O}(a_s)$ functions. Since both the functions $\tilde{A}^{S,(1)}_{hg}$ and $A_{gg,h}^{S,(1)}$ are proportional to $\ln(\mu^2/M^2)$, they can be written as:
+Now, if we want to replace the pole mass $M$ with the
+$\overline{\mbox{MS}}$ mass $m(\mu)$, we just have to plug
+eq. (\ref{cacchiocacchio}) into eq. (\ref{couple1}). In the
+$\mathcal{O}(a_s^2)$ functions the second term in the l.h.s. of
+eq. (\ref{cacchiocacchio}) would give rise to subleading
+terms. Therefore in those functions it is enough to replace $M$ with
+$m(\mu)$. On the other hand, the second term in the l.h.s. of
+eq. (\ref{cacchiocacchio}) is important in the $\mathcal{O}(a_s)$
+functions. Since both the functions $\tilde{A}^{S,(1)}_{hg}$ and
+$A_{gg,h}^{S,(1)}$ are proportional to $\ln(\mu^2/M^2)$, they can be
+written as:
 \begin{equation}\label{ahciccio!}
 \begin{array}{l}
 \displaystyle \tilde{A}^{S,(1)}_{hg}\left(x,\frac{\mu^2}{M^2}\right) = f_1(x)\ln\frac{\mu^2}{M^2}\\
@@ -355,13 +412,98 @@ a_s^2A^{S,(2)}_{gq,h} & 1+a_s^2[A_{gg,h}^{S,(2)}-2h^{(1)}f_2]\end{pmatrix}(x){\S
 \end{array}
 \end{equation}
 
-Again, as it happened in the the pole mass case, if one chooses cleverly the matching point also in the $\overline{\mbox{MS}}$ mass case the matching conditions for PDFs start to play a role only at NNLO, but the difference now is that some coefficients of the matching matrix for gluon and singlet result modified by some simple functions.
+Again, as it happened in the the pole mass case, if one chooses
+cleverly the matching point also in the $\overline{\mbox{MS}}$ mass
+case the matching conditions for PDFs start to play a role only at
+NNLO, but the difference now is that some coefficients of the matching
+matrix for gluon and singlet result modified by some simple functions.
+
+One might want to invert the matching conditions for PDFs and
+considerig that eq~(\ref{couple1}) can be written as:
+\begin{equation}\label{couple1exp}
+\begin{array}{c}
+\displaystyle {\Sigma^{(N_f+1)}(\mu) \choose g^{(N_f+1)}(\mu)}=\left[
+\begin{pmatrix}
+1 & 0 \\
+0 &1
+\end{pmatrix}
++a_s
+\begin{pmatrix}
+0 & \tilde{A}^{S,(1)}_{hg}\\
+0 & A_{gg,h}^{S,(1)}
+\end{pmatrix}
++a_s^2
+\begin{pmatrix}
+[A_{qq,h}^{N\!S,(2)}+\tilde{A}^{S,(2)}_{hq}] & \tilde{A}^{S,(2)}_{hg}\\
+A^{S,(2)}_{gq,h} & A_{gg,h}^{S,(2)}
+\end{pmatrix}
+\right]
+{\Sigma^{(N_f)}(\mu) \choose g^{(N_f)}(\mu)}\,,
+\end{array}
+\end{equation}
+and using the expansion:
+\begin{equation}
+\frac{1}{1+b_1x+b_2x^2} =  1-b_1x-(b_2-b_1^2)x^2 + \mathcal{O}(x^3)\,,
+\end{equation}
+we can immediately write:
+\begin{equation}\label{couple1expInv}
+\begin{array}{c}
+\displaystyle {\Sigma^{(N_f)}(\mu) \choose g^{(N_f)}(\mu)}=\left[
+\begin{pmatrix}
+1 & 0 \\
+0 &1
+\end{pmatrix}
+-a_s
+\begin{pmatrix}
+0 & \tilde{A}^{S,(1)}_{hg}\\
+0 & A_{gg,h}^{S,(1)}
+\end{pmatrix}
+-a_s^2
+\begin{pmatrix}
+[A_{qq,h}^{N\!S,(2)}+\tilde{A}^{S,(2)}_{hq}] & \tilde{A}^{S,(2)}_{hg}
+- \tilde{A}^{S,(1)}_{hg} \otimes A_{gg,h}^{S,(1)} \\
+A^{S,(2)}_{gq,h} & A_{gg,h}^{S,(2)} - A_{gg,h}^{S,(1)} \otimes A_{gg,h}^{S,(1)}
+\end{pmatrix}
+\right]
+{\Sigma^{(N_f+1)}(\mu) \choose g^{(N_f+1)}(\mu)}\,,
+\end{array}
+\end{equation}
+and using eqs.~(\ref{ahciccio!}) and~(\ref{ahbelli!}), we get:
+\begin{equation}
+ \begin{array}{l}
+\displaystyle   - \tilde{A}^{S,(1)}_{hg} \otimes A_{gg,h}^{S,(1)} =
+   \frac{16}{3}T_R^2\left[x^2+(1-x)^2\right]\ln^2\frac{\mu^2}{M^2} = \frac{4}{3}T_R \ln\frac{\mu^2}{M^2}\tilde{A}^{S,(1)}_{hg}\\
+\\
+\displaystyle - A_{gg,h}^{S,(1)} \otimes A_{gg,h}^{S,(1)} =
+   - \frac{16}{9}T_R^2\delta(1-x) \ln^2\frac{\mu^2}{M^2} = \frac{4}{3}T_R \ln\frac{\mu^2}{M^2}A_{gg,h}^{S,(1)}
+   \end{array}
+\end{equation}
 
 \subsection{Renormalization Scale Variation}
 
-The scale $\mu$ that appears in the running of $a_s$ and $m_q$ is the \textit{renormalization} scale, which now we will indicate as $\mu_R$, while the scale that appears in the PDF evolution is the \textit{factorization} scale, which now we will call $\mu_F$, and in principle they could be taken different and in general one can write $\mu_R = \kappa \mu_F$, where $\kappa$ can be any real number. 
+The scale $\mu$ that appears in the running of $a_s$ and $m_q$ is the
+\textit{renormalization} scale, which now we will indicate as $\mu_R$,
+while the scale that explicitly appears in the PDF evolution is the
+\textit{factorization} scale, which now we will call $\mu_F$, and in
+principle they could be taken different and in general one can write
+$\mu_R = \kappa \mu_F$, where $\kappa$ can be any real
+number(\footnote{It should be noticed that in the case $\kappa\neq1$
+PDFs aquire an implicit dependence on $\mu_R$ that essentially comes
+from the redefinition of the splitting functions that in turn derives
+from the expansion of $\alpha_s(\mu_R)$ around $\mu_R=\mu_F$ that
+appears in the DGLAP equation.}).
 
-What one usually does for the choice of the matching points is to set $\mu_F$ to heavy quark thresholds ($M_c$, $M_b$ and $M_t$ in the Pole Mass scheme and $m_c(m_c)$, $m_b(m_b)$ and $m_t(m_t)$ in the $\overline{\mbox{MS}}$ scheme). In this way the logarithmic terms in the PDF matching conditions are assured to vanish guaranteeing the same matching pattern for PDFs. But if $\kappa$ is different from one, the logarithmic terms in the matching conditions for $a_s(\mu_R)$ and $m_q(\mu_R)$ don't vanish anymore. This is exactly the case when one wants to perform the renormalization scale variation and in the following we will just show how to implement the matching condition for $a_s$ and $m_q$ in terms of $\kappa$.
+What one usually does for the choice of the matching points is to set
+$\mu_F$ to heavy quark thresholds ($M_c$, $M_b$ and $M_t$ in the Pole
+Mass scheme and $m_c(m_c)$, $m_b(m_b)$ and $m_t(m_t)$ in the
+$\overline{\mbox{MS}}$ scheme). In this way the logarithmic terms in
+the PDF matching conditions are assured to vanish guaranteeing the
+same matching pattern for PDFs. But if $\kappa$ is different from one,
+the logarithmic terms in the matching conditions for $a_s(\mu_R)$ and
+$m_q(\mu_R)$ don't vanish anymore. This is exactly the case when one
+wants to perform the renormalization scale variation and in the
+following we will just show how to implement the matching condition
+for $a_s$ and $m_q$ in terms of $\kappa$.
 
 \subsection{$\alpha_s$}
 Let us start with $\alpha_s$. Using the expansion:
@@ -560,7 +702,7 @@ Now we need to evaluate explicitly the derivative of $C_g^{(0)}$ in eq. (\ref{ma
 
 \subsubsection{$F_2$}
 
-We consider first $F_2$. In Mellin space, it is better to calculate directly the derivative of the Mellin transform of $C_{2,g}^{(0)}$, which in the massive case is:
+We consider first $F_2$. Since the NNPDF code works in the Mellin space, it is better to calculate directly the derivative of the Mellin transform of $C_{2,g}^{(0)}$, which in the massive case is:
 \begin{equation}
 \begin{array}{rl}
 \displaystyle C_{2,g}^{(0)}(N,Q^2,M^2)=&\displaystyle T_R\Big\{2(1-6\epsilon-4\epsilon^2)I_2(a,N)-2(1-2\epsilon)I_1(a,N)+I_0(a,N)+\\
@@ -631,7 +773,7 @@ and:
 \end{array}
 \end{equation}
 
-Looking at these expressions, one can see that in these derivatives, a part from hypergeometric functions of the form ${_2F_1(a,b,a+b;x)}$ which were already present in $C_{2,g}^{(0)}$ itself, also hypergeometric functions of the form ${_2F_1(a,b,a+b-1;x)}$ appear. This raises a technical problem because the code uses a fast routine for the hypergeometric function which is accurate both around $x=0$ and $x=1$, but with the limitation $c=a+b$. Now, instead, we need also the case ${c=a+b-1}$, therefore we need to extend our routine including this possibility. We can do this using the expansion around $x=1$ reported in eq. (15.3.12) of \cite{AbramowitzStegun}.
+Looking at these expressions, one can see that in these derivatives, a part from hypergeometric functions of the form ${_2F_1(a,b,a+b;x)}$ which were already present in $C_{2,g}^{(0)}$ itself, also hypergeometric functions of the form ${_2F_1(a,b,a+b-1;x)}$ appear. This raises a technical problem because the NNPDF code uses a fast routine for the hypergeometric function which is accurate both around $x=0$ and $x=1$, but with the limitation $c=a+b$. Now, instead, we need also the case ${c=a+b-1}$, therefore we need to extend our routine including this possibility. We can do this using the expansion around $x=1$ reported in eq. (15.3.12) of \cite{AbramowitzStegun}.
 
 Now we consider the NC massive0 structure function $F_2^0$. In this limit the gluon coefficient function takes the form:
 \begin{equation}
@@ -857,13 +999,27 @@ It is interesting to observe that in massless limit, where $\lambda\rightarrow 1
 
 The evolution schemes that are involved in the FONLL scheme, meaning ZM (Zero-Mass-Variable-Flavour-Number) and FFN (massive) schemes, require the presence of a mass threshold for each heavy flavour. These thresholds are basically the points from where the respective heavy quark structure functions start contributing to the total structure function.
 
-In the ZM scheme, these thresholds don't have any particular physical meaning, but rather they just represent a convenient choice where to perform the matching between the $N_f$ and the $N_f+1$ scheme. Of course, if we choose to write the observables in terms of the pole masses $M_c$, $M_b$ and $M_t$, the most natural choice for the thresholds are the pole masses themselves, so that ZM structure function can be written as:
+In the ZM scheme, these thresholds don't have a uniquely defined
+physical meaning, but rather they just represent a convenient choice
+of $Q^2$ where to perform the matching between the $N_f$ and the
+$N_f+1$ scheme. If one chooses to write the observables in terms of
+the pole masses $M_c$, $M_b$ and $M_t$, the most natural choice for
+the thresholds are the pole masses themselves, so that ZM structure
+function can be written as:
 \begin{equation}
 F^{(zm)}(x,Q^2) = F^{(zm),l}(x,Q^2)+\sum_{i=c,b,t}\theta(Q^2-M_i^2)F^{(zm),i}(x,Q^2,M_i)\,.
 \end{equation}
-This is also justified by the fact that $\alpha_s$ as well as PDFs are conveniently matched in correspondence of these thresholds.
+This is also justified by the fact that $\alpha_s$ as well as PDFs are
+conveniently matched in correspondence of these thresholds.
 
-When one instead chooses to write the observables in terms of the $\overline{\mbox{MS}}$ masses $m_c(\mu)$, $m_b(\mu)$ and $m_t(\mu)$, as we have seen, the most covenient choice for the matching thresholds are the RG-invariant masses  $m_c(m_c)$, $m_b(m_b)$ and $m_t(m_t)$. For this reason, in the $\overline{\mbox{MS}}$ framework, it looks more natural to choose the same thresholds also for the structure functions, so that in term of the $\overline{\mbox{MS}}$ masses, the generic ZM structure function looks like this:
+When one instead chooses to write the observables in terms of the
+$\overline{\mbox{MS}}$ masses, as we have seen, the most covenient
+choice for the matching thresholds of the PDFs, $\alpha_s$ and masses
+evolution are the RG-invariant masses $m_c(m_c)$, $m_b(m_b)$ and
+$m_t(m_t)$. For this reason, in the $\overline{\mbox{MS}}$ framework,
+it looks more natural to choose the same thresholds also for the
+structure functions, so that in term of the $\overline{\mbox{MS}}$
+masses, the generic ZM structure function looks like this:
 \begin{equation}
 F^{(zm)}(x,Q^2) = F^{(zm),l}(x,Q^2)+\sum_{i=c,b,t}\theta(Q^2-m_i^2(m_i))F^{(zm),i}(x,Q^2,m_i(\mu))\,.
 \end{equation}

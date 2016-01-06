@@ -9,12 +9,18 @@ ccccccccccccc
       subroutine fevolveapfel(Q0,Q)
       double precision Q0, Q
       call EvolveAPFEL(Q0,Q)
-      end subroutine
+      end subroutine fevolveapfel
 
 ccccccccccccc      
       subroutine fderiveapfel(Q)
       double precision Q
       call DeriveAPFEL(Q)
+      end subroutine fderiveapfel
+
+ccccccccccccc      
+      subroutine fcachepdfsapfel(Q0)
+      double precision Q0
+      call CachePDFsAPFEL(Q0)
       end subroutine
 
 ccccccccccccc      
@@ -22,6 +28,14 @@ ccccccccccccc
       integer i
       double precision x, fxpdf
       fxpdf = xPDF(i,x)
+      return
+      end
+
+ccccccccccccc      
+      function fxpdfxq(i,x,Q)
+      integer i
+      double precision x, Q, fxpdfxq
+      fxpdfxq = xPDFxQ(i,x,Q)
       return
       end
 
@@ -63,11 +77,16 @@ ccccccccccccc
       end
 
 ccccccccccccc      
-      function fxpdfall(x,xf)
-      double precision x, xf(-6:6), fxpdfall
-      fxpdfall = xPDFall(x,xf)
-      return
-      end
+      subroutine fxpdfall(x,xf)
+      double precision x, xf(-6:6)
+      call xPDFall(x,xf)
+      end subroutine fxpdfall
+
+ccccccccccccc      
+      subroutine fxpdfxqall(x,Q,xf)
+      double precision x, Q, xf(-6:6)
+      call xPDFxQall(x,Q,xf)
+      end subroutine fxpdfxqall
 
 ccccccccccccc      
       function fxlepton(i,x)
@@ -89,9 +108,10 @@ ccccccccccccc
       function fexternalevolutionoperator(fname,i,j,x,beta)
       integer i,j,beta
       double precision x,fexternalevolutionoperator
+      double precision ExternalEvolutionOperator
       character fname*(*)
       fexternalevolutionoperator = 
-     1     ExternalEvolutionOperator(fname,i,j,alpha,x)
+     1     ExternalEvolutionOperator(fname,i,j,x,beta)
       return
       end
 
@@ -288,6 +308,12 @@ ccccccccccccc
       end subroutine fsetgridparameters
 
 ccccccccccccc
+      subroutine fsetqgridparameters(npq,degq)
+      integer npq, degq
+      call SetQGridParameters(npq,degq)
+      end subroutine fsetqgridparameters
+
+ccccccccccccc
       subroutine fsetexternalgrid(i,np,deg,x)
       integer i, np, deg
       double precision x(0:np)
@@ -319,6 +345,12 @@ ccccccccccccc
       end subroutine fsetmassscalereference
 
 ccccccccccccc      
+      subroutine fsetmassmatchingscales(kmc,kmb,kmt)
+      double precision kmc, kmb, kmt
+      call SetMassMatchingScales(kmc,kmb,kmt)
+      end subroutine fsetmassmatchingscales
+
+ccccccccccccc      
       subroutine fsetnumberofgrids(n)
       integer n
       call SetNumberOfGrids(n)
@@ -339,20 +371,23 @@ ccccccccccccc
 ccccccccccccc      
       function fgetperturbativeorder()
       integer fgetperturbativeorder
+      integer GetPerturbativeOrder
       fgetperturbativeorder = GetPerturbativeOrder()
       return
       end
 
 ccccccccccccc      
       function fgetmuf()
-      integer fgetmuf
+      double precision fgetmuf
+      double precision GetMuF
       fgetmuf = GetMuF()
       return
       end
 
 ccccccccccccc      
       function fgetmuf0()
-      integer fgetmuf0
+      double precision fgetmuf0
+      double precision GetMuF0
       fgetmuf0 = GetMuF0()
       return
       end

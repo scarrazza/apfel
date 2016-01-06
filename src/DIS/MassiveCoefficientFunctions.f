@@ -1345,3 +1345,316 @@ c$$$     6        * dlog( ( 1d0 - lambda * z ) / ( 1d0 - lambda ) / z ) ) )
 c$$$*
 c$$$      return
 c$$$      end
+c$$$*
+************************************************************************
+*
+*     O(as) coefficient functions for massive initial state charm.
+*     The following expressions hold both for NC and CC processes.
+*     The z-independent kinematics is bassed by common.
+*     Reference: hep-ph/9805233
+*
+************************************************************************
+*     Regular functions that multiplies 1 / ( 1 - z )
+************************************************************************
+      function c11ICR(z)
+*
+      implicit none
+*
+      include "../commons/wrapIC.h"
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Internal Variables
+*
+      double precision s1h,s1h2
+      double precision Lxi,Ixi
+      double precision DeltaFun,Delp,Delp2
+      double precision f1hat,N1
+**
+*     Output Variables
+*
+      double precision c11ICR
+*
+      s1h   = ( 1d0 - z ) * ( ( Del - Spm ) * z + Del + Spm ) / 2d0 / z
+      s1h2  = s1h * s1h
+      Delp  = DeltaFun(m12,s1h+m22,-Q2IC)
+      Delp2 = Delp * Delp
+      Lxi   = dlog( ( Spp + s1h - Delp ) / ( Spp + s1h + Delp ) )
+      Ixi   = ( ( s1h + 2d0 * m22 ) / s1h2 + ( s1h + m22 )
+     1      / Delp / s1h2 * Spp * Lxi )
+*
+      f1hat = 8d0 / Delp2 * ( - Del2 * ( Splus * Spp
+     1     - 2d0 * m1 * m2 * Sminus ) * Ixi
+     2     + 2d0 * m1 * m2 * Sminus * ( 1d0 / s1h * ( Delp2
+     3     + 4d0 * m22 * Spm )
+     4     + 2d0 * Spm - Smp + (Spp + s1h) / 2d0
+     5     + ( s1h + m22 ) / Delp / s1h * ( Delp2
+     6     + 2d0 * Spm * Spp + ( m22 + Q2IC ) * s1h ) * Lxi )
+     7     + Splus * ( ( - m22 * Spp ) / ( ( s1h + m22 ) * s1h )
+     8     * ( Del2 + 4d0 * m22 * Spm)
+     9     - 1d0 / 4d0 / ( s1h + m22 )
+     1     * ( 3d0 * Spp**2d0 * Smp
+     2     + 4d0 * m22 * (10d0 * Spp * Spm - Spm * Smp
+     3     - m12 * Spp)
+     4     + s1h * ( - 7d0 * Spp * Smp + 18d0 * Del2
+     5     - 4d0 * m12 * ( 7d0 * Q2IC - 4 * m22
+     6     + 7d0 * m12 ) )
+     7     + 3d0 * s1h2 * ( Spm - 2d0 * m12 ) - s1h**3d0 )
+     8     + ( s1h + m22 ) / 2d0 / Delp
+     9     * ( - 2d0 / s1h * Spp * ( Del2 + 2d0 * Spm * Spp )
+     1     + ( 4d0 * m12 * m22 - 7d0 * Spm * Spp )
+     2     - 4d0 * Spm * s1h - s1h**2d0 ) * Lxi ) )
+*
+      N1 = ( Splus * Spp - 2d0 * m1 * m2 * Sminus ) / 2d0 /  Del
+*
+      c11ICR = ( 1d0 - z ) * s1h * f1hat / N1 / 8d0 / ( s1h + m22 )
+*
+      return
+      end
+*
+************************************************************************
+      function c21ICR(z)
+*
+      implicit none
+*
+      include "../commons/wrapIC.h"
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Internal Variables
+*
+      double precision s1h,s1h2
+      double precision Lxi,Ixi
+      double precision DeltaFun,Delp,Delp2
+      double precision f2hat,N2
+**
+*     Output Variables
+*
+      double precision c21ICR
+*
+      s1h   = ( 1d0 - z ) * ( ( Del - Spm ) * z + Del + Spm ) / 2d0 / z
+      s1h2  = s1h * s1h
+      Delp  = DeltaFun(m12,s1h+m22,-Q2IC)
+      Delp2 = Delp * Delp
+      Lxi   = dlog( ( Spp + s1h - Delp ) / ( Spp + s1h + Delp ) )
+      Ixi   = ( ( s1h + 2d0 * m22 ) / s1h2 + ( s1h + m22 )
+     1      / Delp / s1h2 * Spp * Lxi )
+*
+      f2hat = 16d0 / Delp**4d0 * ( - 2d0 * Del**4d0 * Splus * Ixi
+     1     + 2d0 * m1 * m2 * Sminus * ( ( ( s1h + m22 ) / Delp )
+     2     * ( Delp2 - 6d0 * m12 * Q2IC ) * Lxi
+     3     - Delp2 * ( s1h + Spp ) / 2d0 / ( s1h + m22 )
+     4     + ( 2d0 * Delp2 - 3d0 * Q2IC * ( s1h + Spp) ) )
+     5     + Splus * ( - 2d0 * ( Del2 - 6d0 * m12 * Q2IC )
+     6     * ( s1h + m22 ) - 2d0 * ( m12 + m22 ) * s1h2
+     7     - 9d0 * m22 * Spm**2d0 + Del2 * ( 2d0 * Spp - m22 )
+     8     + 2d0 * s1h * ( 2d0 * Del2 + ( m12 - 5d0 * m22 ) * Spm )
+     9     + ( Delp2 - 6d0 * Q2IC * ( m22 + s1h ) )
+     1     * Spp * ( s1h + Spp ) / 2d0 / ( s1h + m22 )
+     2     - 2d0 * Del2 / s1h * ( Del2
+     3     + 2d0 * ( 2d0 * m22 + s1h ) * Spm )
+     4     + ( s1h + m22 ) / Delp * ( - 2d0 / s1h * Del2
+     5     * ( Del2 + 2d0 * Spm * Spp )
+     6     - 2d0 * s1h * ( Del2 - 6d0 * m12 * Q2IC )
+     7     - ( Delp2 - 18d0 * m12 * Q2IC ) * Spp
+     8     - 2d0 * Del2 * ( Spp + 2d0 * Spm) ) * Lxi ) )
+*
+      N2 = 2d0 * Splus * Del / Delp2
+*
+      c21ICR = ( 1d0 - z ) * s1h * f2hat / N2 / 8d0 / ( s1h + m22 )
+*
+      return
+      end
+*
+************************************************************************
+      function c31ICR(z)
+*
+      implicit none
+*
+      include "../commons/wrapIC.h"
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Internal Variables
+*
+      double precision s1h,s1h2
+      double precision Lxi,Ixi
+      double precision DeltaFun,Delp,Delp2
+      double precision f3hat,N3
+**
+*     Output Variables
+*
+      double precision c31ICR
+*
+      s1h   = ( 1d0 - z ) * ( ( Del - Spm ) * z + Del + Spm ) / 2d0 / z
+      s1h2  = s1h * s1h
+      Delp  = DeltaFun(m12,s1h+m22,-Q2IC)
+      Delp2 = Delp * Delp
+      Lxi   = dlog( ( Spp + s1h - Delp ) / ( Spp + s1h + Delp ) )
+      Ixi   = ( ( s1h + 2d0 * m22 ) / s1h2 + ( s1h + m22 )
+     1      / Delp / s1h2 * Spp * Lxi )
+*
+      f3hat = 16d0 / Delp2 * ( - 2d0 * Del2 * Rplus * Ixi
+     1     + 2d0 * m1 * m2 * Rminus * ( 1d0 - Smp / s1h + ( s1h + m22 )
+     2     * ( s1h + Spm ) / Delp / s1h * Lxi )
+     3     + Rplus * ( Smp - 3d0 * Spm - 2d0 / s1h * ( Del2
+     4     + 2d0 * m22 * Spm ) - ( s1h - Smp ) * ( s1h + Spp ) / 2d0
+     5     / ( s1h + m22 ) + ( s1h + m22 ) / Delp / s1h * ( - s1h2
+     6     + 4d0 * ( m12 * Smp - Del2 ) - 3d0 * s1h * Spm ) * Lxi ) )
+*
+      N3 = 2d0 * Rplus / Delp
+*
+      c31ICR = ( 1d0 - z ) * s1h * f3hat / N3 / 8d0 / ( s1h + m22 )
+      return
+      end
+*
+************************************************************************
+      function cL1ICR(z)
+*
+      implicit none
+*
+      include "../commons/wrapIC.h"
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Internal Variables
+*
+      double precision c11ICR,c21ICR
+**
+*     Output Variables
+*
+      double precision cL1ICR
+*
+      cL1ICR = fact2 * c21ICR(z) - fact1 * c11ICR(z)
+*
+      return
+      end
+*
+************************************************************************
+*     Local terms proportional to delta(1 - z)
+*     + the residual term coming frm the plus prescripted term.
+************************************************************************
+      function c11ICL(z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/wrapIC.h"
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Internal Variables
+*
+      double precision c11ICR
+**
+*     Output Variables
+*
+      double precision c11ICL
+*
+      c11ICL = S1 + V1 + c11ICR(one) * dlog( 1d0 - z )
+*
+      return
+      end
+*
+************************************************************************
+      function c21ICL(z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/wrapIC.h"
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Internal Variables
+*
+      double precision c21ICR
+**
+*     Output Variables
+*
+      double precision c21ICL
+*
+      c21ICL = S2 + V2 + c21ICR(one) * dlog( 1d0 - z )
+*
+      return
+      end
+*
+************************************************************************
+      function c31ICL(z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/wrapIC.h"
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Internal Variables
+*
+      double precision c31ICR
+**
+*     Output Variables
+*
+      double precision c31ICL
+*
+      c31ICL = S3 + V3 + c31ICR(one) * dlog( 1d0 - z )
+*
+      return
+      end
+*
+************************************************************************
+      function cL1ICL(z)
+*
+      implicit none
+*
+      include "../commons/wrapIC.h"
+**
+*     Input Variables
+*
+      double precision z
+**
+*     Internal Variables
+*
+      double precision c11ICL,c21ICL
+**
+*     Output Variables
+*
+      double precision cL1ICL
+*
+      cL1ICL = fact2 * c21ICL(z) - fact1 * c11ICL(z)
+*
+      return
+      end
+*
+************************************************************************
+      function DeltaFun(a,b,c)
+*
+      implicit none
+**
+*     Input Variables
+*
+      double precision a,b,c
+**
+*     Output Variables
+*
+      double precision DeltaFun
+*
+      DeltaFun = dsqrt( a * a + b * b + c * c
+     1         - 2d0 * ( a * b + b * c + c * a ) )
+*
+      return
+      end

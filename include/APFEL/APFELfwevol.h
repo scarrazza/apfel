@@ -16,8 +16,14 @@ extern "C" {
 #define fderiveapfel FC_FUNC(deriveapfel,DERIVEAPFEL)
   void fderiveapfel(double*);
 
+#define fcachepdfsapfel FC_FUNC(cachepdfsapfel,CACHEPDFSAPFEL)
+  void fcachepdfsapfel(double*);
+
 #define fxpdf FC_FUNC(xpdf,XPDF)
   double fxpdf(int*, double*);
+
+#define fxpdfxq FC_FUNC(xpdfxq,XPDFXQ)
+  double fxpdfxq(int*, double*, double *);
 
 #define fxpdfj FC_FUNC(xpdfj,XPDFJ)
   double fxpdfj(int*, double*);
@@ -39,6 +45,9 @@ extern "C" {
 
 #define fxpdfallphoton FC_FUNC(xpdfallphoton,XPDFALLPHOTON)
   void fxpdfallphoton(double*,double*);
+
+#define fxpdfxqall FC_FUNC(xpdfxqall,XPDFXQALL)
+  void fxpdfxqall(double*,double*,double*);
 
 #define fxlepton FC_FUNC(xlepton,XLEPTON)
   double fxlepton(int*, double*);
@@ -136,6 +145,9 @@ extern "C" {
 #define fsetgridparameters FC_FUNC(setgridparameters,SETGRIDPARAMETERS)
   void fsetgridparameters(int*,int*,int*,double*);
 
+#define fsetqgridparameters FC_FUNC(setqgridparameters,SETQGRIDPARAMETERS)
+  void fsetqgridparameters(int*,int*);
+
 #define fsetlhgridparameters FC_FUNC(setlhgridparameters,SETLHGRIDPARAMETERS)
   void fsetlhgridparameters(int*,int*,double*,double*,double*,int*,double*,double*);
 
@@ -153,6 +165,9 @@ extern "C" {
 
 #define fsetmassscalereference FC_FUNC(setmassscalereference,SETMASSSCALEREFERENCE)
   void fsetmassscalereference(double*,double*,double*);
+
+#define fsetmassmatchingscales FC_FUNC(setmassmatchingscales,SETMASSMATCHINGSCALES)
+  void fsetmassmatchingscales(double*,double*,double*);
 
 #define fsetnumberofgrids FC_FUNC(setnumberofgrids,SETNUMBEROFGRIDS)
   void fsetnumberofgrids(int*);

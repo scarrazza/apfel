@@ -61,11 +61,16 @@
       include "../commons/EWCouplings.h"
       include "../commons/DynScVar.h"
       include "../commons/IntrinsicCharm.h"
+      include "../commons/gridQ.h"
+      include "../commons/fphxQ.h"
+      include "../commons/StructureFunctionsxQ.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
 *
       InAPFEL           = "xxxx"
+      InCachePDFs       = "xxxx"
+      InCacheSFs        = "xxxx"
 *
       InWelcome         = "xxxx"
       InScales          = "xxxx"
@@ -77,6 +82,7 @@
       InKren            = "xxxx"  
       InMasses          = "xxxx"
       InMassRef         = "xxxx"
+      InThrRatios       = "xxxx"
       InMTau            = "xxxx"
       InMassRunning     = "xxxx"
       InMFP             = "xxxx"
@@ -87,6 +93,7 @@
       InLeptEvol        = "xxxx"
       InLock            = "xxxx"
       InGrid            = "xxxx"
+      InQGrid           = "xxxx"
       InTimeLike        = "xxxx"
       InPolarized       = "xxxx"
       InSmallx          = "xxxx"

@@ -22,7 +22,7 @@
       double precision F2light,F2charm,F2bottom,F2top,F2total
       double precision FLlight,FLcharm,FLbottom,FLtop,FLtotal
       double precision F3light,F3charm,F3bottom,F3top,F3total
-      double precision GetWMass,GetZMass,GetGFermi,GetProtonMass
+      double precision GetWMass,GetGFermi,GetProtonMass
       double precision GetSIATotalCrossSection
       double precision yp,ym,y2,ypc
       double precision Q2,MW,MW2,GF,GF2,MN

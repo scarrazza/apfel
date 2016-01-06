@@ -6,7 +6,7 @@
 *     resummation.
 *
 ************************************************************************
-      subroutine initHELL(LogAcc,ipt,asmc,asmb,asmt)
+      subroutine initHELL(pt,asmc,asmb,asmt)
 *
       implicit none
 *
@@ -14,7 +14,7 @@
 **
 *     Input Variables
 *
-      double precision LogAcc,ipt
+      double precision pt
       double precision asmc,asmb,asmt
 **
 *     Internal Variables
@@ -25,8 +25,7 @@
       alphasmb = 4d0 * pi * asmb
       alphasmt = 4d0 * pi * asmt
 *
-      call HELLLogOrder(LogAcc)
-      call HELLOrder(ipt)
+      call HELLOrder(pt)
       call HELL(alphasmc,alphasmb,alphasmt)
 *
       return

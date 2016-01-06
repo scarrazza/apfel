@@ -17,6 +17,7 @@
 *
       implicit none
 *
+      include "../commons/ColorFactors.h"
       include "../commons/wrap.h"
       include "../commons/grid.h"
       include "../commons/integrals.h"
@@ -30,17 +31,16 @@
 *
       integer bound
       integer nfup,nfdn,nc,nk
-      double precision PL(14),fL
+      double precision PL,fL
       double precision X0NSC
       double precision dgauss,a,b,eps
       double precision integrandsQED
-      double precision e2u,e2d,e2sig,fnf,etap,etam,thetap,thetam,CF
-      double precision nsL,nsRL,qgR,gqR,integ,cp(14)
+      double precision e2u,e2d,e2sig,fnf,etap,etam,thetap,thetam
+      double precision nsL,nsRL,qgR,gqR,integ,cp
       external integrandsQED
       parameter(nc=3)
       parameter(e2u=4d0/9d0)
       parameter(e2d=1d0/9d0)
-      parameter(CF=4d0/3d0)
       parameter(eps=1d-6)
 *
 *     Initialize Integrals
@@ -112,79 +112,79 @@
 *
 *     Non-singlet Plus
          if(k.eq.1)then
-            cp(k) = e2u
-            PL(k) = nsL / CF
+            cp = e2u
+            PL = nsL / CF
             integ = nsRL
 *     Non-singlet Minus
          elseif(k.eq.2)then
-            cp(k) = e2d
-            PL(k) = nsL / CF
+            cp = e2d
+            PL = nsL / CF
             integ = nsRL
 *    Gamma-Gamma
          elseif(k.eq.3)then
-            cp(k) = e2sig
-            PL(k) = - 4d0 / 3d0
+            cp = e2sig
+            PL = - 4d0 / 3d0
             integ = 0d0
 *    Gamma-Quark
          elseif(k.eq.4)then
-            cp(k) = etap
-            PL(k) = 0d0
+            cp = etap
+            PL = 0d0
             integ = gqR
 *    Gamma-Delta
          elseif(k.eq.5)then
-            cp(k) = etam
-            PL(k) = 0d0
+            cp = etam
+            PL = 0d0
             integ = gqR
 *    Quark-Gamma
          elseif(k.eq.6)then
-            cp(k) = thetam
-            PL(k) = 0d0
+            cp = thetam
+            PL = 0d0
             integ = qgR
 *    Quark-Quark
          elseif(k.eq.7)then
-            cp(k) = etap
-            PL(k) = nsL / CF
+            cp = etap
+            PL = nsL / CF
             integ = nsRL
 *    Quark-Delta
          elseif(k.eq.8)then
-            cp(k) = etam
-            PL(k) = nsL / CF
+            cp = etam
+            PL = nsL / CF
             integ = nsRL
 *    Delta-Gamma
          elseif(k.eq.9)then
-            cp(k) = thetap
-            PL(k) = 0d0
+            cp = thetap
+            PL = 0d0
             integ = qgR
 *    Delta-Quark
          elseif(k.eq.10)then
-            cp(k) = etam
-            PL(k) = nsL / CF
+            cp = etam
+            PL = nsL / CF
             integ = nsRL
 *    Delta-Delta
          elseif(k.eq.11)then
-            cp(k) = etap
-            PL(k) = nsL / CF
+            cp = etap
+            PL = nsL / CF
             integ = nsRL
 *     Lepton-Lepton
          elseif(k.eq.12)then
-            cp(k) = 1d0
-            PL(k) = nsL / CF
+            cp = 1d0
+            PL = nsL / CF
             integ = nsRL
 *    Gamma-Lepton
          elseif(k.eq.13)then
-            cp(k) = 1d0
-            PL(k) = 0d0
+            cp = 1d0
+            PL = 0d0
             integ = gqR
 *    Lepton-Gamma
          elseif(k.eq.14)then
-            cp(k) = 1d0
-            PL(k) = 0d0
+            cp = 1d0
+            PL = 0d0
             integ = 2d0 * nl * qgR
          endif
 *
 *     Integrals
 *
-         SQ(igrid,nf,nl,k,beta,alpha) = cp(k) * ( integ + PL(k) * fL )
+         SQ(igrid,nf,nl,k,beta,alpha) = cp * ( integ + PL * fL )
       enddo
 *
       return

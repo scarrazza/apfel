@@ -26,6 +26,11 @@ namespace APFEL {
     fcomputestructurefunctionsapfel(&Q0,&Q);
   }
 
+  void CacheStructureFunctionsAPFEL(double Q0)
+  {
+    fcachestructurefunctionsapfel(&Q0);
+  }
+
   void SetMassScheme(const std::string& ms)
   {
     char cms[SIZE+1];
@@ -146,6 +151,17 @@ namespace APFEL {
   double F3total(double x)
   {
     return ff3total(&x);
+  }
+
+  double StructureFunctionxQ(const std::string& proc, const std::string& sf, const std::string& comp, double x, double Q)
+  {
+    char cproc[SIZE+1];
+    strncpy(cproc, proc.c_str(), SIZE);
+    char csf[SIZE+1];
+    strncpy(csf, sf.c_str(), SIZE);
+    char ccomp[SIZE+1];
+    strncpy(ccomp, comp.c_str(), SIZE);
+    return fstructurefunctionxq(cproc,csf,ccomp,&x,&Q);
   }
 
   void SetZMass(double massz)

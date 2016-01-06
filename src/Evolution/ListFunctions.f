@@ -32,6 +32,11 @@
      1           achar(27)//"[0m"
       write(6,*) "    computes the logarithmic derivative with respect"
       write(6,*) "    of 'Q' of PDFs at the scale 'Q' [GeV]."
+
+      write(6,*) achar(27)//"[34m- CachePDFsAPFEL(double Q0):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    evolves PDFs and cache them on an (x,Q2)-grid"
+      write(6,*) "    starting from the scale 'Q0' [GeV]."
       write(6,*) "  "
 *
       write(6,*) achar(27)//"[33mSetting functions:"
@@ -78,6 +83,11 @@
       write(6,*) "    sets the reference scales in GeV at which heavy"
       write(6,*) "    quark masses are given. This has no effect if the"
       write(6,*) "    pole masses are used."
+      write(6,*) achar(27)//"[34m- SetMassMatchingScales(double kmc,",
+     1           " double kmb, double kmt):"//achar(27)//"[0m"
+      write(6,*) "    sets the ratios between heavy quark masses and"
+      write(6,*) "    heavy quark matching thresholds"
+      write(6,*) "    (default 'kmc' = 1, 'kmb' = 1, 'kmt' = 1)."
       write(6,*) achar(27)//"[34m- SetTauMass(double mtau):"//
      1           achar(27)//"[0m"
       write(6,*) "    sets the values of the tau lepton in GeV"
@@ -145,10 +155,16 @@
       write(6,*) "    sets the number of subgrids 'n' (default 3)"
       write(6,*) achar(27)//"[34m- SetGridParameters(int i, int n,",
      1           " int deg, double x):"//achar(27)//"[0m"
-      write(6,*) "    sets the parameter of the i-th subgrid. 'n' ="
-      write(6,*) "    number intevals, 'deg' = interpolation order,"
+      write(6,*) "    sets the parameters of the i-th subgrid. 'n' ="
+      write(6,*) "    number of intevals, 'deg' = interpolation order,"
       write(6,*) "    'x' lower bound of the grid (the upper bound is"
       write(6,*) "    always 1)."
+      write(6,*) achar(27)//"[34m- SetQGridParameters(int nQ,",
+     1           " int degQ):"//achar(27)//"[0m"
+      write(6,*) "    sets the parameters of the Q-grid. 'nQ' = number"
+      write(6,*) "    of intevals and 'degQ' = interpolation order."
+      write(6,*) "    (default: 'nQ' = 100, 'degQ' = 3, relevant only"
+      write(6,*) "    for the cached evolution)."
       write(6,*) achar(27)//"[34m- SetExternalGrid(int i, int np,",
      1           " int deg, double *x):"//achar(27)//"[0m"
       write(6,*) "    sets the external grid in the position 'i' with"
@@ -221,6 +237,28 @@
       write(6,*) "    return the N-th moment of the i-th and the"
       write(6,*) "    photon PDF the final scale 'Q' [GeV] defined in"
       write(6,*) "    'EvolveAPFEL'."
+      write(6,*) achar(27)//"[34m- xLepton(int i, double x):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return 'x' times the i-th lepton PDF in 'x'"
+      write(6,*) "    at the final scale 'Q' [GeV] defined in"
+      write(6,*) "    'EvolveAPFEL'."
+      write(6,*) achar(27)//"[34m- xLeptonj(int i, double x):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return 'x' times the i-th lepton PDF in 'x'"
+      write(6,*) "    at the final scale 'Q' [GeV] defined in"
+      write(6,*) "    'EvolveAPFEL' interpolated on the joint grid."
+      write(6,*) achar(27)//"[34m- xPDFxQ(int i, double x, double Q):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return 'x' times the i-th PDF (inclunding quarks,"
+      write(6,*) "    gluon, photon and leptons) in 'x' at the final"
+      write(6,*) "    scale 'Q' [GeV]. This function requires that"
+      write(6,*) "    'CachePDFsAPFEL' to be called in advance."
+      write(6,*) achar(27)//"[34m- xPDFxQall(double x, double Q,",
+     1           " double *xf):"//achar(27)//"[0m"
+      write(6,*) "    returns at once 'x' times all the PDF in the"
+      write(6,*) "    array xf[-6:6] computed in 'x' at the scale"
+      write(6,*) "    'Q' [GeV]. This function requires that"
+      write(6,*) "    'CachePDFsAPFEL' to be called in advance."
       write(6,*) achar(27)//"[34m- LUMI(int i, int j, double S):"//
      1           achar(27)//"[0m"
       write(6,*) "    returns the partonic luminosity of the i-th and"

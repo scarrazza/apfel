@@ -7,23 +7,23 @@
 *     the output one.
 *
 ************************************************************************
-      subroutine MatchPDFs(nf,fevQCD)
+      subroutine MatchPDFs(nf,sgn,fevQCD)
 *
       implicit none
 *
       include "../commons/grid.h"
-      include "../commons/m2th.h"
+      include "../commons/ThresholdAlphaQCD.h"
 **
 *     Input Variables
 *
-      integer nf
+      integer nf,sgn
 **
 *     Internal Variables
 *
       integer i,j
       integer alpha,beta
       integer mapp(2,2)
-      double precision coup,a_QCD
+      double precision coup
       double precision integralsMatching
       double precision integ1(5,0:nint_max)
       double precision integ2(5,0:nint_max,0:nint_max)
@@ -35,7 +35,8 @@
 *
 *     Get alphas value at the heavy quark threshold (with nf active flavours)
 *
-      coup = a_QCD(m2th(nf))
+c      coup = asthUp(nf)
+      coup = asthDown(nf)
 *
 *     Singlet map
 *
@@ -52,7 +53,7 @@
             do beta=alpha,nin(igrid)
                do i=1,5
                   integ2(i,alpha,beta) =
-     1                 integralsMatching(alpha,beta,coup,i)
+     1                 integralsMatching(nf,alpha,beta,coup,i,sgn)
                enddo
             enddo
          enddo
@@ -143,7 +144,8 @@
 *
          do alpha=0,nin(igrid)
             do i=1,5
-               integ1(i,alpha) = integralsMatching(0,alpha,coup,i)
+               integ1(i,alpha) = 
+     1              integralsMatching(nf,0,alpha,coup,i,sgn)
             enddo
          enddo
 *

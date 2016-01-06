@@ -29,8 +29,14 @@ namespace APFEL {
   /// Computes the derivative of PDFs 
   void DeriveAPFEL(double Q);
 
+  /// Cache PDFs on a (x,Q2)-grid
+  void CachePDFsAPFEL(double Q0);
+
   /// Returns x*PDF
   double xPDF(int i, double x);
+
+  /// Returns x*PDF has functions of x and Q using the cached evolution
+  double xPDFxQ(int i, double x, double Q);
 
   /// Returns the derivative of x*PDF
   double dxPDF(int i, double x);
@@ -52,6 +58,9 @@ namespace APFEL {
 
   /// Returns all PDFs (including the photon) on the joint grid
   void xPDFallPhoton(double x, double *xf);
+
+  /// Returns all the cached PDFs on the (x,Q)-grid
+  void xPDFxQall(double x, double Q, double *xf);
 
   /// Returns x*Lepton PDFs
   double xLepton(int i, double x);
@@ -158,6 +167,9 @@ namespace APFEL {
   /// Sets the parameters of the i-th x-space grid
   void SetGridParameters(int i, int np, int deg, double x);
 
+  /// Sets the parameters of the Q-space grid
+  void SetQGridParameters(int npq, int degq);
+
   /// Sets the parameters of the grid over which PDFs in the LHAPDF
   /// format will be witten
   void SetLHgridParameters(int nx, int nxm, double xmin, double xm, double xmax,
@@ -180,6 +192,9 @@ namespace APFEL {
   /// Sets scales at which heavy quark masses are defined.
   /// No effect for the pole masses.
   void SetMassScaleReference(double Qc, double Qb, double Qt);
+
+  /// Sets ratios between heavy quark masses and thresholds 
+  void SetMassMatchingScales(double kmc, double kmb, double kmt);
   
   /// Sets the number of x-space grids that will be used in the computation
   void SetNumberOfGrids(int n);

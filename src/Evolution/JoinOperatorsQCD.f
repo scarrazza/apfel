@@ -15,7 +15,7 @@
       implicit none
 *
       include "../commons/grid.h"
-      include "../commons/m2th.h"
+      include "../commons/ThresholdAlphaQCD.h"
       include "../commons/EvolutionMatrices.h"
       include "../commons/transQCD.h"
       include "../commons/EvolutionOperator.h"
@@ -29,7 +29,7 @@
       integer i,j,k,l
       integer nf,nfm
       integer alpha,beta,gamma,delta
-      double precision coup,a_QCD,integralsMatching
+      double precision coup,integralsMatching
       double precision MatQCDns(0:nint_max,0:nint_max),Match(2)
       double precision MatQCDsg(2,2,0:nint_max,0:nint_max)
       double precision EvQCDb(0:13,0:13,0:nint_max,0:nint_max)
@@ -147,36 +147,37 @@
 *     
             nfm = nf + 1
 *     Get alphas value at the heavy quark threshold (with nfm active flavours)
-            coup = a_QCD(m2th(nfm))
+c            coup = asthUp(nfm)
+            coup = asthDown(nfm)
 *     Contruct matching conditions at this threshod
             if(IsExt(igrid))then
                do alpha=0,nin(igrid)
                   do beta=alpha,nin(igrid)
                      MatQCDns(alpha,beta)     =
-     1                    integralsMatching(alpha,beta,coup,1)
+     1                    integralsMatching(nf,alpha,beta,coup,1,sgn)
                      MatQCDsg(1,1,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,2)
+     1                    integralsMatching(nf,alpha,beta,coup,2,sgn)
                      MatQCDsg(1,2,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,3)
+     1                    integralsMatching(nf,alpha,beta,coup,3,sgn)
                      MatQCDsg(2,1,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,4)
+     1                    integralsMatching(nf,alpha,beta,coup,4,sgn)
                      MatQCDsg(2,2,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,5)
+     1                    integralsMatching(nf,alpha,beta,coup,5,sgn)
                   enddo
                enddo
             else
                do alpha=0,nin(igrid)
                   do beta=alpha,nin(igrid)
                      MatQCDns(alpha,beta)     =
-     1                    integralsMatching(0,beta-alpha,coup,1)
+     1                    integralsMatching(nf,0,beta-alpha,coup,1,sgn)
                      MatQCDsg(1,1,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,2)
+     1                    integralsMatching(nf,0,beta-alpha,coup,2,sgn)
                      MatQCDsg(1,2,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,3)
+     1                    integralsMatching(nf,0,beta-alpha,coup,3,sgn)
                      MatQCDsg(2,1,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,4)
+     1                    integralsMatching(nf,0,beta-alpha,coup,4,sgn)
                      MatQCDsg(2,2,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,5)
+     1                    integralsMatching(nf,0,beta-alpha,coup,5,sgn)
                   enddo
                enddo
             endif

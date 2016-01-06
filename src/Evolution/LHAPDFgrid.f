@@ -31,21 +31,19 @@
 *     Input Variables
 *
       integer Nrep
-      logical islhapdf6
       double precision Qin
       character*50 fname
 **
 *     Intenal Variables
 *
       integer ln
-      integer i,ix,iq2,iq2c,ipdf,ilep,krep,iq2in,iq2fi
+      integer ix,iq2,iq2c,ipdf,ilep,krep,iq2in,iq2fi
       integer nfin,nffi
       integer isg,nQ(3:7)
       integer nfmax
       integer alpha
-      double precision qref,mth(4:6)
       double precision lambda3,lambda4,lambda5,lambdaNF
-      double precision xbLHA(nxmax),q2LHA(nq2max)
+      double precision xbLHA(nxmax),q2LHA(nq2max),as(nxmax)
       double precision lnQmin,lnQmax
       double precision eps,eps2,offset
       double precision xpdfLHA(-6:6,nxmax,nq2max)
@@ -119,6 +117,12 @@
       lnQmin = dlog( q2minLHA / Lambda2 )
       lnQmax = dlog( q2maxLHA / Lambda2 )
 *
+*     Initialize number of points per subgrid
+*
+      do isg=3,7
+         nQ(isg) = 0
+      enddo
+*
       if(Evs.eq."VF")then
          if(q2minLHA.gt.m2th(6))then
             nfin = 6
@@ -142,12 +146,6 @@
          endif
          if(nffi.gt.nfmax) nffi = nfmax
 *
-*     Number of points per subgrid
-*
-         do isg=3,7
-            nQ(isg) = 0
-         enddo
-*
          isg = nfin
          do iq2=1,nq2LHA
             q2LHA(iq2) = Lambda2 * dexp( lnQmin
@@ -159,6 +157,15 @@
                isg = isg + 1
                if(isg.gt.nfmax) isg = nfmax
                nQ(isg) = nQ(isg) + 1
+            endif
+         enddo
+*
+*     Make sure that all subgrids have at least two points.
+*
+         do isg=nfin,nffi-1
+            if(nQ(isg).lt.2)then
+               nQ(isg) = nQ(isg) + 1
+               nQ(isg+1) = nQ(isg+1) - 1
             endif
          enddo
 *
@@ -195,7 +202,36 @@
             write(6,*) "- Found = ",iq2c
             call exit(-10)
          endif
+      else
+         nfin = Nf_FF
+         nffi = Nf_FF
+*
+         nQ(Nf_FF) = nq2LHA
+*
+         do iq2=1,nq2LHA
+            q2LHA(iq2) = Lambda2 * dexp( lnQmin
+     1                 * dexp( dble( iq2 - 1 ) / dble( nq2LHA - 1 )
+     2                 * dlog( lnQmax / lnQmin ) ) )
+         enddo
       endif
+*
+*     Compute alphas on the grid being careful with the grids
+*
+      iq2in = 1
+      iq2fi = nQ(nfin)
+      do isg=nfin,nffi
+         do iq2=iq2in,iq2fi
+            if(iq2.eq.iq2in.and.isg.ne.nfin)then
+               as(iq2) = AlphaQCD(dsqrt(q2LHA(iq2)+eps2))
+            elseif(iq2.eq.iq2fi.and.isg.ne.nffi)then
+               as(iq2) = AlphaQCD(dsqrt(q2LHA(iq2)-eps2))
+            else
+               as(iq2) = AlphaQCD(dsqrt(q2LHA(iq2)))
+            endif
+         enddo
+         iq2in = iq2in + nQ(isg)
+         iq2fi = iq2fi + nQ(isg+1)
+      enddo
 *
 *     Define quark IDs
 *
@@ -260,15 +296,16 @@
       write(13,*) "MUp: 0"
       write(13,*) "MDown: 0"
       write(13,*) "MStrange: 0"
-      write(13,*) "MCharm:",dsqrt(m2th(4))
-      write(13,*) "MBottom:",dsqrt(m2th(5))
-      write(13,*) "MTop:",dsqrt(m2th(6))
+      write(13,*) "MCharm:",dsqrt(m2ph(4))
+      write(13,*) "MBottom:",dsqrt(m2ph(5))
+      write(13,*) "MTop:",dsqrt(m2ph(6))
       write(13,*) "AlphaS_MZ:",alpha_ref_qcd
       write(13,*) "AlphaS_OrderQCD:",ipt
       write(13,*) "AlphaS_Type: ipol"
-      write(13,*)"AlphaS_Qs: [",(dsqrt(q2LHA(iq2)),",",iq2=1,nq2LHA),"]"
-      write(13,*) "AlphaS_Vals: [",(AlphaQCD(dsqrt(q2LHA(iq2))),",",
-     1     iq2=1,nq2LHA), "]"
+      write(13,*) "AlphaS_Qs: [",(dsqrt(q2LHA(iq2)),",",
+     1     iq2=1,nq2LHA-1),dsqrt(q2LHA(nq2LHA)),"]"
+      write(13,*) "AlphaS_Vals: [",(as(iq2),",",
+     1     iq2=1,nq2LHA-1),as(nq2LHA),"]"
       write(13,*) "AlphaS_Lambda4:", lambda4
       write(13,*) "AlphaS_Lambda5:", lambda5
       close(13)
@@ -306,20 +343,22 @@
 *
 *     Tabulate PDFs at the initial scale on the grid
 *
-         do igrid=1,ngrid
-            call initPDFs(Qin**2d0)
-            do alpha=0,nin(igrid)
-               do ipdf=-6,6
-                  fqpre1(igrid,ipdf,alpha) = f0ph(ipdf,alpha)
-               enddo
-               do ipdf=-3,3
-                  flpre1(igrid,ipdf,alpha) = f0lep(ipdf,alpha)
+         if(Qin.gt.0d0)then
+            do igrid=1,ngrid
+               call initPDFs(Qin**2d0)
+               do alpha=0,nin(igrid)
+                  do ipdf=-6,6
+                     fqpre1(igrid,ipdf,alpha) = f0ph(ipdf,alpha)
+                  enddo
+                  do ipdf=-3,3
+                     flpre1(igrid,ipdf,alpha) = f0lep(ipdf,alpha)
+                  enddo
                enddo
             enddo
-         enddo
 *     Back up PDF name and set pretabulated PDFs as input
-         pdfsetbkp = pdfset
-         call SetPDFSet("pretabulated1")
+            pdfsetbkp = pdfset
+            call SetPDFSet("pretabulated1")
+         endif
 *
          iq2in = 1
          iq2fi = nQ(nfin)
@@ -409,11 +448,12 @@
          enddo
          close(13)
 *     Restore PDF name
-         call SetPDFSet(pdfsetbkp)
+         if(Qin.gt.0d0) call SetPDFSet(pdfsetbkp)
       enddo
 *
-      write(6,*) "File ",fname(1:ln)," grid produced!"
-      write(6,*) "  "
+      write(6,*) achar(27)//"[1;32m"
+      write(6,*) "File ",fname(1:ln)," grid produced"
+      write(6,*) achar(27)//"[0m"
 *
  40   format(13(es14.7,1x))
  50   format(14(es14.7,1x))

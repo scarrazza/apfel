@@ -17,9 +17,9 @@
       double precision mc,mb,mt
 *
       mass_scheme = "Pole"
-      m2th(4)     = mc * mc
-      m2th(5)     = mb * mb
-      m2th(6)     = mt * mt
+      m2ph(4)     = mc * mc
+      m2ph(5)     = mb * mb
+      m2ph(6)     = mt * mt
       InMasses    = "done"
 *
       return

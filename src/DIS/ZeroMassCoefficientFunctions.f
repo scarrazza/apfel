@@ -842,8 +842,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4 
-      INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 3 ) 
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2), 
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1018,7 +1018,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      INTEGER NF, NF2
+      INTEGER NF
 *
       z2 = zeta2
       z3 = zeta3
@@ -1069,8 +1069,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4, HC5
-      INTEGER NF, NF2, N1, N2, NW
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 3 )
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1119,8 +1119,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4, HC5
-      INTEGER NF, NF2, N1, N2, NW
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 3 )
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1201,8 +1201,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4, HC5
-      INTEGER NF, NF2, N1, N2, NW
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 3 )
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1257,8 +1257,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4, HC5
-      INTEGER NF, NF2, N1, N2, NW
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 2 )
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1297,8 +1297,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4, HC5
-      INTEGER NF, NF2, N1, N2, NW
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 2 )
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1348,7 +1348,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/consts.h"
 *
       COMPLEX*16 HC1, HC2, HC3, HC4 
-      INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 3 ) 
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2), 
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 

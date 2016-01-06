@@ -77,9 +77,20 @@ we obtain:
 R\left(x,\alpha_s\right)\otimes f(x,\alpha_s)\,
 \end{equation}
 where:
-\begin{equation}
-R\left(x,\alpha_s\right) = \frac{P\left(x,\left|\alpha_s\right|\right)}{\beta(\alpha_s)}\,.
+\begin{equation}\label{RescaledKernels}
+R\left(x,\alpha_s\right) = \frac{P\left(x,\left|\alpha_s\right|\right)}{\beta(\alpha_s)}=\frac{\widetilde{P}\left(x,\alpha_s\right)}{\beta(\alpha_s)}\,.
 \end{equation}
+Writing the strong coupling as:
+\begin{equation}
+\alpha_s(\mu) =\left|\alpha_s(\mu)\right| e^{i\theta(\mu)}\,,
+\end{equation}
+in eq.~(\ref{RescaledKernels}) we have defined:
+\begin{equation}
+\widetilde{P}(\alpha_s) = \sum_{n}
+\alpha_s^{n+1}\widetilde{P}^{(n)}\quad\mbox{with}\quad
+\widetilde{P}^{(n)} = e^{-i(n+1)\theta(\mu)}P^{(n)}\,.
+\end{equation}
+
 
 The next fundamental step is the promotion of the factorization scale
 $\mu$ from a real to a complex variable:

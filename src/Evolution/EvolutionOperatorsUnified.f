@@ -49,8 +49,6 @@
       double precision Mnslep(0:nint_max,0:nint_max)
       double precision tiny
       parameter(tiny=1d-10)
-
-      integer alpha,beta,i,j
 *
 *     Initial Conditions (Unity matrices)
 *

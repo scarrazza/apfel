@@ -210,7 +210,7 @@
 *     compuation of the IC component to NLO.
 *
          if(IntrinsicCharm)then
-            cFLIC = ( 1d0 - ( 1d0 - bqt(4) / bq(4) ) / 2d0 )
+            cFLIC = ( 1d0 + bqt(4) / bq(4) ) / 2d0
             ipt_max_IC = min(ipt,1)
          endif
 *     
@@ -1145,13 +1145,13 @@ c     6                             3,pt,alpha,beta) )
      4                             + c1(4)
      5                             * SC2m0CC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
-c                              CLccIC = CLccIC + as(pt)
-c     1                             * ( c0(4)
-c     2                             * SCLm0CC(jgrid,ixi(4),
-c     3                             2,pt,alpha,beta)
-c     4                             + c1(4)
-c     5                             * SCLm0CC(jgrid,ixi(4)+1,
-c     6                             2,pt,alpha,beta) )
+                              CLccIC = CLccIC + as(pt)
+     1                             * ( c0(4)
+     2                             * SCLm0CC(jgrid,ixi(4),
+     3                             2,pt,alpha,beta)
+     4                             + c1(4)
+     5                             * SCLm0CC(jgrid,ixi(4)+1,
+     6                             2,pt,alpha,beta) )
                               C3ccIC = C3ccIC + as(pt)
      1                             * ( c0(4)
      2                             * SC3m0CC(jgrid,ixi(4),
@@ -1447,7 +1447,6 @@ c     6                             2,pt,alpha,beta) )
                            endif
                         enddo
                      endif
-
 *
 *     If needed, compute the IC contributions.
 *     (Warning: such contributions are placed in the pure-singlet slot
@@ -1493,13 +1492,13 @@ c     6                             2,pt,alpha,beta) )
      4                             + c1(4)
      5                             * SC2m0CC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
-c                              CLccIC = CLccIC - as(pt)
-c     1                             * damp(4) * ( c0(4)
-c     2                             * SCLm0CC(jgrid,ixi(4),
-c     3                             2,pt,alpha,beta)
-c     4                             + c1(4)
-c     5                             * SCLm0CC(jgrid,ixi(4)+1,
-c     6                             2,pt,alpha,beta) )
+                              CLccIC = CLccIC - as(pt)
+     1                             * damp(4) * ( c0(4)
+     2                             * SCLm0CC(jgrid,ixi(4),
+     3                             2,pt,alpha,beta)
+     4                             + c1(4)
+     5                             * SCLm0CC(jgrid,ixi(4)+1,
+     6                             2,pt,alpha,beta) )
                               C3ccIC = C3ccIC - as(pt)
      1                             * damp(4) * ( c0(4)
      2                             * SC3m0CC(jgrid,ixi(4),

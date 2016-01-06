@@ -68,26 +68,27 @@ matching conditions at the charm threshold.
 
 \section{Intrinsic Charm Contribution to the Massive Structure Functions}
 
+Assuming the presence of IC in the proton, the massive structure 
+functions with $N_f=3$ light flavours acquire a further contribution 
+coming from the presence of a massive charm in the initial state. As a 
+consequence, the massive structure functions get a term that is 
+proportional to a \textit{static} charm PDF, $i.e.$ a PDF that, being 
+massive, does not evolve according to the DGLAP equantion. Such a 
+contribution starts already at order $\alpha_s^0$ and has the novel 
+effect to ``allign'' the massive scheme to the massless scheme in 
+terms of power counting because, contrary to what happens without IC,
+the two sectors start at $\alpha_s^0$. 
+
 \subsection{Order $\alpha_s^0$ Contributions}
 
-Assuming the presence of IC in the proton, the massive structure
-functions with $N_f=3$ light flavours acquire a further contribution
-coming from the presence of a massive charm in the initial state. As a
-consequence, the massive structure functions get a term that is
-proportional to a \textit{static} charm PDF, $i.e.$ a PDF that, being
-massive, does not evolve according to the DGLAP equantion. Such a
-contribution starts already at order $\alpha_s^0$ and has the novel
-effect to ``allign'' the massive scheme to the massless scheme in
-terms of power counting because, contrary to what happens without IC,
-the two sectors start at $\alpha_s^0$.
-
 In order to write explicitly the form of such LO contributions to the
-DIS structure functions, I consider eq.~(2) of \cite{Kretzer:1998ju}
-where the function $Q_1$ schould be indentified with the charm PDF. It
-should be noticed that in the $N_f=3$ scheme, such PDF does not obey
-the DGLAP equation because, due to the presence of the mass of the
-charm $m_c$, no large collinear logarithms appear in the calculation
-and thus there is no need to resum them.
+DIS structure functions, I consider eq.~(2) of
+Ref.~\cite{Kretzer:1998ju} where the function $Q_1$ schould be
+indentified with the charm PDF. It should be noticed that in the
+$N_f=3$ scheme, such PDF does not obey the DGLAP equation because, due
+to the presence of the mass of the charm $m_c$, no large collinear
+logarithms appear in the calculation and thus there is no need to
+resum them.
 
 From eq.~(2) of \cite{Kretzer:1998ju} one reads that the
 $\mathcal{O}(\alpha_s^0)$ IC contributions to the massive structrure
@@ -100,7 +101,7 @@ F_1^{\rm FF,IC}(x,Q^2) = \frac{S_+\Sigma_{++}-2m_1m_2S_-}{2\Delta}c(\chi)
 F_2^{\rm FF,IC}(x,Q^2) = \frac{S_+\Delta}{2Q^2}2xc(\chi)
 \end{equation}
 \begin{equation}
-xF_3^{\rm FF,IC}(x,Q^2) = 2Rxc(\chi)
+xF_3^{\rm FF,IC}(x,Q^2) = 2R_+ xc(\chi)
 \end{equation}
 \end{subequations}
 where $m_1$ and $m_2$ are the masses of the incoming and outcoming
@@ -134,7 +135,7 @@ F_i^{\rm FF}(x,Q^2)\longrightarrow F_i^{\rm FF}(x,Q^2)  + F_i^{\rm
 Now, for a purely \textit{electromagnetic} process, where only a
 $\gamma$ strikes the charm, one has:
 \begin{equation}
-S_+=S_-=e_c^2\quad\mbox{and}\quad R=0
+S_+=S_-=e_c^2\quad\mbox{and}\quad R_+=0
 \end{equation}
 Moreover, in this case both the incoming and the outcoming quarks are
 of the same flavour (charm) therefore we have $m_1=m_2=m_c$. Under
@@ -164,7 +165,7 @@ For a \textit{neutral current} process, where all the $\gamma$, the
 $Z$ and the interference $\gamma Z$ contributions are considered, one
 has:
 \begin{equation}
-S_{\pm}=B_c(\tilde{B}_c)=e_c^2-2e_cV_eV_cP_Z+(V_e^2+A_e^2)(V_c^2\pm A_c^2)P_Z^2\quad\mbox{and}\quad R=D_c=-2e_c A_cA_eP_Z+4V_cA_cV_eA_eP_Z^2
+S_{\pm}=B_c(\tilde{B}_c)=e_c^2-2e_cV_eV_cP_Z+(V_e^2+A_e^2)(V_c^2\pm A_c^2)P_Z^2\quad\mbox{and}\quad R_+=D_c=-2e_c A_cA_eP_Z+4V_cA_cV_eA_eP_Z^2
 \end{equation}
 with:
 \begin{equation}
@@ -196,11 +197,11 @@ xF_3^{\rm FF,IC}(x,Q^2)= 2D_cxc(\chi)\,.
 Finally, for a \textit{charged current} process, where a charged boson
 $W^\pm$ strikes the charm, one has:
 \begin{equation}
-S_+=S_-=2|V_{cs}|^2\quad\mbox{and}\quad R=|V_{cs}|^2
+S_+=2|V_{cs}|^2\,,\quad S_-=0\,,\quad\mbox{and}\quad R_+=|V_{cs}|^2
 \end{equation}
 if the outcoming quark is a strange or an anti-strange, and:
 \begin{equation}
-S_+=S_-=2|V_{cd}|^2\quad\mbox{and}\quad R=|V_{cd}|^2
+S_+=2|V_{cd}|^2\,,\quad S_-=0\,,\quad\mbox{and}\quad R_+=|V_{cd}|^2
 \end{equation}
 if the outcoming quark is a down or an anti-down. 
 
@@ -239,10 +240,10 @@ where:
 c^{\pm}=c\pm\overline{c}
 \end{equation}
 therefore:
-\begin{equation}
+\begin{equation}\label{FLLOIC}
 F_L^{\rm FF,IC}(x,Q^2) = F_2^{\rm FF,IC}(x,Q^2) -2x F_1^{\rm
-FF,IC}(x,Q^2)  = 4\frac{1-\eta}{2-\eta}
-B_c\left[1-\frac{1}{2}\left(1-\frac{\tilde{B}_c}{B_c}\right)\right] \chi c^+(\chi)
+FF,IC}(x,Q^2)  = \frac{1}{2}\left(1+\frac{\tilde{B}_c}{B_c}\right)4\frac{1-\eta}{2-\eta}
+B_c\chi c^+(\chi)
 \end{equation}
 
 In the charged current case, instead, one has to distinguish between
@@ -337,6 +338,275 @@ xF_3^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 2(|V_{cd}|^2+|V_{cs}|^2)xc(x)
 F_L^{\overline{\nu},\rm FF0,IC}(x,Q^2)= 0
 \end{equation}
 \end{subequations}
+
+\subsection{Order $\alpha_s$ Contributions}
+
+We can now turn to describe the NLO contributions to the IC component
+of the DIS structure functions. The explicit expressions can be found
+in Appendix C of Ref.~\cite{Kretzer:1998ju}. The main difficulty here
+is the fact that are particularly involved and it is not possible to
+identify the singular terms from the regular ones. As a consequence,
+in this case we have to adopt a different strategy.
+
+As we know, when convoluting a coefficient function with a PDF, say,
+$f(y)$ interpolated over an $x$-space grid to obtaing the structure
+function $F(x,m_1,m_2)$ the resulting expression is(\footnote{Note
+  that the factor $x_\beta$ in front of the intergral in
+  eq.~(\ref{ConvolutionGrid}) is not always included in the definition
+  of the structure functions. In particular, while $F_2$ and $F_L$
+  include it, $F_1$ and and $F_3$ do not so we need to keep it in mind
+  in what follows.}):
+\begin{equation}\label{ConvolutionGrid}
+F(x_\beta,m_1,m_2) =x_\beta
+\int_{x_\beta}^1\frac{dy}{y}\widetilde{C}\left(\frac{x_\beta}{y},m_1,m_2\right)f(y)
+= \sum^{N_{x}}_{\alpha=0} \Gamma_{\beta\alpha}(m_1,m_2)x_\alpha f(x_{\alpha},t)\,,
+\end{equation}
+with:
+\begin{equation}\label{GridKernel}
+\Gamma_{\beta\alpha}(m_1,m_2) = \int_c^d dy\,\widetilde{C}\left(y,m_1,m_2\right)
+  w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)\,,
+\end{equation}
+where $w_{\alpha}^{(k)}$ is the order-$k$ interpolation functions on
+the grid node $\alpha$ and:
+\begin{equation}
+  c =
+  \mbox{max}(x_\beta,x_\beta/x_{\alpha+1}) \quad\mbox{and}\quad d =
+  \mbox{min}(1,x_\beta/x_{\alpha-k}) \,.
+\end{equation}
+
+On the other hand, as it usually happens when mass effects are taken
+into account, the phase-space available to the process gets reduced
+and this is reflected by the fact that the convolution between
+coeffient functions and PDFs needed to obtain the structure functions
+takes the following form:
+\begin{equation}\label{MassiveIntegral0}
+  F(x)=x\int_\chi^1\frac{dz}{z}
+  C(z)f\left(\frac{\chi}{z}\right)=x\int_\chi^1\frac{dz}{z}
+  C\left(\frac{\chi}{z}\right)f(z)\,,
+\end{equation}
+where $\chi=x/\eta$ with $\eta\leq 1$ given in eq.~(\ref{Rescaledx})
+and where we have dropped all the unnecessary mass
+dependencies. Usually, expressions for the coefficient functions are
+given in this form. However, in order to write this integral in the
+form given in eq.~(\ref{ConvolutionGrid}), that is in such a way that
+lower bound of the integral is not the rescaled variable $\chi$ but
+the physical Bjorken $x$, one needs to perform the change of variable
+$y=\eta z$, so that:
+\begin{equation}\label{MassiveIntegral}
+  F(x)=x\int_x^\eta\frac{dy}{y}
+  C\left(\frac{y}{\eta}\right)f\left(\frac{x}{y}\right)=x\int_x^1 \frac{dy}{y}\,
+  \widetilde{C}(y)f\left(\frac{x}{y}\right)\,,
+\end{equation}
+with:
+\begin{equation}\label{RescaledIntegrand}
+\widetilde{C}(y) \equiv \theta\left(1-\frac{y}{\eta}\right)C\left(\frac{y}{\eta}\right)\,.
+\end{equation}
+
+The kind of expressions we have to deal with have this apparently
+simple form:
+\begin{equation}\label{CoeffFuncs}
+C(z) = \frac{R(z)}{(1-z)_+}+ L\delta(1-z)\,,
+\end{equation}
+where $R$ is a regular function in $z=1$, that is:
+\begin{equation}
+R(1) =  \lim_{z\rightarrow 1} R(z) = K\,,
+\end{equation}
+$K$ being a finite function of the masses, and $L$ is also constant in
+$z$ and depends only on the masses.
+
+
+Now, plugging eq.~(\ref{RescaledIntegrand}) into
+eq.~(\ref{GridKernel}) and taking into account eq.~(\ref{CoeffFuncs}),
+we have that:
+\begin{equation}
+\begin{array}{rcl}
+\Gamma_{\beta\alpha} &=&\displaystyle \int_c^d dy\,\theta\left(1-\frac{y}{\eta}\right) C\left(\frac{y}{\eta}\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)=\int_c^{\bar{d}} dy\,C\left(\frac{y}{\eta}\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)\\
+\\
+ &=&\displaystyle 
+\int_c^{\bar{d}} dy\,\left[\frac{1}{(1-y/\eta)_+}R\left(\frac{y}{\eta}\right)+\delta\left(1-\frac{y}{\eta}\right)L\right] w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)\\
+\\
+&=& \displaystyle \int_c^{\bar{d}} dy\frac{1}{1-y/\eta}\left[R\left(\frac{y}{\eta}\right)w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)-R(1)w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta}\right)\theta(\bar{d}-\eta)\right]\\
+\\
+&+&\displaystyle \left[R(1)\ln\left(1-\frac{c}{\eta}\right)\theta(\bar{d}-\eta)+L \right]\eta w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta}\right)\,.
+\end{array}
+\end{equation}
+where we have redefined:
+\begin{equation}
+\bar{d} = \mbox{min}(\eta,x_\beta/x_{\alpha-k})\,.
+\end{equation}
+Finally, changing the integration variable in $z=y/\eta$, we have:
+\begin{equation}\label{FinalCFonTheGrid0}
+\begin{array}{rcl}
+\Gamma_{\beta\alpha} &=& \eta\displaystyle \int_{c/\eta}^{\bar{d}/\eta} dz\frac{1}{1-z}\left[R\left(z\right)w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta z}\right)-R(1)w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta}\right)\theta(\bar{d}-\eta)\right]\\
+\\
+&+&\displaystyle \eta\left[R(1)\ln\left(1-\frac{c}{\eta}\right)\theta(\bar{d}-\eta)+L \right]w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta}\right)\,.
+\end{array}
+\end{equation}
+As a remark, it should be noted that the Heaviside function $\theta(\bar{d}-\eta)$ is indeed superflous because the same condition is guaranteed by the form of the interpolation functions. As a consequence, we can simply write:
+\begin{equation}\label{FinalCFonTheGrid}
+\begin{array}{rcl}
+\Gamma_{\beta\alpha} &=& \eta\displaystyle \int_{c/\eta}^{\bar{d}/\eta} dz\frac{1}{1-z}\left[R\left(z\right)w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta z}\right)-R(1)w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta}\right)\right]\\
+\\
+&+&\displaystyle \eta\left[R(1)\ln\left(1-\frac{c}{\eta}\right)+L \right]w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta}\right)\,.
+\end{array}
+\end{equation}
+
+Explicit expressions for the functions $R$ and $L$ for the structure
+functions $xF_1$, $F_2$ and $xF_3$ can be extracted Appendix C of
+Ref.~\cite{Kretzer:1998ju}. The relative expressions for $F_L$ can be
+constructed using the usual relation:
+\begin{equation}
+F_L(x,Q) = F_2(x,Q) - 2xF_1(x,Q)\,.
+\end{equation}
+
+Using the same notation of Ref.~\cite{Kretzer:1998ju} and dropping an
+overall factor $\alpha_s/4\pi$, we can write the
+$\mathcal{O}(\alpha_s)$ contribution to the ``reduced'' structure
+functions as:
+\begin{equation}
+x\hat{\mathcal{F}}_i^{QS^{(1)}} = x
+\int_\chi^1\frac{dz}{z}
+2\hat{H}_i^{q}(z)c\left(\frac{\chi}{z}\right)\quad\mbox{with}\quad i=1,2,3\,,
+\end{equation}
+and:
+\begin{equation}\label{KretzerCFs}
+2\hat{H}_i^{q}(z)= 2C_F\left[(S_i+V_i)\delta(1-z)+\frac{(1-z)}{(1-z)_+}\frac{\hat{s}-m_2^2}{8 \hat{s}}N_i^{-1}\hat{f}_i^{Q}(z)\right]\,.
+\end{equation}
+The standard structrure functions can be recovered just by applying
+the correct kinematic factors. We will do this in the next section
+where we will consider the NC and the CC sectors separately.
+
+It is now easy to identify the function $C(z)$ in
+eq.~(\ref{MassiveIntegral0}) with $2\hat{H}_i^{q}(z)$. As a
+consequence, we also have that the function $\widetilde{C}(y)$ in
+eq.~(\ref{MassiveIntegral}) is equal to:
+\begin{equation}
+\widetilde{C}(y) = \theta\left(1-\frac{y}{\eta}\right) 2\hat{H}_i^{q}\left(\frac{y}{\eta}\right)\,.
+\end{equation}
+Finally, comparing eq.~(\ref{KretzerCFs}) to eq.~(\ref{CoeffFuncs}),
+we can easily make the following identifications:
+\begin{equation}\label{Conjunction}
+\begin{array}{l}
+\displaystyle R(z) = 2C_F (1-z)\frac{\hat{s}-m_2^2}{8
+  \hat{s}}N_i^{-1}\hat{f}_i^{Q}(z)\,,\\
+\\
+\displaystyle L = 2C_F (S_i+V_i)\,.
+\end{array}
+\end{equation}
+
+In the following, we will treat the NC and the CC cases separately,
+showing how to implement the $\mathcal{O}(\alpha_s)$ corrections to
+the relative structure functions keeping into account all the relevant
+kinematic factors. To do so, using eq~(7) of
+Ref.~\cite{Kretzer:1998ju}, we write here the general correspondence
+between the standard and the reduced structure functions that holds at
+all orders in perturbation theory:
+\begin{equation}
+\begin{array}{rcl}
+2xF_1 &=& \displaystyle S_+ \left[\frac{\Sigma_{++}-2m_1m_2\frac{S_-}{S_+}}{\Delta}\right]\,x\hat{\mathcal{F}}_1^{QS}\,, \\
+\\
+F_2 &=& \displaystyle S_+\left[\frac{\Delta}{Q^2}\right] \, x\hat{\mathcal{F}}_2^{QS}\,,\\
+\\
+xF_3 &=& \displaystyle R_+
+         \left[2\right]\,x\hat{\mathcal{F}}_3^{QS}\,,\\
+\\
+F_L &=& \displaystyle \left[\frac{2S_+}{S_++S_-}\right]_{\mbox{\tiny NC only}}\left(F_2 - 2xF_1\right)
+\end{array}
+\end{equation}
+Notice that we have factorized a factor which in {\tt APFEL} is
+included \textit{a posteriori} when constructing the structure
+functions and that thus does not go into the coefficient
+functions. The factors in the square bracket goes into the coefficient
+functions with the exception of the factor in front of $F_L$ that must
+be included only the NC case to balance the factor in the r.h.s. of
+eq.~(\ref{FLLOIC})
+
+In the NC case, we have:
+\begin{equation}
+\begin{array}{l}
+m_1=m_2=m_c\\
+S_+=B_q\\
+S_-=\widetilde{B}_q\\
+R_+=D_q
+\end{array}
+\end{equation}
+In addition, the parameter $\eta$ to be used in eq.~(\ref{FinalCFonTheGrid}) takes the form:
+\begin{equation}
+\eta = \frac{2}{1+\sqrt{1+4\lambda}}\,.
+\end{equation}
+Finally, to obtain the coefficient functions to implement, one just
+needs to multiply the functions $R$ and $L$ given in
+eq.~(\ref{Conjunction}) by the kinematical factor that multiplies the
+respective $x\hat{\mathcal{F}}_i^{QS^{(1)}}$ in the equation above.
+
+
+In the CC case, where the outcoming parton is massless (either a
+strange or a down quark), the kinematics is simpler than in the NC
+case. In addition, no mass singularies are caused by the masslessness
+of the outcoming parton. Therefore the limit $m_2\rightarrow 0$ can
+safely be taken. In fact, in the CC case for a strange+down quark in
+the final state,we have:
+\begin{equation}
+\begin{array}{l}
+  m_1=m_c\\
+  m_2=0\\
+  S_+=2(|V_{cs}|^2+|V_{cd}|^2)\\
+  S_-=0\\
+  R_+=|V_{cs}|^2+|V_{cd}|^2
+\end{array}
+\end{equation}
+However, for numerical reasons we cannot really set $m_2=0$. We set it
+instead to a small number.  As a further simplification:
+\begin{equation}
+\eta = 1
+\end{equation}
+As a consequence, eq.~(\ref{FinalCFonTheGrid}) reduces to:
+\begin{equation}
+\Gamma_{\beta\alpha} =\int_{c}^{d} dz\frac{1}{1-z}\left[R\left(z\right)w_{\alpha}^{(k)}\left(\frac{x_\beta}{z}\right)-R(1)\delta_{\alpha\beta}\right]+\left[R(1)\ln\left(1-c\right)+L \right]\delta_{\alpha\beta}\,.
+\end{equation}
+
+\subsection{Massless Limit}
+
+What is left to be done to allow us to implement the FONLL scheme with
+IC to $\mathcal{O}(\alpha_s)$ is to compute and implement the massless
+limit, $i.e.$ $m_1=m_c\rightarrow 0$, of the $\mathcal{O}(\alpha_s)$
+coeffient functions. We do not really need to compute these coeffient
+functions because in Ref.~\cite{Kretzer:1998ju} the authors show that
+the logarithmically divergent part of all coefficient functions is
+equal to:
+\begin{equation}
+\begin{array}{rcl}
+D(x,m_1^2)&=&\displaystyle
+     2C_F\left[\frac{1+x^2}{1-x}\left(\ln\frac{\mu_F^2}{m_1^2}-1-2\ln(1-x)\right)\right]_+\\
+\\
+&=&\displaystyle 2C_F\left\{
+  \left(\ln\frac{\mu_F^2}{m_1^2}-1\right)\left[(1+x^2)\frac{1}{1-x}\right]_+-2\left[(1+x^2)\frac{\ln(1-x)}{1-x}\right]_+\right\}\,.
+\end{array}
+\end{equation}
+We can now manipulate this expression using the following property of
+the plus-prescripted distributions:
+\begin{equation}
+\left[g(x)f(x)\right]_+= \left[g(x) \right]_+ f(x) -
+\delta(1-x)\int_0^1 dy \left[g(y) \right]_+ f(y)\,,
+\end{equation}
+so that:
+\begin{equation}\label{LogDivergence}
+\begin{array}{rcl}
+D(x,m_1^2) &=& \displaystyle  2C_F\Bigg\{
+  \ln\frac{\mu_F^2}{m_1^2}
+ \left( 2\left[\frac{1}{1-x}\right]_+-(1+x)+\frac32\delta(1-x)\right)\\
+\\
+&&\displaystyle 
+  - 4 \left[\frac{\ln(1-x)}{1-x}\right]_+-2\left[\frac{1}{1-x}\right]_++2(1+x)\ln(1-x) +(1+x)+2\delta(1-x) \Bigg\}\,.
+\end{array}
+\end{equation}
+
+Finally, what we need to do to obtain the massless limit is to add to
+the $\overline{\mbox{MS}}$ zero-mass coeffient functions the term in
+eq.~(\ref{LogDivergence}).
+
+
+
 
 \section{The FONLL Structure Functions}\label{FONNLSF}
 

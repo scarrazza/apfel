@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([APFEL],[2.7.1],[stefano.carrazza@mi.infn.it],[apfel])
+AC_INIT([APFEL],[2.7.1],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfel])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
@@ -13,7 +13,7 @@ AC_CONFIG_HEADERS([config/config.h include/APFEL/FortranWrappers.h])
 
 ## Set Fortran compiler behaviour
 if test "x$FCFLAGS" == "x"; then
-  FCFLAGS="-O3"
+  FCFLAGS="-O3 -Wunused"
 fi
 # Try to respect users' Fortran compiler variables
 if test "x$FC" == "x"; then

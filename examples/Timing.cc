@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 
   // Activate some options
   APFEL::SetPerturbativeOrder(pt);
-  APFEL::SetQLimits(1,1000);
+  //APFEL::SetQLimits(1,1000);
   APFEL::SetTheory(theory);
   
   // Initializes integrals on the grids
@@ -60,9 +60,34 @@ int main(int argc, char** argv)
       double Q = exp(log(1.0)+i*(log(1000)-log(1.0))/N);
       t.start();
       APFEL::EvolveAPFEL(Q0,Q);
-      t.stop();    
+      t.stop();
       cout << Q << "\t" << t.print()/1000 << endl;
     }
+
+  cout << endl;
+  cout << "Testing cached evolution ..." << endl;
+  cout << endl;
+
+  APFEL::CachePDFsAPFEL(Q0);
+
+  double x = 1e-4;
+
+  int nQ = 10000;
+  double Qmin  = 1;
+  double Qmax  = 10000;
+  double Qstep = exp( log(Qmax/Qmin) / ( nQ - 1 ) );
+  
+  double Q = Qmin;
+  t.start();
+  for(int iQ = 0; iQ < nQ; iQ++) {
+    //cout << APFEL::xPDFxQ(0,x,Q) << endl;
+    APFEL::xPDFxQ(0,x,Q);
+    Q *= Qstep;
+  }
+  t.stop();
+
+  cout << nQ <<  " calls in " << t.print()/1000 << " s" << endl;
+  cout << endl;
 
   return 0;
 }

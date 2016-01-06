@@ -28,6 +28,7 @@
       include "../commons/MaxFlavourPDFs.h"
       include "../commons/MaxFlavourAlpha.h"
       include "../commons/grid.h"
+      include "../commons/gridQ.h"
       include "../commons/pdfset.h"
       include "../commons/Replica.h"
       include "../commons/lock.h"
@@ -44,7 +45,7 @@
 *     Initialize default parameters (those that were not initialized before)
 *
       if(InWelcome.ne."done")     call EnableWelcomeMessage(.true.)
-      if(InScales.ne."done")      call SetQLimits(0.5d0,100000d0)
+      if(InScales.ne."done")      call SetQLimits(1d0,10000d0)
       if(InPt.ne."done")          call SetPerturbativeOrder(2)
       if(InEvs.ne."done")         call SetVFNS
       if(InTheory.ne."done")      call SetTheory("QCD")
@@ -57,16 +58,18 @@
       if(InAlpQED.ne."done")      call SetAlphaQEDRef(7.496252d-3,
      1                                                1.777d0)
       if(InLambdaQCD.ne."done")   call SetLambdaQCDRef(0.220d0,5)
-      if(InEpsTrunc.ne."done")    call SetEpsilonTruncation(1d-5)
+      if(InEpsTrunc.ne."done")    call SetEpsilonTruncation(1d-2)
       if(InAlphaEvol.ne."done")   call SetAlphaEvolution("exact")
-      if(InPDFEvol.ne."done")     call SetPDFEvolution("exactmu")
+      if(InPDFEvol.ne."done")     call SetPDFEvolution("exactalpha")
       if(InKren.ne."done")        call SetRenFacRatio(1d0)
       if(InMasses.ne."done")      call SetPoleMasses(dsqrt(2d0),4.5d0,
      1                                               175d0)
+      if(InThrRatios.ne."done")   call SetMassMatchingScales(1d0,1d0,
+     1                                                       1d0)
       if(InMassRef.ne."done")     call SetMassScaleReference(
-     1                                                   dsqrt(m2th(4)),
-     2                                                   dsqrt(m2th(5)),
-     3                                                   dsqrt(m2th(6)))
+     1                                                   dsqrt(m2ph(4)),
+     2                                                   dsqrt(m2ph(5)),
+     3                                                   dsqrt(m2ph(6)))
       if(InMTau.ne."done")        call SetTauMass(1.777d0)
       if(InMassRunning.ne."done") call EnableMassRunning(.true.)
       if(InMFP.ne."done")         call SetMaxFlavourPDFs(6)
@@ -75,9 +78,10 @@
       if(InRep.ne."done")         call SetReplica(0)
       if(InEvolOp.ne."done")      call EnableEvolutionOperator(.false.)
       if(InLeptEvol.ne."done")    call EnableLeptonEvolution(.false.)
-      if(InLock.ne."done")        call LockGrids(.false.)
+      if(InLock.ne."done")        call LockGrids(.true.)
       if(InLHgrid.ne."done")      call SetLHgridParameters(100,50,1d-9,
      1                                            1d-1,1d0,50,1d0,1d10)
+      if(InQGrid.ne."done")       call SetQGridParameters(70,3)
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,80,3,1d-5)
@@ -204,7 +208,7 @@
       if(Smallx)then
          if(TimeLike)then
             write(6,*) achar(27)//"[31mERROR:"
-            write(6,*) "Timelike evolution and Small-x resummation"
+            write(6,*) "Time-like evolution and Small-x resummation"
             write(6,*) "cannot be combined, switch off one of them."
             write(6,*) achar(27)//"[0m"
             call exit(-10)
@@ -220,14 +224,6 @@
             write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Renormalization scale variation not allowed"
             write(6,*) "if the small-x resummation is enabled."
-            write(6,*) achar(27)//"[0m"
-            call exit(-10)
-         endif
-         if(PDFEvol.eq."expandalpha".or.PDFEvol(1:9).eq."truncated")then
-            write(6,*) achar(27)//"[31mERROR:"
-            write(6,*) "The 'expandalpha' and 'truncated' solutions"
-            write(6,*) "of the DGLAP equation cannot be used if the"
-            write(6,*) "small-x resummation is enabled."
             write(6,*) achar(27)//"[0m"
             call exit(-10)
          endif
@@ -247,45 +243,77 @@
 *     Check that there are no identical masses and that
 *     masses are correctly ordered
 *
-      if(m2th(4).eq.m2th(5).or.
-     1   m2th(4).eq.m2th(6).or.
-     2   m2th(5).eq.m2th(6))then
+      if(m2ph(4).eq.m2ph(5).or.
+     1   m2ph(4).eq.m2ph(6).or.
+     2   m2ph(5).eq.m2ph(6))then
          write(6,*) achar(27)//"[31mERROR:"
-         write(6,*) "There cannot be equal heavy quark masses:"
-         write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2th(4))," GeV"
-         write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2th(5))," GeV"
-         write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2th(6))," GeV"
+         write(6,*) "There cannot be equal heavy quark masses."
+         write(6,*) "This condition is not fulfilled with:"
+         write(6,*) "  "
+         write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2ph(4))," GeV"
+         write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2ph(5))," GeV"
+         write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2ph(6))," GeV"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
-      if(m2th(4).gt.m2th(5).or.
-     1   m2th(4).gt.m2th(6).or.
-     2   m2th(5).gt.m2th(6))then
+      if(m2ph(4).gt.m2ph(5).or.
+     1   m2ph(4).gt.m2ph(6).or.
+     2   m2ph(5).gt.m2ph(6))then
          write(6,*) achar(27)//"[31mERROR:"
-         write(6,*) "The heavy quark masses are not correctly",
-     1              " ordered:"
-         write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2th(4))," GeV"
-         write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2th(5))," GeV"
-         write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2th(6))," GeV"
+         write(6,*) "The heavy quark masses must be ordered, i.e.:"
+         write(6,*) "- Mc < Mb < Mt"
+         write(6,*) "This condition is not fulfilled with:"
+         write(6,*) "  "
+         write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2ph(4))," GeV"
+         write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2ph(5))," GeV"
+         write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2ph(6))," GeV"
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
+      endif
+*
+*     Check that also the thresholds are correctly ordered
+*
+      if(k2th(4)*m2ph(4).gt.k2th(5)*m2ph(5).or.
+     1   k2th(4)*m2ph(4).gt.k2th(6)*m2ph(6).or.
+     2   k2th(5)*m2ph(5).gt.k2th(6)*m2ph(6))then
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "The heavy quark thresholds must be ordered, i.e.:"
+         write(6,*) "- Mthc < Mthb < Mtht"
+         write(6,*) "This condition is not fulfilled with:"
+         write(6,*) "  "
+         write(6,"(a,f8.3,a)") " Mthc = ",dsqrt(k2th(4)*m2ph(4))," GeV"
+         write(6,"(a,f8.3,a)") " Mthb = ",dsqrt(k2th(5)*m2ph(5))," GeV"
+         write(6,"(a,f8.3,a)") " Mtht = ",dsqrt(k2th(6)*m2ph(6))," GeV"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
 *
 *     Check that each scale at which heavy quark masses have been defined
-*     is below the following mass (only for MSbar masses).
+*     above it's threshold and below the threshold above.
+*     This ensures that no threshold is crossed during the evolution to
+*     calculate the RGI masses. (only for MSbar masses).
 *
       if(mass_scheme.eq."MSbar")then
-         if(q2th(4).ge.m2th(5).or.q2th(5).ge.m2th(6).or.
-     1      q2th(4).lt.m2th(4)-1d-2.or.q2th(5).lt.m2th(5)-1d-2.or.
-     2      q2th(6).lt.m2th(6)-1d-2)then
+         if(q2th(4).ge.k2th(5)*m2ph(5).or.q2th(5).ge.k2th(6)*m2ph(6).or.
+     1      q2th(4).lt.k2th(4)*m2ph(4)-1d-2.or.
+     2      q2th(5).lt.k2th(5)*m2ph(5)-1d-2.or.
+     2      q2th(6).lt.k2th(6)*m2ph(6)-1d-2)then
             write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Each heavy quark mass reference scale must be"
-            write(6,*) "above quark mass itself and below the following"
-            write(6,*) "one:"
-            write(6,"(a,f8.3,a)") " Mc = ",dsqrt(m2th(4))," GeV"
-            write(6,"(a,f8.3,a)") " Mb = ",dsqrt(m2th(5))," GeV"
-            write(6,"(a,f8.3,a)") " Mt = ",dsqrt(m2th(6))," GeV"
+            write(6,*) "between its corresponding threshold and the"
+            write(6,*) "threshold immediately above, i.e.:"
+            write(6,*) "- Mthc < Qc < Mthb"
+            write(6,*) "- Mthb < Qb < Mtht"
+            write(6,*) "- Qt > Mtht"
+            write(6,*) "This condition is not fulfilled with:"
+            write(6,*) "  "
+            write(6,"(a,f8.3,a)") " Mthc = ",dsqrt(k2th(4)*m2ph(4)),
+     1                            " GeV"
+            write(6,"(a,f8.3,a)") " Mthb = ",dsqrt(k2th(5)*m2ph(5)),
+     1                            " GeV"
+            write(6,"(a,f8.3,a)") " Mtht = ",dsqrt(k2th(6)*m2ph(6)),
+     1                            " GeV"
             write(6,*) "   "
             write(6,"(a,f8.3,a)") " Qc = ",dsqrt(q2th(4))," GeV"
             write(6,"(a,f8.3,a)") " Qb = ",dsqrt(q2th(5))," GeV"
@@ -300,9 +328,9 @@
       if(nq2LHA.gt.nq2max)then
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "The number of points of the LHA Q2 grid exceeds",
-     1              " the maximum"
+     1              " the maximum:"
          write(6,*) "- input number =",nq2LHA
-         write(6,*) "- maximun number =",nq2max
+         write(6,*) "- maximum number =",nq2max
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
@@ -310,9 +338,9 @@
       if(nxLHA.gt.nxmax)then
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "The number of points of the LHA x grid exceeds",
-     1              " the maximum"
+     1              " the maximum:"
          write(6,*) "- input number =",nxLHA
-         write(6,*) "- maximun number =",nxmax
+         write(6,*) "- maximum number =",nxmax
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
@@ -355,20 +383,19 @@
 *
 *     Security switches
 *
-*     If one of the combined solutions QCD x QED is chose
-*     switch of the fast evolution.
+*     If one of the combined solutions QCD x QED is chosen
+*     switch off the fast evolution.
 *
-      if(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
+      if((Th.eq."QCEDP".or.Th.eq."QCEDS".or.
      1   Th.eq."QECDP".or.Th.eq."QECDS".or.
-     2   Th.eq."QavDP".or.Th.eq."QavDS")then
-         if(FastEvol)then
-            write(6,*) achar(27)//"[33m"//
-     1                 "WARNING: fast evolution not available with",
-     2                 " the ",Th," solution"
-            write(6,*) "         ... disabling fast evolution"
-     1                 //achar(27)//"[0m"
-            call SetFastEvolution(.false.)
-         endif
+     2   Th.eq."QavDP".or.Th.eq."QavDS").and.
+     3   FastEvol)then
+         write(6,*) achar(27)//"[33m"//
+     1              "WARNING: fast evolution not available with",
+     2              " the ",Th," solution"
+         write(6,*) "         ... disabling fast evolution"
+     1              //achar(27)//"[0m"
+         call SetFastEvolution(.false.)
       endif
 *
 *     If the fast evolution is enabled, disable automatically
@@ -390,6 +417,7 @@
          write(6,*) achar(27)//"[33m"//
      1              "WARNING: Computation of the evolution operator",
      2              " not possible if there is more than one subgrid"
+         write(6,*) "             and one of the is external"
          write(6,*) "         ... disabling evolution operator",
      1              " computation"
      2              //achar(27)//"[0m"
@@ -397,7 +425,7 @@
       endif
 *
 *     When the computation of the Evolution Operator is enabled
-*     lock the grids by default.
+*     lock the grids by default (if there are no external grids).
 *
       if(EvolOp.and..not.lock.and..not.ThereAreExtGrids)then
          write(6,*) achar(27)//"[33m"//
@@ -408,8 +436,8 @@
          call LockGrids(.true.)
       endif
 *
-*     When the computation of the Evolution Operator is enabled
-*     lock the grids by default.
+*     At the moment the computation of the evolution operator
+*     is available only for QCD evolution.
 *
       if(EvolOp.and.Th.ne."QCD")then
          write(6,*) achar(27)//"[33m"//
@@ -421,7 +449,7 @@
          call EnableEvolutionOperator(.false.)
       endif
 *
-*     If there are external grids the grids cannot be locked
+*     If there are external grids the subgrids cannot be locked
 *
       if(ThereAreExtGrids.and.lock)then
          write(6,*) achar(27)//"[33m"//
@@ -440,9 +468,19 @@
          write(6,*) achar(27)//"[33m"//
      1              "WARNING: the polarized evolution at NNLO is ",
      2              "incomplete."
-         write(6,*) "         APFEL uses P^(2,v) = P^(2,minus). "
+         write(6,*) "         APFEL assumes P^(2,v) = P^(2,minus). "
      1              //achar(27)//"[0m"
       endif
+*
+*     If the MSbar are used and the heavy quark masses are not given
+*     at the mass scales themselves, compute the RG invariant masses
+*     i.e. mc(mc), mb(mb) and mt(mt).
+*
+      if(mass_scheme.eq."MSbar") call ComputeRGInvariantMasses
+*
+*     Compute the heavy quark thresholds
+*
+      call ComputeHeavyQuarkThresholds
 *
 *     If the alpha solution is "lambda", compute values of LambdaQCD
 *     for all the number of flavours.     
@@ -454,12 +492,6 @@
 *     the DGLAP equation different from 'exactmu').
 *
       call ThresholdAlphaQCD
-*
-*     If the MSbar are used and the heavy quark masses are not given
-*     at the mass scales themselves, compute the RG invariant masses
-*     i.e. mc(mc), mb(mb) and mt(mt).
-*
-      if(mass_scheme.eq."MSbar") call ComputeRGInvariantMasses
 *
       return
       end
