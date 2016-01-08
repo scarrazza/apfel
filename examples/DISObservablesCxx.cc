@@ -15,8 +15,11 @@ int main()
   //
   // Settings
   //
+  string proc = "NC";
   //APFEL::SetMassScheme("ZM-VFNS");
-  APFEL::SetProcessDIS("NC");
+  APFEL::SetMassScheme("FONLL-C");
+  APFEL::SetProcessDIS(proc);
+  APFEL::SetQLimits(1.4,250);
   //APFEL::SetPolarizationDIS(0);
   //APFEL::SetProjectileDIS("electron");
   //APFEL::SetTargetDIS("proton");
@@ -70,14 +73,13 @@ int main()
        << setw(11) << "   F2charm   " 
        << setw(11) << "   F2bottom  " 
        << setw(11) << "   F2total   " << endl;
-
   cout << scientific;
   for (int i = 2; i < 11; i++)
     cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
-	 << setw(11) <<APFEL::F2light(xlha[i])  << "  "
-      	 << setw(11) <<APFEL::F2charm(xlha[i])  << "  "
-      	 << setw(11) <<APFEL::F2bottom(xlha[i]) << "  "
-      	 << setw(11) <<APFEL::F2total(xlha[i])	<< endl;
+	 << setw(11) << APFEL::F2light(xlha[i])  << "  "
+      	 << setw(11) << APFEL::F2charm(xlha[i])  << "  "
+      	 << setw(11) << APFEL::F2bottom(xlha[i]) << "  "
+      	 << setw(11) << APFEL::F2total(xlha[i])	 << endl;
   cout << "      " << endl;
 
   cout << "   x   " 
@@ -85,14 +87,13 @@ int main()
        << setw(11) << "   FLcharm   " 
        << setw(11) << "   FLbottom  " 
        << setw(11) << "   FLtotal   " << endl;
-
   cout << scientific;
   for (int i = 2; i < 11; i++)
     cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
-	 << setw(11) <<APFEL::FLlight(xlha[i])  << "  "
-      	 << setw(11) <<APFEL::FLcharm(xlha[i])  << "  "
-      	 << setw(11) <<APFEL::FLbottom(xlha[i]) << "  "
-      	 << setw(11) <<APFEL::FLtotal(xlha[i])	<< endl;
+	 << setw(11) << APFEL::FLlight(xlha[i])  << "  "
+      	 << setw(11) << APFEL::FLcharm(xlha[i])  << "  "
+      	 << setw(11) << APFEL::FLbottom(xlha[i]) << "  "
+      	 << setw(11) << APFEL::FLtotal(xlha[i])  << endl;
   cout << "      " << endl;
 
   cout << "   x   " 
@@ -100,14 +101,58 @@ int main()
        << setw(11) << "   F3charm   " 
        << setw(11) << "   F3bottom  " 
        << setw(11) << "   F3total   " << endl;
-
   cout << scientific;
   for (int i = 2; i < 11; i++)
     cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
-	 << setw(11) <<APFEL::F3light(xlha[i])  << "  "
-      	 << setw(11) <<APFEL::F3charm(xlha[i])  << "  "
-      	 << setw(11) <<APFEL::F3bottom(xlha[i]) << "  "
-      	 << setw(11) <<APFEL::F3total(xlha[i])	<< endl;
+	 << setw(11) << APFEL::F3light(xlha[i])  << "  "
+      	 << setw(11) << APFEL::F3charm(xlha[i])  << "  "
+      	 << setw(11) << APFEL::F3bottom(xlha[i]) << "  "
+      	 << setw(11) << APFEL::F3total(xlha[i])	 << endl;
+  cout << "      " << endl;
+  //
+  // Cache Structure functions
+  //
+      APFEL::CacheStructureFunctionsAPFEL(Q0);
+  cout << "   x   " 
+       << setw(11) << "   F2light   " 
+       << setw(11) << "   F2charm   " 
+       << setw(11) << "   F2bottom  " 
+       << setw(11) << "   F2total   " << endl;
+  cout << scientific;
+  for (int i = 2; i < 11; i++)
+    cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
+	 << setw(11) << APFEL::StructureFunctionxQ(proc,"F2","light",xlha[i],Q)  << "  "
+      	 << setw(11) << APFEL::StructureFunctionxQ(proc,"F2","charm",xlha[i],Q)  << "  "
+      	 << setw(11) << APFEL::StructureFunctionxQ(proc,"F2","bottom",xlha[i],Q) << "  "
+      	 << setw(11) << APFEL::StructureFunctionxQ(proc,"F2","total",xlha[i],Q)  << endl;
+  cout << "      " << endl;
+
+  cout << "   x   " 
+       << setw(11) << "   FLlight   " 
+       << setw(11) << "   FLcharm   " 
+       << setw(11) << "   FLbottom  " 
+       << setw(11) << "   FLtotal   " << endl;
+  cout << scientific;
+  for (int i = 2; i < 11; i++)
+    cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
+	 << setw(11) << APFEL::StructureFunctionxQ(proc,"FL","light",xlha[i],Q)  << "  "
+      	 << setw(11) << APFEL::StructureFunctionxQ(proc,"FL","charm",xlha[i],Q)  << "  "
+      	 << setw(11) << APFEL::StructureFunctionxQ(proc,"FL","bottom",xlha[i],Q) << "  "
+      	 << setw(11) << APFEL::StructureFunctionxQ(proc,"FL","total",xlha[i],Q)  << endl;
+  cout << "      " << endl;
+
+  cout << "   x   " 
+       << setw(11) << "   F3light   " 
+       << setw(11) << "   F3charm   " 
+       << setw(11) << "   F3bottom  " 
+       << setw(11) << "   F3total   " << endl;
+  cout << scientific;
+  for (int i = 2; i < 11; i++)
+    cout << setprecision(1) << xlha[i] << "\t" << setprecision(4) 
+	 << setw(11) << APFEL::StructureFunctionxQ(proc,"F3","light",xlha[i],Q)  << "  "
+      	 << setw(11) << APFEL::StructureFunctionxQ(proc,"F3","charm",xlha[i],Q)  << "  "
+      	 << setw(11) << APFEL::StructureFunctionxQ(proc,"F3","bottom",xlha[i],Q) << "  "
+      	 << setw(11) << APFEL::StructureFunctionxQ(proc,"F3","total",xlha[i],Q)  << endl;
   cout << "      " << endl;
 
   return 0;

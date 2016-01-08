@@ -31,9 +31,19 @@ namespace APFEL {
     fderiveapfel(&Q);
   }
 
+  void CachePDFsAPFEL(double Q0)
+  {
+    fcachepdfsapfel(&Q0);
+  }
+
   double xPDF(int i, double x)
   {
     return fxpdf(&i, &x);
+  }
+
+  double xPDFxQ(int i, double x, double Q)
+  {
+    return fxpdfxq(&i, &x, &Q);
   }
 
   double dxPDF(int i, double x)
@@ -69,6 +79,11 @@ namespace APFEL {
   void xPDFallPhoton(double x, double *xf)
   {
     fxpdfallphoton(&x,xf);
+  }
+
+  void xPDFxQall(double x, double Q, double *xf)
+  {
+    fxpdfxqall(&x,&Q,xf);
   }
 
   double xLepton(int i, double x)
@@ -248,6 +263,11 @@ namespace APFEL {
     fsetgridparameters(&i,&np,&deg,&x);
   }
 
+  void SetQGridParameters(int npq, int degq)
+  {
+    fsetqgridparameters(&npq,&degq);
+  }
+
   void SetLHgridParameters(int nx, int nxm, double xmin, double xm, double xmax,
 			   int nq2, double q2min, double q2max)
   {
@@ -277,6 +297,11 @@ namespace APFEL {
   void SetMassScaleReference(double Qc, double Qb, double Qt)
   {
     fsetmassscalereference(&Qc,&Qb,&Qt);
+  }
+
+  void SetMassMatchingScales(double kmc, double kmb, double kmt)
+  {
+    fsetmassmatchingscales(&kmc,&kmb,&kmt);
   }
 
   void SetNumberOfGrids(int n)

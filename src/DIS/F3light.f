@@ -34,11 +34,11 @@
       double precision F3light
 *
       if(TMC)then
-         tau = 1d0 + 4d0 * rhop * x**2d0
+         tau = 1d0 + 4d0 * rhop * x**2
          xi  = 2d0 * x / ( 1d0 + dsqrt(tau) )
 *
-         c1 = x**2d0 / xi**2d0 / tau
-         c2 = 4d0 * rhop * x**3d0 / tau**1.5d0
+         c1 = x**2 / xi**2 / tau
+         c2 = 4d0 * rhop * x**3 / tau**1.5d0
 *
          if(xi.lt.xmin(1)-tol.or.xi.gt.xmax+tol)then
             write(6,*) "In F3light.f:"

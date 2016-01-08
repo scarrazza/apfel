@@ -17,7 +17,6 @@
 *
 *     Variables
 *
-      integer inf,nfi,nff
       double precision t1,t2
 *
 *     Read input parameters

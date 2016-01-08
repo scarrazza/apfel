@@ -57,7 +57,7 @@
 *
       DOUBLE PRECISION C2G1AM0_AQ
 *
-      C2G1AM0_AQ = TR * ( 4D0 - 8D0 * X + 8D0 * X**2D0 )
+      C2G1AM0_AQ = TR * ( 4D0 - 8D0 * X + 8D0 * X**2 )
 *
       RETURN
       END
@@ -77,7 +77,7 @@
 *
       DOUBLE PRECISION C2G1AM0_A0
 *
-      C2G1AM0_A0 = TR * ( ( 4D0 - 8D0 * X + 8D0 * X**2D0 )
+      C2G1AM0_A0 = TR * ( ( 4D0 - 8D0 * X + 8D0 * X**2 )
      1           * DLOG( ( 1D0 - X ) / X ) - 4D0 + 32D0 * X 
      2           - 32D0 * X**2 )
 *
@@ -1099,7 +1099,95 @@
 *
       DOUBLE PRECISION CG1ACCM0_AL
 *
-      CG1ACCM0_AL = 2D0 * TR * ( X**2D0 + ( 1D0 - X )** 2D0 )
+      CG1ACCM0_AL = 2D0 * TR * ( X**2 + ( 1D0 - X )**2 )
 *
       RETURN
       END
+*
+************************************************************************
+*     Logarithmically divergents term to be added to the MSbar ZM
+*     coefficient functions to obtain the massless limit of the IC
+*     contributions.
+************************************************************************
+      function DICa(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lnk
+**
+*     Output Variables
+*
+      double precision DICa
+*
+      lnk = dlog(xi/kfacQ)                ! ln(muF2/mh2)
+*
+      DICa = 2d0 * CF * ( 1d0 + z ) * ( - lnk + 1d0
+     1     + 2d0 * dlog( 1d0 - z ) )
+*
+      return
+      end
+*
+************************************************************************
+      function DICb(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lnk
+**
+*     Output Variables
+*
+      double precision DICb
+*
+      lnk = dlog(xi/kfacQ)                ! ln(muF2/mh2)
+*
+      DICb = 4d0 * CF * ( lnk - 1d0 - 2d0 * dlog( 1d0 - z ) )
+     1     / ( 1d0 - z )
+*
+      return
+      end
+*
+************************************************************************
+      function DICc(xi,z)
+*
+      implicit none
+*
+      include "../commons/ColorFactors.h"
+      include "../commons/kfacQ.h"
+**
+*     Input Variables
+*
+      double precision xi,z
+**
+*     Internal Variables
+*
+      double precision lnk
+**
+*     Output Variables
+*
+      double precision DICc
+*
+      lnk = dlog(xi/kfacQ)                ! ln(muF2/mh2)
+*
+      DICc = 4d0 * CF * ( 3d0 * lnk / 4d0 + 1d0 
+     1     + ( lnk - 1d0 ) * dlog( 1d0 - z ) - dlog( 1d0 - z )**2 )
+*
+      return
+      end

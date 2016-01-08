@@ -27,7 +27,7 @@
       DOUBLE PRECISION C2NS1A
 *
       C2NS1A = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
-     1     - ( 1D0 + X**2D0 ) * DLOG(X) / ( 1D0 - X ) + 3D0 + 2D0 * X )
+     1     - ( 1D0 + X**2 ) * DLOG(X) / ( 1D0 - X ) + 3D0 + 2D0 * X )
 *
       RETURN
       END
@@ -73,7 +73,7 @@
 *
       DOUBLE PRECISION C2NS1C
 *
-      C2NS1C = 2D0 * CF * ( DLOG( 1D0 - X )**2D0 
+      C2NS1C = 2D0 * CF * ( DLOG( 1D0 - X )**2 
      1       - 3D0 * DLOG( 1D0 - X ) / 2D0 
      2       - ( 2D0 * ZETA2 + 9D0 / 2D0 ) )
 *
@@ -97,8 +97,8 @@
 *
       DOUBLE PRECISION C2G1A
 *
-      C2G1A = 4D0 * TR * ( ( ( 1D0 - X )**2D0 + X**2D0 ) 
-     1      * DLOG( ( 1D0 - X ) / X ) - 8D0 * X**2D0 + 8D0 * X - 1D0 )
+      C2G1A = 4D0 * TR * ( ( ( 1D0 - X )**2 + X**2 ) 
+     1      * DLOG( ( 1D0 - X ) / X ) - 8D0 * X**2 + 8D0 * X - 1D0 )
 *
       RETURN
       END
@@ -165,7 +165,7 @@
       DOUBLE PRECISION C3NS1A
 *
       C3NS1A = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
-     1     - ( 1D0 + X**2D0 ) * DLOG(X) / ( 1D0 - X ) + 2D0 + X )
+     1     - ( 1D0 + X**2 ) * DLOG(X) / ( 1D0 - X ) + 2D0 + X )
 *
       RETURN
       END
@@ -211,7 +211,7 @@
 *
       DOUBLE PRECISION C3NS1C
 *
-      C3NS1C = 2D0 * CF * ( DLOG( 1D0 - X )**2D0 
+      C3NS1C = 2D0 * CF * ( DLOG( 1D0 - X )**2 
      1        - 3D0 * DLOG( 1D0 - X ) / 2D0 
      2        - ( 2D0 * ZETA2 + 9D0 / 2D0 ) )
 *
@@ -358,13 +358,13 @@
        C2PS2A =   NF * ( 5.290 * (1./Y-1.) + 4.310 * DL**3   
      1         - 2.086 * DL**2 + 39.78 * DL - 0.101 * (1.-Y) * DL1**3 
      2         - (24.75 - 13.80 * Y) * DL**2 * DL1 + 30.23 * DL * DL1 )
-C       C2PS2A = NF * ( ( 8D0 / 3D0 * DL1**2D0 - 32D0 / 3D0 * DL1 
+C       C2PS2A = NF * ( ( 8D0 / 3D0 * DL1**2 - 32D0 / 3D0 * DL1 
 C     1       + 9.8937D0 ) * ( 1D0 - Y ) + ( 9.57D0 - 13.41D0 * Y 
-C     2       + 0.08D0 * DL1**3D0 ) * ( 1D0 - Y )**2D0 
-C     3       + 5.667D0 * Y * DL**3D0 - DL**2D0 * DL1 * ( 20.26D0 
+C     2       + 0.08D0 * DL1**3 ) * ( 1D0 - Y )**2 
+C     3       + 5.667D0 * Y * DL**3 - DL**2 * DL1 * ( 20.26D0 
 C     4       - 33.93D0 * Y ) + 43.36D0 * ( 1D0 - Y ) * DL 
-C     5       - 1.053D0 * DL**2D0 + 40D0 / 9D0 * DL**3D0 
-C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
+C     5       - 1.053D0 * DL**2 + 40D0 / 9D0 * DL**3
+C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 *
        RETURN
        END
@@ -634,7 +634,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       DOUBLE PRECISION C2NS1TA
 *
       C2NS1TA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
-     1     + 2D0 * ( 1D0 + X**2D0 ) * DLOG(X) / ( 1D0 - X ) + 5D0 / 2D0 
+     1     + 2D0 * ( 1D0 + X**2 ) * DLOG(X) / ( 1D0 - X ) + 5D0 / 2D0 
      2     - 3D0 * X / 2D0 )
 *
       RETURN
@@ -681,7 +681,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
 *
       DOUBLE PRECISION C2NS1TC
 *
-      C2NS1TC = 2D0 * CF * ( DLOG( 1D0 - X )**2D0 
+      C2NS1TC = 2D0 * CF * ( DLOG( 1D0 - X )**2 
      1        - 3D0 * DLOG( 1D0 - X ) / 2D0 
      2        + ( 4D0 * ZETA2 - 9D0 / 2D0 ) )
 *
@@ -705,8 +705,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
 *
       DOUBLE PRECISION C2G1TA
 *
-      C2G1TA = 4D0 * CF * ( ( 1D0 + ( 1D0 - X )**2D0 ) 
-     1       * DLOG( X**2D0 * ( 1D0 - X ) ) / X )
+      C2G1TA = 4D0 * CF * ( ( 1D0 + ( 1D0 - X )**2 ) 
+     1       * DLOG( X**2 * ( 1D0 - X ) ) / X )
 *
       RETURN
       END
@@ -773,7 +773,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       DOUBLE PRECISION C3NS1TA
 *
       C3NS1TA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
-     1     + 2d0 * ( 1D0 + X**2D0 ) * DLOG(X) / ( 1D0 - X ) + 1D0 / 2D0
+     1     + 2d0 * ( 1D0 + X**2 ) * DLOG(X) / ( 1D0 - X ) + 1D0 / 2D0
      2     - X / 2D0 )
 *
       RETURN
@@ -820,7 +820,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
 *
       DOUBLE PRECISION C3NS1TC
 *
-      C3NS1TC = 2D0 * CF * ( DLOG( 1D0 - X )**2D0 
+      C3NS1TC = 2D0 * CF * ( DLOG( 1D0 - X )**2 
      1        - 3D0 * DLOG( 1D0 - X ) / 2D0 
      2        + ( 4D0 * ZETA2 - 9D0 / 2D0 ) )
 *
@@ -842,8 +842,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4 
-      INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 3 ) 
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2), 
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1018,7 +1018,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      INTEGER NF, NF2
+      INTEGER NF
 *
       z2 = zeta2
       z3 = zeta3
@@ -1069,8 +1069,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4, HC5
-      INTEGER NF, NF2, N1, N2, NW
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 3 )
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1119,8 +1119,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4, HC5
-      INTEGER NF, NF2, N1, N2, NW
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 3 )
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1201,8 +1201,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4, HC5
-      INTEGER NF, NF2, N1, N2, NW
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 3 )
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1257,8 +1257,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4, HC5
-      INTEGER NF, NF2, N1, N2, NW
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 2 )
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1297,8 +1297,8 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/ColorFactors.h"
       INCLUDE "../commons/consts.h"
 *
-      COMPLEX*16 HC1, HC2, HC3, HC4, HC5
-      INTEGER NF, NF2, N1, N2, NW
+      COMPLEX*16 HC1, HC2, HC3, HC4
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 2 )
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2),
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1348,7 +1348,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       INCLUDE "../commons/consts.h"
 *
       COMPLEX*16 HC1, HC2, HC3, HC4 
-      INTEGER NF, NF2, N1, N2, NW, I1, I2, I3, N
+      INTEGER NF, N1, N2, NW
       PARAMETER ( N1 = -1, N2 = 1, NW = 3 ) 
       DIMENSION HC1(N1:N2),HC2(N1:N2,N1:N2),HC3(N1:N2,N1:N2,N1:N2), 
      ,          HC4(N1:N2,N1:N2,N1:N2,N1:N2) 
@@ -1586,7 +1586,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
       DOUBLE PRECISION C2NS1PA
 *
       C2NS1PA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
-     1     - ( 1D0 + X**2D0 ) * DLOG(X) / ( 1D0 - X ) + 2D0 + X )
+     1     - ( 1D0 + X**2 ) * DLOG(X) / ( 1D0 - X ) + 2D0 + X )
 *
       RETURN
       END
@@ -1632,7 +1632,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2D0 / Y )
 *
       DOUBLE PRECISION C2NS1PC
 *
-      C2NS1PC = 2D0 * CF * ( DLOG( 1D0 - X )**2D0 
+      C2NS1PC = 2D0 * CF * ( DLOG( 1D0 - X )**2 
      1       - 3D0 * DLOG( 1D0 - X ) / 2D0 
      2       - ( 2D0 * ZETA2 + 9D0 / 2D0 ) )
 *

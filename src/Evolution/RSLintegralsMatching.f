@@ -14,7 +14,7 @@
 *            V   qq  qg  gq  gg
 * 
 ************************************************************************
-      subroutine RSLintegralsMatching(beta,alpha)
+      subroutine RSLintegralsMatching(nf,beta,alpha)
 *
       implicit none
 *
@@ -22,16 +22,18 @@
       include "../commons/wrap.h"
       include "../commons/grid.h"
       include "../commons/integrals.h"
+      include "../commons/m2th.h"
 **
 *     Input Variables
 *
-      integer beta,alpha
+      integer nf,beta,alpha
 **
 *     Internal Variables
 *
       integer bound
-      double precision ML(5,0:2),fL
+      double precision ML(2),fL
       double precision ANS2qqH_L,AS2ggH_L
+      double precision AS1ggH_mass_L,ANS2qqH_mass_L,AS2ggH_mass_L
       double precision dgauss,a,b,eps
       double precision integrandsMatching
       external integrandsMatching
@@ -41,15 +43,16 @@
 *
       do k=1,5
          do wipt=0,ipt
-            SM(igrid,k,wipt,beta,alpha) = 0d0
+            SM(igrid,nf,k,wipt,beta,alpha) = 0d0
          enddo
       enddo
       if(alpha.eq.beta)then
-         SM(igrid,1,0,beta,alpha) = 1d0
-         SM(igrid,2,0,beta,alpha) = 1d0
-         SM(igrid,5,0,beta,alpha) = 1d0
+         SM(igrid,nf,1,0,beta,alpha) = 1d0
+         SM(igrid,nf,2,0,beta,alpha) = 1d0
+         SM(igrid,nf,5,0,beta,alpha) = 1d0
       endif
-      if(ipt.le.1) return
+      if(ipt.eq.0) return
+      if(ipt.eq.1.and.k2th(nf).eq.1d0) return
 *
 *     Adjustment od the bounds of the integrals
 *
@@ -67,32 +70,59 @@
 *
 *     Variables needed for wrapping the integrand functions
 *
+      wnf    = nf
       walpha = alpha
       wbeta  = beta
-      wipt   = 2
-*
-      do k=1,5
 *
 *     Local contributions
 *
+      do k=1,5
 *
-*     NNLO
+*     NLO
 *
-*     Valence, Quark-Quark
-         if(k.eq.1.or.k.eq.2)then
-            ML(k,2) = ANS2qqH_L(a)
-*     Quark-Gluon, Gluon-Quark
-         elseif(k.eq.3.or.k.eq.4)then
-            ML(k,2) = 0d0
+         wipt = 1
 *     Gluon-Gluon
-         elseif(k.eq.5)then
-            ML(k,2) = AS2ggH_L(a)
+         if(k.eq.5.and.k2th(nf).ne.1d0)then
+            ML(1) = AS1ggH_mass_L(wnf,a)
+         else
+            ML(1) = 0d0
          endif
 *
 *     Integrals
 *
-         SM(igrid,k,wipt,beta,alpha)= dgauss(integrandsMatching,a,b,eps) 
-     1                              + ML(k,wipt) * fL
+         if(k2th(nf).ne.1d0.and.(k.eq.3.or.k.eq.5))then
+            SM(igrid,nf,k,1,beta,alpha) =
+     1           dgauss(integrandsMatching,a,b,eps)
+     2           + ML(1) * fL
+         endif
+*
+*     NNLO
+*
+         if(ipt.ge.2)then
+            wipt = 2
+*     Valence, Quark-Quark
+            if(k.eq.1.or.k.eq.2)then
+               ML(2) = ANS2qqH_L(a)
+*     Quark-Gluon, Gluon-Quark
+            elseif(k.eq.3.or.k.eq.4)then
+               ML(2) = 0d0
+*     Gluon-Gluon
+            elseif(k.eq.5)then
+               ML(2) = AS2ggH_L(a)
+            endif
+            if(k2th(nf).ne.1d0)then
+               if(k.eq.1.or.k.eq.2)then
+                  ML(2) = ML(2) + ANS2qqH_mass_L(wnf,a)
+*     Gluon-Gluon
+               elseif(k.eq.5)then
+                  ML(2) = ML(2) + AS2ggH_mass_L(wnf,a)
+               endif
+            endif
+*
+            SM(igrid,nf,k,2,beta,alpha) =
+     1           dgauss(integrandsMatching,a,b,eps)
+     2           + ML(2) * fL
+         endif
       enddo
 *
       return
@@ -103,7 +133,7 @@
 *     Integrals for the time-like evolution.
 *
 ************************************************************************
-      subroutine RSLintegralsMatchingT(beta,alpha)
+      subroutine RSLintegralsMatchingT(nf,beta,alpha)
 *
       implicit none
 *
@@ -114,13 +144,11 @@
 **
 *     Input Variables
 *
-      integer beta,alpha
+      integer nf,beta,alpha
 **
 *     Internal Variables
 *
       integer bound
-      double precision ML(5,0:2)
-      double precision ANS2qqH_L,AS2ggH_L
       double precision dgauss,a,b,eps
       double precision integrandsMatchingT
       external integrandsMatchingT
@@ -130,15 +158,15 @@
 *
       do k=1,5
          do wipt=0,ipt
-            SM(igrid,k,wipt,beta,alpha) = 0d0
+            SM(igrid,nf,k,wipt,beta,alpha) = 0d0
          enddo
       enddo
       if(alpha.eq.beta)then
-         SM(igrid,1,0,beta,alpha) = 1d0
-         SM(igrid,2,0,beta,alpha) = 1d0
-         SM(igrid,5,0,beta,alpha) = 1d0
+         SM(igrid,nf,1,0,beta,alpha) = 1d0
+         SM(igrid,nf,2,0,beta,alpha) = 1d0
+         SM(igrid,nf,5,0,beta,alpha) = 1d0
       endif
-      if(ipt.lt.1) return
+      if(ipt.eq.0) return
 *
 *     Adjustment od the bounds of the integrals
 *
@@ -159,9 +187,8 @@
 *
 *     Integrals
 *
-c      do k=1,5
       do k=3,3
-         SM(igrid,k,wipt,beta,alpha) =
+         SM(igrid,nf,k,wipt,beta,alpha) =
      1        dgauss(integrandsMatchingT,a,b,eps) 
       enddo
 *

@@ -12,16 +12,17 @@
 *     2) the grid indices walpha and wbeta,
 *     3) the particular plitting function denoted by k such that:
 *
-*        k  =  1   2   3   4   5   6   7   8   9  10  11
+*        k  =  1   2   3   4   5   6   7   8   9   10  11
 *              nsp nsm gg  gq  gD  qg  qq  qD  Dg  Dq  DD
 *
-*     that are contained in the common block wrap.h
+*     that are contained in the common block wrap.h.
 * 
 ************************************************************************
       function integrandsQED(y)
 *
       implicit none
 *
+      include "../commons/ColorFactors.h"
       include "../commons/grid.h"
       include "../commons/wrap.h"
 **
@@ -32,11 +33,8 @@
 *     Internal Variables
 *
       double precision z,w_int,fR,fS,fL
-      double precision PR(11),PS(11)
+      double precision PR,PS
       double precision X0NSA,X0NSB,X0QGA,X0GQA
-      double precision CF,TR
-      parameter(CF=4d0/3d0)
-      parameter(TR=1d0/2d0)
 **
 *     Output Variables
 *
@@ -56,24 +54,23 @@
 *
 *     Plus, Minus, Quark-Quark, Quark-Delta, Delta-Quark, Delta-Delta
       if(k.eq.1.or.k.eq.2.or.k.eq.7.or.k.eq.8.or.k.eq.10.or.k.eq.11)then
-         PR(k) = X0NSA(y) / CF
-         PS(k) = X0NSB(y) / CF
+         PR = X0NSA(y) / CF
+         PS = X0NSB(y) / CF
 *     Quark-Gamma, Delta-Gamma
       elseif(k.eq.6.or.k.eq.9)then
-         PR(k) = X0QGA(y,1) / TR
-         PS(k) = 0d0
+         PR = X0QGA(y,1) / TR
+         PS = 0d0
 *     Gluon-Quark
       elseif(k.eq.4.or.k.eq.5)then
-         PR(k) = X0GQA(y) / CF
-         PS(k) = 0d0
+         PR = X0GQA(y) / CF
+         PS = 0d0
 *     Gamma-Gamma
       elseif(k.eq.3)then
-         PR(k) = 0d0
-         PS(k) = 0d0
+         PR = 0d0
+         PS = 0d0
       endif
 *
-      integrandsQED = PR(k) * fR + PS(k) * fS
+      integrandsQED = PR * fR + PS * fS
 *
       return
       end
-      

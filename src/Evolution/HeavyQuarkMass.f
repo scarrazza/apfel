@@ -45,10 +45,10 @@
             Q2 = Q * Q / kren
             HeavyQuarkMass = MSbarmass(i,Q2)
          else
-            HeavyQuarkMass = dsqrt(m2th(i))
+            HeavyQuarkMass = dsqrt(m2ph(i))
          endif
       elseif(mass_scheme.eq."Pole")then
-         HeavyQuarkMass = dsqrt(m2th(i))
+         HeavyQuarkMass = dsqrt(m2ph(i))
       endif
 *
       return

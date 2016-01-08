@@ -59,10 +59,11 @@
 *
       if(PDFEvol.eq."exactmu")then
          do pt=1,ipt+1
-            integralsQCD = integralsQCD 
+            integralsQCD = integralsQCD
      1                   + coup**pt * SP(igrid,pnf,kk,pt-1,alpha,beta)
          enddo
-*
+*     Include small-x resummed splitting functions
+*     (linearly interpolated in alphas).
          if(Smallx.and.kk.ge.4)then
 *     find "tau" such that ag(tau) <= coup < ag(tau+1)
             do tau=0,na-1
@@ -73,15 +74,17 @@
  102        c1 = ( ag(tau+1) - coup ) / ( ag(tau+1) - ag(tau) )
             c2 = ( coup - ag(tau) ) / ( ag(tau+1) - ag(tau) )
 *
-            integralsQCD = integralsQCD 
-     1                   + c1 * SPRes(igrid,kk,alpha,beta,tau)
-     2                   + c2 * SPRes(igrid,kk,alpha,beta,tau+1)
+            integralsQCD = integralsQCD
+     1                   + c1 * SPRes(igrid,kk,LogAcc,alpha,beta,tau)
+     2                   + c2 * SPRes(igrid,kk,LogAcc,alpha,beta,tau+1)
          endif
       elseif(PDFEvol.eq."exactalpha")then
          do pt=1,ipt+1
-            integralsQCD = integralsQCD 
+            integralsQCD = integralsQCD
      1                   + coup**pt * SP(igrid,pnf,kk,pt-1,alpha,beta)
          enddo
+*     Include small-x resummed splitting functions
+*     (linearly interpolated in alphas).
          if(Smallx.and.kk.ge.4)then
 *     find "tau" such that ag(tau) <= coup < ag(tau+1)
             do tau=0,na-1
@@ -92,43 +95,97 @@
  103        c1 = ( ag(tau+1) - coup ) / ( ag(tau+1) - ag(tau) )
             c2 = ( coup - ag(tau) ) / ( ag(tau+1) - ag(tau) )
 *
-            integralsQCD = integralsQCD 
-     1                   + c1 * SPRes(igrid,kk,alpha,beta,tau)
-     2                   + c2 * SPRes(igrid,kk,alpha,beta,tau+1)
+            integralsQCD = integralsQCD
+     1                   + c1 * SPRes(igrid,kk,LogAcc,alpha,beta,tau)
+     2                   + c2 * SPRes(igrid,kk,LogAcc,alpha,beta,tau+1)
          endif
          integralsQCD = integralsQCD / fbeta(coup,bnf,ipt)
       elseif(PDFEvol.eq."expandalpha")then
+*     LO
          integralsQCD = SP(igrid,pnf,kk,0,alpha,beta)
+*     Include small-x resummed splitting functions
+         if(Smallx.and.kk.ge.4)then
+            do tau=0,na-1
+               if(nfg(tau).eq.bnf.and.
+     1            ag(tau).ge.coup.and.ag(tau+1).lt.coup) goto 104
+            enddo
+ 104        c1 = ( ag(tau+1) - coup ) / ( ag(tau+1) - ag(tau) )
+            c2 = ( coup - ag(tau) ) / ( ag(tau+1) - ag(tau) )
+            integralsQCD = integralsQCD
+     1                   + ( c1 * SPRes(igrid,kk,0,alpha,beta,tau)
+     2                   +   c2 * SPRes(igrid,kk,0,alpha,beta,tau+1) )
+     3                   / coup
+         endif
+*     NLO
          if(ipt.ge.1)then
             b1 = beta1apf(bnf) / beta0apf(bnf)
-            integralsQCD = integralsQCD 
+            integralsQCD = integralsQCD
      1                   + coup * ( SP(igrid,pnf,kk,1,alpha,beta) 
      2                   - b1 * SP(igrid,pnf,kk,0,alpha,beta) )
+            if(Smallx.and.kk.ge.4.and.LogAcc.ge.1)then
+               integralsQCD = integralsQCD
+     1              + c1 * (
+     2              ( SPRes(igrid,kk,1,alpha,beta,tau)
+     3              - SPRes(igrid,kk,0,alpha,beta,tau) ) / coup
+     4              - b1 * SPRes(igrid,kk,0,alpha,beta,tau) )
+     5              + c2 * (
+     6              ( SPRes(igrid,kk,1,alpha,beta,tau+1)
+     7              - SPRes(igrid,kk,0,alpha,beta,tau+1) ) / coup
+     8              - b1 * SPRes(igrid,kk,0,alpha,beta,tau+1) )
+            endif
          endif
+*     NNLO
          if(ipt.ge.2)then
             b2 = beta2apf(bnf) / beta0apf(bnf)
-            integralsQCD = integralsQCD 
-     1           + coup**2d0 * ( SP(igrid,pnf,kk,2,alpha,beta) 
+            integralsQCD = integralsQCD
+     1           + coup**2 * ( SP(igrid,pnf,kk,2,alpha,beta) 
      2           - b1 * SP(igrid,pnf,kk,1,alpha,beta)
-     3           + ( b1**2d0 - b2 ) * SP(igrid,pnf,kk,0,alpha,beta) )
+     3           + ( b1**2 - b2 ) * SP(igrid,pnf,kk,0,alpha,beta) )
          endif
          integralsQCD = - integralsQCD / beta0apf(bnf) / coup
       elseif(PDFEvol.eq."truncated")then
+*     LO
          integralsQCD = SP(igrid,pnf,kk,0,alpha,beta)
+*     Include small-x resummed splitting functions
+         if(Smallx.and.kk.ge.4)then
+            do tau=0,na-1
+               if(nfg(tau).eq.bnf.and.
+     1            ag(tau).ge.coup.and.ag(tau+1).lt.coup) goto 105
+            enddo
+ 105        c1 = ( ag(tau+1) - coup ) / ( ag(tau+1) - ag(tau) )
+            c2 = ( coup - ag(tau) ) / ( ag(tau+1) - ag(tau) )
+            integralsQCD = integralsQCD
+     1                   + ( c1 * SPRes(igrid,kk,0,alpha,beta,tau)
+     2                   +   c2 * SPRes(igrid,kk,0,alpha,beta,tau+1) )
+     3                   / coup
+         endif
+*     NLO
          if(ipt.ge.1)then
             b1 = beta1apf(bnf) / beta0apf(bnf)
-            integralsQCD = integralsQCD 
+            integralsQCD = integralsQCD
      1                   + EpsEff * coup
      2                   * ( SP(igrid,pnf,kk,1,alpha,beta) 
      3                   - b1 * SP(igrid,pnf,kk,0,alpha,beta) )
+            if(Smallx.and.kk.ge.4.and.LogAcc.ge.1)then
+               integralsQCD = integralsQCD
+     1              + EpsEff * ( c1 * (
+     2              ( SPRes(igrid,kk,1,alpha,beta,tau)
+     3              - SPRes(igrid,kk,0,alpha,beta,tau) ) / coup
+     4              - b1 * SPRes(igrid,kk,0,alpha,beta,tau) )
+     5              + c2 * (
+     6              ( SPRes(igrid,kk,1,alpha,beta,tau+1)
+     7              - SPRes(igrid,kk,0,alpha,beta,tau+1) ) / coup
+     8              - b1 * SPRes(igrid,kk,0,alpha,beta,tau+1) ) )
+            endif
          endif
+*     NNLO
          if(ipt.ge.2)then
             b2 = beta2apf(bnf) / beta0apf(bnf)
-            integralsQCD = integralsQCD 
-     1           + ( EpsEff * coup )**2d0
+            integralsQCD = integralsQCD
+     1           + ( EpsEff * coup )**2
      2           * ( SP(igrid,pnf,kk,2,alpha,beta) 
      3           - b1 * SP(igrid,pnf,kk,1,alpha,beta)
-     4           + ( b1**2d0 - b2 ) * SP(igrid,pnf,kk,0,alpha,beta) )
+     4           + ( b1**2 - b2 ) * SP(igrid,pnf,kk,0,alpha,beta) )
          endif
          integralsQCD = - integralsQCD / beta0apf(bnf) / coup
       endif

@@ -117,29 +117,39 @@
          endif
 *
          if(mass_scheme.eq."MSbar")then
-            write(6,*) "MSbar heavy quark reference values:"
+            write(6,*) "MSbar heavy quark reference masses:"
             write(6,"(a,f7.3,a,f7.3,a)") " - mc(",dsqrt(Q2th(4)),
      1           " GeV) = ",dsqrt(m2q(4))," GeV"
             write(6,"(a,f7.3,a,f7.3,a)") " - mb(",dsqrt(Q2th(5)),
      1           " GeV) = ",dsqrt(m2q(5))," GeV"
             write(6,"(a,f7.3,a,f7.3,a)") " - mt(",dsqrt(Q2th(6)),
      1           " GeV) = ",dsqrt(m2q(6))," GeV"
-            write(6,*) "MSbar heavy quark thresholds:"
-            write(6,"(a,f7.3,a)") " - mc(mc) = ",dsqrt(m2th(4))," GeV"
-            write(6,"(a,f7.3,a)") " - mb(mb) = ",dsqrt(m2th(5))," GeV"
-            write(6,"(a,f7.3,a)") " - mt(mt) = ",dsqrt(m2th(6))," GeV"
+            write(6,*) "MSbar heavy quark masses:"
+            write(6,"(a,f7.3,a)") " - mc(mc) = ",dsqrt(m2ph(4))," GeV"
+            write(6,"(a,f7.3,a)") " - mb(mb) = ",dsqrt(m2ph(5))," GeV"
+            write(6,"(a,f7.3,a)") " - mt(mt) = ",dsqrt(m2ph(6))," GeV"
             if(MassRunning)then
                write(6,*) "Running of the masses enabled"
             else
                write(6,*) "Running of the masses disabled"
             endif
          elseif(mass_scheme(1:4).eq."Pole")then
-            write(6,*) "Pole heavy quark thresholds:"
-            write(6,"(a,f7.3,a)") " - Mc = ",dsqrt(m2th(4))," GeV"
-            write(6,"(a,f7.3,a)") " - Mb = ",dsqrt(m2th(5))," GeV"
-            write(6,"(a,f7.3,a)") " - Mt = ",dsqrt(m2th(6))," GeV"
+            write(6,*) "Pole heavy quark masses:"
+            write(6,"(a,f7.3,a)") " - Mc = ",dsqrt(m2ph(4))," GeV"
+            write(6,"(a,f7.3,a)") " - Mb = ",dsqrt(m2ph(5))," GeV"
+            write(6,"(a,f7.3,a)") " - Mt = ",dsqrt(m2ph(6))," GeV"
          endif
-*     
+*
+         if(k2th(4).ne.1d0.or.k2th(5).ne.1d0.or.k2th(6).ne.1d0)then
+            write(6,*) "Heavy quark thresholds:"
+            write(6,"(a,f7.3,a)") " - Mthc = ",dsqrt(m2th(4))," GeV"
+            write(6,"(a,f7.3,a)") " - Mthb = ",dsqrt(m2th(5))," GeV"
+            write(6,"(a,f7.3,a)") " - Mtht = ",dsqrt(m2th(6))," GeV"
+         else
+            write(6,*) "The matching thresholds coincide",
+     1                 " with the physical masses"
+         endif
+*
          write(6,"(a,f7.4)") " muR / muF = ",dsqrt(kren)
 *
          if(LeptEvol.and.Th.eq."QUniD")then

@@ -13,6 +13,9 @@ extern "C" {
 #define fcomputestructurefunctionsapfel FC_FUNC(computestructurefunctionsapfel,COMPUTESTRUCTUREFUNCTIONSAPFEL)
   void fcomputestructurefunctionsapfel(double*, double*);
 
+#define fcachestructurefunctionsapfel FC_FUNC(cachestructurefunctionsapfel,CACHESTRUCTUREFUNCTIONSAPFEL)
+  void fcachestructurefunctionsapfel(double*);
+
 #define fsetmassscheme FC_FUNC(setmassscheme,SETMASSSCHEME)
   void fsetmassscheme(char*);
 
@@ -78,6 +81,9 @@ extern "C" {
 
 #define ff3total FC_FUNC(f3total,F3TOTAL)
   double ff3total(double*);
+
+#define fstructurefunctionxq FC_FUNC(structurefunctionxq,STRUCTUREFUNCTIONXQ)
+  double fstructurefunctionxq(char*,char*,char*,double*,double*);
 
 #define fsetzmass FC_FUNC(setzmass,SETZMASS)
   void fsetzmass(double*);

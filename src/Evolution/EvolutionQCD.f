@@ -68,7 +68,8 @@
 *
       if(Evs.eq."FF")then
          wnf = Nf_FF
-*     If initial and final energies are equal, return immediately the intial conditions
+*     If initial and final energies are equal,
+*     return immediately the intial conditions
          if(muF2.eq.muF20)then
             do alpha=0,nin(igrid)
                do i=0,13
@@ -206,7 +207,7 @@
 *     Apply matching conditions for the backward evolution
 *
             if(sgn.eq.-1.and.inf.lt.nfi.and.inf.lt.nfMaxPDFs)then
-               call MatchPDFs(inf+1,f0ev)
+               call MatchPDFs(inf+1,sgn,f0ev)
             endif
 *
             do alpha=0,nin(igrid)
@@ -292,7 +293,7 @@
 *     Apply matching conditions for the forward evolution
 *
             if(sgn.eq.1.and.inf.lt.nff.and.inf.lt.nfMaxPDFs)then
-               call MatchPDFs(inf+1,f0ev)
+               call MatchPDFs(inf+1,sgn,f0ev)
             endif
          enddo
       endif

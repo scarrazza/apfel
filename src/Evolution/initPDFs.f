@@ -29,8 +29,7 @@
       integer alpha
       integer ifl,ilept
 c      integer Nrep,numberPDF
-      double precision f0(-6:6),fp0,fext0(-6:7),flext0(-3:3), xfxQ
-      logical has_photon
+      double precision f0(-6:6),fext0(-6:7),flext0(-3:3), xfxQ
       external ExternalSetAPFEL
       external ExternalSetAPFEL1
       external ExternalSetAPFELLept

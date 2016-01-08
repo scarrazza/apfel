@@ -10,24 +10,27 @@
 *            V   qq  qg  gq  gg
 * 
 ************************************************************************
-      function integralsMatching(alpha,beta,coup,kk)
+      function integralsMatching(nf,alpha,beta,coup,kk,sgn)
 *
       implicit none
 *
+      include "../commons/ColorFactors.h"
       include "../commons/ipt.h"
       include "../commons/grid.h"
       include "../commons/integrals.h"
       include "../commons/TimeLike.h"
+      include "../commons/m2th.h"
 **
 *     Input Variables
 *
-      integer alpha,beta,kk
-      integer ptstep
+      integer nf,alpha,beta,kk,sgn
       double precision coup
 **
 *     Internal Variables
 *
-      integer pt
+      integer pt,ptstep
+      integer s
+      double precision fact
 **
 *     Output Variables
 *
@@ -45,11 +48,26 @@
 *     always equal to zero but this can't be done for the time-like evolution 
 *
       ptstep = 2
-      if(TimeLike) ptstep = 1
+      s      = 1
+      if(TimeLike.or.k2th(nf).ne.1d0) ptstep = 1
       do pt=0,ipt,ptstep
+         if(pt.ne.0) s = sgn
          integralsMatching = integralsMatching 
-     1                     + coup**pt * SM(igrid,kk,pt,alpha,beta)
+     1                     + s * coup**pt
+     2                     * SM(igrid,nf,kk,pt,alpha,beta)
       enddo
+*
+*     In case of backwards evolution, a part from changing the sign of corrections,
+*     an additional term to the NNLO should be added, because:
+*
+*     ( 1 + a A1 + a^2 A2 )^{-1} = 1 - a A1 - a^2 ( A2 - A1^2 ) + O(a^3)
+*
+      if(sgn.eq.-1.and.ipt.ge.2.and.k2th(nf).ne.1d0.and.
+     1   (kk.eq.3.or.kk.eq.5))then
+         fact = 4d0 * TR * dlog(k2th(nf)) / 3d0
+         integralsMatching = integralsMatching
+     1        + fact * coup**2 * SM(igrid,nf,kk,1,alpha,beta)
+      endif
 *
       return
       end

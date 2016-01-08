@@ -15,7 +15,7 @@
       implicit none
 *
       include "../commons/grid.h"
-      include "../commons/m2th.h"
+      include "../commons/ThresholdAlphaQCD.h"
       include "../commons/EvolutionMatrices.h"
       include "../commons/transQCD.h"
       include "../commons/EvolutionOperator.h"
@@ -29,7 +29,7 @@
       integer i,j,k,l
       integer nf,nfm
       integer alpha,beta,gamma,delta
-      double precision coup,a_QCD,integralsMatching
+      double precision coup,integralsMatching
       double precision MatQCDns(0:nint_max,0:nint_max),Match(2)
       double precision MatQCDsg(2,2,0:nint_max,0:nint_max)
       double precision EvQCDb(0:13,0:13,0:nint_max,0:nint_max)
@@ -52,77 +52,77 @@
 *     Singlet and Gluon
             do i=1,2
                do j=1,2
-                  EvQCD(i,j,alpha,beta) = 
+                  EvQCD(i,j,alpha,beta) =
      1                 MQCDsg(nfi,i,j,alpha,beta)
                enddo
-*     Total Valence
-               EvQCD(3,3,alpha,beta) = 
-     1              MQCDnsv(nfi,alpha,beta)
-*     V3
-               EvQCD(4,4,alpha,beta) = 
-     1              MQCDnsm(nfi,alpha,beta)
-*     V8
-               EvQCD(5,5,alpha,beta) = 
-     1              MQCDnsm(nfi,alpha,beta)
-*     V15
-               if(nfi.lt.4)then
-                  EvQCD(6,3,alpha,beta) = 
-     1                 MQCDnsv(nfi,alpha,beta)
-               else
-                  EvQCD(6,6,alpha,beta) = 
-     1                 MQCDnsm(nfi,alpha,beta)
-               endif
-*     V24
-               if(nfi.lt.5)then
-                  EvQCD(7,3,alpha,beta) = 
-     1                 MQCDnsv(nfi,alpha,beta)
-               else
-                  EvQCD(7,7,alpha,beta) = 
-     1                 MQCDnsm(nfi,alpha,beta)
-               endif
-*     V35
-               if(nfi.lt.6)then
-                  EvQCD(8,3,alpha,beta) = 
-     1                 MQCDnsv(nfi,alpha,beta)
-               else
-                  EvQCD(8,8,alpha,beta) = 
-     1                 MQCDnsm(nfi,alpha,beta)
-               endif
-*     T3
-               EvQCD(9,9,alpha,beta) = 
-     1              MQCDnsp(nfi,alpha,beta)
-*     T8
-               EvQCD(10,10,alpha,beta) = 
-     1              MQCDnsp(nfi,alpha,beta)
             enddo
+*     Total Valence
+            EvQCD(3,3,alpha,beta) =
+     1           MQCDnsv(nfi,alpha,beta)
+*     V3
+            EvQCD(4,4,alpha,beta) =
+     1           MQCDnsm(nfi,alpha,beta)
+*     V8
+            EvQCD(5,5,alpha,beta) =
+     1           MQCDnsm(nfi,alpha,beta)
+*     V15
+            if(nfi.lt.4)then
+               EvQCD(6,3,alpha,beta) =
+     1              MQCDnsv(nfi,alpha,beta)
+            else
+               EvQCD(6,6,alpha,beta) =
+     1              MQCDnsm(nfi,alpha,beta)
+            endif
+*     V24
+            if(nfi.lt.5)then
+               EvQCD(7,3,alpha,beta) =
+     1              MQCDnsv(nfi,alpha,beta)
+            else
+               EvQCD(7,7,alpha,beta) =
+     1              MQCDnsm(nfi,alpha,beta)
+            endif
+*     V35
+            if(nfi.lt.6)then
+               EvQCD(8,3,alpha,beta) =
+     1              MQCDnsv(nfi,alpha,beta)
+            else
+               EvQCD(8,8,alpha,beta) =
+     1              MQCDnsm(nfi,alpha,beta)
+            endif
+*     T3
+            EvQCD(9,9,alpha,beta) =
+     1           MQCDnsp(nfi,alpha,beta)
+*     T8
+            EvQCD(10,10,alpha,beta) =
+     1           MQCDnsp(nfi,alpha,beta)
 *     T15
             if(nfi.lt.4)then
                do j=1,2
-                  EvQCD(11,j,alpha,beta) = 
+                  EvQCD(11,j,alpha,beta) =
      1                 MQCDsg(nfi,1,j,alpha,beta)
                enddo
             else
-               EvQCD(11,11,alpha,beta) = 
+               EvQCD(11,11,alpha,beta) =
      1              MQCDnsp(nfi,alpha,beta)
             endif
 *     T24
             if(nfi.lt.5)then
                do j=1,2
-                  EvQCD(12,j,alpha,beta) = 
+                  EvQCD(12,j,alpha,beta) =
      1                 MQCDsg(nfi,1,j,alpha,beta)
                enddo
             else
-               EvQCD(12,12,alpha,beta) = 
+               EvQCD(12,12,alpha,beta) =
      1              MQCDnsp(nfi,alpha,beta)
             endif
 *     T25
             if(nfi.lt.6)then
                do j=1,2
-                  EvQCD(13,j,alpha,beta) = 
+                  EvQCD(13,j,alpha,beta) =
      1                 MQCDsg(nfi,1,j,alpha,beta)
                enddo
             else
-               EvQCD(13,13,alpha,beta) = 
+               EvQCD(13,13,alpha,beta) =
      1              MQCDnsp(nfi,alpha,beta)
             endif
          enddo
@@ -147,36 +147,37 @@
 *     
             nfm = nf + 1
 *     Get alphas value at the heavy quark threshold (with nfm active flavours)
-            coup = a_QCD(m2th(nfm))
+c            coup = asthUp(nfm)
+            coup = asthDown(nfm)
 *     Contruct matching conditions at this threshod
             if(IsExt(igrid))then
                do alpha=0,nin(igrid)
                   do beta=alpha,nin(igrid)
                      MatQCDns(alpha,beta)     =
-     1                    integralsMatching(alpha,beta,coup,1)
+     1                    integralsMatching(nf+1,alpha,beta,coup,1,sgn)
                      MatQCDsg(1,1,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,2)
+     1                    integralsMatching(nf+1,alpha,beta,coup,2,sgn)
                      MatQCDsg(1,2,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,3)
+     1                    integralsMatching(nf+1,alpha,beta,coup,3,sgn)
                      MatQCDsg(2,1,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,4)
+     1                    integralsMatching(nf+1,alpha,beta,coup,4,sgn)
                      MatQCDsg(2,2,alpha,beta) =
-     1                    integralsMatching(alpha,beta,coup,5)
+     1                    integralsMatching(nf+1,alpha,beta,coup,5,sgn)
                   enddo
                enddo
             else
                do alpha=0,nin(igrid)
                   do beta=alpha,nin(igrid)
                      MatQCDns(alpha,beta)     =
-     1                    integralsMatching(0,beta-alpha,coup,1)
+     1                   integralsMatching(nf+1,0,beta-alpha,coup,1,sgn)
                      MatQCDsg(1,1,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,2)
+     1                   integralsMatching(nf+1,0,beta-alpha,coup,2,sgn)
                      MatQCDsg(1,2,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,3)
+     1                   integralsMatching(nf+1,0,beta-alpha,coup,3,sgn)
                      MatQCDsg(2,1,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,4)
+     1                   integralsMatching(nf+1,0,beta-alpha,coup,4,sgn)
                      MatQCDsg(2,2,alpha,beta) =
-     1                    integralsMatching(0,beta-alpha,coup,5)
+     1                   integralsMatching(nf+1,0,beta-alpha,coup,5,sgn)
                   enddo
                enddo
             endif

@@ -54,7 +54,7 @@
       as(1) = a_QCD(Q2)
       as(2) = as(1) * as(1)
 *
-      alpha2 = ( 4d0 * pi * a_QED(Q2) )**2d0
+      alpha2 = ( 4d0 * pi * a_QED(Q2) )**2
 *
       call ComputeChargesDIS(Q2,bq,dq,bqt)
 *
@@ -85,7 +85,7 @@
          Ree = Ree + as(1) * CF * 3d0
       endif
       if(pto.ge.2)then
-         Ree = Ree + as(2) * ( CF**2d0 * ( - 3d0 / 2d0 )
+         Ree = Ree + as(2) * ( CF**2 * ( - 3d0 / 2d0 )
      1       + CA * CF * ( - 11d0 * lnQ2M2 - 44d0 * zeta3
      2       + 123d0 / 2d0 ) + nf * CF * TR * ( 4d0 * lnQ2M2
      3       + 16d0 * zeta3 - 22d0 ) )

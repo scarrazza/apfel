@@ -15,4 +15,3 @@ Integration with VAI
 vai: ./configure
 vai: make -j4
 vai: sudo make install
-

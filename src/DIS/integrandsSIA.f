@@ -49,9 +49,7 @@
 *     Internal Variables
 *
       double precision z,w_int,fR,fS,fL
-      double precision C2R(4,2),C2S(4,2)
-      double precision CLR(4,2),CLS(4,2)
-      double precision C3R(4,2),C3S(4,2)
+      double precision CR,CS
       double precision C2G1TA,C2NS1TA,C2NS1TB
       double precision CLG1TA,CLNS1TA
       double precision C3NS1TA,C3NS1TB
@@ -75,6 +73,9 @@
 *
 *     Contructing integrands order by order
 *
+      CR = 0d0
+      CS = 0d0
+*
 *     NLO
 *
       if(wipt.eq.1)then
@@ -82,123 +83,80 @@
          if(sf.eq.1)then
 *     Gluon
             if(k.eq.1)then
-               C2R(k,1) = C2G1TA(y)
-               C2S(k,1) = 0d0
-*     Pure-singlet
-            elseif(k.eq.2)then
-               C2R(k,1) = 0d0
-               C2S(k,1) = 0d0
+               CR = C2G1TA(y)
 *     Non-singlet-plus/minus
             elseif(k.eq.3.or.k.eq.4)then
-               C2R(k,1) = C2NS1TA(y)
-               C2S(k,1) = C2NS1TB(y)
+               CR = C2NS1TA(y)
+               CS = C2NS1TB(y)
             endif
 *     CL
          elseif(sf.eq.2)then
 *     Gluon
             if(k.eq.1)then
-               CLR(k,1) = CLG1TA(y)
-               CLS(k,1) = 0d0
-*     Pure-singlet
-            elseif(k.eq.2)then
-               CLR(k,1) = 0d0
-               CLS(k,1) = 0d0
+               CR = CLG1TA(y)
 *     Non-singlet-plus/minus
             elseif(k.eq.3.or.k.eq.4)then
-               CLR(k,1) = CLNS1TA(y)
-               CLS(k,1) = 0d0
+               CR = CLNS1TA(y)
             endif
 *     C3
          elseif(sf.eq.3)then
-*     Gluon
-            if(k.eq.1)then
-               C3R(k,1) = 0d0
-               C3S(k,1) = 0d0
-*     Pure-singlet
-            elseif(k.eq.2)then
-               C3R(k,1) = 0d0
-               C3S(k,1) = 0d0
 *     Non-singlet-plus/minus
-            elseif(k.eq.3.or.k.eq.4)then
-               C3R(k,1) = C3NS1TA(y)
-               C3S(k,1) = C3NS1TB(y)
+            if(k.eq.3.or.k.eq.4)then
+               CR = C3NS1TA(y)
+               CS = C3NS1TB(y)
             endif
          endif
-      endif
 *
 *     NNLO
 *
-      if(wipt.eq.2)then
+      elseif(wipt.eq.2)then
 *     C2
          if(sf.eq.1)then
 *     Gluon
             if(k.eq.1)then
-               C2R(k,2) = C2G2TA(y,1)
-               C2S(k,2) = 0d0
+               CR = C2G2TA(y,1)
 *     Pure-singlet
             elseif(k.eq.2)then
-               C2R(k,2) = C2PS2TA(y,1)
-               C2S(k,2) = 0d0
+               CR = C2PS2TA(y,1)
 *     Non-singlet-plus
             elseif(k.eq.3)then
-               C2R(k,2) = C2NSP2TA(y,wnf)
-               C2S(k,2) = C2NS2TB(y,wnf)
+               CR = C2NSP2TA(y,wnf)
+               CS = C2NS2TB(y,wnf)
 *     Non-singlet-minus
             elseif(k.eq.4)then
-               C2R(k,2) = C2NSP2TA(y,wnf)
-               C2S(k,2) = C2NS2TB(y,wnf)
+               CR = C2NSP2TA(y,wnf)
+               CS = C2NS2TB(y,wnf)
             endif
 *     CL
          elseif(sf.eq.2)then
 *     Gluon
             if(k.eq.1)then
-               CLR(k,2) = CLG2TA(y,1)
-               CLS(k,2) = 0d0
+               CR = CLG2TA(y,1)
 *     Pure-singlet
             elseif(k.eq.2)then
-               CLR(k,2) = CLPS2TA(y,1)
-               CLS(k,2) = 0d0
+               CR = CLPS2TA(y,1)
 *     Non-singlet-plus
             elseif(k.eq.3)then
-               CLR(k,2) = CLNSP2TA(y,wnf)
-               CLS(k,2) = 0d0
+               CR = CLNSP2TA(y,wnf)
 *     Non-singlet-minus
             elseif(k.eq.4)then
-               CLR(k,2) = CLNSP2TA(y,wnf)
-               CLS(k,2) = 0d0
+               CR = CLNSP2TA(y,wnf)
             endif
 *     C3
          elseif(sf.eq.3)then
-*     Gluon
-            if(k.eq.1)then
-               C3R(k,2) = 0d0
-               C3S(k,2) = 0d0
-*     Pure-singlet
-            elseif(k.eq.2)then
-               C3R(k,2) = 0d0
-               C3S(k,2) = 0d0
 *     Non-singlet-plus
-            elseif(k.eq.3)then
-               C3R(k,2) = C3NSP2TA(y,wnf)
-               C3S(k,2) = C3NS2TB(y,wnf)
+            if(k.eq.3)then
+               CR = C3NSP2TA(y,wnf)
+               CS = C3NS2TB(y,wnf)
 *     Non-singlet-minus
             elseif(k.eq.4)then
-               C3R(k,2) = C3NSP2TA(y,wnf)
-               C3S(k,2) = C3NS2TB(y,wnf)
+               CR = C3NSP2TA(y,wnf)
+               CS = C3NS2TB(y,wnf)
             endif
          endif
       endif
 *
-      if(sf.eq.1)then
-         integrandsSIAzm = C2R(k,wipt) * fR + C2S(k,wipt) * fS
-c         integrandsSIAzm = z * ( C2R(k,wipt) * fR + C2S(k,wipt) * fS ) / y
-      elseif(sf.eq.2)then
-         integrandsSIAzm = CLR(k,wipt) * fR + CLS(k,wipt) * fS
-c         integrandsSIAzm = z * ( CLR(k,wipt) * fR + CLS(k,wipt) * fS ) / y
-      elseif(sf.eq.3)then
-         integrandsSIAzm = C3R(k,wipt) * fR + C3S(k,wipt) * fS
-c         integrandsSIAzm = z * ( C3R(k,wipt) * fR + C3S(k,wipt) * fS ) / y
-      endif
+      integrandsSIAzm = CR * fR + CS * fS
 *
       return
       end
