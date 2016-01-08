@@ -345,7 +345,7 @@
 *
          if(Qin.gt.0d0)then
             do igrid=1,ngrid
-               call initPDFs(Qin**2d0)
+               call initPDFs(Qin**2)
                do alpha=0,nin(igrid)
                   do ipdf=-6,6
                      fqpre1(igrid,ipdf,alpha) = f0ph(ipdf,alpha)

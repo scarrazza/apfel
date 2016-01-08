@@ -89,7 +89,7 @@
       n = inter_degree(0)
       ExternalDISOperator = 0d0
       if(TMC)then
-         tau = 1d0 + 4d0 * rhop * x**2d0
+         tau = 1d0 + 4d0 * rhop * x**2
          xi  = 2d0 * x / ( 1d0 + dsqrt(tau) )
 *
          if(xi.lt.xmin(1)-tol.or.xi.gt.xmax+tol)then
@@ -103,8 +103,8 @@
 *     interpolate
 *
          if(SF.eq."F2")then
-            c1 = x**2d0 / xi**2d0 / tau**1.5d0
-            c2 = 6d0 * rhop * x**3d0 / tau**2d0
+            c1 = x**2 / xi**2 / tau**1.5d0
+            c2 = 6d0 * rhop * x**3 / tau**2
 *
             do alpha=0,nin(0)
                ExternalDISOperator = ExternalDISOperator 
@@ -113,8 +113,8 @@
      3                             +   c2 * EvOpI2(ihq,i,alpha,beta) )
             enddo
          elseif(SF.eq."FL")then
-            c1 = ( 1d0 - tau ) * x**2d0 / xi**2d0 / tau**1.5d0
-            c2 = ( 6d0 - 2d0 * tau ) * rhop * x**3d0 / tau**2d0
+            c1 = ( 1d0 - tau ) * x**2 / xi**2 / tau**1.5d0
+            c2 = ( 6d0 - 2d0 * tau ) * rhop * x**3 / tau**2
 *
             do alpha=0,nin(0)
                ExternalDISOperator = ExternalDISOperator 
@@ -125,8 +125,8 @@
 
             enddo
          elseif(SF.eq."F3")then
-            c1 = x**2d0 / xi**2d0 / tau
-            c2 = 4d0 * rhop * x**3d0 / tau**1.5d0
+            c1 = x**2 / xi**2 / tau
+            c2 = 4d0 * rhop * x**3 / tau**1.5d0
 *
             do alpha=0,nin(0)
                ExternalDISOperator = ExternalDISOperator 

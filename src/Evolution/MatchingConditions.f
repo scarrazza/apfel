@@ -42,10 +42,10 @@
       S121mz = wgplg(1,2,1d0-z)
 *
       A0 = ( 1d0 + z ) * ( 32d0 * S121mz + 16d0 * lnz * Li21mz 
-     1   - 16d0 * zeta2 * lnz - 4d0 * lnz**3d0 / 3d0 ) 
+     1   - 16d0 * zeta2 * lnz - 4d0 * lnz**3 / 3d0 ) 
      2   + ( 32d0 / 3d0 / z + 8d0 - 8d0 * z - 32d0 * z2 / 3d0 ) 
      3   * ( Li21mz - zeta2 ) + ( 2d0 + 10d0 * z + 16d0 * z2 / 3d0 ) 
-     4   * lnz**2d0 - ( 56d0 / 3d0 + 88d0 * z / 3d0 
+     4   * lnz**2 - ( 56d0 / 3d0 + 88d0 * z / 3d0 
      5   + 448d0 * z2 / 9d0 ) * lnz - 448d0 / 27d0 / z - 4d0 / 3d0
      6   - 124d0 * z / 3d0 + 1600d0 * z2 / 27d0
 *
@@ -75,7 +75,7 @@
 *
       double precision AS1Hg
 *
-      B0 = 4d0 * ( z**2d0 + ( 1d0 - z )**2d0 )
+      B0 = 4d0 * ( z**2 + ( 1d0 - z )**2 )
 *
       AS1Hg = TR * B0
 *
@@ -306,7 +306,7 @@
 *
       ln1mz = dlog(1d0 - z)
 *
-      A0 = 4d0 * ( 2d0 / z - 2d0 + z ) * ln1mz**2d0 / 3d0 
+      A0 = 4d0 * ( 2d0 / z - 2d0 + z ) * ln1mz**2 / 3d0 
      1   + 8d0 * ( 10d0 / z - 10d0 + 8d0 * z ) * ln1mz / 9d0 
      2   + ( 448d0 / z - 448d0 + 344d0 * z ) / 27d0
 *
@@ -484,7 +484,7 @@
 *
       double precision AS1HgT
 *
-      B0 = ( 1d0 + ( 1d0 - z )**2d0 ) * ( - 1d0 - 2d0 * dlog(z) ) / z
+      B0 = ( 1d0 + ( 1d0 - z )**2 ) * ( - 1d0 - 2d0 * dlog(z) ) / z
 *
       AS1HgT = 2d0 * CF * B0
 *
@@ -524,7 +524,7 @@
 *
       lnk = - dlog(k2th(nf))
 *
-      B0 = - 4d0 * ( z**2d0 + ( 1d0 - z )**2d0 ) * lnk
+      B0 = - 4d0 * ( z**2 + ( 1d0 - z )**2 ) * lnk
 *
       AS1Hg_mass = TR * B0
 *
@@ -676,7 +676,7 @@
       omeL2p2 = CA * TR * ( - ( 8d0 - 16d0 * z + 16d0 * z2 ) * ln1mz
      1        - ( 8d0 + 32d0 * z ) * lnz - 16d0 / 3d0 / z - 4d0
      2        - 32d0 * z + 124d0 * z2 / 3d0 )
-      omeL2p3 = TR * TR * ( - 16d0 * ( z2 + ( 1d0 - z )**2d0 ) / 3d0 )
+      omeL2p3 = TR * TR * ( - 16d0 * ( z2 + ( 1d0 - z )**2 ) / 3d0 )
 *
       omeL2 = ( omeL2p1 + omeL2p2 + omeL2p3 ) * lnk2
 *
@@ -1030,7 +1030,7 @@
 *
       lnk = - dlog(k2th(nf))
 *
-      B0 = ( 1d0 + ( 1d0 - z )**2d0 ) * ( - lnk ) / z
+      B0 = ( 1d0 + ( 1d0 - z )**2 ) * ( - lnk ) / z
 *
       AS1HgT_mass = 2d0 * CF * B0
 *

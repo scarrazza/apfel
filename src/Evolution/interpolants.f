@@ -302,7 +302,7 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
 *
       double precision h00
 *
-      h00 = 2d0 * t**3d0 - 3d0 * t**2d0 + 1d0
+      h00 = 2d0 * t**3 - 3d0 * t**2 + 1d0
 *
       return
       end
@@ -320,7 +320,7 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
 *
       double precision h10
 *
-      h10 = t**3d0 - 2d0 * t**2d0 + t
+      h10 = t**3 - 2d0 * t**2 + t
 *
       return
       end
@@ -338,7 +338,7 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
 *
       double precision h01
 *
-      h01 = - 2d0 * t**3d0 + 3d0 * t**2d0
+      h01 = - 2d0 * t**3 + 3d0 * t**2
 *
       return
       end
@@ -356,7 +356,7 @@ c      if(alpha.le.(n-2)) zg(2)  = xg(alpha+2)
 *
       double precision h11
 *
-      h11 = t**3d0 - t**2d0
+      h11 = t**3 - t**2
 *
       return
       end

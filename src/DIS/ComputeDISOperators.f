@@ -88,7 +88,7 @@
 *
 *     Ratio needed for the target mass corrections
 *
-      rhop = MProton**2d0 / Q2
+      rhop = MProton**2 / Q2
 *
 *     Compute alphas
 *     (Remember that a_QCD takes as an argument the factorization scale
@@ -143,7 +143,7 @@
 *
       do ihq=4,6
          ixi(ihq) = 0
-         M2(ihq) = HeavyQuarkMass(ihq,Q)**2d0
+         M2(ihq) = HeavyQuarkMass(ihq,Q)**2
          xi(ihq) = Q2 / M2(ihq)
          if(xi(ihq).le.xigrid(xistep))then
             ixi(ihq) = 0
@@ -176,7 +176,7 @@
          if(DampingFONLL)then
             if(ihq.gt.Nf_FF)then
                if(Q2.gt.m2th(ihq))then
-                  damp(ihq) = ( 1d0 - m2th(ihq) / Q2 )**2d0
+                  damp(ihq) = ( 1d0 - m2th(ihq) / Q2 )**2
                else
                   damp(ihq) = 0d0
                endif
@@ -3641,12 +3641,12 @@ c     6                             3,pt,alpha,beta) )
      1                                OpI2(jgrid,ihq,ipdf,alpha,beta)
      2                                + J_TMC(jgrid,alpha,gamma)
      3                                * OpF2(jgrid,ihq,ipdf,gamma,beta)
-     4                                / xg(jgrid,gamma)**2d0
+     4                                / xg(jgrid,gamma)**2
                                  OpI3(jgrid,ihq,ipdf,alpha,beta) =
      1                                OpI3(jgrid,ihq,ipdf,alpha,beta)
      2                                + J_TMC(jgrid,alpha,gamma)
      3                                * OpF3(jgrid,ihq,ipdf,gamma,beta)
-     4                                / xg(jgrid,gamma)**2d0
+     4                                / xg(jgrid,gamma)**2
                               enddo
                            enddo
                         enddo
@@ -3664,12 +3664,12 @@ c     6                             3,pt,alpha,beta) )
      1                                OpI2(jgrid,ihq,ipdf,alpha,beta)
      2                         + J_TMC(jgrid,alpha,gamma)
      3                         * OpF2(jgrid,ihq,ipdf,0,beta-gamma)
-     4                         / xg(jgrid,gamma)**2d0
+     4                         / xg(jgrid,gamma)**2
                                  OpI3(jgrid,ihq,ipdf,alpha,beta) =
      1                                OpI3(jgrid,ihq,ipdf,alpha,beta)
      2                         + J_TMC(jgrid,alpha,gamma)
      3                         * OpF3(jgrid,ihq,ipdf,0,beta-gamma)
-     4                         / xg(jgrid,gamma)**2d0
+     4                         / xg(jgrid,gamma)**2
                               enddo
                            enddo
                         enddo

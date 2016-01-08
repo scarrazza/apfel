@@ -53,7 +53,7 @@
       do pt=0,ipt,ptstep
          if(pt.ne.0) s = sgn
          integralsMatching = integralsMatching 
-     1                     + sgn * coup**pt
+     1                     + s * coup**pt
      2                     * SM(igrid,nf,kk,pt,alpha,beta)
       enddo
 *

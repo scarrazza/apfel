@@ -138,9 +138,9 @@
          if(ipt.ge.2)then
             b2 = beta2apf(bnf) / beta0apf(bnf)
             integralsQCD = integralsQCD
-     1           + coup**2d0 * ( SP(igrid,pnf,kk,2,alpha,beta) 
+     1           + coup**2 * ( SP(igrid,pnf,kk,2,alpha,beta) 
      2           - b1 * SP(igrid,pnf,kk,1,alpha,beta)
-     3           + ( b1**2d0 - b2 ) * SP(igrid,pnf,kk,0,alpha,beta) )
+     3           + ( b1**2 - b2 ) * SP(igrid,pnf,kk,0,alpha,beta) )
          endif
          integralsQCD = - integralsQCD / beta0apf(bnf) / coup
       elseif(PDFEvol.eq."truncated")then
@@ -182,10 +182,10 @@
          if(ipt.ge.2)then
             b2 = beta2apf(bnf) / beta0apf(bnf)
             integralsQCD = integralsQCD
-     1           + ( EpsEff * coup )**2d0
+     1           + ( EpsEff * coup )**2
      2           * ( SP(igrid,pnf,kk,2,alpha,beta) 
      3           - b1 * SP(igrid,pnf,kk,1,alpha,beta)
-     4           + ( b1**2d0 - b2 ) * SP(igrid,pnf,kk,0,alpha,beta) )
+     4           + ( b1**2 - b2 ) * SP(igrid,pnf,kk,0,alpha,beta) )
          endif
          integralsQCD = - integralsQCD / beta0apf(bnf) / coup
       endif

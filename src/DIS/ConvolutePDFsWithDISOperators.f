@@ -97,11 +97,11 @@
                      I2(ihq,igrid,alpha) = I2(ihq,igrid,alpha)
      1                    + J_TMC(igrid,alpha,beta)
      2                    * F2(ihq,igrid,beta)
-     3                    / xg(igrid,beta)**2d0 
+     3                    / xg(igrid,beta)**2 
                      I3(ihq,igrid,alpha) = I3(ihq,igrid,alpha)
      1                    + J_TMC(igrid,alpha,beta)
      2                    * F3(ihq,igrid,beta)
-     3                    / xg(igrid,beta)**2d0 
+     3                    / xg(igrid,beta)**2 
                   enddo
                enddo
             enddo

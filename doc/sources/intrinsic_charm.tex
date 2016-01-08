@@ -576,7 +576,7 @@ the logarithmically divergent part of all coefficient functions is
 equal to:
 \begin{equation}
 \begin{array}{rcl}
-D(x,m_1^2)&=&\displaystyle
+D(x,m_1,\mu_F)&=&\displaystyle
      2C_F\left[\frac{1+x^2}{1-x}\left(\ln\frac{\mu_F^2}{m_1^2}-1-2\ln(1-x)\right)\right]_+\\
 \\
 &=&\displaystyle 2C_F\left\{
@@ -592,18 +592,110 @@ the plus-prescripted distributions:
 so that:
 \begin{equation}\label{LogDivergence}
 \begin{array}{rcl}
-D(x,m_1^2) &=& \displaystyle  2C_F\Bigg\{
+D(x,m_1,\mu_F) &=& \displaystyle  2C_F\Bigg\{
   \ln\frac{\mu_F^2}{m_1^2}
  \left( 2\left[\frac{1}{1-x}\right]_+-(1+x)+\frac32\delta(1-x)\right)\\
 \\
-&&\displaystyle 
-  - 4 \left[\frac{\ln(1-x)}{1-x}\right]_+-2\left[\frac{1}{1-x}\right]_++2(1+x)\ln(1-x) +(1+x)+2\delta(1-x) \Bigg\}\,.
+&-&\displaystyle 
+   4 \left[\frac{\ln(1-x)}{1-x}\right]_+-2\left[\frac{1}{1-x}\right]_++2(1+x)\ln(1-x) +(1+x)+2\delta(1-x) \Bigg\}\\
+\\
+&=&\displaystyle 2C_F\Bigg\{-4 \left[\frac{\ln(1-x)}{1-x}\right]_++2\left(\ln\frac{\mu_F^2}{m_1^2}-1\right)\left[\frac{1}{1-x}\right]_+\\
+\\
+&+&\displaystyle 2(1+x)\ln(1-x) - \left(\ln\frac{\mu_F^2}{m_1^2}-1\right)(1+x) + \left(\frac{3}{2}\ln\frac{\mu_F^2}{m_1^2}+2\right)\delta(1-x)\Bigg\}\,.
 \end{array}
 \end{equation}
 
 Finally, what we need to do to obtain the massless limit is to add to
 the $\overline{\mbox{MS}}$ zero-mass coeffient functions the term in
 eq.~(\ref{LogDivergence}).
+
+In order to complete the picture, we need to consider one additional
+term that comes out when applying the FONLL recipe. In particular, in
+the presence of IC the matching conditions for PDFs need to be
+generalized to allow for the presence of an intrinsic component of a
+particular the charm quark below its threshold ($e.g.$ see eq.~(8) of
+Ref.~\cite{Ball:2015tna}). Such a matching condition reads: 
+\begin{equation}\label{eq:hqmatch}
+c^{(3)}(x) = c^{(4)}(x,\mu_F)-\alpha_s^{(4)}(\mu_F) \left[D(x,m_1,\mu_F) \otimes c^{(4)}(x,\mu_F)
++\ln\frac{\mu_F^2}{m_1^2} P^{(0)}_{qg}\otimes g^{(4)}(x,\mu_F)\right] +\mathcal O(\alpha_s^2)\,.
+\end{equation}
+with:
+\begin{equation}
+ P^{(0)}_{qg}(x) = 2T_R\left[x^2+(1-x)^2\right]\,.
+\end{equation}
+As we will see below, the additional piece to be added to the FONLL
+structure function in the presence of IC is:
+\begin{equation}\label{eq:fccont}
+\Delta F(x,Q)= \left[C^{(3)}
+\left(x,Q,\mu_F,m_1^2\right)-
+C^{(3,0)}\left(x,Q,\mu_F,m_1\right)\right]\otimes c^{(3)}(x)\,,
+\end{equation}
+where $C^{(3)}$ and $C^{(3,0)}$ are the massive IC coefficient
+function and its massless limit, respectively.
+
+Combining eq.~(\ref{eq:hqmatch}) and eq.~(\ref{eq:fccont}) up to
+$\mathcal{O}(\alpha_s)$ and dropping all dependencies, leads to:
+\begin{equation}\label{eq:fcfinal}
+\begin{array}{rcl}
+\Delta F &=&\displaystyle x\left[\left(C^{(3),0}-C^{(3,0),0}\right)+\alpha_s^{(3)} \left(C^{(3),1}-C^{(3,0),1}\right)\right]\\
+\\
+&\otimes& \displaystyle \left[ c^{(4)}-\alpha_s^{(4)} \left(D \otimes c^{(4)}
++\ln\frac{\mu_F^2}{m_1^2} P^{(0)}_{qg}\otimes g^{(4)}\right)\right]\\
+\\
+&=&\displaystyle x\left[\left(C^{(3),0}-C^{(3,0),0}\right)+\alpha_s^{(4)} \left(C^{(3),1}-C^{(3,0),1}\right)\right]\otimes c^{(4)}\\
+\\
+&-&\displaystyle \alpha_s^{(4)}x\left(C^{(3),0}-C^{(3,0),0}\right)\otimes\left(D \otimes c^{(4)}
++\ln\frac{\mu_F^2}{m_1^2} P^{(0)}_{qg}\otimes g^{(4)}\right)\,.
+\end{array}
+\end{equation}
+It is clear that the last line of the equation above originates from
+the matching conditions and is not contained in the massive
+coefficient functions. Therefore it has to be added by hand. We then
+need to understand how to treat these additional terms and the
+starting general consideration is that for all structure
+functions(\footnote{In some cases, like the massless limit of $F_L$,
+  the proportionality constant is simply zero. In some other cases,
+  like in the CC sector, it turns out that $\chi=x$.}):
+\begin{equation}
+\begin{array}{l}
+C^{(3),0}\propto \delta(1-\chi)=\delta(1-x/\eta)\,,\\
+C^{(3,0),0}\propto \delta(1-x)\,.
+\end{array}
+\end{equation}
+As a consequence, the four additional terms can be written on the grid as follows:
+\begin{equation}
+\begin{array}{rcl}
+x_\beta C^{(3),0}\otimes D \otimes c^{(4)}&\propto&\displaystyle \eta\int_{x_\beta/\eta}^1dyD(y,m_1,\mu_F)\frac{x_\beta}{\eta y}c^{(4)}\left(\frac{x_\beta}{\eta y},\mu_F\right)\\
+\\
+&=&\displaystyle \int_{x_\beta}^1dz\theta(\eta-z)D\left(\frac{z}{\eta},m_1,\mu_F\right)\frac{x_\beta}{z}c^{(4)}\left(\frac{x_\beta}{z},\mu_F\right)\\
+\\
+&=&\displaystyle \sum^{N_{x}}_{\alpha=0} \left[ \eta\int_{c/\eta}^{\overline{d}/\eta} dy\,D\left(y,m_1,\mu_F\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta y}\right)\right]x_\alpha c^{(4)}(x_{\alpha},\mu_F)\\
+\\
+x_\beta C^{(3,0),0}\otimes D \otimes c^{(4)}&\propto&\displaystyle \int_{x_\beta}^1dyD(y,m_1,\mu_F)\frac{x_\beta}{y}c^{(4)}\left(\frac{x_\beta}{y},\mu_F\right)\\
+\\
+&=&\displaystyle \sum^{N_{x}}_{\alpha=0} \left[ \int_c^d dy\,D\left(y,m_1,\mu_F\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)\right]x_\alpha c^{(4)}(x_{\alpha},\mu_F)\\
+\\
+x_\beta C^{(3),0}\otimes P^{(0)}_{qg}\otimes g^{(4)} &\propto&\displaystyle  \eta\int_{x_\beta/\eta}^1dy P^{(0)}_{qg}(y)\frac{x_\beta}{\eta y}g^{(4)}\left(\frac{x_\beta}{\eta y},\mu_F\right)\\
+\\
+&=&\displaystyle \int_{x_\beta}^1dz\theta(\eta-z)P^{(0)}_{qg}\left(\frac{z}{\eta}\right)\frac{x_\beta}{z}g^{(4)}\left(\frac{x_\beta}{z},\mu_F\right)\\
+\\
+&=&\displaystyle \sum^{N_{x}}_{\alpha=0} \left[ \eta\int_{c/\eta}^{\overline{d}/\eta} dy\,P^{(0)}_{qg}\left(y\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{\eta y}\right)\right]x_\alpha 
+g^{(4)}(x_{\alpha},\mu_F)\\
+\\
+x_\beta C^{(3,0),0}\otimes P^{(0)}_{qg}\otimes g^{(4)} &\propto&\displaystyle  \int_{x_\beta}^1dyP^{(0)}_{qg}(y)\frac{x_\beta}{y}g^{(4)}\left(\frac{x_\beta}{y},\mu_F\right)\\
+\\
+&=&\displaystyle \sum^{N_{x}}_{\alpha=0} \left[ \int_c^d dy\,P^{(0)}_{qg}\left(y\right) w_{\alpha}^{(k)}\left(\frac{x_\beta}{y}\right)\right]x_\alpha g^{(4)}(x_{\alpha},\mu_F)
+\end{array}
+\end{equation}
+It should be noted that, being $P_{qg}$ a regular functions, the third
+and fourth equations can be implemented as they are. The second
+equation instead is identical to the additional term computed to
+implement the massless limit of the massive struncture functions and
+thus it does not need to be recomputed. Finally, the only term that
+needs some more care is that in the first equation. However, it can be
+easily computed using the same procedure follwed to derive
+eq.~(\ref{FinalCFonTheGrid}).
+
 
 
 
@@ -788,6 +880,14 @@ c = \frac{1}{8}(\Sigma - T_{15} + V - V_{15})\quad\mbox{and}\quad \overline{c} =
   Phys.\ Rev.\ D {\bf 58} (1998) 094035
   [hep-ph/9805233].
   %%CITATION = HEP-PH/9805233;%%
+
+%\cite{Ball:2015tna}
+\bibitem{Ball:2015tna}
+  R.~D.~Ball, V.~Bertone, M.~Bonvini, S.~Forte, P.~G.~Merrild, J.~Rojo and L.~Rottoli,
+  %``Intrinsic charm in a matched general-mass scheme,''
+  arXiv:1510.00009 [hep-ph].
+  %%CITATION = ARXIV:1510.00009;%%
+  %4 citations counted in INSPIRE as of 07 Jan 2016
 
 \end{thebibliography}
 

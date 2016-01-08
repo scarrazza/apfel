@@ -312,7 +312,7 @@ c      return
 *
       double precision fbetaQED
 *
-      fbetaQED = a**2d0 * beta0qed(nf,nl)
+      fbetaQED = a**2 * beta0qed(nf,nl)
 *
       return
       end

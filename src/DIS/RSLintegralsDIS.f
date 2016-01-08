@@ -599,7 +599,7 @@ c               endif
      2              + 2d0 * h1 * ( 1d0 - lambda ) * dfL_CCm
                SCLmCC(igrid,ixi,3,1,beta,alpha) = 
      1              SCLmCC(igrid,ixi,3,1,beta,alpha)
-     2              + 2d0 * h1 * ( 1d0 - lambda )**2d0 * dfL_CCm
+     2              + 2d0 * h1 * ( 1d0 - lambda )**2 * dfL_CCm
                SC3mCC(igrid,ixi,3,1,beta,alpha) = 
      1              SC3mCC(igrid,ixi,3,1,beta,alpha)
      2              + 2d0 * h1 * ( 1d0 - lambda ) * ( dfL_CCm - fL_CCm )

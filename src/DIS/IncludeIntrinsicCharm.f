@@ -276,10 +276,10 @@
      2     + ( m22 - m12 ) / 2d0 / Q2IC * dlog( m12 / m22 )
      3     - dlog( Q2IC / m12 ) - dlog( Q2IC / m22 ) - 4d0
      4     + Spp / Del * ( 
-     5     + dlog( dabs( ( Del - Spm ) / 2d0 / Q2IC ) )**2d0 / 2d0
-     6     + dlog( dabs( ( Del - Smp ) / 2d0 / Q2IC ) )**2d0 / 2d0
-     7     - dlog( dabs( ( Del + Spm ) / 2d0 / Q2IC ) )**2d0 / 2d0
-     8     - dlog( dabs( ( Del + Smp ) / 2d0 / Q2IC ) )**2d0 / 2d0
+     5     + dlog( dabs( ( Del - Spm ) / 2d0 / Q2IC ) )**2 / 2d0
+     6     + dlog( dabs( ( Del - Smp ) / 2d0 / Q2IC ) )**2 / 2d0
+     7     - dlog( dabs( ( Del + Spm ) / 2d0 / Q2IC ) )**2 / 2d0
+     8     - dlog( dabs( ( Del + Smp ) / 2d0 / Q2IC ) )**2 / 2d0
      9     - ddilog( ( Del - Spm ) / 2d0 / Del )
      1     - ddilog( ( Del - Smp ) / 2d0 / Del )
      2     + ddilog( ( Del + Spm ) / 2d0 / Del )

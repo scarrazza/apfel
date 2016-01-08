@@ -57,7 +57,7 @@
 *
       DOUBLE PRECISION C2G1AM0_AQ
 *
-      C2G1AM0_AQ = TR * ( 4D0 - 8D0 * X + 8D0 * X**2D0 )
+      C2G1AM0_AQ = TR * ( 4D0 - 8D0 * X + 8D0 * X**2 )
 *
       RETURN
       END
@@ -77,7 +77,7 @@
 *
       DOUBLE PRECISION C2G1AM0_A0
 *
-      C2G1AM0_A0 = TR * ( ( 4D0 - 8D0 * X + 8D0 * X**2D0 )
+      C2G1AM0_A0 = TR * ( ( 4D0 - 8D0 * X + 8D0 * X**2 )
      1           * DLOG( ( 1D0 - X ) / X ) - 4D0 + 32D0 * X 
      2           - 32D0 * X**2 )
 *
@@ -1099,7 +1099,7 @@
 *
       DOUBLE PRECISION CG1ACCM0_AL
 *
-      CG1ACCM0_AL = 2D0 * TR * ( X**2D0 + ( 1D0 - X )** 2D0 )
+      CG1ACCM0_AL = 2D0 * TR * ( X**2 + ( 1D0 - X )**2 )
 *
       RETURN
       END
@@ -1187,7 +1187,7 @@
       lnk = dlog(xi/kfacQ)                ! ln(muF2/mh2)
 *
       DICc = 4d0 * CF * ( 3d0 * lnk / 4d0 + 1d0 
-     1     + ( lnk - 1d0 ) * dlog( 1d0 - z ) - dlog( 1d0 - z )**2d0 )
+     1     + ( lnk - 1d0 ) * dlog( 1d0 - z ) - dlog( 1d0 - z )**2 )
 *
       return
       end

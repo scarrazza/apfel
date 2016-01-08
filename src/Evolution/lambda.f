@@ -28,7 +28,7 @@
       double precision xlam
 *
       xlam  = lref
-      lref2 = lref**2d0
+      lref2 = lref**2
 *
       if(nf.eq.4)then
          mb2  = m2th(5)

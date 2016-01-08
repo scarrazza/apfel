@@ -224,7 +224,7 @@
             elseif(ipt.eq.2)then
                SP(igrid,nf,k,2,beta,alpha) = SP(igrid,nf,k,2,beta,alpha) 
      1         - 2d0 * beta0apf(nf) * lnk * SP(igrid,nf,k,1,beta,alpha)
-     2         - ( beta1apf(nf) - beta0apf(nf)**2d0 * lnk ) 
+     2         - ( beta1apf(nf) - beta0apf(nf)**2 * lnk )
      3         * lnk * SP(igrid,nf,k,0,beta,alpha)
                SP(igrid,nf,k,1,beta,alpha) = SP(igrid,nf,k,1,beta,alpha) 
      1         - beta0apf(nf) * lnk * SP(igrid,nf,k,0,beta,alpha) 
@@ -451,7 +451,7 @@
             elseif(ipt.eq.2)then
                SP(igrid,nf,k,2,beta,alpha) = SP(igrid,nf,k,2,beta,alpha) 
      1         - 2d0 * beta0apf(nf) * lnk * SP(igrid,nf,k,1,beta,alpha)
-     2         - ( beta1apf(nf) - beta0apf(nf)**2d0 * lnk ) 
+     2         - ( beta1apf(nf) - beta0apf(nf)**2 * lnk )
      3         * lnk * SP(igrid,nf,k,0,beta,alpha)
                SP(igrid,nf,k,1,beta,alpha) = SP(igrid,nf,k,1,beta,alpha) 
      1         - beta0apf(nf) * lnk * SP(igrid,nf,k,0,beta,alpha) 
@@ -738,7 +738,7 @@
             elseif(ipt.eq.2)then
                SP(igrid,nf,k,2,beta,alpha) = SP(igrid,nf,k,2,beta,alpha) 
      1         - 2d0 * beta0apf(nf) * lnk * SP(igrid,nf,k,1,beta,alpha)
-     2         - ( beta1apf(nf) - beta0apf(nf)**2d0 * lnk ) 
+     2         - ( beta1apf(nf) - beta0apf(nf)**2 * lnk )
      3         * lnk * SP(igrid,nf,k,0,beta,alpha)
                SP(igrid,nf,k,1,beta,alpha) = SP(igrid,nf,k,1,beta,alpha) 
      1         - beta0apf(nf) * lnk * SP(igrid,nf,k,0,beta,alpha) 

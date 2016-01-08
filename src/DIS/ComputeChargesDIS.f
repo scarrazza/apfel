@@ -166,32 +166,32 @@
          enddo
       elseif(ProcessDIS.eq."NC")then
          if(TimeLike)then
-            pz  = Q2 * ( Q2 -  MZ**2d0 )
-     1          / ( ( Q2 - MZ**2d0 )**2d0 + ( MZ * GammaZ )**2d0 ) 
+            pz  = Q2 * ( Q2 -  MZ**2 )
+     1          / ( ( Q2 - MZ**2 )**2 + ( MZ * GammaZ )**2 ) 
      2          / ( 4d0 * Sin2ThetaW * ( 1d0 - Sin2ThetaW ) )
-            pz2 = Q2**2d0 
-     1          / ( ( Q2 - MZ**2d0 )**2d0 + ( MZ * GammaZ )**2d0 ) 
-     2          / ( ( 4d0 * Sin2ThetaW * ( 1d0 - Sin2ThetaW ) ) )**2d0
+            pz2 = Q2**2 
+     1          / ( ( Q2 - MZ**2 )**2 + ( MZ * GammaZ )**2 ) 
+     2          / ( ( 4d0 * Sin2ThetaW * ( 1d0 - Sin2ThetaW ) ) )**2
          else
-            pz  = Q2 / ( Q2 + MZ**2d0 ) 
+            pz  = Q2 / ( Q2 + MZ**2 ) 
      1          / ( 4d0 * Sin2ThetaW * ( 1d0 - Sin2ThetaW ) )
             pz2 = pz * pz
          endif
 *     Apply propagator correction
          pz  = pz  / ( 1d0 - DeltaR )
-         pz2 = pz2 / ( 1d0 - DeltaR )**2d0
+         pz2 = pz2 / ( 1d0 - DeltaR )**2
          do i=nfi,nff
             bq(i)  = eq2(i) 
      1             - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
-     2             + ( ve**2d0 + ae**2d0 + ie * pol * 2d0 * ve * ae )
-     3             * ( vq(i)**2d0 + aq(i)**2d0 ) * pz2
+     2             + ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
+     3             * ( vq(i)**2 + aq(i)**2 ) * pz2
             dq(i)  = - 2d0 * eq(i) * aq(i) * ( ae + ie * pol * ve ) * pz
      1             + 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae 
-     2             + ie * pol * ( ve**2d0 + ae**2d0 ) ) * pz2
+     2             + ie * pol * ( ve**2 + ae**2 ) ) * pz2
             bqt(i) = eq2(i) 
      1             - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
-     2             + ( ve**2d0 + ae**2d0 + ie * pol * 2d0 * ve * ae )
-     3             * ( vq(i)**2d0 - aq(i)**2d0 ) * pz2
+     2             + ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
+     3             * ( vq(i)**2 - aq(i)**2 ) * pz2
          enddo
       endif
 *

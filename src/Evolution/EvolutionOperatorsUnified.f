@@ -124,16 +124,16 @@
          endif
 *
          nli = 2
-         if(muF20.gt.MTau**2d0) nli = 3
+         if(muF20.gt.MTau**2) nli = 3
          nlf = 2
-         if(muF2.gt.MTau**2d0)  nlf = 3
+         if(muF2.gt.MTau**2)  nlf = 3
 *
          if(nli.eq.nlf)then
             muF20l = muF20
             muF2l  = muF2
          else
             muF20l = muF20
-            muF2l  = MTau**2d0
+            muF2l  = MTau**2
          endif
 *
          do inl=nli,nlf,sgn
@@ -206,7 +206,7 @@
      2              MUnisg1,Munisg2,MUninspu,MUninspd,MUninsmu,MUninsmd,
      3              MUninslep)
             enddo
-            muF20l = MTau**2d0
+            muF20l = MTau**2
             muF2l  = muF2
          enddo
       endif

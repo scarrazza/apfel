@@ -202,10 +202,10 @@
       gqq1 = 2d0 * CF * NF * ( ( - 1.1111111111111112d0 - ( 2d0 * lnx ) 
      1     / 3d0 ) * pqq - ( 4d0 * ( 1d0 - x ) ) / 3d0 ) 
      2     + 4d0 * CA * CF * ( ( 3.7222222222222223d0 + ( 11d0 * lnx ) 
-     3     / 6d0 + lnx**2d0 / 2d0 - pi**2d0 / 6d0 ) * pqq
+     3     / 6d0 + lnx**2 / 2d0 - pi**2 / 6d0 ) * pqq
      4     + ( 20d0 * ( 1d0 - x ) ) / 3d0 + lnx * ( 1d0 + x) )
-     5     + 4d0 * CF**2d0 * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
-     6     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2d0 * ( 1d0 
+     5     + 4d0 * CF**2 * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
+     6     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2 * ( 1d0 
      7     + x ) ) / 2d0 - lnx * ( 1.5d0 + ( 7d0 * x ) / 2d0 ) )
      8     + 4d0 * CF * ( CF - CA / 2d0 ) * ( 2d0 * pqqmx * S2x 
      9     + 4d0 * ( 1d0 - x ) + 2d0 * lnx * ( 1d0 + x ) )
@@ -253,10 +253,10 @@
       gqq1 = 2d0 * CF * NF * ( ( - 1.1111111111111112d0 - ( 2d0 * lnx ) 
      1     / 3d0 ) * pqq - ( 4d0 * ( 1d0 - x ) ) / 3d0 ) 
      2     + 4d0 * CA * CF * ( ( 3.7222222222222223d0 + ( 11d0 * lnx ) 
-     3     / 6d0 + lnx**2d0 / 2d0 - pi**2d0 / 6d0 ) * pqq
+     3     / 6d0 + lnx**2 / 2d0 - pi**2 / 6d0 ) * pqq
      4     + ( 20d0 * ( 1d0 - x ) ) / 3d0 + lnx * ( 1d0 + x) )
-     5     + 4d0 * CF**2d0 * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
-     6     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2d0 * ( 1d0 
+     5     + 4d0 * CF**2 * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
+     6     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2 * ( 1d0 
      7     + x ) ) / 2d0 - lnx * ( 1.5d0 + ( 7d0 * x ) / 2d0 ) )
      8     - 4d0 * CF * ( CF - CA / 2d0 ) * ( 2d0 * pqqmx * S2x 
      9     + 4d0 * ( 1d0 - x ) + 2d0 * lnx * ( 1d0 + x ) )
@@ -611,19 +611,19 @@
 *
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
-      pqg   = x**2d0 + ( 1d0 - x )**2d0
-      pqgmx = x**2d0 + ( 1d0 + x )**2d0
+      pqg   = x**2 + ( 1d0 - x )**2
+      pqgmx = x**2 + ( 1d0 + x )**2
       S2x   = S2(x)
 *
       X1QGA = 2d0 * CF * NF * ( 4d0  + 4d0 * ln1mx + ( 10d0 - 4d0 
-     1      * ( ln1mx - lnx ) + 2d0 * ( - ln1mx + lnx )**2d0 
-     2      - 2d0 * pi**2d0 / 3d0 ) * pqg - lnx * ( 1d0 - 4d0 * x )
-     3      - lnx**2d0 * ( 1d0  - 2d0 * x ) - 9d0 * x )
+     1      * ( ln1mx - lnx ) + 2d0 * ( - ln1mx + lnx )**2 
+     2      - 2d0 * pi**2 / 3d0 ) * pqg - lnx * ( 1d0 - 4d0 * x )
+     3      - lnx**2 * ( 1d0  - 2d0 * x ) - 9d0 * x )
      4      + 2d0 * CA * NF * ( 20.22222222222222d0 - 4d0 * ln1mx
-     5      + ( - 24.22222222222222d0 + 4d0 * ln1mx - 2d0 * ln1mx**2d0
-     6      + ( 44d0 * lnx ) /3d0 - lnx**2d0 + pi**2d0 / 3d0 ) * pqg 
+     5      + ( - 24.22222222222222d0 + 4d0 * ln1mx - 2d0 * ln1mx**2
+     6      + ( 44d0 * lnx ) /3d0 - lnx**2 + pi**2 / 3d0 ) * pqg 
      7      + 2d0 * pqgmx * S2x + 40d0 / ( 9d0 * x ) 
-     8      + ( 14d0 * x ) / 9d0 - lnx**2d0 * ( 2d0 + 8d0 * x ) 
+     8      + ( 14d0 * x ) / 9d0 - lnx**2 * ( 2d0 + 8d0 * x ) 
      9      + lnx * ( - 12.666666666666666d0 + ( 136d0 * x ) / 3d0 ) )
 *
       RETURN
@@ -647,21 +647,21 @@
 *
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
-      pgq   = ( 1d0 + ( 1d0 - x )**2d0 ) / x
-      pgqmx = - ( 1d0 + ( 1d0 + x )**2d0 ) / x
+      pgq   = ( 1d0 + ( 1d0 - x )**2 ) / x
+      pgqmx = - ( 1d0 + ( 1d0 + x )**2 ) / x
       S2x   = S2(x)
 *
       X1GQA = 2d0 * CF * NF * ( - ( ( 2.2222222222222223d0 
      1      + ( 4d0 * ln1mx ) / 3d0 ) * pgq ) - ( 4d0 * x ) / 3d0 )
-     2      + 4d0 * CF**2d0 * ( - 2.5d0 - ( 3d0 * ln1mx + ln1mx**2d0 )
-     3      * pgq - lnx**2d0 * ( 1d0 - x / 2d0 ) - ( 7d0 * x ) / 2d0 
+     2      + 4d0 * CF**2 * ( - 2.5d0 - ( 3d0 * ln1mx + ln1mx**2 )
+     3      * pgq - lnx**2 * ( 1d0 - x / 2d0 ) - ( 7d0 * x ) / 2d0 
      4      - 2d0 * ln1mx * x + lnx * ( 2d0 + ( 7d0 * x ) / 2d0 ) ) 
      5      + 4d0 * CA * CF * ( 3.111111111111111d0 + pgq * ( 0.5 d0 
-     6      + ( 11d0 * ln1mx ) / 3d0 + ln1mx**2d0 - 2d0 * ln1mx * lnx
-     7      + lnx**2d0 / 2d0 - pi**2d0 / 6d0 ) + pgqmx * S2x 
-     8      + ( 65d0 * x ) / 18d0 + 2d0 * ln1mx * x + ( 44d0 * x**2d0 ) 
-     9      / 9d0 + lnx**2d0 * ( 4d0 + x ) - lnx * ( 12d0 + 5d0 * x 
-     1      + ( 8d0 * x**2d0 ) / 3d0 ) )
+     6      + ( 11d0 * ln1mx ) / 3d0 + ln1mx**2 - 2d0 * ln1mx * lnx
+     7      + lnx**2 / 2d0 - pi**2 / 6d0 ) + pgqmx * S2x 
+     8      + ( 65d0 * x ) / 18d0 + 2d0 * ln1mx * x + ( 44d0 * x**2 ) 
+     9      / 9d0 + lnx**2 * ( 4d0 + x ) - lnx * ( 12d0 + 5d0 * x 
+     1      + ( 8d0 * x**2 ) / 3d0 ) )
 *
        RETURN
        END
@@ -694,17 +694,17 @@
       DM    = 1D0/(1D0-X)
 *
       ggg1  = 2d0 * CF * NF * ( - 16d0 + 4d0 / ( 3d0 * x ) + 8d0 * x 
-     1      + ( 20d0 * x**2d0 ) / 3d0 - lnx**2d0 * ( 2d0 + 2d0 * x ) 
+     1      + ( 20d0 * x**2 ) / 3d0 - lnx**2 * ( 2d0 + 2d0 * x ) 
      2      - lnx * ( 6d0 + 10d0 * x ) )
      3      + 2d0 * CA * NF * ( 2d0 - ( 20d0 * pgg ) / 9d0 - 2d0 * x 
      4      - ( 4d0 * lnx * ( 1d0 + x ) ) / 3d0 + ( 26d0 * ( 
-     5      - ( 1d0 / x ) + x**2d0 ) ) / 9d0 ) 
-     6      + 4d0 * CA**2d0 * ( pgg * ( 7.444444444444445d0 
-     7      - 4d0 * ln1mx * lnx + lnx**2d0 - pi**2d0 / 3d0 ) 
+     5      - ( 1d0 / x ) + x**2 ) ) / 9d0 ) 
+     6      + 4d0 * CA**2 * ( pgg * ( 7.444444444444445d0 
+     7      - 4d0 * ln1mx * lnx + lnx**2 - pi**2 / 3d0 ) 
      8      + 2d0 * pggmx * S2x + ( 27d0 * ( 1d0 - x ) ) / 2d0 
-     9      + 4d0 * lnx**2d0 * ( 1d0 + x ) + ( 67d0 * ( - ( 1d0 / x ) 
-     1      + x**2d0 ) ) / 9d0 - lnx * ( 8.333333333333334d0 
-     2      - ( 11d0 * x ) / 3d0 + ( 44d0 * x**2d0 ) / 3d0 ) )
+     9      + 4d0 * lnx**2 * ( 1d0 + x ) + ( 67d0 * ( - ( 1d0 / x ) 
+     1      + x**2 ) ) / 9d0 - lnx * ( 8.333333333333334d0 
+     2      - ( 11d0 * x ) / 3d0 + ( 44d0 * x**2 ) / 3d0 ) )
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
@@ -865,9 +865,9 @@
 *
       lnx = dlog(x)
 *
-      S2 = - 2d0 * ddilog(-x) + lnx**2d0 / 2d0 
+      S2 = - 2d0 * ddilog(-x) + lnx**2 / 2d0 
      1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
-c      S2 = - 2d0 * wgplg(1,1,-x) + lnx**2d0 / 2d0 
+c      S2 = - 2d0 * wgplg(1,1,-x) + lnx**2 / 2d0 
 c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
 *
       return
@@ -909,11 +909,11 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
       gqq1 = 2d0 * CF * NF * ( ( - 1.1111111111111112d0 - ( 2d0 * lnx ) 
      1     / 3d0 ) * pqq - ( 4d0 * ( 1d0 - x ) ) / 3d0 ) 
      2     + 4d0 * CA * CF * ( ( 3.7222222222222223d0 + ( 11d0 * lnx ) 
-     3     / 6d0 + lnx**2d0 / 2d0 - pi**2d0 / 6d0 ) * pqq
+     3     / 6d0 + lnx**2 / 2d0 - pi**2 / 6d0 ) * pqq
      4     + ( 20d0 * ( 1d0 - x ) ) / 3d0 + lnx * ( 1d0 + x ) )
-     5     + 4d0 * CF**2d0 * ( ( ( 3d0 * lnx ) / 2d0 + 2d0 * ln1mx 
-     6     * lnx - 2d0 * lnx**2d0 ) * pqq - 5d0 * ( 1d0 - x ) 
-     7     + ( lnx**2d0 * ( 1d0 + x ) ) / 2d0 
+     5     + 4d0 * CF**2 * ( ( ( 3d0 * lnx ) / 2d0 + 2d0 * ln1mx 
+     6     * lnx - 2d0 * lnx**2 ) * pqq - 5d0 * ( 1d0 - x ) 
+     7     + ( lnx**2 * ( 1d0 + x ) ) / 2d0 
      8     - lnx * ( 3.5d0 + ( 3d0 * x ) / 2d0 ) )
      9     + 4d0 * CF * ( CF - CA / 2d0 ) * ( 2d0 * pqqmx * S2x 
      1     + 4d0 * ( 1d0 - x ) + 2d0 * lnx * ( 1d0 + x ) )
@@ -961,11 +961,11 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
       gqq1 = 2d0 * CF * NF * ( ( - 1.1111111111111112d0 - ( 2d0 * lnx ) 
      1     / 3d0 ) * pqq - ( 4d0 * ( 1d0 - x ) ) / 3d0 ) 
      2     + 4d0 * CA * CF * ( ( 3.7222222222222223d0 + ( 11d0 * lnx ) 
-     3     / 6d0 + lnx**2d0 / 2d0 - pi**2d0 / 6d0 ) * pqq
+     3     / 6d0 + lnx**2 / 2d0 - pi**2 / 6d0 ) * pqq
      4     + ( 20d0 * ( 1d0 - x ) ) / 3d0 + lnx * ( 1d0 + x) )
-     5     + 4d0 * CF**2d0 * ( ( ( 3d0 * lnx ) / 2d0 + 2d0 * ln1mx 
-     6     * lnx - 2d0 * lnx**2d0 ) * pqq - 5d0 * ( 1d0 - x ) 
-     7     + ( lnx**2d0 * ( 1d0 + x ) ) / 2d0 
+     5     + 4d0 * CF**2 * ( ( ( 3d0 * lnx ) / 2d0 + 2d0 * ln1mx 
+     6     * lnx - 2d0 * lnx**2 ) * pqq - 5d0 * ( 1d0 - x ) 
+     7     + ( lnx**2 * ( 1d0 + x ) ) / 2d0 
      8     - lnx * ( 3.5d0 + ( 3d0 * x ) / 2d0 ) )
      9     - 4d0 * CF * ( CF - CA / 2d0 ) * ( 2d0 * pqqmx * S2x 
      1     + 4d0 * ( 1d0 - x ) + 2d0 * lnx * ( 1d0 + x ) )
@@ -1078,24 +1078,24 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
 *
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
-      pqg   = x**2d0 + ( 1d0 - x )**2d0
-      pqgmx = x**2d0 + ( 1d0 + x )**2d0
+      pqg   = x**2 + ( 1d0 - x )**2
+      pqgmx = x**2 + ( 1d0 + x )**2
       S1x   = - ddilog(1d0-x)
       S2x   = S2(x)
 *
-      X1QGTA = ( NF**2d0 * ( - 8d0 / 3d0 - ( 16d0 / 9d0 
+      X1QGTA = ( NF**2 * ( - 8d0 / 3d0 - ( 16d0 / 9d0 
      1       + 8d0 * lnx / 3d0 + 8d0 * ln1mx / 3d0 ) * pqg )
      2       + 2d0 * CF * NF * ( - 2d0 + 3d0 * x 
      3       + ( - 7d0 + 8d0 * x ) * lnx - 4d0 * ln1mx 
-     4       + ( 1d0 - 2d0 * x ) * lnx**2d0 
-     5       + ( - 2d0 * ( lnx + ln1mx )**2d0 - 2d0 * ( ln1mx - lnx )
-     6       + 16d0 * S1x + 2d0 * pi**2d0 - 10d0 ) * pqg )
+     4       + ( 1d0 - 2d0 * x ) * lnx**2 
+     5       + ( - 2d0 * ( lnx + ln1mx )**2 - 2d0 * ( ln1mx - lnx )
+     6       + 16d0 * S1x + 2d0 * pi**2 - 10d0 ) * pqg )
      7       + 2d0 * CA * NF * ( - 152d0 / 9d0 + 166d0 * x / 9d0 
      8       - 40d0 / 9d0 / x + ( - 4d0 / 3d0 - 76d0 * x / 3d0 ) * lnx 
-     9       + 4d0 * ln1mx + ( 2d0 + 8d0 * x ) * lnx**2d0 
-     1       + ( 8d0 * lnx * ln1mx - lnx**2d0 - 4d0 * lnx / 3d0 
-     2       + 10d0 * ln1mx / 3d0 + 2d0 * ln1mx**2d0 - 16d0 * S1x 
-     3       - 7d0 * pi**2d0 / 3d0 + 178d0 / 9d0 ) * pqg 
+     9       + 4d0 * ln1mx + ( 2d0 + 8d0 * x ) * lnx**2 
+     1       + ( 8d0 * lnx * ln1mx - lnx**2 - 4d0 * lnx / 3d0 
+     2       + 10d0 * ln1mx / 3d0 + 2d0 * ln1mx**2 - 16d0 * S1x 
+     3       - 7d0 * pi**2 / 3d0 + 178d0 / 9d0 ) * pqg 
      4       + 2d0 * pqgmx * S2x ) ) / 2d0 / NF
 *
       RETURN
@@ -1119,22 +1119,22 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
 *
       lnx = dlog(x)
       ln1mx = dlog(1d0 - x)
-      pgq   = ( 1d0 + ( 1d0 - x )**2d0 ) / x
-      pgqmx = - ( 1d0 + ( 1d0 + x )**2d0 ) / x
+      pgq   = ( 1d0 + ( 1d0 - x )**2 ) / x
+      pgqmx = - ( 1d0 + ( 1d0 + x )**2 ) / x
       S1x   = - ddilog(1d0-x)
       S2x   = S2(x)
 *
-      X1GQTA = 2d0 * NF * ( 4d0 * CF**2d0 * ( - 1d0 / 2d0 + 9d0 * x 
+      X1GQTA = 2d0 * NF * ( 4d0 * CF**2 * ( - 1d0 / 2d0 + 9d0 * x 
      1       / 2d0 + ( - 8d0 + x / 2d0 ) * lnx + 2d0 * x * ln1mx 
-     2       + ( 1d0 - x / 2d0 ) * lnx**2d0 + ( ln1mx**2d0 
+     2       + ( 1d0 - x / 2d0 ) * lnx**2 + ( ln1mx**2 
      3       + 4d0 * lnx * ln1mx - 8d0 * S1x 
-     4       - 4d0 * pi**2d0 / 3d0 ) * pgq )
+     4       - 4d0 * pi**2 / 3d0 ) * pgq )
      5       + 4d0 * CF * CA * ( 62d0 / 9d0 - 35d0 * x / 18d0 
-     6       - 44d0 * x**2d0 / 9d0 
-     7       + ( 2d0 + 12d0 * x + 8d0 * x**2d0 / 3d0 ) * lnx 
-     8       - 2d0 * x * ln1mx - ( 4d0 + x ) * lnx**2d0 + pgqmx * S2x 
-     9       + ( - 2d0 * lnx * ln1mx - 3d0 * lnx - 3d0 * lnx**2d0 / 2d0 
-     1       - ln1mx**2d0 + 8d0 * S1x + 7d0 * pi**2d0 / 6d0 
+     6       - 44d0 * x**2 / 9d0 
+     7       + ( 2d0 + 12d0 * x + 8d0 * x**2 / 3d0 ) * lnx 
+     8       - 2d0 * x * ln1mx - ( 4d0 + x ) * lnx**2 + pgqmx * S2x 
+     9       + ( - 2d0 * lnx * ln1mx - 3d0 * lnx - 3d0 * lnx**2 / 2d0 
+     1       - ln1mx**2 + 8d0 * S1x + 7d0 * pi**2 / 6d0 
      2       + 17d0 / 18d0 ) * pgq ) )
 *
        RETURN
@@ -1167,18 +1167,18 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
       S2x   = S2(x)
       DM    = 1D0/(1D0-X)
 *
-      ggg1  = 2d0 * CF * NF * ( - 4d0 + 12d0 * x - 164d0 * x**2d0 / 9d0 
-     1      + ( 10d0 + 14d0 * x + 16d0 * x**2d0 / 3d0 + 16d0 / 3d0 / x )
+      ggg1  = 2d0 * CF * NF * ( - 4d0 + 12d0 * x - 164d0 * x**2 / 9d0 
+     1      + ( 10d0 + 14d0 * x + 16d0 * x**2 / 3d0 + 16d0 / 3d0 / x )
      2      * lnx + 92d0 / 9d0 / x + 2d0 * ( 1d0 + x ) * lnx**2 )
      3      + 2d0 * CA * NF * ( 2d0 - 2d0 * x 
-     4      + 26d0 * ( x**2d0 - 1d0 / x ) / 9d0 
+     4      + 26d0 * ( x**2 - 1d0 / x ) / 9d0 
      5      - 4d0 * ( 1d0 + x ) * lnx / 3d0 
      6      - ( 20d0 / 9d0 + 8d0 * lnx / 3d0 ) * pgg )
      7      + 4d0 * CA * CA * ( 27d0 * ( 1d0 - x ) / 2d0 
-     8      + 67d0 * ( x**2d0 - 1d0 / x ) / 9d0
+     8      + 67d0 * ( x**2 - 1d0 / x ) / 9d0
      9      + ( 11d0 / 3d0 - 25d0 * x / 3d0 - 44d0 / 3d0 / x ) * lnx
-     1      - 4d0 * ( 1d0 + x ) * lnx**2d0
-     2      + ( 4d0 * lnx * ln1mx - 3d0 * lnx**2d0 + 22d0 * lnx / 3d0
+     1      - 4d0 * ( 1d0 + x ) * lnx**2
+     2      + ( 4d0 * lnx * ln1mx - 3d0 * lnx**2 + 22d0 * lnx / 3d0
      3      - 2d0 * zeta2 + 67d0 / 9d0 ) * pgg + 2d0 * pggmx * S2x )
 *
 * ...The soft (`+'-distribution) part of the splitting function
@@ -1772,10 +1772,10 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
       gqq1 = 2d0 * CF * NF * ( ( - 1.1111111111111112d0 - ( 2d0 * lnx ) 
      1     / 3d0 ) * pqq - ( 4d0 * ( 1d0 - x ) ) / 3d0 ) 
      2     + 4d0 * CA * CF * ( ( 3.7222222222222223d0 + ( 11d0 * lnx ) 
-     3     / 6d0 + lnx**2d0 / 2d0 - pi**2d0 / 6d0 ) * pqq
+     3     / 6d0 + lnx**2 / 2d0 - pi**2 / 6d0 ) * pqq
      4     + ( 20d0 * ( 1d0 - x ) ) / 3d0 + lnx * ( 1d0 + x) )
-     5     + 4d0 * CF**2d0 * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
-     6     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2d0 * ( 1d0 
+     5     + 4d0 * CF**2 * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
+     6     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2 * ( 1d0 
      7     + x ) ) / 2d0 - lnx * ( 1.5d0 + ( 7d0 * x ) / 2d0 ) )
      8     + 4d0 * CF * ( CF - CA / 2d0 ) * ( 2d0 * pqqmx * S2x 
      9     + 4d0 * ( 1d0 - x ) + 2d0 * lnx * ( 1d0 + x ) )
@@ -1823,10 +1823,10 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
       gqq1 = 2d0 * CF * NF * ( ( - 1.1111111111111112d0 - ( 2d0 * lnx ) 
      1     / 3d0 ) * pqq - ( 4d0 * ( 1d0 - x ) ) / 3d0 ) 
      2     + 4d0 * CA * CF * ( ( 3.7222222222222223d0 + ( 11d0 * lnx ) 
-     3     / 6d0 + lnx**2d0 / 2d0 - pi**2d0 / 6d0 ) * pqq
+     3     / 6d0 + lnx**2 / 2d0 - pi**2 / 6d0 ) * pqq
      4     + ( 20d0 * ( 1d0 - x ) ) / 3d0 + lnx * ( 1d0 + x) )
-     5     + 4d0 * CF**2d0 * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
-     6     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2d0 * ( 1d0 
+     5     + 4d0 * CF**2 * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
+     6     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2 * ( 1d0 
      7     + x ) ) / 2d0 - lnx * ( 1.5d0 + ( 7d0 * x ) / 2d0 ) )
      8     - 4d0 * CF * ( CF - CA / 2d0 ) * ( 2d0 * pqqmx * S2x 
      9     + 4d0 * ( 1d0 - x ) + 2d0 * lnx * ( 1d0 + x ) )
@@ -1951,12 +1951,12 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
       S2x    = S2(x)
 *
       X1QGPA =  4d0 * TR * nf * ( CF * ( - 22d0 + 27d0 * x - 9d0 * lnx
-     1     + 8d0 * ( 1d0 - x ) * ln1mx + dpqg * ( 2d0 * ln1mx**2d0
-     3     - 4d0 * ln1mx * lnx + lnx**2d0 - 4d0 * zeta2 ) )
+     1     + 8d0 * ( 1d0 - x ) * ln1mx + dpqg * ( 2d0 * ln1mx**2
+     3     - 4d0 * ln1mx * lnx + lnx**2 - 4d0 * zeta2 ) )
      3     + CA * ( ( 24d0 - 22d0 * x )
      4     - 8d0 * ( 1d0 - x ) * ln1mx + ( 2d0 + 16d0 * x ) * lnx 
-     5     - 2d0 * ( ln1mx**2d0 - zeta2 ) * dpqg
-     6     - ( 2d0 * S2x - 3d0 * lnx**2d0 ) * dpqgmx ) )
+     5     - 2d0 * ( ln1mx**2 - zeta2 ) * dpqg
+     6     - ( 2d0 * S2x - 3d0 * lnx**2 ) * dpqgmx ) )
 *
       RETURN
       END
@@ -1986,12 +1986,12 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
       X1GQPA = 4d0 * ( CF * TR * nf * (- 4d0 / 9d0 * ( x + 4d0 )
      1     - 4d0 / 3d0 * dpgq * ln1mx )
      2     + CF * CF * ( - 1d0 / 2d0 - ( 4d0 - x ) * lnx / 2d0
-     3     - dpgqmx * ln1mx + ( - 4d0 - ln1mx**2d0 + lnx**2d0 / 2d0 )
+     3     - dpgqmx * ln1mx + ( - 4d0 - ln1mx**2 + lnx**2 / 2d0 )
      4     * dpgq )
      5     + CF * CA * ( ( 4d0 - 13d0 * x ) * lnx + ( 10d0 + x )
      6     * ln1mx / 3d0 + ( 41d0 + 35d0 * x ) / 9d0
-     7     + ( - 2d0 * S2x + 3d0 * lnx**2d0 ) * dpgqmx / 2d0
-     8     + ( ln1mx**2d0 - 2d0 * ln1mx * lnx - zeta2 ) * dpgq ) )
+     7     + ( - 2d0 * S2x + 3d0 * lnx**2 ) * dpgqmx / 2d0
+     8     + ( ln1mx**2 - 2d0 * ln1mx * lnx - zeta2 ) * dpgq ) )
 *
        RETURN
        END
@@ -2026,15 +2026,15 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
       ggg1  = 4d0 * ( - CA * TR * nf * ( 4d0 * ( 1d0 - x )
      1     + 4d0 / 3d0 * ( 1d0 + x ) * lnx + 20d0 / 9d0 * dpgg )
      2     - CF * TR * nf * ( 10d0 * ( 1d0 - x )
-     3     + 2d0 * ( 5d0 - x ) * lnx + 2d0 * ( 1d0 + x ) * lnx**2d0 )
+     3     + 2d0 * ( 5d0 - x ) * lnx + 2d0 * ( 1d0 + x ) * lnx**2 )
      4     + CA * CA * ( ( 29d0 - 67d0 * x ) * lnx / 3d0
-     5     - 19d0 * ( 1d0 - x ) / 2d0 + 4d0 * ( 1d0 + x ) * lnx**2d0
+     5     - 19d0 * ( 1d0 - x ) / 2d0 + 4d0 * ( 1d0 + x ) * lnx**2
      4     - 2d0 * S2x * dpggmx + ( 67d0 / 9d0 - 4d0 * ln1mx * lnx
-     5     + lnx**2d0 - 2d0 * zeta2 ) * dpgg ) )
+     5     + lnx**2 - 2d0 * zeta2 ) * dpgg ) )
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-      A2GP = - 80d0 / 9d0 * CA * TR * nf + 268d0 / 9d0 * CA**2d0
+      A2GP = - 80d0 / 9d0 * CA * TR * nf + 268d0 / 9d0 * CA**2
      1     - 8d0 * zeta2 * CA**2
 *
        GGG1L = DM * A2GP
@@ -2078,12 +2078,12 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
        P1GDELT = 
      ,    - 4d0 * CF * TR * nf
      ,    - 16d0 / 3d0 * CA * TR * nf
-     ,    + 32d0 / 3d0 * CA**2d0
-     ,    + 12d0 * zeta3 * CA**2d0
+     ,    + 32d0 / 3d0 * CA**2
+     ,    + 12d0 * zeta3 * CA**2
 *
 * ...The soft (`+'-distribution) part of the splitting function
 *
-      A2GP = - 80d0 / 9d0 * CA * TR * nf + 268d0 / 9d0 * CA**2d0
+      A2GP = - 80d0 / 9d0 * CA * TR * nf + 268d0 / 9d0 * CA**2
      1     - 8d0 * zeta2 * CA**2
 *
        X1GGPC = DLOG (1d0-Y) * A2GP + P1GDELT

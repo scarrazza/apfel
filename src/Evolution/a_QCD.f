@@ -56,7 +56,7 @@ c      return
 c         mur2th(i) = m2th(i)
       enddo
       do i=3,6
-         lambda2(i) = LambdaQCD(i)**2d0
+         lambda2(i) = LambdaQCD(i)**2
       enddo
 *
       if(Evs.eq."FF")then
@@ -123,19 +123,19 @@ c         kappa = 1d0                          ! mu_R / mu_F
          if(mass_scheme.eq."Pole")then
             if(nff.gt.nfi)then
                c1 = 2d0 / 3d0 * ln
-               c2 = 4d0 / 9d0 * ln**2d0 + 38d0 / 3d0 * ln + 14d0 / 3d0
+               c2 = 4d0 / 9d0 * ln**2 + 38d0 / 3d0 * ln + 14d0 / 3d0
             elseif(nff.lt.nfi)then
                c1 = - 2d0 / 3d0 * ln
-               c2 = 4d0 / 9d0 * ln**2d0 - 38d0 / 3d0 * ln - 14d0 / 3d0
+               c2 = 4d0 / 9d0 * ln**2 - 38d0 / 3d0 * ln - 14d0 / 3d0
             endif
 *     MSbar mass
          elseif(mass_scheme.eq."MSbar")then
             if(nff.gt.nfi)then
                c1 = 2d0 / 3d0 * ln
-               c2 = 4d0 / 9d0 * ln**2d0 + 22d0 / 3d0 * ln - 22d0 / 9d0
+               c2 = 4d0 / 9d0 * ln**2 + 22d0 / 3d0 * ln - 22d0 / 9d0
             elseif(nff.lt.nfi)then
                c1 = - 2d0 / 3d0 * ln
-               c2 = 4d0 / 9d0 * ln**2d0 - 22d0 / 3d0 * ln + 22d0 / 9d0
+               c2 = 4d0 / 9d0 * ln**2 - 22d0 / 3d0 * ln + 22d0 / 9d0
             endif
          endif
 *
@@ -144,7 +144,7 @@ c         kappa = 1d0                          ! mu_R / mu_F
          if(ipt.eq.1)then
             asi = asi * ( 1d0 + c1 * asi )
          elseif(ipt.eq.2)then
-            asi = asi * ( 1d0 + c1 * asi + c2 * asi**2d0 )
+            asi = asi * ( 1d0 + c1 * asi + c2 * asi**2 )
          endif
 *
          asr0  = asi
@@ -211,7 +211,7 @@ c         kappa = 1d0                          ! mu_R / mu_F
 *
       if(ipt.eq.2)then
          as = alo * ( 1d0 
-     1      + ( alo * ( alo - asi ) * ( b2 - b1**2d0 )
+     1      + ( alo * ( alo - asi ) * ( b2 - b1**2 )
      2      + as * b1 * dlog(as/asi) ) )
       endif
 *
@@ -300,11 +300,11 @@ c         kappa = 1d0                          ! mu_R / mu_F
 *
       as_lambda = lo
       if(ipt.ge.1)then
-         as_lambda = as_lambda - lo**2d0 * b1 * lnL
+         as_lambda = as_lambda - lo**2 * b1 * lnL
       endif
       if(ipt.ge.2)then
          as_lambda = as_lambda 
-     1             + lo**3d0 * ( b2 + b1**2 * ( lnL**2d0 - lnL - 1d0 ) )
+     1             + lo**3 * ( b2 + b1**2 * ( lnL**2 - lnL - 1d0 ) )
       endif
 *
       return
@@ -333,11 +333,11 @@ c         kappa = 1d0                          ! mu_R / mu_F
       double precision fbeta
 *
       if(ipt.eq.0)then
-         fbeta = - a**2d0 * beta0apf(nf)
+         fbeta = - a**2 * beta0apf(nf)
       elseif(ipt.eq.1)then
-         fbeta = - a**2d0 * ( beta0apf(nf) + a * beta1apf(nf) )
+         fbeta = - a**2 * ( beta0apf(nf) + a * beta1apf(nf) )
       elseif(ipt.eq.2)then
-         fbeta = - a**2d0 * ( beta0apf(nf) 
+         fbeta = - a**2 * ( beta0apf(nf) 
      1           + a * ( beta1apf(nf) + a * beta2apf(nf) ) )
       endif
 *
@@ -394,7 +394,7 @@ c         kappa = 1d0                          ! mu_R / mu_F
       double precision beta2apf
 *
       beta2apf = 2857d0 / 2d0 - 5033d0 / 18d0 * nf 
-     1         + 325d0 / 54d0 * nf**2d0
+     1         + 325d0 / 54d0 * nf**2
 *
       return
       end
@@ -512,23 +512,23 @@ c         kappa = 1d0                          ! mu_R / mu_F
 *     Pole Mass
       if(mass_scheme.eq."Pole")then
          c1 = 2d0 / 3d0 * ln
-         c2 = 4d0 / 9d0 * ln**2d0 + 38d0 / 3d0 * ln + 14d0 / 3d0
+         c2 = 4d0 / 9d0 * ln**2 + 38d0 / 3d0 * ln + 14d0 / 3d0
 *     MSbar mass
       elseif(mass_scheme.eq."MSbar")then
          c1 = 2d0 / 3d0 * ln
-         c2 = 4d0 / 9d0 * ln**2d0 + 22d0 / 3d0 * ln - 22d0 / 9d0
+         c2 = 4d0 / 9d0 * ln**2 + 22d0 / 3d0 * ln - 22d0 / 9d0
       endif
 *
       thr = kren * m2th(i)
-      lambda2u = lambda**2d0
-      lambda2d = LambdaQCD(i-1)**2d0
+      lambda2u = lambda**2
+      lambda2d = LambdaQCD(i-1)**2
       au = as_lambda(i,lambda2u,thr,ipt)
       ad = as_lambda(i-1,lambda2d,thr,ipt)
 *
       if(ipt.eq.1)then
          ad = ad * ( 1d0 + c1 * ad )
       elseif(ipt.eq.2)then
-         ad = ad * ( 1d0 + c1 * ad + c2 * ad**2d0 )
+         ad = ad * ( 1d0 + c1 * ad + c2 * ad**2 )
       endif
 *
       LambdaMatchUp = au - ad
@@ -566,23 +566,23 @@ c         kappa = 1d0                          ! mu_R / mu_F
 *     Pole Mass
       if(mass_scheme.eq."Pole")then
          c1 = - 2d0 / 3d0 * ln
-         c2 = 4d0 / 9d0 * ln**2d0 - 38d0 / 3d0 * ln - 14d0 / 3d0
+         c2 = 4d0 / 9d0 * ln**2 - 38d0 / 3d0 * ln - 14d0 / 3d0
 *     MSbar mass
       elseif(mass_scheme.eq."MSbar")then
          c1 = - 2d0 / 3d0 * ln
-         c2 = 4d0 / 9d0 * ln**2d0 - 22d0 / 3d0 * ln + 22d0 / 9d0
+         c2 = 4d0 / 9d0 * ln**2 - 22d0 / 3d0 * ln + 22d0 / 9d0
       endif
 *
       thr = kren * m2th(i+1)
-      lambda2u = LambdaQCD(i+1)**2d0
-      lambda2d = lambda**2d0
+      lambda2u = LambdaQCD(i+1)**2
+      lambda2d = lambda**2
       au = as_lambda(i+1,lambda2u,thr,ipt)
       ad = as_lambda(i,lambda2d,thr,ipt)
 *
       if(ipt.eq.1)then
          au = au * ( 1d0 + c1 * au )
       elseif(ipt.eq.2)then
-         au = au * ( 1d0 + c1 * au + c2 * au**2d0 )
+         au = au * ( 1d0 + c1 * au + c2 * au**2 )
       endif
 *
       LambdaMatchDown = au - ad

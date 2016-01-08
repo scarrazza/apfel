@@ -148,12 +148,12 @@
       ELSEIF(IPT.EQ.2)THEN
          EVMASS = FACT * ( 1D0 + ( C1 - B1 * C0 ) * AS 
      1                 + ( C2 - C1 * B1 - B2 * C0 
-     2                 + B1**2D0 * C0 + ( C1 
-     3                 - B1 * C0 )**2D0 ) * AS**2D0 / 2D0 )
+     2                 + B1**2 * C0 + ( C1 
+     3                 - B1 * C0 )**2 ) * AS**2 / 2D0 )
      4                 / ( 1D0 + ( C1 - B1 * C0 ) * AS0 
      5                 + ( C2 - C1 * B1 - B2 * C0 
-     6                 + B1**2D0 * C0 + ( C1 
-     7                 - B1 * C0 )**2D0 ) * AS0**2D0 / 2D0 )
+     6                 + B1**2 * C0 + ( C1 
+     7                 - B1 * C0 )**2 ) * AS0**2 / 2D0 )
       ENDIF
 *
       RETURN
@@ -187,20 +187,20 @@
          DECOUP = 1D0
          RETURN
       ELSE
-         ASTH2(4)  = A_QCD(M2TH(4))**2D0
-         ASTH2(5)  = A_QCD(M2TH(5))**2D0
-         ASTH2(6)  = A_QCD(M2TH(6))**2D0
+         ASTH2(4)  = A_QCD(M2TH(4))**2
+         ASTH2(5)  = A_QCD(M2TH(5))**2
+         ASTH2(6)  = A_QCD(M2TH(6))**2
 *
-         ASTHM2(4) = A_QCD(M2TH(4)-EPS)**2D0
-         ASTHM2(5) = A_QCD(M2TH(5)-EPS)**2D0
-         ASTHM2(6) = A_QCD(M2TH(6)-EPS)**2D0
+         ASTHM2(4) = A_QCD(M2TH(4)-EPS)**2
+         ASTHM2(5) = A_QCD(M2TH(5)-EPS)**2
+         ASTHM2(6) = A_QCD(M2TH(6)-EPS)**2
 *
          IF(DIR.EQ."DW")THEN
             DECOUP = 1D0 + ASTH2(IM) * ( 89D0 / 27D0 - 20D0 / 9D0 * LN 
-     1                                 + 4D0 / 3D0 * LN**2D0 )
+     1                                 + 4D0 / 3D0 * LN**2 )
          ELSEIF(DIR.EQ."UP")THEN
             DECOUP = 1D0 - ASTHM2(IM) * ( 89D0 / 27D0 - 20D0 / 9D0 * LN 
-     1                                  + 4D0 / 3D0 * LN**2D0 )
+     1                                  + 4D0 / 3D0 * LN**2 )
          ELSE
             WRITE(6,*) "In src/Evolution/MSbarmass.f:"
             WRITE(6,*) "Unknown direction, DIR =",DIR
@@ -293,7 +293,7 @@
       double precision gamma2apf
 *
       gamma2apf = 1249d0 - ( 2216d0 / 27d0 + 160d0 / 3d0 * zeta3 ) * nf 
-     1          - 140d0 / 81d0 * nf**2d0
+     1          - 140d0 / 81d0 * nf**2
 *
       return
       end
@@ -325,7 +325,7 @@
       double precision MassQSplit
 *
       as0 = a_QCD(q2th(i))
-      as  = a_QCD(Q**2d0)
+      as  = a_QCD(Q**2)
       MassQSplit = dsqrt(m2ph(i)) * evmass(i,as0,as) - Q
 *
       return
@@ -357,7 +357,7 @@
          if(q2th(i).ne.m2ph(i))then
             x1 = dsqrt(q2th(i)) - window
             x2 = dsqrt(q2th(i)) + window
-            m2ph(i) = zriddr(MassQSplit,i,x1,x2,acc)**2d0
+            m2ph(i) = zriddr(MassQSplit,i,x1,x2,acc)**2
          endif
       enddo
 *
