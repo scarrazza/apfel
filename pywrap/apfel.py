@@ -111,9 +111,17 @@ def DeriveAPFEL(*args):
   return _apfel.DeriveAPFEL(*args)
 DeriveAPFEL = _apfel.DeriveAPFEL
 
+def CachePDFsAPFEL(*args):
+  return _apfel.CachePDFsAPFEL(*args)
+CachePDFsAPFEL = _apfel.CachePDFsAPFEL
+
 def xPDF(*args):
   return _apfel.xPDF(*args)
 xPDF = _apfel.xPDF
+
+def xPDFxQ(*args):
+  return _apfel.xPDFxQ(*args)
+xPDFxQ = _apfel.xPDFxQ
 
 def dxPDF(*args):
   return _apfel.dxPDF(*args)
@@ -142,6 +150,10 @@ xPDFall = _apfel.xPDFall
 def xPDFallPhoton(*args):
   return _apfel.xPDFallPhoton(*args)
 xPDFallPhoton = _apfel.xPDFallPhoton
+
+def xPDFxQall(*args):
+  return _apfel.xPDFxQall(*args)
+xPDFxQall = _apfel.xPDFxQall
 
 def xLepton(*args):
   return _apfel.xLepton(*args)
@@ -275,6 +287,10 @@ def SetGridParameters(*args):
   return _apfel.SetGridParameters(*args)
 SetGridParameters = _apfel.SetGridParameters
 
+def SetQGridParameters(*args):
+  return _apfel.SetQGridParameters(*args)
+SetQGridParameters = _apfel.SetQGridParameters
+
 def SetLHgridParameters(*args):
   return _apfel.SetLHgridParameters(*args)
 SetLHgridParameters = _apfel.SetLHgridParameters
@@ -298,6 +314,10 @@ SetMSbarMasses = _apfel.SetMSbarMasses
 def SetMassScaleReference(*args):
   return _apfel.SetMassScaleReference(*args)
 SetMassScaleReference = _apfel.SetMassScaleReference
+
+def SetMassMatchingScales(*args):
+  return _apfel.SetMassMatchingScales(*args)
+SetMassMatchingScales = _apfel.SetMassMatchingScales
 
 def SetNumberOfGrids(*args):
   return _apfel.SetNumberOfGrids(*args)
@@ -362,6 +382,10 @@ InitializeAPFEL_DIS = _apfel.InitializeAPFEL_DIS
 def ComputeStructureFunctionsAPFEL(*args):
   return _apfel.ComputeStructureFunctionsAPFEL(*args)
 ComputeStructureFunctionsAPFEL = _apfel.ComputeStructureFunctionsAPFEL
+
+def CacheStructureFunctionsAPFEL(*args):
+  return _apfel.CacheStructureFunctionsAPFEL(*args)
+CacheStructureFunctionsAPFEL = _apfel.CacheStructureFunctionsAPFEL
 
 def SetMassScheme(*args):
   return _apfel.SetMassScheme(*args)
@@ -450,6 +474,10 @@ F3top = _apfel.F3top
 def F3total(*args):
   return _apfel.F3total(*args)
 F3total = _apfel.F3total
+
+def StructureFunctionxQ(*args):
+  return _apfel.StructureFunctionxQ(*args)
+StructureFunctionxQ = _apfel.StructureFunctionxQ
 
 def SetZMass(*args):
   return _apfel.SetZMass(*args)
