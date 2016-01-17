@@ -39,10 +39,12 @@
 **
 *     Internal Variables
 *
-      double precision z,w_int,fR,fL
-      double precision eta
-      double precision CR,CL
+      double precision z,w_int,fR,fS,fL
+      double precision xi,eta
+      double precision CR,CS
       double precision c21ICR,cL1ICR,c31ICR
+      double precision DICa,DICb
+      double precision X0QGA
 **
 *     Output Variables
 *
@@ -51,32 +53,69 @@
       integrandsICm = 0d0
       if(y.ge.1d0) return
 *
-      eta = 2d0 * Q2IC / ( Spm + Del )
-*
 *     Interpolant functions
+*
+      eta = 2d0 * Q2IC / ( Spm + Del )
+      xi  = xigrid(wixi)
 *
       z = xg(igrid,wbeta) / y / eta
 *
       fR = w_int(inter_degree(igrid),walpha,z)
       fL = w_int(inter_degree(igrid),walpha,xg(igrid,wbeta)/eta)
+      fS = fR - fL
 *
 *     Contructing integrands
 *
+      CR = 0d0
+      CS = 0d0
 *     C2
       if(sf.eq.1)then
-         CR = c21ICR(y)
-         CL = c21ICR(one)
+*     Gluon
+         if(k.eq.1)then
+            CR = X0QGA(y,1)
+*     Non-singlet
+         elseif(k.eq.3.or.k.eq.4)then
+            if(wl.eq.1)then
+               CS = c21ICR(one) / ( 1d0 - y )
+               CR = c21ICR(y) / ( 1d0 - y ) - CS
+            elseif(wl.eq.2)then
+               CR = DICa(xi,y)
+               CS = DICb(xi,y)
+            endif
+         endif
 *     CL
       elseif(sf.eq.2)then
-         CR = cL1ICR(y)
-         CL = cL1ICR(one)
+*     Gluon
+         if(k.eq.1)then
+            CR = X0QGA(y,1)
+*     Non-singlet
+         elseif(k.eq.3.or.k.eq.4)then
+            if(wl.eq.1)then
+               CS = cL1ICR(one) / ( 1d0 - y )
+               CR = cL1ICR(y) / ( 1d0 - y ) - CS
+            elseif(wl.eq.2)then
+               CR = DICa(xi,y)
+               CS = DICb(xi,y)
+            endif
+         endif
 *     C3
       elseif(sf.eq.3)then
-         CR = c31ICR(y)
-         CL = c31ICR(one)
+*     Gluon
+         if(k.eq.1)then
+            CR = X0QGA(y,1)
+*     Non-singlet
+         elseif(k.eq.3.or.k.eq.4)then
+            if(wl.eq.1)then
+               CS = c31ICR(one) / ( 1d0 - y )
+               CR = c31ICR(y) / ( 1d0 - y ) - CS
+            elseif(wl.eq.2)then
+               CR = DICa(xi,y)
+               CS = DICb(xi,y)
+            endif
+         endif
       endif
 *
-      integrandsICm = ( CR * fR - CL * fL ) / ( 1d0 - y )
+      integrandsICm = CR * fR + CS * fS
 *
       return
       end
@@ -98,7 +137,9 @@
 *
       double precision z,w_int,fR,fS,fL
       double precision xi
+      double precision CR,CS
       double precision DICa,DICb
+      double precision X0QGA
 **
 *     Output Variables
 *
@@ -111,14 +152,25 @@
       fL = 0d0
       if(walpha.eq.wbeta) fL = 1d0
 *
+      xi = xigrid(wixi)
+*
       fR = w_int(inter_degree(igrid),walpha,z)
       fS = fR - fL
 *
-      xi = xigrid(wixi)
-*
 *     Contructing integrands
 *
-      integrandsICm0 = DICa(xi,y) * fR + DICb(xi,y) * fS
+      CR = 0d0
+      CS = 0d0
+*     Gluon
+      if(k.eq.1)then
+         CR = X0QGA(y,1)
+*     Non-singlet
+      elseif(k.eq.3.or.k.eq.4)then
+         CR = DICa(xi,y)
+         CS = DICb(xi,y)
+      endif
+*
+      integrandsICm0 = CR * fR + CS * fS
 *
       return
       end

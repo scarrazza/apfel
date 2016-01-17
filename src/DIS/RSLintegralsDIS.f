@@ -633,19 +633,19 @@ c               endif
             wipt = 1
 *
             sf = 1
-            k = 1
+            k  = 1
             wl = 1
             C2g1R0 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
             C2g1RQ = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
             sf = 2
-            k = 1
+            k  = 1
             wl = 1
             CLg1R0 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
             sf = 3
-            k = 3
+            k  = 3
             C3ns1RS = dgauss(integrandsDISzm,a,b,eps(wipt))
             C3ns1L  = C3NS1C(a)
          endif
@@ -653,7 +653,7 @@ c               endif
             wipt = 2
 *
             sf = 1
-            k = 1
+            k  = 1
             wl = 1
             C2g2R0  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
@@ -665,7 +665,7 @@ c               endif
             wl = 5
             C2g2RQF = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
-            k = 2
+            k  = 2
             wl = 1
             C2ps2R0  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
@@ -677,7 +677,7 @@ c               endif
             wl = 5
             C2ps2RQF = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
-            k = 3
+            k  = 3
             wl = 1
             C2ns2RS0  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             C2ns2L0   = C2NS2CM0_A0(a)
@@ -689,7 +689,7 @@ c               endif
             C2ns2LQ2  = C2NS2CM0_AQ2(a)
 *
             sf = 2
-            k = 1
+            k  = 1
             wl = 1
             CLg2R0 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
@@ -705,14 +705,14 @@ c               endif
             wl = 4
             CLps2RF = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
-            k = 3
+            k  = 3
             wl = 1
             CLns2R0 = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             wl = 2
             CLns2RQ = dgauss(integrandsDISNCm0,a,b,eps(wipt))
 *
             sf = 3
-            k = 2
+            k  = 2
             C3ps2R  = dgauss(integrandsDISNCm0,a,b,eps(wipt))
             k = 3
             C3ns2RS = dgauss(integrandsDISNCm0,a,b,eps(wipt))

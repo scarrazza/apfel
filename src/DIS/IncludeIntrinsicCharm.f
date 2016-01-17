@@ -21,6 +21,7 @@
       include "../commons/CKM.h"
       include "../commons/wrapIC.h"
       include "../commons/wrapDIS.h"
+      include "../commons/kfacQ.h"
 **
 *     Internal Variables
 *
@@ -28,14 +29,14 @@
       integer gbound
       integer alpha,beta
       integer bound
-      double precision xi,lambda,eta
+      double precision xi,lambda,eta,lnF
       double precision w_int,win
       double precision bq(0:6),dq(0:6),bqt(0:6)
       double precision fL
       double precision dgauss,c,d,eps
       double precision C2RS,C2L,CLRS,CLL,C3RS,C3L
       double precision c21ICL,cL1ICL,c31ICL
-      double precision DIC,DICc
+      double precision DIC,DICc,gDIC,nsDIC
       double precision integrandsICm
       external integrandsICm
       double precision integrandsICm0
@@ -98,6 +99,8 @@
 *
          if(ipt.ge.1)then
 *
+            lnF = dlog(xi*kfacQ)
+*
             wixi = ixi * xistep
 *
 *     FFNS
@@ -137,18 +140,46 @@
                   walpha = alpha
                   wbeta  = beta
 *
-                  sf = 1
-                  C2RS = eta * dgauss(integrandsICm,c,d,eps)
-                  C2L  = eta * c21ICL(c)
+                  k  = 3
+                  wl = 1
 *
-                  sf = 2
-                  CLRS = eta * dgauss(integrandsICm,c,d,eps)
-                  CLL  = eta * cL1ICL(c)
+                  sf   = 1
+                  C2RS = fact2 * eta * dgauss(integrandsICm,c,d,eps)
+                  C2L  = fact2 * eta * c21ICL(c)
 *
-                  SC2mNC(igrid,ixi,3,1,beta,alpha) = fact2
-     1                                             * ( C2RS + C2L * fL )
-                  SCLmNC(igrid,ixi,3,1,beta,alpha) = factL
-     1                                             * ( CLRS + CLL * fL )
+                  sf   = 2
+                  CLRS = factL * eta * dgauss(integrandsICm,c,d,eps)
+                  CLL  = factL * eta * cL1ICL(c)
+*
+                  if(MassScheme(1:5).eq."FONLL")then
+                     sf = 2
+*     Gluon
+                     k  = 1
+                     gDIC = eta * dgauss(integrandsICm,c,d,eps)
+*
+                     SC2mNC(igrid,ixi,1,1,beta,alpha) =
+     1                    SC2mNC(igrid,ixi,1,1,beta,alpha)
+     2                    - ( 2d0 - eta ) * lnF * gDIC
+                     SCLmNC(igrid,ixi,1,1,beta,alpha) =
+     1                    SCLmNC(igrid,ixi,1,1,beta,alpha)
+     2                    - 4d0 * ( 1d0 - eta ) / ( 2d0 - eta )
+     3                    * lnF * gDIC * factL
+*     Non-singlet
+                     k  = 3
+                     wl = 2
+                     nsDIC = eta * dgauss(integrandsICm,c,d,eps)
+*
+                     C2RS = C2RS - ( 2d0 - eta ) * nsDIC
+                     C2L  = C2L - ( 2d0 - eta ) * eta * DICc(xi,c)
+*
+                     CLRS = CLRS - 4d0 * ( 1d0 - eta ) / ( 2d0 - eta )
+     1                    * nsDIC * factL
+                     CLL  = CLL - 4d0 * ( 1d0 - eta ) / ( 2d0 - eta )
+     1                    * eta * DICc(xi,c) * factL
+                  endif
+*
+                  SC2mNC(igrid,ixi,3,1,beta,alpha) = C2RS + C2L * fL
+                  SCLmNC(igrid,ixi,3,1,beta,alpha) = CLRS + CLL * fL
                enddo
             enddo
 *
@@ -182,24 +213,24 @@
                   walpha = alpha
                   wbeta  = beta
 *
-                  sf = 1
-                  C2RS = dgauss(integrandsICm,c,d,eps)
-                  C2L  = c21ICL(c)
+                  k  = 3
+                  wl = 1
 *
-                  sf = 2
-                  CLRS = dgauss(integrandsICm,c,d,eps)
-                  CLL  = cL1ICL(c)
+                  sf   = 1
+                  C2RS = fact2 * dgauss(integrandsICm,c,d,eps)
+                  C2L  = fact2 * c21ICL(c)
 *
-                  sf = 3
-                  C3RS = dgauss(integrandsICm,c,d,eps)
-                  C3L  = c31ICL(c)
+                  sf   = 2
+                  CLRS = factL * dgauss(integrandsICm,c,d,eps)
+                  CLL  = factL * cL1ICL(c)
 *
-                  SC2mCC(igrid,ixi,2,1,beta,alpha) = fact2
-     1                                             * ( C2RS + C2L * fL )
-                  SCLmCC(igrid,ixi,2,1,beta,alpha) = factL
-     1                                             * ( CLRS + CLL * fL )
-                  SC3mCC(igrid,ixi,2,1,beta,alpha) = fact3
-     1                                             * ( C3RS + C3L * fL )
+                  sf   = 3
+                  C3RS = fact3 * dgauss(integrandsICm,c,d,eps)
+                  C3L  = fact3 * c31ICL(c)
+*
+                  SC2mCC(igrid,ixi,2,1,beta,alpha) = C2RS + C2L * fL
+                  SCLmCC(igrid,ixi,2,1,beta,alpha) = CLRS + CLL * fL
+                  SC3mCC(igrid,ixi,2,1,beta,alpha) = C3RS + C3L * fL
                enddo
             enddo
 *
@@ -220,7 +251,18 @@
                   walpha = alpha
                   wbeta  = beta
 *
-                  DIC = dgauss(integrandsICm0,c,d,eps) + DICc(xi,c) * fL
+*     If the FONLL scheme has been chosen, the term DIC will cancel
+*     between the actual coefficient functions and the matching conditions
+*     ==> set it to zero.
+*     In addition, the gluon coefficient functions must be updated due to the
+*     presence of the matcing conditions.
+*
+*     Non-singlet
+*
+                  k   = 3
+                  DIC = 0d0
+                  if(MassScheme(1:5).ne."FONLL")
+     1            DIC = dgauss(integrandsICm0,c,d,eps) + DICc(xi,c) * fL
 *     Neutral Current
                   SC2m0NC(igrid,ixi,3,1,beta,alpha) =
      1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
@@ -233,6 +275,23 @@
      1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha)
                   SC3m0CC(igrid,ixi,2,1,beta,alpha) =
      1                 SC3zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+*
+*     Gluon
+*
+                  if(MassScheme(1:5).eq."FONLL")then
+                     k = 1
+                     gDIC = dgauss(integrandsICm0,c,d,eps)
+*     Neutral Current
+                     SC2m0NC(igrid,ixi,1,1,beta,alpha) =
+     1                    SC2m0NC(igrid,ixi,1,1,beta,alpha) - lnF * gDIC
+c*     Charged Current
+c                     SC2m0CC(igrid,ixi,1,1,beta,alpha) =
+c     1                    SC2m0CC(igrid,ixi,1,1,beta,alpha) -
+c     2                    lnF * gDIC / 2d0
+c                     SC3m0CC(igrid,ixi,1,1,beta,alpha) =
+c     1                    SC3m0CC(igrid,ixi,1,1,beta,alpha) -
+c     2                    lnF * gDIC / 2d0
+                  endif
                enddo
             enddo
          endif
