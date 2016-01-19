@@ -58,7 +58,6 @@
       double precision Kl,Kc,Kb,Kt
       double precision sgn,diff(nxir),xi(4:6),c0(4:6),c1(4:6)
       double precision damp(4:6)
-      double precision cFLIC
       double precision c2ccIC,clccIC,c3ccIC
       double precision t1,t2
 *
@@ -205,14 +204,10 @@
 *     
          call ComputeChargesDIS(Q2,bq,dq,bqt)
 *
-*     In case of intrinsic charm, compute the correction to apply
-*     to the non-singlet part of the massive F_L and also limit the
-*     compuation of the IC component to NLO.
+*     In case of intrinsic charm, limit the compuation of the
+*     IC component to NLO.
 *
-         if(IntrinsicCharm)then
-            cFLIC = ( 1d0 + bqt(4) / bq(4) ) / 2d0
-            ipt_max_IC = min(ipt,1)
-         endif
+         if(IntrinsicCharm) ipt_max_IC = min(ipt,1)
 *     
          do jgrid=1,ngrid
 *     
@@ -510,7 +505,6 @@
      5                             * SC2mNC(jgrid,ixi(4)+1,
      6                             3,pt,alpha,beta) )
                            enddo
-                           CLnsp(4) = cFLIC * CLnsp(4)
                         endif
                      endif
                   elseif(MassScheme(1:5).eq."FONLL")then
@@ -668,7 +662,7 @@
                         if(Nf_FF.lt.4)then
 *     FFNS
                            do pt=0,ipt_max_IC
-                              CLnsp(4) = CLnsp(4) + cFLIC * as(pt)
+                              CLnsp(4) = CLnsp(4) + as(pt)
      1                             * ( c0(4)
      2                             * SCLmNC(jgrid,ixi(4),
      3                             3,pt,alpha,beta)

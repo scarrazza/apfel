@@ -40,7 +40,7 @@
 *     Internal Variables
 *
       double precision z,w_int,fR,fS,fL
-      double precision xi,eta
+      double precision xi
       double precision CR,CS
       double precision c21ICR,cL1ICR,c31ICR
       double precision DICa,DICb
@@ -55,14 +55,13 @@
 *
 *     Interpolant functions
 *
-      eta = 2d0 * Q2IC / ( Spm + Del )
-      xi  = xigrid(wixi)
-*
       z = xg(igrid,wbeta) / y / eta
 *
       fR = w_int(inter_degree(igrid),walpha,z)
       fL = w_int(inter_degree(igrid),walpha,xg(igrid,wbeta)/eta)
       fS = fR - fL
+*
+      xi  = xigrid(wixi)
 *
 *     Contructing integrands
 *

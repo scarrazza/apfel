@@ -29,8 +29,8 @@
       integer gbound
       integer alpha,beta
       integer bound
-      double precision xi,lambda,eta,lnF
-      double precision w_int,win
+      double precision xi,lambda,lnF
+      double precision w_int
       double precision bq(0:6),dq(0:6),bqt(0:6)
       double precision fL
       double precision dgauss,c,d,eps
@@ -54,76 +54,48 @@
       if(IsExt(igrid)) gbound = nin(igrid) - 1
 *
       do ixi=1,nxir
+         wixi   = ixi * xistep
+*     Definitions
          xi     = xigrid(ixi*xistep)
          lambda = 1d0 / xi
-         eta    = 2d0 / ( 1d0 + dsqrt( 1d0 + 4d0 * lambda ) )
-*
-*     LO
-*
-         do beta=0,gbound
-            do alpha=beta,nin(igrid)-1
-*
-*     Neutral current
-*
-*     FFNS
-               win = w_int(inter_degree(igrid),alpha,
-     1              xg(igrid,beta)/eta)
-*
-               SC2mNC(igrid,ixi,3,0,beta,alpha) = ( 2d0 - eta ) * win
-               SCLmNC(igrid,ixi,3,0,beta,alpha) = 4d0 * ( 1d0 - eta )
-     1              / ( 2d0 - eta ) * win
-*     FFN0
-               if(alpha.eq.beta) SC2m0NC(igrid,ixi,3,0,beta,alpha) = 1d0
-*
-*     Charged current
-*
-*     (even if the IC contribution is a non-singlet one, put it in the 
-*     pure-singlet slot (e.g. SC2mCC(igrid,ixi,2,0,beta,alpha) because
-*     for now this slot is never used. If one day there will be the 
-*     O(as^2) correction to CC, that contain a pure-singlet piece, I
-*     will need to extend the CC arrays from 3 to 4.)
-*
-               if(alpha.eq.beta)then
-*     FFNS
-                  SC2mCC(igrid,ixi,2,0,beta,alpha) = ( 1d0 + lambda )
-                  SCLmCC(igrid,ixi,2,0,beta,alpha) = lambda
-                  SC3mCC(igrid,ixi,2,0,beta,alpha) = 1d0
-*     FFN0
-                  SC2m0CC(igrid,ixi,2,0,beta,alpha) = 1d0
-                  SC3m0CC(igrid,ixi,2,0,beta,alpha) = 1d0
-               endif
-            enddo
-         enddo
-*
-*     NLO
-*
-         if(ipt.ge.1)then
-*
-            lnF = dlog(xi*kfacQ)
-*
-            wixi = ixi * xistep
+         lnF    = dlog(xi*kfacQ)
+*     Charm mass and scale.
+*     Even though, due to teh way how the coefficnet functions are written
+*     it is necessary to have mass and scale separarted, it can be shown
+*     that the expressions only dependo on the ratio.
+         m12  = m2ph(4)
+         Q2IC = m12 / lambda
 *
 *     FFNS
-*
-*     Charm mass and scale (Only pole mass for now)
-            m12  = m2ph(4)
-            Q2IC = m12 / lambda
 *
 *     Neutral current
 *
 *     Mass of the outcoming particle (charm)
-            m22 = m12
+         m22 = m12
 *     Couplings
-            call ComputeChargesDIS(Q2IC,bq,dq,bqt)
-            Splus  = bq(4)
-            Sminus = bqt(4)
-            Rplus  = dq(4)        ! Needed only for F3 (never used)
-            Rminus = 0d0          ! Needed only for F3 (never used)
+         call ComputeChargesDIS(Q2IC,bq,dq,bqt)
+         Splus  = bq(4)
+         Sminus = bqt(4)
+         Rplus  = dq(4)         ! Needed only for F3 (never used)
+         Rminus = 0d0           ! Needed only for F3 (never used)
 *     Compute the needed IC factors according to hep-ph/9805233
-            call ComputeICFactors("NC")
+         call ComputeICFactors
 *
-            do beta=0,gbound
-               do alpha=beta,nin(igrid)-1
+         do beta=0,gbound
+            do alpha=beta,nin(igrid)-1
+*
+               fL = w_int(inter_degree(igrid),alpha,
+     1              xg(igrid,beta)/eta)
+*
+*     LO
+*
+               SC2mNC(igrid,ixi,3,0,beta,alpha) = ( 2d0 - eta ) * fL
+               SCLmNC(igrid,ixi,3,0,beta,alpha) = 4d0 * ( 1d0 - eta )
+     1              / ( 2d0 - eta ) / factL * fL
+*
+*     NLO
+*
+               if(ipt.ge.1)then
 *
                   bound = alpha-inter_degree(igrid)
                   if(alpha.lt.inter_degree(igrid)) bound = 0
@@ -133,9 +105,6 @@
                   d = min(eta,xg(igrid,beta)/xg(igrid,bound)) / eta
 *
                   if(c.ge.1d0) cycle
-*
-                  fL = w_int(inter_degree(igrid),alpha,
-     1                 xg(igrid,beta)/eta)
 *
                   walpha = alpha
                   wbeta  = beta
@@ -148,8 +117,8 @@
                   C2L  = fact2 * eta * c21ICL(c)
 *
                   sf   = 2
-                  CLRS = factL * eta * dgauss(integrandsICm,c,d,eps)
-                  CLL  = factL * eta * cL1ICL(c)
+                  CLRS = eta * dgauss(integrandsICm,c,d,eps)
+                  CLL  = eta * cL1ICL(c)
 *
                   if(MassScheme(1:5).eq."FONLL")then
                      sf = 2
@@ -162,8 +131,8 @@
      2                    - ( 2d0 - eta ) * lnF * gDIC
                      SCLmNC(igrid,ixi,1,1,beta,alpha) =
      1                    SCLmNC(igrid,ixi,1,1,beta,alpha)
-     2                    - 4d0 * ( 1d0 - eta ) / ( 2d0 - eta )
-     3                    * lnF * gDIC / factL
+     2                    - 4d0 * ( 1d0 - eta ) / ( 2d0 - eta ) / factL
+     3                    * lnF * gDIC
 *     Non-singlet
                      k  = 3
                      wl = 2
@@ -180,23 +149,43 @@
 *
                   SC2mNC(igrid,ixi,3,1,beta,alpha) = C2RS + C2L * fL
                   SCLmNC(igrid,ixi,3,1,beta,alpha) = CLRS + CLL * fL
-               enddo
+               endif
             enddo
+         enddo
 *
 *     Charged current
 *
-*     Mass of the outcoming particle (strange or down (massless))
-            m22 = m2strange
-*     Couplings
-            Splus  = 2d0 * ( V_cd2 + V_cs2 )
-            Sminus = 0d0
-            Rplus  = V_cd2 + V_cs2
-            Rminus = 0d0
-*     Compute the needed IC factors according to hep-ph/9805233
-            call ComputeICFactors("CC")
+*     (even if the IC contribution is a non-singlet one, put it in the 
+*     pure-singlet slot (e.g. SC2mCC(igrid,ixi,2,0,beta,alpha) because
+*     for now this slot is never used. If one day there will be the 
+*     O(as^2) correction to CC, that contain a pure-singlet piece, I
+*     will need to extend the CC arrays from 3 to 4.)
 *
-            do beta=0,gbound
-               do alpha=beta,nin(igrid)-1
+*     Mass of the outcoming particle (strange or down (massless))
+         m22 = m2strange
+*     Couplings
+         Splus  = 2d0 * ( V_cd2 + V_cs2 )
+         Sminus = 0d0
+         Rplus  = V_cd2 + V_cs2
+         Rminus = 0d0
+*     Compute the needed IC factors according to hep-ph/9805233
+         call ComputeICFactors
+*
+         do beta=0,gbound
+            do alpha=beta,nin(igrid)-1
+*
+               fL = 0d0
+               if(alpha.eq.beta) fL = 1d0
+*
+*     LO
+*
+               SC2mCC(igrid,ixi,2,0,beta,alpha) = ( 1d0 + lambda ) * fL
+               SCLmCC(igrid,ixi,2,0,beta,alpha) = lambda * fL
+               SC3mCC(igrid,ixi,2,0,beta,alpha) = fL
+*
+*     NLO
+*
+               if(ipt.ge.1)then
 *
                   bound = alpha-inter_degree(igrid)
                   if(alpha.lt.inter_degree(igrid)) bound = 0
@@ -206,9 +195,6 @@
                   d = min(1d0,xg(igrid,beta)/xg(igrid,bound))
 *
                   if(c.ge.1d0) cycle
-*
-                  fL = 0d0
-                  if(alpha.eq.beta) fL = 1d0
 *
                   walpha = alpha
                   wbeta  = beta
@@ -221,8 +207,8 @@
                   C2L  = fact2 * c21ICL(c)
 *
                   sf   = 2
-                  CLRS = factL * dgauss(integrandsICm,c,d,eps)
-                  CLL  = factL * cL1ICL(c)
+                  CLRS = dgauss(integrandsICm,c,d,eps)
+                  CLL  = cL1ICL(c)
 *
                   sf   = 3
                   C3RS = fact3 * dgauss(integrandsICm,c,d,eps)
@@ -231,22 +217,36 @@
                   SC2mCC(igrid,ixi,2,1,beta,alpha) = C2RS + C2L * fL
                   SCLmCC(igrid,ixi,2,1,beta,alpha) = CLRS + CLL * fL
                   SC3mCC(igrid,ixi,2,1,beta,alpha) = C3RS + C3L * fL
-               enddo
+               endif
             enddo
+         enddo
 *
 *     FFN0
 *
-            do beta=0,gbound
-               do alpha=beta,nin(igrid)-1
+         do beta=0,gbound
+            do alpha=beta,nin(igrid)-1
+*
+               fL = 0d0
+               if(alpha.eq.beta) fL = 1d0
+*
+*     LO
+*
+*     Neutral Current
+               SC2m0NC(igrid,ixi,3,0,beta,alpha) = fL
+*     Charged Current
+               SC2m0CC(igrid,ixi,2,0,beta,alpha) = fL
+               SC3m0CC(igrid,ixi,2,0,beta,alpha) = fL
+*
+*     NLO
+*
+               if(ipt.ge.1)then
+*
                   bound = alpha-inter_degree(igrid)
                   if(alpha.lt.inter_degree(igrid)) bound = 0
 *
                   c = max(xg(igrid,beta),
      1                 xg(igrid,beta)/xg(igrid,alpha+1))
                   d = min(1d0,xg(igrid,beta)/xg(igrid,bound))
-*
-                  fL = 0d0
-                  if(alpha.eq.beta) fL = 1d0
 *
                   walpha = alpha
                   wbeta  = beta
@@ -292,25 +292,21 @@ c                     SC3m0CC(igrid,ixi,1,1,beta,alpha) =
 c     1                    SC3m0CC(igrid,ixi,1,1,beta,alpha) -
 c     2                    lnF * gDIC / 2d0
                   endif
-               enddo
+               endif
             enddo
-         endif
+         enddo
       enddo
 *
       return
       end
 *
 ************************************************************************
-      subroutine ComputeICFactors(proc)
+      subroutine ComputeICFactors
 *
       implicit none
 *
       include "../commons/wrapIC.h"
       include "../commons/ColorFactors.h"
-**
-*     Input Variables
-*
-      character*2 proc
 **
 *     Internal Variables
 *
@@ -325,6 +321,7 @@ c     2                    lnF * gDIC / 2d0
       Spp  = Q2IC + m22 + m12
       Spm  = Q2IC + m22 - m12
       Smp  = Q2IC - m22 + m12
+      eta  = 2d0 * Q2IC / ( Spm + Del )
 *
       I1     = dlog( ( Spp + Del ) / ( Spp - Del ) ) / Del
       Cplus  = 2d0 * m1 * m2 * I1
@@ -362,11 +359,7 @@ c     2                    lnF * gDIC / 2d0
       fact1 = 2d0 * CF * ( Spp - 2d0 * m1 * m2 * Sminus / Splus ) / Del
       fact2 = 2d0 * CF * Del / Q2IC
       fact3 = 2d0 * CF
-      if(proc.eq."NC")then
-         factL = 2d0 * Splus / ( Splus + Sminus )
-      elseif(proc.eq."CC")then
-         factL = 1d0
-      endif
+      factL = 2d0 * Splus / ( Splus + Sminus )
 *
       return
       end
