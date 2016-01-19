@@ -155,7 +155,7 @@
                      sf = 2
 *     Gluon
                      k  = 1
-                     gDIC = eta * dgauss(integrandsICm,c,d,eps)
+                     gDIC = dgauss(integrandsICm,c,d,eps)
 *
                      SC2mNC(igrid,ixi,1,1,beta,alpha) =
      1                    SC2mNC(igrid,ixi,1,1,beta,alpha)
@@ -163,19 +163,19 @@
                      SCLmNC(igrid,ixi,1,1,beta,alpha) =
      1                    SCLmNC(igrid,ixi,1,1,beta,alpha)
      2                    - 4d0 * ( 1d0 - eta ) / ( 2d0 - eta )
-     3                    * lnF * gDIC * factL
+     3                    * lnF * gDIC / factL
 *     Non-singlet
                      k  = 3
                      wl = 2
-                     nsDIC = eta * dgauss(integrandsICm,c,d,eps)
+                     nsDIC = dgauss(integrandsICm,c,d,eps)
 *
                      C2RS = C2RS - ( 2d0 - eta ) * nsDIC
-                     C2L  = C2L - ( 2d0 - eta ) * eta * DICc(xi,c)
+                     C2L  = C2L - ( 2d0 - eta ) * DICc(xi,c)
 *
                      CLRS = CLRS - 4d0 * ( 1d0 - eta ) / ( 2d0 - eta )
-     1                    * nsDIC * factL
+     1                    * nsDIC
                      CLL  = CLL - 4d0 * ( 1d0 - eta ) / ( 2d0 - eta )
-     1                    * eta * DICc(xi,c) * factL
+     1                    * DICc(xi,c)
                   endif
 *
                   SC2mNC(igrid,ixi,3,1,beta,alpha) = C2RS + C2L * fL

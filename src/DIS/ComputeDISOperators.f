@@ -685,7 +685,7 @@
                            enddo
 *     FFN0
                            do pt=0,ipt_max_IC
-                              CLnsp(4) = CLnsp(4) - cFLIC * as(pt)
+                              CLnsp(4) = CLnsp(4) - as(pt)
      1                             *  damp(4) * ( c0(4)
      2                             * SCLm0NC(jgrid,ixi(4),
      3                             3,pt,alpha,beta)
