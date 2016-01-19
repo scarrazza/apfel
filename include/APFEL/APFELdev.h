@@ -42,6 +42,9 @@ namespace APFEL
   const string kQmb      = "Qmb";
   const string kmt       = "mt";
   const string kQmt      = "Qmt";
+  const string kcThr     = "kcThr";
+  const string kbThr     = "kbThr";
+  const string ktThr     = "ktThr";
   const string kCKM      = "CKM";
   const string kMZ       = "MZ";
   const string kMW       = "MW";
@@ -53,8 +56,8 @@ namespace APFEL
 
   const string values[] = { kID, kPTO, kFNS, kDAMP, kIC, kModEv, kXIR, kXIF, kNfFF, kMaxNfAs,
                             kMaxNfPdf, kQ0, kalphas, kQref, kQED, kalphaqed, kQedref, kSxRes,
-                            kSxOrd, kHQ, kmc, kQmc, kmb, kQmb, kmt, kQmt, kCKM, kMZ, kMW, kGF,
-                            kSIN2TW, kTMC, kMP, kComments };
+                            kSxOrd, kHQ, kmc, kQmc, kmb, kQmb, kmt, kQmt, kcThr, kbThr, ktThr,
+			    kCKM, kMZ, kMW, kGF, kSIN2TW, kTMC, kMP, kComments };
 
   const vector<string> kValues(values,  values + sizeof values/sizeof values[0]);
 
