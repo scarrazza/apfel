@@ -36,7 +36,7 @@
       double precision dgauss,c,d,eps
       double precision C2RS,C2L,CLRS,CLL,C3RS,C3L
       double precision c21ICL,cL1ICL,c31ICL
-      double precision DIC,DICc,gDIC,nsDIC
+      double precision DICc,gDIC,nsDIC
       double precision integrandsICm
       external integrandsICm
       double precision integrandsICm0
@@ -251,46 +251,59 @@
                   walpha = alpha
                   wbeta  = beta
 *
-*     If the FONLL scheme has been chosen, the term DIC will cancel
-*     between the actual coefficient functions and the matching conditions
-*     ==> set it to zero.
-*     In addition, the gluon coefficient functions must be updated due to the
-*     presence of the matcing conditions.
-*
-*     Non-singlet
-*
                   k   = 3
-                  DIC = 0d0
-                  if(MassScheme(1:5).ne."FONLL")
-     1            DIC = dgauss(integrandsICm0,c,d,eps) + DICc(xi,c) * fL
+                  nsDIC = dgauss(integrandsICm0,c,d,eps)
+     1                 + DICc(xi,c) * fL
 *     Neutral Current
                   SC2m0NC(igrid,ixi,3,1,beta,alpha) =
-     1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+     1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + nsDIC
                   SCLm0NC(igrid,ixi,3,1,beta,alpha) =
      1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha)
 *     Charged Current
                   SC2m0CC(igrid,ixi,2,1,beta,alpha) =
-     1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+     1                 SC2zm(igrid,Nf_FF,3,1,beta,alpha) + nsDIC
                   SCLm0CC(igrid,ixi,2,1,beta,alpha) =
      1                 SCLzm(igrid,Nf_FF,3,1,beta,alpha)
                   SC3m0CC(igrid,ixi,2,1,beta,alpha) =
-     1                 SC3zm(igrid,Nf_FF,3,1,beta,alpha) + DIC
+     1                 SC3zm(igrid,Nf_FF,3,1,beta,alpha) + nsDIC
+*
+*     If the FONLL scheme has been chosen, the non-singlet and the gluon
+*     coefficient functions must be modified taking into account the
+*     matching conditions. However, while the NC additional terms are
+*     split into the FFNS and the FFN0 sector according to thei kinematics,
+*     the CC additional terms have all the same kinematics and thus I've
+*     chosen to put them in the FFN0 terms.
+*
+                  if(MassScheme(1:5).eq."FONLL")then
 *
 *     Gluon
 *
-                  if(MassScheme(1:5).eq."FONLL")then
                      k = 1
                      gDIC = dgauss(integrandsICm0,c,d,eps)
 *     Neutral Current
                      SC2m0NC(igrid,ixi,1,1,beta,alpha) =
      1                    SC2m0NC(igrid,ixi,1,1,beta,alpha) - lnF * gDIC
-c*     Charged Current
-c                     SC2m0CC(igrid,ixi,1,1,beta,alpha) =
-c     1                    SC2m0CC(igrid,ixi,1,1,beta,alpha) -
-c     2                    lnF * gDIC / 2d0
-c                     SC3m0CC(igrid,ixi,1,1,beta,alpha) =
-c     1                    SC3m0CC(igrid,ixi,1,1,beta,alpha) -
-c     2                    lnF * gDIC / 2d0
+*     Charged Current
+                     SC2m0CC(igrid,ixi,1,1,beta,alpha) =
+     1                    SC2m0CC(igrid,ixi,1,1,beta,alpha) +
+     2                    lambda * lnF * gDIC / 2d0
+                     SCLm0CC(igrid,ixi,1,1,beta,alpha) =
+     1                    SCLm0CC(igrid,ixi,1,1,beta,alpha) +
+     2                    lambda * lnF * gDIC / 2d0
+*
+*     Non-singlet
+*
+*     Neutral Current
+                     SC2m0NC(igrid,ixi,3,1,beta,alpha) =
+c     1                    SC2m0NC(igrid,ixi,3,1,beta,alpha) - nsDIC
+     1                    SC2zm(igrid,Nf_FF,3,1,beta,alpha)
+*     Charged Current
+                     SC2m0CC(igrid,ixi,2,1,beta,alpha) =
+     1                    SC2m0CC(igrid,ixi,2,1,beta,alpha)
+     2                    + lambda * nsDIC
+                     SCLm0CC(igrid,ixi,2,1,beta,alpha) =
+     1                    SCLm0CC(igrid,ixi,2,1,beta,alpha)
+     2                    + lambda * nsDIC
                   endif
                endif
             enddo
