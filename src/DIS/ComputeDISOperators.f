@@ -1292,42 +1292,6 @@
                         endif
                      endif
                   elseif(MassScheme(1:5).eq."FONLL")then
-                     do pt=0,ipt
-                        C2g(3)   = C2g(3)
-     1                       + as(pt) * SC2zm(jgrid,nf,1,pt,alpha,beta)
-                        C2ps(3)  = C2ps(3)
-     1                       + as(pt) * SC2zm(jgrid,nf,2,pt,alpha,beta)
-                        C2nsp(3) = C2nsp(3)
-     1                       + as(pt) * SC2zm(jgrid,nf,3,pt,alpha,beta)
-                        C2nsm(3) = C2nsm(3)
-     1                       + as(pt) * SC2zm(jgrid,nf,4,pt,alpha,beta)
-                        CLg(3)   = CLg(3)
-     1                       + as(pt) * SCLzm(jgrid,nf,1,pt,alpha,beta)
-                        CLps(3)  = CLps(3)
-     1                       + as(pt) * SCLzm(jgrid,nf,2,pt,alpha,beta)
-                        CLnsp(3) = CLnsp(3)
-     1                       + as(pt) * SCLzm(jgrid,nf,3,pt,alpha,beta)
-                        CLnsm(3) = CLnsm(3)
-     1                       + as(pt) * SCLzm(jgrid,nf,4,pt,alpha,beta)
-                        C3nsp(3) = C3nsp(3)
-     1                       + as(pt) * SC3zm(jgrid,nf,3,pt,alpha,beta)
-                        C3nsm(3) = C3nsm(3)
-     1                       + as(pt) * SC3zm(jgrid,nf,4,pt,alpha,beta)
-                     enddo
-                     if(nf.gt.3)then
-                        do ihq=4,nf
-                           C2g(ihq)   = damp(ihq) * C2g(3)
-                           C2ps(ihq)  = damp(ihq) * C2ps(3)
-                           C2nsp(ihq) = damp(ihq) * C2nsp(3)
-                           C2nsm(ihq) = damp(ihq) * C2nsm(3)
-                           CLg(ihq)   = damp(ihq) * CLg(3)
-                           CLps(ihq)  = damp(ihq) * CLps(3)
-                           CLnsp(ihq) = damp(ihq) * CLnsp(3)
-                           CLnsm(ihq) = damp(ihq) * CLnsm(3)
-                           C3nsp(ihq) = damp(ihq) * C3nsp(3)
-                           C3nsm(ihq) = damp(ihq) * C3nsm(3)
-                        enddo
-                     endif
 *
 *     FFNS is NLO at most
 *
@@ -1442,6 +1406,61 @@
                         enddo
                      endif
 *
+*     ZM contribution
+*
+                     do pt=0,ipt
+                        C2g(3)   = C2g(3)
+     1                       + as(pt) * SC2zm(jgrid,nf,1,pt,alpha,beta)
+                        C2ps(3)  = C2ps(3)
+     1                       + as(pt) * SC2zm(jgrid,nf,2,pt,alpha,beta)
+                        C2nsp(3) = C2nsp(3)
+     1                       + as(pt) * SC2zm(jgrid,nf,3,pt,alpha,beta)
+                        C2nsm(3) = C2nsm(3)
+     1                       + as(pt) * SC2zm(jgrid,nf,4,pt,alpha,beta)
+                        CLg(3)   = CLg(3)
+     1                       + as(pt) * SCLzm(jgrid,nf,1,pt,alpha,beta)
+                        CLps(3)  = CLps(3)
+     1                       + as(pt) * SCLzm(jgrid,nf,2,pt,alpha,beta)
+                        CLnsp(3) = CLnsp(3)
+     1                       + as(pt) * SCLzm(jgrid,nf,3,pt,alpha,beta)
+                        CLnsm(3) = CLnsm(3)
+     1                       + as(pt) * SCLzm(jgrid,nf,4,pt,alpha,beta)
+                        C3nsp(3) = C3nsp(3)
+     1                       + as(pt) * SC3zm(jgrid,nf,3,pt,alpha,beta)
+                        C3nsm(3) = C3nsm(3)
+     1                       + as(pt) * SC3zm(jgrid,nf,4,pt,alpha,beta)
+                     enddo
+                     if(nf.gt.3)then
+                        do ihq=4,nf
+                           C2g(ihq)   = damp(ihq) * C2g(3)
+                           C2ps(ihq)  = damp(ihq) * C2ps(3)
+                           C2nsp(ihq) = damp(ihq) * C2nsp(3)
+                           C2nsm(ihq) = damp(ihq) * C2nsm(3)
+                           CLg(ihq)   = damp(ihq) * CLg(3)
+                           CLps(ihq)  = damp(ihq) * CLps(3)
+                           CLnsp(ihq) = damp(ihq) * CLnsp(3)
+                           CLnsm(ihq) = damp(ihq) * CLnsm(3)
+                           C3nsp(ihq) = damp(ihq) * C3nsp(3)
+                           C3nsm(ihq) = damp(ihq) * C3nsm(3)
+                        enddo
+                     endif
+*
+*     Include massive contributions
+*
+                     if(Nf_FF.lt.6)then
+                        do ihq=Nf_FF+1,6
+                           C2g(ihq)   = C2g(ihq)   + C2gm(ihq)
+                           C2nsp(ihq) = C2nsp(ihq) + C2qm(ihq)
+                           C2nsm(ihq) = C2nsm(ihq) + C2qm(ihq)
+                           CLg(ihq)   = CLg(ihq)   + CLgm(ihq)
+                           CLnsp(ihq) = CLnsp(ihq) + CLqm(ihq)
+                           CLnsm(ihq) = CLnsm(ihq) + CLqm(ihq)
+                           C3g(ihq)   = C3g(ihq)   + C3gm(ihq)
+                           C3nsp(ihq) = C3nsp(ihq) + C3qm(ihq)
+                           C3nsm(ihq) = C3nsm(ihq) + C3qm(ihq)
+                        enddo
+                     endif
+*
 *     If needed, compute the IC contributions.
 *     (Warning: such contributions are placed in the pure-singlet slot
 *     even if they are actually non-singlet contributions. The reason is
@@ -1503,7 +1522,6 @@
                            enddo
                         endif
                      endif
-
                   endif
 *
 *     F2
@@ -1564,153 +1582,40 @@
                   OpF2(jgrid,4,13,alpha,beta) = Kc * C2nsp(4) / 15d0
 *
                   if(MassScheme(1:5).eq."FONLL")then
-                     if(Nf_FF.eq.3)then
+*     Subtract the spurious charm contribution
+                     if(Nf_FF.le.3)then
 *     Singlet
-                        OpF2(jgrid,4,1,alpha,beta)  = 
-     1                       OpF2(jgrid,4,1,alpha,beta)
-     2                       + Kc * C2qm(4) / 3d0
-*     Gluon
-                        OpF2(jgrid,4,2,alpha,beta)  = 
-     1                       OpF2(jgrid,4,2,alpha,beta)
-     2                       + 2d0 * Kc * C2gm(4)
+                        OpF2(jgrid,4,1,alpha,beta)  =
+     1                       OpF2(jgrid,4,1,alpha,beta)  -
+     2                       2d0 * Kc * C2qm(4) / 12d0
 *     Valence
                         OpF2(jgrid,4,3,alpha,beta)  =
-     1                       OpF2(jgrid,4,3,alpha,beta)
-     2                       + ipr * Kc * C2qm(4) / 3d0
-*     V3
-                        OpF2(jgrid,4,4,alpha,beta)  = 
-     1                       OpF2(jgrid,4,4,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * C2qm(4) / 2d0
-*     V8
-                        OpF2(jgrid,4,5,alpha,beta)  =
-     1                       OpF2(jgrid,4,5,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * C2qm(4)
-     3                       / 6d0
-*     T3
-                        OpF2(jgrid,4,9,alpha,beta)  = 
-     1                       OpF2(jgrid,4,9,alpha,beta)
-     2                       - fr3 * V_cd2 * C2qm(4) / 2d0
-*     T8
-                        OpF2(jgrid,4,10,alpha,beta) = 
-     1                       OpF2(jgrid,4,10,alpha,beta)
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * C2qm(4) / 6d0
-                     elseif(Nf_FF.eq.4)then
-*     Singlet
-                        OpF2(jgrid,4,1,alpha,beta)  = 
-     1                       OpF2(jgrid,4,1,alpha,beta)
-     2                       + Kc * C2qm(4) / 3d0
-     3                       + Kc * C2qm(4) / 15d0
-     4                       + Kc * C2qm(4) / 10d0
-*     Gluon
-                        OpF2(jgrid,4,2,alpha,beta)  =
-     1                       OpF2(jgrid,4,2,alpha,beta)
-     2                       + 2d0 * Kc * C2gm(4)
-*     V3
-                        OpF2(jgrid,4,4,alpha,beta)  =
-     1                       OpF2(jgrid,4,4,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * C2qm(4) / 2d0
-*     V8
-                        OpF2(jgrid,4,5,alpha,beta)  =
-     1                       OpF2(jgrid,4,5,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * C2qm(4)
-     3                       / 6d0
+     1                       OpF2(jgrid,4,3,alpha,beta)  +
+     2                       ipr * 2d0 * Kc * C2qm(4) / 12d0
 *     V15
                         OpF2(jgrid,4,6,alpha,beta)  =
-     1                       OpF2(jgrid,4,6,alpha,beta)
-     2                       + ipr * Kc * C2qm(4) / 3d0
-*     T3
-                        OpF2(jgrid,4,9,alpha,beta)  = 
-     1                       OpF2(jgrid,4,9,alpha,beta)
-     2                       - fr3 * V_cd2 * C2qm(4) / 2d0
-*     T8
-                        OpF2(jgrid,4,10,alpha,beta) =
-     1                       OpF2(jgrid,4,10,alpha,beta)
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * C2qm(4) / 6d0
+     1                       OpF2(jgrid,4,6,alpha,beta)  -
+     2                       ipr * 2d0 * Kc * C2qm(4) / 8d0
+*     V24
+                        OpF2(jgrid,4,7,alpha,beta)  =
+     1                       OpF2(jgrid,4,7,alpha,beta)  +
+     2                       ipr * 2d0 * Kc * C2qm(4) / 40d0
+*     V35
+                        OpF2(jgrid,4,8,alpha,beta)  =
+     1                       OpF2(jgrid,4,8,alpha,beta)  +
+     2                       ipr * 2d0 * Kc * C2qm(4) / 60d0
 *     T15
                         OpF2(jgrid,4,11,alpha,beta) =
-     1                       OpF2(jgrid,4,11,alpha,beta)
-     2                       - Kc * C2qm(4) / 6d0
-                     elseif(Nf_FF.eq.5)then
-*     Singlet
-                        OpF2(jgrid,4,1,alpha,beta)  = 
-     1                       OpF2(jgrid,4,1,alpha,beta)
-     2                       + Kc * C2qm(4) / 3d0
-     3                       + Kc * C2qm(4) / 15d0
-*     Gluon
-                        OpF2(jgrid,4,2,alpha,beta)  =
-     1                       OpF2(jgrid,4,2,alpha,beta)
-     2                       + 2d0 * Kc * C2gm(4)
-*     V3
-                        OpF2(jgrid,4,4,alpha,beta)  =
-     1                       OpF2(jgrid,4,4,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * C2qm(4) / 2d0
-*     V8
-                        OpF2(jgrid,4,5,alpha,beta)  =
-     1                       OpF2(jgrid,4,5,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * C2qm(4)
-     3                       / 6d0
-*     V15
-                        OpF2(jgrid,4,6,alpha,beta)  =
-     1                       OpF2(jgrid,4,6,alpha,beta)
-     2                       + ipr * Kc * C2qm(4) / 3d0
-*     T3
-                        OpF2(jgrid,4,9,alpha,beta)  = 
-     1                       OpF2(jgrid,4,9,alpha,beta)
-     2                       - fr3 * V_cd2 * C2qm(4) / 2d0
-*     T8
-                        OpF2(jgrid,4,10,alpha,beta) =
-     1                       OpF2(jgrid,4,10,alpha,beta)
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * C2qm(4) / 6d0
-*     T15
-                        OpF2(jgrid,4,11,alpha,beta) =
-     1                       OpF2(jgrid,4,11,alpha,beta)
-     2                       - Kc * C2qm(4) / 6d0
+     1                       OpF2(jgrid,4,11,alpha,beta) +
+     2                       2d0 * Kc * C2qm(4) / 8d0
 *     T24
                         OpF2(jgrid,4,12,alpha,beta) =
-     1                       OpF2(jgrid,4,12,alpha,beta)
-     2                       + Kc * C2qm(4) / 10d0
-                     elseif(Nf_FF.eq.6)then
-*     Singlet
-                        OpF2(jgrid,4,1,alpha,beta)  = 
-     1                       OpF2(jgrid,4,1,alpha,beta)
-     2                       + Kc * C2qm(4) / 3d0
-*     Gluon
-                        OpF2(jgrid,4,2,alpha,beta)  =
-     1                       OpF2(jgrid,4,2,alpha,beta)
-     2                       + 2d0 * Kc * C2gm(4)
-*     V3
-                        OpF2(jgrid,4,4,alpha,beta)  =
-     1                       OpF2(jgrid,4,4,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * C2qm(4) / 2d0
-*     V8
-                        OpF2(jgrid,4,5,alpha,beta)  =
-     1                       OpF2(jgrid,4,5,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * C2qm(4)
-     3                       / 6d0
-*     V15
-                        OpF2(jgrid,4,6,alpha,beta)  =
-     1                       OpF2(jgrid,4,6,alpha,beta)
-     2                       + ipr * Kc * C2qm(4) / 3d0
-*     T3
-                        OpF2(jgrid,4,9,alpha,beta)  = 
-     1                       OpF2(jgrid,4,9,alpha,beta)
-     2                       - fr3 * V_cd2 * C2qm(4) / 2d0
-*     T8
-                        OpF2(jgrid,4,10,alpha,beta) =
-     1                       OpF2(jgrid,4,10,alpha,beta)
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * C2qm(4) / 6d0
-*     T15
-                        OpF2(jgrid,4,11,alpha,beta) =
-     1                       OpF2(jgrid,4,11,alpha,beta)
-     2                       - Kc * C2qm(4) / 6d0
-*     T24
-                        OpF2(jgrid,4,12,alpha,beta) =
-     1                       OpF2(jgrid,4,12,alpha,beta)
-     2                       + Kc * C2qm(4) / 10d0
+     1                       OpF2(jgrid,4,12,alpha,beta) -
+     2                       2d0 * Kc * C2qm(4) / 40d0
 *     T35
                         OpF2(jgrid,4,13,alpha,beta) =
-     1                       OpF2(jgrid,4,13,alpha,beta)
-     2                       + Kc * C2qm(4) / 15d0
+     1                       OpF2(jgrid,4,13,alpha,beta) -
+     2                       2d0 * Kc * C2qm(4) / 60d0
                      endif
                   endif
 *
@@ -1725,19 +1630,19 @@
      2                       2d0 * Kc * C2nsp(4) / 12d0
 *     Valence
                         OpF2(jgrid,4,3,alpha,beta)  =
-     1                       OpF2(jgrid,4,3,alpha,beta)  -
+     1                       OpF2(jgrid,4,3,alpha,beta)  +
      2                       ipr * 2d0 * Kc * C2nsm(4) / 12d0
 *     V15
                         OpF2(jgrid,4,6,alpha,beta)  =
-     1                       OpF2(jgrid,4,6,alpha,beta)  +
+     1                       OpF2(jgrid,4,6,alpha,beta)  -
      2                       ipr * 2d0 * Kc * C2nsm(4) / 8d0
 *     V24
                         OpF2(jgrid,4,7,alpha,beta)  =
-     1                       OpF2(jgrid,4,7,alpha,beta)  -
+     1                       OpF2(jgrid,4,7,alpha,beta)  +
      2                       ipr * 2d0 * Kc * C2nsm(4) / 40d0
 *     V35
                         OpF2(jgrid,4,8,alpha,beta)  =
-     1                       OpF2(jgrid,4,8,alpha,beta)  -
+     1                       OpF2(jgrid,4,8,alpha,beta)  +
      2                       ipr * 2d0 * Kc * C2nsm(4) / 60d0
 *     T15
                         OpF2(jgrid,4,11,alpha,beta) =
@@ -1758,19 +1663,19 @@
      2                    2d0 * Kc * c2ccIC / 12d0
 *     Valence
                      OpF2(jgrid,4,3,alpha,beta)  =
-     1                    OpF2(jgrid,4,3,alpha,beta)  +
+     1                    OpF2(jgrid,4,3,alpha,beta)  -
      2                    ipr * 2d0 * Kc * c2ccIC / 12d0
 *     V15
                      OpF2(jgrid,4,6,alpha,beta)  =
-     1                    OpF2(jgrid,4,6,alpha,beta)  -
+     1                    OpF2(jgrid,4,6,alpha,beta)  +
      2                    ipr * 2d0 * Kc * c2ccIC / 8d0
 *     V24
                      OpF2(jgrid,4,7,alpha,beta)  =
-     1                    OpF2(jgrid,4,7,alpha,beta)  +
+     1                    OpF2(jgrid,4,7,alpha,beta)  -
      2                    ipr * 2d0 * Kc * c2ccIC / 40d0
 *     V35
                      OpF2(jgrid,4,8,alpha,beta)  =
-     1                    OpF2(jgrid,4,8,alpha,beta)  +
+     1                    OpF2(jgrid,4,8,alpha,beta)  -
      2                    ipr * 2d0 * Kc * c2ccIC / 60d0
 *     T15
                      OpF2(jgrid,4,11,alpha,beta) =
@@ -1821,164 +1726,67 @@
                   OpF2(jgrid,5,13,alpha,beta) = Kb * C2nsp(5) / 15d0
 *
                   if(MassScheme(1:5).eq."FONLL")then
-                     if(Nf_FF.eq.3)then
+*     Subtract the spurious bottom contribution
+                     if(Nf_FF.le.4)then
 *     Singlet
-                        OpF2(jgrid,5,1,alpha,beta)  = 
-     1                       OpF2(jgrid,5,1,alpha,beta)
-     2                       + Kb * C2qm(5) / 4d0
-     4                       + ( V_ub2 - 3d0 * V_cb2 ) * C2qm(5) / 12d0
-*     Gluon
-                        OpF2(jgrid,5,2,alpha,beta)  =
-     1                       OpF2(jgrid,5,2,alpha,beta)
-     2                       + 2d0 * Kb * C2gm(5)
+                        OpF2(jgrid,5,1,alpha,beta)  =
+     1                       OpF2(jgrid,5,1,alpha,beta)  -
+     2                       2d0 * Kb * C2qm(5) / 12d0
 *     Valence
-                        OpF2(jgrid,5,3,alpha,beta)  = 
-     1                       OpF2(jgrid,5,3,alpha,beta)
-     2                       - ipr * Kb * C2qm(5) / 4d0
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 )
-     3                       * C2qm(5) / 12d0
-*     V3
-                        OpF2(jgrid,5,4,alpha,beta)  =
-     1                       OpF2(jgrid,5,4,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * C2qm(5) / 2d0
-*     V8
-                        OpF2(jgrid,5,5,alpha,beta)  = 
-     1                       OpF2(jgrid,5,5,alpha,beta)
-     2                       - ipr * V_ub2 * C2qm(5) / 6d0
-*     T3
-                        OpF2(jgrid,5,9,alpha,beta)  =
-     1                       OpF2(jgrid,5,9,alpha,beta)
-     2                       + fr3 * V_ub2 * C2qm(5) / 2d0 
-*     T8
-                        OpF2(jgrid,5,10,alpha,beta) = 
-     1                       OpF2(jgrid,5,10,alpha,beta)
-     2                       + V_ub2 * C2qm(5) / 6d0
-                     elseif(Nf_FF.eq.4)then
-*     Singlet
-                        OpF2(jgrid,5,1,alpha,beta)  = 
-     1                       OpF2(jgrid,5,1,alpha,beta)
-     2                       + Kb * C2qm(5) / 4d0
-*     Gluon
-                        OpF2(jgrid,5,2,alpha,beta)  =
-     1                       OpF2(jgrid,5,2,alpha,beta)
-     2                       + 2d0 * Kb * C2gm(5)
-*     Valence
-                        OpF2(jgrid,5,3,alpha,beta)  = 
-     1                       OpF2(jgrid,5,3,alpha,beta)
-     2                       - ipr * Kb * C2qm(5) / 4d0
-*     V3
-                        OpF2(jgrid,5,4,alpha,beta)  =
-     1                       OpF2(jgrid,5,4,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * C2qm(5) / 2d0
-*     V8
-                        OpF2(jgrid,5,5,alpha,beta)  = 
-     1                       OpF2(jgrid,5,5,alpha,beta)
-     2                       - ipr * V_ub2 * C2qm(5) / 6d0
-*     V15
-                        OpF2(jgrid,5,6,alpha,beta)  =
-     1                       OpF2(jgrid,5,6,alpha,beta)
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 )
-     3                       * C2qm(5) / 12d0
-*     T3
-                        OpF2(jgrid,5,9,alpha,beta)  =
-     1                       OpF2(jgrid,5,9,alpha,beta)
-     2                       + fr3 * V_ub2 * C2qm(5) / 2d0 
-*     T8
-                        OpF2(jgrid,5,10,alpha,beta) = 
-     1                       OpF2(jgrid,5,10,alpha,beta)
-     2                       + V_ub2 * C2qm(5) / 6d0
-*     T15
-                        OpF2(jgrid,5,11,alpha,beta) = 
-     1                       OpF2(jgrid,5,11,alpha,beta)
-     2                       + ( V_ub2 - 3d0 * V_cb2 ) * C2qm(5) / 12d0
-                     elseif(Nf_FF.eq.5)then
-*     Singlet
-                        OpF2(jgrid,5,1,alpha,beta)  = 
-     1                       OpF2(jgrid,5,1,alpha,beta)
-     2                       + 2d0 * Kb * C2qm(5) / 5d0
-*     Gluon
-                        OpF2(jgrid,5,2,alpha,beta)  =
-     1                       OpF2(jgrid,5,2,alpha,beta)
-     2                       + 2d0 * Kb * C2gm(5)
-*     V3
-                        OpF2(jgrid,5,4,alpha,beta)  =
-     1                       OpF2(jgrid,5,4,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * C2qm(5) / 2d0
-*     V8
-                        OpF2(jgrid,5,5,alpha,beta)  = 
-     1                       OpF2(jgrid,5,5,alpha,beta)
-     2                       - ipr * V_ub2 * C2qm(5) / 6d0
-*     V15
-                        OpF2(jgrid,5,6,alpha,beta)  =
-     1                       OpF2(jgrid,5,6,alpha,beta)
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 )
-     3                       * C2qm(5) / 12d0
+                        OpF2(jgrid,5,3,alpha,beta)  =
+     1                       OpF2(jgrid,5,3,alpha,beta)  -
+     2                       ipr * 2d0 * Kb * C2qm(5) / 12d0
 *     V24
-                        OpF2(jgrid,5,7,alpha,beta)  = 
-     1                       OpF2(jgrid,5,7,alpha,beta)
-     2                       - ipr * Kb * C2qm(5) / 4d0
-*     T3
-                        OpF2(jgrid,5,9,alpha,beta)  =
-     1                       OpF2(jgrid,5,9,alpha,beta)
-     2                       + fr3 * V_ub2 * C2qm(5) / 2d0 
-*     T8
-                        OpF2(jgrid,5,10,alpha,beta) = 
-     1                       OpF2(jgrid,5,10,alpha,beta)
-     2                       + V_ub2 * C2qm(5) / 6d0
-*     T15
-                        OpF2(jgrid,5,11,alpha,beta) = 
-     1                       OpF2(jgrid,5,11,alpha,beta)
-     2                       + ( V_ub2 - 3d0 * V_cb2 ) * C2qm(5) / 12d0
+                        OpF2(jgrid,5,7,alpha,beta)  =
+     1                       OpF2(jgrid,5,7,alpha,beta)  +
+     2                       ipr * 2d0 * Kb * C2qm(5) / 10d0
+*     V35
+                        OpF2(jgrid,5,8,alpha,beta)  =
+     1                       OpF2(jgrid,5,8,alpha,beta)  -
+     2                       ipr * 2d0 * Kb * C2qm(5) / 60d0
 *     T24
-                        OpF2(jgrid,5,12,alpha,beta) = 
-     1                       OpF2(jgrid,5,12,alpha,beta)
-     2                       - 3d0 * Kb * C2qm(5) / 20d0
-                     elseif(Nf_FF.eq.6)then
-*     Singlet
-                        OpF2(jgrid,5,1,alpha,beta)  = 
-     1                       OpF2(jgrid,5,1,alpha,beta)
-     2                       + Kb * C2qm(5) / 3d0
-*     Gluon
-                        OpF2(jgrid,5,2,alpha,beta)  =
-     1                       OpF2(jgrid,5,2,alpha,beta)
-     2                       + 2d0 * Kb * C2gm(5)
-*     V3
-                        OpF2(jgrid,5,4,alpha,beta)  =
-     1                       OpF2(jgrid,5,4,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * C2qm(5) / 2d0
-*     V8
-                        OpF2(jgrid,5,5,alpha,beta)  = 
-     1                       OpF2(jgrid,5,5,alpha,beta)
-     2                       - ipr * V_ub2 * C2qm(5) / 6d0
-*     V15
-                        OpF2(jgrid,5,6,alpha,beta)  =
-     1                       OpF2(jgrid,5,6,alpha,beta)
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 )
-     3                       * C2qm(5) / 12d0
-*     V24
-                        OpF2(jgrid,5,7,alpha,beta)  = 
-     1                       OpF2(jgrid,5,7,alpha,beta)
-     2                       - ipr * Kb * C2qm(5) / 4d0
-*     T3
-                        OpF2(jgrid,5,9,alpha,beta)  =
-     1                       OpF2(jgrid,5,9,alpha,beta)
-     2                       + fr3 * V_ub2 * C2qm(5) / 2d0 
-*     T8
-                        OpF2(jgrid,5,10,alpha,beta) = 
-     1                       OpF2(jgrid,5,10,alpha,beta)
-     2                       + V_ub2 * C2qm(5) / 6d0
-*     T15
-                        OpF2(jgrid,5,11,alpha,beta) = 
-     1                       OpF2(jgrid,5,11,alpha,beta)
-     2                       + ( V_ub2 - 3d0 * V_cb2 ) * C2qm(5) / 12d0
-*     T24
-                        OpF2(jgrid,5,12,alpha,beta) = 
-     1                       OpF2(jgrid,5,12,alpha,beta)
-     2                       - 3d0 * Kb * C2qm(5) / 20d0
+                        OpF2(jgrid,5,12,alpha,beta) =
+     1                       OpF2(jgrid,5,12,alpha,beta) +
+     2                       2d0 * Kb * C2qm(5) / 10d0
 *     T35
                         OpF2(jgrid,5,13,alpha,beta) =
-     1                   OpF2(jgrid,5,13,alpha,beta)
-     2                       + Kb * C2qm(5) / 15d0
+     1                       OpF2(jgrid,5,13,alpha,beta) -
+     2                       2d0 * Kb * C2qm(5) / 60d0
+                     endif
+*     Subtract the spurious charm contribution
+                     if(Nf_FF.le.3)then
+*     Singlet
+                        OpF2(jgrid,5,1,alpha,beta)  =
+     1                       OpF2(jgrid,5,1,alpha,beta)  -
+     2                       2d0 * V_cb2 * C2qm(5) / 12d0
+*     Valence
+                        OpF2(jgrid,5,3,alpha,beta)  =
+     1                       OpF2(jgrid,5,3,alpha,beta)  +
+     2                       ipr * 2d0 * V_cb2 * C2qm(5) / 12d0
+*     V15
+                        OpF2(jgrid,5,6,alpha,beta)  =
+     1                       OpF2(jgrid,5,6,alpha,beta)  -
+     2                       ipr * 2d0 * V_cb2 * C2qm(5) / 8d0
+*     V24
+                        OpF2(jgrid,5,7,alpha,beta)  =
+     1                       OpF2(jgrid,5,7,alpha,beta)  +
+     2                       ipr * 2d0 * V_cb2 * C2qm(5) / 40d0
+*     V35
+                        OpF2(jgrid,5,8,alpha,beta)  =
+     1                       OpF2(jgrid,5,8,alpha,beta)  +
+     2                       ipr * 2d0 * V_cb2 * C2qm(5) / 60d0
+*     T15
+                        OpF2(jgrid,5,11,alpha,beta) =
+     1                       OpF2(jgrid,5,11,alpha,beta) +
+     2                       2d0 * V_cb2 * C2qm(5) / 8d0
+*     T24
+                        OpF2(jgrid,5,12,alpha,beta) =
+     1                       OpF2(jgrid,5,12,alpha,beta) -
+     2                       2d0 * V_cb2 * C2qm(5) / 40d0
+*     T35
+                        OpF2(jgrid,5,13,alpha,beta) =
+     1                       OpF2(jgrid,5,13,alpha,beta) -
+     2                       2d0 * V_cb2 * C2qm(5) / 60d0
                      endif
                   endif
 *
@@ -2023,184 +1831,51 @@
      1                 - 2d0 * Kt * C2nsp(6) / 15d0
 *
                   if(MassScheme(1:5).eq."FONLL")then
-                     if(Nf_FF.eq.3)then
+*     Subtract the spurious top contribution
+                     if(Nf_FF.le.5)then
 *     Singlet
-                        OpF2(jgrid,6,1,alpha,beta)  = 
-     1                       OpF2(jgrid,6,1,alpha,beta)
-     2                       + Kt * C2qm(6) / 5d0
-     3                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * C2qm(6) / 20d0
-     5                       + ( V_td2 + V_ts2 ) * C2qm(6) / 12d0
-*     Gluon
-                        OpF2(jgrid,6,2,alpha,beta)  =
-     1                       OpF2(jgrid,6,2,alpha,beta)
-     2                       + 2d0 * Kt * C2gm(6)
+                        OpF2(jgrid,6,1,alpha,beta)  =
+     1                       OpF2(jgrid,6,1,alpha,beta)  -
+     2                       2d0 * Kt * C2qm(6) / 12d0
 *     Valence
                         OpF2(jgrid,6,3,alpha,beta)  =
-     1                       OpF2(jgrid,6,3,alpha,beta)
-     2                       + ipr * Kt * C2qm(6) / 5d0
-     3                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * C2qm(6) / 20d0
-     5                       + ipr * ( V_td2 + V_ts2 ) * C2qm(6) / 12d0
-*     V3
-                        OpF2(jgrid,6,4,alpha,beta)  =
-     1                       OpF2(jgrid,6,4,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * C2qm(6) / 2d0
-*     V8
-                        OpF2(jgrid,6,5,alpha,beta)  = 
-     1                       OpF2(jgrid,6,5,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * C2qm(6)
-     3                       / 6d0
-*     T3
-                        OpF2(jgrid,6,9,alpha,beta)  =
-     1                       OpF2(jgrid,6,9,alpha,beta)
-     2                       - fr3 * V_td2 * C2qm(6) / 2d0 
-*     T8
-                        OpF2(jgrid,6,10,alpha,beta) =
-     1                       OpF2(jgrid,6,10,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * C2qm(6) / 6d0
-                     elseif(Nf_FF.eq.4)then
-*     Singlet
-                        OpF2(jgrid,6,1,alpha,beta)  = 
-     1                       OpF2(jgrid,6,1,alpha,beta)
-     2                       + Kt * C2qm(6) / 5d0
-     3                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * C2qm(6) / 20d0
-*     Gluon
-                        OpF2(jgrid,6,2,alpha,beta)  =
-     1                       OpF2(jgrid,6,2,alpha,beta)
-     2                       + 2d0 * Kt * C2gm(6)
-*     Valence
-                        OpF2(jgrid,6,3,alpha,beta)  =
-     1                       OpF2(jgrid,6,3,alpha,beta)
-     2                       + ipr * Kt * C2qm(6) / 5d0
-     3                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * C2qm(6) / 20d0
-*     V3
-                        OpF2(jgrid,6,4,alpha,beta)  =
-     1                       OpF2(jgrid,6,4,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * C2qm(6) / 2d0
-*     V8
-                        OpF2(jgrid,6,5,alpha,beta)  = 
-     1                       OpF2(jgrid,6,5,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * C2qm(6)
-     3                       / 6d0
-*     V15
-                        OpF2(jgrid,6,6,alpha,beta)  =
-     1                       OpF2(jgrid,6,6,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 ) * C2qm(6) / 12d0
-*     T3
-                        OpF2(jgrid,6,9,alpha,beta)  =
-     1                       OpF2(jgrid,6,9,alpha,beta)
-     2                       - fr3 * V_td2 * C2qm(6) / 2d0 
-*     T8
-                        OpF2(jgrid,6,10,alpha,beta) =
-     1                       OpF2(jgrid,6,10,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * C2qm(6) / 6d0
-*     T15
-                        OpF2(jgrid,6,11,alpha,beta) = 
-     1                       OpF2(jgrid,6,11,alpha,beta)
-     2                       + ( V_td2 + V_ts2 ) * C2qm(6) / 12d0
-                     elseif(Nf_FF.eq.5)then
-*     Singlet
-                        OpF2(jgrid,6,1,alpha,beta)  = 
-     1                       OpF2(jgrid,6,1,alpha,beta)
-     2                       + Kt * C2qm(6) / 5d0
-*     Gluon
-                        OpF2(jgrid,6,2,alpha,beta)  =
-     1                       OpF2(jgrid,6,2,alpha,beta)
-     2                       + 2d0 * Kt * C2gm(6)
-*     Valence
-                        OpF2(jgrid,6,3,alpha,beta)  =
-     1                       OpF2(jgrid,6,3,alpha,beta)
-     2                       + ipr * Kt * C2qm(6) / 5d0
-*     V3
-                        OpF2(jgrid,6,4,alpha,beta)  =
-     1                       OpF2(jgrid,6,4,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * C2qm(6) / 2d0
-*     V8
-                        OpF2(jgrid,6,5,alpha,beta)  = 
-     1                       OpF2(jgrid,6,5,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * C2qm(6)
-     3                       / 6d0
-*     V15
-                        OpF2(jgrid,6,6,alpha,beta)  =
-     1                       OpF2(jgrid,6,6,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 ) * C2qm(6) / 12d0
-*     V24
-                        OpF2(jgrid,6,7,alpha,beta)  = 
-     1                       OpF2(jgrid,6,7,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * C2qm(6) / 20d0
-*     T3
-                        OpF2(jgrid,6,9,alpha,beta)  =
-     1                       OpF2(jgrid,6,9,alpha,beta)
-     2                       - fr3 * V_td2 * C2qm(6) / 2d0 
-*     T8
-                        OpF2(jgrid,6,10,alpha,beta) =
-     1                       OpF2(jgrid,6,10,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * C2qm(6) / 6d0
-*     T15
-                        OpF2(jgrid,6,11,alpha,beta) = 
-     1                       OpF2(jgrid,6,11,alpha,beta)
-     2                       + ( V_td2 + V_ts2 ) * C2qm(6) / 12d0
-*     T24
-                        OpF2(jgrid,6,12,alpha,beta) = 
-     1                       OpF2(jgrid,6,12,alpha,beta)
-     2                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * C2qm(6) / 20d0
-                     elseif(Nf_FF.eq.6)then
-*     Singlet
-                        OpF2(jgrid,6,1,alpha,beta)  = 
-     1                       OpF2(jgrid,6,1,alpha,beta)
-     2                       + Kt * C2qm(6) / 3d0
-*     Gluon
-                        OpF2(jgrid,6,2,alpha,beta)  =
-     1                       OpF2(jgrid,6,2,alpha,beta)
-     2                       + 2d0 * Kt * C2gm(6)
-*     V3
-                        OpF2(jgrid,6,4,alpha,beta)  =
-     1                       OpF2(jgrid,6,4,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * C2qm(6) / 2d0
-*     V8
-                        OpF2(jgrid,6,5,alpha,beta)  = 
-     1                       OpF2(jgrid,6,5,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * C2qm(6)
-     3                       / 6d0
-*     V15
-                        OpF2(jgrid,6,6,alpha,beta)  =
-     1                       OpF2(jgrid,6,6,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 ) * C2qm(6) / 12d0
-*     V24
-                        OpF2(jgrid,6,7,alpha,beta)  = 
-     1                       OpF2(jgrid,6,7,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * C2qm(6) / 20d0
+     1                       OpF2(jgrid,6,3,alpha,beta)  +
+     2                       ipr * 2d0 * Kt * C2qm(6) / 12d0
 *     V35
                         OpF2(jgrid,6,8,alpha,beta)  =
-     1                       OpF2(jgrid,6,8,alpha,beta)
-     2                       + ipr * Kt * C2qm(6) / 5d0
-*     T3
-                        OpF2(jgrid,6,9,alpha,beta)  =
-     1                       OpF2(jgrid,6,9,alpha,beta)
-     2                       - fr3 * V_td2 * C2qm(6) / 2d0 
-*     T8
-                        OpF2(jgrid,6,10,alpha,beta) =
-     1                       OpF2(jgrid,6,10,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * C2qm(6) / 6d0
-*     T15
-                        OpF2(jgrid,6,11,alpha,beta) = 
-     1                       OpF2(jgrid,6,11,alpha,beta)
-     2                       + ( V_td2 + V_ts2 ) * C2qm(6) / 12d0
-*     T24
-                        OpF2(jgrid,6,12,alpha,beta) = 
-     1                       OpF2(jgrid,6,12,alpha,beta)
-     2                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * C2qm(6) / 20d0
+     1                       OpF2(jgrid,6,8,alpha,beta)  -
+     2                       ipr * 2d0 * Kt * C2qm(6) / 12d0
 *     T35
                         OpF2(jgrid,6,13,alpha,beta) =
-     1                       OpF2(jgrid,6,13,alpha,beta)
-     2                       - 2d0 * Kt * C2qm(6) / 15d0
+     1                       OpF2(jgrid,6,13,alpha,beta) +
+     2                       2d0 * Kt * C2qm(6) / 12d0
+                     endif
+*     Subtract the spurious bottom contribution
+                     if(Nf_FF.le.4)then
+*     Singlet
+                        OpF2(jgrid,6,1,alpha,beta)  =
+     1                       OpF2(jgrid,6,1,alpha,beta)  -
+     2                       2d0 * V_tb2 * C2qm(6) / 12d0
+*     Valence
+                        OpF2(jgrid,6,3,alpha,beta)  =
+     1                       OpF2(jgrid,6,3,alpha,beta)  -
+     2                       ipr * 2d0 * V_tb2 * C2qm(6) / 12d0
+*     V24
+                        OpF2(jgrid,6,7,alpha,beta)  =
+     1                       OpF2(jgrid,6,7,alpha,beta)  +
+     2                       ipr * 2d0 * V_tb2 * C2qm(6) / 10d0
+*     V35
+                        OpF2(jgrid,6,8,alpha,beta)  =
+     1                       OpF2(jgrid,6,8,alpha,beta)  -
+     2                       ipr * 2d0 * V_tb2 * C2qm(6) / 60d0
+*     T24
+                        OpF2(jgrid,6,12,alpha,beta) =
+     1                       OpF2(jgrid,6,12,alpha,beta) +
+     2                       2d0 * V_tb2 * C2qm(6) / 10d0
+*     T35
+                        OpF2(jgrid,6,13,alpha,beta) =
+     1                       OpF2(jgrid,6,13,alpha,beta) -
+     2                       2d0 * V_tb2 * C2qm(6) / 60d0
                      endif
                   endif
 *
@@ -2272,143 +1947,40 @@
                   OpFL(jgrid,4,13,alpha,beta) = Kc * CLnsp(4) / 15d0
 *
                   if(MassScheme(1:5).eq."FONLL")then
-                     if(Nf_FF.eq.3)then
-                        OpFL(jgrid,4,1,alpha,beta)  = 
-     1                       OpFL(jgrid,4,1,alpha,beta)
-     2                       + Kc * CLqm(4) / 3d0
-                        OpFL(jgrid,4,2,alpha,beta)  = 
-     1                       OpFL(jgrid,4,2,alpha,beta)
-     2                       + 2d0 * Kc * CLgm(4)
+*     Subtract the spurious charm contribution
+                     if(Nf_FF.le.3)then
+*     Singlet
+                        OpFL(jgrid,4,1,alpha,beta)  =
+     1                       OpFL(jgrid,4,1,alpha,beta)  -
+     2                       2d0 * Kc * CLqm(4) / 12d0
+*     Valence
                         OpFL(jgrid,4,3,alpha,beta)  =
-     1                       OpFL(jgrid,4,3,alpha,beta)
-     2                       + ipr * Kc * CLqm(4) / 3d0
-                        OpFL(jgrid,4,4,alpha,beta)  = 
-     1                       OpFL(jgrid,4,4,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * CLqm(4) / 2d0
-                        OpFL(jgrid,4,5,alpha,beta)  =
-     1                       OpFL(jgrid,4,5,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * CLqm(4)
-     3                       / 6d0
-                        OpFL(jgrid,4,9,alpha,beta)  = 
-     1                       OpFL(jgrid,4,9,alpha,beta)
-     2                       - fr3 * V_cd2 * CLqm(4) / 2d0
-                        OpFL(jgrid,4,10,alpha,beta) = 
-     1                       OpFL(jgrid,4,10,alpha,beta)
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * CLqm(4) / 6d0
-                     elseif(Nf_FF.eq.4)then
-*     Singlet
-                        OpFL(jgrid,4,1,alpha,beta)  = 
-     1                       OpFL(jgrid,4,1,alpha,beta)
-     2                       + Kc * CLqm(4) / 2d0
-*     Gluon
-                        OpFL(jgrid,4,2,alpha,beta)  =
-     1                       OpFL(jgrid,4,2,alpha,beta)
-     2                       + 2d0 * Kc * CLgm(4)
-*     V3
-                        OpFL(jgrid,4,4,alpha,beta)  =
-     1                       OpFL(jgrid,4,4,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * CLqm(4) / 2d0
-*     V8
-                        OpFL(jgrid,4,5,alpha,beta)  =
-     1                       OpFL(jgrid,4,5,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * CLqm(4)
-     3                       / 6d0
+     1                       OpFL(jgrid,4,3,alpha,beta)  +
+     2                       ipr * 2d0 * Kc * CLqm(4) / 12d0
 *     V15
                         OpFL(jgrid,4,6,alpha,beta)  =
-     1                       OpFL(jgrid,4,6,alpha,beta)
-     2                       + ipr * Kc * CLqm(4) / 3d0
-*     T3
-                        OpFL(jgrid,4,9,alpha,beta)  = 
-     1                       OpFL(jgrid,4,9,alpha,beta)
-     2                       - fr3 * V_cd2 * CLqm(4) / 2d0
-*     T8
-                        OpFL(jgrid,4,10,alpha,beta) =
-     1                       OpFL(jgrid,4,10,alpha,beta)
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * CLqm(4) / 6d0
+     1                       OpFL(jgrid,4,6,alpha,beta)  -
+     2                       ipr * 2d0 * Kc * CLqm(4) / 8d0
+*     V24
+                        OpFL(jgrid,4,7,alpha,beta)  =
+     1                       OpFL(jgrid,4,7,alpha,beta)  +
+     2                       ipr * 2d0 * Kc * CLqm(4) / 40d0
+*     V35
+                        OpFL(jgrid,4,8,alpha,beta)  =
+     1                       OpFL(jgrid,4,8,alpha,beta)  +
+     2                       ipr * 2d0 * Kc * CLqm(4) / 60d0
 *     T15
                         OpFL(jgrid,4,11,alpha,beta) =
-     1                       OpFL(jgrid,4,11,alpha,beta)
-     2                       - Kc * CLqm(4) / 6d0
-                     elseif(Nf_FF.eq.5)then
-*     Singlet
-                        OpFL(jgrid,4,1,alpha,beta)  = 
-     1                       OpFL(jgrid,4,1,alpha,beta)
-     2                       + 2d0 * Kc * CLqm(4) / 5d0
-*     Gluon
-                        OpFL(jgrid,4,2,alpha,beta)  =
-     1                       OpFL(jgrid,4,2,alpha,beta)
-     2                       + 2d0 * Kc * CLgm(4)
-*     V3
-                        OpFL(jgrid,4,4,alpha,beta)  =
-     1                       OpFL(jgrid,4,4,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * CLqm(4) / 2d0
-*     V8
-                        OpFL(jgrid,4,5,alpha,beta)  =
-     1                       OpFL(jgrid,4,5,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * CLqm(4)
-     3                       / 6d0
-*     V15
-                        OpFL(jgrid,4,6,alpha,beta)  =
-     1                       OpFL(jgrid,4,6,alpha,beta)
-     2                       + ipr * Kc * CLqm(4) / 3d0
-*     T3
-                        OpFL(jgrid,4,9,alpha,beta)  = 
-     1                       OpFL(jgrid,4,9,alpha,beta)
-     2                       - fr3 * V_cd2 * CLqm(4) / 2d0
-*     T8
-                        OpFL(jgrid,4,10,alpha,beta) =
-     1                       OpFL(jgrid,4,10,alpha,beta)
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * CLqm(4) / 6d0
-*     T15
-                        OpFL(jgrid,4,11,alpha,beta) =
-     1                       OpFL(jgrid,4,11,alpha,beta)
-     2                       - Kc * CLqm(4) / 6d0
+     1                       OpFL(jgrid,4,11,alpha,beta) +
+     2                       2d0 * Kc * CLqm(4) / 8d0
 *     T24
                         OpFL(jgrid,4,12,alpha,beta) =
-     1                       OpFL(jgrid,4,12,alpha,beta)
-     2                       + Kc * CLqm(4) / 10d0
-                     elseif(Nf_FF.eq.6)then
-*     Singlet
-                        OpFL(jgrid,4,1,alpha,beta)  = 
-     1                       OpFL(jgrid,4,1,alpha,beta)
-     2                       + Kc * CLqm(4) / 3d0
-*     Gluon
-                        OpFL(jgrid,4,2,alpha,beta)  =
-     1                       OpFL(jgrid,4,2,alpha,beta)
-     2                       + 2d0 * Kc * CLgm(4)
-*     V3
-                        OpFL(jgrid,4,4,alpha,beta)  =
-     1                       OpFL(jgrid,4,4,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * CLqm(4) / 2d0
-*     V8
-                        OpFL(jgrid,4,5,alpha,beta)  =
-     1                       OpFL(jgrid,4,5,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * CLqm(4)
-     3                       / 6d0
-*     V15
-                        OpFL(jgrid,4,6,alpha,beta)  =
-     1                       OpFL(jgrid,4,6,alpha,beta)
-     2                       + ipr * Kc * CLqm(4) / 3d0
-*     T3
-                        OpFL(jgrid,4,9,alpha,beta)  = 
-     1                       OpFL(jgrid,4,9,alpha,beta)
-     2                       - fr3 * V_cd2 * CLqm(4) / 2d0
-*     T8
-                        OpFL(jgrid,4,10,alpha,beta) =
-     1                       OpFL(jgrid,4,10,alpha,beta)
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * CLqm(4) / 6d0
-*     T15
-                        OpFL(jgrid,4,11,alpha,beta) =
-     1                       OpFL(jgrid,4,11,alpha,beta)
-     2                       - Kc * CLqm(4) / 6d0
-*     T24
-                        OpFL(jgrid,4,12,alpha,beta) =
-     1                       OpFL(jgrid,4,12,alpha,beta)
-     2                       + Kc * CLqm(4) / 10d0
+     1                       OpFL(jgrid,4,12,alpha,beta) -
+     2                       2d0 * Kc * CLqm(4) / 40d0
 *     T35
                         OpFL(jgrid,4,13,alpha,beta) =
-     1                       OpFL(jgrid,4,13,alpha,beta)
-     2                       + Kc * CLqm(4) / 15d0
+     1                       OpFL(jgrid,4,13,alpha,beta) -
+     2                       2d0 * Kc * CLqm(4) / 60d0
                      endif
                   endif
 *
@@ -2423,19 +1995,19 @@
      2                       2d0 * Kc * CLnsp(4) / 12d0
 *     Valence
                         OpFL(jgrid,4,3,alpha,beta)  =
-     1                       OpFL(jgrid,4,3,alpha,beta)  -
+     1                       OpFL(jgrid,4,3,alpha,beta)  +
      2                       ipr * 2d0 * Kc * CLnsm(4) / 12d0
 *     V15
                         OpFL(jgrid,4,6,alpha,beta)  =
-     1                       OpFL(jgrid,4,6,alpha,beta)  +
+     1                       OpFL(jgrid,4,6,alpha,beta)  -
      2                       ipr * 2d0 * Kc * CLnsm(4) / 8d0
 *     V24
                         OpFL(jgrid,4,7,alpha,beta)  =
-     1                       OpFL(jgrid,4,7,alpha,beta)  -
+     1                       OpFL(jgrid,4,7,alpha,beta)  +
      2                       ipr * 2d0 * Kc * CLnsm(4) / 40d0
 *     V35
                         OpFL(jgrid,4,8,alpha,beta)  =
-     1                       OpFL(jgrid,4,8,alpha,beta)  -
+     1                       OpFL(jgrid,4,8,alpha,beta)  +
      2                       ipr * 2d0 * Kc * CLnsm(4) / 60d0
 *     T15
                         OpFL(jgrid,4,11,alpha,beta) =
@@ -2456,19 +2028,19 @@
      2                    2d0 * Kc * cLccIC / 12d0
 *     Valence
                      OpFL(jgrid,4,3,alpha,beta)  =
-     1                    OpFL(jgrid,4,3,alpha,beta)  +
+     1                    OpFL(jgrid,4,3,alpha,beta)  -
      2                    ipr * 2d0 * Kc * cLccIC / 12d0
 *     V15
                      OpFL(jgrid,4,6,alpha,beta)  =
-     1                    OpFL(jgrid,4,6,alpha,beta)  -
+     1                    OpFL(jgrid,4,6,alpha,beta)  +
      2                    ipr * 2d0 * Kc * cLccIC / 8d0
 *     V24
                      OpFL(jgrid,4,7,alpha,beta)  =
-     1                    OpFL(jgrid,4,7,alpha,beta)  +
+     1                    OpFL(jgrid,4,7,alpha,beta)  -
      2                    ipr * 2d0 * Kc * cLccIC / 40d0
 *     V35
                      OpFL(jgrid,4,8,alpha,beta)  =
-     1                    OpFL(jgrid,4,8,alpha,beta)  +
+     1                    OpFL(jgrid,4,8,alpha,beta)  -
      2                    ipr * 2d0 * Kc * cLccIC / 60d0
 *     T15
                      OpFL(jgrid,4,11,alpha,beta) =
@@ -2519,164 +2091,67 @@
                   OpFL(jgrid,5,13,alpha,beta) = Kb * CLnsp(5) / 15d0
 *
                   if(MassScheme(1:5).eq."FONLL")then
-                     if(Nf_FF.eq.3)then
+*     Subtract the spurious bottom contribution
+                     if(Nf_FF.le.4)then
 *     Singlet
-                        OpFL(jgrid,5,1,alpha,beta)  = 
-     1                       OpFL(jgrid,5,1,alpha,beta)
-     2                       + Kb * CLqm(5) / 4d0
-     4                       + ( V_ub2 - 3d0 * V_cb2 ) * CLqm(5) / 12d0
-*     Gluon
-                        OpFL(jgrid,5,2,alpha,beta)  =
-     1                       OpFL(jgrid,5,2,alpha,beta)
-     2                       + 2d0 * Kb * CLgm(5)
+                        OpFL(jgrid,5,1,alpha,beta)  =
+     1                       OpFL(jgrid,5,1,alpha,beta)  -
+     2                       2d0 * Kb * CLqm(5) / 12d0
 *     Valence
-                        OpFL(jgrid,5,3,alpha,beta)  = 
-     1                       OpFL(jgrid,5,3,alpha,beta)
-     2                       - ipr * Kb * CLqm(5) / 4d0
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 )
-     3                       * CLqm(5) / 12d0
-*     V3
-                        OpFL(jgrid,5,4,alpha,beta)  =
-     1                       OpFL(jgrid,5,4,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * CLqm(5) / 2d0
-*     V8
-                        OpFL(jgrid,5,5,alpha,beta)  = 
-     1                       OpFL(jgrid,5,5,alpha,beta)
-     2                       - ipr * V_ub2 * CLqm(5) / 6d0
-*     T3
-                        OpFL(jgrid,5,9,alpha,beta)  =
-     1                       OpFL(jgrid,5,9,alpha,beta)
-     2                       + fr3 * V_ub2 * CLqm(5) / 2d0 
-*     T8
-                        OpFL(jgrid,5,10,alpha,beta) = 
-     1                       OpFL(jgrid,5,10,alpha,beta)
-     2                       + V_ub2 * CLqm(5) / 6d0
-                     elseif(Nf_FF.eq.4)then
-*     Singlet
-                        OpFL(jgrid,5,1,alpha,beta)  = 
-     1                       OpFL(jgrid,5,1,alpha,beta)
-     2                       + Kb * CLqm(5) / 4d0
-*     Gluon
-                        OpFL(jgrid,5,2,alpha,beta)  =
-     1                       OpFL(jgrid,5,2,alpha,beta)
-     2                       + 2d0 * Kb * CLgm(5)
-*     Valence
-                        OpFL(jgrid,5,3,alpha,beta)  = 
-     1                       OpFL(jgrid,5,3,alpha,beta)
-     2                       - ipr * Kb * CLqm(5) / 4d0
-*     V3
-                        OpFL(jgrid,5,4,alpha,beta)  =
-     1                       OpFL(jgrid,5,4,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * CLqm(5) / 2d0
-*     V8
-                        OpFL(jgrid,5,5,alpha,beta)  = 
-     1                       OpFL(jgrid,5,5,alpha,beta)
-     2                       - ipr * V_ub2 * CLqm(5) / 6d0
-*     V15
-                        OpFL(jgrid,5,6,alpha,beta)  =
-     1                       OpFL(jgrid,5,6,alpha,beta)
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 )
-     3                       * CLqm(5) / 12d0
-*     T3
-                        OpFL(jgrid,5,9,alpha,beta)  =
-     1                       OpFL(jgrid,5,9,alpha,beta)
-     2                       + fr3 * V_ub2 * CLqm(5) / 2d0 
-*     T8
-                        OpFL(jgrid,5,10,alpha,beta) = 
-     1                       OpFL(jgrid,5,10,alpha,beta)
-     2                       + V_ub2 * CLqm(5) / 6d0
-*     T15
-                        OpFL(jgrid,5,11,alpha,beta) = 
-     1                       OpFL(jgrid,5,11,alpha,beta)
-     2                       + ( V_ub2 - 3d0 * V_cb2 ) * CLqm(5) / 12d0
-                     elseif(Nf_FF.eq.5)then
-*     Singlet
-                        OpFL(jgrid,5,1,alpha,beta)  = 
-     1                       OpFL(jgrid,5,1,alpha,beta)
-     2                       + 2d0 * Kb * CLqm(5) / 5d0
-*     Gluon
-                        OpFL(jgrid,5,2,alpha,beta)  =
-     1                       OpFL(jgrid,5,2,alpha,beta)
-     2                       + 2d0 * Kb * CLgm(5)
-*     V3
-                        OpFL(jgrid,5,4,alpha,beta)  =
-     1                       OpFL(jgrid,5,4,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * CLqm(5) / 2d0
-*     V8
-                        OpFL(jgrid,5,5,alpha,beta)  = 
-     1                       OpFL(jgrid,5,5,alpha,beta)
-     2                       - ipr * V_ub2 * CLqm(5) / 6d0
-*     V15
-                        OpFL(jgrid,5,6,alpha,beta)  =
-     1                       OpFL(jgrid,5,6,alpha,beta)
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 )
-     3                       * CLqm(5) / 12d0
+                        OpFL(jgrid,5,3,alpha,beta)  =
+     1                       OpFL(jgrid,5,3,alpha,beta)  -
+     2                       ipr * 2d0 * Kb * CLqm(5) / 12d0
 *     V24
-                        OpFL(jgrid,5,7,alpha,beta)  = 
-     1                       OpFL(jgrid,5,7,alpha,beta)
-     2                       - ipr * Kb * CLqm(5) / 4d0
-*     T3
-                        OpFL(jgrid,5,9,alpha,beta)  =
-     1                       OpFL(jgrid,5,9,alpha,beta)
-     2                       + fr3 * V_ub2 * CLqm(5) / 2d0 
-*     T8
-                        OpFL(jgrid,5,10,alpha,beta) = 
-     1                       OpFL(jgrid,5,10,alpha,beta)
-     2                       + V_ub2 * CLqm(5) / 6d0
-*     T15
-                        OpFL(jgrid,5,11,alpha,beta) = 
-     1                       OpFL(jgrid,5,11,alpha,beta)
-     2                       + ( V_ub2 - 3d0 * V_cb2 ) * CLqm(5) / 12d0
+                        OpFL(jgrid,5,7,alpha,beta)  =
+     1                       OpFL(jgrid,5,7,alpha,beta)  +
+     2                       ipr * 2d0 * Kb * CLqm(5) / 10d0
+*     V35
+                        OpFL(jgrid,5,8,alpha,beta)  =
+     1                       OpFL(jgrid,5,8,alpha,beta)  -
+     2                       ipr * 2d0 * Kb * CLqm(5) / 60d0
 *     T24
-                        OpFL(jgrid,5,12,alpha,beta) = 
-     1                       OpFL(jgrid,5,12,alpha,beta)
-     2                       - 3d0 * Kb * CLqm(5) / 20d0
-                     elseif(Nf_FF.eq.6)then
-*     Singlet
-                        OpFL(jgrid,5,1,alpha,beta)  = 
-     1                       OpFL(jgrid,5,1,alpha,beta)
-     2                       + Kb * CLqm(5) / 3d0
-*     Gluon
-                        OpFL(jgrid,5,2,alpha,beta)  =
-     1                       OpFL(jgrid,5,2,alpha,beta)
-     2                       + 2d0 * Kb * CLgm(5)
-*     V3
-                        OpFL(jgrid,5,4,alpha,beta)  =
-     1                       OpFL(jgrid,5,4,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * CLqm(5) / 2d0
-*     V8
-                        OpFL(jgrid,5,5,alpha,beta)  = 
-     1                       OpFL(jgrid,5,5,alpha,beta)
-     2                       - ipr * V_ub2 * CLqm(5) / 6d0
-*     V15
-                        OpFL(jgrid,5,6,alpha,beta)  =
-     1                       OpFL(jgrid,5,6,alpha,beta)
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 )
-     3                       * CLqm(5) / 12d0
-*     V24
-                        OpFL(jgrid,5,7,alpha,beta)  = 
-     1                       OpFL(jgrid,5,7,alpha,beta)
-     2                       - ipr * Kb * CLqm(5) / 4d0
-*     T3
-                        OpFL(jgrid,5,9,alpha,beta)  =
-     1                       OpFL(jgrid,5,9,alpha,beta)
-     2                       + fr3 * V_ub2 * CLqm(5) / 2d0 
-*     T8
-                        OpFL(jgrid,5,10,alpha,beta) = 
-     1                       OpFL(jgrid,5,10,alpha,beta)
-     2                       + V_ub2 * CLqm(5) / 6d0
-*     T15
-                        OpFL(jgrid,5,11,alpha,beta) = 
-     1                       OpFL(jgrid,5,11,alpha,beta)
-     2                       + ( V_ub2 - 3d0 * V_cb2 ) * CLqm(5) / 12d0
-*     T24
-                        OpFL(jgrid,5,12,alpha,beta) = 
-     1                       OpFL(jgrid,5,12,alpha,beta)
-     2                       - 3d0 * Kb * CLqm(5) / 20d0
+                        OpFL(jgrid,5,12,alpha,beta) =
+     1                       OpFL(jgrid,5,12,alpha,beta) +
+     2                       2d0 * Kb * CLqm(5) / 10d0
 *     T35
                         OpFL(jgrid,5,13,alpha,beta) =
-     1                   OpFL(jgrid,5,13,alpha,beta)
-     2                       + Kb * CLqm(5) / 15d0
+     1                       OpFL(jgrid,5,13,alpha,beta) -
+     2                       2d0 * Kb * CLqm(5) / 60d0
+                     endif
+*     Subtract the spurious charm contribution
+                     if(Nf_FF.le.3)then
+*     Singlet
+                        OpFL(jgrid,5,1,alpha,beta)  =
+     1                       OpFL(jgrid,5,1,alpha,beta)  -
+     2                       2d0 * V_cb2 * CLqm(5) / 12d0
+*     Valence
+                        OpFL(jgrid,5,3,alpha,beta)  =
+     1                       OpFL(jgrid,5,3,alpha,beta)  +
+     2                       ipr * 2d0 * V_cb2 * CLqm(5) / 12d0
+*     V15
+                        OpFL(jgrid,5,6,alpha,beta)  =
+     1                       OpFL(jgrid,5,6,alpha,beta)  -
+     2                       ipr * 2d0 * V_cb2 * CLqm(5) / 8d0
+*     V24
+                        OpFL(jgrid,5,7,alpha,beta)  =
+     1                       OpFL(jgrid,5,7,alpha,beta)  +
+     2                       ipr * 2d0 * V_cb2 * CLqm(5) / 40d0
+*     V35
+                        OpFL(jgrid,5,8,alpha,beta)  =
+     1                       OpFL(jgrid,5,8,alpha,beta)  +
+     2                       ipr * 2d0 * V_cb2 * CLqm(5) / 60d0
+*     T15
+                        OpFL(jgrid,5,11,alpha,beta) =
+     1                       OpFL(jgrid,5,11,alpha,beta) +
+     2                       2d0 * V_cb2 * CLqm(5) / 8d0
+*     T24
+                        OpFL(jgrid,5,12,alpha,beta) =
+     1                       OpFL(jgrid,5,12,alpha,beta) -
+     2                       2d0 * V_cb2 * CLqm(5) / 40d0
+*     T35
+                        OpFL(jgrid,5,13,alpha,beta) =
+     1                       OpFL(jgrid,5,13,alpha,beta) -
+     2                       2d0 * V_cb2 * CLqm(5) / 60d0
                      endif
                   endif
 *
@@ -2721,184 +2196,51 @@
      1                 - 2d0 * Kt * CLnsp(6) / 15d0
 *
                   if(MassScheme(1:5).eq."FONLL")then
-                     if(Nf_FF.eq.3)then
+*     Subtract the spurious top contribution
+                     if(Nf_FF.le.5)then
 *     Singlet
-                        OpFL(jgrid,6,1,alpha,beta)  = 
-     1                       OpFL(jgrid,6,1,alpha,beta)
-     2                       + Kt * CLqm(6) / 5d0
-     3                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * CLqm(6) / 20d0
-     5                       + ( V_td2 + V_ts2 ) * CLqm(6) / 12d0
-*     Gluon
-                        OpFL(jgrid,6,2,alpha,beta)  =
-     1                       OpFL(jgrid,6,2,alpha,beta)
-     2                       + 2d0 * Kt * CLgm(6)
+                        OpFL(jgrid,6,1,alpha,beta)  =
+     1                       OpFL(jgrid,6,1,alpha,beta)  -
+     2                       2d0 * Kt * CLqm(6) / 12d0
 *     Valence
                         OpFL(jgrid,6,3,alpha,beta)  =
-     1                       OpFL(jgrid,6,3,alpha,beta)
-     2                       + ipr * Kt * CLqm(6) / 5d0
-     3                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * CLqm(6) / 20d0
-     5                       + ipr * ( V_td2 + V_ts2 ) * CLqm(6) / 12d0
-*     V3
-                        OpFL(jgrid,6,4,alpha,beta)  =
-     1                       OpFL(jgrid,6,4,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * CLqm(6) / 2d0
-*     V8
-                        OpFL(jgrid,6,5,alpha,beta)  = 
-     1                       OpFL(jgrid,6,5,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * CLqm(6)
-     3                       / 6d0
-*     T3
-                        OpFL(jgrid,6,9,alpha,beta)  =
-     1                       OpFL(jgrid,6,9,alpha,beta)
-     2                       - fr3 * V_td2 * CLqm(6) / 2d0 
-*     T8
-                        OpFL(jgrid,6,10,alpha,beta) =
-     1                       OpFL(jgrid,6,10,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * CLqm(6) / 6d0
-                     elseif(Nf_FF.eq.4)then
-*     Singlet
-                        OpFL(jgrid,6,1,alpha,beta)  = 
-     1                       OpFL(jgrid,6,1,alpha,beta)
-     2                       + Kt * CLqm(6) / 5d0
-     3                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * CLqm(6) / 20d0
-*     Gluon
-                        OpFL(jgrid,6,2,alpha,beta)  =
-     1                       OpFL(jgrid,6,2,alpha,beta)
-     2                       + 2d0 * Kt * CLgm(6)
-*     Valence
-                        OpFL(jgrid,6,3,alpha,beta)  =
-     1                       OpFL(jgrid,6,3,alpha,beta)
-     2                       + ipr * Kt * CLqm(6) / 5d0
-     3                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * CLqm(6) / 20d0
-*     V3
-                        OpFL(jgrid,6,4,alpha,beta)  =
-     1                       OpFL(jgrid,6,4,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * CLqm(6) / 2d0
-*     V8
-                        OpFL(jgrid,6,5,alpha,beta)  = 
-     1                       OpFL(jgrid,6,5,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * CLqm(6)
-     3                       / 6d0
-*     V15
-                        OpFL(jgrid,6,6,alpha,beta)  =
-     1                       OpFL(jgrid,6,6,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 ) * CLqm(6) / 12d0
-*     T3
-                        OpFL(jgrid,6,9,alpha,beta)  =
-     1                       OpFL(jgrid,6,9,alpha,beta)
-     2                       - fr3 * V_td2 * CLqm(6) / 2d0 
-*     T8
-                        OpFL(jgrid,6,10,alpha,beta) =
-     1                       OpFL(jgrid,6,10,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * CLqm(6) / 6d0
-*     T15
-                        OpFL(jgrid,6,11,alpha,beta) = 
-     1                       OpFL(jgrid,6,11,alpha,beta)
-     2                       + ( V_td2 + V_ts2 ) * CLqm(6) / 12d0
-                     elseif(Nf_FF.eq.5)then
-*     Singlet
-                        OpFL(jgrid,6,1,alpha,beta)  = 
-     1                       OpFL(jgrid,6,1,alpha,beta)
-     2                       + Kt * CLqm(6) / 5d0
-*     Gluon
-                        OpFL(jgrid,6,2,alpha,beta)  =
-     1                       OpFL(jgrid,6,2,alpha,beta)
-     2                       + 2d0 * Kt * CLgm(6)
-*     Valence
-                        OpFL(jgrid,6,3,alpha,beta)  =
-     1                       OpFL(jgrid,6,3,alpha,beta)
-     2                       + ipr * Kt * CLqm(6) / 5d0
-*     V3
-                        OpFL(jgrid,6,4,alpha,beta)  =
-     1                       OpFL(jgrid,6,4,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * CLqm(6) / 2d0
-*     V8
-                        OpFL(jgrid,6,5,alpha,beta)  = 
-     1                       OpFL(jgrid,6,5,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * CLqm(6)
-     3                       / 6d0
-*     V15
-                        OpFL(jgrid,6,6,alpha,beta)  =
-     1                       OpFL(jgrid,6,6,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 ) * CLqm(6) / 12d0
-*     V24
-                        OpFL(jgrid,6,7,alpha,beta)  = 
-     1                       OpFL(jgrid,6,7,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * CLqm(6) / 20d0
-*     T3
-                        OpFL(jgrid,6,9,alpha,beta)  =
-     1                       OpFL(jgrid,6,9,alpha,beta)
-     2                       - fr3 * V_td2 * CLqm(6) / 2d0 
-*     T8
-                        OpFL(jgrid,6,10,alpha,beta) =
-     1                       OpFL(jgrid,6,10,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * CLqm(6) / 6d0
-*     T15
-                        OpFL(jgrid,6,11,alpha,beta) = 
-     1                       OpFL(jgrid,6,11,alpha,beta)
-     2                       + ( V_td2 + V_ts2 ) * CLqm(6) / 12d0
-*     T24
-                        OpFL(jgrid,6,12,alpha,beta) = 
-     1                       OpFL(jgrid,6,12,alpha,beta)
-     2                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * CLqm(6) / 20d0
-                     elseif(Nf_FF.eq.6)then
-*     Singlet
-                        OpFL(jgrid,6,1,alpha,beta)  = 
-     1                       OpFL(jgrid,6,1,alpha,beta)
-     2                       + Kt * CLqm(6) / 3d0
-*     Gluon
-                        OpFL(jgrid,6,2,alpha,beta)  =
-     1                       OpFL(jgrid,6,2,alpha,beta)
-     2                       + 2d0 * Kt * CLgm(6)
-*     V3
-                        OpFL(jgrid,6,4,alpha,beta)  =
-     1                       OpFL(jgrid,6,4,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * CLqm(6) / 2d0
-*     V8
-                        OpFL(jgrid,6,5,alpha,beta)  = 
-     1                       OpFL(jgrid,6,5,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * CLqm(6)
-     3                       / 6d0
-*     V15
-                        OpFL(jgrid,6,6,alpha,beta)  =
-     1                       OpFL(jgrid,6,6,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 ) * CLqm(6) / 12d0
-*     V24
-                        OpFL(jgrid,6,7,alpha,beta)  = 
-     1                       OpFL(jgrid,6,7,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * CLqm(6) / 20d0
+     1                       OpFL(jgrid,6,3,alpha,beta)  +
+     2                       ipr * 2d0 * Kt * CLqm(6) / 12d0
 *     V35
                         OpFL(jgrid,6,8,alpha,beta)  =
-     1                       OpFL(jgrid,6,8,alpha,beta)
-     2                       + ipr * Kt * CLqm(6) / 5d0
-*     T3
-                        OpFL(jgrid,6,9,alpha,beta)  =
-     1                       OpFL(jgrid,6,9,alpha,beta)
-     2                       - fr3 * V_td2 * CLqm(6) / 2d0 
-*     T8
-                        OpFL(jgrid,6,10,alpha,beta) =
-     1                       OpFL(jgrid,6,10,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * CLqm(6) / 6d0
-*     T15
-                        OpFL(jgrid,6,11,alpha,beta) = 
-     1                       OpFL(jgrid,6,11,alpha,beta)
-     2                       + ( V_td2 + V_ts2 ) * CLqm(6) / 12d0
-*     T24
-                        OpFL(jgrid,6,12,alpha,beta) = 
-     1                       OpFL(jgrid,6,12,alpha,beta)
-     2                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * CLqm(6) / 20d0
+     1                       OpFL(jgrid,6,8,alpha,beta)  -
+     2                       ipr * 2d0 * Kt * CLqm(6) / 12d0
 *     T35
                         OpFL(jgrid,6,13,alpha,beta) =
-     1                       OpFL(jgrid,6,13,alpha,beta)
-     2                       - 2d0 * Kt * CLqm(6) / 15d0
+     1                       OpFL(jgrid,6,13,alpha,beta) +
+     2                       2d0 * Kt * CLqm(6) / 12d0
+                     endif
+*     Subtract the spurious bottom contribution
+                     if(Nf_FF.le.4)then
+*     Singlet
+                        OpFL(jgrid,6,1,alpha,beta)  =
+     1                       OpFL(jgrid,6,1,alpha,beta)  -
+     2                       2d0 * V_tb2 * CLqm(6) / 12d0
+*     Valence
+                        OpFL(jgrid,6,3,alpha,beta)  =
+     1                       OpFL(jgrid,6,3,alpha,beta)  -
+     2                       ipr * 2d0 * V_tb2 * CLqm(6) / 12d0
+*     V24
+                        OpFL(jgrid,6,7,alpha,beta)  =
+     1                       OpFL(jgrid,6,7,alpha,beta)  +
+     2                       ipr * 2d0 * V_tb2 * CLqm(6) / 10d0
+*     V35
+                        OpFL(jgrid,6,8,alpha,beta)  =
+     1                       OpFL(jgrid,6,8,alpha,beta)  -
+     2                       ipr * 2d0 * V_tb2 * CLqm(6) / 60d0
+*     T24
+                        OpFL(jgrid,6,12,alpha,beta) =
+     1                       OpFL(jgrid,6,12,alpha,beta) +
+     2                       2d0 * V_tb2 * CLqm(6) / 10d0
+*     T35
+                        OpFL(jgrid,6,13,alpha,beta) =
+     1                       OpFL(jgrid,6,13,alpha,beta) -
+     2                       2d0 * V_tb2 * CLqm(6) / 60d0
                      endif
                   endif
 *
@@ -2968,143 +2310,39 @@
      1                 ipr * Kc * C3nsp(4) / 3d0
 *
                   if(MassScheme(1:5).eq."FONLL")then
-                     if(Nf_FF.eq.3)then
-                        OpF3(jgrid,4,1,alpha,beta) =
-     1                       OpF3(jgrid,4,1,alpha,beta)
-     2                       + ipr * Kc * C3qm(4) / 3d0
-                        OpF3(jgrid,4,2,alpha,beta)  =
-     1                       OpF3(jgrid,4,2,alpha,beta)
-     2                       + ipr * 2d0 * Kc * C3gm(4)
-                        OpF3(jgrid,4,3,alpha,beta)  =
-     1                       OpF3(jgrid,4,3,alpha,beta)
-     2                       + Kc * C3qm(4) / 3d0
-                        OpF3(jgrid,4,4,alpha,beta)  = 
-     1                       OpF3(jgrid,4,4,alpha,beta)
-     2                       - fr3 * V_cd2 * C3qm(4) / 2d0
-                        OpF3(jgrid,4,5,alpha,beta)  = 
-     1                       OpF3(jgrid,4,5,alpha,beta)
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * C3qm(4) / 6d0
-                        OpF3(jgrid,4,9,alpha,beta)  = 
-     1                       OpF3(jgrid,4,9,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * C3qm(4) / 2d0
-                        OpF3(jgrid,4,10,alpha,beta) =
-     1                       OpF3(jgrid,4,10,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * C3qm(4)
-     3                       / 6d0
-                     elseif(Nf_FF.eq.4)then
-*     Gluon
-                        OpF3(jgrid,4,2,alpha,beta)  =
-     1                       OpF3(jgrid,4,2,alpha,beta)
-     2                       + ipr * 2d0 * Kc * C3g(4)
+                     if(Nf_FF.le.3)then
+*     Singlet
+                        OpF3(jgrid,4,1,alpha,beta)  =
+     1                       OpF3(jgrid,4,1,alpha,beta)  +
+     2                       ipr * 2d0 * Kc * C3qm(4) / 12d0
 *     Valence
-                        OpF3(jgrid,4,3,alpha,beta)  =
-     1                       OpF3(jgrid,4,3,alpha,beta)
-     2                       + Kc * C3nsm(4) / 2d0
-*     V3
-                        OpF3(jgrid,4,4,alpha,beta)  = 
-     1                       OpF3(jgrid,4,4,alpha,beta)
-     2                       - fr3 * V_cd2 * C3nsm(4) / 2d0
-*     V8
-                        OpF3(jgrid,4,5,alpha,beta)  = 
-     1                       OpF3(jgrid,4,5,alpha,beta) 
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * C3nsm(4) / 6d0
+                        OpF3(jgrid,4,3,alpha,beta)  = 
+     1                       OpF3(jgrid,4,3,alpha,beta)  -
+     2                       2d0 * Kc * C3qm(4) / 12d0
 *     V15
                         OpF3(jgrid,4,6,alpha,beta)  =
-     1                       OpF3(jgrid,4,6,alpha,beta)
-     2                       - Kc * C3nsm(4) / 6d0
-*     T3
-                        OpF3(jgrid,4,9,alpha,beta)  = 
-     1                       OpF3(jgrid,4,9,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * C3nsp(4) / 2d0
-*     T8
-                        OpF3(jgrid,4,10,alpha,beta) =
-     1                       OpF3(jgrid,4,10,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * C3nsp(4)
-     3                       / 6d0
-*     T15
-                        OpF3(jgrid,4,11,alpha,beta) =
-     1                       OpF3(jgrid,4,11,alpha,beta)
-     2                       + ipr * Kc * C3nsp(4) / 3d0
-                     elseif(Nf_FF.eq.5)then
-*     Gluon
-                        OpF3(jgrid,4,2,alpha,beta)  =
-     1                       OpF3(jgrid,4,2,alpha,beta)
-     2                       + ipr * 2d0 * Kc * C3g(4)
-*     Valence
-                        OpF3(jgrid,4,3,alpha,beta)  =
-     1                       OpF3(jgrid,4,3,alpha,beta)
-     2                       + 2d0 * Kc * C3nsm(4) / 5d0
-*     V3
-                        OpF3(jgrid,4,4,alpha,beta)  = 
-     1                       OpF3(jgrid,4,4,alpha,beta)
-     2                       - fr3 * V_cd2 * C3nsm(4) / 2d0
-*     V8
-                        OpF3(jgrid,4,5,alpha,beta)  = 
-     1                       OpF3(jgrid,4,5,alpha,beta) 
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * C3nsm(4) / 6d0
-*     V15
-                        OpF3(jgrid,4,6,alpha,beta)  =
-     1                       OpF3(jgrid,4,6,alpha,beta)
-     2                       - Kc * C3nsm(4) / 6d0
+     1                       OpF3(jgrid,4,6,alpha,beta)  +
+     2                       2d0 * Kc * C3qm(4) / 8d0
 *     V24
                         OpF3(jgrid,4,7,alpha,beta)  =
-     1                       OpF3(jgrid,4,7,alpha,beta)
-     2                       + Kc * C3nsm(4) / 10d0
-*     T3
-                        OpF3(jgrid,4,9,alpha,beta)  = 
-     1                       OpF3(jgrid,4,9,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * C3nsp(4) / 2d0
-*     T8
-                        OpF3(jgrid,4,10,alpha,beta) =
-     1                       OpF3(jgrid,4,10,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * C3nsp(4)
-     3                       / 6d0
-*     T15
-                        OpF3(jgrid,4,11,alpha,beta) =
-     1                       OpF3(jgrid,4,11,alpha,beta)
-     2                       + ipr * Kc * C3nsp(4) / 3d0
-                     elseif(Nf_FF.eq.6)then
-*     Gluon
-                        OpF3(jgrid,4,2,alpha,beta)  =
-     1                       OpF3(jgrid,4,2,alpha,beta)
-     2                       + ipr * 2d0 * Kc * C3g(4)
-*     Valence
-                        OpF3(jgrid,4,3,alpha,beta)  =
-     1                       OpF3(jgrid,4,3,alpha,beta)
-     2                       + Kc * C3nsm(4) / 3d0
-*     V3
-                        OpF3(jgrid,4,4,alpha,beta)  = 
-     1                       OpF3(jgrid,4,4,alpha,beta)
-     2                       - fr3 * V_cd2 * C3nsm(4) / 2d0
-*     V8
-                        OpF3(jgrid,4,5,alpha,beta)  = 
-     1                       OpF3(jgrid,4,5,alpha,beta) 
-     2                       + ( V_cd2 - 2d0 * V_cs2 ) * C3nsm(4) / 6d0
-*     V15
-                        OpF3(jgrid,4,6,alpha,beta)  =
-     1                       OpF3(jgrid,4,6,alpha,beta)
-     2                       - Kc * C3nsm(4) / 6d0
-*     V24
-                        OpF3(jgrid,4,7,alpha,beta)  =
-     1                       OpF3(jgrid,4,7,alpha,beta)
-     2                       + Kc * C3nsm(4) / 10d0
+     1                       OpF3(jgrid,4,7,alpha,beta)  -
+     2                       2d0 * Kc * C3qm(4) / 40d0
 *     V35
                         OpF3(jgrid,4,8,alpha,beta)  =
-     1                       OpF3(jgrid,4,8,alpha,beta)
-     2                       + Kc * C3nsm(4) / 15d0
-*     T3
-                        OpF3(jgrid,4,9,alpha,beta)  = 
-     1                       OpF3(jgrid,4,9,alpha,beta)
-     2                       - ipr * fr3 * V_cd2 * C3nsp(4) / 2d0
-*     T8
-                        OpF3(jgrid,4,10,alpha,beta) =
-     1                       OpF3(jgrid,4,10,alpha,beta)
-     2                       + ipr * ( V_cd2 - 2d0 * V_cs2 ) * C3nsp(4)
-     3                       / 6d0
+     1                       OpF3(jgrid,4,8,alpha,beta)  -
+     2                       2d0 * Kc * C3qm(4) / 60d0
 *     T15
                         OpF3(jgrid,4,11,alpha,beta) =
-     1                       OpF3(jgrid,4,11,alpha,beta)
-     2                       + ipr * Kc * C3nsp(4) / 3d0
+     1                       OpF3(jgrid,4,11,alpha,beta) -
+     2                       ipr * 2d0 * Kc * C3qm(4) / 8d0
+*     T24
+                        OpF3(jgrid,4,12,alpha,beta) =
+     1                       OpF3(jgrid,4,12,alpha,beta) +
+     2                       ipr * 2d0 * Kc * C3qm(4) / 40d0
+*     T35
+                        OpF3(jgrid,4,13,alpha,beta) =
+     1                       OpF3(jgrid,4,13,alpha,beta) +
+     2                       ipr * 2d0 * Kc * C3qm(4) / 60d0
                      endif
                   endif
 *
@@ -3114,37 +2352,37 @@
 *     For any of the FFNSs, subtract the spurious charm contribution
                      if(MassScheme(1:3).eq."FFN")then
 *     Singlet
-                     OpF3(jgrid,4,1,alpha,beta)  =
-     1                    OpF3(jgrid,4,1,alpha,beta)  +
-     2                    ipr * 2d0 * Kc * C3nsp(4) / 12d0
+                        OpF3(jgrid,4,1,alpha,beta)  =
+     1                       OpF3(jgrid,4,1,alpha,beta)  +
+     2                       ipr * 2d0 * Kc * C3nsp(4) / 12d0
 *     Valence
-                     OpF3(jgrid,4,3,alpha,beta)  = 
-     1                    OpF3(jgrid,4,3,alpha,beta)  + 
-     2                    2d0 * Kc * C3nsm(4) / 12d0
+                        OpF3(jgrid,4,3,alpha,beta)  = 
+     1                       OpF3(jgrid,4,3,alpha,beta)  - 
+     2                       2d0 * Kc * C3nsm(4) / 12d0
 *     V15
-                     OpF3(jgrid,4,6,alpha,beta)  =
-     1                    OpF3(jgrid,4,6,alpha,beta)  -
-     2                    2d0 * Kc * C3nsm(4) / 8d0
+                        OpF3(jgrid,4,6,alpha,beta)  =
+     1                       OpF3(jgrid,4,6,alpha,beta)  +
+     2                       2d0 * Kc * C3nsm(4) / 8d0
 *     V24
-                     OpF3(jgrid,4,7,alpha,beta)  =
-     1                    OpF3(jgrid,4,7,alpha,beta)  +
-     2                    2d0 * Kc * C3nsm(4) / 40d0
+                        OpF3(jgrid,4,7,alpha,beta)  =
+     1                       OpF3(jgrid,4,7,alpha,beta)  -
+     2                       2d0 * Kc * C3nsm(4) / 40d0
 *     V35
-                     OpF3(jgrid,4,8,alpha,beta)  =
-     1                    OpF3(jgrid,4,8,alpha,beta)  +
-     2                    2d0 * Kc * C3nsm(4) / 60d0
+                        OpF3(jgrid,4,8,alpha,beta)  =
+     1                       OpF3(jgrid,4,8,alpha,beta)  -
+     2                       2d0 * Kc * C3nsm(4) / 60d0
 *     T15
-                     OpF3(jgrid,4,11,alpha,beta) =
-     1                    OpF3(jgrid,4,11,alpha,beta) -
-     2                    ipr * 2d0 * Kc * C3nsp(4) / 8d0
+                        OpF3(jgrid,4,11,alpha,beta) =
+     1                       OpF3(jgrid,4,11,alpha,beta) -
+     2                       ipr * 2d0 * Kc * C3nsp(4) / 8d0
 *     T24
-                     OpF3(jgrid,4,12,alpha,beta) =
-     1                    OpF3(jgrid,4,12,alpha,beta) +
-     2                    ipr * 2d0 * Kc * C3nsp(4) / 40d0
+                        OpF3(jgrid,4,12,alpha,beta) =
+     1                       OpF3(jgrid,4,12,alpha,beta) +
+     2                       ipr * 2d0 * Kc * C3nsp(4) / 40d0
 *     T35
-                     OpF3(jgrid,4,13,alpha,beta) =
-     1                    OpF3(jgrid,4,13,alpha,beta) +
-     2                    ipr * 2d0 * Kc * C3nsp(4) / 60d0
+                        OpF3(jgrid,4,13,alpha,beta) =
+     1                       OpF3(jgrid,4,13,alpha,beta) +
+     2                       ipr * 2d0 * Kc * C3nsp(4) / 60d0
                      endif
 *     Singlet
                      OpF3(jgrid,4,1,alpha,beta)  =
@@ -3152,19 +2390,19 @@
      2                    ipr * 2d0 * Kc * c3ccIC / 12d0
 *     Valence
                      OpF3(jgrid,4,3,alpha,beta)  = 
-     1                    OpF3(jgrid,4,3,alpha,beta)  - 
+     1                    OpF3(jgrid,4,3,alpha,beta)  +
      2                    2d0 * Kc * c3ccIC / 12d0
 *     V15
                      OpF3(jgrid,4,6,alpha,beta)  =
-     1                    OpF3(jgrid,4,6,alpha,beta)  +
+     1                    OpF3(jgrid,4,6,alpha,beta)  -
      2                    2d0 * Kc * c3ccIC / 8d0
 *     V24
                      OpF3(jgrid,4,7,alpha,beta)  =
-     1                    OpF3(jgrid,4,7,alpha,beta)  -
+     1                    OpF3(jgrid,4,7,alpha,beta)  +
      2                    2d0 * Kc * c3ccIC / 40d0
 *     V35
                      OpF3(jgrid,4,8,alpha,beta)  =
-     1                    OpF3(jgrid,4,8,alpha,beta)  -
+     1                    OpF3(jgrid,4,8,alpha,beta)  +
      2                    2d0 * Kc * c3ccIC / 60d0
 *     T15
                      OpF3(jgrid,4,11,alpha,beta) =
@@ -3214,164 +2452,67 @@
      1                 - ipr * Kb * C3nsp(5) / 4d0
 *
                   if(MassScheme(1:5).eq."FONLL")then
-                     if(Nf_FF.eq.3)then
+*     Subtract the spurious bottom contribution
+                     if(Nf_FF.le.4)then
 *     Singlet
-                        OpF3(jgrid,5,11,alpha,beta) = 
-     1                       OpF3(jgrid,5,11,alpha,beta)
-     2                       - ipr * Kb * C3qm(5) / 4d0
-     3                       - ipr * ( V_ub2 - 3d0 * V_cb2 ) * C3qm(5)
-     4                       / 12d0
-*     Gluon
-                        OpF3(jgrid,5,2,alpha,beta)  =
-     1                       OpF3(jgrid,5,2,alpha,beta)
-     2                       + ipr * 2d0 * Kb * C3gm(5)
+                        OpF3(jgrid,5,1,alpha,beta)  =
+     1                       OpF3(jgrid,5,1,alpha,beta)  -
+     2                       ipr * 2d0 * Kb * C3qm(5) / 12d0
 *     Valence
-                        OpF3(jgrid,5,3,alpha,beta)  =
-     1                       OpF3(jgrid,5,3,alpha,beta)
-     2                       + Kb * C3qm(5) / 4d0
-     3                       + ( V_ub2 - 3d0 * V_cb2 ) * C3qm(5) / 12d0
-*     V3
-                        OpF3(jgrid,5,4,alpha,beta)  =
-     1                       OpF3(jgrid,5,4,alpha,beta)
-     2                       + fr3 * V_ub2 * C3qm(5) / 2d0 
-*     V8
-                        OpF3(jgrid,5,5,alpha,beta)  = 
-     1                       OpF3(jgrid,5,5,alpha,beta)
-     2                       + V_ub2 * C3qm(5) / 6d0
-*     T3
-                        OpF3(jgrid,5,9,alpha,beta)  =
-     1                       OpF3(jgrid,5,9,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * C3qm(5) / 2d0
-*     T8
-                        OpF3(jgrid,5,10,alpha,beta) = 
-     1                       OpF3(jgrid,5,10,alpha,beta)
-     2                       - ipr * V_ub2 * C3qm(5) / 6d0
-                     elseif(Nf_FF.eq.4)then
-*     Singlet
-                        OpF3(jgrid,5,11,alpha,beta) = 
-     1                       OpF3(jgrid,5,11,alpha,beta)
-     2                       - ipr * Kb * C3qm(5) / 4d0
-*     Gluon
-                        OpF3(jgrid,5,2,alpha,beta)  =
-     1                       OpF3(jgrid,5,2,alpha,beta)
-     2                       + ipr * 2d0 * Kb * C3gm(5)
-*     Valence
-                        OpF3(jgrid,5,3,alpha,beta)  =
-     1                       OpF3(jgrid,5,3,alpha,beta)
-     2                       + Kb * C3qm(5) / 4d0
-*     V3
-                        OpF3(jgrid,5,4,alpha,beta)  =
-     1                       OpF3(jgrid,5,4,alpha,beta)
-     2                       + fr3 * V_ub2 * C3qm(5) / 2d0 
-*     V8
-                        OpF3(jgrid,5,5,alpha,beta)  = 
-     1                       OpF3(jgrid,5,5,alpha,beta)
-     2                       + V_ub2 * C3qm(5) / 6d0
-*     V15
-                        OpF3(jgrid,5,6,alpha,beta)  = 
-     1                       OpF3(jgrid,5,6,alpha,beta)
-     2                       + ( V_ub2 - 3d0 * V_cb2 ) * C3qm(5) / 12d0
-*     T3
-                        OpF3(jgrid,5,9,alpha,beta)  =
-     1                       OpF3(jgrid,5,9,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * C3qm(5) / 2d0
-*     T8
-                        OpF3(jgrid,5,10,alpha,beta) = 
-     1                       OpF3(jgrid,5,10,alpha,beta)
-     2                       - ipr * V_ub2 * C3qm(5) / 6d0
-*     T15
-                        OpF3(jgrid,5,11,alpha,beta) =
-     1                       OpF3(jgrid,5,11,alpha,beta)
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 ) * C3qm(5)
-     3                       / 12d0
-                     elseif(Nf_FF.eq.5)then
-*     Gluon
-                        OpF3(jgrid,5,2,alpha,beta)  =
-     1                       OpF3(jgrid,5,2,alpha,beta)
-     2                       + ipr * 2d0 * Kb * C3gm(5)
-*     Valence
-                        OpF3(jgrid,5,3,alpha,beta)  =
-     1                       OpF3(jgrid,5,3,alpha,beta)
-     2                       + 2d0 * Kb * C3qm(5) / 5d0
-*     V3
-                        OpF3(jgrid,5,4,alpha,beta)  =
-     1                       OpF3(jgrid,5,4,alpha,beta)
-     2                       + fr3 * V_ub2 * C3qm(5) / 2d0 
-*     V8
-                        OpF3(jgrid,5,5,alpha,beta)  = 
-     1                       OpF3(jgrid,5,5,alpha,beta)
-     2                       + V_ub2 * C3qm(5) / 6d0
-*     V15
-                        OpF3(jgrid,5,6,alpha,beta)  = 
-     1                       OpF3(jgrid,5,6,alpha,beta)
-     2                       + ( V_ub2 - 3d0 * V_cb2 ) * C3qm(5) / 12d0
+                        OpF3(jgrid,5,3,alpha,beta)  = 
+     1                       OpF3(jgrid,5,3,alpha,beta)  - 
+     2                       2d0 * Kb * C3qm(5) / 12d0
 *     V24
                         OpF3(jgrid,5,7,alpha,beta)  =
-     1                       OpF3(jgrid,5,7,alpha,beta)
-     2                       - 3d0 * Kb * C3qm(5) / 20d0
-*     T3
-                        OpF3(jgrid,5,9,alpha,beta)  =
-     1                       OpF3(jgrid,5,9,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * C3qm(5) / 2d0
-*     T8
-                        OpF3(jgrid,5,10,alpha,beta) = 
-     1                       OpF3(jgrid,5,10,alpha,beta)
-     2                       - ipr * V_ub2 * C3qm(5) / 6d0
-*     T15
-                        OpF3(jgrid,5,11,alpha,beta) =
-     1                       OpF3(jgrid,5,11,alpha,beta)
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 ) * C3qm(5)
-     3                       / 12d0
-*     T24
-                        OpF3(jgrid,5,12,alpha,beta) = 
-     1                       OpF3(jgrid,5,12,alpha,beta)
-     2                       - ipr * Kb * C3qm(5) / 4d0
-                     elseif(Nf_FF.eq.6)then
-*     Gluon
-                        OpF3(jgrid,5,2,alpha,beta)  =
-     1                       OpF3(jgrid,5,2,alpha,beta)
-     2                       + ipr * 2d0 * Kb * C3gm(5)
-*     Valence
-                        OpF3(jgrid,5,3,alpha,beta)  =
-     1                       OpF3(jgrid,5,3,alpha,beta)
-     2                       + Kb * C3qm(5) / 3d0
-*     V3
-                        OpF3(jgrid,5,4,alpha,beta)  =
-     1                       OpF3(jgrid,5,4,alpha,beta)
-     2                       + fr3 * V_ub2 * C3qm(5) / 2d0 
-*     V8
-                        OpF3(jgrid,5,5,alpha,beta)  = 
-     1                       OpF3(jgrid,5,5,alpha,beta)
-     2                       + V_ub2 * C3qm(5) / 6d0
-*     V15
-                        OpF3(jgrid,5,6,alpha,beta)  = 
-     1                       OpF3(jgrid,5,6,alpha,beta)
-     2                       + ( V_ub2 - 3d0 * V_cb2 ) * C3qm(5) / 12d0
-*     V24
-                        OpF3(jgrid,5,7,alpha,beta)  =
-     1                       OpF3(jgrid,5,7,alpha,beta)
-     2                       - 3d0 * Kb * C3qm(5) / 20d0
+     1                       OpF3(jgrid,5,7,alpha,beta)  +
+     2                       2d0 * Kb * C3qm(5) / 10d0
 *     V35
                         OpF3(jgrid,5,8,alpha,beta)  =
-     1                       OpF3(jgrid,5,8,alpha,beta)
-     2                       + Kb * C3qm(5) / 15d0
-*     T3
-                        OpF3(jgrid,5,9,alpha,beta)  =
-     1                       OpF3(jgrid,5,9,alpha,beta)
-     2                       - ipr * fr3 * V_ub2 * C3qm(5) / 2d0
-*     T8
-                        OpF3(jgrid,5,10,alpha,beta) = 
-     1                       OpF3(jgrid,5,10,alpha,beta)
-     2                       - ipr * V_ub2 * C3qm(5) / 6d0
+     1                       OpF3(jgrid,5,8,alpha,beta)  -
+     2                       2d0 * Kb * C3qm(5) / 60d0
+*     T24
+                        OpF3(jgrid,5,12,alpha,beta) =
+     1                       OpF3(jgrid,5,12,alpha,beta) +
+     2                       ipr * 2d0 * Kb * C3qm(5) / 10d0
+*     T35
+                        OpF3(jgrid,5,13,alpha,beta) =
+     1                       OpF3(jgrid,5,13,alpha,beta) -
+     2                       ipr * 2d0 * Kb * C3qm(5) / 60d0
+                     endif
+*     Subtract the spurious charm contribution
+                     if(Nf_FF.le.3)then
+*     Singlet
+                        OpF3(jgrid,5,1,alpha,beta)  =
+     1                       OpF3(jgrid,5,1,alpha,beta)  +
+     2                       ipr * 2d0 * V_cb2 * C3qm(5) / 12d0
+*     Valence
+                        OpF3(jgrid,5,3,alpha,beta)  = 
+     1                       OpF3(jgrid,5,3,alpha,beta)  - 
+     2                       2d0 * V_cb2 * C3qm(5) / 12d0
+*     V15
+                        OpF3(jgrid,5,6,alpha,beta)  =
+     1                       OpF3(jgrid,5,6,alpha,beta)  +
+     2                       2d0 * V_cb2 * C3qm(5) / 8d0
+*     V24
+                        OpF3(jgrid,5,7,alpha,beta)  =
+     1                       OpF3(jgrid,5,7,alpha,beta)  -
+     2                       2d0 * V_cb2 * C3qm(5) / 40d0
+*     V35
+                        OpF3(jgrid,5,8,alpha,beta)  =
+     1                       OpF3(jgrid,5,8,alpha,beta)  -
+     2                       2d0 * V_cb2 * C3qm(5) / 60d0
 *     T15
                         OpF3(jgrid,5,11,alpha,beta) =
-     1                       OpF3(jgrid,5,11,alpha,beta)
-     2                       - ipr * ( V_ub2 - 3d0 * V_cb2 ) * C3qm(5)
-     3                       / 12d0
+     1                       OpF3(jgrid,5,11,alpha,beta) -
+     2                       ipr * 2d0 * V_cb2 * C3qm(5) / 8d0
 *     T24
-                        OpF3(jgrid,5,12,alpha,beta) = 
-     1                       OpF3(jgrid,5,12,alpha,beta)
-     2                       - ipr * Kb * C3qm(5) / 4d0
+                        OpF3(jgrid,5,12,alpha,beta) =
+     1                       OpF3(jgrid,5,12,alpha,beta) +
+     2                       ipr * 2d0 * V_cb2 * C3qm(5) / 40d0
+*     T35
+                        OpF3(jgrid,5,13,alpha,beta) =
+     1                       OpF3(jgrid,5,13,alpha,beta) +
+     2                       ipr * 2d0 * V_cb2 * C3qm(5) / 60d0
                      endif
                   endif
 *
@@ -3415,185 +2556,51 @@
      1                 ipr * Kt * C3nsp(6) / 5d0
 *
                   if(MassScheme(1:5).eq."FONLL")then
-                     if(Nf_FF.eq.3)then
+*     Subtract the spurious top contribution
+                     if(Nf_FF.le.5)then
 *     Singlet
-                        OpF3(jgrid,6,1,alpha,beta) =
-     1                       OpF3(jgrid,6,1,alpha,beta)
-     2                       + ipr * Kt * C3qm(6) / 5d0
-     3                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * C3qm(6) / 20d0
-     5                       + ipr * ( V_td2 + V_ts2 ) * C3qm(6) / 12d0
-*     Gluon
-                        OpF3(jgrid,6,2,alpha,beta)  =
-     1                       OpF3(jgrid,6,2,alpha,beta)
-     2                       + ipr * 2d0 * Kt * C3gm(6)
+                        OpF3(jgrid,6,1,alpha,beta)  =
+     1                       OpF3(jgrid,6,1,alpha,beta)  +
+     2                       2d0 * Kt * C3qm(6) / 12d0
 *     Valence
                         OpF3(jgrid,6,3,alpha,beta)  =
-     1                       OpF3(jgrid,6,3,alpha,beta)
-     2                       + Kt * C3qm(6) / 5d0
-     3                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * C3qm(6) / 20d0
-     5                       + ( V_td2 + V_ts2 ) * C3qm(6) / 12d0
-*     V3
-                        OpF3(jgrid,6,4,alpha,beta)  =
-     1                       OpF3(jgrid,6,4,alpha,beta)
-     2                       - fr3 * V_td2 * C3qm(6) / 2d0 
-*     V8
-                        OpF3(jgrid,6,5,alpha,beta)  =
-     1                       OpF3(jgrid,6,5,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * C3qm(6) / 6d0
-*     T3
-                        OpF3(jgrid,6,9,alpha,beta)  =
-     1                       OpF3(jgrid,6,9,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * C3qm(6) / 2d0
-*     T8
-                        OpF3(jgrid,6,10,alpha,beta) = 
-     1                       OpF3(jgrid,6,10,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * C3qm(6)
-     3                       / 6d0
-*
-                     elseif(Nf_FF.eq.4)then
-*     Singlet
-                        OpF3(jgrid,6,1,alpha,beta) =
-     1                       OpF3(jgrid,6,1,alpha,beta)
-     2                       + ipr * Kt * C3qm(6) / 5d0
-     3                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * C3qm(6) / 20d0
-*     Gluon
-                        OpF3(jgrid,6,2,alpha,beta)  =
-     1                       OpF3(jgrid,6,2,alpha,beta)
-     2                       + ipr * 2d0 * Kt * C3gm(6)
-*     Valence
-                        OpF3(jgrid,6,3,alpha,beta)  =
-     1                       OpF3(jgrid,6,3,alpha,beta)
-     2                       + Kt * C3qm(6) / 5d0
-     3                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     4                       * C3qm(6) / 20d0
-*     V3
-                        OpF3(jgrid,6,4,alpha,beta)  =
-     1                       OpF3(jgrid,6,4,alpha,beta)
-     2                       - fr3 * V_td2 * C3qm(6) / 2d0 
-*     V8
-                        OpF3(jgrid,6,5,alpha,beta)  =
-     1                       OpF3(jgrid,6,5,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * C3qm(6) / 6d0
-*     V15
-                        OpF3(jgrid,6,6,alpha,beta)  = 
-     1                       OpF3(jgrid,6,6,alpha,beta)
-     2                       + ( V_td2 + V_ts2 ) * C3qm(6) / 12d0
-*     T3
-                        OpF3(jgrid,6,9,alpha,beta)  =
-     1                       OpF3(jgrid,6,9,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * C3qm(6) / 2d0
-*     T8
-                        OpF3(jgrid,6,10,alpha,beta) = 
-     1                       OpF3(jgrid,6,10,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * C3qm(6)
-     3                       / 6d0
-*     T15
-                        OpF3(jgrid,6,11,alpha,beta) =
-     1                       OpF3(jgrid,6,11,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 ) * C3qm(6) / 12d0
-                     elseif(Nf_FF.eq.5)then
-*     Singlet
-                        OpF3(jgrid,6,1,alpha,beta) =
-     1                       OpF3(jgrid,6,1,alpha,beta)
-     2                       + ipr * Kt * C3qm(6) / 5d0
-*     Gluon
-                        OpF3(jgrid,6,2,alpha,beta)  =
-     1                       OpF3(jgrid,6,2,alpha,beta)
-     2                       + ipr * 2d0 * Kt * C3gm(6)
-*     Valence
-                        OpF3(jgrid,6,3,alpha,beta)  =
-     1                       OpF3(jgrid,6,3,alpha,beta)
-     2                       + Kt * C3qm(6) / 5d0
-*     V3
-                        OpF3(jgrid,6,4,alpha,beta)  =
-     1                       OpF3(jgrid,6,4,alpha,beta)
-     2                       - fr3 * V_td2 * C3qm(6) / 2d0 
-*     V8
-                        OpF3(jgrid,6,5,alpha,beta)  =
-     1                       OpF3(jgrid,6,5,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * C3qm(6) / 6d0
-*     V15
-                        OpF3(jgrid,6,6,alpha,beta)  = 
-     1                       OpF3(jgrid,6,6,alpha,beta)
-     2                       + ( V_td2 + V_ts2 ) * C3qm(6) / 12d0
-*     V24
-                        OpF3(jgrid,6,7,alpha,beta)  = 
-     1                       OpF3(jgrid,6,7,alpha,beta)
-     2                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * C3qm(6) / 20d0
-*     T3
-                        OpF3(jgrid,6,9,alpha,beta)  =
-     1                       OpF3(jgrid,6,9,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * C3qm(6) / 2d0
-*     T8
-                        OpF3(jgrid,6,10,alpha,beta) = 
-     1                       OpF3(jgrid,6,10,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * C3qm(6)
-     3                       / 6d0
-*     T15
-                        OpF3(jgrid,6,11,alpha,beta) =
-     1                       OpF3(jgrid,6,11,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 ) * C3qm(6) / 12d0
-*     T24
-                        OpF3(jgrid,6,12,alpha,beta) = 
-     1                       OpF3(jgrid,6,12,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * C3qm(6) / 20d0
-                     elseif(Nf_FF.eq.6)then
-*     Gluon
-                        OpF3(jgrid,6,2,alpha,beta)  =
-     1                       OpF3(jgrid,6,2,alpha,beta)
-     2                       + ipr * 2d0 * Kt * C3gm(6)
-*     Valence
-                        OpF3(jgrid,6,3,alpha,beta)  =
-     1                       OpF3(jgrid,6,3,alpha,beta)
-     2                       + Kt * C3qm(6) / 3d0
-*     V3
-                        OpF3(jgrid,6,4,alpha,beta)  =
-     1                       OpF3(jgrid,6,4,alpha,beta)
-     2                       - fr3 * V_td2 * C3qm(6) / 2d0 
-*     V8
-                        OpF3(jgrid,6,5,alpha,beta)  =
-     1                       OpF3(jgrid,6,5,alpha,beta)
-     2                       + ( V_td2 - 2d0 * V_ts2 ) * C3qm(6) / 6d0
-*     V15
-                        OpF3(jgrid,6,6,alpha,beta)  = 
-     1                       OpF3(jgrid,6,6,alpha,beta)
-     2                       + ( V_td2 + V_ts2 ) * C3qm(6) / 12d0
-*     V24
-                        OpF3(jgrid,6,7,alpha,beta)  = 
-     1                       OpF3(jgrid,6,7,alpha,beta)
-     2                       + ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * C3qm(6) / 20d0
+     1                       OpF3(jgrid,6,3,alpha,beta)  -
+     2                       ipr * 2d0 * Kt * C3qm(6) / 12d0
 *     V35
                         OpF3(jgrid,6,8,alpha,beta)  =
-     1                       OpF3(jgrid,6,8,alpha,beta)
-     2                       - 2d0 * Kt * C3qm(6) / 15d0
-*     T3
-                        OpF3(jgrid,6,9,alpha,beta)  =
-     1                       OpF3(jgrid,6,9,alpha,beta)
-     2                       - ipr * fr3 * V_td2 * C3qm(6) / 2d0
-*     T8
-                        OpF3(jgrid,6,10,alpha,beta) = 
-     1                       OpF3(jgrid,6,10,alpha,beta)
-     2                       + ipr * ( V_td2 - 2d0 * V_ts2 ) * C3qm(6)
-     3                       / 6d0
-*     T15
-                        OpF3(jgrid,6,11,alpha,beta) =
-     1                       OpF3(jgrid,6,11,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 ) * C3qm(6) / 12d0
-*     T24
-                        OpF3(jgrid,6,12,alpha,beta) = 
-     1                       OpF3(jgrid,6,12,alpha,beta)
-     2                       + ipr * ( V_td2 + V_ts2 - 4d0 * V_tb2 )
-     3                       * C3qm(6) / 20d0
+     1                       OpF3(jgrid,6,8,alpha,beta)  +
+     2                       ipr * 2d0 * Kt * C3qm(6) / 12d0
 *     T35
                         OpF3(jgrid,6,13,alpha,beta) =
-     1                       OpF3(jgrid,6,13,alpha,beta)
-     2                       + ipr * Kt * C3qm(6) / 5d0
+     1                       OpF3(jgrid,6,13,alpha,beta) -
+     2                       2d0 * Kt * C3qm(6) / 12d0
+                     endif
+*     Subtract the spurious bottom contribution
+                     if(Nf_FF.le.4)then
+*     Singlet
+                        OpF3(jgrid,6,1,alpha,beta)  =
+     1                       OpF3(jgrid,6,1,alpha,beta)  -
+     2                       2d0 * V_tb2 * C3qm(6) / 12d0
+*     Valence
+                        OpF3(jgrid,6,3,alpha,beta)  =
+     1                       OpF3(jgrid,6,3,alpha,beta)  -
+     2                       ipr * 2d0 * V_tb2 * C3qm(6) / 12d0
+*     V24
+                        OpF3(jgrid,6,7,alpha,beta)  =
+     1                       OpF3(jgrid,6,7,alpha,beta)  +
+     2                       ipr * 2d0 * V_tb2 * C3qm(6) / 10d0
+*     V35
+                        OpF3(jgrid,6,8,alpha,beta)  =
+     1                       OpF3(jgrid,6,8,alpha,beta)  -
+     2                       ipr * 2d0 * V_tb2 * C3qm(6) / 60d0
+*     T24
+                        OpF3(jgrid,6,12,alpha,beta) =
+     1                       OpF3(jgrid,6,12,alpha,beta) +
+     2                       2d0 * V_tb2 * C3qm(6) / 10d0
+*     T35
+                        OpF3(jgrid,6,13,alpha,beta) =
+     1                       OpF3(jgrid,6,13,alpha,beta) -
+     2                       2d0 * V_tb2 * C3qm(6) / 60d0
                      endif
                   endif
 *
