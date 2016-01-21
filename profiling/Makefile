@@ -67,8 +67,8 @@ MODULES = dummy WelcomeMessage initParameters \
 	integrandsIC CacheStructureFunctionsAPFEL StructureFunctionxQ
 
 # Path with all the directories where modules should be searched by the Makefile
-MDIR 	= ../src
-VPATH 	= .:$(MDIR)/Evolution:$(MDIR)/DIS:$(MDIR)/core:../examples
+MDIR  = ../src
+VPATH = .:$(MDIR)/Evolution:$(MDIR)/DIS:$(MDIR)/core:../examples
 
 ############################## do not change #############################
 
@@ -85,27 +85,22 @@ PGMS= $(MAIN) $(MODULES)
 -include $(addsuffix .d,$(PGMS))
 
 # rule to compile source programs
-
 $(addsuffix .o,$(PGMS)): %.o: %.f Makefile
 	$(FF) $< -c $(FFLAGS) 
 
 # rule to link object files
-
 $(MAIN): %: %.o $(addsuffix .o,$(MODULES)) Makefile
 	@ $(FLINKER) $< $(addsuffix .o,$(MODULES)) $(FFLAGS) -o $@
 
 # produce executables
-
 mkxeq: $(MAIN)
 
 # remove old executables
-
 rmxeq:
 	@ -rm -f $(MAIN); \
         echo "delete old executables"		
 
-# clean directory 
-
+# clean directory
 clean:
 	@ -rm -rf *.o *~ gmon.out $(MAIN)
 .PHONY: clean
