@@ -373,15 +373,26 @@ c     1                 //achar(27)//"[0m"
 *     If the intrinsic charm has been activated, make sure that the number
 *     of light flavours in the massive sector is not bigger than 3.
 *
-      if(IntrinsicCharm.and.Nf_FF.gt.3)then
-         write(6,*) achar(27)//"[33m"//
-     1        "WARNING: Intrinsic charm enabled"
-         write(6,*) "         ... the number of light flavours in the"
-         write(6,*) "         massive sector will be forced to be equal"
-         write(6,*) "         to three"
-         write(6,*) "         "
+      if(IntrinsicCharm)then
+         if(Nf_FF.gt.3)then
+            write(6,*) achar(27)//"[33m"//
+     1           "WARNING: Intrinsic charm enabled"
+            write(6,*) "         ... the number of light flavours in"
+            write(6,*) "         the massive sector will be forced to"
+            write(6,*) "         be equal to three"
+            write(6,*) "         "
+     1           //achar(27)//"[0m"
+            Nf_FF = 3
+         endif
+         if(DampingFONLL)then
+            write(6,*) achar(27)//"[33m"//
+     1           "WARNING: If the intrinsic charm is enabled no FONLL",
+     2           " damping is allowed"
+            write(6,*) "         ... disabling FONLL damping factor"
+            write(6,*) "         "
      1              //achar(27)//"[0m"
-         Nf_FF = 3
+            call EnableDampingFONLL(.false.)
+         endif
       endif
 *
       return
