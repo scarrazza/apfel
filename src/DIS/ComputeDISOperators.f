@@ -205,9 +205,13 @@
          call ComputeChargesDIS(Q2,bq,dq,bqt)
 *
 *     In case of intrinsic charm, limit the compuation of the
-*     IC component to NLO.
+*     IC component to NLO and also disable the damping factor
+*     for the charm component.
 *
-         if(IntrinsicCharm) ipt_max_IC = min(ipt,1)
+         if(IntrinsicCharm)then
+            ipt_max_IC = min(ipt,1)
+            damp(4) = 1d0
+         endif
 *     
          do jgrid=1,ngrid
 *     

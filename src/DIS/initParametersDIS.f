@@ -387,11 +387,9 @@ c     1                 //achar(27)//"[0m"
          if(DampingFONLL)then
             write(6,*) achar(27)//"[33m"//
      1           "WARNING: If the intrinsic charm is enabled no FONLL",
-     2           " damping is allowed"
-            write(6,*) "         ... disabling FONLL damping factor"
+     2           " damping will be applied to the charm componet"
             write(6,*) "         "
      1              //achar(27)//"[0m"
-            call EnableDampingFONLL(.false.)
          endif
       endif
 *

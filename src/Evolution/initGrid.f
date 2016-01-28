@@ -74,14 +74,14 @@
          nin(igrid) = DensityFactor(igrid) * ( nin(igrid-1) - ix )
       endif
 *
-*     Now contruct the grid
+*     Now construct the grid
 *
       if(IsExt(igrid))then
          do ix=0,nin(igrid)
             xg(igrid,ix) = xgext(igrid,ix)
          enddo
 *
-*     Check that the last point of the user give grid is is euqal to one
+*     Check that the last point of the user-given grid is equal to one
 *
          if(dabs(xg(igrid,nin(igrid))-1d0).gt.eps)then
             write(6,*) "In initGrid.f:"
@@ -109,7 +109,7 @@
          do ix=1,nin(igrid)+inter_degree(igrid)
             xg(igrid,ix) = xg(igrid,ix-1) * exp( step(igrid) )
          enddo
-         xg(igrid, nin(igrid)) = 1d0
+         xg(igrid,nin(igrid)) = 1d0
       endif
 *
       return
