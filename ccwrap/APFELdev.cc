@@ -110,6 +110,9 @@ namespace APFEL
     APFEL::SetSmallxResummation(atoi(par.at(kSxRes).c_str()), par.at(kSxOrd));
     APFEL::SetMassMatchingScales(atof(par.at(kcThr).c_str()),atof(par.at(kbThr).c_str()),atof(par.at(ktThr).c_str()));
 
+    // Intrinsic charm
+    APFEL::EnableIntrinsicCharm(atoi(par.at(kIC).c_str()));
+
     // Not included in the map
     /*
     // Truncated Epsilon
