@@ -4,7 +4,7 @@ AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
-AM_MAINTAINER_MODE([disable])
+AM_MAINTAINER_MODE
 
 AC_DEFINE_UNQUOTED(APFEL_VERSION, "$PACKAGE_VERSION", "APFEL version string")
 
@@ -146,5 +146,4 @@ AC_CONFIG_FILES([examples/Makefile])
 AC_CONFIG_FILES([pywrap/Makefile pywrap/setup.py])
 AC_CONFIG_FILES([doc/Makefile])
 AC_CONFIG_FILES([bin/Makefile bin/apfel-config bin/apfel])
-AC_CONFIG_FILES([apfelGUI/Makefile])
 AC_OUTPUT
