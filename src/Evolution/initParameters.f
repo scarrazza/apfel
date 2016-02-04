@@ -472,15 +472,15 @@
      1              //achar(27)//"[0m"
       endif
 *
+*     Compute the heavy quark thresholds
+*
+      call ComputeHeavyQuarkThresholds
+*
 *     If the MSbar are used and the heavy quark masses are not given
 *     at the mass scales themselves, compute the RG invariant masses
 *     i.e. mc(mc), mb(mb) and mt(mt).
 *
       if(mass_scheme.eq."MSbar") call ComputeRGInvariantMasses
-*
-*     Compute the heavy quark thresholds
-*
-      call ComputeHeavyQuarkThresholds
 *
 *     If the alpha solution is "lambda", compute values of LambdaQCD
 *     for all the number of flavours.     
