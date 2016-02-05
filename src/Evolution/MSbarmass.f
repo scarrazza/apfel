@@ -326,7 +326,7 @@
 *
       as0 = a_QCD(q2th(i))
       as  = a_QCD(Q**2)
-      MassQSplit = dsqrt(m2ph(i)) * evmass(i,as0,as) - Q
+      MassQSplit = dsqrt(m2q(i)) * evmass(i,as0,as) - Q
 *
       return
       end
@@ -344,7 +344,7 @@
 **
 *     Internal Variables
 *
-      integer i
+      integer i,j
       double precision MassQSplit,zriddr
       double precision x1,x2
       double precision acc,window
@@ -352,13 +352,30 @@
       parameter(window=2d0)
       external MassQSplit
 *
+*     First iteration to set the first rough estimation
+*     of the heavy quark thresholds.
+*
       do i=4,6
          m2q(i) = m2ph(i)
-         if(q2th(i).ne.m2ph(i))then
+         if(q2th(i).ne.m2q(i))then
             x1 = dsqrt(q2th(i)) - window
             x2 = dsqrt(q2th(i)) + window
             m2ph(i) = zriddr(MassQSplit,i,x1,x2,acc)**2
          endif
+      enddo
+      call ComputeHeavyQuarkThresholds
+*
+*     Additional iterations to refine the result (if needed)
+*
+      do j=1,4
+         do i=4,6
+            if(q2th(i).ne.m2q(i))then
+               x1 = dsqrt(q2th(i)) - window
+               x2 = dsqrt(q2th(i)) + window
+               m2ph(i) = zriddr(MassQSplit,i,x1,x2,acc)**2
+            endif
+         enddo
+         call ComputeHeavyQuarkThresholds
       enddo
 *
       return
