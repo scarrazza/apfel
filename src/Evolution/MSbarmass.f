@@ -352,20 +352,8 @@
       parameter(window=2d0)
       external MassQSplit
 *
-*     First iteration to set the first rough estimation
-*     of the heavy quark thresholds.
-*
-      do i=4,6
-         m2q(i) = m2ph(i)
-         if(q2th(i).ne.m2q(i))then
-            x1 = dsqrt(q2th(i)) - window
-            x2 = dsqrt(q2th(i)) + window
-            m2ph(i) = zriddr(MassQSplit,i,x1,x2,acc)**2
-         endif
-      enddo
-      call ComputeHeavyQuarkThresholds
-*
-*     Additional iterations to refine the result (if needed)
+*     Iterate more times to make sure that the running of alphas
+*     is computed using the correct thresholds.
 *
       do j=1,4
          do i=4,6

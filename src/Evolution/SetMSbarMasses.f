@@ -22,5 +22,9 @@
       m2ph(6)     = mt * mt
       InMasses    = "done"
 *
+      m2q(4) = m2ph(4)
+      m2q(5) = m2ph(5)
+      m2q(6) = m2ph(6)
+*
       return
       end
