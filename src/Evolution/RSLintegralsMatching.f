@@ -167,6 +167,7 @@
          SM(igrid,nf,5,0,beta,alpha) = 1d0
       endif
       if(ipt.eq.0) return
+      if(ipt.eq.1) return
 *
 *     Adjustment od the bounds of the integrals
 *
@@ -181,6 +182,7 @@
 *
 *     Variables needed for wrapping the integrand functions
 *
+      wnf    = nf
       walpha = alpha
       wbeta  = beta
       wipt   = 1
