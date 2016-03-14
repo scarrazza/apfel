@@ -27,6 +27,7 @@
       include "../commons/DampingFONLL.h"
       include "../commons/ProtonMass.h"
       include "../commons/kfacQ.h"
+      include "../commons/krenQ.h"
       include "../commons/DynScVar.h"
       include "../commons/MassInterpolIndices.h"
       include "../commons/IntrinsicCharm.h"
@@ -45,7 +46,7 @@
       integer ipr
       integer i
       integer ik
-      double precision Q2,muF,W2,M2(4:6),HeavyQuarkMass
+      double precision Q2,mu2F,muR,W2,M2(4:6),HeavyQuarkMass
       double precision as(0:2),a_QCD
       double precision bq(0:6),dq(0:6),bqt(0:6)
       double precision frac,fr3
@@ -93,7 +94,7 @@
 *     (Remember that a_QCD takes as an argument the factorization scale
 *     and converts it internally into the renormalization scale).
 *
-      muF = kfacQ * Q2
+      mu2F = kfacQ * Q2
 *
 *     Scale down the perturbative order of the alphas evolution if one
 *     of the FFNSs has been chosen
@@ -102,10 +103,10 @@
       if(MassScheme(1:3).eq."FFN")then
          iptbkp = ipt
          call SetPerturbativeOrder(max(0,ipt-1))
-         as(1) = a_QCD(muF)
+         as(1) = a_QCD(mu2F)
          call SetPerturbativeOrder(iptbkp)
       else
-         as(1) = a_QCD(muF)
+         as(1) = a_QCD(mu2F)
       endif
       as(2) = as(1) * as(1)
 *
@@ -140,9 +141,13 @@
 *
 *     Find "ixi" such that "xigrid(ixi)" < "xi" < "xigrid(ixi+1)"
 *
+*     Renormalization scale
+*
+      muR = dsqrt(krenQ) * Q
+*
       do ihq=4,6
          ixi(ihq) = 0
-         M2(ihq) = HeavyQuarkMass(ihq,Q)**2
+         M2(ihq) = HeavyQuarkMass(ihq,muR)**2
          xi(ihq) = Q2 / M2(ihq)
          if(xi(ihq).le.xigrid(xistep))then
             ixi(ihq) = 0
