@@ -124,5 +124,9 @@
 *
       InAPFEL = "done"
 *
+*     First evolution to complete the setup
+*
+      call EvolveAPFEL(dsqrt(Q2min),dsqrt(Q2max))
+*
       return
       end
