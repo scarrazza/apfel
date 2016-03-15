@@ -39,6 +39,7 @@
       include "../commons/MassRunning.h"
       include "../commons/ColorFactors.h"
       include "../commons/kfacQ.h"
+      include "../commons/krenQ.h"
 **
 *     Input Variables
 *
@@ -593,7 +594,8 @@ c               endif
 *
             if(mass_scheme.eq."MSbar")then
                h1 = CF * 4d0
-               if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xigrid(ixi))
+               if(MassRunning) h1 = h1 + CF * 3d0
+     1              * dlog(xigrid(ixi)*krenQ)
                SC2mCC(igrid,ixi,3,1,beta,alpha) = 
      1              SC2mCC(igrid,ixi,3,1,beta,alpha)
      2              + 2d0 * h1 * ( 1d0 - lambda ) * dfL_CCm
@@ -725,7 +727,8 @@ c               endif
             lnQ2 = lnQ * lnQ
             lnQF = lnQ * lnF
             h1 = CF * 4d0
-            if(MassRunning) h1 = h1 + CF * 3d0 * lnQ
+            if(MassRunning) h1 = h1
+     1           + CF * 3d0 * dlog(xigrid(ixi*xistep)*krenQ)
             do k=1,3
                do wipt=1,ipt_FF
                   SC2m0NC(igrid,ixi,k,wipt,beta,alpha) = 0d0
