@@ -6,7 +6,6 @@ using namespace std;
 
 int main()
 {
-  APFEL::SetQLimits(0e0,1e4);     
   APFEL::SetPerturbativeOrder(1);
   APFEL::SetNumberOfGrids(3);
   APFEL::SetGridParameters(1,150,3,1e-9);

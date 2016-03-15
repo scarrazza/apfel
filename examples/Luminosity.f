@@ -14,7 +14,6 @@
       parameter(eps=1d-10)
 *
 c      call SetFFNS(3)
-      call SetQLimits(0d0,1d4)
       call SetPerturbativeOrder(1)
       call SetNumberOfGrids(3)
       call SetGridParameters(1,150,3,1d-9)
