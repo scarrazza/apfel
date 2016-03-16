@@ -46,7 +46,7 @@
       integer ipr
       integer i
       integer ik
-      double precision Q2,mu2F,muR,W2,M2(4:6),HeavyQuarkMass
+      double precision Q2,muF2,muR,W2,M2(4:6),HeavyQuarkMass
       double precision as(0:2),a_QCD
       double precision bq(0:6),dq(0:6),bqt(0:6)
       double precision frac,fr3
@@ -94,7 +94,7 @@
 *     (Remember that a_QCD takes as an argument the factorization scale
 *     and converts it internally into the renormalization scale).
 *
-      mu2F = kfacQ * Q2
+      muF2 = kfacQ * Q2
 *
 *     Scale down the perturbative order of the alphas evolution if one
 *     of the FFNSs has been chosen
@@ -103,20 +103,29 @@
       if(MassScheme(1:3).eq."FFN")then
          iptbkp = ipt
          call SetPerturbativeOrder(max(0,ipt-1))
-         as(1) = a_QCD(mu2F)
+         as(1) = a_QCD(muF2)
          call SetPerturbativeOrder(iptbkp)
       else
-         as(1) = a_QCD(mu2F)
+         as(1) = a_QCD(muF2)
       endif
       as(2) = as(1) * as(1)
 *
 *     Find number of active flavours at the scale Q2
 *
-      if(Q2.ge.m2th(6))then
+c      if(Q2.ge.m2th(6))then
+c         nf = 6
+c      elseif(Q2.ge.m2th(5))then
+c         nf = 5
+c      elseif(Q2.ge.m2th(4))then
+c         nf = 4
+c      else
+c         nf = 3
+c      endif
+      if(muF2.ge.m2th(6))then
          nf = 6
-      elseif(Q2.ge.m2th(5))then
+      elseif(muF2.ge.m2th(5))then
          nf = 5
-      elseif(Q2.ge.m2th(4))then
+      elseif(muF2.ge.m2th(4))then
          nf = 4
       else
          nf = 3
