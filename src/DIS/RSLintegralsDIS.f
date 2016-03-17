@@ -83,7 +83,8 @@
       double precision lambda,Rf,Rfun
       double precision h1
       double precision xi,xi0,spread,sig1,sig2
-      parameter(xi0=2d3,spread=2d1)
+c      parameter(xi0=2d3,spread=2d1)
+      parameter(xi0=1d3,spread=2d2)
       external integrandsDISzm
       external integrandsDISNCm,integrandsDISNCm0
       external integrandsDISCCm,integrandsDISCCm0
