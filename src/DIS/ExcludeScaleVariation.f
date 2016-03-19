@@ -567,24 +567,26 @@
          if(MassScheme(1:4).eq."FFNS".or.
      1      MassScheme(1:5).eq."FONLL")then
             dh1 = 3d0 * CF * tRen
-            do jxi=1,nxir-1
-               dlogxi = dlog( xigrid((jxi+1)*xistep)
-     1                      / xigrid(jxi*xistep) )
-               do beta=0,gbound
-                  do alpha=beta,nin(igrid)-1
+            do inf=4,6
+               do jxi=ixi(inf),ixi(inf)+1
+                  dlogxi = dlog( xigrid((jxi+1)*xistep)
+     1                         / xigrid(jxi*xistep) )
+                  do beta=0,gbound
+                     do alpha=beta,nin(igrid)-1
 *     Numerical derivatives
-                     SC2mNC(igrid,jxi,1,2,beta,alpha) = 
-     1                    SC2mNC(igrid,jxi,1,2,beta,alpha)
-     2                    - 2d0 * dh1
-     3                    * ( SC2mNC(igrid,jxi+1,1,1,beta,alpha)
-     4                    - SC2mNC(igrid,jxi,1,1,beta,alpha) )
-     5                    / dlogxi
-                     SCLmNC(igrid,jxi,1,2,beta,alpha) = 
-     1                    SCLmNC(igrid,jxi,1,2,beta,alpha)
-     2                    - 2d0 * dh1
-     3                    * ( SCLmNC(igrid,jxi+1,1,1,beta,alpha)
-     4                    - SCLmNC(igrid,jxi,1,1,beta,alpha) )
-     5                    / dlogxi
+                        SC2mNC(igrid,jxi,1,2,beta,alpha) =
+     1                       SC2mNC(igrid,jxi,1,2,beta,alpha)
+     2                       - 2d0 * dh1
+     3                       * ( SC2mNC(igrid,jxi+1,1,1,beta,alpha)
+     4                       - SC2mNC(igrid,jxi,1,1,beta,alpha) )
+     5                       / dlogxi
+                        SCLmNC(igrid,jxi,1,2,beta,alpha) =
+     1                       SCLmNC(igrid,jxi,1,2,beta,alpha)
+     2                       - 2d0 * dh1
+     3                       * ( SCLmNC(igrid,jxi+1,1,1,beta,alpha)
+     4                       - SCLmNC(igrid,jxi,1,1,beta,alpha) )
+     5                       / dlogxi
+                     enddo
                   enddo
                enddo
             enddo
@@ -595,18 +597,20 @@
          if(MassScheme(1:4).eq."FFN0".or.
      1      MassScheme(1:5).eq."FONLL")then
             dh1 = 3d0 * CF * tRen
-            do jxi=1,nxir-1
-               dlogxi = dlog( xigrid((jxi+1)*xistep)
-     1                      / xigrid(jxi*xistep) )
-               do beta=0,gbound
-                  do alpha=beta,nin(igrid)-1
+            do inf=4,6
+               do jxi=ixi(inf),ixi(inf)+1
+                  dlogxi = dlog( xigrid((jxi+1)*xistep)
+     1                         / xigrid(jxi*xistep) )
+                  do beta=0,gbound
+                     do alpha=beta,nin(igrid)-1
 *     Numerical derivatives
-                     SC2m0NC(igrid,jxi,1,2,beta,alpha) = 
-     1                    SC2m0NC(igrid,jxi,1,2,beta,alpha)
-     2                    - 2d0 * dh1
-     3                    * ( SC2m0NC(igrid,jxi+1,1,1,beta,alpha)
-     4                    - SC2m0NC(igrid,jxi,1,1,beta,alpha) )
-     5                    / dlogxi
+                        SC2m0NC(igrid,jxi,1,2,beta,alpha) =
+     1                       SC2m0NC(igrid,jxi,1,2,beta,alpha)
+     2                       - 2d0 * dh1
+     3                       * ( SC2m0NC(igrid,jxi+1,1,1,beta,alpha)
+     4                       - SC2m0NC(igrid,jxi,1,1,beta,alpha) )
+     5                       / dlogxi
+                     enddo
                   enddo
                enddo
             enddo

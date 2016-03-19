@@ -112,15 +112,6 @@
 *
 *     Find number of active flavours at the scale Q2
 *
-c      if(Q2.ge.m2th(6))then
-c         nf = 6
-c      elseif(Q2.ge.m2th(5))then
-c         nf = 5
-c      elseif(Q2.ge.m2th(4))then
-c         nf = 4
-c      else
-c         nf = 3
-c      endif
       if(muF2.ge.m2th(6))then
          nf = 6
       elseif(muF2.ge.m2th(5))then

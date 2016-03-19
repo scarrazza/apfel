@@ -902,7 +902,6 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
      1              SCLzm(igrid,Nf_FF,3,wipt,beta,alpha)
                SC3m0CC(igrid,ixi,3,wipt,beta,alpha) = 
      1              SC3zm(igrid,Nf_FF,3,wipt,beta,alpha)
-
             enddo
          enddo
       endif
