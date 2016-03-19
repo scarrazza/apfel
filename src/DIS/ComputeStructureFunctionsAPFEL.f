@@ -12,6 +12,7 @@
 *
       include "../commons/InAPFELDIS.h"
       include "../commons/kfacQ.h"
+      include "../commons/krenQ.h"
       include "../commons/MassScheme.h"
       include "../commons/ipt.h"
       include "../commons/DynScVar.h"
@@ -29,7 +30,7 @@
 *     Check that the APFEL DIS module has been initialized
 *
       if(InAPFELDIS.ne."done")then
-         write(6,*) "ComputeStructureFunctionsAPFEL: impossible to",
+         write(6,*) "ERROR: impossible to",
      1              " compute structure functions,",
      2              " APFEL DIS has not been initialized."
          write(6,*) "Call 'InitializeAPFEL_DIS' before calling",
@@ -40,9 +41,20 @@
 *
       call cpu_time(t1)
 *
-*     If the dynamical scale variation is enabled set muR = muF
+*     If the dynamical scale variation is enabled, check that set muR = muF
+*     otherwise stop the code.
 *
-      if(DynScVar) call SetRenQRatio(dsqrt(kfacQ))
+      if(DynScVar)then
+         if(kfacQ.ne.krenQ)then
+            write(6,*) "ERROR: if the dynamical scale variation has",
+     1                 " been enabled, the ratios muF / Q and muR / Q",
+     2                 " must be equal."
+            write(6,*) "Use 'SetRenQRatio' and 'SetFacQRatio'",
+     1                 " to set them equal."
+            write(6,*) "   "
+            call exit(-10)
+         endif
+      endif
 *
 *     Compute PDF evolution in the factorization scales
 *

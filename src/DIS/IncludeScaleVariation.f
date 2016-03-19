@@ -22,6 +22,8 @@
       include "../commons/kfacQ.h"
       include "../commons/DynScVar.h"
       include "../commons/MassInterpolIndices.h"
+      include "../commons/mass_scheme.h"
+      include "../commons/ColorFactors.h"
 **
 *     Internal Variables
 *
@@ -36,20 +38,21 @@
       double precision C1LP0(4)
       double precision C13P0(4)
       double precision P0P0(4)
-      double precision tR,tF,tF2h
+      double precision tRen,tFac,tFac2h
       double precision beta0apf,b0,omlam
+      double precision dh1,dlogxi
 *
       if(ipt.eq.0) return
       if(krenQ.eq.1d0.and.kfacQ.eq.1d0) return
 *
-      tR   = dlog(krenQ)
-      tF   = dlog(kfacQ)
-      tF2h = tF * tF / 2d0
+      tRen   = dlog(krenQ)
+      tFac   = dlog(kfacQ)
+      tFac2h = tFac * tFac / 2d0
 *
 *     If the dynamical scale variation has been enabled
 *     set the renormalization scale equal to the factorization scale.
 *
-      if(DynScVar) tR = tF
+      if(DynScVar) tRen = tFac
 *
 *     Maps used for the muliplications
 *
@@ -210,78 +213,80 @@
 *     Gluon
                   SC2zm(igrid,inf,1,2,beta,alpha) = 
      1                 SC2zm(igrid,inf,1,2,beta,alpha)
-     2                 + tR * b0 * SC2zm(igrid,inf,1,1,beta,alpha)
-     3                 - tF * C12P0(1)
-     4                 + tF2h * ( P0P0(1)
+     2                 + tRen * b0 * SC2zm(igrid,inf,1,1,beta,alpha)
+     3                 - tFac * C12P0(1)
+     4                 + tFac2h * ( P0P0(1)
      5                 - b0 * SP(igrid,inf,mapP(1,2),0,beta,alpha) )
      6                 / inf
-     7                 - tF * SP(igrid,inf,mapP(1,2),1,beta,alpha) / inf
+     7                 - tFac * SP(igrid,inf,mapP(1,2),1,beta,alpha)
+     8                 / inf
                   SCLzm(igrid,inf,1,2,beta,alpha) = 
      1                 SCLzm(igrid,inf,1,2,beta,alpha)
-     2                 + tR * b0 * SCLzm(igrid,inf,1,1,beta,alpha)
-     3                 - tF * C1LP0(1)
+     2                 + tRen * b0 * SCLzm(igrid,inf,1,1,beta,alpha)
+     3                 - tFac * C1LP0(1)
                   SC3zm(igrid,inf,1,2,beta,alpha) = 
      1                 SC3zm(igrid,inf,1,2,beta,alpha)
-     2                 + tR * b0 * SC3zm(igrid,inf,1,1,beta,alpha)
-     3                 - tF * C13P0(1)
-     4                 + tF2h * ( P0P0(1)
+     2                 + tRen * b0 * SC3zm(igrid,inf,1,1,beta,alpha)
+     3                 - tFac * C13P0(1)
+     4                 + tFac2h * ( P0P0(1)
      5                 - b0 * SP(igrid,inf,mapP(1,2),0,beta,alpha) )
      6                 / inf
-     7                 - tF * SP(igrid,inf,mapP(1,2),1,beta,alpha) / inf
+     7                 - tFac * SP(igrid,inf,mapP(1,2),1,beta,alpha)
+     8                 / inf
 *     Pure-singlet
                   SC2zm(igrid,inf,2,2,beta,alpha) =
      1                 SC2zm(igrid,inf,2,2,beta,alpha)
-     2                 - tF * C12P0(2)
-     3                 + tF2h * P0P0(2) / inf
-     4                 - tF * ( SP(igrid,inf,mapP(1,1),1,beta,alpha)
+     2                 - tFac * C12P0(2)
+     3                 + tFac2h * P0P0(2) / inf
+     4                 - tFac * ( SP(igrid,inf,mapP(1,1),1,beta,alpha)
      5                 - SP(igrid,inf,1,1,beta,alpha) ) / inf
                   SCLzm(igrid,inf,2,2,beta,alpha) =
      1                 SCLzm(igrid,inf,2,2,beta,alpha)
-     2                 - tF * C1LP0(2)
+     2                 - tFac * C1LP0(2)
                   SC3zm(igrid,inf,2,2,beta,alpha) =
      1                 SC3zm(igrid,inf,2,2,beta,alpha)
-     2                 - tF * C13P0(2)
-     3                 + tF2h * P0P0(2) / inf
-     3                 - tF * ( SP(igrid,inf,mapP(1,1),1,beta,alpha)
+     2                 - tFac * C13P0(2)
+     3                 + tFac2h * P0P0(2) / inf
+     3                 - tFac * ( SP(igrid,inf,mapP(1,1),1,beta,alpha)
      4                 - SP(igrid,inf,1,1,beta,alpha) ) / inf
 *     Plus
                   SC2zm(igrid,inf,3,2,beta,alpha) = 
      1                 SC2zm(igrid,inf,3,2,beta,alpha)
-     2                 + tR * b0 * SC2zm(igrid,inf,3,1,beta,alpha)
-     3                 - tF * C12P0(3)
-     4                 + tF2h * ( P0P0(3)
+     2                 + tRen * b0 * SC2zm(igrid,inf,3,1,beta,alpha)
+     3                 - tFac * C12P0(3)
+     4                 + tFac2h * ( P0P0(3)
      5                 - b0 * SP(igrid,inf,1,0,beta,alpha) )
-     6                 - tF * SP(igrid,inf,1,1,beta,alpha)
+     6                 - tFac * SP(igrid,inf,1,1,beta,alpha)
                   SCLzm(igrid,inf,3,2,beta,alpha) = 
      1                 SCLzm(igrid,inf,3,2,beta,alpha)
-     2                 + tR * b0 * SCLzm(igrid,inf,3,1,beta,alpha)
-     3                 - tF * C1LP0(3)
+     2                 + tRen * b0 * SCLzm(igrid,inf,3,1,beta,alpha)
+     3                 - tFac * C1LP0(3)
                   SC3zm(igrid,inf,3,2,beta,alpha) = 
      1                 SC3zm(igrid,inf,3,2,beta,alpha)
-     2                 + tR * b0 * SC3zm(igrid,inf,3,1,beta,alpha)
-     3                 - tF * C13P0(3)
-     4                 + tF2h * ( P0P0(3)
+     2                 + tRen * b0 * SC3zm(igrid,inf,3,1,beta,alpha)
+     3                 - tFac * C13P0(3)
+     4                 + tFac2h * ( P0P0(3)
      5                 - b0 * SP(igrid,inf,1,0,beta,alpha) )
-     6                 - tF * SP(igrid,inf,1,1,beta,alpha)
+     6                 - tFac * SP(igrid,inf,1,1,beta,alpha)
 *     Minus
                   SC2zm(igrid,inf,4,2,beta,alpha) = 
      1                 SC2zm(igrid,inf,4,2,beta,alpha)
-     2                 + tR * b0 * SC2zm(igrid,inf,4,1,beta,alpha)
-     3                 - tF * C12P0(4)
-     4                 + tF2h * ( P0P0(4)
+     2                 + tRen * b0 * SC2zm(igrid,inf,4,1,beta,alpha)
+     3                 - tFac * C12P0(4)
+     4                 + tFac2h * ( P0P0(4)
      5                 - b0 * SP(igrid,inf,2,0,beta,alpha) )
-     6                 - tF * SP(igrid,inf,2,1,beta,alpha)
+     6                 - tFac * SP(igrid,inf,2,1,beta,alpha)
                   SCLzm(igrid,inf,4,2,beta,alpha) = 
      1                 SCLzm(igrid,inf,4,2,beta,alpha)
-     2                 + tR * b0 * SCLzm(igrid,inf,4,1,beta,alpha)
-     3                 - tF * C1LP0(4)
+     2                 + tRen * b0 * SCLzm(igrid,inf,4,1,beta,alpha)
+     3                 - tFac * C1LP0(4)
                   SC3zm(igrid,inf,4,2,beta,alpha) = 
      1                 SC3zm(igrid,inf,4,2,beta,alpha)
-     2                 + tR * b0 * SC3zm(igrid,inf,4,1,beta,alpha)
-     3                 - tF * C13P0(4)
-     4                 + tF2h * ( P0P0(4)
+     2                 + tRen * b0 * SC3zm(igrid,inf,4,1,beta,alpha)
+     3                 - tFac * C13P0(4)
+     4                 + tFac2h * ( P0P0(4)
      5                 - b0 * SP(igrid,inf,2,0,beta,alpha) )
-     6                 - tF * SP(igrid,inf,2,1,beta,alpha)
+     6                 - tFac * SP(igrid,inf,2,1,beta,alpha)
                enddo
             enddo
          endif
@@ -293,24 +298,24 @@
 *     Gluon
                SC2zm(igrid,inf,1,1,beta,alpha) = 
      1              SC2zm(igrid,inf,1,1,beta,alpha)
-     2              - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf
+     2              - tFac * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf
                SC3zm(igrid,inf,1,1,beta,alpha) = 
      1              SC3zm(igrid,inf,1,1,beta,alpha)
-     2              - tF * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf
+     2              - tFac * SP(igrid,inf,mapP(1,2),0,beta,alpha) / inf
 *     Plus
                SC2zm(igrid,inf,3,1,beta,alpha) = 
      1              SC2zm(igrid,inf,3,1,beta,alpha)
-     2              - tF * SP(igrid,inf,1,0,beta,alpha)
+     2              - tFac * SP(igrid,inf,1,0,beta,alpha)
                SC3zm(igrid,inf,3,1,beta,alpha) = 
      1              SC3zm(igrid,inf,3,1,beta,alpha)
-     2              - tF * SP(igrid,inf,1,0,beta,alpha)
+     2              - tFac * SP(igrid,inf,1,0,beta,alpha)
 *     Minus
                SC2zm(igrid,inf,4,1,beta,alpha) = 
      1              SC2zm(igrid,inf,4,1,beta,alpha)
-     2              - tF * SP(igrid,inf,2,0,beta,alpha)
+     2              - tFac * SP(igrid,inf,2,0,beta,alpha)
                SC3zm(igrid,inf,4,1,beta,alpha) = 
      1              SC3zm(igrid,inf,4,1,beta,alpha)
-     2              - tF * SP(igrid,inf,2,0,beta,alpha)
+     2              - tFac * SP(igrid,inf,2,0,beta,alpha)
             enddo
          enddo
       enddo
@@ -392,14 +397,14 @@
                            do k=1,2
                               SC2mNC(igrid,jxi,k,2,beta,alpha) = 
      1                             SC2mNC(igrid,jxi,k,2,beta,alpha)
-     2                             + tR * b0
+     2                             + tRen * b0
      3                             * SC2mNC(igrid,jxi,k,1,beta,alpha)
-     4                             - tF * C12P0(k)
+     4                             - tFac * C12P0(k)
                               SCLmNC(igrid,jxi,k,2,beta,alpha) = 
      1                             SCLmNC(igrid,jxi,k,2,beta,alpha)
-     2                             + tR * b0
+     2                             + tRen * b0
      3                             * SCLmNC(igrid,jxi,k,1,beta,alpha)
-     4                             - tF * C1LP0(k)
+     4                             - tFac * C1LP0(k)
                            enddo
                         enddo
                      enddo
@@ -418,26 +423,26 @@
                         omlam = 1d0 / ( 1d0 + xigrid(jxi*xistep) )
 *     Gluon
                         SC2mCC(igrid,jxi,1,1,beta,alpha) = 
-     1                       SC2mCC(igrid,jxi,1,1,beta,alpha) - tF
+     1                       SC2mCC(igrid,jxi,1,1,beta,alpha) - tFac
      2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
      3                       / Nf_FF / 2d0
                         SCLmCC(igrid,jxi,1,1,beta,alpha) = 
-     1                       SCLmCC(igrid,jxi,1,1,beta,alpha) - tF
+     1                       SCLmCC(igrid,jxi,1,1,beta,alpha) - tFac
      2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
      3                       / Nf_FF  / 2d0 * omlam
                         SC3mCC(igrid,jxi,1,1,beta,alpha) = 
-     1                       SC3mCC(igrid,jxi,1,1,beta,alpha) - tF
+     1                       SC3mCC(igrid,jxi,1,1,beta,alpha) - tFac
      2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
      3                       / Nf_FF / 2d0
 *     Plus
                         SC2mCC(igrid,jxi,3,1,beta,alpha) = 
-     1                       SC2mCC(igrid,jxi,3,1,beta,alpha) - tF
+     1                       SC2mCC(igrid,jxi,3,1,beta,alpha) - tFac
      2                       * SP(igrid,Nf_FF,1,0,beta,alpha)
                         SCLmCC(igrid,jxi,3,1,beta,alpha) = 
-     1                       SCLmCC(igrid,jxi,3,1,beta,alpha) - tF
+     1                       SCLmCC(igrid,jxi,3,1,beta,alpha) - tFac
      2                       * SP(igrid,Nf_FF,1,0,beta,alpha) * omlam
                         SC3mCC(igrid,Nf_FF,3,1,beta,alpha) = 
-     1                       SC3mCC(igrid,jxi,3,1,beta,alpha) - tF
+     1                       SC3mCC(igrid,jxi,3,1,beta,alpha) - tFac
      2                       * SP(igrid,Nf_FF,1,0,beta,alpha)
                      enddo
                   enddo
@@ -511,14 +516,14 @@
                            do k=1,2
                               SC2m0NC(igrid,jxi,k,2,beta,alpha) = 
      1                             SC2m0NC(igrid,jxi,k,2,beta,alpha)
-     2                             + tR * b0
+     2                             + tRen * b0
      3                             * SC2m0NC(igrid,jxi,k,1,beta,alpha)
-     4                             - tF * C12P0(k)
+     4                             - tFac * C12P0(k)
                               SCLm0NC(igrid,jxi,k,2,beta,alpha) = 
      1                             SCLm0NC(igrid,jxi,k,2,beta,alpha)
-     2                             + tR * b0
+     2                             + tRen * b0
      3                             * SCLm0NC(igrid,jxi,k,1,beta,alpha)
-     4                             - tF * C1LP0(k)
+     4                             - tFac * C1LP0(k)
                            enddo
                         enddo
                      enddo
@@ -536,24 +541,80 @@
                         if(ixi(inf).eq.0) cycle
 *     Gluon
                         SC2m0CC(igrid,jxi,1,1,beta,alpha) = 
-     1                       SC2m0CC(igrid,jxi,1,1,beta,alpha) - tF
+     1                       SC2m0CC(igrid,jxi,1,1,beta,alpha) - tFac
      2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
      3                       / Nf_FF / 2d0
                         SC3m0CC(igrid,jxi,1,1,beta,alpha) = 
-     1                       SC3m0CC(igrid,jxi,1,1,beta,alpha) - tF
+     1                       SC3m0CC(igrid,jxi,1,1,beta,alpha) - tFac
      2                       * SP(igrid,Nf_FF,mapP(1,2),0,beta,alpha)
      3                       / Nf_FF / 2d0
 *     Plus
                         SC2m0CC(igrid,jxi,3,1,beta,alpha) = 
-     1                       SC2m0CC(igrid,jxi,3,1,beta,alpha) - tF
+     1                       SC2m0CC(igrid,jxi,3,1,beta,alpha) - tFac
      2                       * SP(igrid,Nf_FF,1,0,beta,alpha)
                         SC3m0CC(igrid,Nf_FF,3,1,beta,alpha) = 
-     1                       SC3m0CC(igrid,jxi,3,1,beta,alpha) - tF
+     1                       SC3m0CC(igrid,jxi,3,1,beta,alpha) - tFac
      2                       * SP(igrid,Nf_FF,1,0,beta,alpha)
                      enddo
                   enddo
                enddo
             enddo
+         endif
+*
+*     Include renormalization scale variation terms due to the
+*     running of the MSbar masses if needed
+*
+         if(mass_scheme.eq."MSbar")then
+*
+*     FFNS
+*
+            if(MassScheme(1:4).eq."FFNS".or.
+     1         MassScheme(1:5).eq."FONLL")then
+               dh1 = 3d0 * CF * tRen
+               do jxi=1,nxir-1
+                  dlogxi = dlog( xigrid((jxi+1)*xistep)
+     1                         / xigrid(jxi*xistep) )
+                  do beta=0,gbound
+                     do alpha=beta,nin(igrid)-1
+*     Numerical derivatives
+                        SC2mNC(igrid,jxi,1,2,beta,alpha) = 
+     1                       SC2mNC(igrid,jxi,1,2,beta,alpha)
+     2                       - 2d0 * dh1
+     3                       * ( SC2mNC(igrid,jxi+1,1,1,beta,alpha)
+     4                       - SC2mNC(igrid,jxi,1,1,beta,alpha) )
+     5                       / dlogxi
+                        SCLmNC(igrid,jxi,1,2,beta,alpha) = 
+     1                       SCLmNC(igrid,jxi,1,2,beta,alpha)
+     2                       - 2d0 * dh1
+     3                       * ( SCLmNC(igrid,jxi+1,1,1,beta,alpha)
+     4                       - SCLmNC(igrid,jxi,1,1,beta,alpha) )
+     5                       / dlogxi
+                     enddo
+                  enddo
+               enddo
+            endif
+*
+*     FFN0
+*
+            if(MassScheme(1:4).eq."FFN0".or.
+     1         MassScheme(1:5).eq."FONLL")then
+               dh1 = 3d0 * CF * tRen
+               do jxi=1,nxir-1
+                  dlogxi = dlog( xigrid((jxi+1)*xistep)
+     1                         / xigrid(jxi*xistep) )
+                  do beta=0,gbound
+                     do alpha=beta,nin(igrid)-1
+*     Numerical derivatives
+                        SC2m0NC(igrid,jxi,1,2,beta,alpha) = 
+     1                       SC2m0NC(igrid,jxi,1,2,beta,alpha)
+     2                       - 2d0 * dh1
+     3                       * ( SC2m0NC(igrid,jxi+1,1,1,beta,alpha)
+     4                       - SC2m0NC(igrid,jxi,1,1,beta,alpha) )
+     5                       / dlogxi
+                     enddo
+                  enddo
+               enddo
+            endif
          endif
       else
 *
@@ -569,11 +630,11 @@
                         do k=1,2
                            SC2mNC(igrid,jxi,k,2,beta,alpha) = 
      1                          SC2mNC(igrid,jxi,k,2,beta,alpha)
-     2                          + ( tR - tF ) * b0
+     2                          + ( tRen - tFac ) * b0
      3                          * SC2mNC(igrid,jxi,k,1,beta,alpha)
                            SCLmNC(igrid,jxi,k,2,beta,alpha) = 
      1                          SCLmNC(igrid,jxi,k,2,beta,alpha)
-     2                          + ( tR - tF ) * b0
+     2                          + ( tRen - tFac ) * b0
      3                          * SCLmNC(igrid,jxi,k,1,beta,alpha)
                         enddo
                      enddo
@@ -594,11 +655,11 @@
                         do k=1,2
                            SC2m0NC(igrid,jxi,k,2,beta,alpha) = 
      1                          SC2m0NC(igrid,jxi,k,2,beta,alpha)
-     2                          + ( tR - tF ) * b0
+     2                          + ( tRen - tFac ) * b0
      3                          * SC2m0NC(igrid,jxi,k,1,beta,alpha)
                            SCLm0NC(igrid,jxi,k,2,beta,alpha) = 
      1                          SCLm0NC(igrid,jxi,k,2,beta,alpha)
-     2                          + ( tR - tF ) * b0
+     2                          + ( tRen - tFac ) * b0
      3                          * SCLm0NC(igrid,jxi,k,1,beta,alpha)
                         enddo
                      enddo
