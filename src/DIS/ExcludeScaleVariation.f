@@ -35,6 +35,7 @@
       integer mapP(2,2),mapC(2)
       integer gbound
       integer ipt_FF
+      integer iximax
       double precision C12P0(4)
       double precision C1LP0(4)
       double precision C13P0(4)
@@ -568,7 +569,8 @@
      1      MassScheme(1:5).eq."FONLL")then
             dh1 = 3d0 * CF * tRen
             do inf=4,6
-               do jxi=ixi(inf),ixi(inf)+1
+               iximax = min(ixi(inf)+1,nxir-1)
+               do jxi=ixi(inf),iximax
                   dlogxi = dlog( xigrid((jxi+1)*xistep)
      1                         / xigrid(jxi*xistep) )
                   do beta=0,gbound
@@ -598,7 +600,8 @@
      1      MassScheme(1:5).eq."FONLL")then
             dh1 = 3d0 * CF * tRen
             do inf=4,6
-               do jxi=ixi(inf),ixi(inf)+1
+               iximax = min(ixi(inf)+1,nxir-1)
+               do jxi=ixi(inf),iximax
                   dlogxi = dlog( xigrid((jxi+1)*xistep)
      1                         / xigrid(jxi*xistep) )
                   do beta=0,gbound
