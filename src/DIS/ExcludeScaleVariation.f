@@ -35,7 +35,6 @@
       integer mapP(2,2),mapC(2)
       integer gbound
       integer ipt_FF
-      integer iximax
       double precision C12P0(4)
       double precision C1LP0(4)
       double precision C13P0(4)
@@ -52,6 +51,12 @@
       tFac   = - dlog(kfacQ)
       tFac2h = - tFac * tFac / 2d0
       tRen   = tFac
+*
+*     Exclude renormalization scale variation terms due to the
+*     running of the MSbar masses if needed
+*
+      dh1 = 0d0
+      if(mass_scheme.eq."MSbar") dh1 = 6d0 * CF * tRen
 *
 *     Maps used for the muliplications
 *
@@ -385,18 +390,39 @@
                            enddo
                         endif
 *
-                        do k=1,2
-                           SC2mNC(igrid,jxi,k,2,beta,alpha) = 
-     1                          SC2mNC(igrid,jxi,k,2,beta,alpha)
-     2                          + tRen * b0
-     3                          * SC2mNC(igrid,jxi,k,1,beta,alpha)
-     4                          - tFac * C12P0(k)
-                           SCLmNC(igrid,jxi,k,2,beta,alpha) = 
-     1                          SCLmNC(igrid,jxi,k,2,beta,alpha)
-     2                          + tRen * b0
-     3                          * SCLmNC(igrid,jxi,k,1,beta,alpha)
-     4                          - tFac * C1LP0(k)
-                        enddo
+                        dlogxi = dlog( xigrid((jxi+1)*xistep)
+     1                               / xigrid(jxi*xistep) )
+                        if(jxi.eq.nxir) dlogxi = 1d8
+*     Gluon
+                        SC2mNC(igrid,jxi,1,2,beta,alpha) =
+     1                       SC2mNC(igrid,jxi,1,2,beta,alpha)
+     2                       + tRen * b0
+     3                       * SC2mNC(igrid,jxi,1,1,beta,alpha)
+     4                       - tFac * C12P0(1)
+     5                       - dh1
+     6                       * ( SC2mNC(igrid,jxi+1,1,1,beta,alpha) ! Numerical derivative
+     7                       - SC2mNC(igrid,jxi,1,1,beta,alpha) )
+     8                       / dlogxi
+                        SCLmNC(igrid,jxi,1,2,beta,alpha) =
+     1                       SCLmNC(igrid,jxi,1,2,beta,alpha)
+     2                       + tRen * b0
+     3                       * SCLmNC(igrid,jxi,1,1,beta,alpha)
+     4                       - tFac * C1LP0(1)
+     5                       - dh1
+     6                       * ( SCLmNC(igrid,jxi+1,1,1,beta,alpha) ! Numerical derivative
+     7                       - SCLmNC(igrid,jxi,1,1,beta,alpha) )
+     8                       / dlogxi
+*     Pure-singlet
+                        SC2mNC(igrid,jxi,2,2,beta,alpha) =
+     1                       SC2mNC(igrid,jxi,2,2,beta,alpha)
+     2                       + tRen * b0
+     3                       * SC2mNC(igrid,jxi,2,1,beta,alpha)
+     4                       - tFac * C12P0(2)
+                        SCLmNC(igrid,jxi,2,2,beta,alpha) =
+     1                       SCLmNC(igrid,jxi,2,2,beta,alpha)
+     2                       + tRen * b0
+     3                       * SCLmNC(igrid,jxi,2,1,beta,alpha)
+     4                       - tFac * C1LP0(2)
                      enddo
                   enddo
                enddo
@@ -508,18 +534,35 @@
                            enddo
                         endif
 *
-                        do k=1,2
-                           SC2m0NC(igrid,jxi,k,2,beta,alpha) = 
-     1                          SC2m0NC(igrid,jxi,k,2,beta,alpha)
-     2                          + tRen * b0
-     3                          * SC2m0NC(igrid,jxi,k,1,beta,alpha)
-     4                          - tFac * C12P0(k)
-                           SCLm0NC(igrid,jxi,k,2,beta,alpha) = 
-     1                          SCLm0NC(igrid,jxi,k,2,beta,alpha)
-     2                          + tRen * b0
-     3                          * SCLm0NC(igrid,jxi,k,1,beta,alpha)
-     4                          - tFac * C1LP0(k)
-                        enddo
+                        dlogxi = dlog( xigrid((jxi+1)*xistep)
+     1                               / xigrid(jxi*xistep) )
+                        if(jxi.eq.nxir) dlogxi = 1d8
+*     Gluon
+                        SC2m0NC(igrid,jxi,1,2,beta,alpha) =
+     1                       SC2m0NC(igrid,jxi,1,2,beta,alpha)
+     2                       + tRen * b0
+     3                       * SC2m0NC(igrid,jxi,1,1,beta,alpha)
+     4                       - tFac * C12P0(1)
+     5                       - dh1
+     6                       * ( SC2m0NC(igrid,jxi+1,1,1,beta,alpha) ! Numerical derivative
+     7                       - SC2m0NC(igrid,jxi,1,1,beta,alpha) )
+     8                       / dlogxi
+                        SCLm0NC(igrid,jxi,1,2,beta,alpha) =
+     1                       SCLm0NC(igrid,jxi,1,2,beta,alpha)
+     2                       + tRen * b0
+     3                       * SCLm0NC(igrid,jxi,1,1,beta,alpha)
+     4                       - tFac * C1LP0(1)
+*     Pure-singlet
+                        SC2m0NC(igrid,jxi,2,2,beta,alpha) =
+     1                       SC2m0NC(igrid,jxi,2,2,beta,alpha)
+     2                       + tRen * b0
+     3                       * SC2m0NC(igrid,jxi,2,1,beta,alpha)
+     4                       - tFac * C12P0(2)
+                        SCLm0NC(igrid,jxi,2,2,beta,alpha) =
+     1                       SCLm0NC(igrid,jxi,2,2,beta,alpha)
+     2                       + tRen * b0
+     3                       * SCLm0NC(igrid,jxi,2,1,beta,alpha)
+     4                       - tFac * C1LP0(2)
                      enddo
                   enddo
                enddo
@@ -556,68 +599,6 @@
                enddo
             enddo
          enddo
-      endif
-*
-*     Exclude renormalization scale variation terms due to the
-*     running of the MSbar masses if needed
-*
-      if(mass_scheme.eq."MSbar")then
-*
-*     FFNS
-*
-         if(MassScheme(1:4).eq."FFNS".or.
-     1      MassScheme(1:5).eq."FONLL")then
-            dh1 = 3d0 * CF * tRen
-            do inf=4,6
-               iximax = min(ixi(inf)+1,nxir-1)
-               do jxi=ixi(inf),iximax
-                  dlogxi = dlog( xigrid((jxi+1)*xistep)
-     1                         / xigrid(jxi*xistep) )
-                  do beta=0,gbound
-                     do alpha=beta,nin(igrid)-1
-*     Numerical derivatives
-                        SC2mNC(igrid,jxi,1,2,beta,alpha) =
-     1                       SC2mNC(igrid,jxi,1,2,beta,alpha)
-     2                       - 2d0 * dh1
-     3                       * ( SC2mNC(igrid,jxi+1,1,1,beta,alpha)
-     4                       - SC2mNC(igrid,jxi,1,1,beta,alpha) )
-     5                       / dlogxi
-                        SCLmNC(igrid,jxi,1,2,beta,alpha) =
-     1                       SCLmNC(igrid,jxi,1,2,beta,alpha)
-     2                       - 2d0 * dh1
-     3                       * ( SCLmNC(igrid,jxi+1,1,1,beta,alpha)
-     4                       - SCLmNC(igrid,jxi,1,1,beta,alpha) )
-     5                       / dlogxi
-                     enddo
-                  enddo
-               enddo
-            enddo
-         endif
-*
-*     FFN0
-*
-         if(MassScheme(1:4).eq."FFN0".or.
-     1      MassScheme(1:5).eq."FONLL")then
-            dh1 = 3d0 * CF * tRen
-            do inf=4,6
-               iximax = min(ixi(inf)+1,nxir-1)
-               do jxi=ixi(inf),iximax
-                  dlogxi = dlog( xigrid((jxi+1)*xistep)
-     1                         / xigrid(jxi*xistep) )
-                  do beta=0,gbound
-                     do alpha=beta,nin(igrid)-1
-*     Numerical derivatives
-                        SC2m0NC(igrid,jxi,1,2,beta,alpha) =
-     1                       SC2m0NC(igrid,jxi,1,2,beta,alpha)
-     2                       - 2d0 * dh1
-     3                       * ( SC2m0NC(igrid,jxi+1,1,1,beta,alpha)
-     4                       - SC2m0NC(igrid,jxi,1,1,beta,alpha) )
-     5                       / dlogxi
-                     enddo
-                  enddo
-               enddo
-            enddo
-         endif
       endif
 *
       return
