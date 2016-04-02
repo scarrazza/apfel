@@ -117,44 +117,84 @@
       IMPLICIT NONE
 *
       include "../commons/ipt.h"
+      include "../commons/AlphaEvolution.h"
 **
 *     Input Variables
 *
       INTEGER NF
-      DOUBLE PRECISION BETA0APF,BETA1APF,BETA2APF,B1,B2
-      DOUBLE PRECISION GAMMA0APF,GAMMA1APF,GAMMA2APF,C0,C1,C2
       DOUBLE PRECISION AS,AS0
 **
 *     Internal Variables
 *
-      DOUBLE PRECISION FACT
+      DOUBLE PRECISION FACT,BT0
+      DOUBLE PRECISION BETA0APF,BETA1APF,BETA2APF,B1,B2
+      DOUBLE PRECISION GAMMA0APF,GAMMA1APF,GAMMA2APF,C0,C1,C2
+      DOUBLE PRECISION INTEGRANDMASSRUNNING,DGAUSS,EPS
+      PARAMETER(EPS=1D-7)
+      EXTERNAL INTEGRANDMASSRUNNING
+
+      INTEGER CMNF,CMIPT
+      COMMON / CMASSRUNNING / CMNF,CMIPT
 **
 *     Output Variables
 *
       DOUBLE PRECISION EVMASS
 *
-      B1 = BETA1APF(NF)  / BETA0APF(NF)
-      B2 = BETA2APF(NF)  / BETA0APF(NF)
-      C0 = GAMMA0APF()   / BETA0APF(NF)
-      C1 = GAMMA1APF(NF) / BETA0APF(NF)
-      C2 = GAMMA2APF(NF) / BETA0APF(NF)
+      IF(AlphaEvol(1:8).EQ."expanded")THEN
+         BT0 = BETA0APF(NF)
 *
-      FACT = DEXP( C0 * DLOG( AS / AS0 ) )
-      IF(IPT.EQ.0)THEN
-         EVMASS = FACT
-      ELSEIF(IPT.EQ.1)THEN
-         EVMASS = FACT * ( 1D0 + ( C1 - B1 * C0 ) * AS )
-     1                 / ( 1D0 + ( C1 - B1 * C0 ) * AS0 )
-      ELSEIF(IPT.EQ.2)THEN
-         EVMASS = FACT * ( 1D0 + ( C1 - B1 * C0 ) * AS 
-     1                 + ( C2 - C1 * B1 - B2 * C0 
-     2                 + B1**2 * C0 + ( C1 
-     3                 - B1 * C0 )**2 ) * AS**2 / 2D0 )
-     4                 / ( 1D0 + ( C1 - B1 * C0 ) * AS0 
-     5                 + ( C2 - C1 * B1 - B2 * C0 
-     6                 + B1**2 * C0 + ( C1 
-     7                 - B1 * C0 )**2 ) * AS0**2 / 2D0 )
+         C0  = GAMMA0APF() / BT0
+         FACT = DEXP( C0 * DLOG( AS / AS0 ) )
+         IF(IPT.EQ.0)THEN
+            EVMASS = FACT
+         ELSEIF(IPT.EQ.1)THEN
+            B1 = BETA1APF(NF)  / BT0
+            C1 = GAMMA1APF(NF) / BT0
+            EVMASS = FACT * ( 1D0 + ( C1 - B1 * C0 ) * AS )
+     1                    / ( 1D0 + ( C1 - B1 * C0 ) * AS0 )
+         ELSEIF(IPT.EQ.2)THEN
+            B1 = BETA1APF(NF)  / BT0
+            B2 = BETA2APF(NF)  / BT0
+            C1 = GAMMA1APF(NF) / BT0
+            C2 = GAMMA2APF(NF) / BT0
+            EVMASS = FACT * ( 1D0 + ( C1 - B1 * C0 ) * AS
+     1                    + ( C2 - C1 * B1 - B2 * C0
+     2                    + B1**2 * C0 + ( C1
+     3                    - B1 * C0 )**2 ) * AS**2 / 2D0 )
+     4                    / ( 1D0 + ( C1 - B1 * C0 ) * AS0
+     5                    + ( C2 - C1 * B1 - B2 * C0
+     6                    + B1**2 * C0 + ( C1
+     7                    - B1 * C0 )**2 ) * AS0**2 / 2D0 )
+         ENDIF
+      ELSE
+         CMNF  = NF
+         CMIPT = IPT
+         EVMASS = DEXP(DGAUSS(INTEGRANDMASSRUNNING,AS0,AS,EPS))
       ENDIF
+*
+      RETURN
+      END
+*
+****************************************************************
+      FUNCTION INTEGRANDMASSRUNNING(AS)
+**
+*     Input Variables
+*
+      DOUBLE PRECISION AS
+**
+*     Internal Variables
+*
+      DOUBLE PRECISION FGAMMA,FBETA
+
+      INTEGER CMNF,CMIPT
+      COMMON / CMASSRUNNING / CMNF,CMIPT
+**
+*     Output Variables
+*
+      DOUBLE PRECISION INTEGRANDMASSRUNNING
+*
+      INTEGRANDMASSRUNNING = FGAMMA(AS,CMNF,CMIPT)
+     1                     / FBETA(AS,CMNF,CMIPT)
 *
       RETURN
       END
