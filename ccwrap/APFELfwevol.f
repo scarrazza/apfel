@@ -252,6 +252,14 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      function fgetthreshold(i)
+      integer i
+      double precision fgetthreshold
+      fgetthreshold = GetThreshold(i)
+      return
+      end
+
+ccccccccccccc      
       subroutine fsetalphaqcdref(alpharef,Qref)
       double precision alpharef,Qref      
       call SetAlphaQCDRef(alpharef,Qref)

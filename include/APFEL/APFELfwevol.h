@@ -118,6 +118,9 @@ extern "C" {
 #define fheavyquarkmass FC_FUNC(heavyquarkmass,HEAVYQUARKMASS)
   double fheavyquarkmass(int*,double*);
 
+#define fgetthreshold FC_FUNC(getthreshold,GETTHRESHOLD)
+  double fgetthreshold(int*);
+
 #define fsetalphaqcdref FC_FUNC(setalphaqcdref,SETALPHAQCDREF)
   void fsetalphaqcdref(double*,double*);
 

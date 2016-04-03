@@ -278,6 +278,10 @@
       write(6,*) "    returns the mass of the i-th heavy quark"
       write(6,*) "    (i = 4,5,6) scale 'Q' [GeV] (the masses run only"
       write(6,*) "    when using the MSbar scheme)."
+      write(6,*) achar(27)//"[34m- GetThreshold(int i):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    returns the value of the i-th heavy quark"
+      write(6,*) "    threhold in GeV (i = 4,5,6)."
       write(6,*) achar(27)//"[34m- nIntervals():"//achar(27)//"[0m"
       write(6,*) "    returns the number of intervals of the joint"
       write(6,*) "    grid."
