@@ -597,6 +597,7 @@ c         kappa = 1d0                          ! mu_R / mu_F
 *
 ****************************************************************************
       FUNCTION zriddr(func,i,x1,x2,xacc)
+      IMPLICIT NONE
       INTEGER MAXIT,i
       DOUBLE PRECISION zriddr,x1,x2,xacc,func,UNUSED
       PARAMETER (MAXIT=60,UNUSED=-1.11E30)

@@ -289,31 +289,24 @@
          call exit(-10)
       endif
 *
-*     Check that each scale at which heavy quark masses have been defined
-*     above it's threshold and below the threshold above.
-*     This ensures that no threshold is crossed during the evolution to
-*     calculate the RGI masses. (only for MSbar masses).
+*     Check that the scales at which heavy quark masses have been defined
+*     is above the value of the masses themselves.
 *
       if(mass_scheme.eq."MSbar")then
-         if(q2th(4).ge.k2th(5)*m2ph(5).or.q2th(5).ge.k2th(6)*m2ph(6).or.
-     1      q2th(4).lt.k2th(4)*m2ph(4)-1d-2.or.
-     2      q2th(5).lt.k2th(5)*m2ph(5)-1d-2.or.
-     2      q2th(6).lt.k2th(6)*m2ph(6)-1d-2)then
+         if(m2q(4).gt.q2th(4).or.
+     1      m2q(5).gt.q2th(5).or.
+     1      m2q(6).gt.q2th(6))then
             write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Each heavy quark mass reference scale must be"
-            write(6,*) "between its corresponding threshold and the"
-            write(6,*) "threshold immediately above, i.e.:"
-            write(6,*) "- Mthc < Qc < Mthb"
-            write(6,*) "- Mthb < Qb < Mtht"
-            write(6,*) "- Qt > Mtht"
+            write(6,*) "larger than the value of the mass itself, i.e.:"
+            write(6,*) "- Qc > mc(Qc)"
+            write(6,*) "- Qb > mc(Qb)"
+            write(6,*) "- Qt > mc(Qt)"
             write(6,*) "This condition is not fulfilled with:"
             write(6,*) "  "
-            write(6,"(a,f8.3,a)") " Mthc = ",dsqrt(k2th(4)*m2ph(4)),
-     1                            " GeV"
-            write(6,"(a,f8.3,a)") " Mthb = ",dsqrt(k2th(5)*m2ph(5)),
-     1                            " GeV"
-            write(6,"(a,f8.3,a)") " Mtht = ",dsqrt(k2th(6)*m2ph(6)),
-     1                            " GeV"
+            write(6,"(a,f8.3,a)") " mc(Qc) = ",dsqrt(m2q(4))," GeV"
+            write(6,"(a,f8.3,a)") " mb(Qb) = ",dsqrt(m2q(5))," GeV"
+            write(6,"(a,f8.3,a)") " mt(Qt) = ",dsqrt(m2q(6))," GeV"
             write(6,*) "   "
             write(6,"(a,f8.3,a)") " Qc = ",dsqrt(q2th(4))," GeV"
             write(6,"(a,f8.3,a)") " Qb = ",dsqrt(q2th(5))," GeV"

@@ -15,6 +15,7 @@
       include "../commons/Evs.h"
       include "../commons/MaxFlavourAlpha.h"
       include "../commons/Nf_FF.h"
+      include "../commons/ThresholdAlphaQCD.h"
 **
 *     Input Variables
 *
@@ -23,7 +24,6 @@
 **
 *     Internal Variables
 *
-      DOUBLE PRECISION MU2
       DOUBLE PRECISION A_QCD,ASQ,ASI,ASIM,ASTH(4:6),ASTHM(4:6)
       DOUBLE PRECISION LN
       DOUBLE PRECISION INMASS,EVF
@@ -43,20 +43,18 @@
 *
       ASQ      = A_QCD(Q2)
 *
-      ASTH(4)  = A_QCD(M2TH(4))
-      ASTH(5)  = A_QCD(M2TH(5))
-      ASTH(6)  = A_QCD(M2TH(6))
+      ASTH(4)  = asthUp(4)
+      ASTH(5)  = asthUp(5)
+      ASTH(6)  = asthUp(6)
 *
-      ASTHM(4) = A_QCD(M2TH(4)-EPS)
-      ASTHM(5) = A_QCD(M2TH(5)-EPS)
-      ASTHM(6) = A_QCD(M2TH(6)-EPS)
+      ASTHM(4) = asthDown(4)
+      ASTHM(5) = asthDown(5)
+      ASTHM(6) = asthDown(6)
 *
       ASI      = A_QCD(M2Q(IM))
       ASIM     = A_QCD(M2Q(IM)-EPS)
 *
       INMASS = DSQRT(M2Q(IM))
-*
-      MU2 = KREN * Q2
 *
       IF(EVS.EQ."FF")THEN
          EVF = EVMASS(NF_FF,ASI,ASQ)
@@ -64,26 +62,26 @@
          LN = DLOG(KREN)
 *        Charm
          IF(IM.EQ.4)THEN
-            IF(MU2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
+            IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
                EVF = EVMASS(4,ASI,ASTHM(5)) * DECOUP("UP",5,LN)
      1             * EVMASS(5,ASTH(5),ASTHM(6)) * DECOUP("UP",6,LN)
      2             * EVMASS(6,ASTH(6),ASQ)
-            ELSEIF(MU2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
+            ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
                EVF = EVMASS(4,ASI,ASTHM(5)) * DECOUP("UP",5,LN)
      1             * EVMASS(5,ASTH(5),ASQ)
-            ELSEIF(MU2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
+            ELSEIF(Q2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
                EVF = EVMASS(4,ASI,ASQ)
             ELSE
                EVF = DECOUP("DW",4,LN) / EVMASS(3,ASQ,ASIM) 
             ENDIF
 *        Bottom
          ELSEIF(IM.EQ.5)THEN
-            IF(MU2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
+            IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
                EVF = EVMASS(5,ASI,ASTHM(6)) * DECOUP("UP",6,LN)
      1             * EVMASS(6,ASTH(6),ASQ)
-            ELSEIF(MU2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
+            ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
                EVF = EVMASS(5,ASI,ASQ) 
-            ELSEIF(MU2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
+            ELSEIF(Q2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
                EVF = DECOUP("DW",5,LN) / EVMASS(4,ASQ,ASIM) 
             ELSE
                EVF = DECOUP("DW",4,LN) / EVMASS(3,ASQ,ASTHM(4)) 
@@ -91,11 +89,11 @@
             ENDIF
 *        Top
          ELSEIF(IM.EQ.6)THEN
-            IF(MU2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
+            IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
                EVF = EVMASS(6,ASI,ASQ) 
-            ELSEIF(MU2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
+            ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
                EVF = DECOUP("DW",6,LN) / EVMASS(5,ASQ,ASIM) 
-            ELSEIF(MU2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
+            ELSEIF(Q2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
                EVF = DECOUP("DW",5,LN) / EVMASS(4,ASQ,ASIM) 
      1             * DECOUP("DW",6,LN) / EVMASS(5,ASTH(5),ASTHM(6)) 
             ELSE
@@ -206,6 +204,8 @@
 *
       include "../commons/ipt.h"
       include "../commons/m2th.h"
+      include "../commons/kren.h"
+      include "../commons/ThresholdAlphaQCD.h"
 **
 *     Input Variables
 *
@@ -215,7 +215,7 @@
 **
 *     Internal Variables
 *
-      DOUBLE PRECISION A_QCD,ASTH2(4:6),ASTHM2(4:6)
+      DOUBLE PRECISION ASTH2
       DOUBLE PRECISION EPS
       PARAMETER(EPS=1D-7)
 **
@@ -227,20 +227,14 @@
          DECOUP = 1D0
          RETURN
       ELSE
-         ASTH2(4)  = A_QCD(M2TH(4))**2
-         ASTH2(5)  = A_QCD(M2TH(5))**2
-         ASTH2(6)  = A_QCD(M2TH(6))**2
-*
-         ASTHM2(4) = A_QCD(M2TH(4)-EPS)**2
-         ASTHM2(5) = A_QCD(M2TH(5)-EPS)**2
-         ASTHM2(6) = A_QCD(M2TH(6)-EPS)**2
-*
          IF(DIR.EQ."DW")THEN
-            DECOUP = 1D0 + ASTH2(IM) * ( 89D0 / 27D0 - 20D0 / 9D0 * LN 
-     1                                 + 4D0 / 3D0 * LN**2 )
+            ASTH2  = asthUp(IM)**2
+            DECOUP = 1D0 + ASTH2 * ( 89D0 / 27D0 - 20D0 / 9D0 * LN
+     1                             + 4D0 / 3D0 * LN**2 )
          ELSEIF(DIR.EQ."UP")THEN
-            DECOUP = 1D0 - ASTHM2(IM) * ( 89D0 / 27D0 - 20D0 / 9D0 * LN 
-     1                                  + 4D0 / 3D0 * LN**2 )
+            ASTH2 = asthDown(IM)**2
+            DECOUP = 1D0 - ASTH2 * ( 89D0 / 27D0 - 20D0 / 9D0 * LN
+     1                             + 4D0 / 3D0 * LN**2 )
          ELSE
             WRITE(6,*) "In src/Evolution/MSbarmass.f:"
             WRITE(6,*) "Unknown direction, DIR =",DIR
@@ -267,7 +261,7 @@
 **
 *     Internal Variables
 *
-      double precision gamma0apf,gamma1apf,gamma2apf
+      double precision gamma0apf,gamma1apf,gamma2apf,gamma3apf
 **
 *     Output Variables
 *
@@ -278,8 +272,12 @@
       elseif(ipt.eq.1)then
          fgamma = - a * ( gamma0apf() + a * gamma1apf(nf) )
       elseif(ipt.eq.2)then
-         fgamma = - a * ( gamma0apf() 
-     1            + a * ( gamma1apf(nf) + a * gamma2apf(nf) ) )
+         fgamma = - a * ( gamma0apf()
+     1        + a * ( gamma1apf(nf) + a * gamma2apf(nf) ) )
+      elseif(ipt.eq.3)then
+         fgamma = - a * ( gamma0apf()
+     1        + a * ( gamma1apf(nf)
+     2        + a * ( gamma2apf(nf) + a * gamma3apf(nf) ) ) )
       endif
 *
       return
@@ -339,6 +337,32 @@
       end
 *
 ****************************************************************************
+      function gamma3apf(nf)
+*
+      implicit none
+*
+      include "../commons/consts.h"
+**
+*     Input Variables
+*
+      integer nf
+**
+*     Output Variables
+*
+      double precision gamma3apf
+*
+      gamma3apf = 4603055d0 / 162d0 + 135680d0 * zeta3 / 28d0
+     1     - 8800d0 * zeta5
+     2     + ( - 91723d0 / 27d0 - 34192d0 * zeta3 / 9d0 + 880d0 * zeta4
+     3     + 18400d0 * zeta5 / 9d0 ) * nf
+     5     + ( 5242d0 / 243d0 + 800d0 * zeta3 / 9d0
+     6     - 160d0 * zeta4 / 3d0 ) * nf**2
+     7     + ( 332d0 / 243d0 + 64d0 * zeta3 / 27d0 ) * nf**3
+*
+      return
+      end
+*
+****************************************************************************
 *
 *     Function whose zero is the so-called RG invariant mass.
 *     For the MSbar mass, it finds the scale m such that m(m) = m.
@@ -349,6 +373,11 @@
       implicit none
 *
       include "../commons/m2th.h"
+      include "../commons/kren.h"
+      include "../commons/Evs.h"
+      include "../commons/MaxFlavourAlpha.h"
+      include "../commons/Nf_FF.h"
+      include "../commons/ThresholdAlphaQCD.h"
 **
 *     Input Variables
 *
@@ -357,16 +386,62 @@
 **
 *     Internal Variables
 *
-      double precision evmass
-      double precision a_QCD,as0,as
-**
+      DOUBLE PRECISION Q2
+      DOUBLE PRECISION A_QCD,ASQ,ASI,ASTH(4:6),ASTHM(4:6)
+      DOUBLE PRECISION LN
+      DOUBLE PRECISION INMASS,EVF
+      DOUBLE PRECISION EVMASS,DECOUP
+*
 *     Output Variables
 *
       double precision MassQSplit
 *
-      as0 = a_QCD(q2th(i))
-      as  = a_QCD(Q**2)
-      MassQSplit = dsqrt(m2q(i)) * evmass(i,as0,as) - Q
+      Q2  = Q * Q
+*
+      ASQ = A_QCD(Q2)
+      ASI = A_QCD(Q2TH(I))
+*
+      ASTH(4)  = asthUp(4)
+      ASTH(5)  = asthUp(5)
+      ASTH(6)  = asthUp(6)
+*
+      ASTHM(4) = asthDown(4)
+      ASTHM(5) = asthDown(5)
+      ASTHM(6) = asthDown(6)
+*
+      INMASS = DSQRT(M2Q(I))
+*
+      IF(EVS.EQ."FF")THEN
+         EVF = EVMASS(NF_FF,ASI,ASQ)
+      ELSEIF(EVS.EQ."VF")THEN
+         LN = DLOG(KREN)
+*        Charm
+         IF(I.EQ.4)THEN
+            IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
+               EVF = EVMASS(6,ASI,     ASTH(6)) * DECOUP("DW",6,LN)
+     1             * EVMASS(5,ASTHM(6),ASTH(5)) * DECOUP("DW",5,LN)
+     2             * EVMASS(4,ASTHM(5),ASQ)
+            ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
+               EVF = EVMASS(5,ASI,     ASTH(5)) * DECOUP("DW",5,LN)
+     1             * EVMASS(4,ASTHM(5),ASQ)
+            ELSEIF(Q2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
+               EVF = EVMASS(4,ASI,ASQ)
+            ENDIF
+*        Bottom
+         ELSEIF(I.EQ.5)THEN
+            IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
+               EVF = EVMASS(6,ASI,     ASTH(6)) * DECOUP("DW",5,LN)
+     1             * EVMASS(5,ASTHM(6),ASQ)
+            ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
+               EVF = EVMASS(5,ASI,ASQ) 
+            ENDIF
+*        Top
+         ELSEIF(I.EQ.6)THEN
+            EVF = EVMASS(6,ASI,ASQ) 
+         ENDIF
+      ENDIF
+*
+      MassQSplit = INMASS * EVF - Q
 *
       return
       end
@@ -384,27 +459,22 @@
 **
 *     Internal Variables
 *
-      integer i,j
+      integer i
       double precision MassQSplit,zriddr
       double precision x1,x2
-      double precision acc,window
+      double precision acc
       parameter(acc=1d-10)
-      parameter(window=2d0)
       external MassQSplit
 *
-*     Iterate more times to make sure that the running of alphas
-*     is computed using the correct thresholds.
-*
-      do j=1,4
-         do i=4,6
-            if(q2th(i).ne.m2q(i))then
-               x1 = dsqrt(q2th(i)) - window
-               x2 = dsqrt(q2th(i)) + window
-               m2ph(i) = zriddr(MassQSplit,i,x1,x2,acc)**2
-            endif
-         enddo
-         call ComputeHeavyQuarkThresholds
+      call ThresholdAlphaQCD
+      do i=6,4,-1
+         if(q2th(i).ne.m2q(i))then
+            x1 = dsqrt(m2q(i))
+            x2 = dsqrt(q2th(i))
+            m2ph(i) = zriddr(MassQSplit,i,x1,x2,acc)**2
+         endif
       enddo
+      call ComputeHeavyQuarkThresholds
 *
       return
       end
