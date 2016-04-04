@@ -405,7 +405,11 @@
       write(6,*) achar(27)//"[34m- EnableDampingFONLL(bool):"//
      1           achar(27)//"[0m"
       write(6,*) "    enables or disables the damping factor when the"
-      write(6,*) "    FONLL structure functions are computed."      
+      write(6,*) "    FONLL structure functions are computed."
+      write(6,*) achar(27)//"[34m- SetDampingPowerFONLL(int):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    set the power with which damping factor"
+      write(6,*) "    suppresses the subleading terms."
       write(6,*) achar(27)//"[34m- SelectCharge(string selch):"//
      1           achar(27)//"[0m"
       write(6,*) "    selects one particular charge in the NC structure"

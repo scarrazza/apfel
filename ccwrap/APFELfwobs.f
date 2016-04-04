@@ -310,8 +310,14 @@ ccccccccccccc
 ccccccccccccc
       subroutine fenabledampingfonll(df)
       logical df
-      call EnableDampingfonll(df)
+      call EnableDampingFONLL(df)
       end subroutine fenabledampingfonll
+
+ccccccccccccc
+      subroutine fsetdampingpowerfonll(dp)
+      integer dp
+      call SetDampingPowerFONLL(dp)
+      end subroutine fsetdampingpowerfonll
 
 ccccccccccccc
       function ffksimulator(x,q,y,i,beta)

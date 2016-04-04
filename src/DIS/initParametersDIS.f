@@ -52,6 +52,7 @@
       if(InDynScVar.ne."done")       call EnableDynamicalScaleVariations
      1                                    (.false.)
       if(InDampingFONLL.ne."done")   call EnableDampingFONLL(.true.)
+      if(InDampPowerFONLL.ne."done") call SetDampingPowerFONLL(2)
       if(InTMC.ne."done")            call EnableTargetMassCorrections
      1                                                         (.false.)
       if(InIntrinsicCharm.ne."done") call EnableIntrinsicCharm(.false.)
@@ -179,6 +180,16 @@
          write(6,*) "- 'bottom'"
          write(6,*) "- 'top'"
          write(6,*) "- 'all'"
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
+      endif
+*
+*     Check that the FONLL damping power suppression is larger than 1.
+*
+      if(DampingFONLL.and.DampPowerFONLL.lt.1)then      
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "The FONLL damping suppression power must be"
+         write(6,*) "bigger than 0."
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif

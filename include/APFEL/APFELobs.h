@@ -134,6 +134,9 @@ namespace APFEL {
   /// Enables the FONLL damping factor
   void EnableDampingFONLL(int);
 
+  /// Set the FONLL damping power suppression
+  void SetDampingPowerFONLL(int);
+
   /// Emulator of the FKgenerator
   double FKSimulator(double x,double q,double y,int i,int beta);
 

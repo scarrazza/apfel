@@ -112,6 +112,7 @@
       InTargetDIS       = "xxxx"
       InTMC             = "xxxx"
       InDampingFONLL    = "xxxx"
+      InDampPowerFONLL  = "xxxx"
       InSelectedCharge  = "xxxx"
       InKrenQ           = "xxxx"
       InKfacQ           = "xxxx"

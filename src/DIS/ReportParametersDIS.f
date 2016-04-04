@@ -87,7 +87,8 @@
 *
          if(MassScheme(1:5).eq."FONLL")then
             if(DampingFONLL)then
-               write(6,*) "FONLL damping factor enabled"
+               write(6,"(a,a,i1)") " FONLL damping factor enabled ",
+     1              "with power suppression ",DampPowerFONLL
             else
                write(6,*) "FONLL damping factor disabled"
             endif

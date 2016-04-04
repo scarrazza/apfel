@@ -269,6 +269,11 @@ namespace APFEL {
     fenabledampingfonll(&df);
   }
 
+  void SetDampingPowerFONLL(int dp)
+  {
+    fsetdampingpowerfonll(&dp);
+  }
+
   double FKSimulator(double x,double q,double y,int i,int beta)
   {
     return ffksimulator(&x,&q,&y,&i,&beta);

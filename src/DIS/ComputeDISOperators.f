@@ -180,7 +180,7 @@
          if(DampingFONLL)then
             if(ihq.gt.Nf_FF)then
                if(Q2.gt.m2th(ihq))then
-                  damp(ihq) = ( 1d0 - m2th(ihq) / Q2 )**2
+                  damp(ihq) = ( 1d0 - m2th(ihq) / Q2 )**DampPowerFONLL
                else
                   damp(ihq) = 0d0
                endif
