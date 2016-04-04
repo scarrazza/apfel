@@ -398,8 +398,8 @@
 *
       Q2  = Q * Q
 *
-      ASQ = A_QCD(Q2)
-      ASI = A_QCD(Q2TH(I))
+      ASI = A_QCD(Q2)
+      ASQ = A_QCD(Q2TH(I))
 *
       ASTH(4)  = asthUp(4)
       ASTH(5)  = asthUp(5)
@@ -418,22 +418,37 @@
 *        Charm
          IF(I.EQ.4)THEN
             IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
-               EVF = EVMASS(6,ASI,     ASTH(6)) * DECOUP("DW",6,LN)
-     1             * EVMASS(5,ASTHM(6),ASTH(5)) * DECOUP("DW",5,LN)
-     2             * EVMASS(4,ASTHM(5),ASQ)
+               EVF = EVMASS(6,ASI,ASQ)
             ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
-               EVF = EVMASS(5,ASI,     ASTH(5)) * DECOUP("DW",5,LN)
-     1             * EVMASS(4,ASTHM(5),ASQ)
+               IF(Q2TH(4).GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
+                  EVF = EVMASS(5,ASI,    ASTHM(6)) * DECOUP("UP",6,LN)
+     1                * EVMASS(6,ASTH(6),ASQ)
+               ELSE
+                  EVF = EVMASS(5,ASI,ASQ)
+               ENDIF
             ELSEIF(Q2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
-               EVF = EVMASS(4,ASI,ASQ)
+               IF(Q2TH(4).GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
+                  EVF = EVMASS(4,ASI,     ASTHM(5)) * DECOUP("UP",5,LN)
+     1                * EVMASS(5,ASTH(5), ASTHM(6)) * DECOUP("UP",6,LN)
+     2                * EVMASS(6,ASTH(6),ASQ)
+               ELSEIF(Q2TH(4).GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
+                  EVF = EVMASS(4,ASI,    ASTHM(5)) * DECOUP("UP",5,LN)
+     2                * EVMASS(5,ASTH(5),ASQ)
+               ELSE
+                  EVF = EVMASS(4,ASI,ASQ)
+               ENDIF
             ENDIF
 *        Bottom
          ELSEIF(I.EQ.5)THEN
             IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
-               EVF = EVMASS(6,ASI,     ASTH(6)) * DECOUP("DW",5,LN)
-     1             * EVMASS(5,ASTHM(6),ASQ)
+               EVF = EVMASS(6,ASI,ASQ)
             ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
-               EVF = EVMASS(5,ASI,ASQ) 
+               IF(Q2TH(5).GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
+                  EVF = EVMASS(5,ASI,    ASTHM(6)) * DECOUP("UP",6,LN)
+     1                * EVMASS(6,ASTH(6),ASQ)
+               ELSE
+                  EVF = EVMASS(5,ASI,ASQ)
+               ENDIF
             ENDIF
 *        Top
          ELSEIF(I.EQ.6)THEN
@@ -441,7 +456,7 @@
          ENDIF
       ENDIF
 *
-      MassQSplit = INMASS * EVF - Q
+      MassQSplit = INMASS / EVF - Q
 *
       return
       end
@@ -466,15 +481,15 @@
       parameter(acc=1d-10)
       external MassQSplit
 *
-      call ThresholdAlphaQCD
       do i=6,4,-1
+         call ThresholdAlphaQCD
          if(q2th(i).ne.m2q(i))then
             x1 = dsqrt(m2q(i))
             x2 = dsqrt(q2th(i))
             m2ph(i) = zriddr(MassQSplit,i,x1,x2,acc)**2
          endif
+         call ComputeHeavyQuarkThresholds
       enddo
-      call ComputeHeavyQuarkThresholds
 *
       return
       end
