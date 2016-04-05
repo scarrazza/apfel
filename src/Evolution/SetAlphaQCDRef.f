@@ -11,6 +11,7 @@
       implicit none
 *
       include "../commons/alpha_ref_QCD.h"
+      include "../commons/InAPFEL.h"
 *
 *     Variables
 *
@@ -19,6 +20,12 @@
       alpha_ref_QCD = alpharef
       q2_ref_QCD    = Qref * Qref
       InAlpQCD      = "done"
+*
+*     Upadate the values of alphas at the thresholds.
+*     Do it only if this function is called after APFEL
+*     has been initialized.
+*
+      if(InAPFEL.eq."done") call ThresholdAlphaQCD
 *
       return
       end
