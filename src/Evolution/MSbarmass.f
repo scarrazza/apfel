@@ -51,10 +51,10 @@
       ASTHM(5) = asthDown(5)
       ASTHM(6) = asthDown(6)
 *
-      ASI      = A_QCD(M2Q(IM))
-      ASIM     = A_QCD(M2Q(IM)-EPS)
+      ASI      = asthUp(IM)
+      ASIM     = asthDown(IM)
 *
-      INMASS = DSQRT(M2Q(IM))
+      INMASS = DSQRT(M2TH(IM))
 *
       IF(EVS.EQ."FF")THEN
          EVF = EVMASS(NF_FF,ASI,ASQ)

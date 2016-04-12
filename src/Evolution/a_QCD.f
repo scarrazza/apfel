@@ -326,7 +326,7 @@ c         kappa = 1d0                          ! mu_R / mu_F
 **
 *     Internal Variables
 *
-      double precision beta0apf,beta1apf,beta2apf
+      double precision beta0apf,beta1apf,beta2apf,beta3apf
 **
 *     Output Variables
 *
@@ -337,8 +337,12 @@ c         kappa = 1d0                          ! mu_R / mu_F
       elseif(ipt.eq.1)then
          fbeta = - a**2 * ( beta0apf(nf) + a * beta1apf(nf) )
       elseif(ipt.eq.2)then
-         fbeta = - a**2 * ( beta0apf(nf) 
+         fbeta = - a**2 * ( beta0apf(nf)
      1           + a * ( beta1apf(nf) + a * beta2apf(nf) ) )
+      elseif(ipt.eq.3)then
+         fbeta = - a**2 * ( beta0apf(nf)
+     1           + a * ( beta1apf(nf)
+     2           + a * ( beta2apf(nf) + a * beta3apf(nf) ) ) )
       endif
 *
       return
@@ -395,6 +399,29 @@ c         kappa = 1d0                          ! mu_R / mu_F
 *
       beta2apf = 2857d0 / 2d0 - 5033d0 / 18d0 * nf 
      1         + 325d0 / 54d0 * nf**2
+*
+      return
+      end
+*
+****************************************************************************
+      function beta3apf(nf)
+*
+      implicit none
+*
+      include "../commons/consts.h"
+**
+*     Input Variables
+*
+      integer nf
+**
+*     Output Variables
+*
+      double precision beta3apf
+*
+      beta3apf = 149753d0 / 6d0 + 3564d0 * zeta3
+     1         + ( - 1078361d0 / 162d0 - 6508d0 * zeta3 / 27d0 ) * nf
+     2         + ( 50065d0 / 162d0 + 6472 * zeta3 / 81d0 ) * nf**2
+     3         + 1093 / 729d0 * nf**3
 *
       return
       end
