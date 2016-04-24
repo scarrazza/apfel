@@ -59,19 +59,24 @@ c      include "../commons/Nf_FF.h"
 **
 *     internal variables
 *
-      integer i
-      double precision rho
+      double precision xi,rho,eta
       double precision cm21g,cml1g
       double precision cm22q,cml2q
       double precision dcm21g,dcml1g
       double precision h1
+c      double precision APFc2log,APFcllog
+      double precision APFc2nlog,APFclnlog,APFc2nlobarg,APFclnlobarg
+      double precision APFc2nloq,APFclnloq,APFc2nlobarq,APFclnlobarq
+c      double precision APFd2nloq,APFdlnloq
 c      double precision beta0apf
 **
 *     output variables
 *
       double precision MassiveCF
 *
-      rho = 1d0 / ( 4d0 / xigrid(ixi) + 1d0 )
+      xi  = xigrid(ixi)
+      rho = 1d0 / ( 4d0 / xi + 1d0 )
+      eta = xi * ( 1d0 / z - 1d0 ) / 4d0 - 1d0
 *
       MassiveCF = 0d0
       if(z.ge.rho) return
@@ -79,28 +84,34 @@ c      double precision beta0apf
 *     Exact expressions
 *
       if(icoef.eq.1)then
-         MassiveCF = 2d0 * cm21g(xigrid(ixi),z)
-         return
+         MassiveCF = 2d0 * cm21g(xi,z)
+c         MassiveCF = xi * APFcllog(eta,xi) / pi / z ! From hqcoef.f
       elseif(icoef.eq.2)then
-         MassiveCF = 2d0 * cml1g(xigrid(ixi),z)
-         return
+         MassiveCF = 2d0 * cml1g(xi,z)
+c         MassiveCF = xi * APFc2log(eta,xi) / pi / z ! From hqcoef.f
       elseif(icoef.eq.7)then
-         MassiveCF = cm22q(xigrid(ixi),z)
-         return
+         MassiveCF = cm22q(xi,z)
+c         MassiveCF = 16d0 * pi * xi * APFd2nloq(eta,xi) / z ! From hqcoef.f
       elseif(icoef.eq.8)then
-         MassiveCF = cml2q(xigrid(ixi),z)
-         return
+         MassiveCF = cml2q(xi,z)
+c         MassiveCF = 16d0 * pi * xi * APFdlnloq(eta,xi) / z ! From hqcoef.f
+      elseif(icoef.eq.3)then
+         MassiveCF = 16d0 * pi * xi * APFc2nlog(eta,xi) / z
+      elseif(icoef.eq.4)then
+         MassiveCF = 16d0 * pi * xi * APFc2nloq(eta,xi) / z
+      elseif(icoef.eq.5)then
+         MassiveCF = 16d0 * pi * xi * APFclnlog(eta,xi) / z
+      elseif(icoef.eq.6)then
+         MassiveCF = 16d0 * pi * xi * APFclnloq(eta,xi) / z
+      elseif(icoef.eq.9)then
+         MassiveCF = 16d0 * pi * xi * APFc2nlobarg(eta,xi) / z
+      elseif(icoef.eq.10)then
+         MassiveCF = 16d0 * pi * xi * APFc2nlobarq(eta,xi) / z
+      elseif(icoef.eq.11)then
+         MassiveCF = 16d0 * pi * xi * APFclnlobarg(eta,xi) / z
+      elseif(icoef.eq.12)then
+         MassiveCF = 16d0 * pi * xi * APFclnlobarq(eta,xi) / z
       endif
-*
-      do i=0,m_coef(icoef)-1
-         MassiveCF = MassiveCF + coef(icoef,ixi,i+1) * z**i
-      enddo
-      MassiveCF = 16d0 * pi * xigrid(ixi) 
-     1          * z**(-coef_p1(icoef)-1)
-     2          * ( rho - z )**(-coef_p2(icoef))
-     3          * MassiveCF
-*
-      if(icoef.eq.1.or.icoef.eq.2) MassiveCF = MassiveCF / 16d0 / pi**2
 *
 *     If the MSbar masses are to be used, add the appropriate term to
 *     the NNLO gluon coefficient functions.
@@ -108,19 +119,19 @@ c      double precision beta0apf
       if(mass_scheme.eq."MSbar")then
          if(icoef.eq.3)then
             h1 = CF * 4d0
-            if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xigrid(ixi)*krenQ)
-            MassiveCF = MassiveCF + 2d0 * h1 * dcm21g(xigrid(ixi),z)
+            if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xi*krenQ)
+            MassiveCF = MassiveCF + 2d0 * h1 * dcm21g(xi,z)
 c            if(.not.MassRunning)then
 c               MassiveCF = MassiveCF + 2d0 * beta0apf(Nf_FF)
-c     1                   * cm21g(xigrid(ixi),z) * dlog(xigrid(ixi))
+c     1                   * cm21g(xi,z) * dlog(xi)
 c            endif
          elseif(icoef.eq.5)then
             h1 = CF * 4d0
-            if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xigrid(ixi)*krenQ)
-            MassiveCF = MassiveCF + 2d0 * h1 * dcml1g(xigrid(ixi),z)
+            if(MassRunning) h1 = h1 + CF * 3d0 * dlog(xi*krenQ)
+            MassiveCF = MassiveCF + 2d0 * h1 * dcml1g(xi,z)
 c            if(.not.MassRunning)then
 c               MassiveCF = MassiveCF + 2d0 * beta0apf(Nf_FF)
-c     1                   * cml1g(xigrid(ixi),z) * dlog(xigrid(ixi))
+c     1                   * cml1g(xi,z) * dlog(xi)
 c            endif
          endif
       endif

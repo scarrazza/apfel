@@ -65,13 +65,11 @@
       else
          fact = dlog( x / xg(igrid,beta) ) / step(igrid)
          do j=0,beta-bound
-            if(x.ge.xg(igrid,beta-j).and.x.lt.xg(igrid,beta-j+1))then
-               w_int = 1d0
-               do delta=0,k
-                  if(delta.ne.j) w_int = w_int * ( fact / ( j - delta ) 
-     1                                 + 1d0 )
-               enddo
-            endif
+            if(x.ge.xg(igrid,beta-j).and.x.lt.xg(igrid,beta-j+1)) exit
+         enddo
+         w_int = 1d0
+         do delta=0,k
+            if(delta.ne.j) w_int = w_int * ( fact / ( j - delta ) + 1 )
          enddo
       endif
 *

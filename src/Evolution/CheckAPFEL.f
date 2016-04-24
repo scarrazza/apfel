@@ -26,6 +26,7 @@
       double precision FLlight,FLcharm,FLbottom,FLtotal
       double precision F3light,F3charm,F3bottom,F3total
       double precision Act(1048)
+      double precision dev
       character*6 apfelversion
       logical succ
       parameter(eps=1d-10)
@@ -141,7 +142,10 @@ c      call EnableWelcomeMessage(.false.)
 *
       succ = .true.
       do iref=1,1048
-         if((Ref(iref)-Act(iref))/Ref(iref).gt.toll) succ = .false.
+         dev = dabs((Ref(iref)-Act(iref))/Ref(iref))
+         if(dev.gt.toll) succ = .false.
+c         if(.not.succ) write(6,*) iref,dev,Ref(iref),Act(iref)
+c         succ = .true.
       enddo
 *
       if(succ)then

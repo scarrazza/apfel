@@ -248,7 +248,6 @@
 *     Non-singlet
             elseif(k.eq.3)then
                CR = MassiveCF(7,wixi,y) 
-c     1            + MassiveCF(13,wixi,y)
             endif
 *     CL
          elseif(sf.eq.2)then

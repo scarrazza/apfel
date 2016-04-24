@@ -151,7 +151,7 @@
          xi(ihq) = Q2 / M2(ihq)
          if(xi(ihq).le.xigrid(xistep))then
             ixi(ihq) = 0
-         elseif(xi(ihq).ge.ximax)then
+         elseif(xi(ihq).ge.xigrid(nxi))then
             ixi(ihq) = nxir
          else
             diff(1) = xi(ihq) - xigrid(1)

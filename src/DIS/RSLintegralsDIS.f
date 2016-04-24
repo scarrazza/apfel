@@ -82,9 +82,6 @@
       double precision kQF2,lnkQF2,lnQ,lnF,lnQ2,lnQF
       double precision lambda,Rf,Rfun
       double precision h1
-      double precision xi,xi0,spread,sig1,sig2
-c      parameter(xi0=2d3,spread=2d1)
-      parameter(xi0=1d3,spread=2d2)
       external integrandsDISzm
       external integrandsDISNCm,integrandsDISNCm0
       external integrandsDISCCm,integrandsDISCCm0
@@ -614,8 +611,7 @@ c               endif
 *     Massive zero FFNS needed for the FONLL scheme
 *     (and also for the FFNS)
 *
-      if(MassScheme(1:4).eq."FFN0".or.MassScheme(1:4).eq."FFNS".or.
-     1   MassScheme(1:5).eq."FONLL")then
+      if(MassScheme(1:4).eq."FFN0".or.MassScheme(1:5).eq."FONLL")then
 *
 *     Neutral Current
 *
@@ -834,29 +830,6 @@ c               endif
                enddo
             enddo
          enddo
-*
-*     In order to improve the NNLO predictions of the FFNS in the large-Q region,
-*     the code smoothly switches to the FFN0 scheme by means of a sigma function
-*     centered in 'xi0'. This is also need to extend the range of the massive
-*     coefficient functions.
-*
-         if(MassScheme(1:4).eq."FFNS".or.MassScheme(1:5).eq."FONLL")then
-            if(ipt_FF.ge.2)then
-               do ixi=1,nxir
-                  xi   = xigrid(ixi*xistep)
-                  sig2 = 1d0 / ( 1d0 + dexp( - ( xi - xi0 ) / spread ) )
-                  sig1 = 1d0 - sig2
-                  do k=1,2
-                     SC2mNC(igrid,ixi,k,2,beta,alpha) =
-     1                    sig1 * SC2mNC(igrid,ixi,k,2,beta,alpha)
-     2                    + sig2 * SC2m0NC(igrid,ixi,k,2,beta,alpha)
-                     SCLmNC(igrid,ixi,k,2,beta,alpha) =
-     1                    sig1 * SCLmNC(igrid,ixi,k,2,beta,alpha)
-     2                    + sig2 * SCLm0NC(igrid,ixi,k,2,beta,alpha)
-                  enddo
-               enddo
-            endif
-         endif
 *
 *     Charged Current
 *
