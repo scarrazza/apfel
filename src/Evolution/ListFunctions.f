@@ -479,7 +479,7 @@
       write(6,*) achar(27)//"[34m- GetFKObservable()"
       write(6,*) achar(27)//"[34m- FKSimulator(string obs, double x,",
      1           " double q, double y, int i, int beta)"
-      write(6,*) achar(27)//"[34m- FKObservables(string obs, double x,",
+      write(6,*) achar(27)//"[34m- FKObservables(double x,",
      1           " double q, double y)"
       write(6,*) achar(27)//"[34m- ComputeHardCrossSectionsDY(",
      1           "string inputfile, string outputfile)"
