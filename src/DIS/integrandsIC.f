@@ -51,7 +51,7 @@
       double precision integrandsICm
 *
       integrandsICm = 0d0
-      if(y.ge.1d0) return
+      if(y.ge.one) return
 *
 *     Interpolant functions
 *
