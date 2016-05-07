@@ -51,7 +51,7 @@
       if(PDFEvol.eq."exactmu".or.Th.eq."QUniD")then
          integralsQED = coup * SQ(igrid,pnf,wnl,kk,alpha,beta)
       else
-         integralsQED = SQ(igrid,pnf,wnl,kk,alpha,beta) 
+         integralsQED = - SQ(igrid,pnf,wnl,kk,alpha,beta)
      1                / beta0qed(bnf,wnl) / coup
       endif
 *

@@ -339,7 +339,7 @@ c         kappa = 1d0                          ! mu_R / mu_F
       elseif(ipt.eq.2)then
          fbeta = - a**2 * ( beta0apf(nf)
      1           + a * ( beta1apf(nf) + a * beta2apf(nf) ) )
-      elseif(ipt.eq.3)then
+      elseif(ipt.ge.3)then
          fbeta = - a**2 * ( beta0apf(nf)
      1           + a * ( beta1apf(nf)
      2           + a * ( beta2apf(nf) + a * beta3apf(nf) ) ) )

@@ -206,7 +206,7 @@ c      return
       BETA0 = BETA0QED(NF,NL)
       L = DLOG( Q2F / Q2I )
 *
-      ALPHAQEDEV = ALPHAREF / ( 1D0 - ALPHAREF * BETA0 * L )
+      ALPHAQEDEV = ALPHAREF / ( 1D0 + ALPHAREF * BETA0 * L )
 *
       RETURN
       END
@@ -240,7 +240,105 @@ c      return
       sumch2(5) = 11d0 / 9d0
       sumch2(6) = 5d0 / 3d0
 *
-      beta0qed = 8d0 / 3d0 * ( nc * sumch2(nf) + nl )
+      beta0qed = - 8d0 / 3d0 * ( nc * sumch2(nf) + nl )
+c      beta0qed = - 4d0 / 3d0 * ( nc * sumch2(nf) + nl )
+*
+      return
+      end
+*
+****************************************************************
+      function beta1qed(nf,nl)
+*
+      implicit none
+**
+*     Input Variables
+*
+      integer nf,nl
+**
+*     Internal Variables
+*
+      integer nc
+      double precision sumch4(3:6)
+**
+*     Output Variables
+*
+      double precision beta1qed
+*
+*     Number of colours
+*
+      nc = 3
+*
+*     Sum of the first 3, 4, 5 and 6 electric charges to the fouth
+*
+      sumch4(3) = 18d0 / 81d0
+      sumch4(4) = 34d0 / 81d0
+      sumch4(5) = 35d0 / 81d0
+      sumch4(6) = 51d0 / 81d0
+*
+      beta1qed = - 16d0 / 4d0 * ( nc * sumch4(nf) + nl )
+*
+      return
+      end
+*
+****************************************************************
+      function beta1qcdqed(nf)
+*
+      implicit none
+**
+*     Input Variables
+*
+      integer nf
+**
+*     Internal Variables
+*
+      double precision sumch2(3:6)
+**
+*     Output Variables
+*
+      double precision beta1qcdqed
+*
+*     Sum of the first 3, 4, 5 and 6 squared electric charges
+*
+      sumch2(3) = 2d0 / 3d0
+      sumch2(4) = 10d0 / 9d0
+      sumch2(5) = 11d0 / 9d0
+      sumch2(6) = 5d0 / 3d0
+*
+      beta1qcdqed = - 2d0 * sumch2(nf)
+*
+      return
+      end
+*
+****************************************************************
+      function beta1qedqcd(nf)
+*
+      implicit none
+**
+*     Input Variables
+*
+      integer nf
+**
+*     Internal Variables
+*
+      integer nc
+      double precision sumch2(3:6)
+**
+*     Output Variables
+*
+      double precision beta1qedqcd
+*
+*     Number of colours
+*
+      nc = 3
+*
+*     Sum of the first 3, 4, 5 and 6 squared electric charges
+*
+      sumch2(3) = 2d0 / 3d0
+      sumch2(4) = 10d0 / 9d0
+      sumch2(5) = 11d0 / 9d0
+      sumch2(6) = 5d0 / 3d0
+*
+      beta1qedqcd = - 16d0 / 3d0 * nc * sumch2(nf)
 *
       return
       end
@@ -276,10 +374,10 @@ c      return
 *     Fourth-order runge-kutta beyond the leading order
 *
       do n=1,nstep
-         k1 = h * fbetaQED(a,nf,nl) / fbeta(as,nf,ipt)
-         k2 = h * fbetaQED(a+k1/2d0,nf,nl) / fbeta(as+h/2d0,nf,ipt)
-         k3 = h * fbetaQED(a+k2/2d0,nf,nl) / fbeta(as+h/2d0,nf,ipt)
-         k4 = h * fbetaQED(a+k3,nf,nl) / fbeta(as+h,nf,ipt)
+         k1 = h * fbetaQED(a,nf,nl,ipt) / fbeta(as,nf,ipt)
+         k2 = h * fbetaQED(a+k1/2d0,nf,nl,ipt) / fbeta(as+h/2d0,nf,ipt)
+         k3 = h * fbetaQED(a+k2/2d0,nf,nl,ipt) / fbeta(as+h/2d0,nf,ipt)
+         k4 = h * fbetaQED(a+k3,nf,nl,ipt) / fbeta(as+h,nf,ipt)
 *
          a  = a + ( k1 + 2d0 * k2 + 2d0 * k3 + k4 ) / 6d0
          as = as + h
@@ -295,24 +393,29 @@ c      return
 *     QED beta function.
 *
 ****************************************************************************
-      function fbetaQED(a,nf,nl)
+      function fbetaQED(a,nf,nl,ipt)
 *
       implicit none
 **
 *     Input Variables
 *
       double precision a
-      integer nf,nl
+      integer nf,nl,ipt
 **
 *     Internal Variables
 *
-      double precision beta0qed
+      double precision beta0qed!,beta1qed
 **
 *     Output Variables
 *
       double precision fbetaQED
 *
-      fbetaQED = a**2 * beta0qed(nf,nl)
+      fbetaQED = - a**2 * beta0qed(nf,nl)
+c      if(ipt.eq.0)then
+c         fbetaQED = - a**2 * beta0qed(nf,nl)
+c      elseif(ipt.ge.1)then
+c         fbetaQED = - a**2 * ( beta0qed(nf,nl) + a * beta1qed(nf,nl) )
+c      endif
 *
       return
       end

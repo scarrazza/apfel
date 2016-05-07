@@ -57,7 +57,7 @@ In this document I will present a suitable flavout basis for the coupled QCD$\ti
 
 \newpage{}
 
-\section{The Structure of the DGLAP Equation}
+\section{The structure of the DGLAP equation}
 
 The DGLAP equation that governs the PDF evolution has a general
 structure that in QCD holds at any perturbative order. Suppose one
@@ -637,7 +637,7 @@ e_u^2\widetilde{P}^-)u_j^-+ \frac1{n_f} (P^V-P^-)V_u + \frac1{n_f} (P^V-P^-)V_d
 \end{equation}
 
 
-\section{Evolution Basis}
+\section{Evolution basis}
 
 In order to diagonlize as much as possible the evolution matrix in the
 presence of QED corrections avoiding unnecessery couplings between parton distributions, we propose
@@ -908,7 +908,7 @@ Notice that eq. (\ref{APFELsys}), recognizing that
 $2e_\Sigma^2=\theta^-$ and $2\delta_e^2=\theta^+$, is consistent with
 eq.~(9) of the APFEL paper.
 
-\section{Including the Lepton PDFs}
+\section{Including the lepton PDFs}
 
 In order to include the lepton PDFs in the coupled QCD$\times$QED
 DGLAP evolution we first need to make some preliminary
@@ -1408,7 +1408,7 @@ V\\
 \end{equation}
 
 
-\subsection{Evolution Equations at LO}
+\subsection{Evolution equations at LO}
 
 At LO in QED, considering that $\mathcal{P}_{q\ell}^S = 0$ and that $\mathcal{P}_{ij}=\widetilde{P}_{ij}$, the
 evolution equations above reduce to:
@@ -1529,8 +1529,79 @@ From the implementation point of view, the main problem is the fact
 that we need to introduce a new threshold between the charm and the
 bottom thresholds and this will complicate the structure of the code.
 
-\bibliographystyle{unsrt}
-\phantomsection\addcontentsline{toc}{section}{\refname}\nocite{*}
-\bibliography{bibliography}
+\section{QED corrections at NLO}
+
+In this section we discuss the details of the implementation of the
+NLO QED corrections.  While the inclusion of the LO corrections
+presents many simplifications, $e.g.$ QED and QCD corrections do not
+mix and thus the DGLAP equations as well as the $\alpha_s$ and
+$\alpha$ evolution equantions are decoupled, when including NLO
+corrections QED and QCD corrections mix both in the DGLAP and in the
+coupling evolution equations. In addition, as far as DIS structure
+functions are concerned, such corrections induce photon initiated
+diagrams that have to be included in order to have the full set of
+corrections. In the following we will first discuss how to generalize
+the coupling evolution equations, we will then turn to the DGLAP, and
+finally we will consider the DIS structure functions.
+
+\subsection{Evolution equations for the couplings}
+
+As already mentioned, NLO QED corrections induce a mixing with QCD.
+At the level of the couplings, this essentially means that the QCD
+$\beta$-function will get corrections proportional to $\alpha$ and
+vice-versa, the QED $\beta$-function will get corrections proportional
+to $\alpha_s$, that is:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \mu^2\frac{\partial \alpha_s}{\partial \mu^2} &=& \displaystyle
+                                                \beta^{\rm QCD}(\alpha_s,\alpha)\,.\\
+\\
+\displaystyle \mu^2\frac{\partial \alpha}{\partial \mu^2} &=& \displaystyle \beta^{\rm QED}(\alpha_s,\alpha)\,.
+\end{array}
+\end{equation}
+As a consequence, these evolution equations form a set of coupled
+differential equations.
+
+Before discussing the numerical solution of these equations, we first
+need to know explicitly the new contributions to the
+$\beta$-functions. In particular, up to NLO one has: 
+\begin{equation}
+\beta^{\rm QCD}(\alpha_s,\alpha) = -\alpha_s\left[\beta_0^{(\alpha_s)}\left(\frac{\alpha_s}{4\pi}\right)+\beta_1^{(\alpha_s\alpha)}\left(\frac{\alpha_s}{4\pi}\right) \left(\frac{\alpha}{4\pi}\right)+\beta_1^{(\alpha_s^2)}\left(\frac{\alpha_s}{4\pi}\right)^2+\dots\right]\,,
+\end{equation}
+and:
+\begin{equation}
+\beta^{\rm QED}(\alpha_s,\alpha) = -\alpha\left[\beta_0^{(\alpha)}\left(\frac{\alpha}{4\pi}\right)+\beta_1^{(\alpha\alpha_s)}\left(\frac{\alpha}{4\pi}\right) \left(\frac{\alpha_s}{4\pi}\right)+\beta_1^{(\alpha^2)}\left(\frac{\alpha}{4\pi}\right)^2+\dots\right]\,,
+\end{equation}
+where the new terms $\beta_1^{(\alpha_s\alpha)}$ and
+$\beta_1^{(\alpha\alpha_s)}$ can be taken from
+Ref.~\cite{Surguladze:1996hx} and, taking into account the additional
+factor four in the definition of the expansion parameter and writing
+explicitly the color factors one finds:
+\begin{equation}
+\beta_1^{(\alpha_s\alpha)} = -2\sum_{i=1}^{n_f}
+q_i^2\quad\mbox{and}\quad \beta_1^{(\alpha\alpha_s)} = -\frac{16}{3}N_c\sum_{i=1}^{n_f} q_i^2\,.
+\end{equation}
+where $n_f$ is the number of active quark flavors and $N_c=3$ is the
+number of colors.  We also need the term $\beta_1^{(\alpha^2)}$ which
+can again be taken from the same paper:
+\begin{equation}
+\beta_1^{(\alpha^2)} = -4\left(n_l+N_c\sum_{i=1}^{n_f} q_i^2\right)\,.
+\end{equation}
+where $n_l$ is the number of active lepton flavors.
+
+
+
+\begin{thebibliography}{alp}
+
+%\cite{Surguladze:1996hx}
+\bibitem{Surguladze:1996hx}
+  L.~R.~Surguladze,
+  %``O(alpha**n alpha-s**m) corrections in e+ e- annihilation and tau decay,''
+  hep-ph/9803211.
+  %%CITATION = HEP-PH/9803211;%%
+  %3 citations counted in INSPIRE as of 29 Apr 2016
+
+\end{thebibliography}
+
 
 \end{document}

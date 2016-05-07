@@ -33,10 +33,10 @@
 *
       double precision fevQCD(0:13,0:nint_max)
 *
-*     Get alphas value at the heavy quark threshold (with nf active flavours)
+*     Get alphas value at the heavy quark threshold (with nf+1 active flavours)
 *
-c      coup = asthUp(nf)
-      coup = asthDown(nf)
+      coup = asthUp(nf)
+c      coup = asthDown(nf)
 *
 *     Singlet map
 *
