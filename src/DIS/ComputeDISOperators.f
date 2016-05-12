@@ -31,6 +31,7 @@
       include "../commons/DynScVar.h"
       include "../commons/MassInterpolIndices.h"
       include "../commons/IntrinsicCharm.h"
+      include "../commons/MaxFlavourPDFs.h"
 **
 *     Internal Variables
 *
@@ -121,6 +122,7 @@
       else
          nf = 3
       endif
+      if(nf.gt.nfMaxPDFs) nf = nfMaxPDFs
       if(MassScheme(1:5).eq."FONLL".and.nf.lt.Nf_FF) nf = Nf_FF
 *
 *     Define the ratio # of protons / # of nucleons of the target
