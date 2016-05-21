@@ -589,7 +589,7 @@ c         kappa = 1d0                          ! mu_R / mu_F
 *
       double precision LambdaMatchDown
 *
-      ln = dlog( kren * k2th(i) )
+      ln = dlog( kren * k2th(i+1) )
 *     Pole Mass
       if(mass_scheme.eq."Pole")then
          c1 = - 2d0 / 3d0 * ln
