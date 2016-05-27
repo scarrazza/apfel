@@ -192,6 +192,7 @@
          else
             damp(ihq) = 1d0
          endif
+         if(ihq.gt.nfMaxPDFs) damp(ihq) = 0d0
       enddo
 *
 *     Include scale variations if the dynamical evaluation
@@ -217,13 +218,13 @@
 *
          if(IntrinsicCharm)then
             ipt_max_IC = min(ipt,1)
-            damp(4) = 1d0
+c            damp(4) = 1d0
          endif
-*     
+*
          do jgrid=1,ngrid
-*     
+*
 *     If an external grid is found compute the whole operator
-*     
+*
             gbound = 0
             if(IsExt(jgrid)) gbound = nin(jgrid)
 *     

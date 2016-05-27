@@ -395,13 +395,13 @@ c     1                 //achar(27)//"[0m"
      1           //achar(27)//"[0m"
             Nf_FF = 3
          endif
-         if(DampingFONLL)then
-            write(6,*) achar(27)//"[33m"//
-     1           "WARNING: If the intrinsic charm is enabled no FONLL",
-     2           " damping will be applied to the charm componet"
-            write(6,*) "         "
-     1              //achar(27)//"[0m"
-         endif
+c         if(DampingFONLL)then
+c            write(6,*) achar(27)//"[33m"//
+c     1           "WARNING: If the intrinsic charm is enabled no FONLL",
+c     2           " damping will be applied to the charm componet"
+c            write(6,*) "         "
+c     1              //achar(27)//"[0m"
+c         endif
       endif
 *
       return
