@@ -171,11 +171,10 @@
          write(6,*) "- 'lambda'"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
-      elseif((AlphaEvol(1:8).eq."expanded".or.
-     1        AlphaEvol(1:5).eq."lambda").and.Th.eq."QUniD")then
+      elseif(AlphaEvol(1:5).eq."lambda".and.Th.eq."QUniD")then
          write(6,*) achar(27)//"[31mERROR:"
-         write(6,*) "The unified solution can be used only with the"
-         write(6,*) "'exact' solution of the coupling equations."
+         write(6,*) "The unified solution cannot be used with the"
+         write(6,*) "'lambda' solution of the coupling equations."
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
@@ -193,14 +192,6 @@
          write(6,*) "- 'exactalpha'"
          write(6,*) "- 'expandalpha'"
          write(6,*) "- 'truncated'"
-         write(6,*) achar(27)//"[0m"
-         call exit(-10)
-      elseif((PDFEvol(1:11).eq."expandalpha".or.
-     1        PDFEvol(1:9).eq."truncated").and.Th.eq."QUniD")then
-         write(6,*) achar(27)//"[31mERROR:"
-         write(6,*) "The unified solution can be used only with the"
-         write(6,*) "'exactmu' and 'exactalpha' solution of the DGLAP"
-         write(6,*) "equation."
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
