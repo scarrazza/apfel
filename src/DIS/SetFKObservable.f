@@ -14,7 +14,7 @@
 **
 *     Input Variables
 *
-      character*15 obs
+      character*17 obs
 *
       FKObservable = obs
 *
@@ -363,6 +363,10 @@
          call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
+         if(obs(9:12).eq."_NF4")then
+            call SetMaxFlavourAlpha(4)
+            call SetMaxFlavourPDFs(4)
+         endif
 *
 ****  SIA normalized cross section
 *
@@ -371,6 +375,10 @@
          call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
+         if(obs(14:17).eq."_NF4")then
+            call SetMaxFlavourAlpha(4)
+            call SetMaxFlavourPDFs(4)
+         endif
       else
          write(6,*) "In SetFKObservable.f:"
          write(6,*) "Invalid observable, obs = ",obs

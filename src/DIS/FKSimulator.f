@@ -28,7 +28,7 @@
       double precision norm
       double precision conv
       parameter(conv=3.893793d10) ! conversion factor from GeV^-2 to 10^-38 cm^2
-      character*15 obs
+      character*17 obs
 **
 *     Output Variables
 *
