@@ -3,11 +3,12 @@
 *     GetSIATotalCrossSection.f:
 *
 *     This function returns SIA total cross section as a function of Q
-*     in GeV.
+*     in GeV and a given perturbative order "pto" and for a given
+*     component.
 *     Reference: eq. (2.19) of arXiv:hep-ph/9609377.
 *
 ************************************************************************
-      function GetSIATotalCrossSection(pto,Q)
+      function GetSIATotalCrossSection(pto,Q,comp)
 *
       implicit none
 *
@@ -22,10 +23,11 @@
 *
       integer pto
       double precision Q
+      character*5 comp
 **
 *     Internal Variables
 *
-      integer i,nf
+      integer i,nf,nfi,nff
       integer NC
       double precision Q2,a_QCD,as(2),a_QED,alpha2
       double precision bq(0:6),dq(0:6),bqt(0:6),sumq
@@ -71,8 +73,39 @@
       endif
       if(nf.gt.nfMaxPDFs) nf = nfMaxPDFs
 *
+      nfi = 1
+      nff = nf
+      if(comp(1:5).eq."total")then
+         nfi = 1
+         nff = nf
+      elseif(comp(1:5).eq."light")then
+         nfi = 1
+         nff = 3
+      elseif(comp(1:4).eq."charm")then
+         nfi = 4
+         nff = 4
+         if(nf.lt.4)then
+            GetSIATotalCrossSection = 0d0
+            return
+         endif
+      elseif(comp(1:4).eq."bottom")then
+         nfi = 5
+         nff = 5
+         if(nf.lt.5)then
+            GetSIATotalCrossSection = 0d0
+            return
+         endif
+      elseif(comp(1:3).eq."top")then
+         nfi = 6
+         nff = 6
+         if(nf.lt.6)then
+            GetSIATotalCrossSection = 0d0
+            return
+         endif
+      endif
+*
       sumq = 0d0
-      do i=1,nf
+      do i=nfi,nff
          sumq = sumq + bq(0) * bq(i)
       enddo
 *

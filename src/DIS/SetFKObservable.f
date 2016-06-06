@@ -368,7 +368,39 @@
             call SetMaxFlavourPDFs(4)
          endif
 *
-****  SIA normalized cross section
+****  SIA normalized light cross section
+*
+      elseif(obs(1:15).eq."SIA_NORM_XSEC_L")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA normalized charm cross section
+*
+      elseif(obs(1:16).eq."SIA_NORM_XSEC_CH")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA normalized bottom cross section
+*
+      elseif(obs(1:16).eq."SIA_NORM_XSEC_BT")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA normalized top cross section
+*
+      elseif(obs(1:16).eq."SIA_NORM_XSEC_TP")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA normalized total cross section
 *
       elseif(obs(1:13).eq."SIA_NORM_XSEC")then
          call SetTimeLikeEvolution(.true.)
