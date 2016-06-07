@@ -340,30 +340,30 @@
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
-*
-*     Make sure that the time-like evolution at NNLO is done in the FFNS
-*
-      if(TimeLike.and.Evs.eq."VF".and.ipt.ge.2)then
-         write(6,*) achar(27)//"[31mERROR:"
-         write(6,*) "The time-like evolution at NNLO is available only",
-     1              " in the FFNS."
-         write(6,*) "(Unknown matching conditions)"
-         write(6,*) "Use 'SetFFNS(nf)' to use the FFNS."
-         write(6,*) achar(27)//"[0m"
-         call exit(-10)
-      endif
 c*
-c*     Make sure that the polarized evolution at NNLO is done in the FFNS
+c*     Make sure that the time-like evolution at NNLO is done in the FFNS
 c*
-c      if(Polarized.and.Evs.eq."VF".and.ipt.ge.2)then
+c      if(TimeLike.and.Evs.eq."VF".and.ipt.ge.2)then
 c         write(6,*) achar(27)//"[31mERROR:"
-c         write(6,*) "The polarized evolution at NNLO is available only",
+c         write(6,*) "The time-like evolution at NNLO is available only",
 c     1              " in the FFNS."
 c         write(6,*) "(Unknown matching conditions)"
 c         write(6,*) "Use 'SetFFNS(nf)' to use the FFNS."
 c         write(6,*) achar(27)//"[0m"
 c         call exit(-10)
 c      endif
+*
+*     Make sure that the polarized evolution at NNLO is done in the FFNS
+*
+      if(Polarized.and.Evs.eq."VF".and.ipt.ge.2)then
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "The polarized evolution at NNLO is available only",
+     1              " in the FFNS."
+         write(6,*) "(Unknown matching conditions)"
+         write(6,*) "Use 'SetFFNS(nf)' to use the FFNS."
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
+      endif
 *
 *     Security switches
 *
