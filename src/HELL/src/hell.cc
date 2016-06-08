@@ -33,7 +33,7 @@ namespace HELLx {
 
   xTable::xTable(string filename, bool nll) {
     isNLL = nll;
-    ifstream infile(filename);
+    ifstream infile(filename.c_str());
     if(!infile.good()) {
       cout << "Error reading table" << endl;
       abort();
@@ -145,7 +145,7 @@ namespace HELLx {
       cout << "ERROR: alpha_s=" << as << " out of interpolation range [" << vas[0] << ", " << vas[vas.size()-1] << "]" << endl;
       exit(22);
     }
-    for(int i=1; i<vas.size(); i++) {
+    for(unsigned int i=1; i<vas.size(); i++) {
       if(as <= vas[i]) break;
       k++;
     }
