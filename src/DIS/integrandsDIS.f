@@ -618,3 +618,64 @@
 *
       return
       end
+*
+************************************************************************
+*
+*     Integrands for the small-x resummed coefficient functions.
+*     The following routine calls the function "xDeltaC2" and "xDeltaCL"
+*     that are the Fortran wrapper of the c++ function provided by the
+*     Bonvini's code HELL.
+*     The input variables of the function "xDeltaC2" and "xDeltaCL" are:
+*
+*        xDeltaC2(k,alphas,y)
+*        xDeltaCL(k,alphas,y)
+*
+*     where:
+*     - k   = 1: g, 2: pure singlet,
+*     - as  = value of alphas / ( 4 * pi ),
+*     - y   = Bjorken's variable.
+*
+************************************************************************
+      function integrandsDISzmRes(y)
+*
+      implicit none
+*
+      include "../commons/consts.h"
+      include "../commons/grid.h"
+      include "../commons/gridAlpha.h"
+      include "../commons/wrapResDIS.h"
+**
+*     Input Variables
+*
+      double precision y
+**
+*     Internal Variables
+*
+      double precision z,w_int,fR
+      double precision xDeltaC2,xDeltaCL,alphas
+**
+*     Output Variables
+*
+      double precision integrandsDISzmRes
+*
+*     Interpolant functions
+*
+      z = xg(igrid,wbeta) / y
+*
+      fR = w_int(inter_degree(igrid),walpha,z)
+*
+*     Contructing integrands
+*
+      alphas = 4d0 * pi * ag(wtau)
+*     C2
+      if(sf.eq.1)then
+         integrandsDISzmRes = xDeltaC2(k,alphas,y) * fR
+*     CL
+      elseif(sf.eq.2)then
+         integrandsDISzmRes = xDeltaCL(k,alphas,y) * fR
+      else
+         integrandsDISzmRes = 0d0
+      endif
+*
+      return
+      end

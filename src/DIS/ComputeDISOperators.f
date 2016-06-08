@@ -32,6 +32,9 @@
       include "../commons/MassInterpolIndices.h"
       include "../commons/IntrinsicCharm.h"
       include "../commons/MaxFlavourPDFs.h"
+      include "../commons/Smallx.h"
+      include "../commons/gridAlpha.h"
+      include "../commons/integralsResDIS.h"
 **
 *     Internal Variables
 *
@@ -41,7 +44,7 @@
 *
       integer jgrid,ipdf,ihq
       integer pt,ipt_FF,iptbkp,ipt_max_IC
-      integer alpha,beta,gamma
+      integer alpha,beta,gamma,tau
       integer nf
       integer gbound
       integer ipr
@@ -61,6 +64,7 @@
       double precision sgn,diff(nxir),xi(4:6),c0(4:6),c1(4:6)
       double precision damp(4:6)
       double precision c2ccIC,clccIC,c3ccIC
+      double precision sxc1,sxc2
       double precision t1,t2
 *
       call cpu_time(t1)
@@ -204,6 +208,20 @@
          enddo
       endif
 *
+*     If small-x resummed coefficient functions are to be included,
+*     find "tau" such that ag(tau) <= as(1) < ag(tau+1) and find
+*     the coefficients of the linear interpolation in alphas.
+*
+      if(Smallx)then
+         do tau=0,na-1
+            if(nfg(tau).eq.nf.and.
+     1         ag(tau).ge.as(1).and.ag(tau+1).lt.as(1)) goto 102
+         enddo
+*     Interpolation coefficient
+ 102     sxc1 = ( ag(tau+1) - as(1) ) / ( ag(tau+1) - ag(tau) )
+         sxc2 = ( as(1) - ag(tau) ) / ( ag(tau+1) - ag(tau) )
+      endif
+*
 *     Electromagnetic and Neutral current structure functions
 *
       if(ProcessDIS.eq."EM".or.ProcessDIS.eq."NC")then
@@ -269,6 +287,23 @@ c            damp(4) = 1d0
                         C3nsm(3) = C3nsm(3)
      1                       + as(pt) * SC3zm(jgrid,nf,4,pt,alpha,beta)
                      enddo
+*
+*     Small-x resummed contributions
+*
+                     if(Smallx)then
+                        C2g(3) = C2g(3)
+     1                       + sxc1 * SC2zmRes(jgrid,1,alpha,beta,tau)
+     2                       + sxc2 * SC2zmRes(jgrid,1,alpha,beta,tau+1)
+                        C2ps(3) = C2ps(3)
+     1                       + sxc1 * SC2zmRes(jgrid,2,alpha,beta,tau)
+     2                       + sxc2 * SC2zmRes(jgrid,2,alpha,beta,tau+1)
+                        CLg(3) = CLg(3)
+     1                       + sxc1 * SCLzmRes(jgrid,1,alpha,beta,tau)
+     2                       + sxc2 * SCLzmRes(jgrid,1,alpha,beta,tau+1)
+                        CLps(3) = CLps(3)
+     1                       + sxc1 * SCLzmRes(jgrid,2,alpha,beta,tau)
+     2                       + sxc2 * SCLzmRes(jgrid,2,alpha,beta,tau+1)
+                     endif
 *
 *     Heavy quark coefficient functions
 *
@@ -544,6 +579,24 @@ c            damp(4) = 1d0
                         C3nsm(3) = C3nsm(3) + as(pt)
      1                       * SC3zm(jgrid,nf,4,pt,alpha,beta)
                      enddo
+*
+*     Small-x resummed contributions
+*
+                     if(Smallx)then
+                        C2g(3) = C2g(3)
+     1                       + sxc1 * SC2zmRes(jgrid,1,alpha,beta,tau)
+     2                       + sxc2 * SC2zmRes(jgrid,1,alpha,beta,tau+1)
+                        C2ps(3) = C2ps(3)
+     1                       + sxc1 * SC2zmRes(jgrid,2,alpha,beta,tau)
+     2                       + sxc2 * SC2zmRes(jgrid,2,alpha,beta,tau+1)
+                        CLg(3) = CLg(3)
+     1                       + sxc1 * SCLzmRes(jgrid,1,alpha,beta,tau)
+     2                       + sxc2 * SCLzmRes(jgrid,1,alpha,beta,tau+1)
+                        CLps(3) = CLps(3)
+     1                       + sxc1 * SCLzmRes(jgrid,2,alpha,beta,tau)
+     2                       + sxc2 * SCLzmRes(jgrid,2,alpha,beta,tau+1)
+                     endif
+*
                      if(nf.gt.3)then
                         do ihq=4,nf
                            C2g(ihq)   = damp(ihq) * C2g(3)
@@ -1020,6 +1073,24 @@ c            damp(4) = 1d0
                         C3nsm(3) = C3nsm(3)
      1                       + as(pt) * SC3zm(jgrid,nf,4,pt,alpha,beta)
                      enddo
+*
+*     Small-x resummed contributions
+*
+                     if(Smallx)then
+                        C2g(3) = C2g(3)
+     1                       + sxc1 * SC2zmRes(jgrid,1,alpha,beta,tau)
+     2                       + sxc2 * SC2zmRes(jgrid,1,alpha,beta,tau+1)
+                        C2ps(3) = C2ps(3)
+     1                       + sxc1 * SC2zmRes(jgrid,2,alpha,beta,tau)
+     2                       + sxc2 * SC2zmRes(jgrid,2,alpha,beta,tau+1)
+                        CLg(3) = CLg(3)
+     1                       + sxc1 * SCLzmRes(jgrid,1,alpha,beta,tau)
+     2                       + sxc2 * SCLzmRes(jgrid,1,alpha,beta,tau+1)
+                        CLps(3) = CLps(3)
+     1                       + sxc1 * SCLzmRes(jgrid,2,alpha,beta,tau)
+     2                       + sxc2 * SCLzmRes(jgrid,2,alpha,beta,tau+1)
+                     endif
+*
                      if(nf.gt.3)then
                         do ihq=4,nf
                            C2g(ihq)   = C2g(3)
@@ -1442,6 +1513,24 @@ c            damp(4) = 1d0
                         C3nsm(3) = C3nsm(3)
      1                       + as(pt) * SC3zm(jgrid,nf,4,pt,alpha,beta)
                      enddo
+*
+*     Small-x resummed contributions
+*
+                     if(Smallx)then
+                        C2g(3) = C2g(3)
+     1                       + sxc1 * SC2zmRes(jgrid,1,alpha,beta,tau)
+     2                       + sxc2 * SC2zmRes(jgrid,1,alpha,beta,tau+1)
+                        C2ps(3) = C2ps(3)
+     1                       + sxc1 * SC2zmRes(jgrid,2,alpha,beta,tau)
+     2                       + sxc2 * SC2zmRes(jgrid,2,alpha,beta,tau+1)
+                        CLg(3) = CLg(3)
+     1                       + sxc1 * SCLzmRes(jgrid,1,alpha,beta,tau)
+     2                       + sxc2 * SCLzmRes(jgrid,1,alpha,beta,tau+1)
+                        CLps(3) = CLps(3)
+     1                       + sxc1 * SCLzmRes(jgrid,2,alpha,beta,tau)
+     2                       + sxc2 * SCLzmRes(jgrid,2,alpha,beta,tau+1)
+                     endif
+*
                      if(nf.gt.3)then
                         do ihq=4,nf
                            C2g(ihq)   = damp(ihq) * C2g(3)

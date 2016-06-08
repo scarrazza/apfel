@@ -14,6 +14,7 @@
       include "../commons/PDFEvolution.h"
       include "../commons/grid.h"
       include "../commons/gridAlpha.h"
+      include "../commons/ipt.h"
 **
 *     Variables
 *
@@ -31,11 +32,11 @@
       endif
       lamax = min(LogAcc,1)
 *
-*     Initialize integrals 
+*     Initialize integrals
 *
       if(IsExt(igrid))then
          do la=lamin,lamax
-            call HELLLogOrder(la)
+            call initHELL(la,ipt,asmh(4),asmh(5),asmh(6))
             do tau=0,na
                do alpha=0,nin(igrid)-1
                   do beta=alpha,nin(igrid)-1
@@ -46,7 +47,7 @@
          enddo
       else
          do la=lamin,lamax
-            call HELLLogOrder(la)
+            call initHELL(la,ipt,asmh(4),asmh(5),asmh(6))
             do tau=0,na
                do alpha=0,nin(igrid)-1
                   call RSLintegralsQCDRes(la,0,alpha,tau)

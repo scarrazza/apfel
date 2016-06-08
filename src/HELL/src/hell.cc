@@ -33,48 +33,68 @@ namespace HELLx {
 
   xTable::xTable(string filename, bool nll) {
     isNLL = nll;
-    ifstream infile(filename.c_str());
+    ifstream infile(filename);
     if(!infile.good()) {
       cout << "Error reading table" << endl;
       abort();
     }
     infile >> Np1 >> Np2 >> x_min >> x_mid >> x_max;
-    xx      = new double[Np1+Np2];
-    xdPplus = new double[Np1+Np2];
-    xdPqg   = new double[Np1+Np2];
+    xx    = new double[Np1+Np2];
+    xdPgg = new double[Np1+Np2];
+    xdPqg = new double[Np1+Np2];
     for(int i=0; i<Np1+Np2; i++) {
       if(i<Np1) xx[i] = x_min * exp(i/(Np1-1.)*log(x_mid/x_min));
       else      xx[i] = x_mid + (i-Np1+1)*(x_max-x_mid)/(Np2-0.);
-      infile >> xdPplus[i];
+      infile >> xdPgg[i];
       if(isNLL) infile >> xdPqg[i];
     }
     infile.close();
   }
 
-  void xTable::eval(double x, double &dPplus, double &dPqg) {
+  double xTable::eval(double x) {
+    if(x>1 || x<0) {
+      cout << "\033[0;31m" << "Error: requesting resummed splitting function for unphysical value of x=" << x << " outside the physical range 0<x<=1" << "\033[0m" << endl;
+      exit(45);
+    }
     if(x>x_max) {
+      cout << "\033[0;31m" << "Warning! Extrapolating out of interpolation range: x=" << x << " > x_max=" << x_max << "\033[0m" << endl;
       x = x_max;
-      cout << "warning: extrapolating out of interpolation range" << endl;
     }
     if(x<x_min) {
+      cout << "\033[0;31m" << "Warning! Extrapolating out of interpolation range: x=" << x << " < x_min=" << x_min << "\033[0m" << endl;
       x = x_min;
-      cout << "warning: extrapolating out of interpolation range" << endl;
     }
     double ii;
     if(x<x_mid) ii = (Np1-1.)*log(x/x_min)/log(x_mid/x_min);
     else        ii = Np1-1.+Np2*(x-x_mid)/(x_max-x_mid);
+    return ii;
+  }
+  void xTable::evalP(double x, double &dPgg, double &dPqg) {
+    double ii = eval(x);
     int i = int(ii);
     if(i<0) {
-      cout << "error: this should never happen" << endl;
+      cout << "\033[0;31m" << "Error: this should never happen" << "\033[0m" << endl;
       abort();
     }
     //cout << setw(15) << x << setw(15) << xx[i] << setw(15) << xx[i+1] << setw(15) << xx[i] + (ii-i)*(xx[i+1]-xx[i]) << endl;
-    dPplus = xdPplus[i] + (i==Np1+Np2-1 ? 0 : (ii-i)*(xdPplus[i+1]-xdPplus[i]));
+    dPgg   = xdPgg[i] + (i==Np1+Np2-1 ? 0 : (ii-i)*(xdPgg[i+1]-xdPgg[i]));
     if(isNLL)
       dPqg = xdPqg[i] + (i==Np1+Np2-1 ? 0 : (ii-i)*(xdPqg[i+1]-xdPqg[i]));
     return;
   }
-
+  /*
+  void xTable::evalC(double x, double &dC2g, double &dCLg) {
+    double ii = eval(x);
+    int i = int(ii);
+    if(i<0) {
+      cout << "\033[0;31m" << "Error: this should never happen" << "\033[0m" << endl;
+      abort();
+    }
+    dC2g = xdC2g[i] + (i==Np1+Np2-1 ? 0 : (ii-i)*(xdC2g[i+1]-xdC2g[i]));
+    dCLg = xdCLg[i] + (i==Np1+Np2-1 ? 0 : (ii-i)*(xdCLg[i+1]-xdCLg[i]));
+    return;
+  }
+  */
 
 
 
@@ -125,7 +145,7 @@ namespace HELLx {
       cout << "ERROR: alpha_s=" << as << " out of interpolation range [" << vas[0] << ", " << vas[vas.size()-1] << "]" << endl;
       exit(22);
     }
-    for(unsigned i=1; i<vas.size(); i++) {
+    for(int i=1; i<vas.size(); i++) {
       if(as <= vas[i]) break;
       k++;
     }
@@ -143,161 +163,79 @@ namespace HELLx {
     return os.str();
   }
 
-  void HELLxnf::ReadTable(int k) {
+  void HELLxnf::ReadTable(int k, map<int,xTable*> &T, string basename) {
     string sord = (_order == 1 ? "nlo" : "lo");
     ostringstream filename;
-    itxT = xT.find(k);
-    if (itxT == xT.end()) {
-      filename << datapath_ << "/xtable_" << sord << "_nf" << _nf << "_alphas" << sas(_alphas[k]) << ".table";
-      xT[k] = new xTable(filename.str(),_order);
+    itxT = T.find(k);
+    if (itxT == T.end()) {
+      filename << datapath_ << "/" << basename << "_" << sord << "_nf" << _nf << "_alphas" << sas(_alphas[k]) << ".table";
+      T[k] = new xTable(filename.str(),_order);
       filename.str("");  filename.clear();
     }
-    itxT = xT.find(k+1);
-    if (itxT == xT.end()) {
-      filename << datapath_ << "/xtable_" << sord << "_nf" << _nf << "_alphas" << sas(_alphas[k+1]) << ".table";
-      xT[k+1] = new xTable(filename.str(),_order);
+    itxT = T.find(k+1);
+    if (itxT == T.end()) {
+      filename << datapath_ << "/" << basename << "_" << sord << "_nf" << _nf << "_alphas" << sas(_alphas[k+1]) << ".table";
+      T[k+1] = new xTable(filename.str(),_order);
     }
   }
 
 
-
-
-  // Delta P_+
-  double HELLxnf::xdeltaPplus(double as, double x) {
+  sqmatrix<double> HELLxnf::DeltaP(double as, double x, Order matched_to_fixed_order) {
     double factor;
     int k = alphas_interpolation(as, _alphas, factor);
-    ReadTable(k);
-    double xdPpl[2], xdPqg[2];
-    xT[k  ]->eval(x,xdPpl[0],xdPqg[0]);
-    xT[k+1]->eval(x,xdPpl[1],xdPqg[1]);
-    double xdGp  = xdPpl[0]+factor*(xdPpl[1]-xdPpl[0]);
-    return xdGp;
-  }
-  /*
-  dcomplex HELLxnf::deltaGammaplus(double as, dcomplex N, double *leadingPole) {
-    N -= 1.;  // restores the common notation
-    double p1, p2, r1, r2, factor;
-    int k = alphas_interpolation(as, p1, p2, r1, r2, factor);
-    dcomplex dgf_k1 = deltaGammaplus_fit(N, pDPp[k]  );
-    dcomplex dgf_k2 = deltaGammaplus_fit(N, pDPp[k+1]);
-    if(leadingPole != NULL) *leadingPole = p1+1;
-    return r1/(N-p1) + r2/(N-p2) + dgf_k1 + factor * (dgf_k2 - dgf_k1);
-  }
-  double HELLxnf::GammaplusNpole(double as) {
-    double factor;
-    int k = alphas_interpolation(as, factor);
-    return 1 + Npole1[k] + factor * (Npole1[k+1] - Npole1[k]);
-  }
-  */
-  // Delta P_qg
-  double HELLxnf::xdeltaPqg(double as, double x) {
-    if(_order==0) return 0;
-    double factor;
-    int k = alphas_interpolation(as, _alphas, factor);
-    ReadTable(k);
-    double xdPpl[2], xdPqg[2];
-    xT[k  ]->eval(x,xdPpl[0],xdPqg[0]);
-    xT[k+1]->eval(x,xdPpl[1],xdPqg[1]);
-    double xdGqg = xdPqg[0]+factor*(xdPqg[1]-xdPqg[0]);
-    return xdGqg;
-  }
-  /*
-  dcomplex HELLxnf::deltaGammaqg(double as, dcomplex N) {
-    if(_order==0) return 0;
-    N -= 1.;  // restores the common notation
-    double factor;
-    int k = alphas_interpolation(as, factor);
-    dcomplex dgf_k1 = deltaFunc_fit_Nspace(N, pDPqg[k]  );
-    dcomplex dgf_k2 = deltaFunc_fit_Nspace(N, pDPqg[k+1]);
-    return dgf_k1 + factor * (dgf_k2 - dgf_k1);
-  }
-  */
-
-
-
-
-  /*
-  // Anomalous dimension Matrix
-  sqmatrix<dcomplex> HELLxnf::DeltaGammaLL(dcomplex N, double as, Order matched_to_fixed_order) {
-    dcomplex dGgg = deltaGammaplus(as, N);
-    if(matched_to_fixed_order < LO) dGgg += as*CA/M_PI/N;
-    // Both of the following options are equally acceptable
-    return sqmatrix<dcomplex>(dGgg, CF/CA*dGgg, 0., 0.);
-    return sqmatrix<dcomplex>(dGgg, 0., 0., 0.);
-  }
-  sqmatrix<dcomplex> HELLxnf::DeltaGammaNLL(dcomplex N, double as, Order matched_to_fixed_order) {
-    dcomplex dGp  = deltaGammaplus(as, N);
-    dcomplex dGqg = deltaGammaqg(as, N);
-    dcomplex d0 = 0;
-    if(matched_to_fixed_order < NLO) {
-      dGp  += as*as/M_PI/M_PI/4. * _nf*(26.*CF-23.*CA)/9./(N-1.);
-      dGqg += as*as/M_PI/M_PI/4. * _nf*20.*CA/9./(N-1.);
-    }
-    if(matched_to_fixed_order < LO)  {
-      d0 = as/M_PI * _nf/3. * CF/CA;
-      dGp  += as/M_PI * (CA/(N-1.) - (11.*CA+2.*_nf*(1.-2.*CF/CA))/12.) ;
-      dGqg += as/M_PI * _nf/3.;
-    }
-    if(matched_to_fixed_order > NLO) {
-      dGp  -= as*as*as/M_PI/M_PI/M_PI/8. * (-12.38818182*CA*CA*CA - 3.066013837*CA*CA*_nf + 6.132027674*CA*CF*_nf)/(N-1.)/(N-1.);
-      dGqg -= as*as*as/M_PI/M_PI/M_PI/8. * 112.*CA*CA*_nf/27./(N-1.)/(N-1.);
-    }
-    dcomplex dGgg = dGp - CF/CA*dGqg;
-    return sqmatrix<dcomplex>(dGgg, CF/CA*(dGgg+d0), dGqg, CF/CA*dGqg-d0);
-  }
-  sqmatrix<dcomplex> HELLxnf::DeltaGamma(double as, dcomplex N, Order matched_to_fixed_order) {
-    if(_order==0)
-      return DeltaGammaLL(N, as, matched_to_fixed_order);
-    else if(_order==1)
-      return DeltaGammaNLL(N, as, matched_to_fixed_order);
-    return sqmatrix<dcomplex>(0,0,0,0);
-  }
-  */
-
-
-
-  // Splitting Function Matrix
-  sqmatrix<double> HELLxnf::DeltaPLL(double x, double as, Order matched_to_fixed_order) {
-    double dGgg = xdeltaPplus(as, x)/x;
-    if(matched_to_fixed_order < LO) dGgg += as*CA/M_PI;
-    // Both of the following options are equally acceptable
-    return sqmatrix<double>(dGgg, CF/CA*dGgg, 0., 0.);
-    return sqmatrix<double>(dGgg, 0., 0., 0.);
-  }
-  sqmatrix<double> HELLxnf::DeltaPNLL(double x, double as, Order matched_to_fixed_order) {
-    double factor;
-    int k = alphas_interpolation(as, _alphas, factor);
-    ReadTable(k);
-    double xdPpl[2], xdPqg[2];
-    xT[k  ]->eval(x,xdPpl[0],xdPqg[0]);
-    xT[k+1]->eval(x,xdPpl[1],xdPqg[1]);
-    double dGp  = (xdPpl[0]+factor*(xdPpl[1]-xdPpl[0]))/x;
+    ReadTable(k, xT, "xtable");
+    double xdPgg[2], xdPqg[2];
+    xT[k  ]->evalP(x,xdPgg[0],xdPqg[0]);
+    xT[k+1]->evalP(x,xdPgg[1],xdPqg[1]);
+    double dGgg = (xdPgg[0]+factor*(xdPgg[1]-xdPgg[0]))/x;
     double dGqg = (xdPqg[0]+factor*(xdPqg[1]-xdPqg[0]))/x;
-    if(matched_to_fixed_order < NLO) {
-      dGp  += as*as/M_PI/M_PI/4. * _nf*(26.*CF-23.*CA)/9./x;
-      dGqg += as*as/M_PI/M_PI/4. * _nf*20.*CA/9./x;
-    }
-    if(matched_to_fixed_order < LO) {
-      cout << "Error: cannot use pure NLL in x-space: delta(1-x) terms are missing" << endl;
-      abort();
-    }
-    if(matched_to_fixed_order > NLO) {
-      dGp  -= as*as*as/M_PI/M_PI/M_PI/8. * (-12.38818182*CA*CA*CA - 3.066013837*CA*CA*_nf + 6.132027674*CA*CF*_nf) * (-log(x)/x);
-      dGqg -= as*as*as/M_PI/M_PI/M_PI/8. * 112.*CA*CA*_nf/27. * (-log(x)/x);
-    }
-    double dGgg = dGp - CF/CA*dGqg;
     return sqmatrix<double>(dGgg, CF/CA*dGgg, dGqg, CF/CA*dGqg);
   }
-  sqmatrix<double> HELLxnf::DeltaP(double as, double x, Order matched_to_fixed_order) {
-    if(_order==0)
-      return DeltaPLL(x, as, matched_to_fixed_order);
-    else if(_order==1) {
-      return DeltaPNLL(x, as, matched_to_fixed_order);
-    }
-    return sqmatrix<double>(0,0,0,0);
+  double HELLxnf::DeltaC(double as, double x, Order matched_to_fixed_order, string id) {
+    if(_order == 0) return 0;
+    double factor;
+    int k = alphas_interpolation(as, _alphas, factor);
+    ReadTable(k, xTC, "xtableC");
+    double xdC2g[2], xdCLg[2];
+    xTC[k  ]->evalP(x,xdC2g[0],xdCLg[0]);
+    xTC[k+1]->evalP(x,xdC2g[1],xdCLg[1]);
+    map<string,double> dCg;
+    dCg["F2"] = (xdC2g[0]+factor*(xdC2g[1]-xdC2g[0]))/x;
+    dCg["FL"] = (xdCLg[0]+factor*(xdCLg[1]-xdCLg[0]))/x;
+    //return dCg[id];
+    return dCg[id] / _nf;
   }
 
 
+  double HELLxnf::deltaC2g  (double as, double x, Order matched_to_fixed_order) {
+    return DeltaC(as, x, matched_to_fixed_order, "F2");
+  }
+  double HELLxnf::deltaC2q  (double as, double x, Order matched_to_fixed_order) {
+    return deltaC2g(as, x, matched_to_fixed_order) * CF/CA;
+  }
+
+  double HELLxnf::deltaCLg  (double as, double x, Order matched_to_fixed_order) {
+    return DeltaC(as, x, matched_to_fixed_order, "FL");
+  }
+  double HELLxnf::deltaCLq  (double as, double x, Order matched_to_fixed_order) {
+    return deltaCLg(as, x, matched_to_fixed_order) * CF/CA;
+  }
+
+  double HELLxnf::deltaMC2g (double as, double x, double m, Order matched_to_fixed_order) {
+    //return DeltaC(as, x, matched_to_fixed_order, "F2m");
+    return 0;
+  }
+  double HELLxnf::deltaMC2q (double as, double x, double m, Order matched_to_fixed_order) {
+    return deltaMC2g(as, x, m, matched_to_fixed_order) * CF/CA;
+  }
+
+  double HELLxnf::deltaMCLg (double as, double x, double m, Order matched_to_fixed_order) {
+    //return DeltaC(as, x, matched_to_fixed_order, "FLm");
+    return 0;
+  }
+  double HELLxnf::deltaMCLq (double as, double x, double m, Order matched_to_fixed_order) {
+    return deltaMCLg(as, x, m, matched_to_fixed_order) * CF/CA;
+  }
 
 
 
@@ -411,55 +349,44 @@ namespace HELLx {
     return res;
   }
 
-  // Delta P_+
-  double HELLx::xdeltaPplus(double as, double x) {
-    int nf = nf_of_as(as);
-    return sxD[nf-nf_min]->xdeltaPplus(as,x);
-  }
-  //dcomplex HELLx::deltaGammaplus(double as, dcomplex N) {
-  //  int nf = nf_of_as(as);
-  //  return sxD[nf-nf_min]->deltaGammaplus(as, N);
-  //}
-  // Delta P_qg
-  double HELLx::xdeltaPqg(double as, double x) {
-    int nf = nf_of_as(as);
-    return sxD[nf-nf_min]->xdeltaPqg(as, x);
-  }
-  //dcomplex HELLx::deltaGammaqg(double as, dcomplex N) {
-  //  int nf = nf_of_as(as);
-  //  return sxD[nf-nf_min]->deltaGammaqg(as, N);
-  //}
-  /*
-  // Delta C_2g
-  double HELLx::xdeltaC2g(double as, double x) {
-    int nf = nf_of_as(as);
-    return sxD[nf-nf_min]->xdeltaC2g(as, x);
-  }
-  dcomplex HELLx::deltaC2g_N(double as, dcomplex N) {
-    int nf = nf_of_as(as);
-    return sxD[nf-nf_min]->deltaC2g_N(as, N);
-  }
-  // Delta C_2g  ---  as-derivative
-  double HELLx::xdeltaC2g_deriv(double as, double x) {
-    int nf = nf_of_as(as);
-    return sxD[nf-nf_min]->xdeltaC2g_deriv(as, x);
-  }
-  dcomplex HELLx::deltaC2g_deriv_N(double as, dcomplex N) {
-    int nf = nf_of_as(as);
-    return sxD[nf-nf_min]->deltaC2g_deriv_N(as, N);
-  }
-  */
   // Delta P Matrix
   sqmatrix<double> HELLx::DeltaP(double as, double x,  Order matched_to_fixed_order) {
     int nf = nf_of_as(as);
     return sxD[nf-nf_min]->DeltaP(as, x, matched_to_fixed_order);
   }
-  // Delta Gamma Matrix
-  //sqmatrix<dcomplex> HELLx::DeltaGamma(double as, dcomplex N, Order matched_to_fixed_order) {
-  //  int nf = nf_of_as(as);
-  //  return sxD[nf-nf_min]->DeltaGamma(as, N, matched_to_fixed_order);
-  //}
 
+
+  double HELLx::deltaC2g  (double as, double x, Order matched_to_fixed_order) {
+    int nf = nf_of_as(as);
+    return sxD[nf-nf_min]->deltaC2g(as, x, matched_to_fixed_order);
+  }
+  double HELLx::deltaC2q  (double as, double x, Order matched_to_fixed_order) {
+    return deltaC2g(as, x, matched_to_fixed_order) * CF/CA;
+  }
+
+  double HELLx::deltaCLg  (double as, double x, Order matched_to_fixed_order) {
+    int nf = nf_of_as(as);
+    return sxD[nf-nf_min]->deltaCLg(as, x, matched_to_fixed_order);
+  }
+  double HELLx::deltaCLq  (double as, double x, Order matched_to_fixed_order) {
+    return deltaCLg(as, x, matched_to_fixed_order) * CF/CA;
+  }
+
+  double HELLx::deltaMC2g (double as, double x, double m, Order matched_to_fixed_order) {
+    int nf = nf_of_as(as);
+    return sxD[nf-nf_min]->deltaMC2g(as, x, matched_to_fixed_order);
+  }
+  double HELLx::deltaMC2q (double as, double x, double m, Order matched_to_fixed_order) {
+    return deltaMC2g(as, x, m, matched_to_fixed_order) * CF/CA;
+  }
+
+  double HELLx::deltaMCLg (double as, double x, double m, Order matched_to_fixed_order) {
+    int nf = nf_of_as(as);
+    return sxD[nf-nf_min]->deltaMCLg(as, x, matched_to_fixed_order);
+  }
+  double HELLx::deltaMCLq (double as, double x, double m, Order matched_to_fixed_order) {
+    return deltaMCLg(as, x, m, matched_to_fixed_order) * CF/CA;
+  }
 
 
 

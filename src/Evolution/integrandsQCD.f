@@ -286,16 +286,15 @@
 ************************************************************************
 *
 *     Integrands for the small-x resummed evolution.
-*     The following routine calls the functions "Hellx" that is the
+*     The following routine calls the function "xDeltaP" that is the
 *     Fortran wrapper of the c++ function provided by the Bonvini's
 *     code HELL.
-*     The input variables of the function Hellx are:
+*     The input variables of the function "xDeltaP" are:
 *
-*        Hellx(k,ipt,as,y)
+*        xDeltaP(k,alphas,y)
 *
 *     where:
-*     - k   = 4: qq, 5: qg, 6: gq, 7: gg (splittinf function),
-*     - ipt = perturbative order to be matched to
+*     - k   = 4: qq, 5: qg, 6: gq, 7: gg (splitting function),
 *     - as  = value of alphas / ( 4 * pi ),
 *     - y   = Bjorken's variable.
 *
@@ -316,8 +315,7 @@
 *     Internal Variables
 *
       double precision z,w_int,fR
-      double precision xDeltaP,alphas!,Hellx
-      external Hellx
+      double precision xDeltaP,alphas
 **
 *     Output Variables
 *
@@ -339,7 +337,7 @@
 *
 ************************************************************************
 *
-*     Integrands for the unpolarized evolution.
+*     Integrands for the polarized evolution.
 *
 ************************************************************************
       function integrandsQCDPol(y)

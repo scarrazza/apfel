@@ -14,5 +14,7 @@ extern "C" {
   void hell_(double *asmc, double *asmb, double *asmt);
   void hellorder_(int *ord);
   double xdeltap_(int *k, double *as, double *x);
+  double xdeltac2_(int *k, double *as, double *x);
+  double xdeltacl_(int *k, double *as, double *x);
 }
 

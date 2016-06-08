@@ -47,7 +47,7 @@
 *     has to be included.
 *
       if(MassScheme.eq."ZM-VFNS") return
-*     
+*
 *     If an external grid is found compute the whole operator
 *
       gbound = 0

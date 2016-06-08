@@ -17,7 +17,6 @@
       include "../commons/Evs.h"
       include "../commons/Nf_FF.h"
       include "../commons/MaxFlavourAlpha.h"
-      include "../commons/ipt.h"
 *
 *     Variables
 *
@@ -26,7 +25,6 @@
       integer nsubgrids,nas(4),ncount,nmax
       double precision a_QCD,amax,amin,step
       double precision lbound(4),ubound(4)
-      double precision asmh(4:6)
       double precision eps
       parameter(eps=1d-12)
 *
@@ -206,10 +204,6 @@
             enddo
          endif
       endif
-*
-*     Initialize HELL
-*
-      call initHELL(ipt,asmh(4),asmh(5),asmh(6))
 *
       return
       end

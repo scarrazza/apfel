@@ -47,9 +47,10 @@
 
 \title{The APFEL DIS Module}
 
-\author{Valerio Bertone$^{a}$}
+\author{Valerio Bertone$^{a,b}$}
 
-\institution{$^{a}$PH Department, TH Unit, CERN, CH-1211 Geneva 23, Switzerland}
+\institution{$^{a}$PH Department, TH Unit, CERN, CH-1211 Geneva 23, Switzerland\\$^{b}$Rudolf Peierls Centre for Theoretical Physics, 1 Keble Road, University of Oxford,
+OX1 3NP Oxford, UK}
 \maketitle
 
 \begin{abstract} In this document I will descrive the old and the new
@@ -1950,10 +1951,42 @@ where $\lambda$ corresponds to the polarization of the incoming
 lepton. It should be stressed that $B_q$ multiplies $g_4$ and $g_L$
 while $D_q$ multiplies $g_1$.
 
+\section{The $\chi$ Prescription in FONLL}
 
+As is well known, the original formulation of the FONLL matched scheme
+gives rise to discontinuities in correspondence of the heavy quark
+thresholds arising from uncontrolled subleading terms. Such subleading
+terms can however be numerically important especially arond the charm
+threshold where the numerical value of the strong coupling $\alpha_s$
+is large. In order to remedy this unwanted feature different
+prescriptions have been introduced and traditionally the FONLL schem
+DIS has been implemented using the so-called damping factor which
+directly suppresses the unwanted subleading terms by means of a
+function that goes smoothly to zero at the threshold and below and
+tends to one for energies much larger than the threshold itself.
 
-
-
+As an alternative to the damping factor, one can damp the subleading
+terms close to the threshold by mimicing in the subtraction terms the
+phase-space suppression given by the presence of one or more heavy
+quarks in the final state. This is easily done juct by introducing the
+so-called slow-rescaling variable $\chi$, that in the NC case is:
+\begin{equation}
+\chi=x\left(1+\frac{4m_H^2}{Q^2}\right)=\frac{x}{\eta}\,,
+\end{equation}
+$m_H$ being the mass of the heavy quark, in the convolution between
+coefficient functions and PDFs in the zero-mass and in the
+massless-limit bits of the FONLL structure function. In other words,
+the usual zero-mass Mellin convolution becomes:
+\begin{equation}
+x\int_x^1\frac{dy}{y}C\left(\frac{x}{y}\right)f(y)\rightarrow x\int_\chi^1\frac{dy}{y}C\left(\frac{\chi}{y}\right)f(y)=x\int_\chi^1\frac{dy}{y}C(y)f\left(\frac{\chi}{y}\right)\,.
+\end{equation}
+The question is how to treat the new integral on a discreet $x$-space
+grid. What we have done so far for the massive integarls like that in
+the r.h.s. of the equation above is re-express it in terms of the
+physical Bjorken $x$ as:
+\begin{equation}
+x\int_\chi^1\frac{dy}{y}C(y)f\left(\frac{\chi}{y}\right)
+\end{equation}
 
 
 \newpage
@@ -2031,8 +2064,6 @@ while $D_q$ multiplies $g_1$.
   %%CITATION = HEP-PH/0604160;%%
   %39 citations counted in INSPIRE as of 16 Mar 2015
 
-
-
 %\cite{Agashe:2014kda}
 \bibitem{Agashe:2014kda}
   K.~A.~Olive {\it et al.} [Particle Data Group Collaboration],
@@ -2051,7 +2082,6 @@ while $D_q$ multiplies $g_1$.
   [arXiv:1210.7203 [hep-ph]].
   %%CITATION = doi:10.1140/epjc/s10052-013-2356-3;%%
   %5 citations counted in INSPIRE as of 10 Dec 2015
-
 
 \end{thebibliography}
 

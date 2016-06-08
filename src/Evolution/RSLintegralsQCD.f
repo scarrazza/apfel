@@ -494,12 +494,12 @@
          SPRes(igrid,k,la,beta,alpha,tau) = 0d0
       enddo
 *
-*     Adjustment od the bounds of the integrals
+*     Adjustment of the bounds of the integrals
 *
       if(alpha.lt.beta)then
          return
       else
-         bound = alpha-inter_degree(igrid)
+         bound = alpha - inter_degree(igrid)
          if(alpha.lt.inter_degree(igrid)) bound = 0
          a = max(xg(igrid,beta),xg(igrid,beta)/xg(igrid,alpha+1))
          b = min(1d0,xg(igrid,beta)/xg(igrid,bound))

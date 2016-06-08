@@ -56,6 +56,7 @@ extern "C" {
       fixed_order_to_be_matched_to = HELLx::NNLO;	
   }
 
+  // Splitting functions
   double xdeltap_(int *k, double *as, double *x)
   {
     xdPNLL = sxD->DeltaP(*as, *x, fixed_order_to_be_matched_to);
@@ -65,12 +66,23 @@ extern "C" {
     else if(*k == 6) xdp = xdPNLL.gq();
     else if(*k == 7) xdp = xdPNLL.gg();
     return xdp;
-    /*
-    cout << endl << "Printing x*DeltaP_ij(x=" << *x << ", as=" << *as << ")"  << endl;
-    cout << "gg: " << xdPNLL.gg() << endl
-	 << "gq: " << xdPNLL.gq() << endl
-	 << "qg: " << xdPNLL.qg() << endl
-	 << "qq: " << xdPNLL.qq() << endl;
-    */
   }
+
+  // Coeffincient functions
+  double xdeltac2_(int *k, double *as, double *x)
+  {
+    double xdc2 = 0;
+    if(*k == 1)      xdc2 = sxD->deltaC2g(*as, *x, fixed_order_to_be_matched_to); // Gluon
+    else if(*k == 2) xdc2 = sxD->deltaC2q(*as, *x, fixed_order_to_be_matched_to); // Quark
+    return xdc2;
+  }
+
+  double xdeltacl_(int *k, double *as, double *x)
+  {
+    double xdcl = 0;
+    if(*k == 1)      xdcl = sxD->deltaCLg(*as, *x, fixed_order_to_be_matched_to); // Gluon
+    else if(*k == 2) xdcl = sxD->deltaCLq(*as, *x, fixed_order_to_be_matched_to); // Quark
+    return xdcl;
+  }
+
 }

@@ -51,14 +51,16 @@ namespace HELLx {
   class xTable {
   private:
     double *xx;
-    double *xdPplus, *xdPqg;
+    double *xdPgg, *xdPqg;//, *xdC2g, *xdCLg;//, *xdMC2g, *xdMCLg;
     int Np1, Np2;
     double x_min, x_mid, x_max;
     bool isNLL;
   public:
     xTable(string filename, bool nll);
     ~xTable() {};
-    void eval(double x, double &dPplus, double &dPqg);
+    double eval (double x);
+    void   evalP(double x, double &dPgg, double &dPqg);
+    //void   evalC(double x, double &dC2g, double &dCLg);
   };
 
 
@@ -71,14 +73,11 @@ namespace HELLx {
     int _order;
     vector<double> _alphas;
     string datapath_;
-    map<int,xTable*> xT;
+    map<int,xTable*> xT, xTC;
     map<int,xTable*>::iterator itxT;
     int alphas_interpolation(double as, vector<double> vas, double &factor);
-    void ReadTable (int k);
-    //sqmatrix<dcomplex> DeltaGammaLL (dcomplex N, double as, Order matched_to_fixed_order=LO);
-    //sqmatrix<dcomplex> DeltaGammaNLL(dcomplex N, double as, Order matched_to_fixed_order=NLO);
-    sqmatrix<double>   DeltaPLL     (double x,  double as, Order matched_to_fixed_order=LO);
-    sqmatrix<double>   DeltaPNLL    (double x,  double as, Order matched_to_fixed_order=NLO);
+    void ReadTable (int k, map<int,xTable*> &T, string basename);
+    double DeltaC(double as, double x, Order matched_to_fixed_order, string id);
   public:
     HELLxnf(int nf, LogOrder order, string datapath="./data/") : _nf(nf), _order(order) { Init(datapath); }
     ~HELLxnf();
@@ -89,16 +88,18 @@ namespace HELLx {
     int GetNf();
     void GetAvailableAlphas(vector<double> &as);
     //
-    // Delta P_+
-    double  xdeltaPplus   (double as, double  x);
-    //dcomplex deltaGammaplus(double as, dcomplex N, double *leadingPole=NULL);
-    //double  GammaplusNpole(double as);
-    // Delta P_qg
-    double xdeltaPqg    (double as, double  x);
-    //dcomplex deltaGammaqg(double as, dcomplex N);
-    // Delta Gamma
-    //sqmatrix<dcomplex> DeltaGamma(double as, dcomplex N, Order matched_to_fixed_order = NLO);
-    sqmatrix<double>   DeltaP    (double as, double x,  Order matched_to_fixed_order = NLO);
+    // Delta P
+    sqmatrix<double> DeltaP(double as, double x,  Order matched_to_fixed_order = NLO);
+    //
+    // Delta Coefficient functions (the quark coefficients are found multiplying by CF/CA)
+    double deltaC2g  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS F2
+    double deltaC2q  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS F2
+    double deltaCLg  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS FL
+    double deltaCLq  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS FL
+    double deltaMC2g (double as, double x, double m, Order matched_to_fixed_order = NLO);  // DIS massive F2
+    double deltaMC2q (double as, double x, double m, Order matched_to_fixed_order = NLO);  // DIS massive F2
+    double deltaMCLg (double as, double x, double m, Order matched_to_fixed_order = NLO);  // DIS massive FL
+    double deltaMCLq (double as, double x, double m, Order matched_to_fixed_order = NLO);  // DIS massive FL
   };
 
 
@@ -134,15 +135,19 @@ namespace HELLx {
     void init_as_thresholds(double as_of_mu(double));
     void init_as_thresholds(double asc, double asb, double ast);
     int nf_of_as(double as);
-    // Delta P_+
-    double  xdeltaPplus   (double as, double  x);
-    //dcomplex deltaGammaplus(double as, dcomplex N);
-    // Delta P_qg
-    double xdeltaPqg    (double as, double  x);
-    //dcomplex deltaGammaqg(double as, dcomplex N);
-    // Delta Gamma
+    //
+    // Delta P
     sqmatrix<double>   DeltaP    (double as, double x,  Order matched_to_fixed_order = NLO);
-    //sqmatrix<dcomplex> DeltaGamma(double as, dcomplex N, Order matched_to_fixed_order = NLO);
+    //
+    // Delta Coefficient functions (the quark coefficients are found multiplying by CF/CA)
+    double deltaC2g  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS F2
+    double deltaC2q  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS F2
+    double deltaCLg  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS FL
+    double deltaCLq  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS FL
+    double deltaMC2g (double as, double x, double m, Order matched_to_fixed_order = NLO);  // DIS massive F2
+    double deltaMC2q (double as, double x, double m, Order matched_to_fixed_order = NLO);  // DIS massive F2
+    double deltaMCLg (double as, double x, double m, Order matched_to_fixed_order = NLO);  // DIS massive FL
+    double deltaMCLq (double as, double x, double m, Order matched_to_fixed_order = NLO);  // DIS massive FL
   };
 
 

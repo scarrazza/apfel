@@ -13,6 +13,7 @@
       include "../commons/Welcome.h"
       include "../commons/grid.h"
       include "../commons/TimeLike.h"
+      include "../commons/Smallx.h"
       include "../commons/InAPFELDIS.h"
 *
 *     Variables
@@ -41,6 +42,7 @@
       else
          do igrid=1,ngrid
             call initIntegralsDIS
+            if(Smallx) call initIntegralsDISRes
          enddo
       endif
       call cpu_time(t2)

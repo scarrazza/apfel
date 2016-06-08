@@ -923,3 +923,71 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
 *
       return
       end
+*
+************************************************************************
+*
+*     Integrals of the small-x resummed coefficient functions.
+*
+************************************************************************
+      subroutine RSLintegralsDISRes(beta,alpha,tau)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/gridAlpha.h"
+      include "../commons/wrapResDIS.h"
+      include "../commons/integralsResDIS.h"
+**
+*     Input Variables
+*
+      integer beta,alpha,tau
+**
+*     Internal Variables
+*
+      integer bound
+      double precision dgauss,a,b,eps
+      double precision integrandsDISzmRes
+      external integrandsDISzmRes
+      parameter(eps=1d-7)
+*
+*     Initialize Integrals
+*
+      do k=1,2
+         SC2zmRes(igrid,k,beta,alpha,tau) = 0d0
+         SCLzmRes(igrid,k,beta,alpha,tau) = 0d0
+      enddo
+*
+*     Adjustment od the bounds of the integrals
+*
+      if(alpha.lt.beta)then
+         return
+      else
+         bound = alpha-inter_degree(igrid)
+         if(alpha.lt.inter_degree(igrid)) bound = 0
+         a = max(xg(igrid,beta),xg(igrid,beta)/xg(igrid,alpha+1))
+         b = min(1d0,xg(igrid,beta)/xg(igrid,bound))
+      endif
+*
+*     Variables needed for wrapping the integrand functions
+*
+      walpha = alpha
+      wbeta  = beta
+      wtau   = tau
+*
+*     Precompute integrals
+*
+*     F2
+      sf = 1
+      do k=1,2
+         SC2zmRes(igrid,k,beta,alpha,tau) =
+     1        dgauss(integrandsDISzmRes,a,b,eps)
+      enddo
+*     FL
+      sf = 2
+      do k=1,2
+         SCLzmRes(igrid,k,beta,alpha,tau) =
+     1        dgauss(integrandsDISzmRes,a,b,eps)
+      enddo
+*
+      return
+      end
