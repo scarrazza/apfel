@@ -446,3 +446,9 @@ ccccccccccccc
       fcheckapfel = CheckAPFEL()
       return
       end
+
+ccccccccccccc      
+      subroutine fsetfactorsmeft(eft)
+      double precision eft
+      call SetFactorSMEFT(eft)
+      end subroutine fsetfactorsmeft

@@ -191,6 +191,9 @@
       write(6,*) "    fast QUniD is used (default false)."
       write(6,*) achar(27)//"[34m- LockGrids(bool):"//achar(27)//"[0m"
       write(6,*) "    locks the subgrids (default false)."
+      write(6,*) achar(27)//"[34m- SetFactorSMEFT(double):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    sets C_G / Lambda^2 in the SMEFT approach."
       write(6,*) achar(27)//"[34m- CleanUp():"//achar(27)//"[0m"
       write(6,*) "    resets all the evolution parameters to the"
       write(6,*) "    default settings."

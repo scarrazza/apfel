@@ -382,4 +382,9 @@ namespace APFEL {
   {
     return fcheckapfel();
   }
+
+  void SetFactorSMEFT(double eft)
+  {
+    fsetfactorsmeft(&eft);
+  }
 }

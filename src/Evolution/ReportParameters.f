@@ -35,6 +35,7 @@
       include "../commons/TauMass.h"
       include "../commons/LeptEvol.h"
       include "../commons/EpsTrunc.h"
+      include "../commons/SMEFT.h"
 *
 *     Report of the parameters (if enabled)
 *
@@ -180,6 +181,9 @@
          if(EvolOp)then
             write(6,*) "Computation of the evolution operator enabled"
          endif
+*
+         write(6,"(a,es12.4,a)") " Value of C_G / Lambda^2 in SMEFT =",
+     1        FactSMEFT
 *
          write(6,*) achar(27)//"[0m"
       endif

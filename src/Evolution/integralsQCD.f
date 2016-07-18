@@ -15,6 +15,7 @@
 *
       implicit none
 *
+      include "../commons/consts.h"
       include "../commons/ipt.h"
       include "../commons/grid.h"
       include "../commons/PDFEvolution.h"
@@ -26,12 +27,13 @@
       include "../commons/EpsTrunc.h"
       include "../commons/MaxFlavourPDFs.h"
       include "../commons/MaxFlavourAlpha.h"
+      include "../commons/SMEFT.h"
 **
 *     Input Variables
 *
       integer alpha,beta,tau,kk
       integer bnf,pnf
-      double precision coup
+      double precision coup,muR2
       double precision fbeta,beta0apf,beta1apf,beta2apf,b1,b2
       double precision c1,c2
 **
@@ -62,6 +64,10 @@
             integralsQCD = integralsQCD
      1                   + coup**pt * SP(igrid,pnf,kk,pt-1,alpha,beta)
          enddo
+*     Include SMEFT contribution to Pgg at LO
+         if(kk.eq.7) integralsQCD = integralsQCD
+     1        + FactSMEFT * sqrt(coup) * muR2(coup)
+     2        * SP(igrid,pnf,8,0,alpha,beta) / 4d0 / pi
 *     Include small-x resummed splitting functions
 *     (linearly interpolated in alphas).
          if(Smallx.and.kk.ge.4)then
@@ -83,6 +89,10 @@
             integralsQCD = integralsQCD
      1                   + coup**pt * SP(igrid,pnf,kk,pt-1,alpha,beta)
          enddo
+*     Include SMEFT contribution to Pgg at LO
+         if(kk.eq.7) integralsQCD = integralsQCD
+     1        + FactSMEFT * sqrt(coup) * muR2(coup)
+     2        * SP(igrid,pnf,8,0,alpha,beta) / 4d0 / pi
 *     Include small-x resummed splitting functions
 *     (linearly interpolated in alphas).
          if(Smallx.and.kk.ge.4)then
@@ -103,6 +113,10 @@
       elseif(PDFEvol.eq."expandalpha")then
 *     LO
          integralsQCD = SP(igrid,pnf,kk,0,alpha,beta)
+*     Include SMEFT contribution to Pgg at LO
+         if(kk.eq.7) integralsQCD = integralsQCD
+     1        + FactSMEFT * muR2(coup)
+     2        * SP(igrid,pnf,8,0,alpha,beta) / 4d0 / pi / sqrt(coup)
 *     Include small-x resummed splitting functions
          if(Smallx.and.kk.ge.4)then
             do tau=0,na-1
@@ -146,6 +160,10 @@
       elseif(PDFEvol.eq."truncated")then
 *     LO
          integralsQCD = SP(igrid,pnf,kk,0,alpha,beta)
+*     Include SMEFT contribution to Pgg at LO
+         if(kk.eq.7) integralsQCD = integralsQCD
+     1        + FactSMEFT * muR2(coup)
+     2        * SP(igrid,pnf,8,0,alpha,beta) / 4d0 / pi / sqrt(coup)
 *     Include small-x resummed splitting functions
          if(Smallx.and.kk.ge.4)then
             do tau=0,na-1

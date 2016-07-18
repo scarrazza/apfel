@@ -1,0 +1,64 @@
+%% LyX 2.0.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[twoside,english]{article}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=2.5cm,lmargin=2cm,rmargin=2cm}
+\usepackage{babel}
+\usepackage{float}
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{esint}
+\usepackage[unicode=true,pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 0},backref=false,colorlinks=false]
+ {hyperref}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+%% Because html converters don't know tabularnewline
+\providecommand{\tabularnewline}{\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+%\numberwithin{equation}{section}
+
+\makeatother
+
+\begin{document}
+
+\title{Notes on the SMEFT implementation}
+
+The standard gluon-to-gluon splitting function at LO reads:
+\begin{equation}
+P_{gg}(x) = 4C_A\left[\frac{1}{(1-x)_+}+\frac{1}{x}-2+x-x^2\right]+\frac{11C_A-4N_f T_R}{3}\delta(1-x)
+\end{equation}
+where we have used our definition of the expantion parameter
+$\alpha_s/4\pi$. Using the SMEFT approach the same splitting function
+gets an additional contribution:
+\begin{equation}
+P_{gg}(x) \rightarrow P_{gg}(x) + \Delta P_{gg}(x,\mu)\,,
+\end{equation}
+where:
+\begin{equation}\label{DeltaP}
+\Delta P_{gg}(x,\mu) = -\frac{4C_A}{g_s(\mu)}\left[\frac{1}{(1-x)_+}+\frac{1}{x}-2+\delta(1-x)\right]\frac{C_G}{\Lambda^2}\mu^2\,.
+\end{equation}
+In eq.~(\ref{DeltaP}) the ratio $C_G/\Lambda^2$ is a fixed parameter
+while $g_s(\mu) = \sqrt{4\pi \alpha_s(\mu)}$. In addition, the factor
+$\mu^2$ that appears in eq.~(\ref{DeltaP}) can be related to $\alpha_s$
+by inverting the function $\alpha_s(\mu)$ such that $\mu^2\equiv
+\mu^2(\alpha_s)$. Finally, we can write:
+\begin{equation}
+\Delta P_{gg}(x,\mu) = -\frac{\mu^2(\alpha_s)}{\sqrt{4\pi
+    \alpha_s}}4C_A\left[\frac{1}{(1-x)_+}+\frac{1}{x}-2+\delta(1-x)\right]\underbrace{\frac{C_G}{\Lambda^2}}_{K_{\rm EFT}}\,,
+\end{equation}
+so that:
+\begin{equation}
+\frac{\alpha_s}{4\pi} P_{gg}(x,\mu) \rightarrow \frac{\alpha_s}{4\pi} P_{gg}(x,\mu) -\sqrt{\frac{\alpha_s}{4\pi}}\frac{\mu^2(\alpha_s)}{4\pi}4C_A\left[\frac{1}{(1-x)_+}+\frac{1}{x}-2+\delta(1-x)\right]K_{\rm EFT}
+\end{equation}
+
+
+
+\end{document}

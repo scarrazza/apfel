@@ -41,6 +41,7 @@
       include "../commons/LeptEvol.h"
       include "../commons/LHAgrid.h"
       include "../commons/EpsTrunc.h"
+      include "../commons/SMEFT.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -82,6 +83,7 @@
       if(InLHgrid.ne."done")      call SetLHgridParameters(100,50,1d-9,
      1                                            1d-1,1d0,50,1d0,1d10)
       if(InQGrid.ne."done")       call SetQGridParameters(70,3)
+      if(InSMEFT.ne."done")       call SetFactorSMEFT(0d0)
       if(InGrid.ne."done")then
          call SetNumberOfGrids(3)
          call SetGridParameters(1,80,3,1d-5)

@@ -13,8 +13,8 @@
 *     3) the grid indices walpha and wbeta,
 *     4) the particular plitting function denoted by k such that:
 *
-*        k  =  1   2   3   4   5   6   7
-*              +   -   V   qq  qg  gq  gg
+*        k  =  1   2   3   4   5   6   7   8
+*              +   -   V   qq  qg  gq  gg  Dgg
 *
 *     that are contained in the common block wrap.h.
 *
@@ -35,6 +35,7 @@
       double precision z,w_int,fR,fS,fL
       double precision PR,PS
       double precision X0NSA,X0NSB,X0QGA,X0GQA,X0GGA,X0GGB
+      double precision DX0GGA,DX0GGB
       double precision X1NSPA,X1NSB,X1NSMA,X1PSA,X1QGA,X1GQA,X1GGA,X1GGB
       double precision P2NSPA,P2NSB,P2NSMA,P2NSSA,P2PSA,P2QGA,P2GQA
       double precision P2GGA,P2GGB
@@ -74,6 +75,10 @@
          elseif(k.eq.7)then
             PR = X0GGA(y)
             PS = X0GGB(y)
+*     SMEFT Delta Gluon-Gluon
+         elseif(k.eq.8)then
+            PR = DX0GGA(y)
+            PS = DX0GGB(y)
          endif
 *
 *     NLO

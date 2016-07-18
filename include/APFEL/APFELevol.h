@@ -240,6 +240,9 @@ namespace APFEL {
 
   /// Check APFEL
   bool CheckAPFEL(void);
+
+  /// Sets the ratio C_G / Lambda^2 in the SMEFT approach.
+  void SetFactorSMEFT(double eft);
 }
 
 #endif

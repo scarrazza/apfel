@@ -843,6 +843,54 @@
        RETURN
        END
 *
+* ---------------------------------------------------------------------
+*
+*
+* ..The regular piece of the 1-loop gg splitting function \Delta P_gg^(0)
+*   for the SMEFT evolution.
+*
+       FUNCTION DX0GGA (X)
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+       DX0GGA = 4D0*CA * ( - 2. + 1D0/X )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the singular (soft) piece.
+*
+       FUNCTION DX0GGB (X)
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+       DX0GGB = 4D0 * CA / ( 1D0 - X )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' piece.
+*
+       FUNCTION DX0GGC (X,NF)
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+       INTEGER NF
+*
+       DX0GGC = 4D0*CA * ( LOG (1D0-X) + 1D0 )
+*
+       RETURN
+       END
+*
 * =================================================================av==
       function S2(x)
 *

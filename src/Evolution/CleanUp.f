@@ -64,6 +64,7 @@
       include "../commons/gridQ.h"
       include "../commons/fphxQ.h"
       include "../commons/StructureFunctionsxQ.h"
+      include "../commons/SMEFT.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -102,6 +103,7 @@
       InPDFEvol         = "xxxx"
       InFastEvol        = "xxxx"
       InLHgrid          = "xxxx"
+      InSMEFT           = "xxxx"
 *
       InAPFELDIS        = "xxxx"
 *

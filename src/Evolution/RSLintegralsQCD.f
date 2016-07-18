@@ -9,8 +9,8 @@
 *     orders in QCD.
 *     The index kk runs like that:
 *
-*     kk  =  1   2   3   4   5   6   7
-*            +   -   V   qq  qg  gq  gg
+*     kk  =  1   2   3   4   5   6   7   8
+*            +   -   V   qq  qg  gq  gg  Dgg
 * 
 ************************************************************************
       subroutine RSLintegralsQCD(nf,beta,alpha)
@@ -32,10 +32,12 @@
       integer bound
       double precision PL(0:2),fL
       double precision X0NSC,X1NSC,P2NSPC,P2NSMC,X0GGC,X1GGC,P2GGC
+      double precision DX0GGC
       double precision dgauss,a,b,eps(0:2)
       double precision integrandsQCD
       double precision integ(0:2)
       double precision ns0L,gg0L,ns0RS,qg0R,gq0R,gg0RS
+      double precision Dgg0L,Dgg0RS
       double precision ns1L,gg1L,ns1RSp,ns1RSm,qq1RS,qg1RS,gq1RS,gg1RS
       double precision ns2Lp,ns2Lm,gg2L,ns2RSp,ns2RSm,ns2RSv
       double precision qq2RS,qg2RS,gq2RS,gg2RS
@@ -45,7 +47,7 @@
 *
 *     Initialize Integrals
 *
-      do k=1,7
+      do k=1,8
          do wipt=0,ipt
             SP(igrid,nf,k,wipt,beta,alpha) = 0d0
          enddo
@@ -73,17 +75,20 @@
 *
 *     Precompute integrals
 *
-      wipt = 0
-      ns0L = X0NSC(a)
-      gg0L = X0GGC(a,nf)
+      wipt  = 0
+      ns0L  = X0NSC(a)
+      gg0L  = X0GGC(a,nf)
+      Dgg0L = DX0GGC(a,nf)
       k = 1
-      ns0RS = dgauss(integrandsQCD,a,b,eps(wipt))
+      ns0RS  = dgauss(integrandsQCD,a,b,eps(wipt))
       k = 5
-      qg0R  = dgauss(integrandsQCD,a,b,eps(wipt))
+      qg0R   = dgauss(integrandsQCD,a,b,eps(wipt))
       k = 6
-      gq0R  = dgauss(integrandsQCD,a,b,eps(wipt))
+      gq0R   = dgauss(integrandsQCD,a,b,eps(wipt))
       k = 7
-      gg0RS = dgauss(integrandsQCD,a,b,eps(wipt))
+      gg0RS  = dgauss(integrandsQCD,a,b,eps(wipt))
+      k = 8
+      Dgg0RS = dgauss(integrandsQCD,a,b,eps(wipt))
       if(ipt.ge.1)then
          wipt = 1
          ns1L = X1NSC(a,nf)
@@ -122,7 +127,7 @@
          gg2RS  = dgauss(integrandsQCD,a,b,eps(wipt))
       endif
 *
-      do k=1,7
+      do k=1,8
 *
 *     LO
 *
@@ -141,11 +146,17 @@
          elseif(k.eq.7)then
             PL(0)    = gg0L
             integ(0) = gg0RS
+*     SMEFT Delta Gluon-Gluon
+         elseif(k.eq.8)then
+            PL(0)    = Dgg0L
+            integ(0) = Dgg0RS
          endif
 *
 *     NLO
 *
          if(ipt.ge.1)then
+            PL(1)    = 0d0
+            integ(1) = 0d0
 *     Plus
             if(k.eq.1)then
                PL(1)    = ns1L
@@ -176,6 +187,8 @@
 *     NNLO
 *
          if(ipt.ge.2)then
+            PL(2)    = 0d0
+            integ(2) = 0d0
 *     Plus
             if(k.eq.1)then
                PL(2)    = ns2Lp
@@ -300,9 +313,9 @@
 *
 *     Precompute integrals
 *
-      wipt = 0
-      ns0L = X0NSC(a)
-      gg0L = X0GGC(a,nf)
+      wipt  = 0
+      ns0L  = X0NSC(a)
+      gg0L  = X0GGC(a,nf)
       k = 1
       ns0RS = dgauss(integrandsQCDT,a,b,eps(wipt))
       k = 5

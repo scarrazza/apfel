@@ -208,7 +208,6 @@ extern "C" {
 #define fsetvfns FC_FUNC(setvfns,SETVFNS)
   void fsetvfns();
 
-
 #define flistfunctions FC_FUNC(listfunctions,LISTFUNCTIONS)
   void flistfunctions(void);
 
@@ -217,6 +216,9 @@ extern "C" {
 
 #define fcheckapfel FC_FUNC(checkapfel,CHECKAPFEL)
   bool fcheckapfel(void);
+
+#define fsetfactorsmeft FC_FUNC(setfactorsmeft,SETFACTORSMEFT)
+  void fsetfactorsmeft(double*);
 }
 
 #endif
