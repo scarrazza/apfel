@@ -330,7 +330,7 @@
 *     Contructing integrands
 *
       alphas = 4d0 * pi * ag(wtau)
-      integrandsQCDRes = xDeltaP(k,alphas,y) * fR
+      integrandsQCDRes = xDeltaP(nfg(wtau),k,alphas,y) * fR
 *
       return
       end

@@ -669,10 +669,10 @@
       alphas = 4d0 * pi * ag(wtau)
 *     C2
       if(sf.eq.1)then
-         integrandsDISzmRes = xDeltaC2(k,alphas,y) * fR
+         integrandsDISzmRes = xDeltaC2(nfg(wtau),k,alphas,y) * fR
 *     CL
       elseif(sf.eq.2)then
-         integrandsDISzmRes = xDeltaCL(k,alphas,y) * fR
+         integrandsDISzmRes = xDeltaCL(nfg(wtau),k,alphas,y) * fR
       else
          integrandsDISzmRes = 0d0
       endif

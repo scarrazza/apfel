@@ -11,10 +11,10 @@
 
 extern "C" {
   void helllogorder_(int *ord);
-  void hell_(double *asmc, double *asmb, double *asmt);
+  void hell_();
   void hellorder_(int *ord);
-  double xdeltap_(int *k, double *as, double *x);
-  double xdeltac2_(int *k, double *as, double *x);
-  double xdeltacl_(int *k, double *as, double *x);
+  double xdeltap_(int *nf, int *k, double *as, double *x);
+  double xdeltac2_(int *nf, int *k, double *as, double *x);
+  double xdeltacl_(int *nf, int *k, double *as, double *x);
 }
 

@@ -37,11 +37,10 @@ extern "C" {
       order = HELLx::NLL;
   }
 
-  void hell_(double *asmc, double *asmb, double *asmt)
+  void hell_()
   {
     if (sxD) delete sxD;
     sxD = new HELLx::HELLx(order, HELLdataPath());
-    sxD->init_as_thresholds(*asmc,*asmb,*asmt);
   }
 
   void hellorder_(int *ord)
@@ -57,9 +56,9 @@ extern "C" {
   }
 
   // Splitting functions
-  double xdeltap_(int *k, double *as, double *x)
+  double xdeltap_(int *nf, int *k, double *as, double *x)
   {
-    xdPNLL = sxD->DeltaP(*as, *x, fixed_order_to_be_matched_to);
+    xdPNLL = sxD->DeltaP(*nf, *as, *x, fixed_order_to_be_matched_to);
     double xdp = 0;
     if(*k == 4)      xdp = xdPNLL.qq();
     else if(*k == 5) xdp = xdPNLL.qg();
@@ -69,19 +68,19 @@ extern "C" {
   }
 
   // Coeffincient functions
-  double xdeltac2_(int *k, double *as, double *x)
+  double xdeltac2_(int *nf, int *k, double *as, double *x)
   {
     double xdc2 = 0;
-    if(*k == 1)      xdc2 = sxD->deltaC2g(*as, *x, fixed_order_to_be_matched_to); // Gluon
-    else if(*k == 2) xdc2 = sxD->deltaC2q(*as, *x, fixed_order_to_be_matched_to); // Quark
+    if(*k == 1)      xdc2 = sxD->deltaC2g(*nf, *as, *x, fixed_order_to_be_matched_to); // Gluon
+    else if(*k == 2) xdc2 = sxD->deltaC2q(*nf, *as, *x, fixed_order_to_be_matched_to); // Quark
     return xdc2;
   }
 
-  double xdeltacl_(int *k, double *as, double *x)
+  double xdeltacl_(int *nf, int *k, double *as, double *x)
   {
     double xdcl = 0;
-    if(*k == 1)      xdcl = sxD->deltaCLg(*as, *x, fixed_order_to_be_matched_to); // Gluon
-    else if(*k == 2) xdcl = sxD->deltaCLq(*as, *x, fixed_order_to_be_matched_to); // Quark
+    if(*k == 1)      xdcl = sxD->deltaCLg(*nf, *as, *x, fixed_order_to_be_matched_to); // Gluon
+    else if(*k == 2) xdcl = sxD->deltaCLq(*nf, *as, *x, fixed_order_to_be_matched_to); // Quark
     return xdcl;
   }
 
