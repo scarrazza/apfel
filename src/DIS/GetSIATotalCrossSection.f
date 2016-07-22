@@ -23,7 +23,7 @@
 *
       integer pto
       double precision Q
-      character*5 comp
+      character*6 comp
 **
 *     Internal Variables
 *
@@ -81,14 +81,14 @@
       elseif(comp(1:5).eq."light")then
          nfi = 1
          nff = 3
-      elseif(comp(1:4).eq."charm")then
+      elseif(comp(1:5).eq."charm")then
          nfi = 4
          nff = 4
          if(nf.lt.4)then
             GetSIATotalCrossSection = 0d0
             return
          endif
-      elseif(comp(1:4).eq."bottom")then
+      elseif(comp(1:6).eq."bottom")then
          nfi = 5
          nff = 5
          if(nf.lt.5)then

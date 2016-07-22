@@ -410,6 +410,9 @@
          if(obs(14:17).eq."_NF4")then
             call SetMaxFlavourAlpha(4)
             call SetMaxFlavourPDFs(4)
+         elseif(obs(14:17).eq."_NF3")then
+            call SetMaxFlavourAlpha(3)
+            call SetMaxFlavourPDFs(3)
          endif
       else
          write(6,*) "In SetFKObservable.f:"

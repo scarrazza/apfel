@@ -407,28 +407,28 @@
 ****  SIA normalized light cross section
 *
       elseif(obs(1:15).eq."SIA_NORM_XSEC_L")then
-         FKObservables = GetSIATotalCrossSection(0,Q,"light")
+         FKObservables = GetSIATotalCrossSection(0,Q,"total")
      1                 * F2light(x)
      2                 / GetSIATotalCrossSection(ipt,Q,"light")
 *
 ****  SIA normalized charm cross section
 *
       elseif(obs(1:16).eq."SIA_NORM_XSEC_CH")then
-         FKObservables = GetSIATotalCrossSection(0,Q,"charm")
+         FKObservables = GetSIATotalCrossSection(0,Q,"total")
      1                 * F2charm(x)
      2                 / GetSIATotalCrossSection(ipt,Q,"charm")
 *
 ****  SIA normalized bottom cross section
 *
       elseif(obs(1:16).eq."SIA_NORM_XSEC_BT")then
-         FKObservables = GetSIATotalCrossSection(0,Q,"bottom")
+         FKObservables = GetSIATotalCrossSection(0,Q,"total")
      1                 * F2bottom(x)
      2                 / GetSIATotalCrossSection(ipt,Q,"bottom")
 *
 ****  SIA normalized top cross section
 *
       elseif(obs(1:16).eq."SIA_NORM_XSEC_TP")then
-         FKObservables = GetSIATotalCrossSection(0,Q,"top")
+         FKObservables = GetSIATotalCrossSection(0,Q,"total")
      1                 * F2top(x)
      2                 / GetSIATotalCrossSection(ipt,Q,"top")
 *
