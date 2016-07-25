@@ -627,8 +627,8 @@
 *     Bonvini's code HELL.
 *     The input variables of the function "xDeltaC2" and "xDeltaCL" are:
 *
-*        xDeltaC2(k,alphas,y)
-*        xDeltaCL(k,alphas,y)
+*        xDeltaC2(nf,k,alphas,y)
+*        xDeltaCL(nf,k,alphas,y)
 *
 *     where:
 *     - k   = 1: g, 2: pure singlet,

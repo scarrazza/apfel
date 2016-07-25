@@ -153,7 +153,7 @@ namespace HELLx {
       cout << "\033[0;31m" << "HELLx: ERROR: alpha_s=" << as << " out of interpolation range [" << vas[0] << ", " << vas[vas.size()-1] << "]" << "\033[0m" << endl;
       exit(22);
     }
-    for(int i=1; i<vas.size(); i++) {
+    for(unsigned i=1; i<vas.size(); i++) {
       if(as <= vas[i]) break;
       k++;
     }
@@ -285,7 +285,10 @@ namespace HELLx {
   }
 
   void check_nf(int nf) {
-    if(nf<3||nf>6) exit(234);
+    if(nf<3||nf>6) {
+      cout << "\033[0;31m" << "HELLx: Error: nf out of range " << nf << "\033[0m" << endl;
+      exit(234);
+    }
   }
 
   HELLxnf* HELLx::GetHELLxnf(int nf) {
@@ -307,32 +310,48 @@ namespace HELLx {
     return sxD[nf-3]->deltaC2g(as, x, matched_to_fixed_order);
   }
   double HELLx::deltaC2q  (int nf, double as, double x, Order matched_to_fixed_order) {
-    return deltaC2g(as, x, matched_to_fixed_order) * CF/CA;
+    check_nf(nf);
+    return sxD[nf-3]->deltaC2g(as, x, matched_to_fixed_order) * CF/CA;
   }
+  //double HELLx::deltaC2q  (int nf, double as, double x, Order matched_to_fixed_order) {
+  //  return deltaC2g(as, x, matched_to_fixed_order) * CF/CA;
+  //}
 
   double HELLx::deltaCLg  (int nf, double as, double x, Order matched_to_fixed_order) {
     check_nf(nf);
     return sxD[nf-3]->deltaCLg(as, x, matched_to_fixed_order);
   }
   double HELLx::deltaCLq  (int nf, double as, double x, Order matched_to_fixed_order) {
-    return deltaCLg(as, x, matched_to_fixed_order) * CF/CA;
+    check_nf(nf);
+    return sxD[nf-3]->deltaCLg(as, x, matched_to_fixed_order) * CF/CA;
   }
+  //double HELLx::deltaCLq  (int nf, double as, double x, Order matched_to_fixed_order) {
+  //  return deltaCLg(as, x, matched_to_fixed_order) * CF/CA;
+  //}
 
   double HELLx::deltaMC2g (int nf, double as, double x, double m, Order matched_to_fixed_order) {
     check_nf(nf);
     return sxD[nf-3]->deltaMC2g(as, x, matched_to_fixed_order);
   }
   double HELLx::deltaMC2q (int nf, double as, double x, double m, Order matched_to_fixed_order) {
-    return deltaMC2g(as, x, m, matched_to_fixed_order) * CF/CA;
+    check_nf(nf);
+    return sxD[nf-3]->deltaMC2g(as, x, matched_to_fixed_order) * CF/CA;
   }
+  //double HELLx::deltaMC2q (int nf, double as, double x, double m, Order matched_to_fixed_order) {
+  //  return deltaMC2g(as, x, m, matched_to_fixed_order) * CF/CA;
+  //}
 
   double HELLx::deltaMCLg (int nf, double as, double x, double m, Order matched_to_fixed_order) {
     check_nf(nf);
     return sxD[nf-3]->deltaMCLg(as, x, matched_to_fixed_order);
   }
   double HELLx::deltaMCLq (int nf, double as, double x, double m, Order matched_to_fixed_order) {
-    return deltaMCLg(as, x, m, matched_to_fixed_order) * CF/CA;
+    check_nf(nf);
+    return sxD[nf-3]->deltaMCLg(as, x, matched_to_fixed_order) * CF/CA;
   }
+  //double HELLx::deltaMCLq (int nf, double as, double x, double m, Order matched_to_fixed_order) {
+  //  return deltaMCLg(as, x, m, matched_to_fixed_order) * CF/CA;
+  //}
 
 
 
