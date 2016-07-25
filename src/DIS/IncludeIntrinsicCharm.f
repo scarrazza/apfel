@@ -60,9 +60,9 @@
          lambda = 1d0 / xi
          lnF    = dlog(xi*kfacQ)
 *     Charm mass and scale.
-*     Even though, due to teh way how the coefficnet functions are written
+*     Even though, due to the way how the coefficient functions are written
 *     it is necessary to have mass and scale separarted, it can be shown
-*     that the expressions only dependo on the ratio.
+*     that the expressions only depend on the ratio.
          m12  = m2ph(4)
          Q2IC = m12 / lambda
 *
@@ -125,14 +125,13 @@
 *     Gluon
                      k  = 1
                      gDIC = dgauss(integrandsICm,c,d,eps)
-*
-                     SC2mNC(igrid,ixi,1,1,beta,alpha) =
-     1                    SC2mNC(igrid,ixi,1,1,beta,alpha)
-     2                    - ( 2d0 - eta ) * lnF * gDIC
-                     SCLmNC(igrid,ixi,1,1,beta,alpha) =
-     1                    SCLmNC(igrid,ixi,1,1,beta,alpha)
-     2                    - 4d0 * ( 1d0 - eta ) / ( 2d0 - eta ) / factL
-     3                    * lnF * gDIC
+*     Put these terms in the LO gluon slot (e.g. SC2mNC(igrid,ixi,1,0,beta,alpha))
+*     which is empty.
+                     SC2mNC(igrid,ixi,1,0,beta,alpha) =
+     1                    - ( 2d0 - eta ) * lnF * gDIC
+                     SCLmNC(igrid,ixi,1,0,beta,alpha) =
+     1                    - 4d0 * ( 1d0 - eta ) / ( 2d0 - eta ) / factL
+     2                    * lnF * gDIC
 *     Non-singlet
                      k  = 3
                      wl = 2
@@ -270,7 +269,7 @@
 *     If the FONLL scheme has been chosen, the non-singlet and the gluon
 *     coefficient functions must be modified taking into account the
 *     matching conditions. However, while the NC additional terms are
-*     split into the FFNS and the FFN0 sector according to thei kinematics,
+*     split into the FFNS and the FFN0 sector according to their kinematics,
 *     the CC additional terms have all the same kinematics and thus I've
 *     chosen to put them in the FFN0 terms.
 *
@@ -280,22 +279,19 @@
 *
                      k = 1
                      gDIC = dgauss(integrandsICm0,c,d,eps)
+*     Put these terms in the LO gluon slot which is empty.
 *     Neutral Current
-                     SC2m0NC(igrid,ixi,1,1,beta,alpha) =
-     1                    SC2m0NC(igrid,ixi,1,1,beta,alpha) - lnF * gDIC
+                     SC2m0NC(igrid,ixi,1,0,beta,alpha) = - lnF * gDIC
 *     Charged Current
-                     SC2m0CC(igrid,ixi,1,1,beta,alpha) =
-     1                    SC2m0CC(igrid,ixi,1,1,beta,alpha) +
-     2                    lambda * lnF * gDIC / 2d0
-                     SCLm0CC(igrid,ixi,1,1,beta,alpha) =
-     1                    SCLm0CC(igrid,ixi,1,1,beta,alpha) +
-     2                    lambda * lnF * gDIC / 2d0
+                     SC2m0CC(igrid,ixi,1,0,beta,alpha) =
+     1                    lambda * lnF * gDIC / 2d0
+                     SCLm0CC(igrid,ixi,1,0,beta,alpha) =
+     1                    lambda * lnF * gDIC / 2d0
 *
 *     Non-singlet
 *
 *     Neutral Current
                      SC2m0NC(igrid,ixi,3,1,beta,alpha) =
-c     1                    SC2m0NC(igrid,ixi,3,1,beta,alpha) - nsDIC
      1                    SC2zm(igrid,Nf_FF,3,1,beta,alpha)
 *     Charged Current
                      SC2m0CC(igrid,ixi,2,1,beta,alpha) =

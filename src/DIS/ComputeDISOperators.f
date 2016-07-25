@@ -745,20 +745,43 @@ c            damp(4) = 1d0
 *     FFN0
                            do pt=0,ipt_max_IC
                               CLnsp(4) = CLnsp(4) - as(pt)
-     1                             *  damp(4) * ( c0(4)
+     1                             * damp(4) * ( c0(4)
      2                             * SCLm0NC(jgrid,ixi(4),
      3                             3,pt,alpha,beta)
      4                             + c1(4)
      5                             * SCLm0NC(jgrid,ixi(4)+1,
      6                             3,pt,alpha,beta) )
                               C2nsp(4) = C2nsp(4) - as(pt)
-     1                             *  damp(4) * ( c0(4)
+     1                             * damp(4) * ( c0(4)
      2                             * SC2m0NC(jgrid,ixi(4),
      3                             3,pt,alpha,beta)
      4                             + c1(4)
      5                             * SC2m0NC(jgrid,ixi(4)+1,
      6                             3,pt,alpha,beta) )
                            enddo
+*     Include the modification of the gluon coefficient function
+*     due to the scheme change.
+                           CLg(4) = CLg(4) + as(1)
+     1                             * ( c0(4)
+     2                             * SCLmNC(jgrid,ixi(4),
+     3                             1,0,alpha,beta)
+     4                             + c1(4)
+     5                             * SCLmNC(jgrid,ixi(4)+1,
+     6                             1,0,alpha,beta) )
+                           C2g(4) = C2g(4) + as(1)
+     1                             * ( c0(4)
+     2                             * SC2mNC(jgrid,ixi(4),
+     3                             1,0,alpha,beta)
+     4                             + c1(4)
+     5                             * SC2mNC(jgrid,ixi(4)+1,
+     6                             1,0,alpha,beta) )
+                           C2g(4) = C2g(4) - as(1)
+     1                             * damp(4) * ( c0(4)
+     2                             * SC2m0NC(jgrid,ixi(4),
+     3                             1,0,alpha,beta)
+     4                             + c1(4)
+     5                             * SC2m0NC(jgrid,ixi(4)+1,
+     6                             1,0,alpha,beta) )
                         endif
                      endif
                   endif
@@ -1396,13 +1419,14 @@ c            damp(4) = 1d0
                         do ihq=Nf_FF+1,6
                            if(W2.ge.m2th(ihq))then
                               do pt=0,ipt_FF
-                                 C2gm(ihq) = C2gm(ihq) + as(pt)
-     1                                * ( c0(ihq)
-     2                                * SC2mCC(jgrid,ixi(ihq),
-     3                                1,pt,alpha,beta)
-     4                                + c1(ihq)
-     5                                * SC2mCC(jgrid,ixi(ihq)+1,
-     6                                1,pt,alpha,beta) )
+                                 if(pt.ge.1)
+     1                                C2gm(ihq) = C2gm(ihq) + as(pt)
+     2                                * ( c0(ihq)
+     3                                * SC2mCC(jgrid,ixi(ihq),
+     4                                1,pt,alpha,beta)
+     5                                + c1(ihq)
+     6                                * SC2mCC(jgrid,ixi(ihq)+1,
+     7                                1,pt,alpha,beta) )
                                  C2qm(ihq) = C2qm(ihq) + as(pt)
      1                                * ( c0(ihq)
      2                                * SC2mCC(jgrid,ixi(ihq),
@@ -1410,13 +1434,14 @@ c            damp(4) = 1d0
      4                                + c1(ihq)
      5                                * SC2mCC(jgrid,ixi(ihq)+1,
      6                                3,pt,alpha,beta) )
-                                 CLgm(ihq) = CLgm(ihq) + as(pt)
-     1                                * ( c0(ihq)
-     2                                * SCLmCC(jgrid,ixi(ihq),
-     3                                1,pt,alpha,beta)
-     4                                + c1(ihq)
-     5                                * SCLmCC(jgrid,ixi(ihq)+1,
-     6                                1,pt,alpha,beta) )
+                                 if(pt.ge.1)
+     1                                CLgm(ihq) = CLgm(ihq) + as(pt)
+     2                                * ( c0(ihq)
+     3                                * SCLmCC(jgrid,ixi(ihq),
+     4                                1,pt,alpha,beta)
+     5                                + c1(ihq)
+     6                                * SCLmCC(jgrid,ixi(ihq)+1,
+     7                                1,pt,alpha,beta) )
                                  CLqm(ihq) = CLqm(ihq) + as(pt)
      1                                * ( c0(ihq)
      2                                * SCLmCC(jgrid,ixi(ihq),
@@ -1424,13 +1449,14 @@ c            damp(4) = 1d0
      4                                + c1(ihq)
      5                                * SCLmCC(jgrid,ixi(ihq)+1,
      6                                3,pt,alpha,beta) )
-                                 C3gm(ihq) = C3gm(ihq) + as(pt)
-     1                                * ( c0(ihq)
-     2                                * SC3mCC(jgrid,ixi(ihq),
-     3                                1,pt,alpha,beta)
-     4                                + c1(ihq)
-     5                                * SC3mCC(jgrid,ixi(ihq)+1,
-     6                                1,pt,alpha,beta) )
+                                 if(pt.ge.1)
+     1                                C3gm(ihq) = C3gm(ihq) + as(pt)
+     2                                * ( c0(ihq)
+     3                                * SC3mCC(jgrid,ixi(ihq),
+     4                                1,pt,alpha,beta)
+     5                                + c1(ihq)
+     6                                * SC3mCC(jgrid,ixi(ihq)+1,
+     7                                1,pt,alpha,beta) )
                                  C3qm(ihq) = C3qm(ihq) + as(pt)
      1                                * ( c0(ihq)
      2                                * SC3mCC(jgrid,ixi(ihq),
@@ -1442,13 +1468,14 @@ c            damp(4) = 1d0
                            endif
                            if(Q2.ge.m2th(ihq))then
                               do pt=0,ipt_FF
-                                 C2gm(ihq) = C2gm(ihq) - damp(ihq)
-     1                                * as(pt) * ( c0(ihq)
-     2                                * SC2m0CC(jgrid,ixi(ihq),
-     3                                1,pt,alpha,beta)
-     4                                + c1(ihq)
-     5                                * SC2m0CC(jgrid,ixi(ihq)+1,
-     6                                1,pt,alpha,beta) )
+                                 if(pt.ge.1)
+     1                                C2gm(ihq) = C2gm(ihq) - damp(ihq)
+     2                                * as(pt) * ( c0(ihq)
+     3                                * SC2m0CC(jgrid,ixi(ihq),
+     4                                1,pt,alpha,beta)
+     5                                + c1(ihq)
+     6                                * SC2m0CC(jgrid,ixi(ihq)+1,
+     7                                1,pt,alpha,beta) )
                                  C2qm(ihq) = C2qm(ihq) - damp(ihq)
      1                                * as(pt) * ( c0(ihq)
      2                                * SC2m0CC(jgrid,ixi(ihq),
@@ -1456,13 +1483,14 @@ c            damp(4) = 1d0
      4                                + c1(ihq)
      5                                * SC2m0CC(jgrid,ixi(ihq)+1,
      6                                3,pt,alpha,beta) )
-                                 CLgm(ihq) = CLgm(ihq) - damp(ihq)
-     1                                * as(pt) * ( c0(ihq)
-     2                                * SCLm0CC(jgrid,ixi(ihq),
-     3                                1,pt,alpha,beta)
-     4                                + c1(ihq)
-     5                               * SCLm0CC(jgrid,ixi(ihq)+1,
-     6                                1,pt,alpha,beta) )
+                                 if(pt.ge.1)
+     1                                CLgm(ihq) = CLgm(ihq) - damp(ihq)
+     2                                * as(pt) * ( c0(ihq)
+     3                                * SCLm0CC(jgrid,ixi(ihq),
+     4                                1,pt,alpha,beta)
+     5                                + c1(ihq)
+     6                               * SCLm0CC(jgrid,ixi(ihq)+1,
+     7                                1,pt,alpha,beta) )
                                  CLqm(ihq) = CLqm(ihq) - damp(ihq)
      1                                * as(pt) * ( c0(ihq)
      2                                * SCLm0CC(jgrid,ixi(ihq),
@@ -1470,13 +1498,14 @@ c            damp(4) = 1d0
      4                                + c1(ihq)
      5                                * SCLm0CC(jgrid,ixi(ihq)+1,
      6                                3,pt,alpha,beta) )
-                                 C3gm(ihq) = C3gm(ihq) - damp(ihq)
-     1                                * as(pt) * ( c0(ihq)
-     2                                * SC3m0CC(jgrid,ixi(ihq),
-     3                                1,pt,alpha,beta)
-     4                                + c1(ihq)
-     5                                * SC3m0CC(jgrid,ixi(ihq)+1,
-     6                                1,pt,alpha,beta) )
+                                 if(pt.ge.1)
+     1                                C3gm(ihq) = C3gm(ihq) - damp(ihq)
+     2                                * as(pt) * ( c0(ihq)
+     3                                * SC3m0CC(jgrid,ixi(ihq),
+     4                                1,pt,alpha,beta)
+     5                                + c1(ihq)
+     6                                * SC3m0CC(jgrid,ixi(ihq)+1,
+     7                                1,pt,alpha,beta) )
                                  C3qm(ihq) = C3qm(ihq) - damp(ihq)
      1                                * as(pt) * ( c0(ihq)
      2                                * SC3m0CC(jgrid,ixi(ihq),
@@ -1621,6 +1650,22 @@ c            damp(4) = 1d0
      5                             * SC3m0CC(jgrid,ixi(4)+1,
      6                             2,pt,alpha,beta) )
                            enddo
+*     Include the modification of the gluon coefficient function
+*     due to the scheme change.
+                           CLg(4) = CLg(4) - as(1)
+     1                             * damp(4) * ( c0(4)
+     2                             * SCLm0CC(jgrid,ixi(4),
+     3                             1,0,alpha,beta)
+     4                             + c1(4)
+     5                             * SCLm0CC(jgrid,ixi(4)+1,
+     6                             1,0,alpha,beta) )
+                           C2g(4) = C2g(4) - as(1)
+     1                             * damp(4) * ( c0(4)
+     2                             * SC2m0CC(jgrid,ixi(4),
+     3                             1,0,alpha,beta)
+     4                             + c1(4)
+     5                             * SC2m0CC(jgrid,ixi(4)+1,
+     6                             1,0,alpha,beta) )
                         endif
                      endif
                   endif
