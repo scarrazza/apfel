@@ -15,7 +15,7 @@
 *
       character*5 theory
 *
-      if(theory(1:3).eq."QCD".or.theory(1:3).eq."QED")then
+      if(theory(1:3).eq."QCD")then
          Th = theory(1:3)
       else
          Th = theory

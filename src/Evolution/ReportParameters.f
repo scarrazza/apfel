@@ -103,10 +103,6 @@
                write(6,*) "Coupling reference value:"
                write(6,"(a,f8.4,a,f9.6)")" - AlphaQCD(",
      1              dsqrt(q2_ref_qcd)," GeV) = ",alpha_ref_qcd
-            elseif(Th.eq."QED")then
-               write(6,*) "Coupling reference value:"
-               write(6,"(a,f8.4,a,f9.6)")" - AlphaQED(",
-     1              dsqrt(q2_ref_qed)," GeV) = ",alpha_ref_qed
             else
                write(6,*) "Coupling reference values:"
                write(6,"(a,f8.4,a,f9.6)")" - AlphaQCD(",

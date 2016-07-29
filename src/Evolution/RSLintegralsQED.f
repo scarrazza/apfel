@@ -142,12 +142,12 @@
 *
 *     LO
 *
-*     Non-singlet Plus
+*     Non-singlet up
          if(k.eq.1)then
             cp(0) = e2u
             PL(0) = ns0L / CF
             integ(0) = ns0RL
-*     Non-singlet Minus
+*     Non-singlet down
          elseif(k.eq.2)then
             cp(0) = e2d
             PL(0) = ns0L / CF

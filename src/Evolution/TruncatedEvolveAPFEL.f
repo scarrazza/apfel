@@ -171,14 +171,12 @@
 *     Evolve directly PDFs on the grid
                   if(Th.eq."QCD")then
                      call EvolutionQCD(mu2i(inf),mu2f(inf))
-                  elseif(Th.eq."QED")then
-                     call EvolutionQED(mu2i(inf),mu2f(inf))
                   elseif(Th.eq."QUniD")then
                      call EvolutionUnified(mu2i(inf),mu2f(inf))
                   else
                      write(6,*) "The fast evolution is currently",
      1                          " available"
-                     write(6,*) "only for the 'QCD','QED','QUniD'",
+                     write(6,*) "only for the 'QCD','QUniD'",
      1                          " evolutions."
                      write(6,*) "  "
                      call exit(-10)
@@ -187,13 +185,6 @@
 *     Evaluate evolution operators on the grid
                   if(Th.eq."QCD")then
                      call EvolutionOperatorsQCD(mu2i(inf),mu2f(inf))
-                  elseif(Th.eq."QED")then
-                     call EvolutionOperatorsQED(mu2i(inf),mu2f(inf))
-                  elseif(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
-     1                    Th.eq."QECDP".or.Th.eq."QECDS".or.
-     2                    Th.eq."QavDP".or.Th.eq."QavDS")then
-                     call EvolutionOperatorsQCD(mu2i(inf),mu2f(inf))
-                     call EvolutionOperatorsQED(mu2i(inf),mu2f(inf))
                   elseif(Th.eq."QUniD")then
                      call EvolutionOperatorsUnified(mu2i(inf),mu2f(inf))
                   endif
@@ -297,21 +288,12 @@
                if(FastEvol)then
                   if(Th.eq."QCD")then
                      call EvolutionQCD(mu2f(inf),mu2i(inf+1))
-                  elseif(Th.eq."QED")then
-                     call EvolutionQED(mu2f(inf),mu2i(inf+1))
                   elseif(Th.eq."QUniD")then
                      call EvolutionUnified(mu2f(inf),mu2i(inf+1))
                   endif
                else
                   if(Th.eq."QCD")then
                      call EvolutionOperatorsQCD(mu2f(inf),mu2i(inf+1))
-                  elseif(Th.eq."QED")then
-                     call EvolutionOperatorsQED(mu2f(inf),mu2i(inf+1))
-                  elseif(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
-     1                    Th.eq."QECDP".or.Th.eq."QECDS".or.
-     2                    Th.eq."QavDP".or.Th.eq."QavDS")then
-                     call EvolutionOperatorsQCD(mu2f(inf),mu2i(inf+1))
-                     call EvolutionOperatorsQED(mu2f(inf),mu2i(inf+1))
                   elseif(Th.eq."QUniD")then
                      call EvolutionOperatorsUnified(mu2f(inf),
      1                                              mu2i(inf+1))

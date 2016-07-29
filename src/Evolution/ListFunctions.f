@@ -48,7 +48,7 @@
       write(6,*) achar(27)//"[34m- SetTheory(string theory):"//
      1           achar(27)//"[0m"
       write(6,*) "    sets the theory to be used in the evolution"
-      write(6,*) "    (theory = 'QCD','QED','QUniD', default 'QCD')"
+      write(6,*) "    (theory = 'QCD', 'QUniD', default 'QCD')"
       write(6,*) achar(27)//"[34m- SetVFNS():"//achar(27)//"[0m"
       write(6,*) "    sets the Variable-Flavour Number Scheme."
       write(6,*) achar(27)//"[34m- SetFFNS(int nfl):"//achar(27)//"[0m"

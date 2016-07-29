@@ -55,7 +55,7 @@
 *     LO
 *
       if(wipt.eq.0)then
-*     Plus, Minus, Quark-Quark, Quark-Delta, Delta-Quark, Delta-Delta
+*     NS up, NS down, Quark-Quark, Quark-Delta, Delta-Quark, Delta-Delta
          if(k.eq.1.or.k.eq.2.or.k.eq.7.or.
      1      k.eq.8.or.k.eq.10.or.k.eq.11)then
             PR = X0NSA(y) / CF

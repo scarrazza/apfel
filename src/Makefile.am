@@ -28,26 +28,20 @@ SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f
 
 COUPLINGS = Evolution/a_QCD.f Evolution/a_QED.f Evolution/MSbarmass.f Evolution/lambda.f
 
-EVOLUTIONQCD = Evolution/EvolutionQCD.f Evolution/EvolutionOperatorsQCD.f Evolution/IdentityOperatorsQCD.f \
+EVOLUTION = Evolution/EvolutionQCD.f Evolution/EvolutionOperatorsQCD.f Evolution/IdentityOperatorsQCD.f \
 	Evolution/EqualOperatorsQCDnf.f Evolution/integrandsQCD.f Evolution/integralsQCD.f Evolution/RSLintegralsQCD.f \
 	Evolution/odeintnsQCD.f Evolution/odeintsgQCD.f Evolution/MatchingConditions.f Evolution/integrandsMatching.f \
 	Evolution/integralsMatching.f Evolution/RSLintegralsMatching.f Evolution/MatchPDFs.f Evolution/JoinOperatorsQCD.f \
 	Evolution/EvolutionUnified.f Evolution/EvolutionOperatorsUnified.f Evolution/IdentityOperatorsUnified.f \
 	Evolution/EqualOperatorsUnifiednf.f Evolution/EvolveUni.f Evolution/odeintnsUnified.f Evolution/odeintsgUnified.f \
-	Evolution/DerivativeOperatorsQCD.f Evolution/odeintnsQCDf.f Evolution/odeintsgQCDf.f \
-	Evolution/odeintnsUnifiedf.f Evolution/odeintsgUnifiedf.f
+	Evolution/DerivativeOperatorsQCD.f Evolution/odeintnsQCDf.f Evolution/odeintsgQCDf.f Evolution/odeintnsUnifiedf.f \
+	Evolution/odeintsgUnifiedf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f
 
-EVOLUTIONQED = Evolution/EvolutionQED.f Evolution/EvolutionOperatorsQED.f Evolution/IdentityOperatorsQED.f \
-	Evolution/EqualOperatorsQEDnf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f \
-	Evolution/odeintnsQED.f Evolution/odeintsgQED.f Evolution/DerivativeOperatorsQED.f \
-	Evolution/odeintnsQEDf.f Evolution/odeintsgQEDf.f
-
-PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/PDFphys2evQED.f Evolution/PDFevQED2phys.f \
-	Evolution/EvolvePDFs.f Evolution/switchGluonPhoton.f Evolution/EvolveQCD.f Evolution/EvolveQED.f Evolution/toyLHPDFs.f \
+PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/EvolvePDFs.f Evolution/EvolveQCD.f Evolution/toyLHPDFs.f \
 	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f Evolution/JoinGrids.f \
 	Evolution/PDFevUni2evQCD.f Evolution/PDFevQCD2evUni.f Evolution/PDFevUni2phys.f Evolution/PDFphys2evUni.f \
-	Evolution/dxPDF.f Evolution/dxgamma.f Evolution/DeriveQCD.f Evolution/DeriveQED.f Evolution/DerivePDFs.f \
-	Evolution/xGrid.f Evolution/nIntervals.f Evolution/xLepton.f Evolution/xPDFxQ.f
+	Evolution/dxPDF.f Evolution/dxgamma.f Evolution/DeriveQCD.f Evolution/DerivePDFs.f Evolution/xGrid.f \
+	Evolution/nIntervals.f Evolution/xLepton.f Evolution/xPDFxQ.f
 
 UTILITIES = core/dgauss.f core/wgplg.f core/ddilog.f core/gamma.f core/beta.f core/hplog.f
 
@@ -76,9 +70,9 @@ EXTRA_DIST = commons FTDY/commons
 
 HELL = HELL/src/hell.cc HELL/src/hell_wrapper.cc
 
-libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
+libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
 
 libAPFELevol_la_LIBADD = $(FCLIBS) $(top_builddir)/ccwrap/libAPFELCCWrapEvol.la
-libAPFELevol_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTIONQCD) $(EVOLUTIONQED) $(PDF) $(UTILITIES) $(HELL)
+libAPFELevol_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(HELL)
 
 AM_CXXFLAGS += $(LHAPDF_CPPFLAGS) $(LHAPDF_CXXFLAGS)

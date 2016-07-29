@@ -22,13 +22,11 @@
          do igrid=1,ngrid
             if(Th.eq."QCD")then
                call EvolutionQCD(Q20,Q2)
-            elseif(Th.eq."QED")then
-               call EvolutionQED(Q20,Q2)
             elseif(Th.eq."QUniD")then
                call EvolutionUnified(Q20,Q2)
             else
                write(6,*) "The fast evolution is currently available"
-               write(6,*) "only for the 'QCD','QED','QUniD' evolutions."
+               write(6,*) "only for the 'QCD', 'QUniD' evolutions."
                write(6,*) "  "
                call exit(-10)
             endif
@@ -38,13 +36,6 @@
 *     Evaluate evolution operators on the grid
             if(Th.eq."QCD")then
                call EvolutionOperatorsQCD(Q20,Q2)
-            elseif(Th.eq."QED")then
-               call EvolutionOperatorsQED(Q20,Q2)
-            elseif(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
-     1             Th.eq."QECDP".or.Th.eq."QECDS".or.
-     2             Th.eq."QavDP".or.Th.eq."QavDS")then
-               call EvolutionOperatorsQCD(Q20,Q2)
-               call EvolutionOperatorsQED(Q20,Q2)
             elseif(Th.eq."QUniD")then
                call EvolutionOperatorsUnified(Q20,Q2)
             endif

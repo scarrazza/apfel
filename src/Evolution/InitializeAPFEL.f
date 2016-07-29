@@ -72,17 +72,15 @@
             else
                nfi = 3
             endif
-*     Initialize matching conditions in case the theory is nor "QED"
-            if(Th.ne."QED")then
-               if(nfi.lt.nff)then
-                  do inf=nfi+1,nff
-                     call initIntegralsMatching(inf)
-                  enddo
-               elseif(nfi.gt.nff)then
-                  do inf=nfi,nff+1
-                     call initIntegralsMatching(inf)
-                  enddo
-               endif
+*     Initialize matching conditions
+            if(nfi.lt.nff)then
+               do inf=nfi+1,nff
+                  call initIntegralsMatching(inf)
+               enddo
+            elseif(nfi.gt.nff)then
+               do inf=nfi,nff+1
+                  call initIntegralsMatching(inf)
+               enddo
             endif
          endif
 *
@@ -93,16 +91,7 @@
                call initIntegralsQCD(inf)
             enddo
             if(Smallx) call initIntegralsQCDRes
-         elseif(Th.eq."QED")then
-            do inf=nfi,nff
-               do inl=2,3
-                  call initIntegralsQED(inf,inl)
-               enddo
-            enddo
-         elseif(Th.eq."QCEDP".or.Th.eq."QCEDS".or.
-     1          Th.eq."QECDP".or.Th.eq."QECDS".or.
-     2          Th.eq."QavDP".or.Th.eq."QavDS".or.
-     3          Th.eq."QUniD")then
+         elseif(Th.eq."QUniD")then
             do inf=nfi,nff
                call initIntegralsQCD(inf)
                do inl=2,3

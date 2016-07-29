@@ -91,24 +91,13 @@
 *
 *     Check the consistency of the input parameters
 *
-      if(Th.ne."QCD".and.Th.ne."QED".and.
-     1   Th.ne."QCEDP".and.Th.ne."QCEDS".and.
-     2   Th.ne."QECDP".and.Th.ne."QECDS".and.
-     3   Th.ne."QavDP".and.Th.ne."QavDS".and.
-     4   Th.ne."QUniD")then
+      if(Th.ne."QCD".and.Th.ne."QUniD")then
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "Theory unknown:"
          write(6,*) "Theory = ",Th
          write(6,*) "  "
          write(6,*) "The options are:"
          write(6,*) "- 'QCD'"
-         write(6,*) "- 'QED'"
-         write(6,*) "- 'QCEDP'"
-         write(6,*) "- 'QCEDS'"
-         write(6,*) "- 'QECDP'"
-         write(6,*) "- 'QECDS'"
-         write(6,*) "- 'QavDP'"
-         write(6,*) "- 'QavDS'"
          write(6,*) "- 'QUniD'"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
@@ -366,21 +355,6 @@ c      endif
       endif
 *
 *     Security switches
-*
-*     If one of the combined solutions QCD x QED is chosen
-*     switch off the fast evolution.
-*
-      if((Th.eq."QCEDP".or.Th.eq."QCEDS".or.
-     1   Th.eq."QECDP".or.Th.eq."QECDS".or.
-     2   Th.eq."QavDP".or.Th.eq."QavDS").and.
-     3   FastEvol)then
-         write(6,*) achar(27)//"[33m"//
-     1              "WARNING: fast evolution not available with",
-     2              " the ",Th," solution"
-         write(6,*) "         ... disabling fast evolution"
-     1              //achar(27)//"[0m"
-         call SetFastEvolution(.false.)
-      endif
 *
 *     If the fast evolution is enabled, disable automatically
 *     the computation of the evolution operator
