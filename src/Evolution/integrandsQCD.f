@@ -11,7 +11,7 @@
 *     1) the perturbatibe order pt, 
 *     2) the number of active flavours wnf,
 *     3) the grid indices walpha and wbeta,
-*     4) the particular plitting function denoted by k such that:
+*     4) the particular splitting function denoted by k such that:
 *
 *        k  =  1   2   3   4   5   6   7
 *              +   -   V   qq  qg  gq  gg

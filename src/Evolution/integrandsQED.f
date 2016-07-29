@@ -10,7 +10,7 @@
 *
 *     1) the perturbatibe order pt, 
 *     2) the grid indices walpha and wbeta,
-*     3) the particular plitting function denoted by k such that:
+*     3) the particular splitting function denoted by k such that:
 *
 *        k  =  1   2   3   4   5   6   7   8   9   10  11
 *              nsp nsm gg  gq  gD  qg  qq  qD  Dg  Dq  DD
@@ -52,22 +52,39 @@
 *
 *     Contructing integrands
 *
+*     LO
+*
+      if(wipt.eq.0)then
 *     Plus, Minus, Quark-Quark, Quark-Delta, Delta-Quark, Delta-Delta
-      if(k.eq.1.or.k.eq.2.or.k.eq.7.or.k.eq.8.or.k.eq.10.or.k.eq.11)then
-         PR = X0NSA(y) / CF
-         PS = X0NSB(y) / CF
+         if(k.eq.1.or.k.eq.2.or.k.eq.7.or.
+     1      k.eq.8.or.k.eq.10.or.k.eq.11)then
+            PR = X0NSA(y) / CF
+            PS = X0NSB(y) / CF
 *     Quark-Gamma, Delta-Gamma
-      elseif(k.eq.6.or.k.eq.9)then
-         PR = X0QGA(y,1) / TR
-         PS = 0d0
+         elseif(k.eq.6.or.k.eq.9)then
+            PR = X0QGA(y,1) / TR
+            PS = 0d0
 *     Gluon-Quark
-      elseif(k.eq.4.or.k.eq.5)then
-         PR = X0GQA(y) / CF
-         PS = 0d0
+         elseif(k.eq.4.or.k.eq.5)then
+            PR = X0GQA(y) / CF
+            PS = 0d0
 *     Gamma-Gamma
-      elseif(k.eq.3)then
-         PR = 0d0
-         PS = 0d0
+         elseif(k.eq.3)then
+            PR = 0d0
+            PS = 0d0
+         endif
+      endif
+*
+*     NLO (i.e. O(alpha_s alpha))
+*
+      if(wipt.eq.1)then
+
+      endif
+*
+*     NNLO (i.e. O(alpha^2))
+*
+      if(wipt.eq.2)then
+
       endif
 *
       integrandsQED = PR * fR + PS * fS

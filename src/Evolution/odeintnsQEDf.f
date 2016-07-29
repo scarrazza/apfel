@@ -243,7 +243,7 @@
       endif
 *
       do alpha=0,nin(igrid)
-         integ(alpha) = integralsQED(0,alpha,coup,i)
+         integ(alpha) = integralsQED(0,alpha,coup,0d0,i)
       enddo
 *
 *     Initialization

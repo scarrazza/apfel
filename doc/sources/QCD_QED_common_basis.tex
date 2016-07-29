@@ -240,8 +240,8 @@ not contain any power of the fine structure constant $\alpha$ and it
 only contains powers of the strong coupling $\alpha_s$ and therefore
 undergoes to the same simplifications we discussed above. As a further
 consequence if $a$ or $b$ is equal to $\gamma$, $P_{ab}$ must vanish.
-$\widetilde{P}_{ab}$ instead contains at least one power of $\alpha$. 
-In this way we can rearrange eq. (\ref{EvenMoreGeneralDGLAP})  as follows:
+$\widetilde{P}_{ab}$ instead contains one power of $\alpha$. In this
+way we can rearrange eq. (\ref{EvenMoreGeneralDGLAP}) as follows:
 \begin{equation}\label{EvenMoreGeneralDGLAPciao}
 \begin{array}{rcl}
 \displaystyle \mu^2\frac{\partial}{\partial \mu^2}
@@ -308,11 +308,11 @@ be summed over all the flavours. This is (should be) true at any
 perturbative order.
 
 Now we consider the splitting functions involving one boson and one
-quark. Here the situation is more involved because at higer orders it
-may happen that the incoming/outcoming quark never couples with a
-photon and thus, given that there is at least one power aof $\alpha$,
-apart from a term proportional to the charge of the incomin/outcoming
-quark there must also be a term proportional to the charge
+quark. Here the situation is more involved because at higher orders it
+may happen that the incoming/outcoming quark never couples to a photon
+and thus, given that there is at least one power of $\alpha$, apart
+from a term proportional to the charge of the incomin/outcoming quark
+there must also be a term proportional to the charge
 $e_\Sigma^2$. However, such contributions only appear at three loops
 (NNLO) and since here we are only intersted in the two-loop splitting
 functions, we have:
@@ -340,7 +340,7 @@ e_d^2\widetilde{P}_{q\gamma }\,.
 
 Finally, we consider the splitting functions involving quarks or
 anti-quarks in the final and initial states. Again we will limit
-ourselves to tow loops and under this resctriction we have:
+ourselves to two loops and under this restriction we have:
 \begin{equation}\label{decompositionQED}
 \begin{array}{l}
 \widetilde{P}_{u_iu_j} = \widetilde{P}_{\overline{u}_i\overline{u}_j} = e_u^2\delta_{ij} \widetilde{P}_{qq}^V+e_u^4\widetilde{P}_{qq}^S\\
@@ -402,8 +402,8 @@ P_{q\overline{q}}^S & \delta_{kl} P_{q\overline{q}}^V+P_{q\overline{q}}^S & {P}_
 \end{pmatrix}=\\
 \\
 \begin{pmatrix}
-\delta_{je} P_{qq}^V & 0 & {P}_{qg} & 0 & \delta_{jm} P_{q\overline{q}}^V & 0 \\ 
-0 & \delta_{il} P_{qq}^V & {P}_{qg} & 0 & 0 & \delta_{in} P_{q\overline{q}}^V \\ 
+\delta_{je} P_{qq}^V & 0 & {P}_{qg} & 0 & 0 & \delta_{jm} P_{q\overline{q}}^V \\ 
+0 & \delta_{il} P_{qq}^V & {P}_{qg} & 0 & \delta_{in} P_{q\overline{q}}^V & 0 \\ 
 {P}_{gq}  & {P}_{gq} & {P}_{gg} & 0 & {P}_{gq} & {P}_{gq}\\
 0 & 0 & 0 & 0 & 0 & 0 \\
 0 & \delta_{kl} P_{q\overline{q}}^V & {P}_{qg} & 0 & \delta_{km} P_{qq}^V & 0\\
@@ -2055,9 +2055,105 @@ Ref.~\cite{deFlorian:2015ujt} but stipping them from the electric
 charges which are already accounted in our formulation and where an
 additional factor 4 is included due to the difference in the definition
 of the expansion parameters:
+%\begin{equation}
+%\begin{array}{rcl}
+%  \mathcal{P}_{q\gamma}^{(1,1)} &=& \displaystyle 2C_F
+%                                    \left\{ 4 -9x-(1-4x) \ln x - (1-2x)
+%                                    \ln^2x +4 \ln(1-x) \right.\\
+%  \\
+%                                &+& \displaystyle
+%                                    \left. p_{qg}(x) \left[
+%                                    2\ln^2\left(\frac{1-x}{x}\right) -
+%                                    4\ln\left(\frac{1-x}{x}\right)
+%                                    -\frac{2\pi^2}{3}+10
+%                                    \right]\right\}\,,\\
+%  \\
+%  \mathcal{P}_{g\gamma}^{(1,1)} &=& \displaystyle 4C_F \left\{ -16
+%                                    +8 x +\frac{20}{3}x^2+\frac{4}{3x}
+%                                    - \vphantom{\frac{20}{3}x^2}
+%                                    (6+10x) \ln{x} -2(1+x)\ln^2{x}
+%                                    \right\} \,,\\
+%  \\
+%  \mathcal{P}_{\gamma\gamma}^{(1,1)} &=& \displaystyle -4C_F
+%                                         \delta(1-x)\,,\\
+%  \\
+%  \mathcal{P}_{qg}^{(1,1)} &=& \displaystyle  2T_R\left\{ 4
+%                               -9x-(1-4x) \ln{x} - (1-2x)
+%                               \ln^2{x} +4 \ln(1-x) \right.\\
+%  \\
+%                                &+& \displaystyle \left. 
+%                                    p_{qg}(x) \left[  2\ln^2\left(\frac{1-x}{x}\right) -
+%                                    4\ln\left(\frac{1-x}{x}\right)  -\frac{2\pi^2}{3}+10
+%                                    \right]\right\}=\frac{T_R}{C_F} \mathcal{P}_{q\gamma}^{(1,1)}\,,\\
+%  \\ 
+%  \mathcal{P}_{\gamma g}^{(1,1)} &=& \displaystyle 4T_R \left\{ -16 +8
+%                                     x +\frac{20}{3}x^2+\frac{4}{3x} -
+%                                     \vphantom{\frac{20}{3}x^2}
+%                                     (6+10x) \ln{x} -2(1+x)\ln^2{x}
+%                                     \right\}=\frac{T_R}{C_F} \mathcal{P}_{g\gamma}^{(1,1)}\,,\\ 
+%  \\
+%  \mathcal{P}_{gg}^{(1,1)} &=& \displaystyle -4T_R \delta(1-x)=\frac{T_R}{C_F} \mathcal{P}_{\gamma\gamma}^{(1,1)}\,,\\
+%  \\
+%  \mathcal{P}_{qq}^{V(1,1)} &=& \displaystyle 8 C_F\left[-\left(2 \ln{x}
+%                                \ln(1-x)+\frac{3}{2}\ln{x}\right)
+%                                p_{qq}(x) - \frac{3+7x}{2}\ln{x} -
+%                                \frac{1+x}{2}{\ln^2{x}}  \right.\\
+%  \\
+%                                &-& \displaystyle \left. 5(1-x) -
+%                                    \left(
+%                                    \frac{\pi^2}{2}-\frac{3}{8}-6
+%                                    \zeta_3 \right) \delta(1-x)
+%                                    \right]\,,\\
+%  \\
+%  \mathcal{P}_{q\bar{q}}^{V(1,1)} &=& \displaystyle
+%                                      8C_F\left[4(1-x)+2(1+x)\ln{x} +
+%                                      2p_{qq}(-x)S_2(x)\right]\,,\\
+%  \\
+%  \mathcal{P}^{+(1,1)} =
+%  \mathcal{P}_{qq}^{V(1,1)}+\mathcal{P}_{q\bar{q}}^{V(1,1)}&=&
+%  \displaystyle 8 C_F\left[-\left(2 \ln{x}
+%    \ln(1-x)+\frac{3}{2}\ln{x}\right)
+%                                p_{qq}(x) + \frac{1-3x}{2}\ln{x} -
+%                                \frac{1+x}{2}{\ln^2{x}}  \right.\\
+%  \\
+%                                &-& \displaystyle \left. (1-x) +
+%                                    2p_{qq}(-x)S_2(x) -
+%                                    \left(
+%                                    \frac{\pi^2}{2}-\frac{3}{8}-6
+%                                    \zeta_3 \right) \delta(1-x)
+%                                    \right]\,,\\
+%  \\
+%  \mathcal{P}^{-(1,1)} =
+%  \mathcal{P}_{qq}^{V(1,1)}-\mathcal{P}_{q\bar{q}}^{V(1,1)}&=&
+%  \displaystyle 8C_F\left[-\left(2 \ln{x}
+%                                \ln(1-x)+\frac{3}{2}\ln{x}\right)
+%                                p_{qq}(x) - \frac{7+11x}{2}\ln{x} -
+%                                \frac{1+x}{2}{\ln^2{x}}  \right.\\
+%  \\
+%                                &-& \displaystyle \left. 9(1-x) -2p_{qq}(-x)S_2(x)-
+%                                    \left(
+%                                    \frac{\pi^2}{2}-\frac{3}{8}-6
+%                                    \zeta_3 \right) \delta(1-x)
+%                                    \right]\,,\\
+%  \\
+%  \mathcal{P}_{gq}^{(1,1)} &=& \displaystyle
+%                               4C_F\left[-(3\ln(1-x)+\ln^2(1-x))p_{gq}(x)
+%                               \vphantom{\left(2+\frac{7}{2}x\right)}
+%                               +
+%                               \left(2+\frac{7}{2}x\right)\ln{x}\right.\\
+%  \\
+%                                &-& \displaystyle
+%                                    \left. \left(1-\frac{x}{2}\right)\ln^2{x}
+%                                    -
+%                                    2x\ln(1-x)-\frac{7}{2}x-\frac{5}{2}\right]\,,\\
+%  \\
+%  \mathcal{P}_{\gamma q}^{(1,1)} &=& \displaystyle \mathcal{P}_{gq}^{(1,1)}\,,
+%\end{array}
+%\end{equation}
+
 \begin{equation}
 \begin{array}{rcl}
-  \mathcal{P}_{q\gamma}^{(1,1)} &=& \displaystyle 2C_F C_A
+  \mathcal{P}_{q\gamma}^{(1,1)} &=& \displaystyle 2C_F
                                     \left\{ 4 -9x-(1-4x) \ln x - (1-2x)
                                     \ln^2x +4 \ln(1-x) \right.\\
   \\
@@ -2068,31 +2164,20 @@ of the expansion parameters:
                                     -\frac{2\pi^2}{3}+10
                                     \right]\right\}\,,\\
   \\
-  \mathcal{P}_{g\gamma}^{(1,1)} &=& \displaystyle 4C_F C_A \left\{ -16
+  \mathcal{P}_{g\gamma}^{(1,1)} &=& \displaystyle 4C_F \left\{ -16
                                     +8 x +\frac{20}{3}x^2+\frac{4}{3x}
                                     - \vphantom{\frac{20}{3}x^2}
                                     (6+10x) \ln{x} -2(1+x)\ln^2{x}
                                     \right\} \,,\\
   \\
   \mathcal{P}_{\gamma\gamma}^{(1,1)} &=& \displaystyle -4C_F
-                                         C_A\delta(1-x)\,,\\
+                                         \delta(1-x)\,,\\
   \\
-  \mathcal{P}_{qg}^{(1,1)} &=& \displaystyle  2T_R\left\{ 4
-                               -9x-(1-4x) \ln{x} - (1-2x)
-                               \ln^2{x} +4 \ln(1-x) \right.\\
-  \\
-                                &+& \displaystyle \left. 
-                                    p_{qg}(x) \left[  2\ln^2\left(\frac{1-x}{x}\right) -
-                                    4\ln\left(\frac{1-x}{x}\right)  -\frac{2\pi^2}{3}+10
-                                    \right]\right\}\,,\\
+  \mathcal{P}_{qg}^{(1,1)} &=& \displaystyle \frac{T_R}{C_F} \mathcal{P}_{q\gamma}^{(1,1)}\,,\\
   \\ 
-  \mathcal{P}_{\gamma g}^{(1,1)} &=& \displaystyle 4T_R \left\{ -16 +8
-                                     x +\frac{20}{3}x^2+\frac{4}{3x} -
-                                     \vphantom{\frac{20}{3}x^2}
-                                     (6+10x) \ln{x} -2(1+x)\ln^2{x}
-                                     \right\}\,,\\ 
+  \mathcal{P}_{\gamma g}^{(1,1)} &=& \displaystyle \frac{T_R}{C_F} \mathcal{P}_{g\gamma}^{(1,1)}\,,\\ 
   \\
-  \mathcal{P}_{gg}^{(1,1)} &=& \displaystyle -4T_R \delta(1-x)\,,\\
+  \mathcal{P}_{gg}^{(1,1)} &=& \displaystyle \frac{T_R}{C_F} \mathcal{P}_{\gamma\gamma}^{(1,1)}\,,\\
   \\
   \mathcal{P}_{qq}^{V(1,1)} &=& \displaystyle 8 C_F\left[-\left(2 \ln{x}
                                 \ln(1-x)+\frac{3}{2}\ln{x}\right)
@@ -2111,8 +2196,8 @@ of the expansion parameters:
   \\
   \mathcal{P}^{+(1,1)} =
   \mathcal{P}_{qq}^{V(1,1)}+\mathcal{P}_{q\bar{q}}^{V(1,1)}&=&
-                                                               \displaystyle 8 C_F\left[-\left(2 \ln{x}
-                                \ln(1-x)+\frac{3}{2}\ln{x}\right)
+  \displaystyle 8 C_F\left[-\left(2 \ln{x}
+    \ln(1-x)+\frac{3}{2}\ln{x}\right)
                                 p_{qq}(x) + \frac{1-3x}{2}\ln{x} -
                                 \frac{1+x}{2}{\ln^2{x}}  \right.\\
   \\
@@ -2125,7 +2210,7 @@ of the expansion parameters:
   \\
   \mathcal{P}^{-(1,1)} =
   \mathcal{P}_{qq}^{V(1,1)}-\mathcal{P}_{q\bar{q}}^{V(1,1)}&=&
-                                                               \displaystyle C_F\left[-\left(2 \ln{x}
+  \displaystyle 8C_F\left[-\left(2 \ln{x}
                                 \ln(1-x)+\frac{3}{2}\ln{x}\right)
                                 p_{qq}(x) - \frac{7+11x}{2}\ln{x} -
                                 \frac{1+x}{2}{\ln^2{x}}  \right.\\
@@ -2136,7 +2221,7 @@ of the expansion parameters:
                                     \zeta_3 \right) \delta(1-x)
                                     \right]\,,\\
   \\
-  \mathcal{P}_{gq}^{(1,1)} &=& \displaystyle
+  \mathcal{P}_{\gamma q}^{(1,1)} &=& \displaystyle
                                4C_F\left[-(3\ln(1-x)+\ln^2(1-x))p_{gq}(x)
                                \vphantom{\left(2+\frac{7}{2}x\right)}
                                +
@@ -2147,9 +2232,10 @@ of the expansion parameters:
                                     -
                                     2x\ln(1-x)-\frac{7}{2}x-\frac{5}{2}\right]\,,\\
   \\
-  \mathcal{P}_{\gamma q}^{(1,1)} &=& \displaystyle \mathcal{P}_{gq}^{(1,1)}\,,
+  \mathcal{P}_{gq}^{(1,1)} &=& \displaystyle \mathcal{P}_{\gamma q}^{(1,1)}\,,
 \end{array}
 \end{equation}
+
 The function $S_2(x)$ is given by:
 \begin{equation}\label{eq:S2definicion}
   S_2(x) = \int_{\frac{x}{1+x}}^{\frac{1}{1+x}} \frac{dz}{z}
@@ -2165,6 +2251,101 @@ p_{qg}(x)&=&\displaystyle x^2+(1-x)^2\\
 p_{gq}(x)&=&\displaystyle \frac{1+(1-x)^2}{x}\\
 \end{array}
 \end{equation}
+It should be noticed that, excluding the color factors and some
+additional prefactors, all functions appearing above appear also in
+the $\mathcal{O}(\alpha_s^2)$ expressions of the splitting
+functions. As a consequence, there is no additional work to be done to
+reduce these expressions to the form needed by {\tt APFEL}, that to
+separate regular, singular, and local contributions.
+
+The resulting evolution equations at $\mathcal{O}(\alpha_s\alpha)$
+are:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle\left.\mu^2\frac{\partial}{\partial \mu^2}
+\begin{pmatrix}
+g\\
+\gamma\\
+\Sigma\\
+\Delta_\Sigma
+\end{pmatrix}\right|_{\mathcal{O}(\alpha_s \alpha)} &=& \displaystyle \begin{pmatrix}
+e_\Sigma^2 \mathcal{P}^{(1,1)}_{gg}      & e_\Sigma^2 \mathcal{P}^{(1,1)}_{g\gamma} & \eta^+\mathcal{P}^{(1,1)}_{gq} & \eta^-\mathcal{P}^{(1,1)}_{gq} \\
+e_\Sigma^2 \mathcal{P}^{(1,1)}_{\gamma g} & e_\Sigma^2 \mathcal{P}^{(1,1)}_{\gamma\gamma} & \eta^+\mathcal{P}^{(1,1)}_{\gamma q} &\eta^-\mathcal{P}^{(1,1)}_{\gamma q} \\
+2 e_\Sigma^2 \mathcal{P}^{(1,1)}_{qg}    & 2 e_\Sigma^2 \mathcal{P}^{(1,1)}_{q\gamma} & \eta^+\mathcal{P}^{+(1,1)}  & \eta^-\mathcal{P}^{+(1,1)}\\
+2 \delta_e^2 \mathcal{P}^{(1,1)}_{qg} & 2 \delta_e^2 \mathcal{P}^{(1,1)}_{q\gamma} &\eta^-\mathcal{P}^{+(1,1)} &\eta^+\mathcal{P}^{+(1,1)}
+\end{pmatrix}
+\begin{pmatrix}
+g\\
+\gamma\\
+\Sigma\\
+\Delta_\Sigma
+\end{pmatrix}
+\end{array}
+\end{equation}
+
+
+\begin{equation}
+\displaystyle\left.\mu^2\frac{\partial}{\partial \mu^2}
+\begin{pmatrix}
+V\\
+\Delta_V
+\end{pmatrix} \right|_{\mathcal{O}(\alpha_s \alpha)}= 
+\begin{pmatrix}
+\eta^+\mathcal{P}^{-(1,1)} & \eta^-\mathcal{P}^{-(1,1)} \\
+\eta^-\mathcal{P}^{-(1,1)} & \eta^+\mathcal{P}^{-(1,1)} 
+\end{pmatrix}
+\begin{pmatrix}
+V\\
+\Delta_V
+\end{pmatrix}
+\end{equation}
+
+
+\begin{equation}
+\begin{array}{l}
+\begin{array}{rcl}
+\\
+\displaystyle \left.\mu^2\frac{\partial T^u_{1,2}}{\partial \mu^2}\right|_{\mathcal{O}(\alpha_s \alpha)} &=&
+\displaystyle e_u^2\mathcal{P}^{+(1,1)} T^u_{1,2}\\
+\\
+\displaystyle \left.\mu^2\frac{\partial T^d_{1,2}}{\partial \mu^2}\right|_{\mathcal{O}(\alpha_s \alpha)} &=&
+\displaystyle e_d^2\mathcal{P}^{+(1,1)} T^d_{1,2}
+\end{array}
+\\
+\\
+\begin{array}{rcl}
+\displaystyle \left.\mu^2\frac{\partial V^u_{1,2}}{\partial \mu^2}\right|_{\mathcal{O}(\alpha_s \alpha)} &=&
+\displaystyle e_u^2\mathcal{P}^{-(1,1)} V^u_{1,2}\\
+\\
+\displaystyle \left.\mu^2\frac{\partial V^d_{1,2}}{\partial \mu^2}\right|_{\mathcal{O}(\alpha_s \alpha)} &=&
+\displaystyle e_d^2\mathcal{P}^{-(1,1)} V^d_{1,2}
+\end{array}
+\end{array}
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 Now we turn to $\mathcal{P}^{(0,2)}$ and, referring to eq.~(58) of
 Ref.~\cite{deFlorian:2016gvk}, we first observe that:
@@ -2191,74 +2372,299 @@ eq.~(53) of the same reference we read:
   \mathcal{P}_{\gamma g}^{(0,2)} = 0
 \end{array}
 \end{equation}
-which provide a big simplification. The non-vanishing splitting
-functions are:
+which provide a big simplification. The non-vanishing
+$\mathcal{O}(\alpha^2)$ splitting functions can mostly be written in
+terms of the $\mathcal{O}(\alpha_s\alpha)$ ones and are:
+%\begin{equation}
+%\begin{array}{rcl}
+%  \mathcal{P}_{\gamma \gamma}^{(0,2)} &=& \displaystyle 4\left[ -16 +8
+%    x +\frac{20}{3}x^2+\frac{4}{3x} -(6+10x) \ln{x} -
+%    2(1+x)\ln^2{x} -\delta(1-x)\right]\,,\\
+%  \\
+%  \mathcal{P}_{q\gamma}^{(0,2)}
+%  &=&\displaystyle 2\left\{ 4-9x-(1-4x) \ln{x} -(1-2x)\ln^2{x} +4
+%  \ln(1-x) \right.\\
+%  \\
+%                               &+&\displaystyle \left. p_{qg}(x)
+%                                   \left[
+%                                   2\ln^2\left(\frac{1-x}{x}\right)
+%                                   -4\ln\left(\frac{1-x}{x}\right)
+%                                   -\frac{2\pi^2}{3}+10 \right]
+%                                   \right\}\,,\\
+%  \\
+%  \mathcal{P}_{\gamma q}^{(0,2)} &=&\displaystyle 4
+%                                     \left[-\left(3\ln(1-x)+\ln^2(1-x)\right)p_{gq}(x)+\left(2+\frac{7}{2}x\right)\ln{x}-\left(1-\frac{x}{2}\right)\ln^2{x}
+%                                     \right.\\
+%  \\
+%                               &-&\displaystyle
+%                                   \left. 2x\ln(1-x)-\frac{7}{2}x-\frac{5}{2}\right]
+%                                   - 4\left(\frac1{e_q^2}e_\Sigma^2
+%                                   \right) \left[  \frac{4}{3}x +
+%                                   p_{gq}(x) \left(
+%                                   \frac{20}{9}+\frac{4}{3}\ln(1-x)
+%                                   \right)\right]\,,\\
+%  \\
+%  \mathcal{P}_{qq}^{V(0,2)} &=&\displaystyle  4 \left[-\left(2
+%                                \ln{x}\ln(1-x)+\frac{3}{2}\ln{x}\right)
+%                                p_{qq}(x) - \frac{3+7x}{2}\ln{x}
+%                                \right.\\
+%  \\
+%                               &-&\displaystyle \left.
+%                                   \frac{1+x}{2}\ln^2{x}-5(1-x)
+%                                   -\left(\frac{\pi^2}{2}-\frac{3}{8}-6
+%                                   \zeta_3 \right) \delta(1-x)
+%                                   \right]\\
+%  \\
+%                               &-&\displaystyle 4
+%                                   \left(\frac1{e_q^2}e_\Sigma^2\right) \left[
+%                                   \frac{4}{3}(1-x) +  p_{qq}(x)
+%                                   \left( \frac{2}{3}
+%                                   \ln{x}+\frac{10}{9}  \right)
+%                                   +\left(\frac{2
+%                                   \pi^2}{9}+\frac{1}{6}\right)
+%                                   \delta(1-x)\right]\,,\\
+%  \\
+%  \mathcal{P}_{q\bar{q}}^{V(0,2)} &=&\displaystyle 4
+%                                      \left[4(1-x)+2(1+x)\ln{x}+2p_{qq}(-x)S_2(x)\right]\,,\\
+%  \\
+%  \mathcal{P}_{qq}^{+(0,2)}=\mathcal{P}_{qq}^{V(0,2)}+\mathcal{P}_{q\overline{q}}^{V(0,2)} &=&\displaystyle  4 \left[-\left(2
+%                                \ln{x}\ln(1-x)+\frac{3}{2}\ln{x}\right)
+%                                p_{qq}(x) + \frac{1-3x}{2}\ln{x}
+%                                \right.\\
+%  \\
+%                               &-&\displaystyle \left.
+%                                   \frac{1+x}{2}\ln^2{x}-(1-x)+2p_{qq}(-x)S_2(x)
+%                                   -\left(\frac{\pi^2}{2}-\frac{3}{8}-6
+%                                   \zeta_3 \right) \delta(1-x)
+%                                   \right]\\
+%  \\
+%                               &-&\displaystyle 4
+%                                   \left(\frac1{e_q^2}e_\Sigma^2\right) \left[
+%                                   \frac{4}{3}(1-x) +  p_{qq}(x)
+%                                   \left( \frac{2}{3}
+%                                   \ln{x}+\frac{10}{9}  \right)
+%                                   +\left(\frac{2
+%                                   \pi^2}{9}+\frac{1}{6}\right)
+%                                   \delta(1-x)\right]\,,\\
+%  \\
+%  \mathcal{P}_{qq}^{-(0,2)}=\mathcal{P}_{qq}^{V(0,2)}-\mathcal{P}_{q\overline{q}}^{V(0,2)}  &=&\displaystyle  4 \left[-\left(2
+%                                \ln{x}\ln(1-x)+\frac{3}{2}\ln{x}\right)
+%                                p_{qq}(x) - \frac{7+11x}{2}\ln{x}
+%                                \right.\\
+%  \\
+%                               &-&\displaystyle \left.
+%                                   \frac{1+x}{2}\ln^2{x}-9(1-x)-2p_{qq}(-x)S_2(x)
+%                                   -\left(\frac{\pi^2}{2}-\frac{3}{8}-6
+%                                   \zeta_3 \right) \delta(1-x)
+%                                   \right]\\
+%  \\
+%                               &-&\displaystyle 4
+%                                   \left(\frac1{e_q^2}e_\Sigma^2\right) \left[
+%                                   \frac{4}{3}(1-x) +  p_{qq}(x)
+%                                   \left( \frac{2}{3}
+%                                   \ln{x}+\frac{10}{9}  \right)
+%                                   +\left(\frac{2
+%                                   \pi^2}{9}+\frac{1}{6}\right)
+%                                   \delta(1-x)\right]\,,\\
+%  \\
+%  \mathcal{P}_{qq}^{S(0,2)} &=&\displaystyle 4\left(\frac{20}{9x}
+%                                -2+6x-\frac{56}{9}x^2+\left(1+5x+\frac{8}{3}x^2\right)\ln{x}-(1+x)\ln^2{x}\right)\,,
+%\end{array}
+%\end{equation}
+
 \begin{equation}
 \begin{array}{rcl}
-  \mathcal{P}_{\gamma \gamma}^{(0,2)} &=&  \displaystyle \left( \sum_{f}e_f^4\right)
-                                \left[ -16 +8 x
-                                +\frac{20}{3}x^2+\frac{4}{3x} -(6+10x)
-                                \ln{x} \right.\\
+  \mathcal{P}_{\gamma \gamma}^{(0,2)} &=& \displaystyle \frac1{C_F}\mathcal{P}_{g \gamma}^{(1,1)} -4\delta(1-x)\\
   \\
-                                      &-& \displaystyle \left. 2(1+x)\ln^2{x}  -\delta(1-x)\right]\\
+  \mathcal{P}_{q\gamma}^{(0,2)}      &=&\displaystyle \frac1{C_F}\mathcal{P}_{q \gamma}^{(1,1)}\\
   \\
- \mathcal{P}_{q\gamma}^{(0,2)} &=&\displaystyle 2C_A e_q^4\left\{
-                                   2\ln^2\left(\frac{1-x}{x}\right) 4
-                                   -9x-(1-4x) \ln{x} -(1-2x)\ln^2{x}
-                                   +4 \ln(1-x) \right.\\
-
-  \\
-                               &+&\displaystyle \left. p_{qg}(x)
-                                   \left[
-                                   2\ln^2\left(\frac{1-x}{x}\right)
-                                   -4\ln\left(\frac{1-x}{x}\right)
-                                   -\frac{2\pi^2}{3}+10 \right]
-                                   \right\}\,,\\
-  \\
-  \mathcal{P}_{\gamma q}^{(0,2)} &=&\displaystyle 4e_q^4
-                                     \left[-\left(3\ln(1-x)+\ln^2(1-x)\right)p_{gq}(x)+\left(2+\frac{7}{2}x\right)\ln{x}-\left(1-\frac{x}{2}\right)\ln^2{x}
-                                     \right.\\
-  \\
-                               &-&\displaystyle
-                                   \left. 2x\ln(1-x)-\frac{7}{2}x-\frac{5}{2}\right]
-                                   - e_q^2  \left(\sum_{f}\, e_f^2
-                                   \right) \left[  \frac{4}{3}x +
+  \mathcal{P}_{\gamma q}^{(0,2)} &=&\displaystyle \frac1{C_F}\mathcal{P}_{\gamma q}^{(1,1)} + \left(\frac{e_\Sigma^2}{e_q^2}
+                                   \right) 4\left[ - \frac{4}{3}x -
                                    p_{gq}(x) \left(
                                    \frac{20}{9}+\frac{4}{3}\ln(1-x)
                                    \right)\right]\,,\\
   \\
-  \mathcal{P}_{qq}^{V(0,2)} &=&\displaystyle  4e_q^4 \left[-\left(2
-                                \ln{x}\ln(1-x)+\frac{3}{2}\ln{x}\right)
-                                p_{qq}(x) - \frac{3+7x}{2}\ln{x}
-                                \right.\\
-  \\
-                               &-&\displaystyle \left.
-                                   \frac{1+x}{2}\ln^2{x}-5(1-x)
-                                   -\left(\frac{\pi^2}{2}-\frac{3}{8}-6
-                                   \zeta_3 \right) \delta(1-x)
-                                   \right]\\
-  \\
-                               &-&\displaystyle e_q^2
-                                   \left(\sum_{f}\,e_f^2\right) \left[
-                                   \frac{4}{3}(1-x) +  p_{qq}(x)
+  \mathcal{P}_{qq}^{\pm(0,2)}     &=&\displaystyle  \frac1{2C_F}\mathcal{P}^{\pm(1,1)} 
+                                   +\left(\frac{e_\Sigma^2}{e_q^2}\right) 4\left[
+                                   -\frac{4}{3}(1-x) - p_{qq}(x)
                                    \left( \frac{2}{3}
-                                   \ln{x}+\frac{10}{9}  \right)
-                                   +\left(\frac{2
+                                   \ln{x}+\frac{10}{9} \right)
+                                   -\left(\frac{2
                                    \pi^2}{9}+\frac{1}{6}\right)
                                    \delta(1-x)\right]\,,\\
   \\
-  \mathcal{P}_{q\bar{q}}^{V(0,2)} &=&\displaystyle 4e_q^4
-                                      \left[4(1-x)+2(1+x)\ln{x}+2p_{qq}(-x)S_2(x)\right]\,,\\
-  \\
-  \mathcal{P}_{qQ}^{S(0,2)} &=&\displaystyle P_{q\bar{Q}}^{S(0,2)}= 4C_A \, e_q^2 \, e_Q^2 \left(\frac{20}{9x}
-                                -2+6x-\frac{56}{9}x^2+\left(1+5x+\frac{8}{3}x^2\right)\ln{x}-(1+x)\ln^2{x}\right)\,,
+  \mathcal{P}_{qq}^{S(0,2)} &=&\displaystyle 4\left[\frac{20}{9x}
+                                -2+6x-\frac{56}{9}x^2+\left(1+5x+\frac{8}{3}x^2\right)\ln{x}-(1+x)\ln^2{x}\right]\,,
 \end{array}
 \end{equation}
-Note that here we temprary keep the electric charges in the definition
-of the splitting functions. The reason is that, contrary to all cases
-we have treated so far in which the electric charges appeared to the
-second power at the most, here they appear to the fourth power and
-thus we need to adjust the couplings accordingly.
+
+
+
+It is interesting to notice that the expressions above for the
+$\mathcal{O}(\alpha^2)$ splitting functions coincide with the
+$\mathcal{O}(\alpha_s^2)$ where all color factor are set to one but
+$C_A$ which is instead set to zero.
+
+Contrary to all cases we have treated so far in which the electric
+charges appeared to the second power at the most, here they appear to
+the fourth power and thus we need to adjust the couplings accordingly.
+Although, we could adjust the couplings relying on basic
+considerations, we adopt the brute force approach and re-derive the
+DGLAP equations in the evolution basis defined aboove but
+concentrating only on the $\mathcal{O}(\alpha^2)$ contributions. This
+will provide a more solid result. In order to simplify the notation,
+we will get rid of all unneeded indices under the assumption that we
+are dealing only with the $\mathcal{O}(\alpha^2)$ contributions to the
+splitting functions.  We now define:
+\begin{equation}
+e_{\Sigma}^4 = N_c(e_u^4 n_{u} + e_d^4 n_{d})\,,
+\end{equation}
+so that:
+\begin{equation}
+{P}_{\gamma\gamma} \rightarrow e_\Sigma^4\mathcal{P}_{\gamma\gamma}\,.
+\end{equation}
+In addition,for the splitting functions involving one photon and one
+quark we have:
+\begin{equation}
+\begin{array}{cc}
+\displaystyle {P}_{\gamma u_i} = {P}_{\gamma \overline{u}_i} \rightarrow
+e_u^4\mathcal{P}_{\gamma u}\,, & \displaystyle {P}_{\gamma d_i} = {P}_{\gamma \overline{d}_i} \rightarrow
+e_d^4\mathcal{P}_{\gamma d}\,, \\
+\\
+\displaystyle {P}_{u_i \gamma } = {P}_{\overline{u}_i \gamma } \rightarrow
+e_u^4{P}_{q\gamma }\,, & \displaystyle {P}_{d_i \gamma } =
+{P}_{\overline{d}_i \gamma } \rightarrow
+e_d^4{P}_{q\gamma }\,.
+\end{array}
+\end{equation}
+Finally, we consider the splitting functions involving quarks or
+anti-quarks in the final and initial states:
+\begin{equation}\label{decompositionQED}
+\begin{array}{l}
+{P}_{u_iu_j} = {P}_{\overline{u}_i\overline{u}_j} \rightarrow e_u^4\delta_{ij} \mathcal{P}_{uu}^V+e_u^4\mathcal{P}_{qq}^S\\
+{P}_{d_id_j} = {P}_{\overline{d}_i\overline{d}_j} \rightarrow e_d^4\delta_{ij} \mathcal{P}_{dd}^V+e_d^4\mathcal{P}_{qq}^S\\
+{P}_{\overline{u}_iu_j} = {P}_{u_i\overline{u}_j} \rightarrow e_u^4\delta_{ij} \mathcal{P}_{q\overline{q}}^V+e_u^4\mathcal{P}_{qq}^S\\
+{P}_{\overline{d}_id_j} = {P}_{d_i\overline{d}_j} \rightarrow e_d^4\delta_{ij} \mathcal{P}_{q\overline{q}}^V+e_d^4\mathcal{P}_{qq}^S\\
+{P}_{u_id_j} = {P}_{d_iu_j} = {P}_{\overline{u}_id_j} = {P}_{d_i\overline{u}_j} = {P}_{\overline{d}_iu_j} = {P}_{u_i\overline{d}_j} = {P}_{\overline{u}_i\overline{d}_j} = {P}_{\overline{d}_i\overline{u}_j} \rightarrow e_u^2e_d^2\mathcal{P}_{qq}^S
+\end{array}\,.
+\end{equation}
+so that we finally get:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \mu^2\frac{\partial}{\partial \mu^2}
+\left.\begin{pmatrix}
+u_j^+ \\
+d_i^+\\
+g\\
+\gamma\\
+d_i^-\\
+u_j^-
+\end{pmatrix}\right|_{\mathcal{O}(\alpha^2)} &=& \displaystyle
+\begin{pmatrix}
+e_u^4\mathcal{P}_{uu}^+ & 0 & 0 & 2 e_u^4\mathcal{P}_{q\gamma} & 0 & 0 \\ 
+0 & e_d^4\mathcal{P}_{dd}^+ & 0 & 2 e_d^4\mathcal{P}_{q\gamma} & 0 & 0 \\ 
+0 & 0 & 0 & 0 & 0 & 0 \\
+e_u^4 \mathcal{P}_{\gamma u} & e_d^4\mathcal{P}_{\gamma d} & 0 & e_\Sigma^4\mathcal{P}_{\gamma\gamma} & 0 & 0 \\
+0 & 0 & 0 & 0 & e_d^4\mathcal{P}_{dd}^- & 0 \\
+0 & 0 & 0 & 0 & 0 & e_u^4\mathcal{P}_{uu}^-
+\end{pmatrix}
+\begin{pmatrix}
+u_j^+ \\
+d_i^+\\
+g\\
+\gamma\\
+d_i^-\\
+u_j^-
+\end{pmatrix}\\
+\\
+&+&
+\displaystyle 
+\begin{pmatrix}
+e_u^4\mathcal{P}_{qq}^{S} & e_u^2e_d^2\mathcal{P}_{qq}^{S} & 0 & 0 & 0 & 0 \\ 
+e_u^2e_d^2\mathcal{P}_{qq}^{S} & e_d^4\mathcal{P}_{qq}^{S} & 0 & 0 & 0 & 0 \\ 
+0  & 0 & 0 & 0 & 0 & 0\\
+0  & 0 & 0 & 0 & 0 & 0\\
+0  & 0 & 0 & 0 & 0 & 0\\
+0  & 0 & 0 & 0 & 0 & 0
+\end{pmatrix}
+\begin{pmatrix}
+\Sigma_u \\
+\Sigma_d\\
+g\\
+\gamma\\
+V_d\\
+V_u
+\end{pmatrix}
+\end{array}
+\end{equation}
+that cal also be written as:
+\begin{equation}
+\left\{
+\begin{array}{rcl}
+\displaystyle \left.\mu^2\frac{\partial g}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& 0\\
+\\
+\displaystyle \left.\mu^2\frac{\partial \gamma}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& e_u^4
+\mathcal{P}_{\gamma u}\Sigma_u + e_d^4
+\mathcal{P}_{\gamma d}\Sigma_d+ e_\Sigma^4 \mathcal{P}_{\gamma\gamma} \gamma\\
+\\
+\displaystyle \left.\mu^2\frac{\partial \Sigma_d}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& \displaystyle e_d^4\left(\mathcal{P}_{dd}^+ + n_d\mathcal{P}^{S}_{qq}\right)\Sigma_d + n_de_d^2 e_u^2\mathcal{P}_{qq}^S\Sigma_u + 2n_de_d^4 \mathcal{P}_{q\gamma} \gamma\\
+\\
+\displaystyle \left.\mu^2\frac{\partial \Sigma_u}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& \displaystyle e_u^4\left(\mathcal{P}_{uu}^+ +n_u\mathcal{P}^{S}_{qq}\right)\Sigma_u + n_u e_u^2 e_d^2\mathcal{P}^{S}_{qq}\Sigma_d  + 2n_ue_u^4 \mathcal{P}_{q\gamma} \gamma\\
+\\
+\displaystyle \left.\mu^2\frac{\partial V_d}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& \displaystyle e_d^4\mathcal{P}_{dd}^-V_d\\
+\\
+\displaystyle \left.\mu^2\frac{\partial V_u}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& \displaystyle e_u^4\mathcal{P}_{uu}^-V_u
+\end{array}
+\right.\,.
+\end{equation}
+Now, using the fact that:
+\begin{equation}
+\begin{array}{l}
+\Sigma = \Sigma_u +\Sigma_d\\
+\Delta_\Sigma = \Sigma_u -\Sigma_d\\
+V = V_u + V_d\\
+\Delta_V = V_u - V_d
+\end{array}
+\end{equation}
+we can write:
+\begin{equation}
+\left\{
+\begin{array}{rcl}
+\displaystyle \left.\mu^2\frac{\partial g}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& 0\\
+\\
+\displaystyle \left.\mu^2\frac{\partial \gamma}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& \displaystyle
+\frac12\left(e_u^4 \mathcal{P}_{\gamma u} + e_d^4 \mathcal{P}_{\gamma d}\right)\Sigma+
+\frac12\left(e_u^4 \mathcal{P}_{\gamma u} - e_d^4 \mathcal{P}_{\gamma d}\right)\Delta_\Sigma
++ e_\Sigma^4 \mathcal{P}_{\gamma\gamma} \gamma\\
+\\
+\displaystyle \left.\mu^2\frac{\partial \Sigma}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& \displaystyle \frac12\left(e_u^4\mathcal{P}_{uu}^+ +e_d^4\mathcal{P}_{dd}^++2\eta^+e_\Sigma^2\mathcal{P}^{S}_{qq}\right)\Sigma + \frac12\left(e_u^4\mathcal{P}_{uu}^+-e_d^4\mathcal{P}_{dd}^+ + 2\eta^-e_\Sigma^2\mathcal{P}^{S}_{qq}\right)\Delta_\Sigma+ 2e_
+\Sigma^4 \mathcal{P}_{q\gamma} \gamma\\
+\\
+\displaystyle \left.\mu^2\frac{\partial \Delta_\Sigma}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& \displaystyle \frac12\left(e_u^4\mathcal{P}_{uu}^+ -e_d^4\mathcal{P}_{dd}^++2\eta^-\delta_e^2 \mathcal{P}^{S}_{qq}\right)\Sigma + \frac12\left(e_u^4\mathcal{P}_{uu}^++e_d^4\mathcal{P}_{dd}^+ + 2\eta^+\delta_e^2 \mathcal{P}^{S}_{qq}\right)\Delta_\Sigma + 2\delta_e^4 \mathcal{P}_{q\gamma} \gamma\\
+\\
+\displaystyle \left.\mu^2\frac{\partial V}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& \displaystyle \frac12\left(e_u^4\mathcal{P}_{uu}^-+e_d^4\mathcal{P}_{dd}^-\right)V+\frac12\left(e_u^4\mathcal{P}_{uu}^--e_d^4\mathcal{P}_{dd}^-\right)\Delta_V\\
+\\
+\displaystyle \left.\mu^2\frac{\partial \Delta_V}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)} &=& \displaystyle \frac12\left(e_u^4\mathcal{P}_{uu}^--e_d^4\mathcal{P}_{dd}^-\right)V+\frac12\left(e_u^4\mathcal{P}_{uu}^-+e_d^4\mathcal{P}_{dd}^-\right)\Delta_V
+\end{array}
+\right.\,.
+\end{equation}
+And the remaining distributions evolving multiplicatively as:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \left.\mu^2\frac{\partial T^u_{1,2}}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)}  &=& \displaystyle e_u^4\mathcal{P}_{uu}^+ T^u_{1,2}\\
+\\
+\displaystyle \left.\mu^2\frac{\partial T^d_{1,2}}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)}  &=& \displaystyle e_d^4\mathcal{P}_{dd}^+ T^d_{1,2}\\
+\\
+\displaystyle \left.\mu^2\frac{\partial V^u_{1,2}}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)}  &=& \displaystyle e_u^4\mathcal{P}_{uu}^- V^u_{1,2}\\
+\\
+\displaystyle \left.\mu^2\frac{\partial V^d_{1,2}}{\partial \mu^2}\right|_{\mathcal{O}(\alpha^2)}  &=& \displaystyle e_d^4\mathcal{P}_{dd}^- V^d_{1,2}
+\end{array}
+\end{equation}
+
+
+
+
+
 
 
 

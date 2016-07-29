@@ -265,7 +265,7 @@
       endif
 *
       do alpha=0,nin(igrid)
-         integ(alpha) = integralsQED(0,alpha,coup,i)
+         integ(alpha) = integralsQED(0,alpha,coup,0d0,i)
       enddo
 *
 *     Initialization
@@ -311,7 +311,7 @@
       double precision dMdt(0:nint_max,0:nint_max)
 *
       do alpha=0,nin(igrid)
-         integ(alpha) = integralsQED(0,alpha,coup,i)
+         integ(alpha) = integralsQED(0,alpha,coup,0d0,i)
       enddo
 *
 *     Initialization

@@ -278,7 +278,8 @@
       do alpha=0,nin(igrid)
          do i=1,3
             do k=1,3
-               integ(alpha,i,k) = integralsQED(0,alpha,coup,mapp(i,k))
+               integ(alpha,i,k) =
+     1              integralsQED(0,alpha,coup,0d0,mapp(i,k))
             enddo
          enddo
       enddo

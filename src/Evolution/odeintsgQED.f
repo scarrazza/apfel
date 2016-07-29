@@ -322,7 +322,8 @@
       do alpha=0,nin(igrid)
          do i=1,3
             do j=1,3
-               integ(alpha,i,j) = integralsQED(0,alpha,coup,mapp(i,j))
+               integ(alpha,i,j) =
+     1              integralsQED(0,alpha,coup,0d0,mapp(i,j))
             enddo
          enddo
       enddo
@@ -390,7 +391,8 @@
       do alpha=0,nin(igrid)
          do i=1,3
             do j=1,3
-               integ(alpha,i,j) = integralsQED(0,alpha,coup,mapp(i,j))
+               integ(alpha,i,j) =
+     1              integralsQED(0,alpha,coup,0d0,mapp(i,j))
             enddo
          enddo
       enddo

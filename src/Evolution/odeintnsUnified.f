@@ -276,26 +276,27 @@
       if(i.eq.1)then
          do alpha=0,nin(igrid)
             integ(alpha) = integralsQCD(0,alpha,coupQCD,1)
-     1                   + bts * integralsQED(0,alpha,coupQED,1)
+     1                   + bts * integralsQED(0,alpha,coupQED,coupQCD,1)
          enddo
       elseif(i.eq.2)then
          do alpha=0,nin(igrid)
             integ(alpha) = integralsQCD(0,alpha,coupQCD,1)
-     1                   + bts * integralsQED(0,alpha,coupQED,2)
+     1                   + bts * integralsQED(0,alpha,coupQED,coupQCD,2)
          enddo
       elseif(i.eq.3)then
          do alpha=0,nin(igrid)
             integ(alpha) = integralsQCD(0,alpha,coupQCD,2)
-     1                   + bts * integralsQED(0,alpha,coupQED,1)
+     1                   + bts * integralsQED(0,alpha,coupQED,coupQCD,1)
          enddo
       elseif(i.eq.4)then
          do alpha=0,nin(igrid)
             integ(alpha) = integralsQCD(0,alpha,coupQCD,2)
-     1                   + bts * integralsQED(0,alpha,coupQED,2)
+     1                   + bts * integralsQED(0,alpha,coupQED,coupQCD,2)
          enddo
       elseif(i.eq.5)then
          do alpha=0,nin(igrid)
-            integ(alpha) = bts * integralsQED(0,alpha,coupQED,12)
+            integ(alpha) = bts
+     1           * integralsQED(0,alpha,coupQED,coupQCD,12)
          enddo
       endif
 *

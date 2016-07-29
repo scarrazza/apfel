@@ -11,7 +11,7 @@
 *           nsp nsm gg  gq  gD  qg  qq  qD  Dg  Dq  DD
 * 
 ************************************************************************
-      function integralsQED(alpha,beta,coup,kk)
+      function integralsQED(alpha,beta,coupQED,coupQCD,kk)
 *
       implicit none
 *
@@ -27,7 +27,7 @@
 *
       integer alpha,beta,kk
       integer bnf,pnf
-      double precision coup
+      double precision coupQED,coupQCD
       double precision beta0qed
 **
 *     Output Variables
@@ -49,10 +49,10 @@
 *     Integrals
 *
       if(PDFEvol.eq."exactmu".or.Th.eq."QUniD")then
-         integralsQED = coup * SQ(igrid,pnf,wnl,kk,alpha,beta)
+         integralsQED = coupQED * SQ(igrid,pnf,wnl,kk,0,alpha,beta)
       else
-         integralsQED = - SQ(igrid,pnf,wnl,kk,alpha,beta)
-     1                / beta0qed(bnf,wnl) / coup
+         integralsQED = - SQ(igrid,pnf,wnl,kk,0,alpha,beta)
+     1                / beta0qed(bnf,wnl) / coupQED
       endif
 *
       return

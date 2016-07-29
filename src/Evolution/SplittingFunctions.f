@@ -2358,3 +2358,315 @@ c     1     - 2d0 * lnx * log(1d0+x) - pi**2 / 6d0
 *
        RETURN
        END
+*
+***********************************************************************
+*
+*     O(alphas alpha) splitting functions for the NLO QED evolution
+*
+***********************************************************************
+*
+*
+* ..This is the regular 2-loop piece for P_NS^+. 
+*
+      FUNCTION X1NSPA_ASA (X)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/ColorFactors.h"
+*
+* ...some abbreviations
+*
+      lnx   = dlog(x)
+      ln1mx = dlog(1d0 - x)
+      pqq   = 2d0 / ( 1d0 - x ) - 1d0 - x
+      pqqmx = 2d0 / ( 1d0 + x ) - 1d0 + x
+      S2x   = S2(x)
+*
+      X1NSPA_ASA = 8d0 * CF * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
+     1     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2 * ( 1d0 
+     2     + x ) ) / 2d0 - lnx * ( 1.5d0 + ( 7d0 * x ) / 2d0 ) )
+     3     + 8d0 * CF * ( 2d0 * pqqmx * S2x 
+     4     + 4d0 * ( 1d0 - x ) + 2d0 * lnx * ( 1d0 + x ) )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the regular 2-loop piece for P_NS^-. 
+*
+      FUNCTION X1NSMA_ASA (X)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/ColorFactors.h"
+*
+* ...some abbreviations
+*
+      lnx   = dlog(x)
+      ln1mx = dlog(1d0 - x)
+      pqq   = 2d0 / ( 1d0 - x ) - 1d0 - x
+      pqqmx = 2d0 / ( 1d0 + x ) - 1d0 + x
+      S2x   = S2(x)
+*
+      X1NSMA_ASA = 8d0 * CF * ( ( ( - 3d0 * lnx ) / 2d0 - 2d0 * ln1mx 
+     1     * lnx ) * pqq - 5d0 * ( 1d0 - x ) - ( lnx**2 * ( 1d0 
+     2     + x ) ) / 2d0 - lnx * ( 1.5d0 + ( 7d0 * x ) / 2d0 ) )
+     3     - 8d0 * CF * ( 2d0 * pqqmx * S2x 
+     4     + 4d0 * ( 1d0 - x ) + 2d0 * lnx * ( 1d0 + x ) )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' piece.
+*
+       FUNCTION X1NSC_ASA ()
+*
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/consts.h"
+       include "../commons/ColorFactors.h"
+*
+* ...The coefficient of delta(1-x)
+*
+       X1NSC_ASA = 2d0 * cf * (
+     &     + 3D0/2D0
+     &     + 24D0*zeta3
+     &     - 12D0*zeta2 )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The 2-loop gluon->quark splitting functions P_qgamma^(1,1)
+*
+      FUNCTION X1QGAMA_ASA (X)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/consts.h"
+      include "../commons/ColorFactors.h"
+*
+      lnx   = dlog(x)
+      ln1mx = dlog(1d0 - x)
+      pqg   = x**2 + ( 1d0 - x )**2
+*
+      X1QGAMA_ASA = 2d0 * CF * ( 4d0 + 4d0 * ln1mx + ( 10d0 - 4d0 
+     1      * ( ln1mx - lnx ) + 2d0 * ( - ln1mx + lnx )**2 
+     2      - 2d0 * pi**2 / 3d0 ) * pqg - lnx * ( 1d0 - 4d0 * x )
+     3      - lnx**2 * ( 1d0  - 2d0 * x ) - 9d0 * x )
+*
+      RETURN
+      END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The 2-loop quark->gluon splitting functions P_gq^(1,1)
+*
+      FUNCTION X1GAMQA_ASA (X)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/ColorFactors.h"
+*
+* ...some abbreviations
+*
+      lnx = dlog(x)
+      ln1mx = dlog(1d0 - x)
+      pgq   = ( 1d0 + ( 1d0 - x )**2 ) / x
+*
+      X1GAMQA_ASA = 4d0 * CF * ( - 2.5d0 - ( 3d0 * ln1mx + ln1mx**2 )
+     1      * pgq - lnx**2 * ( 1d0 - x / 2d0 ) - ( 7d0 * x ) / 2d0 
+     2      - 2d0 * ln1mx * x + lnx * ( 2d0 + ( 7d0 * x ) / 2d0 ) )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The regular piece of the 2-loop gg splitting function P_ggamma^(1,1) 
+*
+      FUNCTION X1GGAMA_ASA (X)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+      include "../commons/ColorFactors.h"
+*
+* ...some abbreviations
+*
+      lnx = dlog(x)
+      ln1mx = dlog(1d0 - x)
+*
+      X1GGAMA_ASA  = 4d0 * CF *( - 16d0 + 4d0 / ( 3d0 * x ) + 8d0 * x 
+     1      + ( 20d0 * x**2 ) / 3d0 - lnx**2 * ( 2d0 + 2d0 * x ) 
+     2      - lnx * ( 6d0 + 10d0 * x ) )
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' piece.
+*
+       FUNCTION X1GAMGAMC_ASA ()
+*
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/ColorFactors.h"
+*
+* ...The coefficient of delta(1-x)
+*
+       X1GAMGAMC_ASA = - 4D0 * CF
+*
+       RETURN
+       END
+*
+***********************************************************************
+*
+*     O(alpha^2) splitting functions for the NLO QED evolution
+*
+***********************************************************************
+*
+*
+* ..The 2-loop pure-singlet splitting functions P_ps^(0,2)
+*
+      FUNCTION X1PSA_AA (X)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+* ...some abbreviations
+*
+      DX = 1D0/X
+      LNX = DLOG(X)
+      HR200 = LNX * LNX / 2D0
+*
+* ...The splitting function in terms of the harmonic polylogs
+*
+      X1PSA_AA =
+     &    ( - 8D0 + 24D0*x - 224D0/9D0*x**2 + 80D0/9D0*
+     &    dx + 4D0*LNX + 20D0*LNX*x + 32D0/3D0*LNX*x**2 -
+     &    8D0*HR200 - 8D0*HR200*x )
+*
+      RETURN
+      END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' piece of  P_gammagamma^(0,2).
+*
+       FUNCTION X1GAMGAMC_AA ()
+*
+       IMPLICIT REAL*8 (A - Z)
+*
+* ...The coefficient of delta(1-x)
+*
+       X1GAMGAMC_AA = - 4D0
+*
+       RETURN
+       END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..The 2-loop remainder term to the quark->gluon splitting functions P_gammaq^(0,2)
+*
+      FUNCTION REM_X1GAMQA_AA (X)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+* ...some abbreviations
+*
+      ln1mx = dlog(1d0 - x)
+      pgq   = ( 1d0 + ( 1d0 - x )**2 ) / x
+*
+      REM_X1GAMQA_AA = 4d0 * ( - 4d0 * x / 3d0
+     1               - pgq * ( 20d0 / 9d0 + 4d0 * ln1mx / 3d0 ) )
+*
+       RETURN
+       END
+*
+* =====================================================================
+*
+*
+* ..This is the  remainder term to the regular 2-loop piece for P_NS^\pm(0,2). 
+*
+      FUNCTION REM_X1NSA_AA (X)
+*
+      IMPLICIT REAL*8 (A - Z)
+*
+* ..The soft coefficient for use in X2NSB and X2NSC
+*
+      COMMON / REM_P1SOFT_AA / A2
+*
+* ...some abbreviations
+*
+      lnx = dlog(x)
+      pqq = 2d0 / ( 1d0 - x ) - 1d0 - x
+      DM  = 1d0 / ( 1d0 - x )
+*
+      gqq1 = 4d0 * ( ( - 1.1111111111111112d0 - ( 2d0 * lnx ) 
+     1     / 3d0 ) * pqq - ( 4d0 * ( 1d0 - x ) ) / 3d0 ) 
+*
+* ...The soft (`+'-distribution) part of the splitting function
+*
+      A2 = - 80D0/9D0
+*
+      GQQ1L = DM * A2
+*
+* ...The regular piece of the coefficient function
+*
+      REM_X1NSA_AA = GQQ1 - GQQ1L
+*
+      RETURN
+      END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the singular (soft) piece.
+*
+      FUNCTION REM_X1NSB_AA (Y)
+      IMPLICIT REAL*8 (A - Z)
+*
+      COMMON / REM_P1SOFT_AA / A2
+*
+      REM_X1NSB_AA  = A2 / ( 1d0 - Y )
+*
+      RETURN
+      END
+*
+* ---------------------------------------------------------------------
+*
+*
+* ..This is the 'local' piece.
+*
+       FUNCTION REM_X1NSC_AA (Y)
+*
+       IMPLICIT REAL*8 (A - Z)
+*
+       include "../commons/consts.h"
+*
+* ...The coefficient of delta(1-x)
+*
+       P1DELT = 
+     &     - 2D0/3D0
+     &     - 16D0/3D0*zeta2
+*
+* ...The soft (`+'-distribution) part of the splitting function
+*
+       A2 = - 80D0/9D0
+*
+       REM_X1NSC_AA = LOG (1D0-Y) * A2 + P1DELT
+*
+       RETURN
+       END
