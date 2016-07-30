@@ -135,11 +135,11 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
 libAPFELCore_la_LIBADD =
 am__dirstamp = $(am__leading_dot)dirstamp
-am__objects_1 = Evolution/apfelversion.lo Evolution/lhapdfwrapper.lo \
-	Evolution/WelcomeMessage.lo Evolution/initParameters.lo \
-	Evolution/initGrid.lo Evolution/initGridAlpha.lo \
-	Evolution/initIntegralsQCD.lo Evolution/initIntegralsQCDRes.lo \
-	Evolution/initIntegralsQED.lo \
+am__objects_1 = Evolution/apfelversion.lo Evolution/lhapdfwrapper.lo
+am__objects_2 = Evolution/WelcomeMessage.lo \
+	Evolution/initParameters.lo Evolution/initGrid.lo \
+	Evolution/initGridAlpha.lo Evolution/initIntegralsQCD.lo \
+	Evolution/initIntegralsQCDRes.lo Evolution/initIntegralsQED.lo \
 	Evolution/initIntegralsMatching.lo Evolution/initPDFs.lo \
 	Evolution/InitializeAPFEL.lo Evolution/EvolveAPFEL.lo \
 	Evolution/DeriveAPFEL.lo Evolution/initHELL.lo \
@@ -148,7 +148,7 @@ am__objects_1 = Evolution/apfelversion.lo Evolution/lhapdfwrapper.lo \
 	Evolution/ReportParameters.lo Evolution/CheckAPFEL.lo \
 	Evolution/ComputeHeavyQuarkThresholds.lo \
 	Evolution/CachePDFsAPFEL.lo
-am__objects_2 = Evolution/SetAlphaQCDRef.lo \
+am__objects_3 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetAlphaQEDRef.lo Evolution/SetQLimits.lo \
 	Evolution/SetPerturbativeOrder.lo Evolution/SetFFNS.lo \
 	Evolution/SetGridParameters.lo Evolution/SetExternalGrid.lo \
@@ -176,11 +176,11 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetMassScaleReference.lo \
 	Evolution/SetQGridParameters.lo Evolution/GetThreshold.lo \
 	Evolution/EnableNLOQEDCorrections.lo
-am__objects_3 = Evolution/interpolants.lo
-am__objects_4 = Evolution/SplittingFunctions.lo
-am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
+am__objects_4 = Evolution/interpolants.lo
+am__objects_5 = Evolution/SplittingFunctions.lo
+am__objects_6 = Evolution/a_QCD.lo Evolution/a_QED.lo \
 	Evolution/MSbarmass.lo Evolution/lambda.lo
-am__objects_6 = Evolution/EvolutionQCD.lo \
+am__objects_7 = Evolution/EvolutionQCD.lo \
 	Evolution/EvolutionOperatorsQCD.lo \
 	Evolution/IdentityOperatorsQCD.lo \
 	Evolution/EqualOperatorsQCDnf.lo Evolution/integrandsQCD.lo \
@@ -198,7 +198,7 @@ am__objects_6 = Evolution/EvolutionQCD.lo \
 	Evolution/odeintsgQCDf.lo Evolution/odeintnsUnifiedf.lo \
 	Evolution/odeintsgUnifiedf.lo Evolution/integrandsQED.lo \
 	Evolution/integralsQED.lo Evolution/RSLintegralsQED.lo
-am__objects_7 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
+am__objects_8 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
 	Evolution/EvolvePDFs.lo Evolution/EvolveQCD.lo \
 	Evolution/toyLHPDFs.lo Evolution/xPDF.lo Evolution/xgamma.lo \
 	Evolution/NPDF.lo Evolution/Ngamma.lo Evolution/LUMI.lo \
@@ -209,9 +209,9 @@ am__objects_7 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
 	Evolution/DerivePDFs.lo Evolution/xGrid.lo \
 	Evolution/nIntervals.lo Evolution/xLepton.lo \
 	Evolution/xPDFxQ.lo
-am__objects_8 = core/dgauss.lo core/wgplg.lo core/ddilog.lo \
+am__objects_9 = core/dgauss.lo core/wgplg.lo core/ddilog.lo \
 	core/gamma.lo core/beta.lo core/hplog.lo
-am__objects_9 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
+am__objects_10 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
 	DIS/SetMassScheme.lo DIS/initIntegralsDIS.lo \
 	DIS/ZeroMassCoefficientFunctions.lo DIS/RSLintegralsDIS.lo \
 	DIS/ComputeStructureFunctionsAPFEL.lo DIS/F2total.lo \
@@ -243,8 +243,8 @@ am__objects_9 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
 	DIS/integrandsIC.lo DIS/CacheStructureFunctionsAPFEL.lo \
 	DIS/StructureFunctionxQ.lo DIS/SetDampingPowerFONLL.lo \
 	DIS/hqcoef.lo DIS/initIntegralsDISRes.lo
-am__objects_10 = HELL/src/hell.lo HELL/src/hell_wrapper.lo
-am__objects_11 = FTDY/src/ComputeFKTables.lo \
+am__objects_11 = HELL/src/hell.lo HELL/src/hell_wrapper.lo
+am__objects_12 = FTDY/src/ComputeFKTables.lo \
 	FTDY/src/ComputeHardCrossSectionsDY.lo FTDY/src/gauleg.lo \
 	FTDY/src/initDYcouplings.lo FTDY/src/initxGridDY.lo \
 	FTDY/src/readcDY.lo FTDY/src/ReadDataFile.lo \
@@ -255,7 +255,8 @@ am__objects_11 = FTDY/src/ComputeFKTables.lo \
 am_libAPFELCore_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
 	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
 	$(am__objects_6) $(am__objects_7) $(am__objects_8) \
-	$(am__objects_9) $(am__objects_10) $(am__objects_11)
+	$(am__objects_9) $(am__objects_10) $(am__objects_11) \
+	$(am__objects_12)
 libAPFELCore_la_OBJECTS = $(am_libAPFELCore_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -264,10 +265,10 @@ am__v_lt_1 =
 am__DEPENDENCIES_1 =
 libAPFELevol_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(top_builddir)/ccwrap/libAPFELCCWrapEvol.la
-am_libAPFELevol_la_OBJECTS = $(am__objects_1) $(am__objects_2) \
-	$(am__objects_3) $(am__objects_4) $(am__objects_5) \
-	$(am__objects_6) $(am__objects_7) $(am__objects_8) \
-	$(am__objects_10)
+am_libAPFELevol_la_OBJECTS = $(am__objects_2) $(am__objects_3) \
+	$(am__objects_4) $(am__objects_5) $(am__objects_6) \
+	$(am__objects_7) $(am__objects_8) $(am__objects_9) \
+	$(am__objects_11)
 libAPFELevol_la_OBJECTS = $(am_libAPFELevol_la_OBJECTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -503,11 +504,11 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 lib_LTLIBRARIES = libAPFELevol.la
 noinst_LTLIBRARIES = libAPFELCore.la
-INIT = Evolution/apfelversion.cc Evolution/lhapdfwrapper.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
-	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
-	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
-	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
-	Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f Evolution/ExponentiatedEvolveAPFEL.f \
+INITCXX = Evolution/apfelversion.cc Evolution/lhapdfwrapper.cc
+INIT = Evolution/WelcomeMessage.f Evolution/initParameters.f Evolution/initGrid.f Evolution/initGridAlpha.f \
+	Evolution/initIntegralsQCD.f Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f \
+	Evolution/initIntegralsMatching.f Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f \
+	Evolution/DeriveAPFEL.f Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f Evolution/ExponentiatedEvolveAPFEL.f \
 	Evolution/ReportParameters.f Evolution/CheckAPFEL.f Evolution/ComputeHeavyQuarkThresholds.f \
 	Evolution/CachePDFsAPFEL.f
 
@@ -566,7 +567,7 @@ FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src
 
 EXTRA_DIST = commons FTDY/commons
 HELL = HELL/src/hell.cc HELL/src/hell_wrapper.cc
-libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
+libAPFELCore_la_SOURCES = $(INITCXX) $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
 libAPFELevol_la_LIBADD = $(FCLIBS) $(top_builddir)/ccwrap/libAPFELCCWrapEvol.la
 libAPFELevol_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(HELL)
 all: all-am

@@ -1,11 +1,12 @@
 lib_LTLIBRARIES = libAPFELevol.la
 noinst_LTLIBRARIES = libAPFELCore.la
 
-INIT = 	Evolution/apfelversion.cc Evolution/lhapdfwrapper.cc Evolution/WelcomeMessage.f Evolution/initParameters.f \
-	Evolution/initGrid.f Evolution/initGridAlpha.f Evolution/initIntegralsQCD.f \
-	Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f Evolution/initIntegralsMatching.f \
-	Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f Evolution/DeriveAPFEL.f \
-	Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f Evolution/ExponentiatedEvolveAPFEL.f \
+INITCXX = Evolution/apfelversion.cc Evolution/lhapdfwrapper.cc
+
+INIT = 	Evolution/WelcomeMessage.f Evolution/initParameters.f Evolution/initGrid.f Evolution/initGridAlpha.f \
+	Evolution/initIntegralsQCD.f Evolution/initIntegralsQCDRes.f Evolution/initIntegralsQED.f \
+	Evolution/initIntegralsMatching.f Evolution/initPDFs.f Evolution/InitializeAPFEL.f Evolution/EvolveAPFEL.f \
+	Evolution/DeriveAPFEL.f Evolution/initHELL.f Evolution/TruncatedEvolveAPFEL.f Evolution/ExponentiatedEvolveAPFEL.f \
 	Evolution/ReportParameters.f Evolution/CheckAPFEL.f Evolution/ComputeHeavyQuarkThresholds.f \
 	Evolution/CachePDFsAPFEL.f
 
@@ -70,7 +71,7 @@ EXTRA_DIST = commons FTDY/commons
 
 HELL = HELL/src/hell.cc HELL/src/hell_wrapper.cc
 
-libAPFELCore_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
+libAPFELCore_la_SOURCES = $(INITCXX) $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
 
 libAPFELevol_la_LIBADD = $(FCLIBS) $(top_builddir)/ccwrap/libAPFELCCWrapEvol.la
 libAPFELevol_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(HELL)

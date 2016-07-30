@@ -52,6 +52,18 @@
       return
       end
 
+      function xdeltac2(x,as)
+      double precision xdeltac2,x,as
+      write(6,*) "I should not be here!"
+      return
+      end
+
+      function xdeltacl(x,as)
+      double precision xdeltacl,x,as
+      write(6,*) "I should not be here!"
+      return
+      end
+
       subroutine externalsetapfel
       write(6,*) "I should not be here!"
       return

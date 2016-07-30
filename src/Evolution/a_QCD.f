@@ -857,3 +857,115 @@ c         kappa = 1d0                          ! mu_R / mu_F
 *
       return
       end
+*
+****************************************************************************
+*
+*     Set of functions to evaluate the QCD and the QED couplings simultaneuosly
+*     when mixed corrections are included... it's probably not necessary.
+*
+****************************************************************************
+      subroutine aQCDxQED_exact(ipt,nf,nl,a0,mu20,mu2,a)
+*
+      IMPLICIT NONE
+**
+*     Input Variables
+*
+      integer ipt,nf,nl
+      double precision a0(2),mu20,mu2
+**
+*     Internal Variables
+*
+      integer nstep,istep,ia
+      double precision fbetaQCDxQED
+      double precision dlr
+      double precision k1(2),k2(2),k3(2),k4(2)
+      parameter(nstep=10)
+**
+*     Output Variables
+*
+      double precision a(2)
+*
+      do ia=1,2
+         a(ia) = a0(ia)
+      enddo
+      if(mu2.eq.mu20) return
+*
+      dlr = dlog( mu2 / mu20 ) / nstep
+*
+      do istep=1,nstep
+         do ia=1,2
+            k1(ia) = dlr * fbetaQCDxQED(ia,ipt,nf,nl,a(1),a(2))
+         enddo
+         do ia=1,2
+            k2(ia) = dlr * fbetaQCDxQED(ia,ipt,nf,nl,
+     1           a(1) + 0.5d0 * k1(1), a(2) + 0.5d0 * k1(2))
+         enddo
+         do ia=1,2
+            k3(ia) = dlr * fbetaQCDxQED(ia,ipt,nf,nl,
+     1           a(1) + 0.5d0 * k2(1),a(2) + 0.5d0 * k2(2))
+         enddo
+         do ia=1,2
+            k4(ia) = dlr * fbetaQCDxQED(ia,ipt,nf,nl,
+     1           a(1) + k3(1),a(2) + k3(2))
+         enddo
+         do ia=1,2
+            a(ia) = a(ia) + ( k1(ia) + 2d0 * k2(ia)
+     1            + 2d0 * k3(ia) + k4(ia) ) / 6d0
+         enddo
+      enddo
+*
+      return
+      end
+*
+****************************************************************************
+*
+*     QCDxQED beta function.
+*
+****************************************************************************
+      function fbetaQCDxQED(i,ipt,nf,nl,as,a)
+*
+      implicit none
+**
+*     Input Variables
+*
+      integer i,ipt,nf,nl
+      double precision as,a
+**
+*     Internal Variables
+*
+      double precision beta0apf,beta1apf,beta2apf
+      double precision beta0qed,beta1qed
+      double precision beta1qcdqed,beta1qedqcd
+**
+*     Output Variables
+*
+      double precision fbetaQCDxQED
+*
+      fbetaQCDxQED = 0d0
+      if(ipt.eq.0)then
+         if(i.eq.1)then
+            fbetaQCDxQED = - as**2 * beta0apf(nf)
+         elseif(i.eq.2)then
+            fbetaQCDxQED = - a**2  * beta0qed(nf,nl)
+         endif
+      elseif(ipt.eq.1)then
+         if(i.eq.1)then
+            fbetaQCDxQED = - as**2 * ( beta0apf(nf)
+     1           + as * beta1apf(nf) + a * beta1qcdqed(nf) )
+         elseif(i.eq.2)then
+            fbetaQCDxQED = - a**2 * ( beta0qed(nf,nl)
+     1        + a * beta1qed(nf,nl) + as * beta1qedqcd(nf) )
+         endif
+      elseif(ipt.eq.2)then
+         if(i.eq.1)then
+            fbetaQCDxQED = - as**2 * ( beta0apf(nf)
+     1           + as * beta1apf(nf) + a * beta1qcdqed(nf)
+     2           + as**2 * beta2apf(nf) )
+         elseif(i.eq.2)then
+            fbetaQCDxQED = - a**2 * ( beta0qed(nf,nl)
+     1        + a * beta1qed(nf,nl) + as * beta1qedqcd(nf) )
+         endif
+      endif
+*
+      return
+      end

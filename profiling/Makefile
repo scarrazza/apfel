@@ -16,13 +16,13 @@ all: rmxeq mkxeq
 MAIN = Tabulation DISObservables
 
 # List of the modules to include
-MODULES = dummy WelcomeMessage initParameters \
-	initGrid initGridAlpha initIntegralsQCD \
-	initIntegralsQCDRes initIntegralsQED initIntegralsMatching \
-	initPDFs InitializeAPFEL EvolveAPFEL DeriveAPFEL \
-	initHELL TruncatedEvolveAPFEL ExponentiatedEvolveAPFEL \
+MODULES = dummy WelcomeMessage initParameters initGrid initGridAlpha \
+	initIntegralsQCD initIntegralsQCDRes initIntegralsQED \
+	initIntegralsMatching initPDFs InitializeAPFEL EvolveAPFEL \
+	DeriveAPFEL initHELL TruncatedEvolveAPFEL ExponentiatedEvolveAPFEL \
 	ReportParameters CheckAPFEL ComputeHeavyQuarkThresholds \
-	CachePDFsAPFEL SetAlphaQCDRef SetAlphaQEDRef SetQLimits \
+	CachePDFsAPFEL \
+	SetAlphaQCDRef SetAlphaQEDRef SetQLimits \
 	SetPerturbativeOrder SetFFNS SetGridParameters SetExternalGrid \
 	SetMSbarMasses SetNumberOfGrids SetPDFSet SetPoleMasses \
 	SetRenFacRatio SetTheory SetVFNS SetMaxFlavourPDFs \
@@ -33,23 +33,24 @@ MODULES = dummy WelcomeMessage initParameters \
 	SetSmallxResummation SetFastEvolution EnableMassRunning ListFunctions \
 	GetPerturbativeOrder SetTauMass EnableLeptonEvolution SetLHgridParameters \
 	SetEpsilonTruncation GetMuF SetPolarizedEvolution SetMassMatchingScales \
-	SetMassScaleReference SetQGridParameters interpolants SplittingFunctions \
-	Hellx a_QCD a_QED MSbarmass lambda EvolutionQCD EvolutionOperatorsQCD \
-	IdentityOperatorsQCD EqualOperatorsQCDnf integrandsQCD integralsQCD \
-	RSLintegralsQCD odeintnsQCD odeintsgQCD MatchingConditions integrandsMatching \
+	SetMassScaleReference SetQGridParameters GetThreshold EnableNLOQEDCorrections \
+	interpolants \
+	SplittingFunctions \
+	a_QCD a_QED MSbarmass lambda \
+	EvolutionQCD EvolutionOperatorsQCD IdentityOperatorsQCD \
+	EqualOperatorsQCDnf integrandsQCD integralsQCD RSLintegralsQCD \
+	odeintnsQCD odeintsgQCD MatchingConditions integrandsMatching \
 	integralsMatching RSLintegralsMatching MatchPDFs JoinOperatorsQCD \
 	EvolutionUnified EvolutionOperatorsUnified IdentityOperatorsUnified \
 	EqualOperatorsUnifiednf EvolveUni odeintnsUnified odeintsgUnified \
-	DerivativeOperatorsQCD odeintnsQCDf odeintsgQCDf \
-	odeintnsUnifiedf odeintsgUnifiedf EvolutionQED EvolutionOperatorsQED \
-	IdentityOperatorsQED EqualOperatorsQEDnf integrandsQED integralsQED \
-	RSLintegralsQED odeintnsQED odeintsgQED DerivativeOperatorsQED \
-	odeintnsQEDf odeintsgQEDf PDFphys2evQCD PDFevQCD2phys PDFphys2evQED PDFevQED2phys \
-	EvolvePDFs switchGluonPhoton EvolveQCD EvolveQED toyLHPDFs \
+	DerivativeOperatorsQCD odeintnsQCDf odeintsgQCDf odeintnsUnifiedf \
+	odeintsgUnifiedf integrandsQED integralsQED RSLintegralsQED \
+	PDFphys2evQCD PDFevQCD2phys EvolvePDFs EvolveQCD toyLHPDFs \
 	xPDF xgamma NPDF Ngamma LUMI JoinGrids \
 	PDFevUni2evQCD PDFevQCD2evUni PDFevUni2phys PDFphys2evUni \
-	dxPDF dxgamma DeriveQCD DeriveQED DerivePDFs \
-	xGrid nIntervals xLepton xPDFxQ dgauss wgplg ddilog gamma beta hplog \
+	dxPDF dxgamma DeriveQCD DerivePDFs xGrid \
+	nIntervals xLepton xPDFxQ \
+	dgauss wgplg ddilog gamma beta hplog \
 	InitializeAPFEL_DIS initParametersDIS SetMassScheme initIntegralsDIS \
 	ZeroMassCoefficientFunctions RSLintegralsDIS ComputeStructureFunctionsAPFEL F2total \
 	F2light F2charm F2bottom F2top FLtotal FLlight FLcharm \
@@ -64,7 +65,8 @@ MODULES = dummy WelcomeMessage initParameters \
 	SetRenQRatio SetFacQRatio GetSIATotalCrossSection IncludeScaleVariation \
 	ExcludeScaleVariation ReportParametersDIS EnableDampingFONLL SetPropagatorCorrection \
 	SetEWCouplings EnableDynamicalScaleVariations EnableIntrinsicCharm IncludeIntrinsicCharm \
-	integrandsIC CacheStructureFunctionsAPFEL StructureFunctionxQ
+	integrandsIC CacheStructureFunctionsAPFEL StructureFunctionxQ SetDampingPowerFONLL \
+	hqcoef initIntegralsDISRes
 
 # Path with all the directories where modules should be searched by the Makefile
 MDIR  = ../src

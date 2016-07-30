@@ -2837,8 +2837,8 @@ c            damp(4) = 1d0
       endif
 *
 *     Once the computation is complete and if the dynamical evaluation
-*     has been enabled, exlude the scale variations ins such a way that
-*     the next computation wil start from clean coefficient functions.
+*     has been enabled, exclude the scale variations in such a way that
+*     the next computation will start from clean coefficient functions.
 *
       if(DynScVar)then
          do igrid=1,ngrid
