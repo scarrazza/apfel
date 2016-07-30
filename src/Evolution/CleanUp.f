@@ -64,6 +64,7 @@
       include "../commons/gridQ.h"
       include "../commons/fphxQ.h"
       include "../commons/StructureFunctionsxQ.h"
+      include "../commons/NLOQEDCorrections.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -77,6 +78,7 @@
       InPt              = "xxxx"
       InEvs             = "xxxx"   
       InTheory          = "xxxx"
+      InNLOQED          = "xxxx"
       InAlpQCD          = "xxxx"
       InAlpQED          = "xxxx"
       InKren            = "xxxx"  

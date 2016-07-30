@@ -232,6 +232,9 @@ namespace APFEL {
   /// Sets the FFNS as a default
   void SetTheory(const std::string& theory);
   
+  /// Enables NLO QED corrections
+  void EnableNLOQEDCorrecions(int);
+  
   /// Sets the VFNS as a default
   void SetVFNS(void);
 

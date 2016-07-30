@@ -5,7 +5,7 @@ import apfel
 # activate some options
 apfel.SetPerturbativeOrder(1);
 apfel.SetNumberOfGrids(3);
-apfel.SetGridParameters(1,150,3,1e-9);
+apfel.SetGridParameters(1,130,3,1e-9);
 apfel.SetGridParameters(2,60,5,1e-1);
 apfel.SetGridParameters(3,20,5,8e-1);
 

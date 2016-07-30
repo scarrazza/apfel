@@ -174,7 +174,8 @@ am__objects_2 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetPolarizedEvolution.lo \
 	Evolution/SetMassMatchingScales.lo \
 	Evolution/SetMassScaleReference.lo \
-	Evolution/SetQGridParameters.lo Evolution/GetThreshold.lo
+	Evolution/SetQGridParameters.lo Evolution/GetThreshold.lo \
+	Evolution/EnableNLOQEDCorrections.lo
 am__objects_3 = Evolution/interpolants.lo
 am__objects_4 = Evolution/SplittingFunctions.lo
 am__objects_5 = Evolution/a_QCD.lo Evolution/a_QED.lo \
@@ -521,7 +522,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/SetSmallxResummation.f Evolution/SetFastEvolution.f Evolution/EnableMassRunning.f Evolution/ListFunctions.f \
 	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f Evolution/SetLHgridParameters.f \
 	Evolution/SetEpsilonTruncation.f Evolution/GetMuF.f Evolution/SetPolarizedEvolution.f Evolution/SetMassMatchingScales.f \
-	Evolution/SetMassScaleReference.f Evolution/SetQGridParameters.f Evolution/GetThreshold.f
+	Evolution/SetMassScaleReference.f Evolution/SetQGridParameters.f Evolution/GetThreshold.f Evolution/EnableNLOQEDCorrections.f
 
 INTER = Evolution/interpolants.f
 SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f
@@ -786,6 +787,8 @@ Evolution/SetMassScaleReference.lo: Evolution/$(am__dirstamp) \
 Evolution/SetQGridParameters.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/GetThreshold.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/EnableNLOQEDCorrections.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)

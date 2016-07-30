@@ -49,6 +49,11 @@
      1           achar(27)//"[0m"
       write(6,*) "    sets the theory to be used in the evolution"
       write(6,*) "    (theory = 'QCD', 'QUniD', default 'QCD')"
+      write(6,*) achar(27)//"[34m- EnableNLOQEDCorrections(bool):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    enables/disables the NLO QED corrections. If"
+      write(6,*) "    disabled only LO QED are included. This is active"
+      write(6,*) "    only for the 'QUniD' solution (default false)."
       write(6,*) achar(27)//"[34m- SetVFNS():"//achar(27)//"[0m"
       write(6,*) "    sets the Variable-Flavour Number Scheme."
       write(6,*) achar(27)//"[34m- SetFFNS(int nfl):"//achar(27)//"[0m"

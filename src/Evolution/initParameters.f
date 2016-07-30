@@ -41,6 +41,7 @@
       include "../commons/LeptEvol.h"
       include "../commons/LHAgrid.h"
       include "../commons/EpsTrunc.h"
+      include "../commons/NLOQEDCorrections.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -49,6 +50,7 @@
       if(InPt.ne."done")          call SetPerturbativeOrder(2)
       if(InEvs.ne."done")         call SetVFNS
       if(InTheory.ne."done")      call SetTheory("QCD")
+      if(InNLOQED.ne."done")      call EnableNLOQEDCorrections(.false.)
       if(InFastEvol.ne."done")    call SetFastEvolution(.true.)
       if(InTimeLike.ne."done")    call SetTimeLikeEvolution(.false.)
       if(InPolarized.ne."done")   call SetPolarizedEvolution(.false.)

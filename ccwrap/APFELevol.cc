@@ -367,6 +367,11 @@ namespace APFEL {
     strncpy(ctheory, theory.c_str(), SIZE);
     fsettheory(ctheory);
   }
+
+  void EnableNLOQEDCorrections(int qedc)
+  {
+    fenablenloqedcorrections(&qedc);
+  }
   
   void SetVFNS()
   {

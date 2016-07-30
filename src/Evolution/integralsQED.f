@@ -7,8 +7,26 @@
 *     nf and for the the pair of grid indices (alpha,beta) for singlet
 *     and non-singlet in QED according to:
 *
-*     kk  =  1   2   3   4   5   6   7   8   9  10  11
-*           nsp nsm gg  gq  gD  qg  qq  qD  Dg  Dq  DD
+*     kk  =  1    2    3    4
+*            nspu nsmu nspd nsmd
+*
+*            5    6    7    8
+*            gg   ggm  gS   gD
+*
+*            9    10   11   12
+*            gmg  gmgm gmS  gmD
+*
+*            13   14   15   16
+*            Sg   Sgm  SS   SD
+*
+*            17   18   19   20
+*            Dg   Dgm  DS   DD
+*
+*            21   22
+*            VV   VDV (DVDV = VV, DVV = VDV)
+*
+*            23   24   25
+*            LL   gmL  Lgm
 * 
 ************************************************************************
       function integralsQED(alpha,beta,coupQED,coupQCD,kk)
@@ -22,13 +40,15 @@
       include "../commons/Th.h"
       include "../commons/MaxFlavourPDFs.h"
       include "../commons/MaxFlavourAlpha.h"
+      include "../commons/ipt.h"
+      include "../commons/NLOQEDCorrections.h"
 **
 *     Input Variables
 *
       integer alpha,beta,kk
       integer bnf,pnf
+      integer jpt
       double precision coupQED,coupQCD
-      double precision beta0qed
 **
 *     Output Variables
 *
@@ -40,6 +60,9 @@
 *
       if(beta.ge.nin(igrid).or.alpha.ge.nin(igrid)) return
 *
+      jpt = 0
+      if(NLOQED.and.ipt.ge.1) jpt = 2
+*
 *     Define the number of flavours to be used in the
 *     beta function and in the splitting functions.
 *
@@ -48,12 +71,13 @@
 *
 *     Integrals
 *
-      if(PDFEvol.eq."exactmu".or.Th.eq."QUniD")then
-         integralsQED = coupQED * SQ(igrid,pnf,wnl,kk,0,alpha,beta)
-      else
-         integralsQED = - SQ(igrid,pnf,wnl,kk,0,alpha,beta)
-     1                / beta0qed(bnf,wnl) / coupQED
-      endif
+      integralsQED = coupQED * SQ(igrid,pnf,wnl,kk,0,alpha,beta)
+      if(jpt.ge.1) integralsQED = integralsQED
+     1                          + coupQCD * coupQED
+     2                          * SQ(igrid,pnf,wnl,kk,1,alpha,beta)
+      if(jpt.ge.2) integralsQED = integralsQED
+     1                          + coupQED**2
+     2                          * SQ(igrid,pnf,wnl,kk,2,alpha,beta)
 *
       return
       end

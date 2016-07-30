@@ -35,6 +35,7 @@
       include "../commons/TauMass.h"
       include "../commons/LeptEvol.h"
       include "../commons/EpsTrunc.h"
+      include "../commons/NLOQEDCorrections.h"
 *
 *     Report of the parameters (if enabled)
 *
@@ -47,6 +48,13 @@
          write(6,*) "  "
 *
          write(6,"(a,a,a)") " ",trim(Th)," evolution"
+         if(Th(1:5).eq."QUniD".and.ipt.ge.1)then
+            if(NLOQED)then
+               write(6,*) "NLO QED Corrections enabled"
+            else
+               write(6,*) "NLO QED Corrections disabled"
+            endif
+         endif
 *
          if(LeptEvol.and.Th.eq."QUniD")then
             write(6,*) "Lepton evolution enabled"

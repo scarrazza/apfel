@@ -205,6 +205,9 @@ extern "C" {
 #define fsettheory FC_FUNC(settheory,SETTHEORY)
   void fsettheory(char*);
 
+#define fenablenloqedcorrections FC_FUNC(enablenloqedcorrections,ENABLENLOQEDCORRECTIONS)
+  void fenablenloqedcorrections(int*);
+
 #define fsetvfns FC_FUNC(setvfns,SETVFNS)
   void fsetvfns();
 

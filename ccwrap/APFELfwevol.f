@@ -431,6 +431,12 @@ ccccccccccccc
       end subroutine fsettheory
 
 ccccccccccccc      
+      subroutine fenablenloqedcorrections(qedc)
+      logical qedc
+      call EnableNLOQEDCorrections(qedc)
+      end subroutine fenablenloqedcorrections
+
+ccccccccccccc      
       subroutine fsetvfns 
       call SetVFNS
       end subroutine fsetvfns

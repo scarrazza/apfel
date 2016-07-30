@@ -17,10 +17,9 @@
       character*1 answer
 *
 c      call SetFFNS(3)
-c      call SetTheory("QED")
       call SetPerturbativeOrder(1)
       call SetNumberOfGrids(3)
-      call SetGridParameters(1,150,3,1d-9)
+      call SetGridParameters(1,130,3,1d-9)
       call SetGridParameters(2,60,5,1d-1)
       call SetGridParameters(3,20,5,8d-1)
 *

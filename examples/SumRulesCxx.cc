@@ -8,7 +8,7 @@ int main()
 {
   APFEL::SetPerturbativeOrder(1);
   APFEL::SetNumberOfGrids(3);
-  APFEL::SetGridParameters(1,150,3,1e-9);
+  APFEL::SetGridParameters(1,130,3,1e-9);
   APFEL::SetGridParameters(2,60,5,1e-1);
   APFEL::SetGridParameters(3,20,5,8e-1);
 

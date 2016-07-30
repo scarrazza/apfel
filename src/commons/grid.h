@@ -1,11 +1,11 @@
 *     -*-fortran-*-
 
       integer nint_max
-      parameter(nint_max=250)
+      parameter(nint_max=200)
       integer nint_max_DIS
       parameter(nint_max_DIS=120)
       integer ngrid_max
-      parameter(ngrid_max=4)
+      parameter(ngrid_max=3)
       double precision xmax
       parameter(xmax=1d0)
 
