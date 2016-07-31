@@ -432,6 +432,19 @@ c      endif
      1              //achar(27)//"[0m"
       endif
 *
+*     Make sure that the NLO QED corrections are included only if
+*     the 'QUniD' solution is used.
+*
+      if(NLOQED.and.Th(1:5).ne."QUniD")then
+         write(6,*) achar(27)//"[33m"//
+     1              "WARNING: NLO QED corrections can be included only"
+         write(6,*) "         when using the 'QUniD' solution of the"
+         write(6,*) "         DGLAP equation"
+         write(6,*) "         ... turning off NLO QED corrections"
+     1              //achar(27)//"[0m"
+         call EnableNLOQEDCorrections(.false.)
+      endif
+*
 *     Compute the heavy quark thresholds
 *
       call ComputeHeavyQuarkThresholds

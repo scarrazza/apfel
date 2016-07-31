@@ -35,6 +35,7 @@
       include "../commons/Smallx.h"
       include "../commons/gridAlpha.h"
       include "../commons/integralsResDIS.h"
+      include "../commons/NLOQEDCorrections.h"
 **
 *     Internal Variables
 *
@@ -2763,6 +2764,12 @@ c            damp(4) = 1d0
             enddo
          enddo
       endif
+*
+*     Include NLO QED correction if requested
+*
+      if(NLOQED.and.ipt.ge.1)
+     1     call IncludeNLOQEDCorrections(Q2,muF2,nf,fr3,ixi,c0,c1,damp,
+     2     bq,dq,ipr)
 *
 *     If the computation of the evolution operator is enabled
 *     join the DIS operator grids and then convolute with the
