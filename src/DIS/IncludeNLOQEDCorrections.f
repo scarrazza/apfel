@@ -38,8 +38,9 @@
       integer alpha,beta,gbound
       integer ik
       double precision W2
-      double precision bq(0:6),dq(0:6),e2q9(6)
+      double precision bq(0:6),dq(0:6),e2q9(6),e2u,e2d
       double precision aem,a_QED
+      double precision etap,etam
       double precision C2ph(3:6),C2ns(3:6)
       double precision CLph(3:6),CLns(3:6)
       double precision C3ph(3:6),C3ns(3:6)
@@ -47,6 +48,7 @@
       double precision CLgm(4:6),CLqm(4:6)
       double precision C3gm(4:6),C3qm(4:6)
       data e2q9 / 1d0, 4d0, 1d0, 4d0, 1d0, 4d0 /
+      parameter(e2u=4d0/9d0,e2d=1d0/9d0)
 *
 *     Compute alpha
 *     (Remember that a_QCD takes as an argument the factorization scale
@@ -281,8 +283,8 @@
 *     Charm Component
 *     
 *     Photon
-                  OpF2(jgrid,4,2,alpha,beta)  =
-     1                 OpF2(jgrid,4,2,alpha,beta) + bq(4) * C2ph(4)
+                  OpF2(jgrid,4,0,alpha,beta)  =
+     1                 OpF2(jgrid,4,0,alpha,beta) + bq(4) * C2ph(4)
 *     Singlet
                   OpF2(jgrid,4,1,alpha,beta)  =
      1                 OpF2(jgrid,4,1,alpha,beta)
@@ -301,8 +303,8 @@
 *     Bottom Component
 *     
 *     Photon
-                  OpF2(jgrid,5,2,alpha,beta)  =
-     1                 OpF2(jgrid,5,2,alpha,beta) + bq(5) * C2ph(5)
+                  OpF2(jgrid,5,0,alpha,beta)  =
+     1                 OpF2(jgrid,5,0,alpha,beta) + bq(5) * C2ph(5)
 *     Singlet
                   OpF2(jgrid,5,1,alpha,beta)  =
      1                 OpF2(jgrid,5,1,alpha,beta) + bq(5) * C2ns(5) / nf
@@ -320,8 +322,8 @@
 *     Top Component
 *     
 *     Photon
-                  OpF2(jgrid,6,2,alpha,beta)  =
-     1                 OpF2(jgrid,6,2,alpha,beta) + bq(6) * C2ph(6)
+                  OpF2(jgrid,6,0,alpha,beta)  =
+     1                 OpF2(jgrid,6,0,alpha,beta) + bq(6) * C2ph(6)
 *     Singlet
                   OpF2(jgrid,6,1,alpha,beta)  =
      1                 OpF2(jgrid,6,1,alpha,beta) + bq(6) * C2ns(6) / nf
@@ -372,8 +374,8 @@
 *     Charm Component
 *     
 *     Photon
-                  OpFL(jgrid,4,2,alpha,beta)  =
-     1                 OpFL(jgrid,4,2,alpha,beta) + bq(4) * CLph(4)
+                  OpFL(jgrid,4,0,alpha,beta)  =
+     1                 OpFL(jgrid,4,0,alpha,beta) + bq(4) * CLph(4)
 *     Singlet
                   OpFL(jgrid,4,1,alpha,beta)  =
      1                 OpFL(jgrid,4,1,alpha,beta)
@@ -392,8 +394,8 @@
 *     Bottom Component
 *     
 *     Photon
-                  OpFL(jgrid,5,2,alpha,beta)  =
-     1                 OpFL(jgrid,5,2,alpha,beta) + bq(5) * CLph(5)
+                  OpFL(jgrid,5,0,alpha,beta)  =
+     1                 OpFL(jgrid,5,0,alpha,beta) + bq(5) * CLph(5)
 *     Singlet
                   OpFL(jgrid,5,1,alpha,beta)  =
      1                 OpFL(jgrid,5,1,alpha,beta) + bq(5) * CLns(5) / nf
@@ -411,8 +413,8 @@
 *     Top Component
 *     
 *     Photon
-                  OpFL(jgrid,6,2,alpha,beta)  =
-     1                 OpFL(jgrid,6,2,alpha,beta) + bq(6) * CLph(6)
+                  OpFL(jgrid,6,0,alpha,beta)  =
+     1                 OpFL(jgrid,6,0,alpha,beta) + bq(6) * CLph(6)
 *     Singlet
                   OpFL(jgrid,6,1,alpha,beta)  =
      1                 OpFL(jgrid,6,1,alpha,beta) + bq(6) * CLns(6) / nf
@@ -851,6 +853,721 @@
                         enddo
                      endif
                   endif
+*
+*     The following corrections are computed assuming a diagonal CKM matrix.
+*
+*     Coefficients
+*
+                  etap = ( e2u + e2d ) / 2d0
+                  etam = ( e2u - e2d ) / 2d0
+*
+*     F2
+*
+*     Light Component
+*
+*     Photon
+                  OpF2(jgrid,3,0,alpha,beta)  =
+     1                 OpF2(jgrid,3,0,alpha,beta)
+     2                 + 2d0 * etap * C2ph(3)
+*     Singlet
+                  OpF2(jgrid,3,1,alpha,beta)  =
+     1                 OpF2(jgrid,3,1,alpha,beta)
+     2                 + etap * C2ns(3) / 3d0
+*     Valence
+                  OpF2(jgrid,3,3,alpha,beta)  =
+     1                 OpF2(jgrid,3,3,alpha,beta)
+     2                 - ipr * etam * C2ns(3) / 3d0
+*     V3
+                  OpF2(jgrid,3,4,alpha,beta)  =
+     1                 OpF2(jgrid,3,4,alpha,beta)
+     2                 - ipr * fr3 * etap * C2ns(3)
+*     T3
+                  OpF2(jgrid,3,9,alpha,beta)  =
+     1                 OpF2(jgrid,3,9,alpha,beta)
+     2                 + fr3 * etam * C2ns(3)
+*     V8
+                  OpF2(jgrid,3,5,alpha,beta)  =
+     1                 OpF2(jgrid,3,5,alpha,beta)
+     2                 - ipr * etam * C2ns(3) / 3d0
+*     T8
+                  OpF2(jgrid,3,10,alpha,beta)  =
+     1                 OpF2(jgrid,3,10,alpha,beta)
+     2                 + etap * C2ns(3) / 3d0
+*     V15
+                  OpF2(jgrid,3,6,alpha,beta)  =
+     1                 OpF2(jgrid,3,6,alpha,beta)
+     2                 - ipr * etam * C2ns(3) / 6d0
+*     T15
+                  OpF2(jgrid,3,11,alpha,beta)  =
+     1                 OpF2(jgrid,3,11,alpha,beta)
+     2                 + etap * C2ns(3) / 6d0
+*     V24
+                  OpF2(jgrid,3,7,alpha,beta)  =
+     1                 OpF2(jgrid,3,7,alpha,beta)
+     2                 - ipr * etam * C2ns(3) / 10d0
+*     T24
+                  OpF2(jgrid,3,12,alpha,beta)  =
+     1                 OpF2(jgrid,3,12,alpha,beta)
+     2                 + etap * C2ns(3) / 10d0
+*     V35
+                  OpF2(jgrid,3,8,alpha,beta)  =
+     1                 OpF2(jgrid,3,8,alpha,beta)
+     2                 - ipr * etam * C2ns(3) / 15d0
+*     T35
+                  OpF2(jgrid,3,13,alpha,beta)  =
+     1                 OpF2(jgrid,3,13,alpha,beta)
+     2                 + etap * C2ns(3) / 15d0
+*
+*     Charm Component
+*
+*     Photon
+                  OpF2(jgrid,4,0,alpha,beta)  =
+     1                 OpF2(jgrid,4,0,alpha,beta)
+     2                 + 2d0 * etap * C2ph(4)
+*     Singlet
+                  OpF2(jgrid,4,1,alpha,beta)  =
+     1                 OpF2(jgrid,4,1,alpha,beta)
+     2                 + etap * C2ns(4) / 3d0
+*     Valence
+                  OpF2(jgrid,4,3,alpha,beta)  =
+     1                 OpF2(jgrid,4,3,alpha,beta)
+     2                 - ipr * etam * C2ns(4) / 3d0
+*     V8
+                  OpF2(jgrid,4,5,alpha,beta)  =
+     1                 OpF2(jgrid,4,5,alpha,beta)
+     2                 - ipr * e2d * C2ns(4) / 3d0
+*     T8
+                  OpF2(jgrid,4,10,alpha,beta)  =
+     1                 OpF2(jgrid,4,10,alpha,beta)
+     2                 - e2d * C2ns(4) / 3d0
+*     V15
+                  OpF2(jgrid,4,6,alpha,beta)  =
+     1                 OpF2(jgrid,4,6,alpha,beta)
+     2                 + ipr * ( e2d + 3d0 * e2u ) * C2ns(4) / 12d0
+*     T15
+                  OpF2(jgrid,4,11,alpha,beta)  =
+     1                 OpF2(jgrid,4,11,alpha,beta)
+     2                 + ( e2d - 3d0 * e2u ) * C2ns(4) / 12d0
+*     V24
+                  OpF2(jgrid,4,7,alpha,beta)  =
+     1                 OpF2(jgrid,4,7,alpha,beta)
+     2                 - ipr * etam * C2ns(4) / 10d0
+*     T24
+                  OpF2(jgrid,4,12,alpha,beta)  =
+     1                 OpF2(jgrid,4,12,alpha,beta)
+     2                 + etap * C2ns(4) / 10d0
+*     V35
+                  OpF2(jgrid,4,8,alpha,beta)  =
+     1                 OpF2(jgrid,4,8,alpha,beta)
+     2                 - ipr * etam * C2ns(4) / 15d0
+*     T35
+                  OpF2(jgrid,4,13,alpha,beta)  =
+     1                 OpF2(jgrid,4,13,alpha,beta)
+     2                 + etap * C2ns(4) / 15d0
+*
+                  if(MassScheme(1:5).eq."FONLL")then
+*     Subtract the spurious charm contribution
+                     if(Nf_FF.le.3)then
+*     Singlet
+                        OpF2(jgrid,4,1,alpha,beta)  =
+     1                       OpF2(jgrid,4,1,alpha,beta)
+     2                       - etap * C2qm(4) / 6d0
+*     Valence
+                        OpF2(jgrid,4,3,alpha,beta)  =
+     1                       OpF2(jgrid,4,3,alpha,beta)
+     2                       + ipr * etam * C2qm(4) / 6d0
+*     V15
+                        OpF2(jgrid,4,6,alpha,beta)  =
+     1                       OpF2(jgrid,4,6,alpha,beta)
+     2                       - ipr * etam * C2qm(4) / 4d0
+*     T15
+                        OpF2(jgrid,4,11,alpha,beta) =
+     1                       OpF2(jgrid,4,11,alpha,beta)
+     2                       + etap * C2qm(4) / 4d0
+*     V24
+                        OpF2(jgrid,4,7,alpha,beta)  =
+     1                       OpF2(jgrid,4,7,alpha,beta)
+     2                       + ipr * etam * C2qm(4) / 20d0
+*     T24
+                        OpF2(jgrid,4,12,alpha,beta) =
+     1                       OpF2(jgrid,4,12,alpha,beta)
+     2                       - etap * C2qm(4) / 20d0
+*     V35
+                        OpF2(jgrid,4,8,alpha,beta)  =
+     1                       OpF2(jgrid,4,8,alpha,beta)
+     2                       + ipr * etam * C2qm(4) / 30d0
+*     T35
+                        OpF2(jgrid,4,13,alpha,beta) =
+     1                       OpF2(jgrid,4,13,alpha,beta)
+     2                       - etap * C2qm(4) / 30d0
+                     endif
+                  endif
+*
+*     Bottom component (no corrections)
+*
+*
+*     Top component (no corrections)
+*
+*     Photon
+                  OpF2(jgrid,6,0,alpha,beta)  =
+     1                 OpF2(jgrid,6,0,alpha,beta)
+     2                 + 2d0 * etap * C2ph(6)
+*     Singlet
+                  OpF2(jgrid,6,1,alpha,beta)  =
+     1                 OpF2(jgrid,6,1,alpha,beta)
+     2                 + etap * C2ns(6) / 3d0
+*     Valence
+                  OpF2(jgrid,6,3,alpha,beta)  =
+     1                 OpF2(jgrid,6,3,alpha,beta)
+     2                 - ipr * etam * C2ns(6) / 3d0
+*     V24
+                  OpF2(jgrid,6,7,alpha,beta)  =
+     1                 OpF2(jgrid,6,7,alpha,beta)
+     2                 - ipr * e2d * C2ns(6) / 5d0
+*     T24
+                  OpF2(jgrid,6,12,alpha,beta)  =
+     1                 OpF2(jgrid,6,12,alpha,beta)
+     2                 - e2d * C2ns(6) / 5d0
+*     V35
+                  OpF2(jgrid,6,8,alpha,beta)  =
+     1                 OpF2(jgrid,6,8,alpha,beta)
+     2                 + ipr * ( e2d + 5d0 * e2u ) * C2ns(6) / 30d0
+*     T35
+                  OpF2(jgrid,6,13,alpha,beta)  =
+     1                 OpF2(jgrid,6,13,alpha,beta)
+     2                 + ( e2d - 5d0 * e2u ) * C2ns(6) / 30d0
+*
+                  if(MassScheme(1:5).eq."FONLL")then
+*     Subtract the spurious top contribution
+                     if(Nf_FF.le.5)then
+*     Singlet
+                        OpF2(jgrid,6,1,alpha,beta)  =
+     1                       OpF2(jgrid,6,1,alpha,beta)
+     2                       - etap * C2qm(6) / 6d0
+*     Valence
+                        OpF2(jgrid,6,3,alpha,beta)  =
+     1                       OpF2(jgrid,6,3,alpha,beta)
+     2                       + ipr * etam * C2qm(6) / 6d0
+*     V35
+                        OpF2(jgrid,6,8,alpha,beta)  =
+     1                       OpF2(jgrid,6,8,alpha,beta)
+     2                       - ipr * etam * C2qm(6) / 6d0
+*     T35
+                        OpF2(jgrid,6,13,alpha,beta) =
+     1                       OpF2(jgrid,6,13,alpha,beta)
+     2                       + etap * C2qm(6) / 6d0
+                     endif
+*     Subtract the spurious bottom contribution
+                     if(Nf_FF.le.4)then
+*     Singlet
+                        OpF2(jgrid,6,1,alpha,beta)  =
+     1                       OpF2(jgrid,6,1,alpha,beta)
+     2                       - etap * C2qm(6) / 6d0
+*     Valence
+                        OpF2(jgrid,6,3,alpha,beta)  =
+     1                       OpF2(jgrid,6,3,alpha,beta)
+     2                       - ipr * etam * C2qm(6) / 6d0
+*     V24
+                        OpF2(jgrid,6,7,alpha,beta)  =
+     1                       OpF2(jgrid,6,7,alpha,beta)
+     2                       + ipr * etam * C2qm(6) / 5d0
+*     T24
+                        OpF2(jgrid,6,12,alpha,beta) =
+     1                       OpF2(jgrid,6,12,alpha,beta)
+     2                       + etap * C2qm(6) / 5d0
+*     V35
+                        OpF2(jgrid,6,8,alpha,beta)  =
+     1                       OpF2(jgrid,6,8,alpha,beta)
+     2                       - ipr * etam * C2qm(6) / 30d0
+*     T35
+                        OpF2(jgrid,6,13,alpha,beta) =
+     1                       OpF2(jgrid,6,13,alpha,beta)
+     2                       - etap * C2qm(6) / 30d0
+                     endif
+                  endif
+*
+*     Total
+*
+                  do ipdf=0,13
+                     OpF2(jgrid,7,ipdf,alpha,beta) = 0d0
+                     do ihq=3,6
+                        OpF2(jgrid,7,ipdf,alpha,beta) =
+     1                       OpF2(jgrid,7,ipdf,alpha,beta)
+     2                       + OpF2(jgrid,ihq,ipdf,alpha,beta)
+                     enddo
+                  enddo
+*
+*     FL
+*
+*     Light Component
+*
+*     Photon
+                  OpFL(jgrid,3,0,alpha,beta)  =
+     1                 OpFL(jgrid,3,0,alpha,beta)
+     2                 + 2d0 * etap * CLph(3)
+*     Singlet
+                  OpFL(jgrid,3,1,alpha,beta)  =
+     1                 OpFL(jgrid,3,1,alpha,beta)
+     2                 + etap * CLns(3) / 3d0
+*     Valence
+                  OpFL(jgrid,3,3,alpha,beta)  =
+     1                 OpFL(jgrid,3,3,alpha,beta)
+     2                 - ipr * etam * CLns(3) / 3d0
+*     V3
+                  OpFL(jgrid,3,4,alpha,beta)  =
+     1                 OpFL(jgrid,3,4,alpha,beta)
+     2                 - ipr * fr3 * etap * CLns(3)
+*     T3
+                  OpFL(jgrid,3,9,alpha,beta)  =
+     1                 OpFL(jgrid,3,9,alpha,beta)
+     2                 + fr3 * etam * CLns(3)
+*     V8
+                  OpFL(jgrid,3,5,alpha,beta)  =
+     1                 OpFL(jgrid,3,5,alpha,beta)
+     2                 - ipr * etam * CLns(3) / 3d0
+*     T8
+                  OpFL(jgrid,3,10,alpha,beta)  =
+     1                 OpFL(jgrid,3,10,alpha,beta)
+     2                 + etap * CLns(3) / 3d0
+*     V15
+                  OpFL(jgrid,3,6,alpha,beta)  =
+     1                 OpFL(jgrid,3,6,alpha,beta)
+     2                 - ipr * etam * CLns(3) / 6d0
+*     T15
+                  OpFL(jgrid,3,11,alpha,beta)  =
+     1                 OpFL(jgrid,3,11,alpha,beta)
+     2                 + etap * CLns(3) / 6d0
+*     V24
+                  OpFL(jgrid,3,7,alpha,beta)  =
+     1                 OpFL(jgrid,3,7,alpha,beta)
+     2                 - ipr * etam * CLns(3) / 10d0
+*     T24
+                  OpFL(jgrid,3,12,alpha,beta)  =
+     1                 OpFL(jgrid,3,12,alpha,beta)
+     2                 + etap * CLns(3) / 10d0
+*     V35
+                  OpFL(jgrid,3,8,alpha,beta)  =
+     1                 OpFL(jgrid,3,8,alpha,beta)
+     2                 - ipr * etam * CLns(3) / 15d0
+*     T35
+                  OpFL(jgrid,3,13,alpha,beta)  =
+     1                 OpFL(jgrid,3,13,alpha,beta)
+     2                 + etap * CLns(3) / 15d0
+*
+*     Charm Component
+*
+*     Photon
+                  OpFL(jgrid,4,0,alpha,beta)  =
+     1                 OpFL(jgrid,4,0,alpha,beta)
+     2                 + 2d0 * etap * CLph(4)
+*     Singlet
+                  OpFL(jgrid,4,1,alpha,beta)  =
+     1                 OpFL(jgrid,4,1,alpha,beta)
+     2                 + etap * CLns(4) / 3d0
+*     Valence
+                  OpFL(jgrid,4,3,alpha,beta)  =
+     1                 OpFL(jgrid,4,3,alpha,beta)
+     2                 - ipr * etam * CLns(4) / 3d0
+*     V8
+                  OpFL(jgrid,4,5,alpha,beta)  =
+     1                 OpFL(jgrid,4,5,alpha,beta)
+     2                 - ipr * e2d * CLns(4) / 3d0
+*     T8
+                  OpFL(jgrid,4,10,alpha,beta)  =
+     1                 OpFL(jgrid,4,10,alpha,beta)
+     2                 - e2d * CLns(4) / 3d0
+*     V15
+                  OpFL(jgrid,4,6,alpha,beta)  =
+     1                 OpFL(jgrid,4,6,alpha,beta)
+     2                 + ipr * ( e2d + 3d0 * e2u ) * CLns(4) / 12d0
+*     T15
+                  OpFL(jgrid,4,11,alpha,beta)  =
+     1                 OpFL(jgrid,4,11,alpha,beta)
+     2                 + ( e2d - 3d0 * e2u ) * CLns(4) / 12d0
+*     V24
+                  OpFL(jgrid,4,7,alpha,beta)  =
+     1                 OpFL(jgrid,4,7,alpha,beta)
+     2                 - ipr * etam * CLns(4) / 10d0
+*     T24
+                  OpFL(jgrid,4,12,alpha,beta)  =
+     1                 OpFL(jgrid,4,12,alpha,beta)
+     2                 + etap * CLns(4) / 10d0
+*     V35
+                  OpFL(jgrid,4,8,alpha,beta)  =
+     1                 OpFL(jgrid,4,8,alpha,beta)
+     2                 - ipr * etam * CLns(4) / 15d0
+*     T35
+                  OpFL(jgrid,4,13,alpha,beta)  =
+     1                 OpFL(jgrid,4,13,alpha,beta)
+     2                 + etap * CLns(4) / 15d0
+*
+                  if(MassScheme(1:5).eq."FONLL")then
+*     Subtract the spurious charm contribution
+                     if(Nf_FF.le.3)then
+*     Singlet
+                        OpFL(jgrid,4,1,alpha,beta)  =
+     1                       OpFL(jgrid,4,1,alpha,beta)
+     2                       - etap * CLqm(4) / 6d0
+*     Valence
+                        OpFL(jgrid,4,3,alpha,beta)  =
+     1                       OpFL(jgrid,4,3,alpha,beta)
+     2                       + ipr * etam * CLqm(4) / 6d0
+*     V15
+                        OpFL(jgrid,4,6,alpha,beta)  =
+     1                       OpFL(jgrid,4,6,alpha,beta)
+     2                       - ipr * etam * CLqm(4) / 4d0
+*     T15
+                        OpFL(jgrid,4,11,alpha,beta) =
+     1                       OpFL(jgrid,4,11,alpha,beta)
+     2                       + etap * CLqm(4) / 4d0
+*     V24
+                        OpFL(jgrid,4,7,alpha,beta)  =
+     1                       OpFL(jgrid,4,7,alpha,beta)
+     2                       + ipr * etam * CLqm(4) / 20d0
+*     T24
+                        OpFL(jgrid,4,12,alpha,beta) =
+     1                       OpFL(jgrid,4,12,alpha,beta)
+     2                       - etap * CLqm(4) / 20d0
+*     V35
+                        OpFL(jgrid,4,8,alpha,beta)  =
+     1                       OpFL(jgrid,4,8,alpha,beta)
+     2                       + ipr * etam * CLqm(4) / 30d0
+*     T35
+                        OpFL(jgrid,4,13,alpha,beta) =
+     1                       OpFL(jgrid,4,13,alpha,beta)
+     2                       - etap * CLqm(4) / 30d0
+                     endif
+                  endif
+*
+*     Bottom component (no corrections)
+*
+*
+*     Top component (no corrections)
+*
+*     Photon
+                  OpFL(jgrid,6,0,alpha,beta)  =
+     1                 OpFL(jgrid,6,0,alpha,beta)
+     2                 + 2d0 * etap * CLph(6)
+*     Singlet
+                  OpFL(jgrid,6,1,alpha,beta)  =
+     1                 OpFL(jgrid,6,1,alpha,beta)
+     2                 + etap * CLns(6) / 3d0
+*     Valence
+                  OpFL(jgrid,6,3,alpha,beta)  =
+     1                 OpFL(jgrid,6,3,alpha,beta)
+     2                 - ipr * etam * CLns(6) / 3d0
+*     V24
+                  OpFL(jgrid,6,7,alpha,beta)  =
+     1                 OpFL(jgrid,6,7,alpha,beta)
+     2                 - ipr * e2d * CLns(6) / 5d0
+*     T24
+                  OpFL(jgrid,6,12,alpha,beta)  =
+     1                 OpFL(jgrid,6,12,alpha,beta)
+     2                 - e2d * CLns(6) / 5d0
+*     V35
+                  OpFL(jgrid,6,8,alpha,beta)  =
+     1                 OpFL(jgrid,6,8,alpha,beta)
+     2                 + ipr * ( e2d + 5d0 * e2u ) * CLns(6) / 30d0
+*     T35
+                  OpFL(jgrid,6,13,alpha,beta)  =
+     1                 OpFL(jgrid,6,13,alpha,beta)
+     2                 + ( e2d - 5d0 * e2u ) * CLns(6) / 30d0
+*
+                  if(MassScheme(1:5).eq."FONLL")then
+*     Subtract the spurious top contribution
+                     if(Nf_FF.le.5)then
+*     Singlet
+                        OpFL(jgrid,6,1,alpha,beta)  =
+     1                       OpFL(jgrid,6,1,alpha,beta)
+     2                       - etap * CLqm(6) / 6d0
+*     Valence
+                        OpFL(jgrid,6,3,alpha,beta)  =
+     1                       OpFL(jgrid,6,3,alpha,beta)
+     2                       + ipr * etam * CLqm(6) / 6d0
+*     V35
+                        OpFL(jgrid,6,8,alpha,beta)  =
+     1                       OpFL(jgrid,6,8,alpha,beta)
+     2                       - ipr * etam * CLqm(6) / 6d0
+*     T35
+                        OpFL(jgrid,6,13,alpha,beta) =
+     1                       OpFL(jgrid,6,13,alpha,beta)
+     2                       + etap * CLqm(6) / 6d0
+                     endif
+*     Subtract the spurious bottom contribution
+                     if(Nf_FF.le.4)then
+*     Singlet
+                        OpFL(jgrid,6,1,alpha,beta)  =
+     1                       OpFL(jgrid,6,1,alpha,beta)
+     2                       - etap * CLqm(6) / 6d0
+*     Valence
+                        OpFL(jgrid,6,3,alpha,beta)  =
+     1                       OpFL(jgrid,6,3,alpha,beta)
+     2                       - ipr * etam * CLqm(6) / 6d0
+*     V24
+                        OpFL(jgrid,6,7,alpha,beta)  =
+     1                       OpFL(jgrid,6,7,alpha,beta)
+     2                       + ipr * etam * CLqm(6) / 5d0
+*     T24
+                        OpFL(jgrid,6,12,alpha,beta) =
+     1                       OpFL(jgrid,6,12,alpha,beta)
+     2                       + etap * CLqm(6) / 5d0
+*     V35
+                        OpFL(jgrid,6,8,alpha,beta)  =
+     1                       OpFL(jgrid,6,8,alpha,beta)
+     2                       - ipr * etam * CLqm(6) / 30d0
+*     T35
+                        OpFL(jgrid,6,13,alpha,beta) =
+     1                       OpFL(jgrid,6,13,alpha,beta)
+     2                       - etap * CLqm(6) / 30d0
+                     endif
+                  endif
+*
+*     Total
+*
+                  do ipdf=0,13
+                     OpFL(jgrid,7,ipdf,alpha,beta) = 0d0
+                     do ihq=3,6
+                        OpFL(jgrid,7,ipdf,alpha,beta) =
+     1                       OpFL(jgrid,7,ipdf,alpha,beta)
+     2                       + OpFL(jgrid,ihq,ipdf,alpha,beta)
+                     enddo
+                  enddo
+*
+*     F3
+*
+*     Light Component
+*
+*     Photon
+                  OpF3(jgrid,3,0,alpha,beta)  =
+     1                 OpF3(jgrid,3,0,alpha,beta)
+     2                 + 2d0 * etap * C3ph(3)
+*     Singlet
+                  OpF3(jgrid,3,1,alpha,beta)  =
+     1                 OpF3(jgrid,3,1,alpha,beta)
+     2                  - ipr * etam * C3ns(3) / 3d0
+*     Valence
+                  OpF3(jgrid,3,3,alpha,beta)  =
+     1                 OpF3(jgrid,3,3,alpha,beta)
+     2                 + etap * C3ns(3) / 3d0
+*     V3
+                  OpF3(jgrid,3,4,alpha,beta)  =
+     1                 OpF3(jgrid,3,4,alpha,beta)
+     2                 + fr3 * etam * C3ns(3)
+*     T3
+                  OpF3(jgrid,3,9,alpha,beta)  =
+     1                 OpF3(jgrid,3,9,alpha,beta)
+     2                 - ipr * fr3 * etap * C3ns(3)
+*     V8
+                  OpF3(jgrid,3,5,alpha,beta)  =
+     1                 OpF3(jgrid,3,5,alpha,beta)
+     2                 + etap * C3ns(3) / 3d0
+*     T8
+                  OpF3(jgrid,3,10,alpha,beta)  =
+     1                 OpF3(jgrid,3,10,alpha,beta)
+     2                 - ipr * etam * C3ns(3) / 3d0
+*     V15
+                  OpF3(jgrid,3,6,alpha,beta)  =
+     1                 OpF3(jgrid,3,6,alpha,beta)
+     2                  + etap * C3ns(3) / 6d0
+*     T15
+                  OpF3(jgrid,3,11,alpha,beta)  =
+     1                 OpF3(jgrid,3,11,alpha,beta)
+     2                 - ipr * etam* C3ns(3) / 6d0
+*     V24
+                  OpF3(jgrid,3,7,alpha,beta)  =
+     1                 OpF3(jgrid,3,7,alpha,beta)
+     2                  + etap * C3ns(3) / 10d0
+*     T24
+                  OpF3(jgrid,3,12,alpha,beta)  =
+     1                 OpF3(jgrid,3,12,alpha,beta)
+     2                 - ipr * etam * C3ns(3) / 10d0
+*     V35
+                  OpF3(jgrid,3,8,alpha,beta)  =
+     1                 OpF3(jgrid,3,8,alpha,beta)
+     2                  + etap * C3ns(3) / 15d0
+*     T35
+                  OpF3(jgrid,3,13,alpha,beta)  =
+     1                 OpF3(jgrid,3,13,alpha,beta)
+     2                 - ipr * etam * C3ns(3) / 15d0
+*
+*     Charm Component
+*
+*     Photon
+                  OpF3(jgrid,4,0,alpha,beta)  =
+     1                 OpF3(jgrid,4,0,alpha,beta)
+     2                 + 2d0 * etap * C3ph(4)
+*     Singlet
+                  OpF3(jgrid,4,1,alpha,beta)  =
+     1                 OpF3(jgrid,4,1,alpha,beta)
+     2                 - ipr * etam * C3ns(4) / 3d0
+*     Valence
+                  OpF3(jgrid,4,3,alpha,beta)  =
+     1                 OpF3(jgrid,4,3,alpha,beta)
+     2                 + etap * C3ns(4) / 3d0
+*     V8
+                  OpF3(jgrid,4,5,alpha,beta)  =
+     1                 OpF3(jgrid,4,5,alpha,beta)
+     2                 - e2d * C3ns(4) / 3d0
+*     T8
+                  OpF3(jgrid,4,10,alpha,beta)  =
+     1                 OpF3(jgrid,4,10,alpha,beta)
+     2                 - ipr * e2d * C3ns(4) / 3d0
+*     V15
+                  OpF3(jgrid,4,6,alpha,beta)  =
+     1                 OpF3(jgrid,4,6,alpha,beta)
+     2                 + ( e2d - 3d0 * e2u ) * C3ns(4) / 12d0
+*     T15
+                  OpF3(jgrid,4,11,alpha,beta)  =
+     1                 OpF3(jgrid,4,11,alpha,beta)
+     2                 + ipr * ( e2d + 3d0 * e2u ) * C3ns(4) / 12d0
+*     V24
+                  OpF3(jgrid,4,7,alpha,beta)  =
+     1                 OpF3(jgrid,4,7,alpha,beta)
+     2                 + etap * C3ns(4) / 10d0
+*     T24
+                  OpF3(jgrid,4,12,alpha,beta)  =
+     1                 OpF3(jgrid,4,12,alpha,beta)
+     2                 - ipr * etam * C3ns(4) / 10d0
+*     V35
+                  OpF3(jgrid,4,8,alpha,beta)  =
+     1                 OpF3(jgrid,4,8,alpha,beta)
+     2                 + etap * C3ns(4) / 15d0
+*     T35
+                  OpF3(jgrid,4,13,alpha,beta)  =
+     1                 OpF3(jgrid,4,13,alpha,beta)
+     2                 - ipr * etam * C3ns(4) / 15d0
+*
+                  if(MassScheme(1:5).eq."FONLL")then
+*     Subtract the spurious charm contribution
+                     if(Nf_FF.le.3)then
+*     Singlet
+                        OpF3(jgrid,4,1,alpha,beta)  =
+     1                       OpF3(jgrid,4,1,alpha,beta)
+     2                       + ipr * etam * C3qm(4) / 6d0
+*     Valence
+                        OpF3(jgrid,4,3,alpha,beta)  =
+     1                       OpF3(jgrid,4,3,alpha,beta)
+     2                       - etap * C3qm(4) / 6d0
+*     V15
+                        OpF3(jgrid,4,6,alpha,beta)  =
+     1                       OpF3(jgrid,4,6,alpha,beta)
+     2                       + etap * C3qm(4) / 4d0
+*     T15
+                        OpF3(jgrid,4,11,alpha,beta) =
+     1                       OpF3(jgrid,4,11,alpha,beta)
+     2                       - ipr * etam * C3qm(4) / 4d0
+*     V24
+                        OpF3(jgrid,4,7,alpha,beta)  =
+     1                       OpF3(jgrid,4,7,alpha,beta)
+     2                       - etap * C3qm(4) / 20d0
+*     T24
+                        OpF3(jgrid,4,12,alpha,beta) =
+     1                       OpF3(jgrid,4,12,alpha,beta)
+     2                       + ipr * etam * C3qm(4) / 20d0
+*     V35
+                        OpF3(jgrid,4,8,alpha,beta)  =
+     1                       OpF3(jgrid,4,8,alpha,beta)
+     2                       - etap * C3qm(4) / 30d0
+*     T35
+                        OpF3(jgrid,4,13,alpha,beta) =
+     1                       OpF3(jgrid,4,13,alpha,beta)
+     2                       + ipr * etam * C3qm(4) / 30d0
+                     endif
+                  endif
+*
+*     Bottom component (no corrections)
+*
+*
+*     Top component (no corrections)
+*
+*     Photon
+                  OpF3(jgrid,6,0,alpha,beta)  =
+     1                 OpF3(jgrid,6,0,alpha,beta)
+     2                 + 2d0 * etap * C3ph(6)
+*     Singlet
+                  OpF3(jgrid,6,1,alpha,beta)  =
+     1                 OpF3(jgrid,6,1,alpha,beta)
+     2                 - ipr * etam * C3ns(6) / 3d0
+*     Valence
+                  OpF3(jgrid,6,3,alpha,beta)  =
+     1                 OpF3(jgrid,6,3,alpha,beta)
+     2                 + etap * C3ns(6) / 3d0
+*     V24
+                  OpF3(jgrid,6,7,alpha,beta)  =
+     1                 OpF3(jgrid,6,7,alpha,beta)
+     2                 - e2d * C3ns(6) / 5d0
+*     T24
+                  OpF3(jgrid,6,12,alpha,beta)  =
+     1                 OpF3(jgrid,6,12,alpha,beta)
+     2                 - ipr * e2d * C3ns(6) / 5d0
+*     V35
+                  OpF3(jgrid,6,8,alpha,beta)  =
+     1                 OpF3(jgrid,6,8,alpha,beta)
+     2                 + ( e2d - 5d0 * e2u ) * C3ns(6) / 30d0
+*     T35
+                  OpF3(jgrid,6,13,alpha,beta)  =
+     1                 OpF3(jgrid,6,13,alpha,beta)
+     2                 + ipr * ( e2d + 5d0 * e2u ) * C3ns(6) / 30d0
+*
+                  if(MassScheme(1:5).eq."FONLL")then
+*     Subtract the spurious top contribution
+                     if(Nf_FF.le.5)then
+*     Singlet
+                        OpF3(jgrid,6,1,alpha,beta)  =
+     1                       OpF3(jgrid,6,1,alpha,beta)
+     2                       + ipr * etam * C3qm(6) / 6d0
+*     Valence
+                        OpF3(jgrid,6,3,alpha,beta)  =
+     1                       OpF3(jgrid,6,3,alpha,beta)
+     2                       - etap * C3qm(6) / 6d0
+*     V35
+                        OpF3(jgrid,6,8,alpha,beta)  =
+     1                       OpF3(jgrid,6,8,alpha,beta)
+     2                       + etap * C3qm(6) / 6d0
+*     T35
+                        OpF3(jgrid,6,13,alpha,beta) =
+     1                       OpF3(jgrid,6,13,alpha,beta)
+     2                       - ipr * etam * C3qm(6) / 6d0
+                     endif
+*     Subtract the spurious bottom contribution
+                     if(Nf_FF.le.4)then
+*     Singlet
+                        OpF3(jgrid,6,1,alpha,beta)  =
+     1                       OpF3(jgrid,6,1,alpha,beta)
+     2                       - ipr * etam * C3qm(6) / 6d0
+*     Valence
+                        OpF3(jgrid,6,3,alpha,beta)  =
+     1                       OpF3(jgrid,6,3,alpha,beta)
+     2                       - etap * C3qm(6) / 6d0
+*     V24
+                        OpF3(jgrid,6,7,alpha,beta)  =
+     1                       OpF3(jgrid,6,7,alpha,beta)
+     2                       + etap * C3qm(6) / 5d0
+*     T24
+                        OpF3(jgrid,6,12,alpha,beta) =
+     1                       OpF3(jgrid,6,12,alpha,beta)
+     2                       + ipr * etam * C3qm(6) / 5d0
+*     V35
+                        OpF3(jgrid,6,8,alpha,beta)  =
+     1                       OpF3(jgrid,6,8,alpha,beta)
+     2                       - etap * C3qm(6) / 30d0
+*     T35
+                        OpF3(jgrid,6,13,alpha,beta) =
+     1                       OpF3(jgrid,6,13,alpha,beta)
+     2                       - ipr * etam * C3qm(6) / 30d0
+                     endif
+                  endif
+*
+*     Total
+*
+                  do ipdf=0,13
+                     OpF3(jgrid,7,ipdf,alpha,beta) = 0d0
+                     do ihq=3,6
+                        OpF3(jgrid,7,ipdf,alpha,beta) =
+     1                       OpF3(jgrid,7,ipdf,alpha,beta)
+     2                       + OpF3(jgrid,ihq,ipdf,alpha,beta)
+                     enddo
+                  enddo
                enddo
             enddo
          enddo
