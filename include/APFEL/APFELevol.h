@@ -233,7 +233,7 @@ namespace APFEL {
   void SetTheory(const std::string& theory);
   
   /// Enables NLO QED corrections
-  void EnableNLOQEDCorrecions(int);
+  void EnableNLOQEDCorrections(int);
   
   /// Sets the VFNS as a default
   void SetVFNS(void);
