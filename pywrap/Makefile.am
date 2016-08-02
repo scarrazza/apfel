@@ -11,7 +11,7 @@ all-local: apfel_wrap.cc
 	$(PYTHON) setup.py build
 
 install-exec-local:
-	$(PYTHON) setup.py install #--prefix=$(DESTDIR)$(prefix)
+	$(PYTHON) setup.py install --prefix=$(DESTDIR)$(prefix)
 
 uninstall-local:
 	rm -rf $(DESTDIR)$(libdir)/python*/site-packages/apfel*
