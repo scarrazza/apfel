@@ -57,14 +57,26 @@
      2                     * SM(igrid,nf,kk,pt,alpha,beta)
       enddo
 *
-*     In case of backwards evolution, a part from changing the sign of corrections,
+*     In case of backwards evolution, apart from changing the sign of NLO and NNLO terms,
 *     an additional term to the NNLO should be added, because:
 *
 *     ( 1 + a A1 + a^2 A2 )^{-1} = 1 - a A1 - a^2 ( A2 - A1^2 ) + O(a^3)
+*                                = 1 - a A1 - a^2 A2 + [a^2 A1^2] + O(a^3)
 *
-      if(sgn.eq.-1.and.ipt.ge.2.and.k2th(nf).ne.1d0.and.
-     1   (kk.eq.3.or.kk.eq.5))then
-         fact = 4d0 * TR * dlog(k2th(nf)) / 3d0
+*     but being A1 different from zero only for the singlet with the form:
+*
+*     A1 = | 0  A1qg |  => A1^2 = A1gg * A1
+*          | 0  A1gg |
+*
+*     with:
+*
+*     A1gg = - 4 / 3 TR * delta(1-x) ln(k2th)
+*
+      if(.not.TimeLike.and.
+     1     sgn.eq.-1.and.ipt.ge.2.and.k2th(nf).ne.1d0.and.
+     2     (kk.eq.3.or.kk.eq.5).and.
+     3     alpha.eq.beta)then
+         fact = - 4d0 * TR * dlog(k2th(nf)) / 3d0 ! A1gg
          integralsMatching = integralsMatching
      1        + fact * coup**2 * SM(igrid,nf,kk,1,alpha,beta)
       endif
