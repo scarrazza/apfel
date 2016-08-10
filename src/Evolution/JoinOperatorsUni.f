@@ -1,16 +1,16 @@
 ************************************************************************
 *
-*     JoinOperatorsQCD.f:
+*     JoinOperatorsUni.f:
 *
-*     This routine joins the QCD evolution operators computed with 
+*     This routine joins the Unified evolution operators computed with 
 *     different numbers of active flavours.
 *
-*     QCD evolution basis:
-*     0   1   2   3   4   5   6   7   8   9  10  11  12  13
-*     gm  Sg   g   V  V3  V8 V15 V24 V35  T3  T8 T15 T24 T35
+*     Unified evolution basis:
+*     0   1   2   3   4   5   6   7   8   9   10  11  12  13
+*     g   gm  Sig Dsg Tu1 Tu2 Td1 Td2 V   DV  Vu1 Vu2 Vd1 Vd2
 *     
 ************************************************************************
-      subroutine JoinOperatorsQCD(jgrid)
+      subroutine JoinOperatorsUni(jgrid)
 *
       implicit none
 *
@@ -32,11 +32,11 @@
       double precision coup,integralsMatching
       double precision MatQCDns(0:nint_max,0:nint_max),Match(2)
       double precision MatQCDsg(2,2,0:nint_max,0:nint_max)
-      double precision EvQCDb(0:13,0:13,0:nint_max,0:nint_max)
-      double precision EvQCD(0:13,0:13,0:nint_max,0:nint_max)
+      double precision EvUnib(0:13,0:13,0:nint_max,0:nint_max)
+      double precision EvUni(0:13,0:13,0:nint_max,0:nint_max)
 *
       if(sgn.ne.1)then
-         write(6,*) "In JoinOperatorsQCD.f:"
+         write(6,*) "In JoinOperatorsUni.f:"
          write(6,*) "Backward evolution not allowed yet."
          call exit(-10)
       endif
@@ -46,84 +46,86 @@
 *     Set evolution operators to zero
             do i=0,13
                do j=0,13
-                  EvQCD(i,j,alpha,beta) = 0d0
+                  EvUni(i,j,alpha,beta) = 0d0
                enddo
             enddo
-*     Singlet and Gluon
+*     Gluon, photon, Sigma, DeltaSigma
+            do i=0,3
+               do j=0,3
+                  EvUni(i,j,alpha,beta) =
+     1                 MUnisg1(nfi,nli,i,j,alpha,beta)
+               enddo
+            enddo
+*     Tu1
+            if(nfi.lt.4)then
+               do j=0,3
+                  EvUni(4,j,alpha,beta) =
+     1                 ( MUnisg1(nfi,nli,2,j,alpha,beta) 
+     2                 + MUnisg1(nfi,nli,3,j,alpha,beta) ) / 2d0
+               enddo
+            else
+               EvUni(4,4,alpha,beta) = MUninspu(nfi,nli,alpha,beta)
+            endif
+*     Tu2
+            if(nfi.lt.6)then
+               do j=0,3
+                  EvUni(5,j,alpha,beta) =
+     1                 ( MUnisg1(nfi,nli,2,j,alpha,beta) 
+     2                 + MUnisg1(nfi,nli,3,j,alpha,beta) ) / 2d0
+               enddo
+            else
+               EvUni(5,5,alpha,beta) = MUninspu(nfi,nli,alpha,beta)
+            endif
+*     Td1
+            EvUni(6,6,alpha,beta) = MUninspd(nfi,nli,alpha,beta)
+*     Td2
+            if(nfi.lt.5)then
+               do j=0,3
+                  EvUni(7,j,alpha,beta) =
+     1                 ( MUnisg1(nfi,nli,2,j,alpha,beta) 
+     2                 - MUnisg1(nfi,nli,3,j,alpha,beta) ) / 2d0
+               enddo
+            else
+               EvUni(7,7,alpha,beta) = MUninspd(nfi,nli,alpha,beta)
+            endif
+*     Total Valence, DeltaValence
             do i=1,2
                do j=1,2
-                  EvQCD(i,j,alpha,beta) =
-     1                 MQCDsg(nfi,i,j,alpha,beta)
+                  EvUni(7+i,7+j,alpha,beta) =
+     1                 MUnisg2(nfi,nli,i,j,alpha,beta)
                enddo
             enddo
-*     Total Valence
-            EvQCD(3,3,alpha,beta) =
-     1           MQCDnsv(nfi,alpha,beta)
-*     V3
-            EvQCD(4,4,alpha,beta) =
-     1           MQCDnsm(nfi,alpha,beta)
-*     V8
-            EvQCD(5,5,alpha,beta) =
-     1           MQCDnsm(nfi,alpha,beta)
-*     V15
-            if(nfi.lt.4)then
-               EvQCD(6,3,alpha,beta) =
-     1              MQCDnsv(nfi,alpha,beta)
-            else
-               EvQCD(6,6,alpha,beta) =
-     1              MQCDnsm(nfi,alpha,beta)
-            endif
-*     V24
-            if(nfi.lt.5)then
-               EvQCD(7,3,alpha,beta) =
-     1              MQCDnsv(nfi,alpha,beta)
-            else
-               EvQCD(7,7,alpha,beta) =
-     1              MQCDnsm(nfi,alpha,beta)
-            endif
-*     V35
-            if(nfi.lt.6)then
-               EvQCD(8,3,alpha,beta) =
-     1              MQCDnsv(nfi,alpha,beta)
-            else
-               EvQCD(8,8,alpha,beta) =
-     1              MQCDnsm(nfi,alpha,beta)
-            endif
-*     T3
-            EvQCD(9,9,alpha,beta) =
-     1           MQCDnsp(nfi,alpha,beta)
-*     T8
-            EvQCD(10,10,alpha,beta) =
-     1           MQCDnsp(nfi,alpha,beta)
-*     T15
+*     Vu1
             if(nfi.lt.4)then
                do j=1,2
-                  EvQCD(11,j,alpha,beta) =
-     1                 MQCDsg(nfi,1,j,alpha,beta)
+                  EvUni(10,j,alpha,beta) =
+     1                 ( MUnisg2(nfi,nli,1,j,alpha,beta) 
+     2                 + MUnisg2(nfi,nli,2,j,alpha,beta) ) / 2d0
                enddo
             else
-               EvQCD(11,11,alpha,beta) =
-     1              MQCDnsp(nfi,alpha,beta)
+               EvUni(10,10,alpha,beta) = MUninsmu(nfi,nli,alpha,beta)
             endif
-*     T24
-            if(nfi.lt.5)then
-               do j=1,2
-                  EvQCD(12,j,alpha,beta) =
-     1                 MQCDsg(nfi,1,j,alpha,beta)
-               enddo
-            else
-               EvQCD(12,12,alpha,beta) =
-     1              MQCDnsp(nfi,alpha,beta)
-            endif
-*     T35
+*     Vu2
             if(nfi.lt.6)then
                do j=1,2
-                  EvQCD(13,j,alpha,beta) =
-     1                 MQCDsg(nfi,1,j,alpha,beta)
+                  EvUni(11,j,alpha,beta) =
+     1                 ( MUnisg2(nfi,nli,1,j,alpha,beta) 
+     2                 + MUnisg2(nfi,nli,2,j,alpha,beta) ) / 2d0
                enddo
             else
-               EvQCD(13,13,alpha,beta) =
-     1              MQCDnsp(nfi,alpha,beta)
+               EvUni(11,11,alpha,beta) = MUninsmu(nfi,nli,alpha,beta)
+            endif
+*     Vd1
+            EvUni(12,12,alpha,beta) = MUninsmd(nfi,nli,alpha,beta)
+*     Vd2
+            if(nfi.lt.5)then
+               do j=1,2
+                  EvUni(13,j,alpha,beta) =
+     1                 ( MUnisg2(nfi,nli,1,j,alpha,beta) 
+     2                 - MUnisg2(nfi,nli,2,j,alpha,beta) ) / 2d0
+               enddo
+            else
+               EvUni(13,13,alpha,beta) = MUninsmd(nfi,nli,alpha,beta)
             endif
          enddo
       enddo
@@ -139,7 +141,7 @@
                do beta=alpha,nin(igrid)
                   do i=0,13
                      do j=0,13
-                        EvQCDb(i,j,alpha,beta) = 0d0
+                        EvUnib(i,j,alpha,beta) = 0d0
                      enddo
                   enddo
                enddo
@@ -149,7 +151,7 @@
 *     Get alphas value at the heavy quark threshold (with nfm active flavours)
 c            coup = asthUp(nfm)
             coup = asthDown(nfm)
-*     Contruct matching conditions at this threshod
+*     Contruct matching conditions at this threshod in the QCD basis
             if(IsExt(igrid))then
                do alpha=0,nin(igrid)
                   do beta=alpha,nin(igrid)
@@ -194,11 +196,11 @@ c            coup = asthUp(nfm)
                            do delta=0,nin(igrid)
                               do k=1,2
                                  do l=1,2
-                                    EvQCDb(i,j,alpha,beta) = 
-     1                                   EvQCDb(i,j,alpha,beta)
+                                    EvUnib(i,j,alpha,beta) = 
+     1                                   EvUnib(i,j,alpha,beta)
      2                                   + MQCDsg(nf+1,i,k,alpha,gamma)
      3                                   * MatQCDsg(k,l,gamma,delta)
-     4                                   * EvQCD(l,j,delta,beta)
+     4                                   * EvUni(l,j,delta,beta)
                                  enddo
                               enddo
                            enddo
@@ -209,35 +211,35 @@ c            coup = asthUp(nfm)
                   do gamma=0,nin(igrid)
                      do delta=0,nin(igrid)
 *     Total Valence
-                        EvQCDb(3,3,alpha,beta) = 
-     1                       EvQCDb(3,3,alpha,beta)
+                        EvUnib(3,3,alpha,beta) = 
+     1                       EvUnib(3,3,alpha,beta)
      2                       + MQCDnsv(nf+1,alpha,gamma)
      3                       * MatQCDns(gamma,delta)
-     4                       * EvQCD(3,3,delta,beta)
+     4                       * EvUni(3,3,delta,beta)
 *     V3
-                        EvQCDb(4,4,alpha,beta) = 
-     1                       EvQCDb(4,4,alpha,beta)
+                        EvUnib(4,4,alpha,beta) = 
+     1                       EvUnib(4,4,alpha,beta)
      2                       + MQCDnsm(nf+1,alpha,gamma)
      3                       * MatQCDns(gamma,delta)
-     4                       * EvQCD(4,4,delta,beta)
+     4                       * EvUni(4,4,delta,beta)
 *     V8
-                        EvQCDb(5,5,alpha,beta) = 
-     1                       EvQCDb(5,5,alpha,beta)
+                        EvUnib(5,5,alpha,beta) = 
+     1                       EvUnib(5,5,alpha,beta)
      2                       + MQCDnsm(nf+1,alpha,gamma)
      3                       * MatQCDns(gamma,delta)
-     4                       * EvQCD(5,5,delta,beta)
+     4                       * EvUni(5,5,delta,beta)
 *     T3
-                        EvQCDb(9,9,alpha,beta) = 
-     1                       EvQCDb(9,9,alpha,beta)
+                        EvUnib(9,9,alpha,beta) = 
+     1                       EvUnib(9,9,alpha,beta)
      2                       + MQCDnsp(nf+1,alpha,gamma)
      3                       * MatQCDns(gamma,delta)
-     4                       * EvQCD(9,9,delta,beta)
+     4                       * EvUni(9,9,delta,beta)
 *     T8
-                        EvQCDb(10,10,alpha,beta) = 
-     1                       EvQCDb(10,10,alpha,beta)
+                        EvUnib(10,10,alpha,beta) = 
+     1                       EvUnib(10,10,alpha,beta)
      2                       + MQCDnsp(nf+1,alpha,gamma)
      3                       * MatQCDns(gamma,delta)
-     4                       * EvQCD(10,10,delta,beta)
+     4                       * EvUni(10,10,delta,beta)
                      enddo
                   enddo
 *     Charm threshold
@@ -245,23 +247,23 @@ c            coup = asthUp(nfm)
                      do gamma=0,nin(igrid)
                         do delta=0,nin(igrid)
 *     V15
-                           EvQCDb(6,3,alpha,beta) = 
-     1                          EvQCDb(6,3,alpha,beta)
+                           EvUnib(6,3,alpha,beta) = 
+     1                          EvUnib(6,3,alpha,beta)
      2                          + MQCDnsm(nf+1,alpha,gamma)
      3                          * MatQCDns(gamma,delta)
-     4                          * EvQCD(6,3,delta,beta)
+     4                          * EvUni(6,3,delta,beta)
 *     V24
-                           EvQCDb(7,3,alpha,beta) = 
-     1                          EvQCDb(7,3,alpha,beta)
+                           EvUnib(7,3,alpha,beta) = 
+     1                          EvUnib(7,3,alpha,beta)
      2                          + MQCDnsv(nf+1,alpha,gamma)
      3                          * MatQCDns(gamma,delta)
-     4                          * EvQCD(7,3,delta,beta)
+     4                          * EvUni(7,3,delta,beta)
 *     V35
-                           EvQCDb(8,3,alpha,beta) = 
-     1                          EvQCDb(8,3,alpha,beta)
+                           EvUnib(8,3,alpha,beta) = 
+     1                          EvUnib(8,3,alpha,beta)
      2                          + MQCDnsv(nf+1,alpha,gamma)
      3                          * MatQCDns(gamma,delta)
-     4                          * EvQCD(8,3,delta,beta)
+     4                          * EvUni(8,3,delta,beta)
 *     T15
                            Match(1) = MatQCDns(gamma,delta) 
      1                          - 3d0 * ( MatQCDsg(1,1,gamma,delta) 
@@ -269,11 +271,11 @@ c            coup = asthUp(nfm)
                            Match(2) = - 3d0 * MatQCDsg(1,2,gamma,delta)
                            do j=1,2
                               do k=1,2
-                                 EvQCDb(11,j,alpha,beta) = 
-     1                                EvQCDb(11,j,alpha,beta)
+                                 EvUnib(11,j,alpha,beta) = 
+     1                                EvUnib(11,j,alpha,beta)
      2                                + MQCDnsp(nf+sgn,alpha,gamma)
      3                                * Match(k)
-     4                                * EvQCD(k,j,delta,beta)
+     4                                * EvUni(k,j,delta,beta)
                               enddo
                            enddo
 *     
@@ -281,16 +283,16 @@ c            coup = asthUp(nfm)
 *     T24
                               do k=1,2
                                  do l=1,2
-                                    EvQCDb(12,j,alpha,beta) = 
-     1                                   EvQCDb(12,j,alpha,beta)
+                                    EvUnib(12,j,alpha,beta) = 
+     1                                   EvUnib(12,j,alpha,beta)
      2                                   + MQCDsg(nf+1,1,k,alpha,gamma)
      3                                   * MatQCDsg(k,l,gamma,delta)
-     4                                   * EvQCD(l,j,delta,beta)
+     4                                   * EvUni(l,j,delta,beta)
                                  enddo
                               enddo
 *     T35
-                              EvQCDb(13,j,alpha,beta) = 
-     1                             EvQCDb(12,j,alpha,beta)
+                              EvUnib(13,j,alpha,beta) = 
+     1                             EvUnib(12,j,alpha,beta)
                            enddo
                         enddo
                      enddo
@@ -300,44 +302,44 @@ c            coup = asthUp(nfm)
                         do delta=0,nin(igrid)
 *     V15
                            if(nfi.ge.4)then
-                              EvQCDb(6,6,alpha,beta) = 
-     1                             EvQCDb(6,6,alpha,beta)
+                              EvUnib(6,6,alpha,beta) = 
+     1                             EvUnib(6,6,alpha,beta)
      2                             + MQCDnsm(nf+1,alpha,gamma)
      3                             * MatQCDns(gamma,delta)
-     4                             * EvQCD(6,6,delta,beta)
+     4                             * EvUni(6,6,delta,beta)
                            else
-                              EvQCDb(6,3,alpha,beta) = 
-     1                             EvQCDb(6,3,alpha,beta)
+                              EvUnib(6,3,alpha,beta) = 
+     1                             EvUnib(6,3,alpha,beta)
      2                             + MQCDnsm(nf+1,alpha,gamma)
      3                             * MatQCDns(gamma,delta)
-     4                             * EvQCD(6,3,delta,beta)
+     4                             * EvUni(6,3,delta,beta)
                            endif
 *     V24
-                           EvQCDb(7,3,alpha,beta) = 
-     1                          EvQCDb(7,3,alpha,beta)
+                           EvUnib(7,3,alpha,beta) = 
+     1                          EvUnib(7,3,alpha,beta)
      2                          + MQCDnsm(nf+1,alpha,gamma)
      3                          * MatQCDns(gamma,delta)
-     4                          * EvQCD(7,3,delta,beta)
+     4                          * EvUni(7,3,delta,beta)
 *     V35
-                           EvQCDb(8,3,alpha,beta) = 
-     1                          EvQCDb(8,3,alpha,beta)
+                           EvUnib(8,3,alpha,beta) = 
+     1                          EvUnib(8,3,alpha,beta)
      2                          + MQCDnsv(nf+1,alpha,gamma)
      3                          * MatQCDns(gamma,delta)
-     4                          * EvQCD(8,3,delta,beta)
+     4                          * EvUni(8,3,delta,beta)
 *     T15
                            if(nfi.ge.4)then
-                              EvQCDb(11,11,alpha,beta) = 
-     1                             EvQCDb(11,11,alpha,beta)
+                              EvUnib(11,11,alpha,beta) = 
+     1                             EvUnib(11,11,alpha,beta)
      2                             + MQCDnsp(nf+1,alpha,gamma)
      3                             * MatQCDns(gamma,delta)
-     4                             * EvQCD(11,11,delta,beta)
+     4                             * EvUni(11,11,delta,beta)
                            else
                               do j=1,2
-                                 EvQCDb(11,j,alpha,beta) = 
-     1                                EvQCDb(11,j,alpha,beta)
+                                 EvUnib(11,j,alpha,beta) = 
+     1                                EvUnib(11,j,alpha,beta)
      2                                + MQCDnsp(nf+1,alpha,gamma)
      3                                * MatQCDns(gamma,delta)
-     4                                * EvQCD(11,j,delta,beta)
+     4                                * EvUni(11,j,delta,beta)
                               enddo
                            endif
 *     T24
@@ -347,22 +349,22 @@ c            coup = asthUp(nfm)
                            Match(2) = - 4d0 * MatQCDsg(1,2,gamma,delta)
                            do j=1,2
                               do k=1,2
-                                 EvQCDb(12,j,alpha,beta) = 
-     1                                EvQCDb(12,j,alpha,beta)
+                                 EvUnib(12,j,alpha,beta) = 
+     1                                EvUnib(12,j,alpha,beta)
      2                                + MQCDnsp(nf+1,alpha,gamma)
      3                                * Match(k)
-     4                                * EvQCD(k,j,delta,beta)
+     4                                * EvUni(k,j,delta,beta)
                               enddo
                            enddo
 *     T35
                            do j=1,2
                               do k=1,2
                                  do l=1,2
-                                    EvQCDb(13,j,alpha,beta) = 
-     1                                   EvQCDb(13,j,alpha,beta)
+                                    EvUnib(13,j,alpha,beta) = 
+     1                                   EvUnib(13,j,alpha,beta)
      2                                   + MQCDsg(nf+1,1,k,alpha,gamma)
      3                                   * MatQCDsg(k,l,gamma,delta)
-     4                                   * EvQCD(l,j,delta,beta)
+     4                                   * EvUni(l,j,delta,beta)
                                  enddo
                               enddo
                            enddo
@@ -374,68 +376,68 @@ c            coup = asthUp(nfm)
                         do delta=0,nin(igrid)
 *     V15
                            if(nfi.ge.4)then
-                              EvQCDb(6,6,alpha,beta) = 
-     1                             EvQCDb(6,6,alpha,beta)
+                              EvUnib(6,6,alpha,beta) = 
+     1                             EvUnib(6,6,alpha,beta)
      2                             + MQCDnsm(nf+1,alpha,gamma)
      3                             * MatQCDns(gamma,delta)
-     4                             * EvQCD(6,6,delta,beta)
+     4                             * EvUni(6,6,delta,beta)
                            else
-                              EvQCDb(6,3,alpha,beta) = 
-     1                             EvQCDb(6,3,alpha,beta)
+                              EvUnib(6,3,alpha,beta) = 
+     1                             EvUnib(6,3,alpha,beta)
      2                             + MQCDnsm(nf+1,alpha,gamma)
      3                             * MatQCDns(gamma,delta)
-     4                             * EvQCD(6,3,delta,beta)
+     4                             * EvUni(6,3,delta,beta)
                            endif
 *     V24
                            if(nfi.ge.5)then
-                              EvQCDb(7,7,alpha,beta) = 
-     1                             EvQCDb(7,7,alpha,beta)
+                              EvUnib(7,7,alpha,beta) = 
+     1                             EvUnib(7,7,alpha,beta)
      2                             + MQCDnsm(nf+1,alpha,gamma)
      3                             * MatQCDns(gamma,delta)
-     4                             * EvQCD(7,7,delta,beta)
+     4                             * EvUni(7,7,delta,beta)
                            else
-                              EvQCDb(7,3,alpha,beta) = 
-     1                             EvQCDb(7,3,alpha,beta)
+                              EvUnib(7,3,alpha,beta) = 
+     1                             EvUnib(7,3,alpha,beta)
      2                             + MQCDnsm(nf+1,alpha,gamma)
      3                             * MatQCDns(gamma,delta)
-     4                             * EvQCD(7,3,delta,beta)
+     4                             * EvUni(7,3,delta,beta)
                            endif
 *     V35
-                           EvQCDb(8,3,alpha,beta) = 
-     1                          EvQCDb(8,3,alpha,beta)
+                           EvUnib(8,3,alpha,beta) = 
+     1                          EvUnib(8,3,alpha,beta)
      2                          + MQCDnsm(nf+1,alpha,gamma)
      3                          * MatQCDns(gamma,delta)
-     4                          * EvQCD(8,3,delta,beta)
+     4                          * EvUni(8,3,delta,beta)
 *     T15
                            if(nfi.ge.4)then
-                              EvQCDb(11,11,alpha,beta) = 
-     1                             EvQCDb(11,11,alpha,beta)
+                              EvUnib(11,11,alpha,beta) = 
+     1                             EvUnib(11,11,alpha,beta)
      2                             + MQCDnsp(nf+1,alpha,gamma)
      3                             * MatQCDns(gamma,delta)
-     4                             * EvQCD(11,11,delta,beta)
+     4                             * EvUni(11,11,delta,beta)
                            else
                               do j=1,2
-                                 EvQCDb(11,j,alpha,beta) = 
-     1                                EvQCDb(11,j,alpha,beta)
+                                 EvUnib(11,j,alpha,beta) = 
+     1                                EvUnib(11,j,alpha,beta)
      2                                + MQCDnsp(nf+1,alpha,gamma)
      3                                * MatQCDns(gamma,delta)
-     4                                * EvQCD(11,j,delta,beta)
+     4                                * EvUni(11,j,delta,beta)
                               enddo
                            endif
 *     T24
                            if(nfi.ge.5)then
-                              EvQCDb(12,12,alpha,beta) = 
-     1                             EvQCDb(12,12,alpha,beta)
+                              EvUnib(12,12,alpha,beta) = 
+     1                             EvUnib(12,12,alpha,beta)
      2                             + MQCDnsp(nf+1,alpha,gamma)
      3                             * MatQCDns(gamma,delta)
-     4                             * EvQCD(12,12,delta,beta)
+     4                             * EvUni(12,12,delta,beta)
                            else
                               do j=1,2
-                                 EvQCDb(12,j,alpha,beta) = 
-     1                                EvQCDb(12,j,alpha,beta)
+                                 EvUnib(12,j,alpha,beta) = 
+     1                                EvUnib(12,j,alpha,beta)
      2                                + MQCDnsp(nf+1,alpha,gamma)
      3                                * MatQCDns(gamma,delta)
-     4                                * EvQCD(12,j,delta,beta)
+     4                                * EvUni(12,j,delta,beta)
                               enddo
                            endif
 *     T35
@@ -445,11 +447,11 @@ c            coup = asthUp(nfm)
                            Match(2) = - 5d0 * MatQCDsg(1,2,gamma,delta)
                            do j=1,2
                               do k=1,2
-                                 EvQCDb(13,j,alpha,beta) = 
-     1                                EvQCDb(13,j,alpha,beta)
+                                 EvUnib(13,j,alpha,beta) = 
+     1                                EvUnib(13,j,alpha,beta)
      2                                + MQCDnsp(nf+1,alpha,gamma)
      3                                * Match(k)
-     4                                * EvQCD(k,j,delta,beta)
+     4                                * EvUni(k,j,delta,beta)
                               enddo
                            enddo
                         enddo
@@ -464,7 +466,7 @@ c            coup = asthUp(nfm)
                do beta=alpha,nin(igrid)
                   do i=0,13
                      do j=0,13
-                        EvQCD(i,j,alpha,beta) = EvQCDb(i,j,alpha,beta)
+                        EvUni(i,j,alpha,beta) = EvUnib(i,j,alpha,beta)
                      enddo
                   enddo
                enddo
@@ -478,19 +480,19 @@ c            coup = asthUp(nfm)
          do beta=0,nin(igrid)
             do i=0,13
                do j=0,13
-                  Ev2EvQCD(jgrid,i,j,alpha,beta) = EvQCD(i,j,alpha,beta)
+                  Ev2EvUni(jgrid,i,j,alpha,beta) = EvUni(i,j,alpha,beta)
                   Ev2PhQCD(jgrid,i-7,j,alpha,beta) = 0d0
                   Ph2PhQCD(jgrid,i-7,j-7,alpha,beta) = 0d0
                   do k=0,13
                      Ev2PhQCD(jgrid,i-7,j,alpha,beta) = 
      1                    Ev2PhQCD(jgrid,i-7,j,alpha,beta)
      2                       + Tev2phQCD(nff,i,k)
-     3                       * EvQCD(k,j,alpha,beta)
+     3                       * EvUni(k,j,alpha,beta)
                      do l=0,13
                         Ph2PhQCD(jgrid,i-7,j-7,alpha,beta) = 
      1                       Ph2PhQCD(jgrid,i-7,j-7,alpha,beta)
      2                       + Tev2phQCD(nff,i,k)
-     3                       * EvQCD(k,l,alpha,beta)
+     3                       * EvUni(K,alpha,beta)
      4                       * Tph2evQCD(nfi,l,j)
                      enddo
                   enddo

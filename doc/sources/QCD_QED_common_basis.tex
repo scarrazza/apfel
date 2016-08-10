@@ -637,7 +637,7 @@ e_u^2\widetilde{P}^-)u_j^-+ \frac1{n_f} (P^V-P^-)V_u + \frac1{n_f} (P^V-P^-)V_d
 \end{equation}
 
 
-\section{Evolution basis}
+\section{Evolution basis}\label{QEDEvBasis}
 
 In order to diagonlize as much as possible the evolution matrix in the
 presence of QED corrections avoiding unnecessery couplings between parton distributions, we propose
@@ -913,6 +913,187 @@ V\\
 Notice that eq. (\ref{APFELsys}), recognizing that
 $2e_\Sigma^2=\theta^-$ and $2\delta_e^2=\theta^+$, is consistent with
 eq.~(9) of the APFEL paper.
+
+\section{Matching conditions in the QED evolution basis}
+
+In order to couple QCD and QED evolutions in the VFNS, it is necessary
+to work out the structure of the QCD matching conditions in the
+evolution basis defined in Sect.~\ref{QEDEvBasis}. The matching
+conditions up to $\mathcal{O}(\alpha_s^2)$ have been computed in
+Ref.~\cite{Buza:1996wv} and for the thransition betwwn the $n_f$- and
+the $(n_f+1)$-scheme for the gluon $g$, the light quarks $l$ and the
+heavy quarks $h$ and $\overline{h}$ read:
+\begin{equation}
+g^{(n_f+1)} =
+\left[1+\left(\frac{\alpha_s}{4\pi}\right)A_{gg,h}^{S,(1)}+\left(\frac{\alpha_s}{4\pi}\right)^2A_{gg,h}^{S,(2)}\right]g^{(n_f)}+
+\left(\frac{\alpha_s}{4\pi}\right)^2A^{S,(2)}_{gq,h}\Sigma^{(n_f)}
+\end{equation}
+\begin{equation}
+l^{(n_f+1)}=\left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]l^{(n_f)}\,. 
+\end{equation}
+\begin{equation}
+h^{(n_f+1)}=\overline{h}^{(n_f+1)}=\frac12\left(\frac{\alpha_s}{4\pi}\right)^2\tilde{A}^{S,(2)}_{hq}\Sigma^{(n_f)}+\frac12\left[\left(\frac{\alpha_s}{4\pi}\right)\tilde{A}^{S,(1)}_{hq}+\left(\frac{\alpha_s}{4\pi}\right)^2\tilde{A}^{S,(2)}_{hg}\right]g^{(n_f)}\,.
+\end{equation}
+
+The fisrt observation is that, given that the dynamical production of
+heavy quarks at the thresholds always happens in pairs, it is clear
+all distributions that involve only difference between flavours and
+anti-flavours match multiplicatively at the thresholds as the light
+flavours do, that is:
+\begin{equation}
+\{V,\Delta V, V_1^u,V_2^u, V_1^d,V_2^d\}^{(n_f+1)} =
+\left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right] \{V,\Delta V, V_1^u,V_2^u, V_1^d,V_2^d\}^{(n_f)}
+\end{equation}
+Now turn to consider $\Sigma$ and $\Delta_\Sigma$. The first case is
+easy and we have that:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \Sigma^{(n_f+1)} &=&
+\displaystyle
+                                   \sum_{l=1}^{n_f}(l^{(n_f+1)}+\overline{l}^{(n_f+1)})+(h^{(n_f+1)}+\overline{h}^{(n_f+1)})\\
+\\
+&=&\displaystyle
+    \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2\left(\tilde{A}^{S,(2)}_{hq}+A_{qq,h}^{N\!S,(2)}\right)\right]\Sigma^{(n_f)}+\left[\left(\frac{\alpha_s}{4\pi}\right)\tilde{A}^{S,(1)}_{hg}+\left(\frac{\alpha_s}{4\pi}\right)^2\tilde{A}^{S,(2)}_{hg}\right]
+    g^{(n_f)}\,.
+\end{array}
+\end{equation}
+The second case is instead a bit trickier because:
+\begin{equation}
+\Delta_\Sigma ^{(n_f+1)} = \sum_{q=n_{\rm up}}
+(q^{(n_f+1)}+\overline{q}^{(n_f+1)}) - \sum_{q=n_{\rm down}}
+(q^{(n_f+1)}+\overline{q}^{(n_f+1)})=\Sigma_{\rm up}^{(n_f+1)}-\Sigma_{\rm down}^{(n_f+1)}
+\end{equation}
+and thus the way how matching conditions have to be applied depends on
+whether the $(n_f+1)$-th quark is of type up or down. In particular,
+every time that a threshold is crossed, only one of the components
+$\Sigma_{\rm up}$ and $\Sigma_{\rm down}$ will get the contribution
+from the heavy quark $h$:
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle \Delta_\Sigma ^{(n_f+1)} &=&
+\displaystyle \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma ^{(n_f)}\\
+\\
+&\pm&\displaystyle  \left(\frac{\alpha_s}{4\pi}\right)^2\tilde{A}^{S,(2)}_{hq}\Sigma^{(n_f)}\pm \left[\left(\frac{\alpha_s}{4\pi}\right)\tilde{A}^{S,(1)}_{hg}+\left(\frac{\alpha_s}{4\pi}\right)^2\tilde{A}^{S,(2)}_{hg}\right]g^{(n_f)}
+\end{array}
+\end{equation}
+with $+$ if $h$ is an up-type quark and $-$ if it is a down-type
+quark. The matching conditions for $g$, $\Sigma$, and $\Delta_\Sigma$
+can be written in a matricial form as:
+\begin{equation}
+\begin{pmatrix}
+g ^{(n_f+1)}\\
+\Sigma ^{(n_f+1)}\\
+\Delta_\Sigma ^{(n_f+1)}
+\end{pmatrix} = 
+\left[\begin{pmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0\\
+0 & 0 & 1\\
+\end{pmatrix}
++
+\left(\frac{\alpha_s}{4\pi}\right)
+\begin{pmatrix}
+A_{gg,h}^{S,(1)} & 0 & 0 \\
+\tilde{A}^{S,(1)}_{hq} & 0 & 0\\
+\pm\tilde{A}^{S,(1)}_{hg} & 0 & 0\\
+\end{pmatrix}+
+\left(\frac{\alpha_s}{4\pi}\right)^2
+\begin{pmatrix}
+A_{gg,h}^{S,(2)} & A^{S,(2)}_{gq,h} & 0 \\
+\tilde{A}^{S,(2)}_{hg} & \tilde{A}^{S,(2)}_{hq}+A_{qq,h}^{N\!S,(2)} & 0\\
+\pm\tilde{A}^{S,(2)}_{hg} & \pm \tilde{A}^{S,(2)}_{hq} & A_{qq,h}^{N\!S,(2)}\\
+\end{pmatrix}
+\right]
+\begin{pmatrix}
+g ^{(n_f)}\\
+\Sigma ^{(n_f)}\\
+\Delta_\Sigma ^{(n_f)}
+\end{pmatrix}
+\end{equation}
+
+We finally turn to consider the matching of $T_1^u$, $T_2^u$, $T_1^d$,
+and $T_2^d$. Due to the way these distributions are constructed, they
+might behave in different ways below and above a given
+threshold. Therefore we need to consider the what happens at each of
+them.
+\begin{itemize}
+\item charm threshold ($n_f=3$):
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle T_1^{u,(n_f+1)} &=&\displaystyle 
+  \frac{\Sigma^{(n_f+1)}+\Delta_{\Sigma}^{(n_f+1)}}2-2(c^{(n_f+1)}+\overline{c}^{(n_f+1)})
+                                  = \left[-\left(\frac{\alpha_s}{4\pi}\right)
+                                  \tilde{A}^{S,(1)}_{hq}-\left(\frac{\alpha_s}{4\pi}\right)^2
+                                  \tilde{A}^{S,(2)}_{hq}\right]g^{(n_f)}\\
+\\
+                              &+&\displaystyle \left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2\left(-\tilde{A}^{S,(2)}_{hq}+\frac12A_{qq,h}^{N\!S,(2)}\right)\right]\Sigma^{(n_f)}+\left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}\\
+\\
+\displaystyle T_2^{u,(n_f+1)} &=&\displaystyle
+                                  \frac{\Sigma^{(n_f+1)}+\Delta_{\Sigma}^{(n_f+1)}}2=\left[\left(\frac{\alpha_s}{4\pi}\right)
+                                  \tilde{A}^{S,(1)}_{hq}+\left(\frac{\alpha_s}{4\pi}\right)^2
+                                  \tilde{A}^{S,(2)}_{hq}\right]g^{(n_f)}\\
+\\
+                              &+&\displaystyle \left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2\left(\tilde{A}^{S,(2)}_{hq}+\frac12A_{qq,h}^{N\!S,(2)}\right)\right]\Sigma^{(n_f)}+\left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}\\
+\\
+\displaystyle T_1^{d,(n_f+1)} &=&\displaystyle  \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_1^{d,(n_f)} \\
+\\
+\displaystyle T_1^{d,(n_f+1)} &=& \displaystyle
+                                  \frac{\Sigma^{(n_f+1)}-\Delta_{\Sigma}^{(n_f+1)}}2
+                                  = \left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2\frac12A_{qq,h}^{N\!S,(2)}\right]\Sigma^{(n_f)}+\left[-\frac12-\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}
+\end{array}
+\end{equation}
+
+\item bottom threshold ($n_f=4$):
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle T_1^{u,(n_f+1)} &=&\displaystyle  \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_1^{u,(n_f)} \\
+\\
+\displaystyle T_2^{u,(n_f+1)} &=&\displaystyle \left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2\frac12A_{qq,h}^{N\!S,(2)}\right]\Sigma^{(n_f)}+\left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}\\
+\\
+\displaystyle T_1^{d,(n_f+1)} &=&\displaystyle  \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_1^{d,(n_f)} \\
+\\
+\displaystyle T_1^{d,(n_f+1)} &=& \displaystyle
+                                  \frac{\Sigma^{(n_f+1)}-\Delta_{\Sigma}^{(n_f+1)}}2-3(b^{(n_f+1)}+\overline{b}^{(n_f+1)})=2\left[-\left(\frac{\alpha_s}{4\pi}\right)
+                                  \tilde{A}^{S,(1)}_{hq}-\left(\frac{\alpha_s}{4\pi}\right)^2
+                                  \tilde{A}^{S,(2)}_{hq}\right]g^{(n_f)}\\
+\\
+                                  &+&\displaystyle \left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2\left(-2 \tilde{A}^{S,(2)}_{hq}+\frac12A_{qq,h}^{N\!S,(2)}\right)\right]\Sigma^{(n_f)}+\left[-\frac12-\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}
+\end{array}
+\end{equation}
+
+\item top threshold ($n_f=5$):
+\begin{equation}
+\begin{array}{rcl}
+\displaystyle T_1^{u,(n_f+1)} &=&\displaystyle  \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_1^{u,(n_f)} \\
+\\
+\displaystyle T_2^{u,(n_f+1)} &=&\displaystyle
+                                  \frac{\Sigma^{(n_f+1)}+\Delta_{\Sigma}^{(n_f+1)}}2-3(t^{(n_f+1)}+\overline{t}^{(n_f+1)})=2\left[-\left(\frac{\alpha_s}{4\pi}\right)
+                                  \tilde{A}^{S,(1)}_{hq}-\left(\frac{\alpha_s}{4\pi}\right)^2
+                                  \tilde{A}^{S,(2)}_{hq}\right]g^{(n_f)}\\
+\\
+                              &+&\displaystyle \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2\left(-2\tilde{A}^{S,(2)}_{hq}+\frac12A_{qq,h}^{N\!S,(2)}\right)\right]\Sigma^{(n_f)}+\left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}\\
+\\
+\displaystyle T_1^{d,(n_f+1)} &=&\displaystyle  \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_1^{d,(n_f)} \\
+\\
+\displaystyle T_1^{d,(n_f+1)} &=& \displaystyle \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_2^{d,(n_f)}
+\end{array}
+\end{equation}
+
+
+
+
+
+
+
+
+
+
+\end{itemize}
+
+
+
+
+
 
 \section{Including the lepton PDFs}
 
@@ -2679,6 +2860,14 @@ And the remaining distributions evolving multiplicatively as:
   hep-ph/9803211.
   %%CITATION = HEP-PH/9803211;%%
   %3 citations counted in INSPIRE as of 29 Apr 2016
+
+\bibitem{Buza:1996wv}
+  M.~Buza, Y.~Matiounine, J.~Smith and W.~L.~van Neerven,
+  %``Charm electroproduction viewed in the variable-flavour number scheme
+  %versus fixed-order perturbation theory,''
+  Eur.\ Phys.\ J.\  C {\bf 1}, 301 (1998)
+  [arXiv:hep-ph/9612398].
+  %%CITATION = EPHJA,C1,301;%%
 
 %\cite{deFlorian:2016gvk}
 \bibitem{deFlorian:2016gvk}

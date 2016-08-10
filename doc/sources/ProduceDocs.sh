@@ -13,6 +13,7 @@ do
     pdflatex manual.tex
     pdflatex running_mass.tex
     pdflatex Luminosities.tex
+    pdflatex matching_conditions.tex
 done
 
 mv *.pdf ../pdfs/.
