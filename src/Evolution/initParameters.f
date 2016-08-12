@@ -396,17 +396,17 @@ c      endif
          call LockGrids(.true.)
       endif
 *
-*     At the moment the computation of the evolution operator
-*     is available only for QCD evolution.
+*     When enabling the evolution operator with the "QUniD" solution,
+*     make use that the tau threshold is never crossed. Thus set the
+*     tau mass to zero (infinity would do as well).
 *
-      if(EvolOp.and.Th.ne."QCD")then
+      if(EvolOp.and.Th.eq."QUniD")then
          write(6,*) achar(27)//"[33m"//
-     1              "WARNING: computation of the evolution operator",
-     2              " possible only for the 'QCD' theory"
-         write(6,*) "         ... disabling evolution operator",
-     1              " computation"
+     1              "WARNING: no tau mass threshold crossing allowed ",
+     2              "if the evolution operator is enabled"
+         write(6,*) "         ... setting tau mass to zero"
      2              //achar(27)//"[0m"
-         call EnableEvolutionOperator(.false.)
+         call SetTauMass(0d0)
       endif
 *
 *     If there are external grids the subgrids cannot be locked

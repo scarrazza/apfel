@@ -58,18 +58,6 @@
 *     been enabled, join the evolution operators of the sub grid.
 *
       if(EvolOp)then
-*     
-*     Set Evolution Operator to zero
-*     
-         do alpha=0,nin(0)
-            do beta=0,nin(0)
-               do i=-6,6
-                  do j=-6,6
-                     Ph2PhQCD(0,i,j,alpha,beta) = 0
-                  enddo
-               enddo
-            enddo
-         enddo
 *
 *     Fill Evolution Operator
 *     
@@ -97,7 +85,7 @@
                      enddo
                   enddo
 *
-                  do i=-nff,nff
+                  do i=-7,6
                      do j=0,13
                         Ev2PhQCD(0,i,j,alpha,beta) = 
      1                       Ev2PhQCD(dgrid,i,j,alphap,betap)
@@ -106,8 +94,8 @@
                      enddo
                   enddo
 *
-                  do i=-nff,nff
-                     do j=-nfi,nfi
+                  do i=-7,6
+                     do j=-7,6
                         Ph2PhQCD(0,i,j,alpha,beta) = 
      1                       Ph2PhQCD(dgrid,i,j,alphap,betap)
                         if(abs(Ph2PhQCD(0,i,j,alpha,beta)).lt.eps)
@@ -125,13 +113,6 @@
             enddo
          enddo
       endif
-*
-c      open(unit=19,file="JointGrid.dat",status="unknown")
-c      write(19,*) nin(0)!+inter_degree(0)
-c      do alpha=0,nin(0)!+inter_degree(0)
-c         write(19,*) alpha,xg(0,alpha)
-c      enddo
-c      close(19)
 *
       return
       end

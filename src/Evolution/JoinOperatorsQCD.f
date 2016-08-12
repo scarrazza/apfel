@@ -41,8 +41,8 @@
          call exit(-10)
       endif
 *
-      do alpha=0,nin(igrid)
-         do beta=alpha,nin(igrid)
+      do alpha=0,nin(jgrid)
+         do beta=alpha,nin(jgrid)
 *     Set evolution operators to zero
             do i=0,13
                do j=0,13
@@ -135,8 +135,8 @@
 *
 *     Set temporary evolution operators to zero
 *
-            do alpha=0,nin(igrid)
-               do beta=alpha,nin(igrid)
+            do alpha=0,nin(jgrid)
+               do beta=alpha,nin(jgrid)
                   do i=0,13
                      do j=0,13
                         EvQCDb(i,j,alpha,beta) = 0d0
@@ -150,9 +150,9 @@
 c            coup = asthUp(nfm)
             coup = asthDown(nfm)
 *     Contruct matching conditions at this threshod
-            if(IsExt(igrid))then
-               do alpha=0,nin(igrid)
-                  do beta=alpha,nin(igrid)
+            if(IsExt(jgrid))then
+               do alpha=0,nin(jgrid)
+                  do beta=alpha,nin(jgrid)
                      MatQCDns(alpha,beta)     =
      1                    integralsMatching(nf+1,alpha,beta,coup,1,sgn)
                      MatQCDsg(1,1,alpha,beta) =
@@ -166,8 +166,8 @@ c            coup = asthUp(nfm)
                   enddo
                enddo
             else
-               do alpha=0,nin(igrid)
-                  do beta=alpha,nin(igrid)
+               do alpha=0,nin(jgrid)
+                  do beta=alpha,nin(jgrid)
                      MatQCDns(alpha,beta)     =
      1                   integralsMatching(nf+1,0,beta-alpha,coup,1,sgn)
                      MatQCDsg(1,1,alpha,beta) =
@@ -185,13 +185,13 @@ c            coup = asthUp(nfm)
 *     Now combine evolution tables for different numbers of active
 *     flavours.
 *     
-            do alpha=0,nin(igrid)
-               do beta=alpha,nin(igrid)
+            do alpha=0,nin(jgrid)
+               do beta=alpha,nin(jgrid)
 *     Singlet and Gluon
                   do i=1,2
                      do j=1,2
-                        do gamma=0,nin(igrid)
-                           do delta=0,nin(igrid)
+                        do gamma=0,nin(jgrid)
+                           do delta=0,nin(jgrid)
                               do k=1,2
                                  do l=1,2
                                     EvQCDb(i,j,alpha,beta) = 
@@ -206,8 +206,8 @@ c            coup = asthUp(nfm)
                      enddo
                   enddo
 *     
-                  do gamma=0,nin(igrid)
-                     do delta=0,nin(igrid)
+                  do gamma=0,nin(jgrid)
+                     do delta=0,nin(jgrid)
 *     Total Valence
                         EvQCDb(3,3,alpha,beta) = 
      1                       EvQCDb(3,3,alpha,beta)
@@ -242,8 +242,8 @@ c            coup = asthUp(nfm)
                   enddo
 *     Charm threshold
                   if(nfm.eq.4)then
-                     do gamma=0,nin(igrid)
-                        do delta=0,nin(igrid)
+                     do gamma=0,nin(jgrid)
+                        do delta=0,nin(jgrid)
 *     V15
                            EvQCDb(6,3,alpha,beta) = 
      1                          EvQCDb(6,3,alpha,beta)
@@ -296,8 +296,8 @@ c            coup = asthUp(nfm)
                      enddo
 *     Bottom threshold
                   elseif(nfm.eq.5)then
-                     do gamma=0,nin(igrid)
-                        do delta=0,nin(igrid)
+                     do gamma=0,nin(jgrid)
+                        do delta=0,nin(jgrid)
 *     V15
                            if(nfi.ge.4)then
                               EvQCDb(6,6,alpha,beta) = 
@@ -370,8 +370,8 @@ c            coup = asthUp(nfm)
                      enddo
 *     Top threshold
                   elseif(nfm.eq.6)then
-                     do gamma=0,nin(igrid)
-                        do delta=0,nin(igrid)
+                     do gamma=0,nin(jgrid)
+                        do delta=0,nin(jgrid)
 *     V15
                            if(nfi.ge.4)then
                               EvQCDb(6,6,alpha,beta) = 
@@ -460,8 +460,8 @@ c            coup = asthUp(nfm)
 *     
 *     Copy the backup evolution operators into the main ones
 *     
-            do alpha=0,nin(igrid)
-               do beta=alpha,nin(igrid)
+            do alpha=0,nin(jgrid)
+               do beta=alpha,nin(jgrid)
                   do i=0,13
                      do j=0,13
                         EvQCD(i,j,alpha,beta) = EvQCDb(i,j,alpha,beta)
@@ -474,8 +474,8 @@ c            coup = asthUp(nfm)
 *
 *     Tranform the evolution operators from the evolution to the physical basis
 *
-      do alpha=0,nin(igrid)
-         do beta=0,nin(igrid)
+      do alpha=0,nin(jgrid)
+         do beta=0,nin(jgrid)
             do i=0,13
                do j=0,13
                   Ev2EvQCD(jgrid,i,j,alpha,beta) = EvQCD(i,j,alpha,beta)

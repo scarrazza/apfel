@@ -939,10 +939,10 @@ The fisrt observation is that, given that the dynamical production of
 heavy quarks at the thresholds always happens in pairs, it is clear
 all distributions that involve only difference between flavours and
 anti-flavours match multiplicatively at the thresholds as the light
-flavours do, that is:
+flavours do. In particular:
 \begin{equation}
-\{V,\Delta V, V_1^u,V_2^u, V_1^d,V_2^d\}^{(n_f+1)} =
-\left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right] \{V,\Delta V, V_1^u,V_2^u, V_1^d,V_2^d\}^{(n_f)}
+{V^{(n_f+1)} \choose \Delta_V^{(n_f+1)}} =
+\left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right] {V^{(n_f)} \choose \Delta_V^{(n_f)}} =
 \end{equation}
 Now turn to consider $\Sigma$ and $\Delta_\Sigma$. The first case is
 easy and we have that:
@@ -994,7 +994,7 @@ g ^{(n_f+1)}\\
 \left(\frac{\alpha_s}{4\pi}\right)
 \begin{pmatrix}
 A_{gg,h}^{S,(1)} & 0 & 0 \\
-\tilde{A}^{S,(1)}_{hq} & 0 & 0\\
+\tilde{A}^{S,(1)}_{hg} & 0 & 0\\
 \pm\tilde{A}^{S,(1)}_{hg} & 0 & 0\\
 \end{pmatrix}+
 \left(\frac{\alpha_s}{4\pi}\right)^2
@@ -1010,6 +1010,49 @@ g ^{(n_f)}\\
 \Delta_\Sigma ^{(n_f)}
 \end{pmatrix}
 \end{equation}
+If we define:
+\begin{equation}
+\begin{array}{rcl}
+A^{N\!S} &=& \displaystyle 1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)} \\
+\\
+A_{gg} &=& \displaystyle 1+\left(\frac{\alpha_s}{4\pi}\right)A_{gg,h}^{S,(1)}+\left(\frac{\alpha_s}{4\pi}\right)^2A_{gg,h}^{S,(2)}\\
+\\
+A_{gq} &=& \displaystyle \left(\frac{\alpha_s}{4\pi}\right)^2A^{S,(2)}_{gq,h} \\
+\\
+A_{qg} &=& \displaystyle \left(\frac{\alpha_s}{4\pi}\right)\tilde{A}^{S,(1)}_{hg}+\left(\frac{\alpha_s}{4\pi}\right)^2\tilde{A}^{S,(2)}_{hg}\\
+\\
+A_{qq} &=& \displaystyle 1+\left(\frac{\alpha_s}{4\pi}\right)^2\left(\tilde{A}^{S,(2)}_{hq}+A_{qq,h}^{N\!S,(2)}\right)
+\end{array}
+\end{equation}
+we can shrink the system of equations above into:
+\begin{equation}
+\begin{pmatrix}
+g^{(n_f+1)}\\
+\gamma^{(n_f+1)}\\
+\Sigma^{(n_f+1)}\\
+\Delta_\Sigma^{(n_f+1)}
+\end{pmatrix} = 
+\begin{pmatrix}
+A_{gg} & 0 & A_{gq} & 0 \\
+0 & 1 & 0 & 0 \\
+A_{qg} & 0 & A_{qq} & 0 \\
+\pm A_{qg} & 0 & \pm(A_{qq}-A^{N\!S}) & A^{N\!S}
+\end{pmatrix}
+\begin{pmatrix}
+g^{(n_f)}\\
+\gamma^{(n_f)}\\
+\Sigma^{(n_f)}\\
+\Delta_\Sigma^{(n_f)}
+\end{pmatrix}
+\end{equation}
+and in addition:
+\begin{equation}
+{V^{(n_f+1)} \choose \Delta_V^{(n_f+1)}} = A^{N\!S} {V^{(n_f)} \choose \Delta_V^{(n_f)}} =
+\end{equation}
+and:
+\begin{equation}
+h^{(n_f+1)}+\overline{h}^{(n_f+1)}=(A_{qq}-A^{N\!S})\Sigma^{(n_f)}+A_{qg}g^{(n_f)}\,.
+\end{equation}
 
 We finally turn to consider the matching of $T_1^u$, $T_2^u$, $T_1^d$,
 and $T_2^d$. Due to the way these distributions are constructed, they
@@ -1018,67 +1061,350 @@ threshold. Therefore we need to consider the what happens at each of
 them.
 \begin{itemize}
 \item charm threshold ($n_f=3$):
+\iffalse
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle T_1^{u,(n_f+1)} &=&\displaystyle 
-  \frac{\Sigma^{(n_f+1)}+\Delta_{\Sigma}^{(n_f+1)}}2-2(c^{(n_f+1)}+\overline{c}^{(n_f+1)})
-                                  = \left[-\left(\frac{\alpha_s}{4\pi}\right)
-                                  \tilde{A}^{S,(1)}_{hq}-\left(\frac{\alpha_s}{4\pi}\right)^2
-                                  \tilde{A}^{S,(2)}_{hq}\right]g^{(n_f)}\\
-\\
-                              &+&\displaystyle \left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2\left(-\tilde{A}^{S,(2)}_{hq}+\frac12A_{qq,h}^{N\!S,(2)}\right)\right]\Sigma^{(n_f)}+\left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}\\
+\displaystyle T_1^{u,(n_f+1)} &=&\displaystyle \left(A_{qg},\quad 0,\quad -A_{qq}+\frac32A^{N\!S},\quad \frac12A^{N\!S}\right)
+\begin{pmatrix}
+g^{(n_f)}\\
+\gamma^{(n_f)}\\
+\Sigma^{(n_f)}\\
+\Delta_\Sigma^{(n_f)}
+\end{pmatrix}\\
 \\
 \displaystyle T_2^{u,(n_f+1)} &=&\displaystyle
-                                  \frac{\Sigma^{(n_f+1)}+\Delta_{\Sigma}^{(n_f+1)}}2=\left[\left(\frac{\alpha_s}{4\pi}\right)
-                                  \tilde{A}^{S,(1)}_{hq}+\left(\frac{\alpha_s}{4\pi}\right)^2
-                                  \tilde{A}^{S,(2)}_{hq}\right]g^{(n_f)}\\
+\left(A_{qg},\quad 0,\quad A_{qq}-\frac12A^{N\!S},\quad\frac12A^{N\!S}\right)
+\begin{pmatrix}
+g^{(n_f)}\\
+\gamma^{(n_f)}\\
+\Sigma^{(n_f)}\\
+\Delta_\Sigma^{(n_f)}
+\end{pmatrix}\\
 \\
-                              &+&\displaystyle \left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2\left(\tilde{A}^{S,(2)}_{hq}+\frac12A_{qq,h}^{N\!S,(2)}\right)\right]\Sigma^{(n_f)}+\left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}\\
+\displaystyle T_1^{d,(n_f+1)} &=&\displaystyle A^{N\!S} T_1^{d,(n_f)} \\
 \\
-\displaystyle T_1^{d,(n_f+1)} &=&\displaystyle  \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_1^{d,(n_f)} \\
+\displaystyle T_2^{d,(n_f+1)} &=& \displaystyle \left(0,\quad 0,\quad \frac12A^{N\!S},\quad -\frac12A^{N\!S}\right)
+\begin{pmatrix}
+g^{(n_f)}\\
+\gamma^{(n_f)}\\
+\Sigma^{(n_f)}\\
+\Delta_\Sigma^{(n_f)}
+\end{pmatrix}\\
 \\
-\displaystyle T_1^{d,(n_f+1)} &=& \displaystyle
-                                  \frac{\Sigma^{(n_f+1)}-\Delta_{\Sigma}^{(n_f+1)}}2
-                                  = \left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2\frac12A_{qq,h}^{N\!S,(2)}\right]\Sigma^{(n_f)}+\left[-\frac12-\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}
+\displaystyle V_1^{u,(n_f+1)} &=&\displaystyle \left(\frac12A^{N\!S},\quad \frac12A^{N\!S}\right)
+\begin{pmatrix}
+V^{(n_f)}\\
+\Delta_V^{(n_f)}
+\end{pmatrix}\\
+\\
+\displaystyle V_2^{u,(n_f+1)} &=&\displaystyle \left(\frac12A^{N\!S},\quad \frac12A^{N\!S}\right)
+\begin{pmatrix}
+V^{(n_f)}\\
+\Delta_V^{(n_f)}
+\end{pmatrix}\\
+\\
+\displaystyle V_1^{d,(n_f+1)} &=&\displaystyle A^{N\!S} V_1^{d,(n_f)} \\
+\\
+\displaystyle V_2^{d,(n_f+1)} &=& \displaystyle \left(\frac12A^{N\!S},\quad -\frac12A^{N\!S}\right)
+\begin{pmatrix}
+V^{(n_f)}\\
+\Delta_V^{(n_f)}
+\end{pmatrix}
 \end{array}
 \end{equation}
+\fi
+
+%==============================================================================================
+%==============================================================================================
+%==============================================================================================
+\begin{equation}
+\tiny
+\begin{pmatrix}
+g^{(4)}\\
+\gamma^{(4)}\\
+\Sigma^{(4)}\\
+\Delta_\Sigma^{(4)}\\
+T_1^{u,(4)}\\
+T_2^{u,(4)}\\
+T_1^{d,(4)}\\
+T_2^{d,(4)}\\
+V^{(4)}\\
+\Delta_V^{(4)}\\
+V_1^{u,(4)}\\
+V_2^{u,(4)}\\
+V_1^{d,(4)}\\
+V_2^{d,(4)}
+\end{pmatrix}=
+\left(
+\begin{array}{c|cccc|cccc|cc|cccc}
+& 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 \\
+\hline
+0 & A_{gg} & 0 & A_{gq} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+2 & A_{qg} & 0 & A_{qq} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+3 & A_{qg} & 0 & (A_{qq}-A^{N\!S}) & A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+4 & A_{qg} & 0 & -A_{qq}+\frac32A^{N\!S} & \frac12A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+5 & A_{qg} & 0 & A_{qq}-\frac12A^{N\!S} & \frac12A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+6 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+7 & 0 & 0 & \frac12A^{N\!S} & -\frac12A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0 & 0\\
+9 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0\\
+\hline
+10 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \frac12A^{N\!S} & \frac12A^{N\!S} & 0 & 0 & 0 & 0\\
+11 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \frac12A^{N\!S} & \frac12A^{N\!S} & 0 & 0 & 0 & 0\\
+12 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0\\
+13 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \frac12A^{N\!S} & -\frac12A^{N\!S} & 0 & 0 & 0 & 0
+\end{array}
+\right)
+\begin{pmatrix}
+g^{(3)}\\
+\gamma^{(3)}\\
+\Sigma^{(3)}\\
+\Delta_\Sigma^{(3)}\\
+T_1^{u,(3)}\\
+T_2^{u,(3)}\\
+T_1^{d,(3)}\\
+T_2^{d,(3)}\\
+V^{(3)}\\
+\Delta_V^{(3)}\\
+V_1^{u,(3)}\\
+V_2^{u,(3)}\\
+V_1^{d,(3)}\\
+V_2^{d,(3)}
+\end{pmatrix}
+\end{equation}
+%==============================================================================================
+%==============================================================================================
+%==============================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \item bottom threshold ($n_f=4$):
+\iffalse
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle T_1^{u,(n_f+1)} &=&\displaystyle  \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_1^{u,(n_f)} \\
+\displaystyle T_1^{u,(n_f+1)} &=&\displaystyle A^{N\!S} T_1^{u,(n_f)} \\
 \\
-\displaystyle T_2^{u,(n_f+1)} &=&\displaystyle \left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2\frac12A_{qq,h}^{N\!S,(2)}\right]\Sigma^{(n_f)}+\left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}\\
+\displaystyle T_2^{u,(n_f+1)} &=&\displaystyle \left(0,\quad 0,\quad \frac12A^{N\!S},\quad \frac12A^{N\!S}\right)
+\begin{pmatrix}
+g^{(n_f)}\\
+\gamma^{(n_f)}\\
+\Sigma^{(n_f)}\\
+\Delta_\Sigma^{(n_f)}
+\end{pmatrix}\\
+\displaystyle T_1^{d,(n_f+1)} &=&\displaystyle A^{N\!S}T_1^{d,(n_f)} \\
 \\
-\displaystyle T_1^{d,(n_f+1)} &=&\displaystyle  \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_1^{d,(n_f)} \\
+\displaystyle T_2^{d,(n_f+1)} &=& \displaystyle
+                                  \left( -2A_{qg},\quad 0,\quad -2A_{qq}+\frac52A^{N\!S},\quad -\frac12A^{N\!S} \right)
+\begin{pmatrix}
+g^{(n_f)}\\
+\gamma^{(n_f)}\\
+\Sigma^{(n_f)}\\
+\Delta_\Sigma^{(n_f)}
+\end{pmatrix}\\
 \\
-\displaystyle T_1^{d,(n_f+1)} &=& \displaystyle
-                                  \frac{\Sigma^{(n_f+1)}-\Delta_{\Sigma}^{(n_f+1)}}2-3(b^{(n_f+1)}+\overline{b}^{(n_f+1)})=2\left[-\left(\frac{\alpha_s}{4\pi}\right)
-                                  \tilde{A}^{S,(1)}_{hq}-\left(\frac{\alpha_s}{4\pi}\right)^2
-                                  \tilde{A}^{S,(2)}_{hq}\right]g^{(n_f)}\\
+\displaystyle V_1^{u,(n_f+1)} &=&\displaystyle A^{N\!S}V_1^{u,(n_f)}\\
 \\
-                                  &+&\displaystyle \left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2\left(-2 \tilde{A}^{S,(2)}_{hq}+\frac12A_{qq,h}^{N\!S,(2)}\right)\right]\Sigma^{(n_f)}+\left[-\frac12-\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}
+\displaystyle V_2^{u,(n_f+1)} &=&\displaystyle \left(\frac12A^{N\!S},\quad \frac12A^{N\!S}\right)
+\begin{pmatrix}
+V^{(n_f)}\\
+\Delta_V^{(n_f)}
+\end{pmatrix}\\
+\\
+\displaystyle V_1^{d,(n_f+1)} &=&\displaystyle A^{N\!S} V_1^{d,(n_f)} \\
+\\
+\displaystyle V_2^{d,(n_f+1)} &=& \displaystyle \left(\frac12A^{N\!S},\quad -\frac12A^{N\!S}\right)
+\begin{pmatrix}
+V^{(n_f)}\\
+\Delta_V^{(n_f)}
+\end{pmatrix}
 \end{array}
 \end{equation}
+\fi
+
+%==============================================================================================
+%==============================================================================================
+%==============================================================================================
+\begin{equation}
+\tiny
+\begin{pmatrix}
+g^{(5)}\\
+\gamma^{(5)}\\
+\Sigma^{(5)}\\
+\Delta_\Sigma^{(5)}\\
+T_1^{u,(5)}\\
+T_2^{u,(5)}\\
+T_1^{d,(5)}\\
+T_2^{d,(5)}\\
+V^{(5)}\\
+\Delta_V^{(5)}\\
+V_1^{u,(5)}\\
+V_2^{u,(5)}\\
+V_1^{d,(5)}\\
+V_2^{d,(5)}
+\end{pmatrix}=
+\left(
+\begin{array}{c|cccc|cccc|cc|cccc}
+& 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 \\
+\hline
+0 & A_{gg} & 0 & A_{gq} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+2 & A_{qg} & 0 & A_{qq} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+3 & -A_{qg} & 0 & -(A_{qq}-A^{N\!S}) & A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+4 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+5 & 0 & 0 & \frac12A^{N\!S} & \frac12A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+6 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+7 & -2A_{qg} & 0 & -2A_{qq}+\frac52A^{N\!S} & -\frac12A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0 & 0\\
+9 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0\\
+\hline
+10 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 &  A^{N\!S} & 0 & 0 & 0\\
+11 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \frac12A^{N\!S} & \frac12A^{N\!S} & 0 & 0 & 0 & 0\\
+12 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0\\
+13 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \frac12A^{N\!S} & -\frac12A^{N\!S} & 0 & 0 & 0 & 0
+\end{array}
+\right)
+\begin{pmatrix}
+g^{(4)}\\
+\gamma^{(4)}\\
+\Sigma^{(4)}\\
+\Delta_\Sigma^{(4)}\\
+T_1^{u,(4)}\\
+T_2^{u,(4)}\\
+T_1^{d,(4)}\\
+T_2^{d,(4)}\\
+V^{(4)}\\
+\Delta_V^{(4)}\\
+V_1^{u,(4)}\\
+V_2^{u,(4)}\\
+V_1^{d,(4)}\\
+V_2^{d,(4)}
+\end{pmatrix}
+\end{equation}
+%==============================================================================================
+%==============================================================================================
+%==============================================================================================
+
+
+
+
+
+
+
+
 
 \item top threshold ($n_f=5$):
+\iffalse
 \begin{equation}
 \begin{array}{rcl}
-\displaystyle T_1^{u,(n_f+1)} &=&\displaystyle  \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_1^{u,(n_f)} \\
+\displaystyle T_1^{u,(n_f+1)} &=&\displaystyle A^{N\!S}T_1^{u,(n_f)} \\
 \\
 \displaystyle T_2^{u,(n_f+1)} &=&\displaystyle
-                                  \frac{\Sigma^{(n_f+1)}+\Delta_{\Sigma}^{(n_f+1)}}2-3(t^{(n_f+1)}+\overline{t}^{(n_f+1)})=2\left[-\left(\frac{\alpha_s}{4\pi}\right)
-                                  \tilde{A}^{S,(1)}_{hq}-\left(\frac{\alpha_s}{4\pi}\right)^2
-                                  \tilde{A}^{S,(2)}_{hq}\right]g^{(n_f)}\\
+\left( -2A_{qg},\quad 0,\quad -2A_{qq}+\frac52A^{N\!S},\quad \frac12A^{N\!S} \right)
+\begin{pmatrix}
+g^{(n_f)}\\
+\gamma^{(n_f)}\\
+\Sigma^{(n_f)}\\
+\Delta_\Sigma^{(n_f)}
+\end{pmatrix}\\
 \\
-                              &+&\displaystyle \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2\left(-2\tilde{A}^{S,(2)}_{hq}+\frac12A_{qq,h}^{N\!S,(2)}\right)\right]\Sigma^{(n_f)}+\left[\frac12+\left(\frac{\alpha_s}{4\pi}\right)^2 \frac12A_{qq,h}^{N\!S,(2)}\right]\Delta_\Sigma^{(n_f)}\\
+\displaystyle T_1^{d,(n_f+1)} &=&\displaystyle A^{N\!S}T_1^{d,(n_f)} \\
 \\
-\displaystyle T_1^{d,(n_f+1)} &=&\displaystyle  \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_1^{d,(n_f)} \\
+\displaystyle T_2^{d,(n_f+1)} &=& \displaystyle A^{N\!S}T_2^{d,(n_f)}\\
 \\
-\displaystyle T_1^{d,(n_f+1)} &=& \displaystyle \left[1+\left(\frac{\alpha_s}{4\pi}\right)^2A_{qq,h}^{N\!S,(2)}\right]T_2^{d,(n_f)}
+\displaystyle V_1^{u,(n_f+1)} &=&\displaystyle A^{N\!S}V_1^{u,(n_f)}\\
+\\
+\displaystyle V_2^{u,(n_f+1)} &=&\displaystyle \left(\frac12A^{N\!S},\quad \frac12A^{N\!S}\right)
+\begin{pmatrix}
+V^{(n_f)}\\
+\Delta_V^{(n_f)}
+\end{pmatrix}\\
+\\
+\displaystyle V_1^{d,(n_f+1)} &=&\displaystyle A^{N\!S} V_1^{d,(n_f)} \\
+\\
+\displaystyle V_2^{d,(n_f+1)} &=& \displaystyle A^{N\!S}V_1^{d,(n_f)}
 \end{array}
 \end{equation}
+\fi
 
+%==============================================================================================
+%==============================================================================================
+%==============================================================================================
+\begin{equation}
+\tiny
+\begin{pmatrix}
+g^{(6)}\\
+\gamma^{(6)}\\
+\Sigma^{(6)}\\
+\Delta_\Sigma^{(6)}\\
+T_1^{u,(6)}\\
+T_2^{u,(6)}\\
+T_1^{d,(6)}\\
+T_2^{d,(6)}\\
+V^{(6)}\\
+\Delta_V^{(6)}\\
+V_1^{u,(6)}\\
+V_2^{u,(6)}\\
+V_1^{d,(6)}\\
+V_2^{d,(6)}
+\end{pmatrix}=
+\left(\begin{array}{c|cccc|cccc|cc|cccc}
+& 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 \\
+\hline
+0 & A_{gg} & 0 & A_{gq} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+1 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+2 & A_{qg} & 0 & A_{qq} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+3 & A_{qg} & 0 & (A_{qq}-A^{N\!S}) & A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+4 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+5 & -2A_{qg} & 0 & -2A_{qq}+\frac52A^{N\!S} & \frac12A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+6 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+7 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+8 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0 & 0\\
+9 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0 & 0 & 0 & 0\\
+\hline
+10 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 &  A^{N\!S} & 0 & 0 & 0\\
+11 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \frac12A^{N\!S} & \frac12A^{N\!S} & 0 & 0 & 0 & 0\\
+12 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S} & 0\\
+13 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A^{N\!S}
+\end{array}
+\right)
+\begin{pmatrix}
+g^{(5)}\\
+\gamma^{(5)}\\
+\Sigma^{(5)}\\
+\Delta_\Sigma^{(5)}\\
+T_1^{u,(5)}\\
+T_2^{u,(5)}\\
+T_1^{d,(5)}\\
+T_2^{d,(5)}\\
+V^{(5)}\\
+\Delta_V^{(5)}\\
+V_1^{u,(5)}\\
+V_2^{u,(5)}\\
+V_1^{d,(5)}\\
+V_2^{d,(5)}
+\end{pmatrix}
+\end{equation}
+%==============================================================================================
+%==============================================================================================
+%==============================================================================================
 
 
 

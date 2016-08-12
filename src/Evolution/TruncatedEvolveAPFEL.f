@@ -44,10 +44,12 @@
       double precision fqpre(ngrid_max,-6:6,0:nint_max)
       double precision flpre(ngrid_max,-3:3,0:nint_max)
       common / pretabAPFEL / fqpre,flpre
-      double precision Msg(-2:2,2,2,0:nint_max,0:nint_max)
-      double precision Mnsp(-2:2,0:nint_max,0:nint_max)
-      double precision Mnsm(-2:2,0:nint_max,0:nint_max)
-      double precision Mnsv(-2:2,0:nint_max,0:nint_max)
+      double precision Msg1(-2:2,4,4,0:nint_max,0:nint_max)
+      double precision Msg2(-2:2,2,2,0:nint_max,0:nint_max)
+      double precision Mns1(-2:2,0:nint_max,0:nint_max)
+      double precision Mns2(-2:2,0:nint_max,0:nint_max)
+      double precision Mns3(-2:2,0:nint_max,0:nint_max)
+      double precision Mns4(-2:2,0:nint_max,0:nint_max)
       character*100 pdfsetbkp
       logical EvolOpbkp
 *
@@ -98,9 +100,6 @@
          sign = 1
          if(Q2.lt.Q20) sign = - 1
 *
-         EvolOpbkp = EvolOp
-         if(EvolOp) EvolOp = .false.
-*
 *     Define threshold scales
 *
          mu2i(mfi) = Q20
@@ -121,6 +120,11 @@
          endif
          mu2f(mff) = Q2
       endif
+*
+*     Temporary disable the evolution operator
+*
+      EvolOpbkp = EvolOp
+      if(EvolOp) EvolOp = .false.
 *
 *     put epsilon in an array
 *
@@ -193,22 +197,49 @@
 *     save evolution operators for each "eps(ieps)".
 *
                   if(EvolOpbkp)then
-                     do alpha=0,nin(igrid)
-                        do beta=0,nin(igrid)
-                           do ipdf=1,2
-                              do jpdf=1,2
-                                 Msg(ieps,ipdf,jpdf,alpha,beta) = 
-     1                                MQCDsg(inf,ipdf,jpdf,alpha,beta)
+                     if(Th.eq."QCD")then
+                        do alpha=0,nin(igrid)
+                           do beta=0,nin(igrid)
+                              do ipdf=1,2
+                                 do jpdf=1,2
+                                    Msg2(ieps,ipdf,jpdf,alpha,beta) = 
+     1                                  MQCDsg(inf,ipdf,jpdf,alpha,beta)
+                                 enddo
                               enddo
+                              Mns1(ieps,alpha,beta) = 
+     1                             MQCDnsp(inf,alpha,beta)
+                              Mns2(ieps,alpha,beta) =
+     1                             MQCDnsm(inf,alpha,beta)
+                              Mns3(ieps,alpha,beta) =
+     1                             MQCDnsv(inf,alpha,beta)
                            enddo
-                           Mnsp(ieps,alpha,beta) = 
-     1                          MQCDnsp(inf,alpha,beta)
-                           Mnsm(ieps,alpha,beta) =
-     1                          MQCDnsm(inf,alpha,beta)
-                           Mnsv(ieps,alpha,beta) =
-     1                          MQCDnsv(inf,alpha,beta)
                         enddo
-                     enddo
+                     elseif(Th.eq."QUniD")then
+                        do alpha=0,nin(igrid)
+                           do beta=0,nin(igrid)
+                              do ipdf=1,4
+                                 do jpdf=1,4
+                                    Msg1(ieps,ipdf,jpdf,alpha,beta) = 
+     1                             MUnisg1(inf,nli,ipdf,jpdf,alpha,beta)
+                                 enddo
+                              enddo
+                              do ipdf=1,2
+                                 do jpdf=1,2
+                                    Msg2(ieps,ipdf,jpdf,alpha,beta) = 
+     1                             MUnisg2(inf,nli,ipdf,jpdf,alpha,beta)
+                                 enddo
+                              enddo
+                              Mns1(ieps,alpha,beta) = 
+     1                             MUninspu(inf,nli,alpha,beta)
+                              Mns2(ieps,alpha,beta) =
+     1                             MUninspd(inf,nli,alpha,beta)
+                              Mns3(ieps,alpha,beta) =
+     1                             MUninsmu(inf,nli,alpha,beta)
+                              Mns4(ieps,alpha,beta) =
+     1                             MUninsmd(inf,nli,alpha,beta)
+                           enddo
+                        enddo
+                     endif
                   endif
 *     Initialize PDFs at the initial scale on the grid
                   call initPDFs(mu2i(inf))
@@ -320,87 +351,207 @@
 *
             if(EvolOpbkp)then
                if(ipt.ge.1)then
-                  do alpha=0,nin(igrid)
-                     do beta=0,nin(igrid)
-                        do ipdf=1,2
-                           do jpdf=1,2
-                              MQCDsg(inf,ipdf,jpdf,alpha,beta) =
-     1                             Msg(0,ipdf,jpdf,alpha,beta)
-     2                             + ( - Msg(2,ipdf,jpdf,alpha,beta)
-     3                             + 8d0 * Msg(1,ipdf,jpdf,alpha,beta)
-     4                             - 8d0 * Msg(-1,ipdf,jpdf,alpha,beta)
-     5                             + Msg(-2,ipdf,jpdf,alpha,beta) )
-     6                             / 12d0 / EpsTrunc 
+                  if(Th.eq."QCD")then
+                     do alpha=0,nin(igrid)
+                        do beta=0,nin(igrid)
+                           do ipdf=1,2
+                              do jpdf=1,2
+                                 MQCDsg(inf,ipdf,jpdf,alpha,beta) =
+     1                             Msg2(0,ipdf,jpdf,alpha,beta)
+     2                             + ( - Msg2(2,ipdf,jpdf,alpha,beta)
+     3                             + 8d0 * Msg2(1,ipdf,jpdf,alpha,beta)
+     4                             - 8d0 * Msg2(-1,ipdf,jpdf,alpha,beta)
+     5                             + Msg2(-2,ipdf,jpdf,alpha,beta) )
+     6                             / 12d0 / EpsTrunc
+                              enddo
                            enddo
+                           MQCDnsp(inf,alpha,beta) =
+     1                          Mns1(0,alpha,beta)
+     2                          + ( - Mns1(2,alpha,beta)
+     3                          + 8d0 * Mns1(1,alpha,beta)
+     4                          - 8d0 * Mns1(-1,alpha,beta)
+     5                          + Mns1(-2,alpha,beta) )
+     6                          / 12d0 / EpsTrunc
+                           MQCDnsm(inf,alpha,beta) =
+     1                          Mns2(0,alpha,beta)
+     2                          + ( - Mns2(2,alpha,beta)
+     3                          + 8d0 * Mns2(1,alpha,beta)
+     4                          - 8d0 * Mns2(-1,alpha,beta)
+     5                          + Mns2(-2,alpha,beta) )
+     6                          / 12d0 / EpsTrunc
+                           MQCDnsv(inf,alpha,beta) =
+     1                          Mns3(0,alpha,beta)
+     2                          + ( - Mns3(2,alpha,beta)
+     3                          + 8d0 * Mns3(1,alpha,beta)
+     4                          - 8d0 * Mns3(-1,alpha,beta)
+     5                          + Mns3(-2,alpha,beta) )
+     6                          / 12d0 / EpsTrunc
                         enddo
-                        MQCDnsp(inf,alpha,beta) =
-     1                       Mnsp(0,alpha,beta)
-     2                       + ( - Mnsp(2,alpha,beta)
-     3                       + 8d0 * Mnsp(1,alpha,beta)
-     4                       - 8d0 * Mnsp(-1,alpha,beta)
-     5                       + Mnsp(-2,alpha,beta) )
-     6                       / 12d0 / EpsTrunc 
-                        MQCDnsm(inf,alpha,beta) =
-     1                       Mnsm(0,alpha,beta)
-     2                       + ( - Mnsm(2,alpha,beta)
-     3                       + 8d0 * Mnsm(1,alpha,beta)
-     4                       - 8d0 * Mnsm(-1,alpha,beta)
-     5                       + Mnsm(-2,alpha,beta) )
-     6                       / 12d0 / EpsTrunc 
-                        MQCDnsv(inf,alpha,beta) =
-     1                       Mnsv(0,alpha,beta)
-     2                       + ( - Mnsv(2,alpha,beta)
-     3                       + 8d0 * Mnsv(1,alpha,beta)
-     4                       - 8d0 * Mnsv(-1,alpha,beta)
-     5                       + Mnsv(-2,alpha,beta) )
-     6                       / 12d0 / EpsTrunc 
                      enddo
-                  enddo
+                  elseif(Th.eq."QUniD")then
+                     do alpha=0,nin(igrid)
+                        do beta=0,nin(igrid)
+                           do ipdf=1,4
+                              do jpdf=1,4
+                                 MUnisg1(inf,nli,ipdf,jpdf,alpha,beta) =
+     1                             Msg1(0,ipdf,jpdf,alpha,beta)
+     2                             + ( - Msg1(2,ipdf,jpdf,alpha,beta)
+     3                             + 8d0 * Msg1(1,ipdf,jpdf,alpha,beta)
+     4                             - 8d0 * Msg1(-1,ipdf,jpdf,alpha,beta)
+     5                             + Msg1(-2,ipdf,jpdf,alpha,beta) )
+     6                             / 12d0 / EpsTrunc
+                              enddo
+                           enddo
+                           do ipdf=1,2
+                              do jpdf=1,2
+                                 MUnisg2(inf,nli,ipdf,jpdf,alpha,beta) =
+     1                             Msg2(0,ipdf,jpdf,alpha,beta)
+     2                             + ( - Msg2(2,ipdf,jpdf,alpha,beta)
+     3                             + 8d0 * Msg2(1,ipdf,jpdf,alpha,beta)
+     4                             - 8d0 * Msg2(-1,ipdf,jpdf,alpha,beta)
+     5                             + Msg2(-2,ipdf,jpdf,alpha,beta) )
+     6                             / 12d0 / EpsTrunc
+                              enddo
+                           enddo
+                           MUninspu(inf,nli,alpha,beta) =
+     1                          Mns1(0,alpha,beta)
+     2                          + ( - Mns1(2,alpha,beta)
+     3                          + 8d0 * Mns1(1,alpha,beta)
+     4                          - 8d0 * Mns1(-1,alpha,beta)
+     5                          + Mns1(-2,alpha,beta) )
+     6                          / 12d0 / EpsTrunc
+                           MUninspd(inf,nli,alpha,beta) =
+     1                          Mns2(0,alpha,beta)
+     2                          + ( - Mns2(2,alpha,beta)
+     3                          + 8d0 * Mns2(1,alpha,beta)
+     4                          - 8d0 * Mns2(-1,alpha,beta)
+     5                          + Mns2(-2,alpha,beta) )
+     6                          / 12d0 / EpsTrunc
+                           MUninsmu(inf,nli,alpha,beta) =
+     1                          Mns3(0,alpha,beta)
+     2                          + ( - Mns3(2,alpha,beta)
+     3                          + 8d0 * Mns3(1,alpha,beta)
+     4                          - 8d0 * Mns3(-1,alpha,beta)
+     5                          + Mns3(-2,alpha,beta) )
+     6                          / 12d0 / EpsTrunc
+                           MUninsmd(inf,nli,alpha,beta) =
+     1                          Mns4(0,alpha,beta)
+     2                          + ( - Mns4(2,alpha,beta)
+     3                          + 8d0 * Mns4(1,alpha,beta)
+     4                          - 8d0 * Mns4(-1,alpha,beta)
+     5                          + Mns4(-2,alpha,beta) )
+     6                          / 12d0 / EpsTrunc
+                        enddo
+                     enddo
+                  endif
                endif
 *
 *     NNLO
 *
                if(ipt.ge.2)then
-                  do alpha=0,nin(igrid)
-                     do beta=0,nin(igrid)
-                        do ipdf=1,2
-                           do jpdf=1,2
-                              MQCDsg(inf,ipdf,jpdf,alpha,beta) =
-     1                             MQCDsg(inf,ipdf,jpdf,alpha,beta)
-     2                             + ( - Msg(2,ipdf,jpdf,alpha,beta)
-     3                             + 16d0 * Msg(1,ipdf,jpdf,alpha,beta)
-     4                             - 30d0 * Msg(0,ipdf,jpdf,alpha,beta)
-     5                             + 16d0 * Msg(-1,ipdf,jpdf,alpha,beta)
-     6                             - Msg(-2,ipdf,jpdf,alpha,beta) )
-     7                             / 24d0 / EpsTrunc / EpsTrunc 
+                  if(Th.eq."QCD")then
+                     do alpha=0,nin(igrid)
+                        do beta=0,nin(igrid)
+                           do ipdf=1,2
+                              do jpdf=1,2
+                                 MQCDsg(inf,ipdf,jpdf,alpha,beta) =
+     1                            MQCDsg(inf,ipdf,jpdf,alpha,beta)
+     2                            + ( - Msg2(2,ipdf,jpdf,alpha,beta)
+     3                            + 16d0 * Msg2(1,ipdf,jpdf,alpha,beta)
+     4                            - 30d0 * Msg2(0,ipdf,jpdf,alpha,beta)
+     5                            + 16d0 * Msg2(-1,ipdf,jpdf,alpha,beta)
+     6                            - Msg2(-2,ipdf,jpdf,alpha,beta) )
+     7                            / 24d0 / EpsTrunc / EpsTrunc
+                              enddo
                            enddo
+                           MQCDnsp(inf,alpha,beta) =
+     1                          MQCDnsp(inf,alpha,beta)
+     2                          + ( - Mns1(2,alpha,beta)
+     3                          + 16d0 * Mns1(1,alpha,beta)
+     4                          - 30d0 * Mns1(0,alpha,beta)
+     5                          + 16d0 * Mns1(-1,alpha,beta) 
+     6                          - Mns1(-2,alpha,beta))
+     7                          / 24d0 / EpsTrunc / EpsTrunc
+                           MQCDnsm(inf,alpha,beta) =
+     1                          MQCDnsm(inf,alpha,beta)
+     2                          + ( - Mns2(2,alpha,beta)
+     3                          + 16d0 * Mns2(1,alpha,beta)
+     4                          - 30d0 * Mns2(0,alpha,beta)
+     5                          + 16d0 * Mns2(-1,alpha,beta) 
+     6                          - Mns2(-2,alpha,beta))
+     7                          / 24d0 / EpsTrunc / EpsTrunc
+                           MQCDnsv(inf,alpha,beta) =
+     1                          MQCDnsv(inf,alpha,beta)
+     2                          + ( - Mns3(2,alpha,beta)
+     3                          + 16d0 * Mns3(1,alpha,beta)
+     4                          - 30d0 * Mns3(0,alpha,beta)
+     5                          + 16d0 * Mns3(-1,alpha,beta) 
+     6                          - Mns3(-2,alpha,beta))
+     7                          / 24d0 / EpsTrunc / EpsTrunc
                         enddo
-                        MQCDnsp(inf,alpha,beta) =
-     1                       MQCDnsp(inf,alpha,beta)
-     2                       + ( - Mnsp(2,alpha,beta)
-     3                       + 16d0 * Mnsp(1,alpha,beta)
-     4                       - 30d0 * Mnsp(0,alpha,beta)
-     5                       + 16d0 * Mnsp(-1,alpha,beta) 
-     6                       - Mnsp(-2,alpha,beta))
-     7                       / 24d0 / EpsTrunc / EpsTrunc 
-                        MQCDnsm(inf,alpha,beta) =
-     1                       MQCDnsm(inf,alpha,beta)
-     2                       + ( - Mnsm(2,alpha,beta)
-     3                       + 16d0 * Mnsm(1,alpha,beta)
-     4                       - 30d0 * Mnsm(0,alpha,beta)
-     5                       + 16d0 * Mnsm(-1,alpha,beta) 
-     6                       - Mnsm(-2,alpha,beta))
-     7                       / 24d0 / EpsTrunc / EpsTrunc 
-                        MQCDnsv(inf,alpha,beta) =
-     1                       MQCDnsv(inf,alpha,beta)
-     2                       + ( - Mnsv(2,alpha,beta)
-     3                       + 16d0 * Mnsv(1,alpha,beta)
-     4                       - 30d0 * Mnsv(0,alpha,beta)
-     5                       + 16d0 * Mnsv(-1,alpha,beta) 
-     6                       - Mnsv(-2,alpha,beta))
-     7                       / 24d0 / EpsTrunc / EpsTrunc 
                      enddo
-                  enddo
+                  elseif(Th.eq."QUniD")then
+                     do alpha=0,nin(igrid)
+                        do beta=0,nin(igrid)
+                           do ipdf=1,4
+                              do jpdf=1,4
+                                 MUnisg1(inf,nli,ipdf,jpdf,alpha,beta) =
+     1                            MUnisg1(inf,nli,ipdf,jpdf,alpha,beta)
+     2                            + ( - Msg1(2,ipdf,jpdf,alpha,beta)
+     3                            + 16d0 * Msg1(1,ipdf,jpdf,alpha,beta)
+     4                            - 30d0 * Msg1(0,ipdf,jpdf,alpha,beta)
+     5                            + 16d0 * Msg1(-1,ipdf,jpdf,alpha,beta)
+     6                            - Msg1(-2,ipdf,jpdf,alpha,beta) )
+     7                            / 24d0 / EpsTrunc / EpsTrunc 
+                              enddo
+                           enddo
+                           do ipdf=1,2
+                              do jpdf=1,2
+                                 MUnisg2(inf,nli,ipdf,jpdf,alpha,beta) =
+     1                            MUnisg2(inf,nli,ipdf,jpdf,alpha,beta)
+     2                            + ( - Msg2(2,ipdf,jpdf,alpha,beta)
+     3                            + 16d0 * Msg2(1,ipdf,jpdf,alpha,beta)
+     4                            - 30d0 * Msg2(0,ipdf,jpdf,alpha,beta)
+     5                            + 16d0 * Msg2(-1,ipdf,jpdf,alpha,beta)
+     6                            - Msg2(-2,ipdf,jpdf,alpha,beta) )
+     7                            / 24d0 / EpsTrunc / EpsTrunc
+                              enddo
+                           enddo
+                           MUninspu(inf,nli,alpha,beta) =
+     1                          MUninspu(inf,nli,alpha,beta)
+     2                          + ( - Mns1(2,alpha,beta)
+     3                          + 16d0 * Mns1(1,alpha,beta)
+     4                          - 30d0 * Mns1(0,alpha,beta)
+     5                          + 16d0 * Mns1(-1,alpha,beta) 
+     6                          - Mns1(-2,alpha,beta))
+     7                          / 24d0 / EpsTrunc / EpsTrunc
+                           MUninspd(inf,nli,alpha,beta) =
+     1                          MUninspd(inf,nli,alpha,beta)
+     2                          + ( - Mns2(2,alpha,beta)
+     3                          + 16d0 * Mns2(1,alpha,beta)
+     4                          - 30d0 * Mns2(0,alpha,beta)
+     5                          + 16d0 * Mns2(-1,alpha,beta) 
+     6                          - Mns2(-2,alpha,beta))
+     7                          / 24d0 / EpsTrunc / EpsTrunc
+                           MUninsmu(inf,nli,alpha,beta) =
+     1                          MUninsmu(inf,nli,alpha,beta)
+     2                          + ( - Mns3(2,alpha,beta)
+     3                          + 16d0 * Mns3(1,alpha,beta)
+     4                          - 30d0 * Mns3(0,alpha,beta)
+     5                          + 16d0 * Mns3(-1,alpha,beta) 
+     6                          - Mns3(-2,alpha,beta))
+     7                          / 24d0 / EpsTrunc / EpsTrunc
+                           MUninsmd(inf,nli,alpha,beta) =
+     1                          MUninsmd(inf,nli,alpha,beta)
+     2                          + ( - Mns4(2,alpha,beta)
+     3                          + 16d0 * Mns4(1,alpha,beta)
+     4                          - 30d0 * Mns4(0,alpha,beta)
+     5                          + 16d0 * Mns4(-1,alpha,beta) 
+     6                          - Mns4(-2,alpha,beta))
+     7                          / 24d0 / EpsTrunc / EpsTrunc
+                        enddo
+                     enddo
+                  endif
                endif
             endif
          enddo
@@ -426,7 +577,11 @@
          if(EvolOpbkp)then
             nfi = mfi
             nff = mff
-            call JoinOperatorsQCD(igrid)
+            if(Th.eq."QCD")then
+               call JoinOperatorsQCD(igrid)
+            elseif(Th.eq."QUniD")then
+               call JoinOperatorsUni(igrid)
+            endif
          endif
       enddo
 *     Join all the subgrids.

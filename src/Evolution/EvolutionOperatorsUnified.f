@@ -106,18 +106,7 @@
 *
       elseif(Evs.eq."VF")then
 *     If initial and final energies are equal return immediately the intial conditions
-         if(muF2.eq.muF20)then
-            do inl=2,3
-               do inf=3,6
-                  call EqualOperatorsUnifiednf(inf,inl,
-     1                 M0sg1,M0sg2,M0nspu,M0nspd,M0nsmu,M0nsmd,M0nslep,
-     2                 MUnisg1,Munisg2,
-     3                 MUninspu,MUninspd,MUninsmu,MUninsmd,MUninslep)
-               enddo
-            enddo
-            sgn = 1
-            return
-         elseif(muF2.gt.muF20)then
+         if(muF2.ge.muF20)then
             sgn = 1
          elseif(muF2.lt.muF20)then
             sgn = - 1
@@ -182,6 +171,14 @@
             mu2f(nflf(inl)) = muF2l
 *
             do inf=nfli(inl),nflf(inl),sgn
+               if(muF2.eq.muF20)then
+                  call EqualOperatorsUnifiednf(inf,inl,
+     1                 M0sg1,M0sg2,M0nspu,M0nspd,M0nsmu,M0nsmd,M0nslep,
+     2                 MUnisg1,Munisg2,
+     3                 MUninspu,MUninspd,MUninsmu,MUninsmd,MUninslep)
+                  return
+               endif
+*
                wnf = inf
 *     Singlet 1
                call odeintsgUnifiedS1(mu2i(inf),mu2f(inf),M0sg1,Msg1)

@@ -50,12 +50,12 @@
 *     Compute the total evolution operator in case required
          if(EvolOp) call JoinOperatorsQCD(jgrid)
 *     Put Evolved PDF into the common "fph"
-         do alpha=0,nin(igrid)
+         do alpha=0,nin(jgrid)
             do i=-6,6
                fph(jgrid,i,alpha) = fphQCD(i,alpha)
             enddo
             do i=-3,3
-               flepton(igrid,i,alpha) = f0lep(i,alpha)
+               flepton(jgrid,i,alpha) = f0lep(i,alpha)
             enddo
             fgamma(jgrid,alpha) = f0lep(0,alpha)
          enddo
@@ -74,13 +74,15 @@
          enddo
 *     Rotate evolved PDFs from Unified evolution to physical basis
          call PDFevUni2phys(flevUni,fevUni,flphUni,fphUni)
+*     Compute the total evolution operator in case required
+         if(EvolOp) call JoinOperatorsUni(jgrid)
 *     Put Evolved PDF into the common "fph"
-         do alpha=0,nin(igrid)
+         do alpha=0,nin(jgrid)
             do i=-6,6
                fph(jgrid,i,alpha) = fphUni(i,alpha)
             enddo
             do i=-3,3
-               flepton(igrid,i,alpha) = flphUni(i,alpha)
+               flepton(jgrid,i,alpha) = flphUni(i,alpha)
             enddo
             fgamma(jgrid,alpha) = flphUni(0,alpha)
          enddo
