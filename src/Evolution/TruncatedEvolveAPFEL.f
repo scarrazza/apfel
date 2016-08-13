@@ -16,6 +16,7 @@
       include "../commons/Nf_FF.h"
       include "../commons/Evs.h"
       include "../commons/m2th.h"
+      include "../commons/TauMass.h"
       include "../commons/fph.h"
       include "../commons/f0ph.h"
       include "../commons/EpsTrunc.h"
@@ -63,6 +64,9 @@
 *     Find initial and final number of flavours
 *
       if(Evs.eq."FF")then
+         nli = 2
+         nlf = 2
+*
          mfi = Nf_FF
          mff = Nf_FF
 *
@@ -72,6 +76,11 @@
       elseif(Evs.eq."VF")then
 *
 *     Define maximun number of flavours
+*
+         nlf = 2
+         if(Q2.gt.MTau**2)  nlf = 3
+         nli = 2
+         if(Q20.gt.MTau**2) nli = 3
 *
          mfmax = max(nfMaxPDFs,nfMaxAlpha)
 *
@@ -576,11 +585,13 @@
 *     Join evolution operators
 *
          if(EvolOpbkp)then
-            nfi = mfi
-            nff = mff
             if(Th.eq."QCD")then
+               nfi = mfi
+               nff = mff
                call JoinOperatorsQCD(igrid)
             elseif(Th.eq."QUniD")then
+               nfli(nli) = mfi
+               nflf(nli) = mff
                call JoinOperatorsUni(igrid)
             endif
          endif
