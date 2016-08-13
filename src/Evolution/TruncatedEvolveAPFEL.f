@@ -281,7 +281,8 @@
      2                    + ( - fleptoneps(2,ipdf,alpha)
      3                    + 8d0 * fleptoneps(1,ipdf,alpha)
      4                    - 8d0 * fleptoneps(-1,ipdf,alpha)
-     5                    + fleptoneps(-2,ipdf,alpha))
+     5                    + fleptoneps(-2,ipdf,alpha) )
+     5                    / 12d0 / EpsTrunc
                   enddo
                enddo
             endif
