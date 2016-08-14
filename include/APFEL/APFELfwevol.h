@@ -58,6 +58,9 @@ extern "C" {
 #define fexternalevolutionoperator FC_FUNC(externalevolutionoperator,EXTERNALEVOLUTIONOPERATOR)
   double fexternalevolutionoperator(char*,int*,int*,double*,int*);
 
+#define fexternalsplittingfunctions FC_FUNC(externalsplittingfunctions,EXTERNALSPLITTINGFUNCTIONS)
+  double fexternalsplittingfunctions(char*,int*,int*,int*,int*,double*,int*);
+
 #define flhapdfgrid FC_FUNC(lhapdfgrid,LHAPDFGRID)
   void flhapdfgrid(int*, double*, char*);
 
@@ -210,7 +213,6 @@ extern "C" {
 
 #define fsetvfns FC_FUNC(setvfns,SETVFNS)
   void fsetvfns();
-
 
 #define flistfunctions FC_FUNC(listfunctions,LISTFUNCTIONS)
   void flistfunctions(void);

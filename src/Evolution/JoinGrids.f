@@ -15,12 +15,15 @@
       include "../commons/fph.h"
       include "../commons/EvolutionOperator.h"
       include "../commons/EvolutionMatrices.h"
+      include "../commons/integrals.h"
+      include "../commons/ipt.h"
 **
 *     Internal Variables
 *
       integer i,j,ig
       integer alpha,beta,alphap,betap
       integer jgrid,dgrid,istart,density,offset
+      integer inf,isp,pt
       double precision eps
       parameter(eps=1d-12)
 *
@@ -58,9 +61,6 @@
 *     been enabled, join the evolution operators of the sub grid.
 *
       if(EvolOp)then
-*
-*     Fill Evolution Operator
-*     
          do alpha=0,nin(0)
 *     Determine starting grid
             do dgrid=1,ngrid
@@ -76,9 +76,10 @@
             betap   = alphap
             do jgrid=dgrid,ngrid
                do beta=istart,TransitionPoint(jgrid+1),density
+*     Evolution operators
                   do i=0,13
                      do j=0,13
-                        Ev2EvQCD(0,i,j,alpha,beta) = 
+                        Ev2EvQCD(0,i,j,alpha,beta) =
      1                       Ev2EvQCD(dgrid,i,j,alphap,betap)
                         if(abs(Ev2EvQCD(0,i,j,alpha,beta)).lt.eps)
      1                     Ev2EvQCD(0,i,j,alpha,beta) = 0d0 
@@ -87,7 +88,7 @@
 *
                   do i=-7,6
                      do j=0,13
-                        Ev2PhQCD(0,i,j,alpha,beta) = 
+                        Ev2PhQCD(0,i,j,alpha,beta) =
      1                       Ev2PhQCD(dgrid,i,j,alphap,betap)
                         if(abs(Ev2PhQCD(0,i,j,alpha,beta)).lt.eps)
      1                     Ev2PhQCD(0,i,j,alpha,beta) = 0d0 
@@ -96,10 +97,19 @@
 *
                   do i=-7,6
                      do j=-7,6
-                        Ph2PhQCD(0,i,j,alpha,beta) = 
+                        Ph2PhQCD(0,i,j,alpha,beta) =
      1                       Ph2PhQCD(dgrid,i,j,alphap,betap)
                         if(abs(Ph2PhQCD(0,i,j,alpha,beta)).lt.eps)
      1                     Ph2PhQCD(0,i,j,alpha,beta) = 0d0 
+                     enddo
+                  enddo
+*     Splitting functions
+                  do inf=nfi,nff,sgn
+                     do isp=1,7
+                        do pt=0,ipt
+                           SP(0,inf,isp,pt,alpha,beta) =
+     1                          SP(dgrid,inf,isp,pt,alphap,betap)
+                        enddo
                      enddo
                   enddo
 *

@@ -71,6 +71,9 @@ namespace APFEL {
   /// External Evolution Operator
   double ExternalEvolutionOperator(const std::string& fname, int i, int j, double x, int beta);
 
+  /// External Splitting Functions
+  double ExternalSplittingFunctions(const std::string& fname, int pt, int nf, int i, int j, double x, int beta);
+
   /// Builds the *.LHgrid output file
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname);
 

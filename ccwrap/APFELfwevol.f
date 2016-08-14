@@ -115,6 +115,17 @@ ccccccccccccc
       return
       end
 
+ccccccccccccc
+      function fexternalsplittingfunctions(fname,pt,nf,i,j,x,beta)
+      integer pt,nf,i,j,beta
+      double precision x,fexternalsplittingfunctions
+      double precision ExternalSplittingFunctions
+      character fname*(*)
+      fexternalsplittingfunctions = 
+     1     ExternalSplittingFunctions(fname,pt,nf,i,j,x,beta)
+      return
+      end
+
 ccccccccccccc      
       subroutine flhapdfgrid(Nrep,Qin,fname)
       integer Nrep

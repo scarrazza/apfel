@@ -307,6 +307,11 @@
      1           "string fname, int i, int j, double x, int beta):"//
      2           achar(27)//"[0m"
       write(6,*) "    returns the PDF evolution operator."
+      write(6,*) achar(27)//"[34m- ExternalSplittingFunctions(",
+     1           "string fname, int pt, int nf, int i, int j,",
+     2           " double x, int beta):"//achar(27)//"[0m"
+      write(6,*) "    returns the QCD splitting functions on the"
+      write(6,*) "    joint interpolation grid."
       write(6,*) achar(27)//"[34m- LHAPDFgrid(int Nrep, double Qin,",
      1           " string fname):"//achar(27)//"[0m"
       write(6,*) "    produces a PDF interpolation grid in the LHAPDF"
