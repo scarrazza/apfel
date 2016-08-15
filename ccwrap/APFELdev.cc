@@ -32,7 +32,10 @@ namespace APFEL
     if (!atoi(par.at(kQED).c_str()))
       APFEL::SetTheory(string("QCD"));
     else
-      APFEL::SetTheory(string("QUniD"));
+      {
+	APFEL::SetTheory(string("QUniD"));
+	APFEL::EnableNLOQEDCorrections(true);
+      }
     APFEL::SetPerturbativeOrder(atoi(par.at(kPTO).c_str()));
 
     if (par.at(kModEv).compare("EXA") == 0)
