@@ -122,7 +122,7 @@
             eq(i)  = 0d0
             eq2(i) = 0d0
          enddo
-         ve = 0.5d0 + 2d0 * Sin2ThetaW
+         ve = 0.5d0
          ae = 0.5d0
       endif
 *
