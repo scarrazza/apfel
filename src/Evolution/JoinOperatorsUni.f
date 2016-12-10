@@ -251,7 +251,7 @@ c            coup = asthUp(nfm)
 *     T15
                      MatchQCD(11,11) = Mns
 *     T24
-                     MatchQCD(12,1) = Mns
+                     MatchQCD(12,12) = Mns
 *     T35
                      MatchQCD(13,1) = Mns - 5d0 * ( Msg(1,1) - Mns )
                      MatchQCD(13,2) = - 5d0 * Msg(1,2)
