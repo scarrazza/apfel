@@ -147,7 +147,7 @@
       enddo
 *
       n = inter_degree(0)
-      do alpha=0,nin(0)
+      do alpha=0,beta
          wg = w_int_gen(n,alpha,x)
          if(wg.eq.0d0) cycle
 *

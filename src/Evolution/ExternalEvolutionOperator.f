@@ -26,7 +26,7 @@
 *
       integer n
       integer alpha
-      double precision w_int_gen
+      double precision w_int_gen,wg
       double precision tol
       parameter(tol=1d-10)
 **
@@ -113,22 +113,25 @@
       n = inter_degree(0)
       ExternalEvolutionOperator = 0d0
       if(Bs2Bs.eq."Ev2Ev")then
-         do alpha=0,nin(0)
+         do alpha=0,beta
+            wg = w_int_gen(n,alpha,x)
+            if(wg.eq.0d0) cycle
             ExternalEvolutionOperator = ExternalEvolutionOperator 
-     1                                + w_int_gen(n,alpha,x)
-     2                                * Ev2EvQCD(0,i,j,alpha,beta)
+     1                                + wg * Ev2EvQCD(0,i,j,alpha,beta)
          enddo
       elseif(Bs2Bs.eq."Ev2Ph")then
-         do alpha=0,nin(0)
+         do alpha=0,beta
+            wg = w_int_gen(n,alpha,x)
+            if(wg.eq.0d0) cycle
             ExternalEvolutionOperator = ExternalEvolutionOperator 
-     1                                + w_int_gen(n,alpha,x)
-     2                                * Ev2PhQCD(0,i,j,alpha,beta)
+     1                                + wg * Ev2PhQCD(0,i,j,alpha,beta)
          enddo
       elseif(Bs2Bs.eq."Ph2Ph")then
-         do alpha=0,nin(0)
+         do alpha=0,beta
+            wg = w_int_gen(n,alpha,x)
+            if(wg.eq.0d0) cycle
             ExternalEvolutionOperator = ExternalEvolutionOperator 
-     1                                + w_int_gen(n,alpha,x)
-     2                                * Ph2PhQCD(0,i,j,alpha,beta)
+     1                                + wg * Ph2PhQCD(0,i,j,alpha,beta)
          enddo
       endif
 *
