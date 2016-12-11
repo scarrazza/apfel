@@ -104,7 +104,7 @@
          call exit(-10)
       endif
 *
-*     trim away numerical fluctiations
+*     Trim away numerical fluctiations
 *
       if(x.lt.xmin(1)) x  = xmin(1)
       if(x.gt.xmax)    x  = 1d0
@@ -123,22 +123,21 @@
       idQ      = inter_degreeQ
       tQ       = 0
       iQtransp = 0
-      iQtrans  = nQ(nfin)
+      iQtrans  = nQ(nfin) - 1
       do isg=nfin,nffi
 *     1)
-         if(Q2.gt.Q2g(iQtrans-1).and.Q2.lt.Q2g(iQtrans))then
-            Q2 = Q2g(iQtrans)
-         endif
+         if(Q2.gt.Q2g(iQtrans).and.Q2.lt.Q2g(iQtrans+1))
+     1        Q2 = Q2g(iQtrans+1)
 *     2)
-         if(Q2.ge.Q2g(iQtransp).and.Q2.lt.Q2g(iQtrans).and.
-     1      nQ(nfin).lt.idQ+1) idQ = nQ(nfin) - 1
+         if(Q2.ge.Q2g(iQtransp).and.Q2.le.Q2g(iQtrans).and.
+     1      nQ(isg).lt.idQ+1) idQ = nQ(isg) - 1
 *     3)
          do ideg=2,idQ
-            if(Q2.gt.Q2g(iQtrans-ideg).and.Q2.le.Q2g(iQtrans-1))
+            if(Q2.gt.Q2g(iQtrans-ideg+1).and.Q2.le.Q2g(iQtrans))
      1           tQ = ideg - 1
          enddo
-         iQtransp = iQtransp + nQ(isg)
-         iQtrans  = iQtrans  + nQ(isg+1)
+         iQtransp = iQtrans + 1
+         iQtrans  = iQtrans + nQ(isg+1)
       enddo
 *
 *     Interpolation
