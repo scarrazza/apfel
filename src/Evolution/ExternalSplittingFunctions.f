@@ -14,7 +14,6 @@
       include "../commons/EvolOp.h"
       include "../commons/grid.h"
       include "../commons/ipt.h"
-      include "../commons/EvolutionMatrices.h"
       include "../commons/integrals.h"
       include "../commons/transQCD.h"
 **
@@ -28,7 +27,6 @@
 **
 *     Internal Variables
 *
-      integer mfi,mff
       integer k,l,g,h
       integer n
       integer alpha
@@ -74,18 +72,6 @@
          write(6,*) "Perturbative order out of range, pt = ",pt
          write(6,*) "  "
          write(6,'(a,i2,a)') " pt must be in the range [0,",ipt,"]"
-         write(6,*) "  "
-         call exit(-10)
-      endif
-*
-      mfi = min(nfi,nff)
-      mff = max(nfi,nff)
-      if(nf.lt.mfi.or.nf.gt.mff)then
-         write(6,*) "In ExternalSplittingFunctions.f:"
-         write(6,*) "Number of active flavours out of range, nf = ",nf
-         write(6,*) "  "
-         write(6,'(a,i2,a,i2,a)') " nf must be in the range [",nfi,
-     1                            ",",nff,"]"
          write(6,*) "  "
          call exit(-10)
       endif
