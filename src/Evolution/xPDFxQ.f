@@ -132,18 +132,21 @@
       if(abs(id).le.6)then
          do tau=0,nQ2g
             do alpha=0,nin(0)
+               if(win(alpha,tau).eq.0d0) cycle
                xPDFxQ = xPDFxQ + win(alpha,tau) * fphxQ(i,alpha,tau)
             enddo
          enddo
       elseif(abs(id).eq.11.or.abs(id).eq.13.or.abs(id).eq.15)then
          do tau=0,nQ2g
             do alpha=0,nin(0)
+               if(win(alpha,tau).eq.0d0) cycle
                xPDFxQ = xPDFxQ + win(alpha,tau) * fleptonxQ(i,alpha,tau)
             enddo
          enddo
       elseif(id.eq.22)then
          do tau=0,nQ2g
             do alpha=0,nin(0)
+               if(win(alpha,tau).eq.0d0) cycle
                xPDFxQ = xPDFxQ + win(alpha,tau) * fgammaxQ(alpha,tau)
             enddo
          enddo
@@ -263,6 +266,7 @@
          xf(i) = 0
          do tau=0,nQ2g
             do alpha=0,nin(0)
+               if(win(alpha,tau).eq.0d0) cycle
                xf(i) = xf(i) + win(alpha,tau) * fphxQ(i,alpha,tau)
             enddo
          enddo
