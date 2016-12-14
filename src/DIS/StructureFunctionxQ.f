@@ -32,7 +32,7 @@
       integer isg,iQtrans,iQtransp
       integer tQ,ideg
       double precision Q2
-      double precision w_int_xQ
+      double precision w_int_xQ,wg
       double precision tol
       parameter(tol=1d-10)
 **
@@ -145,21 +145,23 @@
       StructureFunctionxQ = 0d0
       idx = inter_degree(0)
       if(icomp.eq.7)then
-         do ic=3,6
-            do tau=0,nQ2g
-               do alpha=0,nin(0)
+         do tau=0,nQ2g
+            do alpha=0,nin(0)
+               wg = w_int_xQ(tQ,idx,idQ,alpha,tau,x,Q2)
+               if(wg.eq.0d0) cycle
+               do ic=3,6
                   StructureFunctionxQ = StructureFunctionxQ
-     1                 + w_int_xQ(tQ,idx,idQ,alpha,tau,x,Q2)
-     2                 * SFxQ(iproc,isf,ic,alpha,tau)
+     1                 + wg * SFxQ(iproc,isf,ic,alpha,tau)
                enddo
             enddo
          enddo
       else
          do tau=0,nQ2g
             do alpha=0,nin(0)
+               wg = w_int_xQ(tQ,idx,idQ,alpha,tau,x,Q2)
+               if(wg.eq.0d0) cycle
                StructureFunctionxQ = StructureFunctionxQ
-     1              + w_int_xQ(tQ,idx,idQ,alpha,tau,x,Q2)
-     2              * SFxQ(iproc,isf,icomp,alpha,tau)
+     1              + wg * SFxQ(iproc,isf,icomp,alpha,tau)
             enddo
          enddo
       endif
