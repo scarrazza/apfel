@@ -255,7 +255,8 @@
       double precision integralsQED
       double precision coupQCD,a_QCD,muR2,bts,fbeta
       double precision coupQED,a_QED
-      double precision integ(0:nint_max)
+      double precision integ1(0:nint_max)
+      double precision integ2(0:nint_max,0:nint_max)
 **
 *     Output Variables
 *
@@ -273,44 +274,99 @@
          bts     = 1d0 / fbeta(t,wnf,ipt)
       endif
 *
-      if(i.eq.1)then
-         do alpha=0,nin(igrid)
-            integ(alpha) = integralsQCD(0,alpha,coupQCD,1)
-     1                   + bts * integralsQED(0,alpha,coupQED,coupQCD,1)
-         enddo
-      elseif(i.eq.2)then
-         do alpha=0,nin(igrid)
-            integ(alpha) = integralsQCD(0,alpha,coupQCD,1)
-     1                   + bts * integralsQED(0,alpha,coupQED,coupQCD,2)
-         enddo
-      elseif(i.eq.3)then
-         do alpha=0,nin(igrid)
-            integ(alpha) = integralsQCD(0,alpha,coupQCD,2)
-     1                   + bts * integralsQED(0,alpha,coupQED,coupQCD,3)
-         enddo
-      elseif(i.eq.4)then
-         do alpha=0,nin(igrid)
-            integ(alpha) = integralsQCD(0,alpha,coupQCD,2)
-     1                   + bts * integralsQED(0,alpha,coupQED,coupQCD,4)
-         enddo
-      elseif(i.eq.5)then
-         do alpha=0,nin(igrid)
-            integ(alpha) = bts
-     1           * integralsQED(0,alpha,coupQED,coupQCD,23)
-         enddo
-      endif
+      if(IsExt(igrid))then
+         if(i.eq.1)then
+            do alpha=0,nin(igrid)
+               do beta=alpha,nin(igrid)
+                  integ2(alpha,beta) =
+     1                 integralsQCD(alpha,beta,coupQCD,1) + bts
+     2                 * integralsQED(alpha,beta,coupQED,coupQCD,1)
+               enddo
+            enddo
+         elseif(i.eq.2)then
+            do alpha=0,nin(igrid)
+               do beta=alpha,nin(igrid)
+                  integ2(alpha,beta) =
+     1                 integralsQCD(alpha,beta,coupQCD,1) + bts
+     2                 * integralsQED(alpha,beta,coupQED,coupQCD,2)
+               enddo
+            enddo
+         elseif(i.eq.3)then
+            do alpha=0,nin(igrid)
+               do beta=alpha,nin(igrid)
+                  integ2(alpha,beta) =
+     1                 integralsQCD(alpha,beta,coupQCD,2) + bts
+     2                 * integralsQED(alpha,beta,coupQED,coupQCD,3)
+               enddo
+            enddo
+         elseif(i.eq.4)then
+            do alpha=0,nin(igrid)
+               do beta=alpha,nin(igrid)
+                  integ2(alpha,beta) =
+     1                 integralsQCD(alpha,beta,coupQCD,2) + bts
+     2                 * integralsQED(alpha,beta,coupQED,coupQCD,4)
+               enddo
+            enddo
+         elseif(i.eq.5)then
+            do alpha=0,nin(igrid)
+               do beta=alpha,nin(igrid)
+                  integ2(alpha,beta) = bts
+     1                 * integralsQED(alpha,beta,coupQED,coupQCD,23)
+               enddo
+            enddo
+         endif
 *
 *     Initialization
 *
-      do alpha=0,nin(igrid)
-         do beta=alpha,nin(igrid)
-            dMdt(alpha,beta) = 0d0
-            do delta=0,nin(igrid)-alpha
-               dMdt(alpha,beta) = dMdt(alpha,beta)
-     1                          + integ(delta) * M(alpha+delta,beta)
+         do alpha=0,nin(igrid)
+            do beta=alpha,nin(igrid)
+               dMdt(alpha,beta) = 0d0
+               do delta=0,nin(igrid)
+                  dMdt(alpha,beta) = dMdt(alpha,beta)
+     1                             + integ2(alpha,delta) * M(delta,beta)
+               enddo
             enddo
          enddo
-      enddo
+      else
+         if(i.eq.1)then
+            do alpha=0,nin(igrid)
+               integ1(alpha) = integralsQCD(0,alpha,coupQCD,1)
+     1              + bts * integralsQED(0,alpha,coupQED,coupQCD,1)
+            enddo
+         elseif(i.eq.2)then
+            do alpha=0,nin(igrid)
+               integ1(alpha) = integralsQCD(0,alpha,coupQCD,1)
+     1              + bts * integralsQED(0,alpha,coupQED,coupQCD,2)
+            enddo
+         elseif(i.eq.3)then
+            do alpha=0,nin(igrid)
+               integ1(alpha) = integralsQCD(0,alpha,coupQCD,2)
+     1              + bts * integralsQED(0,alpha,coupQED,coupQCD,3)
+            enddo
+         elseif(i.eq.4)then
+            do alpha=0,nin(igrid)
+               integ1(alpha) = integralsQCD(0,alpha,coupQCD,2)
+     1              + bts * integralsQED(0,alpha,coupQED,coupQCD,4)
+            enddo
+         elseif(i.eq.5)then
+            do alpha=0,nin(igrid)
+               integ1(alpha) = bts
+     1              * integralsQED(0,alpha,coupQED,coupQCD,23)
+            enddo
+         endif
+*
+*     Initialization
+*
+         do alpha=0,nin(igrid)
+            do beta=alpha,nin(igrid)
+               dMdt(alpha,beta) = 0d0
+               do delta=0,nin(igrid)-alpha
+                  dMdt(alpha,beta) = dMdt(alpha,beta)
+     1                 + integ1(delta) * M(alpha+delta,beta)
+               enddo
+            enddo
+         enddo
+      endif
 *
       return
       end

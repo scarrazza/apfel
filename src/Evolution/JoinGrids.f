@@ -104,14 +104,25 @@
                      enddo
                   enddo
 *     Splitting functions
-                  do inf=nfi,nff,sgn
-                     do isp=1,7
-                        do pt=0,ipt
-                           SP(0,inf,isp,pt,alpha,beta) =
-     1                          SP(dgrid,inf,isp,pt,alphap,betap)
+                  if(IsExt(dgrid))then
+                     do inf=nfi,nff,sgn
+                        do isp=1,7
+                           do pt=0,ipt
+                              SP(0,inf,isp,pt,alpha,beta) =
+     1                             SP(dgrid,inf,isp,pt,alphap,betap)
+                           enddo
                         enddo
                      enddo
-                  enddo
+                  else
+                     do inf=nfi,nff,sgn
+                        do isp=1,7
+                           do pt=0,ipt
+                              SP(0,inf,isp,pt,alpha,beta) =
+     1                             SP(dgrid,inf,isp,pt,0,betap-alphap)
+                           enddo
+                        enddo
+                     enddo
+                  endif
 *
                   betap = betap + 1
                enddo

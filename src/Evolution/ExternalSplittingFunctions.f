@@ -166,37 +166,37 @@
             sfEv2Ev(13,2)  = sfEv2Ev(13,2)
      1                     + SP(0,nf,5,pt,alpha,beta) * wg
          elseif(nf.eq.4)then
-            sfEv2Ev(6,3)   = sfEv2Ev(6,3)
-     1                     + SP(0,nf,3,pt,alpha,beta) * wg
+            sfEv2Ev(6,6)   = sfEv2Ev(6,6)
+     1                     + SP(0,nf,2,pt,alpha,beta) * wg
             sfEv2Ev(7,3)   = sfEv2Ev(7,3)
      1                     + SP(0,nf,3,pt,alpha,beta) * wg
-            sfEv2Ev(8,8)   = sfEv2Ev(8,8)
-     1                     + SP(0,nf,2,pt,alpha,beta) * wg
-            sfEv2Ev(11,1)  = sfEv2Ev(11,1)
-     1                     + SP(0,nf,4,pt,alpha,beta) * wg
-            sfEv2Ev(11,2)  = sfEv2Ev(11,2)
-     1                     + SP(0,nf,5,pt,alpha,beta) * wg
+            sfEv2Ev(8,3)   = sfEv2Ev(8,3)
+     1                     + SP(0,nf,3,pt,alpha,beta) * wg
+            sfEv2Ev(11,11) = sfEv2Ev(11,11)
+     1                     + SP(0,nf,1,pt,alpha,beta) * wg
             sfEv2Ev(12,1)  = sfEv2Ev(12,1)
      1                     + SP(0,nf,4,pt,alpha,beta) * wg
             sfEv2Ev(12,2)  = sfEv2Ev(12,2)
      1                     + SP(0,nf,5,pt,alpha,beta) * wg
-            sfEv2Ev(13,13) = sfEv2Ev(13,13)
-     1                     + SP(0,nf,1,pt,alpha,beta) * wg
+            sfEv2Ev(13,1)  = sfEv2Ev(13,1)
+     1                     + SP(0,nf,4,pt,alpha,beta) * wg
+            sfEv2Ev(13,2)  = sfEv2Ev(13,2)
+     1                     + SP(0,nf,5,pt,alpha,beta) * wg
          elseif(nf.eq.5)then
-            sfEv2Ev(6,3)   = sfEv2Ev(6,3)
-     1                     + SP(0,nf,3,pt,alpha,beta) * wg
+            sfEv2Ev(6,6)   = sfEv2Ev(6,6)
+     1                     + SP(0,nf,2,pt,alpha,beta) * wg
             sfEv2Ev(7,7)   = sfEv2Ev(7,7)
      1                     + SP(0,nf,2,pt,alpha,beta) * wg
-            sfEv2Ev(8,8)   = sfEv2Ev(8,8)
-     1                     + SP(0,nf,2,pt,alpha,beta) * wg
-            sfEv2Ev(11,1)  = sfEv2Ev(11,1)
-     1                     + SP(0,nf,4,pt,alpha,beta) * wg
-            sfEv2Ev(11,2)  = sfEv2Ev(11,2)
-     1                     + SP(0,nf,5,pt,alpha,beta) * wg
+            sfEv2Ev(8,3)   = sfEv2Ev(8,3)
+     1                     + SP(0,nf,3,pt,alpha,beta) * wg
+            sfEv2Ev(11,11) = sfEv2Ev(11,11)
+     1                     + SP(0,nf,1,pt,alpha,beta) * wg
             sfEv2Ev(12,12) = sfEv2Ev(12,12)
      1                     + SP(0,nf,1,pt,alpha,beta) * wg
-            sfEv2Ev(13,13) = sfEv2Ev(13,13)
-     1                     + SP(0,nf,1,pt,alpha,beta) * wg
+            sfEv2Ev(13,1)  = sfEv2Ev(13,1)
+     1                     + SP(0,nf,4,pt,alpha,beta) * wg
+            sfEv2Ev(13,2)  = sfEv2Ev(13,2)
+     1                     + SP(0,nf,5,pt,alpha,beta) * wg
          elseif(nf.eq.6)then
             sfEv2Ev(6,6)   = sfEv2Ev(6,6)
      1                     + SP(0,nf,2,pt,alpha,beta) * wg
@@ -218,8 +218,8 @@
       if(Bs2Bs.eq."Ev2Ph")then
          do k=0,13
             do l=0,13
-               sfEv2Ph(k,l) = 0d0
-               do h=0,13
+               sfEv2Ph(k-7,l) = 0d0
+               do h=1,13
                   sfEv2Ph(k-7,l) = sfEv2Ph(k-7,l)
      1                           + Tev2phQCD(nf,k,h) * sfEv2Ev(h,l)
                enddo
@@ -228,9 +228,9 @@
       elseif(Bs2Bs.eq."Ph2Ph")then
          do k=0,13
             do l=0,13
-               sfEv2Ph(k,l) = 0d0
-               do h=0,13
-                  do g=0,13
+               sfPh2Ph(k-7,l-7) = 0d0
+               do h=1,13
+                  do g=1,13
                      sfPh2Ph(k-7,l-7) = sfPh2Ph(k-7,l-7)
      1                                + Tev2phQCD(nf,k,h)
      2                                * sfEv2Ev(h,g)

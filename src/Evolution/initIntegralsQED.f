@@ -19,11 +19,26 @@
 **
 *     Internal Variables
 *
-      integer alpha
+      integer alpha,beta
 *
-      do alpha=0,nin(igrid)-1
-         call RSLintegralsQED(nf,nl,0,alpha)
-      enddo
+      if(IsExt(igrid))then
+*
+*     If this is an external grid, compute the integrals for
+*     the entire splitting matrix ...
+*
+         do alpha=0,nin(igrid)-1
+            do beta=alpha,nin(igrid)-1
+               call RSLintegralsQED(nf,nl,alpha,beta)
+            enddo
+         enddo
+      else
+*
+*     ... otherwise only for the first line
+*
+         do alpha=0,nin(igrid)-1
+            call RSLintegralsQED(nf,nl,0,alpha)
+         enddo
+      endif
 *
       return
       end
