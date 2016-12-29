@@ -158,7 +158,6 @@
       do alpha=lx,ux
          do tau=lQ,uQ
             wg = w_int_xQ(tQ,idx,idQ,alpha,tau,x,Q2)
-            if(wg.eq.0d0) cycle
             StructureFunctionxQ = StructureFunctionxQ
      1           + wg * SFxQ(iproc,isf,icomp,alpha,tau)
          enddo
