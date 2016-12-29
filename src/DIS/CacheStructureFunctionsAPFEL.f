@@ -183,13 +183,21 @@
                
             else
                do alpha=0,nin(0)
-                  do icomp=3,7
+                  SFxQ(iproc,1,7,alpha,iq2) = 0d0
+                  SFxQ(iproc,2,7,alpha,iq2) = 0d0
+                  SFxQ(iproc,3,7,alpha,iq2) = 0d0
+                  do icomp=3,6
                      SFxQ(iproc,1,icomp,alpha,iq2) = F2(icomp,0,alpha)
                      SFxQ(iproc,2,icomp,alpha,iq2) = FL(icomp,0,alpha)
                      SFxQ(iproc,3,icomp,alpha,iq2) = F3(icomp,0,alpha)
+*
+                     SFxQ(iproc,1,7,alpha,iq2) =
+     1                    SFxQ(iproc,1,7,alpha,iq2) + F2(icomp,0,alpha)
+                     SFxQ(iproc,2,7,alpha,iq2) =
+     1                    SFxQ(iproc,2,7,alpha,iq2) + FL(icomp,0,alpha)
+                     SFxQ(iproc,3,7,alpha,iq2) =
+     1                    SFxQ(iproc,3,7,alpha,iq2) + F3(icomp,0,alpha)
                   enddo
-c                  write(6,*) "... ",iproc,dsqrt(Q2g(iq2),
-c     1                 SFxQ(iproc,1,6,alpha,iq2)
                enddo
             endif
          enddo

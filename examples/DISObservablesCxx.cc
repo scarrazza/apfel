@@ -29,14 +29,14 @@ int main()
   //APFEL::LockGrids(true);
   //APFEL::EnableEvolutionOperator(true);
   //APFEL::SetFFNS(3);
-  //APFEL::SetTheory("QavDS");
+  //APFEL::SetTheory("QUniD");
   //APFEL::SetTheory("QED");
   //APFEL::SetTheory("QUniD");
   //APFEL::EnableLeptonEvolution(true);
   //APFEL::SetTauMass(1e10);
   //APFEL::SetPerturbativeOrder(0);
   //APFEL::SetPDFEvolution("exactalpha");
-  //APFEL::SetPDFSet("NNPDF23_nlo_as_0119_qed.LHgrid");
+  //APFEL::SetPDFSet("NNPDF30_nlo_as_0118.LHgrid");
   //APFEL::SetPDFSet("MRST2004qed.LHgrid");
   //APFEL::SetNumberOfGrids(1);
   //APFEL::SetGridParameters(1,30,3,1e-5);
@@ -60,6 +60,7 @@ int main()
   // Load evolution
   double Q0 = sqrt(Q02) - eps;
   double Q  = sqrt(Q2);
+
   APFEL::ComputeStructureFunctionsAPFEL(Q0,Q);
 
   cout << scientific << setprecision(5) << endl;
@@ -112,7 +113,8 @@ int main()
   //
   // Cache Structure functions
   //
-      APFEL::CacheStructureFunctionsAPFEL(Q0);
+  APFEL::CacheStructureFunctionsAPFEL(Q0);
+
   cout << "   x   " 
        << setw(11) << "   F2light   " 
        << setw(11) << "   F2charm   " 
