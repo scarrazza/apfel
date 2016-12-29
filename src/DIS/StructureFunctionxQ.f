@@ -29,6 +29,7 @@
       integer iproc,isf,icomp
       integer idx,idQ
       integer alpha,tau
+      integer lx,ux,lQ,uQ
       integer isg,iQtrans,iQtransp
       integer tQ,ideg
       double precision Q2
@@ -142,10 +143,20 @@
 *
 *     Interpolation
 *
+      do alpha=0,nin(0)
+         if(xg(0,alpha).gt.x) goto 11
+      enddo
+ 11   lx = alpha - 1
+      ux = lx + idx + 1
+      do tau=0,nQ2g
+         if(Q2g(tau).gt.Q2) goto 12
+      enddo
+ 12   lQ = tau - 1 - tQ
+      uQ = lQ + idQ + 1
       StructureFunctionxQ = 0d0
       idx = inter_degree(0)
-      do alpha=0,nin(0)
-         do tau=0,nQ2g
+      do alpha=lx,ux
+         do tau=lQ,uQ
             wg = w_int_xQ(tQ,idx,idQ,alpha,tau,x,Q2)
             if(wg.eq.0d0) cycle
             StructureFunctionxQ = StructureFunctionxQ
