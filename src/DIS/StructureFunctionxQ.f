@@ -143,6 +143,7 @@
 *
 *     Interpolation
 *
+      idx = inter_degree(0)
       do alpha=0,nin(0)
          if(xg(0,alpha).gt.x) goto 11
       enddo
@@ -154,7 +155,6 @@
  12   lQ = tau - 1 - tQ
       uQ = lQ + idQ + 1
       StructureFunctionxQ = 0d0
-      idx = inter_degree(0)
       do alpha=lx,ux
          do tau=lQ,uQ
             wg = w_int_xQ(tQ,idx,idQ,alpha,tau,x,Q2)
