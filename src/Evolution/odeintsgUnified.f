@@ -366,6 +366,17 @@
             integ2(alpha,beta,5,4) = 0d0
             integ2(alpha,beta,5,5) = 0d0
 *     QED
+            integ2(alpha,beta,1,1) = integ2(alpha,beta,1,1)
+     1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,5)
+            integ2(alpha,beta,1,2) = integ2(alpha,beta,1,2)
+     1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,6)
+            integ2(alpha,beta,1,3) = integ2(alpha,beta,1,3)
+     1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,7)
+            integ2(alpha,beta,1,4) = integ2(alpha,beta,1,4)
+     1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,8)
+*
+            integ2(alpha,beta,2,1) = integ2(alpha,beta,2,1)
+     1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,9)
             integ2(alpha,beta,2,2) = integ2(alpha,beta,2,2)
      1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,10)
             integ2(alpha,beta,2,3) = integ2(alpha,beta,2,3)
@@ -375,6 +386,8 @@
             integ2(alpha,beta,2,5) = integ2(alpha,beta,2,5)
      1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,24)
 *
+            integ2(alpha,beta,3,1) = integ2(alpha,beta,3,1)
+     1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,13)
             integ2(alpha,beta,3,2) = integ2(alpha,beta,3,2)
      1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,14)
             integ2(alpha,beta,3,3) = integ2(alpha,beta,3,3)
@@ -382,6 +395,8 @@
             integ2(alpha,beta,3,4) = integ2(alpha,beta,3,4)
      1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,16)
 *
+            integ2(alpha,beta,4,1) = integ2(alpha,beta,4,1)
+     1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,17)
             integ2(alpha,beta,4,2) = integ2(alpha,beta,4,2)
      1           + bts * integralsQED(alpha,beta,coupQED,coupQCD,18)
             integ2(alpha,beta,4,3) = integ2(alpha,beta,4,3)
@@ -450,6 +465,17 @@
             integ1(alpha,5,4) = 0d0
             integ1(alpha,5,5) = 0d0
 *     QED
+            integ1(alpha,1,1) = integ1(alpha,1,1)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,5)
+            integ1(alpha,1,2) = integ1(alpha,1,2)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,6)
+            integ1(alpha,1,3) = integ1(alpha,1,3)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,7)
+            integ1(alpha,1,4) = integ1(alpha,1,4)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,8)
+*
+            integ1(alpha,2,1) = integ1(alpha,2,1)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,9)
             integ1(alpha,2,2) = integ1(alpha,2,2)
      1           + bts * integralsQED(0,alpha,coupQED,coupQCD,10)
             integ1(alpha,2,3) = integ1(alpha,2,3)
@@ -459,6 +485,8 @@
             integ1(alpha,2,5) = integ1(alpha,2,5)
      1           + bts * integralsQED(0,alpha,coupQED,coupQCD,24)
 *
+            integ1(alpha,3,1) = integ1(alpha,3,1)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,13)
             integ1(alpha,3,2) = integ1(alpha,3,2)
      1           + bts * integralsQED(0,alpha,coupQED,coupQCD,14)
             integ1(alpha,3,3) = integ1(alpha,3,3)
@@ -466,6 +494,8 @@
             integ1(alpha,3,4) = integ1(alpha,3,4)
      1           + bts * integralsQED(0,alpha,coupQED,coupQCD,16)
 *
+            integ1(alpha,4,1) = integ1(alpha,4,1)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,17)
             integ1(alpha,4,2) = integ1(alpha,4,2)
      1           + bts * integralsQED(0,alpha,coupQED,coupQCD,18)
             integ1(alpha,4,3) = integ1(alpha,4,3)
