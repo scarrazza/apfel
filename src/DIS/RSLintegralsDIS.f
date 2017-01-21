@@ -937,6 +937,7 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
       include "../commons/gridAlpha.h"
       include "../commons/wrapResDIS.h"
       include "../commons/integralsResDIS.h"
+      include "../commons/MassScheme.h"
 **
 *     Input Variables
 *
@@ -976,18 +977,29 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
 *
 *     Precompute integrals
 *
+*     ZM-VFNS
+*
+      if(MassScheme.eq."ZM-VFNS".or.MassScheme(1:5).eq."FONLL".or.
+     1   MassScheme(1:4).eq."FFNS".or.MassScheme(1:4).eq."FFN0")then
 *     F2
-      sf = 1
-      do k=1,2
-         SC2zmRes(igrid,k,beta,alpha,tau) =
-     1        dgauss(integrandsDISzmRes,a,b,eps)
-      enddo
+         sf = 1
+         do k=1,2
+            SC2zmRes(igrid,k,beta,alpha,tau) =
+     1           dgauss(integrandsDISzmRes,a,b,eps)
+         enddo
 *     FL
-      sf = 2
-      do k=1,2
-         SCLzmRes(igrid,k,beta,alpha,tau) =
-     1        dgauss(integrandsDISzmRes,a,b,eps)
-      enddo
+         sf = 2
+         do k=1,2
+            SCLzmRes(igrid,k,beta,alpha,tau) =
+     1           dgauss(integrandsDISzmRes,a,b,eps)
+         enddo
+      endif
+*
+*     FFNS
+*
+      if(MassScheme(1:4).eq."FFNS".or.MassScheme(1:5).eq."FONLL")then
+
+      endif
 *
       return
       end
