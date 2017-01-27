@@ -107,6 +107,7 @@
       ux = lx + n + 1
       do alpha=lx,ux
          wg = w_int_gen(n,alpha,x)
+         if(wg.eq.0d0) cycle
 *
          sfEv2Ev(1,1)   = sfEv2Ev(1,1)   + SP(0,nf,4,pt,alpha,beta) * wg
          sfEv2Ev(1,2)   = sfEv2Ev(1,2)   + SP(0,nf,5,pt,alpha,beta) * wg
