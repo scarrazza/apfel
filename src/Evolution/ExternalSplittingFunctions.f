@@ -7,7 +7,7 @@
 *     used or if one single external grid is provided.
 *
 ************************************************************************
-      function ExternalSplittingFunctions(Bs2Bs,pt,nf,i,j,x,beta)
+      subroutine ComputeExternalSplittingFunctions(Bs2Bs,pt,nf,x,beta)
 *
       implicit none
 *
@@ -20,7 +20,6 @@
 *     Input Variables
 *
       integer pt,nf
-      integer i,j
       integer beta
       double precision x
       character*5 Bs2Bs
@@ -30,16 +29,18 @@
       integer k,l,g,h
       integer n
       integer alpha
-      double precision sfEv2Ev(0:13,0:13)
-      double precision sfEv2Ph(-7:6,0:13)
-      double precision sfPh2Ph(-7:6,-7:6)
+      integer lx,ux
       double precision w_int_gen,wg
       double precision tol
       parameter(tol=1d-10)
-**
-*     Output Variables
-*
-      double precision ExternalSplittingFunctions
+
+      double precision sfEv2Ev(0:13,0:13)
+      double precision sfEv2Ph(-7:6,0:13)
+      double precision sfPh2Ph(-7:6,-7:6)
+      common / ExtSplittingFuncsAPFEL / sfEv2Ev,sfEv2Ph,sfPh2Ph
+
+      character*5 Bs2BsC
+      common / ExtSplittingFuncsBasisAPFEL / Bs2BsC
 *
 *     Check whether the evolution operator has been actually computed
 *
@@ -76,41 +77,6 @@
          call exit(-10)
       endif
 *
-      if(Bs2Bs.eq."Ev2Ev")then
-         if(i.lt.0.or.i.gt.13)then
-            write(6,*) "In ExternalSplittingFunctions.f:"
-            write(6,*) "Invalid index, i =",i
-            call exit(-10)
-         endif
-         if(j.lt.0.or.j.gt.13)then
-            write(6,*) "In ExternalSplittingFunctions.f:"
-            write(6,*) "Invalid index, j =",j
-            call exit(-10)
-         endif
-      elseif(Bs2Bs.eq."Ev2Ph")then
-         if(i.lt.-7.or.i.gt.6)then
-            write(6,*) "In ExternalSplittingFunctions.f:"
-            write(6,*) "Invalid index, i =",i
-            call exit(-10)
-         endif
-         if(j.lt.0.or.j.gt.13)then
-            write(6,*) "In ExternalSplittingFunctions.f:"
-            write(6,*) "Invalid index, j =",j
-            call exit(-10)
-         endif
-      elseif(Bs2Bs.eq."Ph2Ph")then
-         if(i.lt.-7.or.i.gt.6)then
-            write(6,*) "In ExternalSplittingFunctions.f:"
-            write(6,*) "Invalid index, i =",i
-            call exit(-10)
-         endif
-         if(j.lt.-7.or.j.gt.6)then
-            write(6,*) "In ExternalSplittingFunctions.f:"
-            write(6,*) "Invalid index, j =",j
-            call exit(-10)
-         endif
-      endif
-*
       if(x.lt.xmin(1)-tol.or.x.gt.xmax+tol)then
          write(6,*) "In ExternalSplittingFunctions.f:"
          write(6,*) "Invalid value of x =",x
@@ -126,6 +92,7 @@
 *
 *     Construct splitting function matrix in the Ev2Ev bases
 *
+      Bs2BsC = Bs2Bs
       do k=0,13
          do l=0,13
             sfEv2Ev(k,l) = 0d0
@@ -134,8 +101,12 @@
 *
       n = inter_degree(0)
       do alpha=0,beta
+         if(xg(0,alpha).gt.x) goto 11
+      enddo
+ 11   lx = alpha - 1
+      ux = lx + n + 1
+      do alpha=lx,ux
          wg = w_int_gen(n,alpha,x)
-         if(wg.eq.0d0) cycle
 *
          sfEv2Ev(1,1)   = sfEv2Ev(1,1)   + SP(0,nf,4,pt,alpha,beta) * wg
          sfEv2Ev(1,2)   = sfEv2Ev(1,2)   + SP(0,nf,5,pt,alpha,beta) * wg
@@ -241,11 +212,37 @@
          enddo
       endif
 *
-      if(Bs2Bs.eq."Ev2Ev")then
+      return
+      end
+*
+************************************************************************
+      function ExternalSplittingFunctions(i,j)
+*
+      implicit none
+**
+*     Input Variables
+*
+      integer i,j
+**
+*     Internal Variables
+*
+      double precision sfEv2Ev(0:13,0:13)
+      double precision sfEv2Ph(-7:6,0:13)
+      double precision sfPh2Ph(-7:6,-7:6)
+      common / ExtSplittingFuncsAPFEL / sfEv2Ev,sfEv2Ph,sfPh2Ph
+*
+      character*5 Bs2BsC
+      common / ExtSplittingFuncsBasisAPFEL / Bs2BsC
+**
+*     Output Variables
+*
+      double precision ExternalSplittingFunctions
+*
+      if(Bs2BsC.eq."Ev2Ev")then
          ExternalSplittingFunctions = sfEv2Ev(i,j)
-      elseif(Bs2Bs.eq."Ev2Ph")then
+      elseif(Bs2BsC.eq."Ev2Ph")then
          ExternalSplittingFunctions = sfEv2Ph(i,j)
-      elseif(Bs2Bs.eq."Ph2Ph")then
+      elseif(Bs2BsC.eq."Ph2Ph")then
          ExternalSplittingFunctions = sfPh2Ph(i,j)
       endif
 *

@@ -103,11 +103,16 @@ namespace APFEL {
     return fexternalevolutionoperator(cfname,&i,&j,&x,&beta);
   }
 
-  double ExternalSplittingFunctions(const std::string& fname, int pt, int nf, int i, int j, double x, int beta)
+  void ComputeExternalSplittingFunctions(const std::string& fname, int pt, int nf, double x, int beta)
   {
     char cfname[SIZE+1];
     strncpy(cfname, fname.c_str(), SIZE);
-    return fexternalsplittingfunctions(cfname,&pt,&nf,&i,&j,&x,&beta);
+    return fcomputeexternalsplittingfunctions(cfname,&pt,&nf,&x,&beta);
+  }
+
+  double ExternalSplittingFunctions(int i, int j)
+  {
+    return fexternalsplittingfunctions(&i,&j);
   }
 
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname)
