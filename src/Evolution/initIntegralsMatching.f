@@ -12,6 +12,8 @@
 *
       include "../commons/grid.h"
       include "../commons/TimeLike.h"
+      include "../commons/Smallx.h"
+      include "../commons/ipt.h"
 **
 *     Input Variables
 *
@@ -40,10 +42,24 @@
                   call RSLintegralsMatching(nf,alpha,beta)
                enddo
             enddo
+            if(Smallx.and.nf.lt.6)then
+               call initHELL(LogAcc,ipt)
+               do alpha=0,nin(igrid)-1
+                  do beta=alpha,nin(igrid)-1
+                     call RSLintegralsMatchingRes(nf,alpha,beta)
+                  enddo
+               enddo
+            endif
          else
             do alpha=0,nin(igrid)-1
                call RSLintegralsMatching(nf,0,alpha)
             enddo
+            if(Smallx.and.nf.lt.6)then
+               call initHELL(LogAcc,ipt)
+               do alpha=0,nin(igrid)-1
+                  call RSLintegralsMatchingRes(nf,0,alpha)
+               enddo
+            endif
          endif
       endif
 *

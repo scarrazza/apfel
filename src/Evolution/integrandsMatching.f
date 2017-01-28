@@ -198,3 +198,60 @@ c      integrandsMatchingT = MR(k,wipt) * fR + MS(k,wipt) * fS
 *
       return
       end
+*
+************************************************************************
+*
+*     Integrands for the small-x resummed matching conditions.
+*     The following routine calls the function "xDeltaK" that is the
+*     Fortran wrapper of the c++ function provided by the Bonvini's
+*     code HELL.
+*     The input variables of the function "xDeltaP" are:
+*
+*        xDeltaK(nf,k,alphas,y,m_Q_ratio)
+*
+*     where:
+*     - k   = 1: Hg, 2: Hq,
+*     - as  = value of alphas / ( 4 * pi ),
+*     - y   = Bjorken's variable.
+*
+************************************************************************
+      function integrandsMatchingRes(y)
+*
+      implicit none
+*
+      include "../commons/consts.h"
+      include "../commons/grid.h"
+      include "../commons/gridAlpha.h"
+      include "../commons/wrapRes.h"
+      include "../commons/ThresholdAlphaQCD.h"
+      include "../commons/m2th.h"
+**
+*     Input Variables
+*
+      double precision y
+**
+*     Internal Variables
+*
+      double precision z,w_int,fR
+      double precision xDeltaK,alphas,moQ
+**
+*     Output Variables
+*
+      double precision integrandsMatchingRes
+*
+*     Interpolant functions
+*
+      z = xg(igrid,wbeta) / y
+*
+      fR = w_int(inter_degree(igrid),walpha,z)
+*
+*     Contructing integrands
+*
+      alphas = 4d0 * pi * asthUp(wnf)
+c      alphas = 4d0 * pi * asthDown(wnf)
+      moQ = 1d0 / dsqrt(k2th(wnf))
+      integrandsMatchingRes = xDeltaK(wnf,k,alphas,y,moQ) * fR
+*
+      return
+      end
+

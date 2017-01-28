@@ -23,7 +23,7 @@
       integer tau,inf,ig
       integer nfi,nff
       integer nsubgrids,nas(4),ncount,nmax
-      double precision a_QCD,amax,amin,step
+      double precision a_QCD,amax,amin,step,muR2
       double precision lbound(4),ubound(4)
       double precision eps
       parameter(eps=1d-12)
@@ -204,6 +204,12 @@
             enddo
          endif
       endif
+*
+*     Compute corresponding values of Q
+*
+      do tau=0,na
+         qag(tau) = dsqrt(muR2(ag(tau)))
+      enddo
 *
       return
       end

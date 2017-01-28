@@ -949,25 +949,20 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
       double precision dgauss,a,b,eps
       double precision integrandsDISzmRes
       external integrandsDISzmRes
+      double precision integrandsDISNCcharmRes
+      external integrandsDISNCcharmRes
+      double precision integrandsDISNCcharm0Res
+      external integrandsDISNCcharm0Res
       parameter(eps=1d-7)
-*
-*     Initialize Integrals
-*
-      do k=1,2
-         SC2zmRes(igrid,k,beta,alpha,tau) = 0d0
-         SCLzmRes(igrid,k,beta,alpha,tau) = 0d0
-      enddo
 *
 *     Adjustment od the bounds of the integrals
 *
-      if(alpha.lt.beta)then
-         return
-      else
-         bound = alpha-inter_degree(igrid)
-         if(alpha.lt.inter_degree(igrid)) bound = 0
-         a = max(xg(igrid,beta),xg(igrid,beta)/xg(igrid,alpha+1))
-         b = min(1d0,xg(igrid,beta)/xg(igrid,bound))
-      endif
+      if(alpha.lt.beta) return
+*
+      bound = alpha-inter_degree(igrid)
+      if(alpha.lt.inter_degree(igrid)) bound = 0
+      a = max(xg(igrid,beta),xg(igrid,beta)/xg(igrid,alpha+1))
+      b = min(1d0,xg(igrid,beta)/xg(igrid,bound))
 *
 *     Variables needed for wrapping the integrand functions
 *
@@ -980,7 +975,14 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
 *     ZM-VFNS
 *
       if(MassScheme.eq."ZM-VFNS".or.MassScheme(1:5).eq."FONLL".or.
-     1   MassScheme(1:4).eq."FFNS".or.MassScheme(1:4).eq."FFN0")then
+     1     MassScheme(1:4).eq."FFNS".or.MassScheme(1:4).eq."FFN0")then
+*
+*     Initialize Integrals
+*
+         do k=1,2
+            SC2zmRes(igrid,k,beta,alpha,tau) = 0d0
+            SCLzmRes(igrid,k,beta,alpha,tau) = 0d0
+         enddo
 *     F2
          sf = 1
          do k=1,2
@@ -998,7 +1000,51 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
 *     FFNS
 *
       if(MassScheme(1:4).eq."FFNS".or.MassScheme(1:5).eq."FONLL")then
-
+*
+*     Initialize Integrals
+*
+         do k=1,2
+            SC2charmNCRes(igrid,k,beta,alpha,tau) = 0d0
+            SCLcharmNCRes(igrid,k,beta,alpha,tau) = 0d0
+         enddo
+*     F2
+         sf = 1
+         do k=1,2
+            SC2charmNCRes(igrid,k,beta,alpha,tau) =
+     1           dgauss(integrandsDISNCcharmRes,a,b,eps)
+         enddo
+*     FL
+         sf = 2
+         do k=1,2
+            SCLcharmNCRes(igrid,k,beta,alpha,tau) =
+     1           dgauss(integrandsDISNCcharmRes,a,b,eps)
+         enddo
+      endif
+*
+*     FFN0
+*
+      if(MassScheme(1:4).eq."FFN0".or.MassScheme(1:5).eq."FONLL")then
+*
+*     Initialize Integrals
+*
+         do k=1,2
+            SC2charm0NCRes(igrid,k,beta,alpha,tau) = 0d0
+            SCLcharm0NCRes(igrid,k,beta,alpha,tau) = 0d0
+         enddo
+*     F2
+         sf = 1
+         do k=1,2
+            SC2charm0NCRes(igrid,k,beta,alpha,tau) =
+     1           SC2zmRes(igrid,k,beta,alpha,tau)
+     2           + dgauss(integrandsDISNCcharm0Res,a,b,eps)
+         enddo
+*     FL (What do I do here???)
+c         sf = 2
+c         do k=1,2
+c            SCLcharm0NCRes(igrid,k,beta,alpha,tau) =
+c     1           SCLzmRes(igrid,k,beta,alpha,tau)
+c     2           + dgauss(integrandsDISNCcharm0Res,a,b,eps)
+c         enddo
       endif
 *
       return

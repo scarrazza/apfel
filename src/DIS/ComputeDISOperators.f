@@ -415,6 +415,23 @@ c            damp(4) = 1d0
                         enddo
                      endif
 *
+*     Small-x resummed contributions
+*
+                     if(Smallx)then
+                        C2g(4) = C2g(4)
+     1                 + sxc1 * SC2charm0NCRes(jgrid,1,alpha,beta,tau)
+     2                 + sxc2 * SC2charm0NCRes(jgrid,1,alpha,beta,tau+1)
+                        C2ps(4) = C2ps(4)
+     1                 + sxc1 * SC2charm0NCRes(jgrid,2,alpha,beta,tau)
+     2                 + sxc2 * SC2charm0NCRes(jgrid,2,alpha,beta,tau+1)
+                        CLg(4) = CLg(4)
+     1                 + sxc1 * SCLcharm0NCRes(jgrid,1,alpha,beta,tau)
+     2                 + sxc2 * SCLcharm0NCRes(jgrid,1,alpha,beta,tau+1)
+                        CLps(4) = CLps(4)
+     1                 + sxc1 * SCLcharm0NCRes(jgrid,2,alpha,beta,tau)
+     2                 + sxc2 * SCLcharm0NCRes(jgrid,2,alpha,beta,tau+1)
+                     endif
+*
 *     Include intrinsic charm contributions if needed
 *
                      if(IntrinsicCharm)then
@@ -531,6 +548,23 @@ c            damp(4) = 1d0
                               enddo
                            endif
                         enddo
+                     endif
+*
+*     Small-x resummed contributions
+*
+                     if(Smallx)then
+                        C2g(4) = C2g(4)
+     1                  + sxc1 * SC2charmNCRes(jgrid,1,alpha,beta,tau)
+     2                  + sxc2 * SC2charmNCRes(jgrid,1,alpha,beta,tau+1)
+                        C2ps(4) = C2ps(4)
+     1                  + sxc1 * SC2charmNCRes(jgrid,2,alpha,beta,tau)
+     2                  + sxc2 * SC2charmNCRes(jgrid,2,alpha,beta,tau+1)
+                        CLg(4) = CLg(4)
+     1                  + sxc1 * SCLcharmNCRes(jgrid,1,alpha,beta,tau)
+     2                  + sxc2 * SCLcharmNCRes(jgrid,1,alpha,beta,tau+1)
+                        CLps(4) = CLps(4)
+     1                  + sxc1 * SCLcharmNCRes(jgrid,2,alpha,beta,tau)
+     2                  + sxc2 * SCLcharmNCRes(jgrid,2,alpha,beta,tau+1)
                      endif
 *
 *     Include intrinsic charm contributions if needed
@@ -720,6 +754,35 @@ c            damp(4) = 1d0
                               enddo
                            endif
                         enddo
+                     endif
+*
+*     Small-x resummed contributions
+*
+                     if(Smallx)then
+                        C2g(4) = C2g(4)
+     1                 + sxc1 * SC2charmNCRes(jgrid,1,alpha,beta,tau)
+     2                 + sxc2 * SC2charmNCRes(jgrid,1,alpha,beta,tau+1)
+     3                 - damp(4) * 
+     1                 (sxc1 * SC2charm0NCRes(jgrid,1,alpha,beta,tau)
+     2                 +sxc2 * SC2charm0NCRes(jgrid,1,alpha,beta,tau+1))
+                        C2ps(4) = C2ps(4)
+     1                 + sxc1 * SC2charmNCRes(jgrid,2,alpha,beta,tau)
+     2                 + sxc2 * SC2charmNCRes(jgrid,2,alpha,beta,tau+1)
+     3                 - damp(4) * 
+     1                 (sxc1 * SC2charm0NCRes(jgrid,2,alpha,beta,tau)
+     2                 +sxc2 * SC2charm0NCRes(jgrid,2,alpha,beta,tau+1))
+                        CLg(4) = CLg(4)
+     1                 + sxc1 * SCLcharmNCRes(jgrid,1,alpha,beta,tau)
+     2                 + sxc2 * SCLcharmNCRes(jgrid,1,alpha,beta,tau+1)
+     3                 - damp(4) * 
+     1                 (sxc1 * SCLcharm0NCRes(jgrid,1,alpha,beta,tau)
+     2                 +sxc2 * SCLcharm0NCRes(jgrid,1,alpha,beta,tau+1))
+                        CLps(4) = CLps(4)
+     1                 + sxc1 * SCLcharmNCRes(jgrid,2,alpha,beta,tau)
+     2                 + sxc2 * SCLcharmNCRes(jgrid,2,alpha,beta,tau+1)
+     3                 - damp(4) * 
+     1                 (sxc1 * SCLcharm0NCRes(jgrid,2,alpha,beta,tau)
+     2                 +sxc2 * SCLcharm0NCRes(jgrid,2,alpha,beta,tau+1))
                      endif
 *
 *     Include intrinsic charm contributions if needed

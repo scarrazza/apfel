@@ -1,5 +1,5 @@
 *     -*-fortran-*-
 
-      integer k,walpha,wbeta,wtau
+      integer k,walpha,wbeta,wtau,wnf
 *
-      common / WrappingVariablesResAPFEL / k,walpha,wbeta,wtau
+      common / WrappingVariablesResAPFEL / k,walpha,wbeta,wtau,wnf

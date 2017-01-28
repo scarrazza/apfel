@@ -490,7 +490,14 @@ namespace HELLx {
     return deltaMCLg(nf, as, x, m_Q_ratio, matched_to_fixed_order) * CF/CA;
   }
 
+  double HELLx::deltaKhg (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
+    check_nf(nf);
+    return sxD[nf-3]->deltaKhg(as, x, m_Q_ratio, matched_to_fixed_order);
 
+  }
+  double HELLx::deltaKhq (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
+    return deltaKhg(nf, as, x, m_Q_ratio, matched_to_fixed_order) * CF/CA;
+  }
 
 
 

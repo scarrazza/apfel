@@ -159,11 +159,11 @@ namespace HELLx {
     HELLxnf* GetHELLxnf(int nf);
     //
     // Delta P
-    sqmatrix<double>   DeltaP(int nf, double as, double x,  Order matched_to_fixed_order = NLO);
+    sqmatrix<double> DeltaP(int nf, double as, double x,  Order matched_to_fixed_order = NLO);
     //
     // matching condition
-    double deltaKhg  (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);
-    double deltaKhq  (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);
+    double deltaKhg (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);
+    double deltaKhq (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);
     //
     // Delta Coefficient functions (the quark coefficients are just CF/CA times the gluon coefficients)
     double deltaC2g  (int nf, double as, double x, Order matched_to_fixed_order = NLO);  // DIS F2

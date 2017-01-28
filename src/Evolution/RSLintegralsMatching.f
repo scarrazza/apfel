@@ -195,3 +195,62 @@
 *
       return
       end
+*
+************************************************************************
+*
+*     Integrals of the small-x resummed matching conditions.
+*
+************************************************************************
+      subroutine RSLintegralsMatchingRes(nf,beta,alpha)
+*
+      implicit none
+*
+      include "../commons/grid.h"
+      include "../commons/gridAlpha.h"
+      include "../commons/wrapRes.h"
+      include "../commons/integrals.h"
+**
+*     Input Variables
+*
+      integer nf,beta,alpha
+**
+*     Internal Variables
+*
+      integer bound
+      double precision dgauss,a,b,eps
+      double precision integrandsMatchingRes
+      external integrandsMatchingRes
+      parameter(eps=1d-7)
+*
+*     Adjustment of the bounds of the integrals
+*
+      if(alpha.lt.beta)then
+         return
+      else
+         bound = alpha - inter_degree(igrid)
+         if(alpha.lt.inter_degree(igrid)) bound = 0
+         a = max(xg(igrid,beta),xg(igrid,beta)/xg(igrid,alpha+1))
+         b = min(1d0,xg(igrid,beta)/xg(igrid,bound))
+      endif
+*
+*     Variables needed for wrapping the integrand functions
+*
+      wnf    = nf
+      walpha = alpha
+      wbeta  = beta
+*
+*     Precompute integrals and put them in the LO slot of
+*     the matching condition array because they don't have to be
+*     multiplied by alpha_s.
+*
+*     Kqq
+      k = 2
+      SM(igrid,nf,2,0,beta,alpha) = SM(igrid,nf,2,0,beta,alpha)
+     1     + dgauss(integrandsMatchingRes,a,b,eps)
+*     Kqg
+      k = 1
+      SM(igrid,nf,3,0,beta,alpha) = SM(igrid,nf,3,0,beta,alpha)
+     1     + dgauss(integrandsMatchingRes,a,b,eps)
+*
+      return
+      end
