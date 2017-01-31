@@ -281,7 +281,7 @@ ccccccccccccc
       function fheavyquarkthreshold(i)
       integer i
       double precision fheavyquarkthreshold
-      fheavyquarkthreshold = HavyQuarkThreshold(i)
+      fheavyquarkthreshold = HeavyQuarkThreshold(i)
       return
       end
 
