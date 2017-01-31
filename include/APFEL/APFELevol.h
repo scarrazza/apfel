@@ -95,6 +95,9 @@ namespace APFEL {
   /// Returns Heavy Quark Threholds
   double GetThreshold(int);
 
+  /// Returns Heavy Quark Threholds (identical to GetThreshold)
+  double HeavyQuarkThreshold(int);
+
   /// Returns the N-th Mellin moment of the i-th PDF 
   /// in the physical basis at the final scale
   double NPDF(int i, int N);

@@ -231,6 +231,11 @@ namespace APFEL {
     return fgetthreshold(&i);
   }
 
+  double HeavyQuarkThreshold(int i)
+  {
+    return fheavyquarkthreshold(&i);
+  }
+
   void SetAlphaQCDRef(double alpharef, double Qref)
   {
     fsetalphaqcdref(&alpharef,&Qref);

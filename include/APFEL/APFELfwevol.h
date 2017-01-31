@@ -127,6 +127,9 @@ extern "C" {
 #define fgetthreshold FC_FUNC(getthreshold,GETTHRESHOLD)
   double fgetthreshold(int*);
 
+#define fheavyquarkthreshold FC_FUNC(heavyquarkthreshold,HEAVYQUARKTHRESHOLD)
+  double fheavyquarkthreshold(int*);
+
 #define fsetalphaqcdref FC_FUNC(setalphaqcdref,SETALPHAQCDREF)
   void fsetalphaqcdref(double*,double*);
 

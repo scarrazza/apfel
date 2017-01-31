@@ -278,6 +278,14 @@ ccccccccccccc
       end
 
 ccccccccccccc      
+      function fheavyquarkthreshold(i)
+      integer i
+      double precision fheavyquarkthreshold
+      fheavyquarkthreshold = HavyQuarkThreshold(i)
+      return
+      end
+
+ccccccccccccc      
       subroutine fsetalphaqcdref(alpharef,Qref)
       double precision alpharef,Qref      
       call SetAlphaQCDRef(alpharef,Qref)
