@@ -111,7 +111,7 @@
 *
          sfEv2Ev(1,1)   = sfEv2Ev(1,1)   + SP(0,nf,4,pt,alpha,beta) * wg
          sfEv2Ev(1,2)   = sfEv2Ev(1,2)   + SP(0,nf,5,pt,alpha,beta) * wg
-         sfEv2Ev(2,1)   = sfEv2Ev(2,2)   + SP(0,nf,6,pt,alpha,beta) * wg
+         sfEv2Ev(2,1)   = sfEv2Ev(2,1)   + SP(0,nf,6,pt,alpha,beta) * wg
          sfEv2Ev(2,2)   = sfEv2Ev(2,2)   + SP(0,nf,7,pt,alpha,beta) * wg
          sfEv2Ev(3,3)   = sfEv2Ev(3,3)   + SP(0,nf,3,pt,alpha,beta) * wg
          sfEv2Ev(4,4)   = sfEv2Ev(4,4)   + SP(0,nf,2,pt,alpha,beta) * wg
