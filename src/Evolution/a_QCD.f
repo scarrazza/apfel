@@ -783,9 +783,13 @@ c         kappa = 1d0                          ! mu_R / mu_F
             snf = 0
          endif
 *
-         integral = integral + intBeta(nfi,ipt,as0,asthDown(nfi+snf))
-*
-         as0 = asthUp(nfi+snf)
+         if(nff.gt.nfi)then
+            integral = integral + intBeta(nfi,ipt,as0,asthDown(nfi+snf))
+            as0 = asthUp(nfi+snf)
+         else
+            integral = integral + intBeta(nfi,ipt,as0,asthUp(nfi))
+            as0 = asthDown(nfi)
+         endif
          nfi  = nfi + dnf
          goto 10
       endif
