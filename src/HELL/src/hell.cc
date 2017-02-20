@@ -25,6 +25,7 @@
 
 #include "HELL/include/hell.hh"
 
+
 using namespace std;
 
 
@@ -314,6 +315,13 @@ namespace HELLx {
     xT[k+1]->eval(x,xdPgg[1],xdPqg[1]);
     double dGgg = (xdPgg[0]+factor*(xdPgg[1]-xdPgg[0]))/x;
     double dGqg = (xdPqg[0]+factor*(xdPqg[1]-xdPqg[0]))/x;
+    if(matched_to_fixed_order == NNLO) {
+      // this part has to be completed
+      //double fixedorderpole = as/M_PI * (CA/x - (11*CA+2*_nf*(1-2*CF/CA))/12.) *as/M_PI *_nf/3.  * pow(1-x,2.) * pow(1-sqrt(x),6.);
+      //double fixedorderpole = as/M_PI *  CA/x                                  *as/M_PI *_nf/3.  * pow(1-x,2.) * pow(1-sqrt(x),6.);
+      //dGgg += fixedorderpole * (43./18.-ZETA2);
+      //dGqg += fixedorderpole * (-1./3.);
+    }
     return sqmatrix<double>(dGgg, CF/CA*dGgg, dGqg, CF/CA*dGqg);
   }
   double HELLxnf::DeltaC(double as, double x, Order matched_to_fixed_order, string id) {
@@ -329,10 +337,10 @@ namespace HELLx {
     dCg["F2"] = (xdC2g[0]+factor*(xdC2g[1]-xdC2g[0]))/x;
     dCg["FL"] = (xdCLg[0]+factor*(xdCLg[1]-xdCLg[0]))/x;
     if(matched_to_fixed_order == NLO) {
-      double fixedorderpole = as/M_PI * (CA/x - (11*CA+2*_nf*(1-2*CF/CA))/12.) *as/M_PI *_nf/3.  * pow(1-x,2.) * pow(1-sqrt(x),6.);
-      //double fixedorderpole = as/M_PI *  CA/x                                  *as/M_PI *_nf/3.  * pow(1-x,2.) * pow(1-sqrt(x),6.);
-      dCg["F2"] += fixedorderpole * (43./18.-ZETA2);
-      dCg["FL"] += fixedorderpole * (-1./3.);
+      double fixedorderpole = as/M_PI * (CA/x - (11*CA+2*_nf*(1-2*CF/CA))/12.) *as/M_PI /3.  * pow(1-x,2.) * pow(1-sqrt(x),6.);
+      //double fixedorderpole = as/M_PI *  CA/x                                  *as/M_PI /3.  * pow(1-x,2.) * pow(1-sqrt(x),6.);
+      dCg["F2"] += fixedorderpole * _nf*(43./18.-ZETA2);
+      dCg["FL"] += fixedorderpole * _nf*(-1./3.);
     }
     return dCg[id];
   }
@@ -356,14 +364,14 @@ namespace HELLx {
     dCg["F2m"] = (xdC2g[0]+factor*(xdC2g[1]-xdC2g[0]))/x;
     dCg["FLm"] = (xdCLg[0]+factor*(xdCLg[1]-xdCLg[0]))/x;
     if(matched_to_fixed_order == NLO) {
-      double fixedorderpole = as/M_PI * (CA/x - (11*CA+2*_nf*(1-2*CF/CA))/12.) *as/M_PI *_nf/3.  * pow(1-x,2.) * pow(1-sqrt(x),6.);
-      //double fixedorderpole = as/M_PI *  CA/x                                  *as/M_PI *_nf/3.  * pow(1-x,2.) * pow(1-sqrt(x),6.);
+      double fixedorderpole = as/M_PI * (CA/x - (11*CA+2*_nf*(1-2*CF/CA))/12.) *as/M_PI /3.  * pow(1-x,2.) * pow(1-sqrt(x),6.);
+      //double fixedorderpole = as/M_PI *  CA/x                                  *as/M_PI /3.  * pow(1-x,2.) * pow(1-sqrt(x),6.);
       double mQ2 = mQ*mQ;
       double lmQ2 = log(mQ2);
       double sq = sqrt(1+4*mQ2);
       dCg["Khg"] += fixedorderpole * ( -(28.+30.*lmQ2+9.*lmQ2*lmQ2)/18. );
-      dCg["F2m"] += fixedorderpole * ( (5+3*log(mQ2))/6 + (1-mQ2)*HPLmp(1./sq)/sq + ArcCsch(2*sqrt(mQ2))*(13-10*mQ2+6*(1-mQ2)*log(mQ2))/3/sq );
-      dCg["FLm"] += fixedorderpole * ( (-1+12*mQ2+3*(1+6*mQ2)*log(mQ2))/3/(1+4*mQ2) - 4*mQ2*(1+3*mQ2)*HPLmp(1./sq)/(1+4*mQ2)/sq + ArcCsch(2*sqrt(mQ2))*(6+8*mQ2*(1-6*mQ2)-24*mQ2*(1+3*mQ2)*log(mQ2))/3/(1+4*mQ2)/sq );
+      dCg["F2m"] += fixedorderpole * ( (5+3*lmQ2)/6 - (1-mQ2)*HPLmp(-1./sq)/sq + ArcCsch(2*sqrt(mQ2))*(13-10*mQ2+6*(1-mQ2)*lmQ2)/3/sq );
+      dCg["FLm"] += fixedorderpole * ( (-1+12*mQ2+3*(1+6*mQ2)*lmQ2)/3/(1+4*mQ2) + 4*mQ2*(1+3*mQ2)*HPLmp(-1./sq)/(1+4*mQ2)/sq + ArcCsch(2*sqrt(mQ2))*(6+8*mQ2*(1-6*mQ2)-24*mQ2*(1+3*mQ2)*lmQ2)/3/(1+4*mQ2)/sq );
     }
     return dCg[id];
   }
@@ -391,6 +399,8 @@ namespace HELLx {
   }
 
   double HELLxnf::deltaMC2g (double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
+    if(4*m_Q_ratio*x/(1-x)>1) return 0;
+    if(m_Q_ratio < 0.002) return deltaC2g(as, x, matched_to_fixed_order)/_nf + deltaKhg(as, x, m_Q_ratio, matched_to_fixed_order);
     return DeltaCm(as, x, matched_to_fixed_order, "F2m", m_Q_ratio);
   }
   double HELLxnf::deltaMC2q (double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
@@ -398,6 +408,8 @@ namespace HELLx {
   }
 
   double HELLxnf::deltaMCLg (double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
+    if(4*m_Q_ratio*x/(1-x)>1) return 0;
+    if(m_Q_ratio < 0.002) return deltaCLg(as, x, matched_to_fixed_order)/_nf;
     return DeltaCm(as, x, matched_to_fixed_order, "FLm", m_Q_ratio);
   }
   double HELLxnf::deltaMCLq (double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
@@ -466,6 +478,18 @@ namespace HELLx {
     return deltaCLg(nf, as, x, matched_to_fixed_order) * CF/CA;
   }
 
+  double HELLx::deltaKhg (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
+    check_nf(nf);
+    if(nf==6) { // Please check this!!!!
+      cout << "You requested matching function nf=6 scheme. Isn't it too much?" << endl;
+      return 0;//deltaC2g(nf, as, x, matched_to_fixed_order);
+    }
+    return sxD[nf-3]->deltaKhg(as, x, m_Q_ratio, matched_to_fixed_order);
+  }
+  double HELLx::deltaKhq (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
+    return deltaKhg(nf, as, x, m_Q_ratio, matched_to_fixed_order) * CF/CA;
+  }
+
   double HELLx::deltaMC2g (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
     check_nf(nf);
     if(nf==6) {
@@ -490,14 +514,7 @@ namespace HELLx {
     return deltaMCLg(nf, as, x, m_Q_ratio, matched_to_fixed_order) * CF/CA;
   }
 
-  double HELLx::deltaKhg (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
-    check_nf(nf);
-    return sxD[nf-3]->deltaKhg(as, x, m_Q_ratio, matched_to_fixed_order);
 
-  }
-  double HELLx::deltaKhq (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order) {
-    return deltaKhg(nf, as, x, m_Q_ratio, matched_to_fixed_order) * CF/CA;
-  }
 
 
 
