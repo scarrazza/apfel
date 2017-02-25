@@ -363,3 +363,9 @@ ccccccccccccc
       character outputfile*(*)
       call ComputeHardCrossSectionsDY(inputfile,outputfile)
       end subroutine fcomputehardcrosssectionsdy
+
+ccccccccccccc      
+      subroutine fenablesfnloqedcorrections(qedsfc)
+      logical qedsfc
+      call EnableSFNLOQEDCorrections(qedsfc)
+      end subroutine fenablesfnloqedcorrections

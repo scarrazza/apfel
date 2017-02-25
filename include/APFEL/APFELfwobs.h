@@ -164,10 +164,13 @@ extern "C" {
   double ffkobservables(double*,double*,double*);
 
 #define fcomputefktables FC_FUNC(computefktables,COMPUTEFKTABLES)
-  void fcomputefktables(char*,char*,double*,int*);    
+  void fcomputefktables(char*,char*,double*,int*);
 
 #define fcomputehardcrosssectionsdy FC_FUNC(computehardcrosssectionsdy,COMPUTEHARDCROSSSECTIONDY)
-  void fcomputehardcrosssectionsdy(char*,char*);    
+  void fcomputehardcrosssectionsdy(char*,char*);
+
+#define fenablesfnloqedcorrections FC_FUNC(enablesfnloqedcorrections,ENABLESFNLOQEDCORRECTIONS)
+  void fenablesfnloqedcorrections(int*);
 
 }
 

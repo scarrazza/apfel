@@ -30,6 +30,7 @@
       include "../commons/EWCouplings.h"
       include "../commons/DynScVar.h"
       include "../commons/IntrinsicCharm.h"
+      include "../commons/NLOQEDCorrections.h"
 *
 *     Print welcome message and report of the parameters (if enabled)
 *
@@ -98,7 +99,12 @@
             write(6,*) "Intrinsic charm enabled"
          else
             write(6,*) "Intrinsic charm disabled"
-         endif         
+         endif
+*
+         if(.not.SFNLOQED)then
+            write(6,*) "NLO QED Corrections disabled",
+     1           " in the stucture functions"
+         endif
          write(6,*) achar(27)//"[0m"
       endif
 *

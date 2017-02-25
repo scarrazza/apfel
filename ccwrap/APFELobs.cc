@@ -316,4 +316,10 @@ namespace APFEL {
     
     fcomputehardcrosssectionsdy(cinputfile,coutputfile);    
   }
+
+  void EnableSFNLOQEDCorrections(int qedsfc)
+  {
+    fenablesfnloqedcorrections(&qedsfc);
+  }
+
 }
