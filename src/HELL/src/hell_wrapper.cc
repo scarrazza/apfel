@@ -78,7 +78,7 @@ extern "C" {
     double xdc2 = 0;
     if      (*k == 1) xdc2 = sxD->deltaC2g(*nf, *as, *x, fixed_order_to_be_matched_to); // Gluon
     else if (*k == 2) xdc2 = sxD->deltaC2q(*nf, *as, *x, fixed_order_to_be_matched_to); // Quark
-    return xdc2;
+    return xdc2 / *nf;
   }
 
   double xdeltacl_(int *nf, int *k, double *as, double *x)
@@ -86,7 +86,7 @@ extern "C" {
     double xdcl = 0;
     if      (*k == 1) xdcl = sxD->deltaCLg(*nf, *as, *x, fixed_order_to_be_matched_to); // Gluon
     else if (*k == 2) xdcl = sxD->deltaCLq(*nf, *as, *x, fixed_order_to_be_matched_to); // Quark
-    return xdcl;
+    return xdcl / *nf;
   }
 
   // Massive coefficient functions
