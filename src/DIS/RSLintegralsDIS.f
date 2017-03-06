@@ -1038,13 +1038,13 @@ c                  SCLm0CC(igrid,ixi,k,wipt,beta,alpha) = 0d0
      1           SC2zmRes(igrid,k,beta,alpha,tau)
      2           + dgauss(integrandsDISNCcharm0Res,a,b,eps)
          enddo
-*     FL (What do I do here???)
-c         sf = 2
-c         do k=1,2
-c            SCLcharm0NCRes(igrid,k,beta,alpha,tau) =
-c     1           SCLzmRes(igrid,k,beta,alpha,tau)
+*     FL
+         sf = 2
+         do k=1,2
+            SCLcharm0NCRes(igrid,k,beta,alpha,tau) =
+     1           SCLzmRes(igrid,k,beta,alpha,tau)
 c     2           + dgauss(integrandsDISNCcharm0Res,a,b,eps)
-c         enddo
+         enddo
       endif
 *
       return
