@@ -55,7 +55,7 @@
       character*100 pdfsetbkp
       character*3   ids(-6:6)
       parameter(eps=1d-4)
-      parameter(eps2=1d-12)
+      parameter(eps2=1d-8)
       parameter(offset=1d-2)
 *
       double precision fqpre1(ngrid_max,-6:6,0:nint_max)

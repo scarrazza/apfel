@@ -419,7 +419,7 @@
                   do beta=alpha,nin(igrid)
                      dMdt(i,j,alpha,beta) = 0d0
                      do l=1,5
-                        do delta=0,nin(igrid)-alpha
+                        do delta=alpha,beta
                            dMdt(i,j,alpha,beta) = dMdt(i,j,alpha,beta)
      1                          + integ2(alpha,delta,i,l)
      2                          * M(l,j,delta,beta)
@@ -888,7 +888,7 @@
                   do beta=alpha,nin(igrid)
                      dMdt(i,j,alpha,beta) = 0d0
                      do l=1,2
-                        do delta=0,nin(igrid)-alpha
+                        do delta=alpha,beta
                            dMdt(i,j,alpha,beta) = dMdt(i,j,alpha,beta)
      1                          + integ2(alpha,delta,i,l)
      2                          * M(l,j,delta,beta)

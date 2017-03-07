@@ -129,6 +129,7 @@
       InCKM             = "xxxx"
       InDeltaR          = "xxxx"
       InEWCouplings     = "xxxx"
+      InSFNLOQED        = "xxxx"
 *
       return
       end

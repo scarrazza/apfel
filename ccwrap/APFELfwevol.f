@@ -116,13 +116,20 @@ ccccccccccccc
       end
 
 ccccccccccccc
-      function fexternalsplittingfunctions(fname,pt,nf,i,j,x,beta)
-      integer pt,nf,i,j,beta
-      double precision x,fexternalsplittingfunctions
-      double precision ExternalSplittingFunctions
+      subroutine fcomputeexternalsplittingfunctions(fname,pt,nf,x,beta)
+      integer pt,nf,beta
+      double precision x
       character fname*(*)
+      call ComputeExternalSplittingFunctions(fname,pt,nf,x,beta)
+      end subroutine fcomputeexternalsplittingfunctions
+
+ccccccccccccc
+      function fexternalsplittingfunctions(i,j)
+      integer i,j
+      double precision fexternalsplittingfunctions
+      double precision ExternalSplittingFunctions
       fexternalsplittingfunctions = 
-     1     ExternalSplittingFunctions(fname,pt,nf,i,j,x,beta)
+     1     ExternalSplittingFunctions(i,j)
       return
       end
 
@@ -267,6 +274,14 @@ ccccccccccccc
       integer i
       double precision fgetthreshold
       fgetthreshold = GetThreshold(i)
+      return
+      end
+
+ccccccccccccc      
+      function fheavyquarkthreshold(i)
+      integer i
+      double precision fheavyquarkthreshold
+      fheavyquarkthreshold = HeavyQuarkThreshold(i)
       return
       end
 

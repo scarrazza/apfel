@@ -37,6 +37,7 @@
       include "../commons/IntrinsicCharm.h"
       include "../commons/coeffhqmellin.h"
       include "../commons/minimax.h"
+      include "../commons/NLOQEDCorrections.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -69,6 +70,8 @@
       if(InDeltaR.ne."done")         call SetPropagatorCorrection(0d0)
       if(InEWCouplings.ne."done")    call SetEWCouplings(0d0,0d0,
      1                                                   0d0,0d0)
+      if(InSFNLOQED.ne."done")       call EnableSFNLOQEDCorrections
+     1                                                          (.true.)
 *
 *     Check the consistency of the input parameters
 *

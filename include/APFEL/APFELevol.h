@@ -71,8 +71,11 @@ namespace APFEL {
   /// External Evolution Operator
   double ExternalEvolutionOperator(const std::string& fname, int i, int j, double x, int beta);
 
-  /// External Splitting Functions
-  double ExternalSplittingFunctions(const std::string& fname, int pt, int nf, int i, int j, double x, int beta);
+  /// Compute External Splitting Functions
+  void ComputeExternalSplittingFunctions(const std::string& fname, int pt, int nf, double x, int beta);
+
+  /// Return External Splitting Functions
+  double ExternalSplittingFunctions(int i, int j);
 
   /// Builds the *.LHgrid output file
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname);
@@ -91,6 +94,9 @@ namespace APFEL {
 
   /// Returns Heavy Quark Threholds
   double GetThreshold(int);
+
+  /// Returns Heavy Quark Threholds (identical to GetThreshold)
+  double HeavyQuarkThreshold(int);
 
   /// Returns the N-th Mellin moment of the i-th PDF 
   /// in the physical basis at the final scale

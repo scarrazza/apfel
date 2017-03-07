@@ -155,6 +155,10 @@ namespace APFEL {
 
   void ComputeHardCrossSectionsDY(const std::string& datafile, 
 				  const std::string& outputfile);
+
+  /// Enables NLO QED corrections in the structure functions
+  void EnableSFNLOQEDCorrections(int);
+
 }
 
 #endif
