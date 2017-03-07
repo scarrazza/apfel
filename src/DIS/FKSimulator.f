@@ -397,6 +397,14 @@
       elseif(obs(1:6).eq."SIA_FA")then
          FKSimulator = ExternalDISOperator("F3",7,i,x,beta)
 *
+****  SIA absolute cross section (nf=4)
+*
+      elseif(obs(1:12).eq."SIA_XSEC_NF4")then
+         FKSimulator = ( GetSIATotalCrossSection(0,Q,"light")
+     1                 + GetSIATotalCrossSection(0,Q,"charm") )
+     2               * ( ExternalDISOperator("F2",3,i,x,beta)
+     3                 + ExternalDISOperator("F2",4,i,x,beta) )
+*
 ****  SIA absolute cross section
 *
       elseif(obs(1:8).eq."SIA_XSEC")then
@@ -430,6 +438,16 @@
          FKSimulator = GetSIATotalCrossSection(0,Q,"total")
      1               * ExternalDISOperator("F2",6,i,x,beta)
      2               / GetSIATotalCrossSection(ipt,Q,"top")
+*
+****  SIA normalized total cross section (nf=4)
+*
+      elseif(obs(1:17).eq."SIA_NORM_XSEC_NF4")then
+         FKSimulator = ( GetSIATotalCrossSection(0,Q,"light")
+     1                   + GetSIATotalCrossSection(0,Q,"charm") )
+     3                 * ( ExternalDISOperator("F2",3,i,x,beta)
+     4                   + ExternalDISOperator("F2",4,i,x,beta) )
+     5                 / ( GetSIATotalCrossSection(ipt,Q,"light")
+     6                   + GetSIATotalCrossSection(ipt,Q,"charm") )
 *
 ****  SIA normalized total cross section
 *

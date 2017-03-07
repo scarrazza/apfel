@@ -402,7 +402,7 @@
 *
       elseif(obs(1:12).eq."SIA_XSEC_NF4")then
          FKObservables = ( GetSIATotalCrossSection(0,Q,"light")
-     1                   + GetSIATotalCrossSection(0,Q,"charm"))
+     1                   + GetSIATotalCrossSection(0,Q,"charm") )
      2                 * ( F2light(x) + F2charm(x) )
 C         FKObservables = GetSIATotalCrossSection(0,Q,"total")
 C     2                 * ( F2light(x) + F2charm(x) )

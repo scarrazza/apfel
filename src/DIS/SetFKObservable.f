@@ -356,6 +356,14 @@
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
 *
+****  SIA absolute cross section (nf=4)
+*
+      elseif(obs(1:12).eq."SIA_XSEC_NF4")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
 ****  SIA absolute cross section
 *
       elseif(obs(1:8).eq."SIA_XSEC")then
@@ -391,6 +399,14 @@
 ****  SIA normalized top cross section
 *
       elseif(obs(1:16).eq."SIA_NORM_XSEC_TP")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA normalized total cross section (nf=4)
+*
+      elseif(obs(1:17).eq."SIA_NORM_XSEC_NF4")then
          call SetTimeLikeEvolution(.true.)
          call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
