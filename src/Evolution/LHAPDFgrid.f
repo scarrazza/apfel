@@ -299,6 +299,21 @@
       write(13,*) "MCharm:",dsqrt(m2ph(4))
       write(13,*) "MBottom:",dsqrt(m2ph(5))
       write(13,*) "MTop:",dsqrt(m2ph(6))
+      if(nfmax.ge.4) then
+         write(13,*) "ThresholdCharm:",dsqrt(m2th(4))
+      else
+         write(13,*) "ThresholdCharm:",dsqrt(q2maxLHA)+1d0
+      endif
+      if(nfmax.ge.5) then
+         write(13,*) "ThresholdBottom:",dsqrt(m2th(5))
+      else
+         write(13,*) "ThresholdBottom:",dsqrt(q2maxLHA)+2d0
+      endif
+      if(nfmax.ge.6) then
+         write(13,*) "ThresholdTop:",dsqrt(m2th(6))
+      else
+         write(13,*) "ThresholdTop:",dsqrt(q2maxLHA)+3d0
+      endif
       write(13,*) "AlphaS_MZ:",alpha_ref_qcd
       write(13,*) "AlphaS_OrderQCD:",ipt
       write(13,*) "AlphaS_Type: ipol"
