@@ -401,11 +401,11 @@
 ****  SIA absolute cross section (nf=4)
 *
       elseif(obs(1:12).eq."SIA_XSEC_NF4")then
-         FKObservables = ( GetSIATotalCrossSection(0,Q,"light")
-     1                   + GetSIATotalCrossSection(0,Q,"charm") )
+c         FKObservables = ( GetSIATotalCrossSection(0,Q,"light")
+c     1                   + GetSIATotalCrossSection(0,Q,"charm") )
+c     2                 * ( F2light(x) + F2charm(x) )
+         FKObservables = GetSIATotalCrossSection(0,Q,"total")
      2                 * ( F2light(x) + F2charm(x) )
-C         FKObservables = GetSIATotalCrossSection(0,Q,"total")
-C     2                 * ( F2light(x) + F2charm(x) )
 *
 ****  SIA absolute cross section
 *
@@ -445,15 +445,15 @@ C     2                 * ( F2light(x) + F2charm(x) )
 ****  SIA normalized cross section (nf=4)
 *
       elseif(obs(1:17).eq."SIA_NORM_XSEC_NF4")then
-         FKObservables = ( GetSIATotalCrossSection(0,Q,"light")
-     1                   + GetSIATotalCrossSection(0,Q,"charm") )
-     3                 * ( F2light(x) + F2charm(x) )
-     4                 / ( GetSIATotalCrossSection(ipt,Q,"light")
-     5                   + GetSIATotalCrossSection(ipt,Q,"charm") )
-C         FKObservables = GetSIATotalCrossSection(0,Q,"total")
-C     3                 * ( F2light(x) + F2charm(x) )
-C     4                 / ( GetSIATotalCrossSection(ipt,Q,"light")
-C     5                   + GetSIATotalCrossSection(ipt,Q,"charm") )
+c         FKObservables = ( GetSIATotalCrossSection(0,Q,"light")
+c     1                   + GetSIATotalCrossSection(0,Q,"charm") )
+c     3                 * ( F2light(x) + F2charm(x) )
+c     4                 / ( GetSIATotalCrossSection(ipt,Q,"light")
+c     5                   + GetSIATotalCrossSection(ipt,Q,"charm") )
+         FKObservables = GetSIATotalCrossSection(0,Q,"total")
+     1                 * ( F2light(x) + F2charm(x) )
+     2                 / ( GetSIATotalCrossSection(ipt,Q,"light")
+     3                   + GetSIATotalCrossSection(ipt,Q,"charm") )
 *
 ****  SIA normalized total cross section
 *
