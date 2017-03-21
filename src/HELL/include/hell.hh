@@ -39,7 +39,10 @@ namespace HELLx {
     none = -1,
     LO = 0,
     NLO = 1,
-    NNLO = 2
+    NNLO = 2,
+    N2LO = 2,
+    N3LO  = 3,
+    NNNLO = 3
   };
   enum LogOrder {
     LL = 0,
@@ -93,7 +96,7 @@ namespace HELLx {
   public:
     xTableCm(string filename, bool nll) : xTable(filename) { Init(); }
     ~xTableCm() {};
-    void eval(double x, double mQ, double &dKhg, double &dC2g, double &dCLg);
+    void eval(double x, double mQ, double &dKhg, double &dC2g, double &dCLg, double as, int nf);
   };
 
 
@@ -125,14 +128,14 @@ namespace HELLx {
     int GetNf();
     void GetAvailableAlphas(vector<double> &as);
     //
-    // Delta P
+    // Delta P   (LL can be matched to LO or NLO)  (NLL can be matched to NLO or NNLO)
     sqmatrix<double> DeltaP(double as, double x,  Order matched_to_fixed_order = NLO);
     //
-    // matching condition
+    // Delta matching condition K_hi (i=g,q)   (can be matched to NLO or NNLO)
     double deltaKhg  (double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);
     double deltaKhq  (double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);
     //
-    // Delta Coefficient functions (the quark coefficients are found multiplying by CF/CA)
+    // Delta coefficient functions   (can be matched to NLO or NNLO)
     double deltaC2g  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS F2
     double deltaC2q  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS F2
     double deltaCLg  (double as, double x, Order matched_to_fixed_order = NLO);  // DIS FL
@@ -141,6 +144,11 @@ namespace HELLx {
     double deltaMC2q (double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);  // DIS massive F2
     double deltaMCLg (double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);  // DIS massive FL
     double deltaMCLq (double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);  // DIS massive FL
+    // Please note that massless coefficient functions contain a factor of nf in them.
+    // FONLL=SACOT is obtained (for a single quark flavour, e.g. charm) as
+    //   deltaC2_FONLL = deltaMC2i - deltaKhi      (i=g,q) for F2
+    //   deltaCL_FONLL = deltaMCLi                 (i=g,q) for FL
+    // In the m/Q->0 limit, these expressions tend to deltaCki/nf  (k=2,L i=g,q)
   };
 
 
@@ -159,13 +167,13 @@ namespace HELLx {
     HELLxnf* GetHELLxnf(int nf);
     //
     // Delta P
-    sqmatrix<double> DeltaP(int nf, double as, double x,  Order matched_to_fixed_order = NLO);
+    sqmatrix<double>   DeltaP(int nf, double as, double x,  Order matched_to_fixed_order = NLO);
     //
-    // matching condition
-    double deltaKhg (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);
-    double deltaKhq (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);
+    // Delta matching condition K_hi (i=g,q)
+    double deltaKhg  (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);
+    double deltaKhq  (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);
     //
-    // Delta Coefficient functions (the quark coefficients are just CF/CA times the gluon coefficients)
+    // Delta coefficient functions
     double deltaC2g  (int nf, double as, double x, Order matched_to_fixed_order = NLO);  // DIS F2
     double deltaC2q  (int nf, double as, double x, Order matched_to_fixed_order = NLO);  // DIS F2
     double deltaCLg  (int nf, double as, double x, Order matched_to_fixed_order = NLO);  // DIS FL
@@ -174,6 +182,11 @@ namespace HELLx {
     double deltaMC2q (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);  // DIS massive F2
     double deltaMCLg (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);  // DIS massive FL
     double deltaMCLq (int nf, double as, double x, double m_Q_ratio, Order matched_to_fixed_order = NLO);  // DIS massive FL
+    // Please note that massless coefficient functions contain a factor of nf in them.
+    // FONLL=SACOT is obtained (for a single quark flavour, e.g. charm) as
+    //   deltaC2_FONLL = deltaMC2i - deltaKhi      (i=g,q) for F2
+    //   deltaCL_FONLL = deltaMCLi                 (i=g,q) for FL
+    // In the m/Q->0 limit, these expressions tend to deltaCki/nf  (k=2,L i=g,q)
   };
 
 
