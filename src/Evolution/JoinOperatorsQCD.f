@@ -147,8 +147,8 @@
 *     
             nfm = nf + 1
 *     Get alphas value at the heavy quark threshold (with nfm active flavours)
-c            coup = asthUp(nfm)
-            coup = asthDown(nfm)
+            coup = asthUp(nfm)
+c            coup = asthDown(nfm)
 *     Contruct matching conditions at this threshod
             if(IsExt(jgrid))then
                do alpha=0,nin(jgrid)
