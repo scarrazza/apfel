@@ -25,6 +25,7 @@
 
 #include "HELL/include/hell.hh"
 
+
 using namespace std;
 
 
@@ -235,10 +236,10 @@ namespace HELLx {
 
   double minterpolate(double mQ, double *mQvals, double *F, int Nmass, double x, double as, int nf) {
     if(mQ>mQvals[Nmass-1]) {
-      cout << "\033[0;31m" << "HELLx: Warning! Extrapolating out of interpolation range: m/Q=" << mQ << " > " << mQvals[Nmass-1] << " for as=" << as << ", nf=" << nf << "\033[0m" << endl;
+      //cout << "\033[0;31m" << "HELLx: Warning! Extrapolating out of interpolation range: m/Q=" << mQ << " > " << mQvals[Nmass-1] << " for as=" << as << ", nf=" << nf << "\033[0m" << endl;
     }
     if(mQ<mQvals[0]) {
-      cout << "\033[0;31m" << "HELLx: Warning! Extrapolating out of interpolation range: m/Q=" << mQ << " < " << mQvals[0]       << " for as=" << as << ", nf=" << nf << "\033[0m" << endl;
+      //cout << "\033[0;31m" << "HELLx: Warning! Extrapolating out of interpolation range: m/Q=" << mQ << " < " << mQvals[0]       << " for as=" << as << ", nf=" << nf << "\033[0m" << endl;
     }
     int m0 = -1;
     for(int m=0; m<Nmass; m++) {
@@ -371,6 +372,9 @@ namespace HELLx {
     dKhg = minterpolate(mQ, mQvals, mdKhg, Nmass, x, as, nf);
     dC2g = minterpolate(mQ, mQvals, mdC2g, Nmass, x, as, nf);
     dCLg = minterpolate(mQ, mQvals, mdCLg, Nmass, x, as, nf);
+    delete[] mdKhg;
+    delete[] mdC2g;
+    delete[] mdCLg;
     return;
   }
 
@@ -406,9 +410,20 @@ namespace HELLx {
       _alphas.push_back(astmp);
     }
     _alphas.pop_back();
+    info.close();
   }
 
+  template<class S>
+  void deleteTable(map<int,S*> &T) {
+    typename map<int,S*>::iterator itxT;  // typename tells the compiler that what follows is a typename, and not a field
+    for (itxT=T.begin(); itxT!=T.end(); ++itxT) {
+      delete T[itxT->first];
+    }
+  }
   HELLxnf::~HELLxnf() {
+    deleteTable(xT);
+    deleteTable(xTC);
+    deleteTable(xTCm);
   }
 
 

@@ -60,7 +60,8 @@ namespace HELLx {
     double interpolate(double x);
   public:
     xTable(string filename);
-    ~xTable() {};
+    //~xTable() { delete[] xx; delete infile; };
+    ~xTable() { delete[] xx; };
   };
 
   // daugther class for splitting functions
@@ -71,7 +72,7 @@ namespace HELLx {
     void Init();
   public:
     xTableP(string filename, bool nll) : xTable(filename) { isNLL=nll; Init(); }
-    ~xTableP() {};
+    ~xTableP() { delete[] xdPgg; delete[] xdPqg; };
     void eval(double x, double &dPgg, double &dPqg);
   };
 
@@ -82,7 +83,7 @@ namespace HELLx {
     void Init();
   public:
     xTableC(string filename, bool nll) : xTable(filename) { Init(); }
-    ~xTableC() {};
+    ~xTableC() { delete[] xdC2g; delete[] xdCLg; };
     void eval(double x, double &dC2g, double &dCLg);
   };
 
@@ -95,7 +96,7 @@ namespace HELLx {
     void Init();
   public:
     xTableCm(string filename, bool nll) : xTable(filename) { Init(); }
-    ~xTableCm() {};
+    ~xTableCm() { for(int i=0; i<Nmass; i++) {delete[] xdCLg[i]; delete[] xdC2g[i]; delete[] xdKhg[i];} delete[] xdCLg; delete[] xdC2g; delete[] xdKhg; delete[] mQvals; };
     void eval(double x, double mQ, double &dKhg, double &dC2g, double &dCLg, double as, int nf);
   };
 
