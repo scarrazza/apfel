@@ -6,8 +6,8 @@
 *     different numbers of active flavours.
 *
 *     QCD evolution basis:
-*     0   1   2   3   4   5   6   7   8   9  10  11  12  13
-*     gm  Sg   g   V  V3  V8 V15 V24 V35  T3  T8 T15 T24 T35
+*     0   1   2   3   4   5   6   7   8   9   10  11  12  13
+*     gm  Sg  g   V   V3  V8  V15 V24 V35 T3  T8  T15 T24 T35
 *     
 ************************************************************************
       subroutine JoinOperatorsQCD(jgrid)

@@ -713,8 +713,6 @@ c         kappa = 1d0                          ! mu_R / mu_F
 *
       include "../commons/consts.h"
       include "../commons/alpha_ref_QCD.h"
-      include "../commons/AlphaEvolution.h"
-      include "../commons/m2th.h"
       include "../commons/ThresholdAlphaQCD.h"
       include "../commons/Nf_FF.h"
       include "../commons/ipt.h"

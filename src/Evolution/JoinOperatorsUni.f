@@ -433,8 +433,57 @@ c            coup = asthDown(nfm)
      4                       * TevQCD2evUni(l,j)
                      enddo
                   enddo
+*
+*     Adjust the evolution operator to reabsorb distribution that reduce
+*     to the singlet or the total valence.
+*
+                  if(mfi.le.5)then
+*     V35 = V
+                     do k=0,13
+                        Ev2EvQCD(jgrid,k,3,alpha,beta) =
+     1                       Ev2EvQCD(jgrid,k,3,alpha,beta)
+     2                       + Ev2EvQCD(jgrid,k,8,alpha,beta)
+                        Ev2EvQCD(jgrid,k,8,alpha,beta) = 0d0
+*     T35 = Sigma
+                        Ev2EvQCD(jgrid,k,1,alpha,beta) =
+     1                       Ev2EvQCD(jgrid,k,1,alpha,beta)
+     2                       + Ev2EvQCD(jgrid,k,13,alpha,beta)
+                        Ev2EvQCD(jgrid,k,13,alpha,beta) = 0d0
+                     enddo
+                  endif
+*
+                  if(mfi.le.4)then
+*     V24 = V
+                     do k=0,13
+                        Ev2EvQCD(jgrid,k,3,alpha,beta) =
+     1                       Ev2EvQCD(jgrid,k,3,alpha,beta)
+     2                       + Ev2EvQCD(jgrid,k,7,alpha,beta)
+                        Ev2EvQCD(jgrid,k,7,alpha,beta) = 0d0
+*     T24 = Sigma
+                        Ev2EvQCD(jgrid,k,1,alpha,beta) =
+     1                       Ev2EvQCD(jgrid,k,1,alpha,beta)
+     2                       + Ev2EvQCD(jgrid,k,12,alpha,beta)
+                        Ev2EvQCD(jgrid,k,12,alpha,beta) = 0d0
+                     enddo
+                  endif
+*
+                  if(mfi.le.3)then
+*     V15 = V
+                     do k=0,13
+                        Ev2EvQCD(jgrid,k,3,alpha,beta) =
+     1                       Ev2EvQCD(jgrid,k,3,alpha,beta)
+     2                       + Ev2EvQCD(jgrid,k,6,alpha,beta)
+                        Ev2EvQCD(jgrid,k,6,alpha,beta) = 0d0
+*     T15 = Sigma
+                        Ev2EvQCD(jgrid,k,1,alpha,beta) =
+     1                       Ev2EvQCD(jgrid,k,1,alpha,beta)
+     2                       + Ev2EvQCD(jgrid,k,11,alpha,beta)
+                        Ev2EvQCD(jgrid,k,11,alpha,beta) = 0d0
+                     enddo
+                  endif
                enddo
             enddo
+*
             do i=0,13
                do j=0,13
                   Ev2PhQCD(jgrid,i-7,j,alpha,beta) = 0d0
