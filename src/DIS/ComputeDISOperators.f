@@ -186,8 +186,8 @@
 *
          if(DampingFONLL)then
             if(ihq.gt.Nf_FF)then
-               if(Q2.gt.m2th(ihq))then
-                  damp(ihq) = ( 1d0 - m2th(ihq) / Q2 )**DampPowerFONLL
+               if(muF2.gt.m2th(ihq))then
+                  damp(ihq) = ( 1d0 - m2th(ihq) / muF2 )**DampPowerFONLL
                else
                   damp(ihq) = 0d0
                endif
@@ -356,7 +356,7 @@ c            damp(4) = 1d0
                      if(ipt.ge.2)then
                         if(Nf_FF.lt.6)then
                            do ihq=Nf_FF+1,6
-                              if(Q2.ge.m2th(ihq))then
+                              if(muF2.ge.m2th(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( c0(ihq)
      2                                * SC2m0NC(jgrid,ixi(ihq),
@@ -380,7 +380,7 @@ c            damp(4) = 1d0
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(Q2.ge.m2th(ihq))then
+                           if(muF2.ge.m2th(ihq))then
                               do pt=1,ipt
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -631,7 +631,7 @@ c            damp(4) = 1d0
      5                                * SCLmNC(jgrid,ixi(ihq)+1,
      6                                3,2,alpha,beta) )
                               endif
-                              if(Q2.ge.m2th(ihq))then
+                              if(muF2.ge.m2th(ihq))then
                                  C2nsp(3) = C2nsp(3) + as(2) *
      1                                ( - damp(ihq) * ( c0(ihq)
      2                                * SC2m0NC(jgrid,ixi(ihq),
@@ -687,7 +687,7 @@ c            damp(4) = 1d0
      6                                2,pt,alpha,beta) )
                               enddo
                            endif
-                           if(Q2.ge.m2th(ihq))then
+                           if(muF2.ge.m2th(ihq))then
                               do pt=1,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( - damp(ihq) * ( c0(ihq)
@@ -1175,7 +1175,7 @@ c            damp(4) = 1d0
 *
                      if(Nf_FF.lt.6)then
                         do ihq=Nf_FF+1,6
-                           if(Q2.ge.m2th(ihq))then
+                           if(muF2.ge.m2th(ihq))then
                               do pt=0,ipt_FF
                                  C2g(ihq) = C2g(ihq) + as(pt)
      1                                * ( c0(ihq)
@@ -1467,7 +1467,7 @@ c            damp(4) = 1d0
      6                                3,pt,alpha,beta) )
                               enddo
                            endif
-                           if(Q2.ge.m2th(ihq))then
+                           if(muF2.ge.m2th(ihq))then
                               do pt=0,ipt_FF
                                  if(pt.ge.1)
      1                                C2gm(ihq) = C2gm(ihq) - damp(ihq)
