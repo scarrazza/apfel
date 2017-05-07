@@ -275,6 +275,7 @@ namespace HELLx {
       if(i<Np1) xx[i] = x_min * exp(i/(Np1-1.)*log(x_mid/x_min));
       else      xx[i] = x_mid + (i-Np1+1)*(x_max-x_mid)/(Np2-0.);
     }
+    //xx[Np1+Np2] = 1.;
     //infile.close();
   }
   void xTableP::Init() {

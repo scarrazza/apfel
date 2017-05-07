@@ -60,8 +60,7 @@ namespace HELLx {
     double interpolate(double x);
   public:
     xTable(string filename);
-    //~xTable() { delete[] xx; delete infile; };
-    ~xTable() { delete[] xx; };
+    ~xTable() { delete[] xx; /*delete infile;*/ };
   };
 
   // daugther class for splitting functions
