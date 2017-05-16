@@ -115,6 +115,7 @@ namespace HELLx {
     map<int,xTableCm*> xTCm;
     //map<int,xTable*>::iterator itxT;
     int alphas_interpolation(double as, vector<double> vas, double &factor);
+    double alphas_cubicinterpolate(double as, double k, double *y);
     template<class S> void ReadTable (int k, map<int,S*> &T, string basename);
     double DeltaC (double as, double x, Order matched_to_fixed_order, string id);
     double DeltaCm(double as, double x, Order matched_to_fixed_order, string id, double mQ);

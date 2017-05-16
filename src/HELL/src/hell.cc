@@ -25,7 +25,6 @@
 
 #include "HELL/include/hell.hh"
 
-
 using namespace std;
 
 
@@ -236,10 +235,10 @@ namespace HELLx {
 
   double minterpolate(double mQ, double *mQvals, double *F, int Nmass, double x, double as, int nf) {
     if(mQ>mQvals[Nmass-1]) {
-      //cout << "\033[0;31m" << "HELLx: Warning! Extrapolating out of interpolation range: m/Q=" << mQ << " > " << mQvals[Nmass-1] << " for as=" << as << ", nf=" << nf << "\033[0m" << endl;
+      cout << "\033[0;31m" << "HELLx: Warning! Extrapolating out of interpolation range: m/Q=" << mQ << " > " << mQvals[Nmass-1] << " for as=" << as << ", nf=" << nf << "\033[0m" << endl;
     }
     if(mQ<mQvals[0]) {
-      //cout << "\033[0;31m" << "HELLx: Warning! Extrapolating out of interpolation range: m/Q=" << mQ << " < " << mQvals[0]       << " for as=" << as << ", nf=" << nf << "\033[0m" << endl;
+      cout << "\033[0;31m" << "HELLx: Warning! Extrapolating out of interpolation range: m/Q=" << mQ << " < " << mQvals[0]       << " for as=" << as << ", nf=" << nf << "\033[0m" << endl;
     }
     int m0 = -1;
     for(int m=0; m<Nmass; m++) {
@@ -451,6 +450,10 @@ namespace HELLx {
       if(as <= vas[i]) break;
       k++;
     }
+    // the following is needed for cubic interpolation
+    if(k==0) k++;
+    if(k==vas.size()-1) k--;
+    //
     //cout << alphas[k] << " < " << as << " < " << alphas[k+1] << endl;
     factor = (as-vas[k]) / (vas[k+1]-vas[k]);
     return k;
@@ -470,7 +473,8 @@ namespace HELLx {
     string sord = (_order == 1 ? "nlo" : "lo");
     ostringstream filename;
     typename map<int,S*>::iterator itxT;  // typename tells the compiler that what follows is a typename, and not a field
-    for(int i=k; i<k+2; i++) {
+    //for(int i=k; i<k+2; i++) { // for linear interpolation
+    for(int i=k-1; i<k+3; i++) { // for cubic interpolation
       itxT = T.find(i);
       if (itxT == T.end()) {
 	filename.str("");  filename.clear();
@@ -479,7 +483,13 @@ namespace HELLx {
       }
     }
   }
-
+  double HELLxnf::alphas_cubicinterpolate(double a, double k, double *y) {
+    double as[4] = { _alphas[k-1], _alphas[k], _alphas[k+1], _alphas[k+2] };
+    return (a-as[1])*(a-as[2])*(a-as[3])*y[0]/(as[0]-as[1])/(as[0]-as[2])/(as[0]-as[3])
+      +    (a-as[0])*(a-as[2])*(a-as[3])*y[1]/(as[1]-as[0])/(as[1]-as[2])/(as[1]-as[3])
+      +    (a-as[0])*(a-as[1])*(a-as[3])*y[2]/(as[2]-as[0])/(as[2]-as[1])/(as[2]-as[3])
+      +    (a-as[0])*(a-as[1])*(a-as[2])*y[3]/(as[3]-as[0])/(as[3]-as[1])/(as[3]-as[2]);
+  }
 
   sqmatrix<double> HELLxnf::DeltaP(double as, double x, Order matched_to_fixed_order) {
     if(_order==1 && (matched_to_fixed_order < NLO || matched_to_fixed_order > NNLO)) {
@@ -493,11 +503,18 @@ namespace HELLx {
     double factor;
     int k = alphas_interpolation(as, _alphas, factor);
     ReadTable(k, xT, "xtable");
-    double xdPgg[2], xdPqg[2];
-    xT[k  ]->eval(x,xdPgg[0],xdPqg[0]);
-    xT[k+1]->eval(x,xdPgg[1],xdPqg[1]);
-    double dGgg = (xdPgg[0]+factor*(xdPgg[1]-xdPgg[0]))/x;
-    double dGqg = (xdPqg[0]+factor*(xdPqg[1]-xdPqg[0]))/x;
+    //double xdPgg[2], xdPqg[2];
+    //xT[k  ]->eval(x,xdPgg[0],xdPqg[0]);
+    //xT[k+1]->eval(x,xdPgg[1],xdPqg[1]);
+    //double dGgg = (xdPgg[0]+factor*(xdPgg[1]-xdPgg[0]))/x;
+    //double dGqg = (xdPqg[0]+factor*(xdPqg[1]-xdPqg[0]))/x;
+    double xdPgg[4], xdPqg[4];
+    xT[k-1]->eval(x,xdPgg[0],xdPqg[0]);
+    xT[k  ]->eval(x,xdPgg[1],xdPqg[1]);
+    xT[k+1]->eval(x,xdPgg[2],xdPqg[2]);
+    xT[k+2]->eval(x,xdPgg[3],xdPqg[3]);
+    double dGgg = alphas_cubicinterpolate(as, k, xdPgg)/x;
+    double dGqg = alphas_cubicinterpolate(as, k, xdPqg)/x;
     if(_order==0 && matched_to_fixed_order == LO) {
       dGgg += as*as * Pgg2(x,_nf);
     }
@@ -516,13 +533,19 @@ namespace HELLx {
     double factor;
     int k = alphas_interpolation(as, _alphas, factor);
     ReadTable(k, xTC, "xtableC");
-    //ReadTable(k, xTCm, "xtableCm");
-    double xdC2g[2], xdCLg[2];
-    xTC[k  ]->eval(x,xdC2g[0],xdCLg[0]);
-    xTC[k+1]->eval(x,xdC2g[1],xdCLg[1]);
+    //double xdC2g[2], xdCLg[2];
+    //xTC[k  ]->eval(x,xdC2g[0],xdCLg[0]);
+    //xTC[k+1]->eval(x,xdC2g[1],xdCLg[1]);
+    double xdC2g[4], xdCLg[4];
+    xTC[k-1]->eval(x,xdC2g[0],xdCLg[0]);
+    xTC[k  ]->eval(x,xdC2g[1],xdCLg[1]);
+    xTC[k+1]->eval(x,xdC2g[2],xdCLg[2]);
+    xTC[k+2]->eval(x,xdC2g[3],xdCLg[3]);
     map<string,double> dCg;
-    dCg["F2"] = (xdC2g[0]+factor*(xdC2g[1]-xdC2g[0]))/x;
-    dCg["FL"] = (xdCLg[0]+factor*(xdCLg[1]-xdCLg[0]))/x;
+    //dCg["F2"] = (xdC2g[0]+factor*(xdC2g[1]-xdC2g[0]))/x;
+    //dCg["FL"] = (xdCLg[0]+factor*(xdCLg[1]-xdCLg[0]))/x;
+    dCg["F2"] = alphas_cubicinterpolate(as, k, xdC2g)/x;
+    dCg["FL"] = alphas_cubicinterpolate(as, k, xdCLg)/x;
     if(matched_to_fixed_order == NLO) {
       double P0 = Pplus0(x,_nf);
       double h12 = 43./18.-ZETA2;
@@ -554,19 +577,31 @@ namespace HELLx {
     int k = alphas_interpolation(as, _alphas, factor);
     //cout << _alphas[k] << "  " << _alphas[k+1] << "  " << factor << endl;
     ReadTable(k, xTCm, "xtableCm");
-    double xdKhg[2], xdC2g[2], xdCLg[2];
     // converts m/Q-interpolation into m-interpolation
-    double mQ0 = mQ * Qofalphas(as,_nf)/Qofalphas(_alphas[k  ],_nf);
-    double mQ1 = mQ * Qofalphas(as,_nf)/Qofalphas(_alphas[k+1],_nf);
-    xTCm[k  ]->eval(x, mQ0, xdKhg[0],xdC2g[0],xdCLg[0],as,_nf);
-    xTCm[k+1]->eval(x, mQ1, xdKhg[1],xdC2g[1],xdCLg[1],as,_nf);
+    //double mQ0 = mQ * Qofalphas(as,_nf)/Qofalphas(_alphas[k  ],_nf);
+    //double mQ1 = mQ * Qofalphas(as,_nf)/Qofalphas(_alphas[k+1],_nf);
+    double mQ0 = mQ * Qofalphas(as,_nf)/Qofalphas(_alphas[k-1],_nf);
+    double mQ1 = mQ * Qofalphas(as,_nf)/Qofalphas(_alphas[k  ],_nf);
+    double mQ2 = mQ * Qofalphas(as,_nf)/Qofalphas(_alphas[k+1],_nf);
+    double mQ3 = mQ * Qofalphas(as,_nf)/Qofalphas(_alphas[k+2],_nf);
+    //double xdKhg[2], xdC2g[2], xdCLg[2];
+    //xTCm[k  ]->eval(x, mQ0, xdKhg[0],xdC2g[0],xdCLg[0],as,_nf);
+    //xTCm[k+1]->eval(x, mQ1, xdKhg[1],xdC2g[1],xdCLg[1],as,_nf);
+    double xdKhg[4], xdC2g[4], xdCLg[4];
+    xTCm[k-1]->eval(x, mQ0, xdKhg[0],xdC2g[0],xdCLg[0],as,_nf);
+    xTCm[k  ]->eval(x, mQ1, xdKhg[1],xdC2g[1],xdCLg[1],as,_nf);
+    xTCm[k+1]->eval(x, mQ2, xdKhg[2],xdC2g[2],xdCLg[2],as,_nf);
+    xTCm[k+2]->eval(x, mQ3, xdKhg[3],xdC2g[3],xdCLg[3],as,_nf);
     //cout << setw(14) << mQ
     //	 << setw(14) << xdKhg[0] << setw(14) << xdC2g[0] << setw(14) << xdCLg[0]
     //	 << setw(14) << xdKhg[1] << setw(14) << xdC2g[1] << setw(14) << xdCLg[1] << endl;
     map<string,double> dCg;
-    dCg["Khg"] = (xdKhg[0]+factor*(xdKhg[1]-xdKhg[0]))/x;
-    dCg["F2m"] = (xdC2g[0]+factor*(xdC2g[1]-xdC2g[0]))/x;
-    dCg["FLm"] = (xdCLg[0]+factor*(xdCLg[1]-xdCLg[0]))/x;
+    //dCg["Khg"] = (xdKhg[0]+factor*(xdKhg[1]-xdKhg[0]))/x;
+    //dCg["F2m"] = (xdC2g[0]+factor*(xdC2g[1]-xdC2g[0]))/x;
+    //dCg["FLm"] = (xdCLg[0]+factor*(xdCLg[1]-xdCLg[0]))/x;
+    dCg["Khg"] = alphas_cubicinterpolate(as, k, xdKhg)/x;
+    dCg["F2m"] = alphas_cubicinterpolate(as, k, xdC2g)/x;
+    dCg["FLm"] = alphas_cubicinterpolate(as, k, xdCLg)/x;
     if(matched_to_fixed_order == NLO) {
       double P0 = Pplus0(x,_nf);
       double mQ2 = mQ*mQ;
