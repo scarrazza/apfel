@@ -240,8 +240,8 @@ c      return
       sumch2(5) = 11d0 / 9d0
       sumch2(6) = 5d0 / 3d0
 *
-      beta0qed = - 8d0 / 3d0 * ( nc * sumch2(nf) + nl )
-c      beta0qed = - 4d0 / 3d0 * ( nc * sumch2(nf) + nl )
+c      beta0qed = - 8d0 / 3d0 * ( nc * sumch2(nf) + nl )
+      beta0qed = - 4d0 / 3d0 * ( nc * sumch2(nf) + nl )
 *
       return
       end
