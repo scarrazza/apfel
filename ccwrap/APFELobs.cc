@@ -254,9 +254,11 @@ namespace APFEL {
     return fgetgfermi();
   }
 
-  double GetSIATotalCrossSection(int pto, double q)
+  double GetSIATotalCrossSection(int pto, double q, const std::string& comp)
   {
-    return fgetsiatotalcrosssection(&pto,&q);
+    char ccomp[SIZE+1];
+    strncpy(ccomp, comp.c_str(), SIZE);
+    return fgetsiatotalcrosssection(&pto,&q,ccomp);
   }
 
   void EnableTargetMassCorrections(int tc)

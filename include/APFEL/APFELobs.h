@@ -126,7 +126,7 @@ namespace APFEL {
   double GetGFermi();
 
   // Returns the SIA total cross section
-  double GetSIATotalCrossSection(int pto, double q);
+  double GetSIATotalCrossSection(int pto, double q, const std::string& comp);
 
   /// Enables the target mass corrections
   void EnableTargetMassCorrections(int);

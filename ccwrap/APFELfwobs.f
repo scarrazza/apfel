@@ -293,11 +293,12 @@ ccccccccccccc
       end
 
 ccccccccccccc
-      function fgetsiatotalcrosssection(pto,Q)
+      function fgetsiatotalcrosssection(pto,Q,comp)
       integer pto
       double precision Q
       double precision fgetsiatotalcrosssection
-      fgetsiatotalcrosssection = GetSIATotalCrossSection(pto,Q)
+      character*6 comp
+      fgetsiatotalcrosssection = GetSIATotalCrossSection(pto,Q,comp)
       return
       end
 

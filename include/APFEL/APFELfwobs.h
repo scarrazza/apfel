@@ -140,7 +140,7 @@ extern "C" {
   double fgetgfermi();
 
 #define fgetsiatotalcrosssection FC_FUNC(getsiatotalcrosssection,GETSIATOTALCROSSSECTION)
-  double fgetsiatotalcrosssection(int*,double*);
+  double fgetsiatotalcrosssection(int*,double*,char*);
 
 #define fenabletargetmasscorrections FC_FUNC(enabletargetmasscorrections,ENABLETARGETMASSCORRECTIONS)
   void fenabletargetmasscorrections(int*);
