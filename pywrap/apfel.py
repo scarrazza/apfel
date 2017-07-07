@@ -632,8 +632,8 @@ def GetGFermi():
     return _apfel.GetGFermi()
 GetGFermi = _apfel.GetGFermi
 
-def GetSIATotalCrossSection(pto, q):
-    return _apfel.GetSIATotalCrossSection(pto, q)
+def GetSIATotalCrossSection(pto, q, comp):
+    return _apfel.GetSIATotalCrossSection(pto, q, comp)
 GetSIATotalCrossSection = _apfel.GetSIATotalCrossSection
 
 def EnableTargetMassCorrections(arg1):
@@ -671,6 +671,10 @@ ComputeFKTables = _apfel.ComputeFKTables
 def ComputeHardCrossSectionsDY(datafile, outputfile):
     return _apfel.ComputeHardCrossSectionsDY(datafile, outputfile)
 ComputeHardCrossSectionsDY = _apfel.ComputeHardCrossSectionsDY
+
+def EnableSFNLOQEDCorrections(arg1):
+    return _apfel.EnableSFNLOQEDCorrections(arg1)
+EnableSFNLOQEDCorrections = _apfel.EnableSFNLOQEDCorrections
 # This file is compatible with both classic and new-style classes.
 
 
