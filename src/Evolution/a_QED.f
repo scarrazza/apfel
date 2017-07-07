@@ -38,11 +38,17 @@
       double precision mur2,mur20
       double precision aqedi,aqedr0
       double precision alphaqedev
+      logical LeptEvolLoc
       external alphaqedev
 **
 *     Output Variables
 *
       double precision a_QED
+*
+*     Always include leptons in the evolution of alpha
+*
+      LeptEvolLoc = .true.
+c      LeptEvolLoc = LeptEvol
 *
       aqedr0 = alpha_ref_QED / 4d0 / pi
 *     Uncomment to switch off the running
@@ -55,7 +61,7 @@ c      return
       if(Evs.eq."FF")then
 *     In the FFNS assume that there is no tau contribution
          Nl_FF = 0
-         if(LeptEvol) Nl_FF = 2
+         if(LeptEvolLoc) Nl_FF = 2
 *
          a_QED = alphaqedev(Nf_FF,Nl_FF,mur2,mur20,aqedr0)
          return
@@ -67,7 +73,7 @@ c      return
          nli = 0
          nlf = 0
          Mtau2ren = kren * MTau * MTau
-         if(LeptEvol)then
+         if(LeptEvolLoc)then
             nli = 2
             if(mur20.gt.Mtau2ren) nli = 3
             nlf = 2
