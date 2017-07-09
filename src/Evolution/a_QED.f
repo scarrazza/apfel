@@ -30,16 +30,23 @@
 **
 *     Internal Variables
 *
-      integer i
+      integer i,il,sgnl
       integer nfi,nff
       integer Nl_FF,nli,nlf
       integer dnf,snf
-      double precision mur2th(4:6),MTau2ren
+      double precision mur2th(3:6),mur2lep(3)
       double precision mur2,mur20
       double precision aqedi,aqedr0
       double precision alphaqedev
       logical LeptEvolLoc
       external alphaqedev
+
+      double precision me ! Electron mass in GeV
+      parameter(me = 0.510998928d-3)
+      double precision mmu ! Muon mass in GeV
+      parameter(mmu = 105.6583715d-3)
+      double precision mlq ! Light quark mass in GeV
+      parameter(mlq = 0.5d0)
 **
 *     Output Variables
 *
@@ -66,18 +73,35 @@ c      return
          a_QED = alphaqedev(Nf_FF,Nl_FF,mur2,mur20,aqedr0)
          return
       elseif(Evs.eq."VF")then
+         mur2th(3) = kren * mlq * mlq
          do i=4,6
             mur2th(i) = kren * m2th(i)
          enddo
 *
          nli = 0
          nlf = 0
-         Mtau2ren = kren * MTau * MTau
+         mur2lep(1) = kren * me * me
+         mur2lep(2) = kren * mmu * mmu
+         mur2lep(3) = kren * MTau * MTau
          if(LeptEvolLoc)then
-            nli = 2
-            if(mur20.gt.Mtau2ren) nli = 3
-            nlf = 2
-            if(mur2.ge.Mtau2ren) nlf = 3
+            if(mur2.ge.mur2lep(3))then
+               nlf = 3
+            elseif(mur2.ge.mur2lep(2))then
+               nlf = 2
+            elseif(mur2.ge.mur2lep(1))then
+               nlf = 1
+            else
+               nlf = 0
+            endif
+            if(mur20.gt.mur2lep(3))then
+               nli = 3
+            elseif(mur20.gt.mur2lep(2))then
+               nli = 2
+            elseif(mur20.gt.mur2lep(1))then
+               nli = 1
+            else
+               nli = 0
+            endif
          endif
 *
 *     If the final and initial and numbers are equal ...
@@ -89,8 +113,10 @@ c      return
                nff = 5
             elseif(mur2.ge.mur2th(4))then
                nff = 4
-            else
+            elseif(mur2.ge.mur2th(3))then
                nff = 3
+            else
+               nff = 0
             endif
             if(nff.gt.nfMaxAlpha) nff = nfMaxAlpha
 *
@@ -100,8 +126,10 @@ c      return
                nfi = 5
             elseif(mur20.gt.mur2th(4))then
                nfi = 4
-            else
+            elseif(mur20.gt.mur2th(3))then
                nfi = 3
+            else
+               nfi = 0
             endif
             if(nfi.gt.nfMaxAlpha) nfi = nfMaxAlpha
 *
@@ -133,60 +161,69 @@ c      return
 *     active leptons and the from the tau scale to the final scale with
 *     "nlf" active leptons.
 *
+            sgnl = 1;
+            if(nli.gt.nlf) sgnl = -1
+
             mur20 = q2_ref_QED
-            mur2  = Mtau2ren
- 12         if(mur2.ge.mur2th(6))then
-               nff = 6
-            elseif(mur2.ge.mur2th(5))then
-               nff = 5
-            elseif(mur2.ge.mur2th(4))then
-               nff = 4
-            else
-               nff = 3
-            endif
-            if(nff.gt.nfMaxAlpha) nff = nfMaxAlpha
-*
-            if(mur20.gt.mur2th(6))then
-               nfi = 6
-            elseif(mur20.gt.mur2th(5))then
-               nfi = 5
-            elseif(mur20.gt.mur2th(4))then
-               nfi = 4
-            else
-               nfi = 3
-            endif
-            if(nfi.gt.nfMaxAlpha) nfi = nfMaxAlpha
-*
- 11         if(nff.eq.nfi)then
-               a_QED = alphaqedev(nfi,nli,mur2,mur20,aqedr0)
-               if(nli.eq.nlf)then
-                  return
+            mur2  = mur2lep(nli+1)
+            if(sgnl.lt.1) mur2  = mur2lep(nli)
+            do il=nli,nlf,sgnl
+               if(mur2.ge.mur2th(6))then
+                  nff = 6
+               elseif(mur2.ge.mur2th(5))then
+                  nff = 5
+               elseif(mur2.ge.mur2th(4))then
+                  nff = 4
+               elseif(mur2.ge.mur2th(3))then
+                  nff = 3
                else
-                  nli    = nlf
-                  mur20  = Mtau2ren
-                  mur2   = kren * mu2F
-                  aqedr0 = a_QED
-                  goto 12
+                  nff = 0
                endif
-            else
-               if(nff.gt.nfi)then
-                  dnf = 1
-                  snf = 1
+               if(nff.gt.nfMaxAlpha) nff = nfMaxAlpha
+*
+               if(mur20.gt.mur2th(6))then
+                  nfi = 6
+               elseif(mur20.gt.mur2th(5))then
+                  nfi = 5
+               elseif(mur20.gt.mur2th(4))then
+                  nfi = 4
+               elseif(mur20.gt.mur2th(3))then
+                  nfi = 3
                else
-                  dnf = -1
-                  snf = 0
+                  nfi = 0
                endif
+               if(nfi.gt.nfMaxAlpha) nfi = nfMaxAlpha
 *
-               aqedi = alphaqedev(nfi,nli,mur2th(nfi+snf),mur20,aqedr0)
-*
+ 11            if(nff.eq.nfi)then
+                  aqedi = alphaqedev(nfi,il,mur2,mur20,aqedr0)
+               else
+                  if(nff.gt.nfi)then
+                     dnf = 1
+                     if(nfi.eq.0) dnf = 3
+                     snf = 1
+                  else
+                     dnf = -1
+                     if(nfi.eq.3) dnf = -3
+                     snf = 0
+                  endif
+                  aqedi  = alphaqedev(nfi,il,mur2th(nfi+snf),
+     1                                mur20,aqedr0)
+                  aqedr0 = aqedi
+                  mur20  = mur2th(nfi+snf)
+                  nfi    = nfi + dnf
+                  goto 11
+               endif
                aqedr0 = aqedi
-               mur20  = mur2th(nfi+snf)
-               nfi    = nfi + dnf
-               goto 11
-            endif
+               mur20  = mur2
+               mur2   = mur2lep(il+sgnl)
+               if(il.eq.nlf-sgnl) mur2 = kren * mu2f
+            enddo
+            a_QED = aqedi
+            return
          endif
       endif
 *
+      return
       end
 *
 ****************************************************************
@@ -229,7 +266,7 @@ c      return
 *     Internal Variables
 *
       integer nc
-      double precision sumch2(3:6)
+      double precision sumch2(0:6)
 **
 *     Output Variables
 *
@@ -241,6 +278,9 @@ c      return
 *
 *     Sum of the first 3, 4, 5 and 6 squared electric charges
 *
+      sumch2(0) = 0d0
+      sumch2(1) = 1d0 / 9d0
+      sumch2(2) = 5d0 / 9d0
       sumch2(3) = 2d0 / 3d0
       sumch2(4) = 10d0 / 9d0
       sumch2(5) = 11d0 / 9d0
