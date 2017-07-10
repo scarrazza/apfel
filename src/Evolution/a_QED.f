@@ -201,6 +201,7 @@ c      return
                      dnf = 1
                      if(nfi.eq.0) dnf = 3
                      snf = 1
+                     if(nfi.eq.0) snf = 3
                   else
                      dnf = -1
                      if(nfi.eq.3) dnf = -3
@@ -216,6 +217,7 @@ c      return
                aqedr0 = aqedi
                mur20  = mur2
                mur2   = mur2lep(il+sgnl)
+               if(sgnl.gt.0) mur2 = mur2lep(il+sgnl+1)
                if(il.eq.nlf-sgnl) mur2 = kren * mu2f
             enddo
             a_QED = aqedi
