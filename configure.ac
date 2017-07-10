@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([APFEL],[3.0.1],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfel])
+AC_INIT([APFEL],[3.0.2],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfel])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
