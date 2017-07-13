@@ -28,7 +28,7 @@
       double precision Q2,MW,MW2,GF,GF2,MN
       double precision norm
       double precision conv
-      character*17 obs
+      character*21 obs
       parameter(conv=3.893793d10) ! conversion factor from GeV^-2 to 10^-38 cm^2
 **
 *     Output Variables
@@ -401,9 +401,6 @@
 ****  SIA absolute cross section (nf=4)
 *
       elseif(obs(1:12).eq."SIA_XSEC_NF4")then
-c         FKObservables = ( GetSIATotalCrossSection(0,Q,"light")
-c     1                   + GetSIATotalCrossSection(0,Q,"charm") )
-c     2                 * ( F2light(x) + F2charm(x) )
          FKObservables = GetSIATotalCrossSection(0,Q,"total")
      2                 * ( F2light(x) + F2charm(x) )
 *
@@ -412,6 +409,27 @@ c     2                 * ( F2light(x) + F2charm(x) )
       elseif(obs(1:8).eq."SIA_XSEC")then
          FKObservables = GetSIATotalCrossSection(0,Q,"total")
      1                 * F2total(x)
+*
+****  SIA normalized light longitudinal cross section
+*
+      elseif(obs(1:20).eq."SIA_NORM_XSEC_LONG_L")then
+         FKObservables = GetSIATotalCrossSection(0,Q,"total")
+     1                 * FLlight(x)
+     2                 / GetSIATotalCrossSection(ipt,Q,"light")
+*
+****  SIA normalized bottom longitudinal cross section
+*
+      elseif(obs(1:21).eq."SIA_NORM_XSEC_LONG_BT")then
+         FKObservables = GetSIATotalCrossSection(0,Q,"total")
+     1                 * FLbottom(x)
+     2                 / GetSIATotalCrossSection(ipt,Q,"bottom")
+*
+****  SIA normalized total longitudinal cross section
+*
+      elseif(obs(1:18).eq."SIA_NORM_XSEC_LONG")then
+         FKObservables = GetSIATotalCrossSection(0,Q,"total")
+     1                 * FLtotal(x)
+     2                 / GetSIATotalCrossSection(ipt,Q,"total")
 *
 ****  SIA normalized light cross section
 *
@@ -445,11 +463,6 @@ c     2                 * ( F2light(x) + F2charm(x) )
 ****  SIA normalized cross section (nf=4)
 *
       elseif(obs(1:17).eq."SIA_NORM_XSEC_NF4")then
-c         FKObservables = ( GetSIATotalCrossSection(0,Q,"light")
-c     1                   + GetSIATotalCrossSection(0,Q,"charm") )
-c     3                 * ( F2light(x) + F2charm(x) )
-c     4                 / ( GetSIATotalCrossSection(ipt,Q,"light")
-c     5                   + GetSIATotalCrossSection(ipt,Q,"charm") )
          FKObservables = GetSIATotalCrossSection(0,Q,"total")
      1                 * ( F2light(x) + F2charm(x) )
      2                 / ( GetSIATotalCrossSection(ipt,Q,"light")

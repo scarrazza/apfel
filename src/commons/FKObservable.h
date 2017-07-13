@@ -1,5 +1,5 @@
 *     -*-fortran-*-
 
-      character*17 FKObservable
+      character*21 FKObservable
 *
       common / FKObservableAPFEL / FKObservable

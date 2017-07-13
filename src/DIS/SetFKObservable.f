@@ -14,7 +14,7 @@
 **
 *     Input Variables
 *
-      character*17 obs
+      character*21 obs
 *
       FKObservable = obs
 *
@@ -367,6 +367,30 @@
 ****  SIA absolute cross section
 *
       elseif(obs(1:8).eq."SIA_XSEC")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA normalized light longitudinal cross section
+*
+      elseif(obs(1:20).eq."SIA_NORM_XSEC_LONG_L")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA normalized bottom longitudinal cross section
+*
+      elseif(obs(1:21).eq."SIA_NORM_XSEC_LONG_BT")then
+         call SetTimeLikeEvolution(.true.)
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  SIA normalized total longitudinal cross section
+*
+      elseif(obs(1:18).eq."SIA_NORM_XSEC_LONG")then
          call SetTimeLikeEvolution(.true.)
          call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
