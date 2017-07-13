@@ -420,7 +420,6 @@
 ****  SIA normalized bottom longitudinal cross section
 *
       elseif(obs(1:21).eq."SIA_NORM_XSEC_LONG_BT")then
-      elseif(obs(1:16).eq."SIA_NORM_XSEC_BT")then
          FKSimulator = GetSIATotalCrossSection(0,Q,"total")
      1               * ExternalDISOperator("FL",5,i,x,beta)
      2               / GetSIATotalCrossSection(ipt,Q,"bottom")
@@ -434,7 +433,7 @@
 *
 ****  SIA normalized light cross section
 *
-           elseif(obs(1:15).eq."SIA_NORM_XSEC_L")then
+      elseif(obs(1:15).eq."SIA_NORM_XSEC_L")then
          FKSimulator = GetSIATotalCrossSection(0,Q,"total")
      1               * ExternalDISOperator("F2",3,i,x,beta)
      2               / GetSIATotalCrossSection(ipt,Q,"light")
