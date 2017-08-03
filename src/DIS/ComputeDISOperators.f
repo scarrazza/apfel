@@ -36,7 +36,7 @@
       include "../commons/gridAlpha.h"
       include "../commons/integralsResDIS.h"
       include "../commons/NLOQEDCorrections.h"
-      include "../commons/Timelike.h"
+      include "../commons/TimeLike.h"
 **
 *     Internal Variables
 *
