@@ -36,6 +36,7 @@
       include "../commons/gridAlpha.h"
       include "../commons/integralsResDIS.h"
       include "../commons/NLOQEDCorrections.h"
+      include "../commons/Timelike.h"
 **
 *     Internal Variables
 *
@@ -288,6 +289,21 @@ c            damp(4) = 1d0
                         C3nsm(3) = C3nsm(3)
      1                       + as(pt) * SC3zm(jgrid,nf,4,pt,alpha,beta)
                      enddo
+*
+*     If computing the time-like structure functions for SIA, add to FL
+*     one additional order.
+*
+                     if(TimeLike.and.ipt.lt.2)then
+                        CLg(3)   = CLg(3)
+     1                       + as(ipt+1)
+     2                       * SCLzm(jgrid,nf,1,ipt+1,alpha,beta)
+                        CLps(3)  = CLps(3)
+     1                       + as(ipt+1)
+     2                       * SCLzm(jgrid,nf,2,ipt+1,alpha,beta)
+                        CLnsp(3) = CLnsp(3)
+     1                       + as(ipt+1)
+     2                       * SCLzm(jgrid,nf,3,ipt+1,alpha,beta)
+                     endif
 *
 *     Small-x resummed contributions
 *

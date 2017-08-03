@@ -29,7 +29,7 @@
 *
       implicit none
 *
-      include "../commons/ipt.h"
+c      include "../commons/ipt.h"
       include "../commons/wrapDIS.h"
       include "../commons/grid.h"
       include "../commons/coeffhqmellin.h"
@@ -43,7 +43,7 @@
 **
 *     Internal Variables
 *
-      integer bound,inf
+      integer bound,inf,ipt_ZM
       double precision C2L(0:2),CLL(0:2),C3L(0:2)
       double precision fL
       double precision dgauss,a,b,eps(2)
@@ -75,11 +75,17 @@ c      data eps / 1d-7, 1d-5 /
       fL = 0d0
       if(alpha.eq.beta) fL = 1d0
 *
+*     The ZM scheme is cheap enough to compute all orders anyway. This
+*     is useful because in some cases one may need different absolute
+*     orderes at the same time, like with F2 and FL.
+*
+      ipt_ZM = 2
+*
 *     Initialize Integrals
 *
       do inf=3,6
          do k=1,4
-            do wipt=0,ipt
+            do wipt=0,ipt_ZM
                SC2zm(igrid,inf,k,wipt,beta,alpha) = 0d0
                SCLzm(igrid,inf,k,wipt,beta,alpha) = 0d0
                SC3zm(igrid,inf,k,wipt,beta,alpha) = 0d0
@@ -94,7 +100,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     Precompute integrals
 *
-         if(ipt.ge.1)then
+         if(ipt_ZM.ge.1)then
             wipt = 1
 *
             sf = 1
@@ -115,7 +121,7 @@ c      data eps / 1d-7, 1d-5 /
             C3ns1RS = dgauss(integrandsSIAzm,a,b,eps(wipt))
             C3ns1L  = C3NS1TC(a)
          endif
-         if(ipt.ge.2)then
+         if(ipt_ZM.ge.2)then
             wipt = 2
 *
             sf = 1
@@ -169,7 +175,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     NLO
 *
-            if(ipt.ge.1)then
+            if(ipt_ZM.ge.1)then
 *     Gluon
                if(k.eq.1)then
 *     C2
@@ -208,7 +214,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     NNLO
 *
-            if(ipt.ge.2)then
+            if(ipt_ZM.ge.2)then
 *     Gluon
                if(k.eq.1)then
 *     C2
@@ -258,7 +264,7 @@ c      data eps / 1d-7, 1d-5 /
 *
 *     Integrals
 *
-            do wipt=0,ipt
+            do wipt=0,ipt_ZM
                SC2zm(igrid,inf,k,wipt,beta,alpha) = integC2(wipt) 
      1                                            + C2L(wipt) * fL
                SCLzm(igrid,inf,k,wipt,beta,alpha) = integCL(wipt) 
