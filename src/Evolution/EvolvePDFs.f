@@ -67,7 +67,7 @@
 *     Rotate initial PDFs from physical to Unified evolution basis
          call PDFphys2evUni(f0lep,f0ph,flevUni,fevUni)
 *     Evolve PDFs using the QCD evolution operators
-         do inl=nli,nlf
+         do inl=nli,nlf,sgn
             do inf=nfli(inl),nflf(inl),sgn
                call EvolveUni(inf,inl,flevUni,fevUni)
             enddo
