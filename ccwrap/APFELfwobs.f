@@ -321,6 +321,13 @@ ccccccccccccc
       end subroutine fsetdampingpowerfonll
 
 ccccccccccccc
+      subroutine fcomputechargesdis(Q2,bq,dq,bqt)
+      double precision Q2
+      double precision bq(0:6),dq(0:6),bqt(0:6)
+      call ComputeChargesDIS(Q2,bq,dq,bqt)
+      end subroutine fcomputechargesdis
+
+ccccccccccccc
       function ffksimulator(x,q,y,i,beta)
       integer i,beta
       double precision x,q,y

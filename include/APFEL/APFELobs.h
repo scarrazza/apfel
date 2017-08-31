@@ -137,6 +137,9 @@ namespace APFEL {
   /// Set the FONLL damping power suppression
   void SetDampingPowerFONLL(int);
 
+  /// Get the EW DIS charges at the scale Q2
+  void ComputeChargesDIS(double q2, double *bq, double *dq, double *bqt);
+
   /// Emulator of the FKgenerator
   double FKSimulator(double x,double q,double y,int i,int beta);
 

@@ -276,6 +276,11 @@ namespace APFEL {
     fsetdampingpowerfonll(&dp);
   }
 
+  void ComputeChargesDIS(double q2, double *bq, double *dq, double *bqt)
+  {
+    fcomputechargesdis(&q2,bq,dq,bqt);
+  }
+
   double FKSimulator(double x,double q,double y,int i,int beta)
   {
     return ffksimulator(&x,&q,&y,&i,&beta);

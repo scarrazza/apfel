@@ -151,6 +151,9 @@ extern "C" {
 #define fsetdampingpowerfonll FC_FUNC(setdampingpowerfonll,SETDAMPINGPOWERFONLL)
   void fsetdampingpowerfonll(int*);
 
+#define fcomputechargesdis FC_FUNC(computechargesdis,COMPUTECHARGESDIS)
+  void fcomputechargesdis(double*,double*,double*,double*);
+
 #define ffksimulator FC_FUNC(fksimulator,FKSIMULATOR)
   double ffksimulator(double*,double*,double*,int*,int*);
 
