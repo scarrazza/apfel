@@ -3,6 +3,9 @@
 
 #include <string>
 #include <iostream>
+
+#include "APFEL/APFELevol.h"
+
 using std::string;
 
 /**
@@ -139,6 +142,12 @@ namespace APFEL {
 
   /// Get the EW DIS charges at the scale Q2
   void ComputeChargesDIS(double q2, double *bq, double *dq, double *bqt);
+
+  /// Get the EW DIS charges at the scale Q2
+  void ComputeChargesDIS(double q2, double *bq, double *dq, double *bqt);
+
+  /// Compute F2 at LO using PDFs
+  double F2LO(double x, double q);
 
   /// Emulator of the FKgenerator
   double FKSimulator(double x,double q,double y,int i,int beta);

@@ -281,6 +281,19 @@ namespace APFEL {
     fcomputechargesdis(&q2,bq,dq,bqt);
   }
 
+  double F2LO(double x, double q)
+  {
+    double Q2 = q * q;
+    double bq[7];
+    double dq[7];
+    double bqt[7];
+    ComputeChargesDIS(Q2,bq,dq,bqt);
+    double F2 = 0;
+    for (int j = 1; j <=6; j++)
+      F2 += bq[j] * ( xPDFj(j,x) + xPDFj(-j,x) );
+    return F2;
+  }
+
   double FKSimulator(double x,double q,double y,int i,int beta)
   {
     return ffksimulator(&x,&q,&y,&i,&beta);
