@@ -288,9 +288,11 @@ namespace APFEL {
     double dq[7];
     double bqt[7];
     ComputeChargesDIS(Q2,bq,dq,bqt);
+    double xf[12];
+    xPDFxQall(x, q, xf);
     double F2 = 0;
     for (int j = 1; j <=6; j++)
-      F2 += bq[j] * ( xPDFj(j,x) + xPDFj(-j,x) );
+      F2 += bq[j] * ( xf[6+j] + xf[6-j] );
     return F2;
   }
 
