@@ -25,6 +25,7 @@
       include "../commons/m2th.h"
       include "../commons/Nf_FF.h"
       include "../commons/TMC.h"
+      include "../commons/ProcessDIS.h"
 **
 *     Input Variables
 *
@@ -42,6 +43,7 @@
       double precision eps
       double precision t1,t2
       character*100 pdfsetbkp
+      character*2   procbkp
       parameter(eps=1d-14)
 *
       call cpu_time(t1)
@@ -155,8 +157,9 @@
      2                 * dlog( lnQmax / lnQmin ) ) )
          enddo
       endif
-*     Backup PDF name
+*     Backup PDF name and process
       pdfsetbkp = pdfset
+      procbkp   = ProcessDIS
 *
 *     Evolve PDFs on the Q2-grid
 *
@@ -202,8 +205,9 @@
             endif
          enddo
       enddo
-*     Restore PDF name and reset PDFs at the initial scale
+*     Restore PDF name, process, and reset PDFs at the initial scale
       call SetPDFSet(pdfsetbkp)
+      call SetProcessDIS(procbkp)
       call ComputeStructureFunctionsAPFEL(Q0,Q0)
 *
 *     Caching complete
