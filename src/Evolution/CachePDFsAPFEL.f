@@ -160,11 +160,15 @@
 *
       Q2g(-1) = Q0 * Q0
       do iq2=0,nQ2g
-         if(PDFevol(1:9).eq."truncated")then
-            call EvolveAPFEL(Q0,dsqrt(Q2g(iq2)))
+         if(Q0.lt.0d0)then
+            call EvolveAPFEL(dsqrt(Q2g(iq2)),dsqrt(Q2g(iq2)))
          else
-            call EvolveAPFEL(dsqrt(Q2g(iq2-1)),dsqrt(Q2g(iq2)))
-            call SetPDFSet("apfel")
+            if(PDFevol(1:9).eq."truncated")then
+               call EvolveAPFEL(Q0,dsqrt(Q2g(iq2)))
+            else
+               call EvolveAPFEL(dsqrt(Q2g(iq2-1)),dsqrt(Q2g(iq2)))
+               call SetPDFSet("apfel")
+            endif
          endif
          do alpha=0,nin(0)
             do ipdf=-6,6
