@@ -188,12 +188,13 @@
          if(DampingFONLL)then
             if(ihq.gt.Nf_FF)then
                if(muF2.gt.m2th(ihq))then
-                  if(DampPowerFONLL.lt.0)then
+                  if(DampPowerFONLL(ihq).lt.0)then
                      damp(ihq) = 1d0
                      c0(ihq)   = 0d0
                      c1(ihq)   = 0d0
                   else
-                     damp(ihq) = (1d0 - m2th(ihq)/muF2)**DampPowerFONLL
+                     damp(ihq) = ( 1d0
+     1                    - m2th(ihq) / muF2 )**DampPowerFONLL(ihq)
                   endif
                else
                   damp(ihq) = 0d0

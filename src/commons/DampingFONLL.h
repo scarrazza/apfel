@@ -9,7 +9,7 @@
 *
 *     Power of the damping
 *
-      integer DampPowerFONLL
+      integer DampPowerFONLL(4:6)
       character*4 InDampPowerFONLL
 *
       common / DampPowerFONLLAPFEL / DampPowerFONLL,InDampPowerFONLL
