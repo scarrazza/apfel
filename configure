@@ -20549,7 +20549,7 @@ _ACEOF
 $as_echo "$flag_ok" >&6; }
   if test x$flag_ok == xyes; then
     true
-    AM_CXXFLAGS="$AM_CXXFLAGS -Wall "
+    AM_CXXFLAGS="$AM_CXXFLAGS -Wall -std=c++11 "
   else
     true
 
