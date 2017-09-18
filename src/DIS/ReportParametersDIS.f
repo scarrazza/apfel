@@ -88,8 +88,12 @@
 *
          if(MassScheme(1:5).eq."FONLL")then
             if(DampingFONLL)then
-               write(6,"(a,a,i1)") " FONLL damping factor enabled ",
-     1              "with suppression power = ",DampPowerFONLL
+               if(DampPowerFONLL.ge.0)then
+                  write(6,"(a,a,i1)") " FONLL damping factor enabled ",
+     1                 "with suppression power = ",DampPowerFONLL
+               else
+                  write(6,*) "Using BGMPU prescription"
+               endif
             else
                write(6,*) "FONLL damping factor disabled"
             endif
