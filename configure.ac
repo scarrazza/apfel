@@ -1,5 +1,5 @@
 AC_PREREQ([2.69])
-AC_INIT([APFEL],[3.0.4],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfel])
+AC_INIT([APFEL],[3.0.4-eft],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfel])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
@@ -76,16 +76,16 @@ AC_ARG_ENABLE([lhapdf],
   [AC_HELP_STRING(--disable-lhapdf, [don't link to LHAPDF])],
   [], [enable_lhapdf=yes])
 if test x$enable_lhapdf == xyes; then
-  AC_SEARCH_LHAPDF  
+  AC_SEARCH_LHAPDF
 else
-  AM_CPPFLAGS=["$AM_CPPFLAGS -DNOLHAPDF"]  
+  AM_CPPFLAGS=["$AM_CPPFLAGS -DNOLHAPDF"]
 fi
 AM_CONDITIONAL(ENABLE_LHAPDF, [test x$enable_lhapdf == xyes])
 
 ## Python extension
 AC_ARG_ENABLE(pywrap, [AC_HELP_STRING(--disable-pywrap,
   [don't build Python module (default=build)])],
-  [], [enable_pywrap=yes])   
+  [], [enable_pywrap=yes])
 
 enable_pywrap=yes
 AZ_PYTHON_DEFAULT
