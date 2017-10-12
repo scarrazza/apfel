@@ -29,8 +29,8 @@
       double precision norm
       double precision conv
       character*21 obs
-      double precision GetZMass,GetSin2ThetaW,xPDFj
-      double precision MZ2,u,ubar,d,dbar,K,ad,au,s2w,cw2,cF2,cF3 ! EFT
+      double precision GetZMass,GetSin2ThetaW,xPDFj,AlphaQED ! EFT
+      double precision e2,MZ2,u,ubar,d,dbar,K,ad,au,s2w,c2w,cF2,cF3 ! EFT
       parameter(conv=3.893793d10) ! conversion factor from GeV^-2 to 10^-38 cm^2
 **
 *     Output Variables
@@ -54,25 +54,26 @@
 *
 ****  EFT specific objects
 *
+      e2 = 4d0 * pi * AlphaQED(Q)
       au = 1.8d0/1d3**2
       ad = 1.9d0/1d3**2
       MZ2 = GetZMass()**2
       s2w = GetSin2ThetaW()
-      cw2 = cos(asin(dsqrt(s2w))**2)
-      K = Q2 / 4d0 / cw2 / s2w / (Q2-MZ2)
+      c2w = 1d0 - s2w
+      K = Q2 / 4d0 / c2w / s2w / (Q2-MZ2)
       d   = xPDFj(1,x)
       dbar= xPDFj(-1,x)
       u   = xPDFj(2,x)
       ubar= xPDFj(-2,x)
 *
-      cF2 = x / 12d0 * (
-     1     (3d0*ad*ad*Q2*Q2 - 2d0*ad*Q2*(1d0+4d0*K*s2w*s2w)) * (d-dbar)
-     2     + (3d0*au*au*Q2*Q2 + 4d0*au*Q2*(1d0+4d0*K*s2w*s2w))*(u-ubar)
+      cF2 = x / 12d0 / e2**2 * (
+     1   (3d0*ad*ad*Q2*Q2 - 2d0*ad*e2*Q2*(1d0+4d0*K*s2w*s2w)) * (d-dbar)
+     2   + (3d0*au*au*Q2*Q2 + 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))*(u-ubar)
      3     )
 *
-      cF3 = x / 12d0 * (
-     1     (3d0*ad*ad*Q2*Q2 - 2d0*ad*Q2*(1d0+4d0*K*s2w*s2w)) * (d+dbar)
-     2     + (3d0*au*au*Q2*Q2 + 4d0*au*Q2*(1d0+4d0*K*s2w*s2w))*(u+ubar)
+      cF3 = x / 12d0 / e2**2 * (
+     1   (3d0*ad*ad*Q2*Q2 - 2d0*ad*e2*Q2*(1d0+4d0*K*s2w*s2w)) * (d+dbar)
+     2   + (3d0*au*au*Q2*Q2 + 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))*(u+ubar)
      3     )
 *
 ****  Light structure function F2light
