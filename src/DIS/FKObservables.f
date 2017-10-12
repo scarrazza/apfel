@@ -54,8 +54,8 @@
 *
 ****  EFT specific objects
 *
-      au = 1.8d0
-      ad = 1.9d0
+      au = 1.8d0/1d3**2
+      ad = 1.9d0/1d3**2
       MZ2 = GetZMass()**2
       s2w = GetSin2ThetaW()
       cw2 = cos(asin(dsqrt(s2w))**2)
@@ -67,13 +67,13 @@
 *
       cF2 = x / 12d0 * (
      1     (3d0*ad*ad*Q2*Q2 - 2d0*ad*Q2*(1d0+4d0*K*s2w*s2w)) * (d-dbar)
-     2     + (-3d0*au*au*Q2*Q2 + 2d0*au*Q2*(1d0+4d0*K*s2w*s2w))*(u-ubar)
+     2     + (3d0*au*au*Q2*Q2 + 4d0*au*Q2*(1d0+4d0*K*s2w*s2w))*(u-ubar)
      3     )
 *
       cF3 = x / 12d0 * (
      1     (3d0*ad*ad*Q2*Q2 - 2d0*ad*Q2*(1d0+4d0*K*s2w*s2w)) * (d+dbar)
      2     + (3d0*au*au*Q2*Q2 + 4d0*au*Q2*(1d0+4d0*K*s2w*s2w))*(u+ubar)
-     3     )      
+     3     )
 *
 ****  Light structure function F2light
 *
