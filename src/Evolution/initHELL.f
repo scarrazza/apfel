@@ -6,16 +6,15 @@
 *     resummation.
 *
 ************************************************************************
-      subroutine initHELL(la,pt)
+      subroutine initHELL
 *
       implicit none
-**
-*     Input Variables
 *
-      integer la,pt
+      include "../commons/Smallx.h"
+      include "../commons/ipt.h"
 *
-      call HELLLogOrder(la)
-      call HELLOrder(pt)
+      call HELLLogOrder(LogAcc)
+      call HELLOrder(ipt)
       call HELL
 *
       return

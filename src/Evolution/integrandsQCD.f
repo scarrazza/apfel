@@ -291,7 +291,7 @@
 *     code HELL.
 *     The input variables of the function "xDeltaP" are:
 *
-*        xDeltaP(k,alphas,y)
+*        xDeltaP(nf,k,alphas,y)
 *
 *     where:
 *     - k   = 4: qq, 5: qg, 6: gq, 7: gg (splitting function),

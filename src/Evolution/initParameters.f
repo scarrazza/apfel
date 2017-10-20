@@ -466,5 +466,10 @@ c      endif
 *
       call ThresholdAlphaQCD
 *
+*     Initialize HELL with the righ accuracies if the small-x
+*     resummation is enabled
+*
+      if(Smallx) call initHELL
+*
       return
       end

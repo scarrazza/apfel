@@ -679,3 +679,124 @@
 *
       return
       end
+*
+************************************************************************
+      function integrandsDISNCcharmRes(y)
+*
+      implicit none
+*
+      include "../commons/consts.h"
+      include "../commons/grid.h"
+      include "../commons/gridAlpha.h"
+      include "../commons/wrapResDIS.h"
+      include "../commons/m2th.h"
+**
+*     Input Variables
+*
+      double precision y
+**
+*     Internal Variables
+*
+      double precision z,w_int,fR
+      double precision xDeltaMC2,xDeltaMCL,alphas
+      double precision mh,m_Q_ratio,eta
+**
+*     Output Variables
+*
+      double precision integrandsDISNCcharmRes
+*
+*     Heavy quark mass
+*
+      mh = dsqrt(m2ph(4))
+      m_Q_ratio = mh / qag(wtau)
+*
+*     Return zero in the prohibited kinematic region
+*
+      integrandsDISNCcharmRes = 0d0
+      eta = 1d0 / ( 1d0 + 4d0 * m_Q_ratio**2 )
+      if(y.ge.eta) return
+*
+*     Interpolant functions
+*
+      z = xg(igrid,wbeta) / y
+*
+      fR = w_int(inter_degree(igrid),walpha,z)
+*
+*     Contructing integrands
+*
+      alphas = 4d0 * pi * ag(wtau)
+*     C2
+      if(sf.eq.1)then
+         integrandsDISNCcharmRes =
+     1        xDeltaMC2(nfg(wtau),k,alphas,y,m_Q_ratio) * fR
+*     CL
+      elseif(sf.eq.2)then
+         integrandsDISNCcharmRes =
+     1        xDeltaMCL(nfg(wtau),k,alphas,y,m_Q_ratio) * fR
+      else
+         integrandsDISNCcharmRes = 0d0
+      endif
+*
+      return
+      end
+*
+************************************************************************
+      function integrandsDISNCcharm0Res(y)
+*
+      implicit none
+*
+      include "../commons/consts.h"
+      include "../commons/grid.h"
+      include "../commons/gridAlpha.h"
+      include "../commons/wrapResDIS.h"
+      include "../commons/m2th.h"
+**
+*     Input Variables
+*
+      double precision y
+**
+*     Internal Variables
+*
+      double precision z,w_int,fR
+      double precision xDeltaK,alphas
+      double precision mh,m_Q_ratio,eta
+**
+*     Output Variables
+*
+      double precision integrandsDISNCcharm0Res
+*
+*     Heavy quark mass
+*
+      mh = dsqrt(m2ph(4))
+      m_Q_ratio = mh / qag(wtau)
+*
+*     Return zero in the prohibited kinematic region
+*
+      integrandsDISNCcharm0Res = 0d0
+      eta = 1d0 / ( 1d0 + 4d0 * m_Q_ratio**2 )
+      if(y.ge.eta) return
+*
+*     Interpolant functions
+*
+      z = xg(igrid,wbeta) / y
+*
+      fR = w_int(inter_degree(igrid),walpha,z)
+*
+*     Contructing integrands
+*
+      alphas = 4d0 * pi * ag(wtau)
+*     C2
+      if(sf.eq.1)then
+         integrandsDISNCcharm0Res =
+     1        xDeltaK(nfg(wtau),k,alphas,y,m_Q_ratio) * fR
+*     CL
+c      elseif(sf.eq.2)then
+c         integrandsDISNCcharm0Res =
+c     1        xDeltaK(nfg(wtau),k,alphas,y,m_Q_ratio) * fR
+      else
+         integrandsDISNCcharm0Res = 0d0
+      endif
+*
+      return
+      end
+
