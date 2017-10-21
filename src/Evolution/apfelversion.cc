@@ -21,7 +21,8 @@ extern "C" {
 #ifndef DARWIN
   void externalsetapfel_(double x, double Q, double* xf)  { return; }
   void externalsetapfel1_(double x, double Q, double* xf) { return; }
-  void externalsetapfelrep_(double x, double Q, int irep, double* xf) { return; }
+  void externalsetapfelrep_(double x, double Q, int irep, double* xf)  { return; }
+  void externalsetapfelrep1_(double x, double Q, int irep, double* xf) { return; }
   void externalsetapfellept_(double x, double Q, int irep, double* xl, double* xf) { return; }
 #endif
 
