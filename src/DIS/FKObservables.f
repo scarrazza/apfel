@@ -71,9 +71,9 @@
      2 + (3d0*au*au*Q2*Q2 + 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))*(xu-xubar)
      3     )
 *
-      cF3 = 1d0 / 12d0 / e2**2 * (
-     1 (3d0*ad*ad*Q2*Q2 - 2d0*ad*e2*Q2*(1d0+4d0*K*s2w*s2w)) * (xd+xdbar)
-     2 + (3d0*au*au*Q2*Q2 + 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))*(xu+xubar)
+      cF3 = -1d0 / 12d0 / e2**2 * (
+     1 (3d0*ad*ad*Q2*Q2 + 2d0*ad*e2*Q2*(1d0+4d0*K*s2w*s2w)) * (xd+xdbar)
+     2 + (3d0*au*au*Q2*Q2 - 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))*(xu+xubar)
      3     )
 *
 ****  Light structure function F2light
