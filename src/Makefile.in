@@ -247,7 +247,8 @@ am__objects_10 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
 	DIS/hqcoef.lo DIS/initIntegralsDISRes.lo \
 	DIS/IncludeNLOQEDCorrections.lo \
 	DIS/EnableSFNLOQEDCorrections.lo
-am__objects_11 = HELL/src/hell.lo HELL/src/hell_wrapper.lo
+am__objects_11 = HELL/src/hell-x.lo HELL/src/math/special_functions.lo \
+	HELL/src/hell_wrapper.lo
 am__objects_12 = FTDY/src/ComputeFKTables.lo \
 	FTDY/src/ComputeHardCrossSectionsDY.lo FTDY/src/gauleg.lo \
 	FTDY/src/initDYcouplings.lo FTDY/src/initxGridDY.lo \
@@ -572,7 +573,7 @@ FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src
 	FTDY/src/writecDY.f FTDY/src/writeFK.f FTDY/src/xlineigen.f FTDY/src/PDFphys2ev.f
 
 EXTRA_DIST = commons FTDY/commons
-HELL = HELL/src/hell.cc HELL/src/hell_wrapper.cc
+HELL = HELL/src/hell-x.cc HELL/src/math/special_functions.cc HELL/src/hell_wrapper.cc
 libAPFELCore_la_SOURCES = $(INITCXX) $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
 libAPFELevol_la_LIBADD = $(FCLIBS) $(top_builddir)/ccwrap/libAPFELCCWrapEvol.la
 libAPFELevol_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(HELL)
@@ -1065,8 +1066,16 @@ HELL/src/$(am__dirstamp):
 HELL/src/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) HELL/src/$(DEPDIR)
 	@: > HELL/src/$(DEPDIR)/$(am__dirstamp)
-HELL/src/hell.lo: HELL/src/$(am__dirstamp) \
+HELL/src/hell-x.lo: HELL/src/$(am__dirstamp) \
 	HELL/src/$(DEPDIR)/$(am__dirstamp)
+HELL/src/math/$(am__dirstamp):
+	@$(MKDIR_P) HELL/src/math
+	@: > HELL/src/math/$(am__dirstamp)
+HELL/src/math/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) HELL/src/math/$(DEPDIR)
+	@: > HELL/src/math/$(DEPDIR)/$(am__dirstamp)
+HELL/src/math/special_functions.lo: HELL/src/math/$(am__dirstamp) \
+	HELL/src/math/$(DEPDIR)/$(am__dirstamp)
 HELL/src/hell_wrapper.lo: HELL/src/$(am__dirstamp) \
 	HELL/src/$(DEPDIR)/$(am__dirstamp)
 FTDY/src/$(am__dirstamp):
@@ -1124,6 +1133,8 @@ mostlyclean-compile:
 	-rm -f FTDY/src/*.lo
 	-rm -f HELL/src/*.$(OBJEXT)
 	-rm -f HELL/src/*.lo
+	-rm -f HELL/src/math/*.$(OBJEXT)
+	-rm -f HELL/src/math/*.lo
 	-rm -f core/*.$(OBJEXT)
 	-rm -f core/*.lo
 
@@ -1132,8 +1143,9 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@Evolution/$(DEPDIR)/apfelversion.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@Evolution/$(DEPDIR)/lhapdfwrapper.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell-x.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell_wrapper.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@HELL/src/math/$(DEPDIR)/special_functions.Plo@am__quote@
 
 .cc.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)depbase=`echo $@ | sed 's|[^/]*$$|$(DEPDIR)/&|;s|\.o$$||'`;\
@@ -1177,6 +1189,7 @@ clean-libtool:
 	-rm -rf Evolution/.libs Evolution/_libs
 	-rm -rf FTDY/src/.libs FTDY/src/_libs
 	-rm -rf HELL/src/.libs HELL/src/_libs
+	-rm -rf HELL/src/math/.libs HELL/src/math/_libs
 	-rm -rf core/.libs core/_libs
 
 ID: $(am__tagged_files)
@@ -1302,6 +1315,8 @@ distclean-generic:
 	-rm -f FTDY/src/$(am__dirstamp)
 	-rm -f HELL/src/$(DEPDIR)/$(am__dirstamp)
 	-rm -f HELL/src/$(am__dirstamp)
+	-rm -f HELL/src/math/$(DEPDIR)/$(am__dirstamp)
+	-rm -f HELL/src/math/$(am__dirstamp)
 	-rm -f core/$(DEPDIR)/$(am__dirstamp)
 	-rm -f core/$(am__dirstamp)
 
@@ -1314,7 +1329,7 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	clean-noinstLTLIBRARIES mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf Evolution/$(DEPDIR) HELL/src/$(DEPDIR)
+	-rm -rf Evolution/$(DEPDIR) HELL/src/$(DEPDIR) HELL/src/math/$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -1360,7 +1375,7 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf Evolution/$(DEPDIR) HELL/src/$(DEPDIR)
+	-rm -rf Evolution/$(DEPDIR) HELL/src/$(DEPDIR) HELL/src/math/$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 

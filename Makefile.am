@@ -2,7 +2,7 @@ ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = include ccwrap src lib examples pywrap doc bin
 dist_doc_DATA = README
-dist_pkgdata_DATA = src/HELL/data/*
+dist_pkgdata_DATA = src/HELL/data30/*
 
 mostlyclean-local:
 	rm -rf a.out

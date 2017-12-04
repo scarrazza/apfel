@@ -3,7 +3,7 @@
  * stefano.carrazza@mi.infn.it
  */
 
-#include "HELL/include/hell.hh"
+#include "HELL/include/hell-x.hh"
 #include "HELL/include/hell_wrapper.hh"
 
 #include <iostream>

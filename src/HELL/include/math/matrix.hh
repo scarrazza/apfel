@@ -1,6 +1,4 @@
-#ifndef __MATRIX_H__
-#define __MATRIX_H__
-
+#pragma once
 #include <cmath>
 #include <stdlib.h>
 #include <iostream>
@@ -10,11 +8,9 @@
 using namespace std;
 
 
-typedef complex<double> dcomplex;
-const dcomplex I(0.0,1.0);
-
 
 namespace HELLx {
+
 
 template <class T>
 class vec2{
@@ -306,7 +302,4 @@ vec2<T> operator * (sqmatrix<T> &a, vec2<T> &b) {
 
 };
 
-
-
-#endif    /*  MATRIX_H  */
 
