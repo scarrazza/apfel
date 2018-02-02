@@ -452,7 +452,7 @@ namespace HELLx {
     }
     // the following is needed for cubic interpolation
     if(k==0) k++;
-    if(k==vas.size()-1) k--;
+    if(k==(int) vas.size()-1) k--;
     //
     //cout << alphas[k] << " < " << as << " < " << alphas[k+1] << endl;
     factor = (as-vas[k]) / (vas[k+1]-vas[k]);
