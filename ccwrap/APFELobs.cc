@@ -271,9 +271,9 @@ namespace APFEL {
     fenabledampingfonll(&df);
   }
 
-  void SetDampingPowerFONLL(int dp)
+  void SetDampingPowerFONLL(int dpc, int dpb, int dpt)
   {
-    fsetdampingpowerfonll(&dp);
+    fsetdampingpowerfonll(&dpc, &dpb, &dpt);
   }
 
   void ComputeChargesDIS(double q2, double *bq, double *dq, double *bqt)

@@ -315,9 +315,9 @@ ccccccccccccc
       end subroutine fenabledampingfonll
 
 ccccccccccccc
-      subroutine fsetdampingpowerfonll(dp)
-      integer dp
-      call SetDampingPowerFONLL(dp)
+      subroutine fsetdampingpowerfonll(dpc,dpb,dpt)
+      integer dpc,dpb,dpt
+      call SetDampingPowerFONLL(dpc,dpb,dpt)
       end subroutine fsetdampingpowerfonll
 
 ccccccccccccc

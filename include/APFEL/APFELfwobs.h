@@ -149,7 +149,7 @@ extern "C" {
   void fenabledampingfonll(int*);
 
 #define fsetdampingpowerfonll FC_FUNC(setdampingpowerfonll,SETDAMPINGPOWERFONLL)
-  void fsetdampingpowerfonll(int*);
+  void fsetdampingpowerfonll(int*,int*,int*);
 
 #define fcomputechargesdis FC_FUNC(computechargesdis,COMPUTECHARGESDIS)
   void fcomputechargesdis(double*,double*,double*,double*);
