@@ -644,9 +644,17 @@ def EnableDampingFONLL(arg1):
     return _apfel.EnableDampingFONLL(arg1)
 EnableDampingFONLL = _apfel.EnableDampingFONLL
 
-def SetDampingPowerFONLL(arg1):
-    return _apfel.SetDampingPowerFONLL(arg1)
+def SetDampingPowerFONLL(arg1, arg2, arg3):
+    return _apfel.SetDampingPowerFONLL(arg1, arg2, arg3)
 SetDampingPowerFONLL = _apfel.SetDampingPowerFONLL
+
+def ComputeChargesDIS(q2, bq, dq, bqt):
+    return _apfel.ComputeChargesDIS(q2, bq, dq, bqt)
+ComputeChargesDIS = _apfel.ComputeChargesDIS
+
+def F2LO(x, q):
+    return _apfel.F2LO(x, q)
+F2LO = _apfel.F2LO
 
 def FKSimulator(x, q, y, i, beta):
     return _apfel.FKSimulator(x, q, y, i, beta)

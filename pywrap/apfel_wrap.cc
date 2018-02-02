@@ -7987,18 +7987,115 @@ fail:
 SWIGINTERN PyObject *_wrap_SetDampingPowerFONLL(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
+  int arg2 ;
+  int arg3 ;
   int val1 ;
   int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
   PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
   
-  if (!PyArg_ParseTuple(args,(char *)"O:SetDampingPowerFONLL",&obj0)) SWIG_fail;
+  if (!PyArg_ParseTuple(args,(char *)"OOO:SetDampingPowerFONLL",&obj0,&obj1,&obj2)) SWIG_fail;
   ecode1 = SWIG_AsVal_int(obj0, &val1);
   if (!SWIG_IsOK(ecode1)) {
     SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetDampingPowerFONLL" "', argument " "1"" of type '" "int""'");
   } 
   arg1 = static_cast< int >(val1);
-  APFEL::SetDampingPowerFONLL(arg1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SetDampingPowerFONLL" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SetDampingPowerFONLL" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  APFEL::SetDampingPowerFONLL(arg1,arg2,arg3);
   resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ComputeChargesDIS(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double *arg2 = (double *) 0 ;
+  double *arg3 = (double *) 0 ;
+  double *arg4 = (double *) 0 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  void *argp4 = 0 ;
+  int res4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:ComputeChargesDIS",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ComputeChargesDIS" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  res2 = SWIG_ConvertPtr(obj1, &argp2,SWIGTYPE_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ComputeChargesDIS" "', argument " "2"" of type '" "double *""'"); 
+  }
+  arg2 = reinterpret_cast< double * >(argp2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3,SWIGTYPE_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ComputeChargesDIS" "', argument " "3"" of type '" "double *""'"); 
+  }
+  arg3 = reinterpret_cast< double * >(argp3);
+  res4 = SWIG_ConvertPtr(obj3, &argp4,SWIGTYPE_p_double, 0 |  0 );
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "ComputeChargesDIS" "', argument " "4"" of type '" "double *""'"); 
+  }
+  arg4 = reinterpret_cast< double * >(argp4);
+  APFEL::ComputeChargesDIS(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_F2LO(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double arg2 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:F2LO",&obj0,&obj1)) SWIG_fail;
+  ecode1 = SWIG_AsVal_double(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "F2LO" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "F2LO" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  result = (double)APFEL::F2LO(arg1,arg2);
+  resultobj = SWIG_From_double(static_cast< double >(result));
   return resultobj;
 fail:
   return NULL;
@@ -8412,6 +8509,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"EnableTargetMassCorrections", _wrap_EnableTargetMassCorrections, METH_VARARGS, NULL},
 	 { (char *)"EnableDampingFONLL", _wrap_EnableDampingFONLL, METH_VARARGS, NULL},
 	 { (char *)"SetDampingPowerFONLL", _wrap_SetDampingPowerFONLL, METH_VARARGS, NULL},
+	 { (char *)"ComputeChargesDIS", _wrap_ComputeChargesDIS, METH_VARARGS, NULL},
+	 { (char *)"F2LO", _wrap_F2LO, METH_VARARGS, NULL},
 	 { (char *)"FKSimulator", _wrap_FKSimulator, METH_VARARGS, NULL},
 	 { (char *)"SetFKObservable", _wrap_SetFKObservable, METH_VARARGS, NULL},
 	 { (char *)"GetFKObservable", _wrap_GetFKObservable, METH_VARARGS, NULL},
