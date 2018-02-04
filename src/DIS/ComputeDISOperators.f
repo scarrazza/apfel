@@ -185,7 +185,7 @@
 *
 *     Damping factors needed for the FONLL structure functions
 *
-         if(DampingFONLL)then
+         if(DampingFONLL.or.DampPowerFONLL(ihq).ne.0)then
             if(ihq.gt.Nf_FF)then
                if(muF2.gt.m2th(ihq))then
                   if(DampPowerFONLL(ihq).lt.0)then

@@ -88,29 +88,39 @@
 *
          if(MassScheme(1:5).eq."FONLL")then
             if(DampingFONLL)then
-               if(DampPowerFONLL(4).ge.0)then
+               if(DampPowerFONLL(4).gt.0)then
                   write(6,"(a,a,i1)") " FONLL damping factor ",
      1                 "for charm enabled with suppression power = ",
      2                 DampPowerFONLL(4)
+               elseif(DampPowerFONLL(4).eq.0)then
+                  write(6,"(a,a,i1)") " FONLL damping factor ",
+     1                 "for charm disbled"
                else
                   write(6,*) "Using BGMPU prescription for charm"
                endif
-               if(DampPowerFONLL(5).ge.0)then
+               if(DampPowerFONLL(5).gt.0)then
                   write(6,"(a,a,i1)") " FONLL damping factor ",
      1                 "for bottom enabled with suppression power = ",
      2                 DampPowerFONLL(5)
+               elseif(DampPowerFONLL(5).eq.0)then
+                  write(6,"(a,a,i1)") " FONLL damping factor ",
+     1                 "for bottom disbled"
                else
                   write(6,*) "Using BGMPU prescription for bottom"
                endif
-               if(DampPowerFONLL(6).ge.0)then
+               if(DampPowerFONLL(6).gt.0)then
                   write(6,"(a,a,i1)") " FONLL damping factor ",
      1                 "for top enabled with suppression power = ",
      2                 DampPowerFONLL(6)
+               elseif(DampPowerFONLL(6).eq.0)then
+                  write(6,"(a,a,i1)") " FONLL damping factor ",
+     1                 "for top disbled"
                else
                   write(6,*) "Using BGMPU prescription for top"
                endif
             else
-               write(6,*) "FONLL damping factor disabled"
+               write(6,*) "FONLL damping factor disabled",
+     1              " for all heavy quarks"
             endif
          endif
 *
