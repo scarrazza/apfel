@@ -344,11 +344,12 @@
          do isg=nfin,nffi
             write(13,*) (xbLHA(ix),ix=1,nxLHA)
             write(13,*) (dsqrt(q2LHA(iq2)),iq2=iq2in,iq2fi)
-            write(13,*) "1001, 1002, 1003, 2001, 2002, 2003,",
-     1           " 3001, 3002, 3003"
+            write(13,*) "1001 1002 1003 2001 2002 2003",
+     1           " 3001 3002 3003"
 *
             do iq2=iq2in,iq2fi
                call SetProcessDIS("NC")
+               call SetProjectileDIS("electron")
                if(Qin.gt.0d0)then
                   if(iq2.eq.iq2in.and.isg.ne.nfin)then
                      call ComputeStructureFunctionsAPFEL(Qin,
