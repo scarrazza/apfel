@@ -683,6 +683,10 @@ ComputeHardCrossSectionsDY = _apfel.ComputeHardCrossSectionsDY
 def EnableSFNLOQEDCorrections(arg1):
     return _apfel.EnableSFNLOQEDCorrections(arg1)
 EnableSFNLOQEDCorrections = _apfel.EnableSFNLOQEDCorrections
+
+def LHAPDFgridStructureFunctions(Nrep, Qin, fname):
+    return _apfel.LHAPDFgridStructureFunctions(Nrep, Qin, fname)
+LHAPDFgridStructureFunctions = _apfel.LHAPDFgridStructureFunctions
 # This file is compatible with both classic and new-style classes.
 
 

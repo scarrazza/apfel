@@ -377,3 +377,11 @@ ccccccccccccc
       logical qedsfc
       call EnableSFNLOQEDCorrections(qedsfc)
       end subroutine fenablesfnloqedcorrections
+
+ccccccccccccc      
+      subroutine flhapdfgridstructurefunctions(Nrep,Qin,fname)
+      integer Nrep
+      double precision Qin
+      character fname*(*)
+      call LHAPDFgridStructureFunctions(Nrep, Qin, fname)
+      end subroutine flhapdfgridstructurefunctions

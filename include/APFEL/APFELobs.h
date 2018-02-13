@@ -171,6 +171,8 @@ namespace APFEL {
   /// Enables NLO QED corrections in the structure functions
   void EnableSFNLOQEDCorrections(int);
 
+  /// Builds the *.LHgrid output file
+  void LHAPDFgridStructureFunctions(int Nrep, double Qin, const std::string& fname);
 }
 
 #endif

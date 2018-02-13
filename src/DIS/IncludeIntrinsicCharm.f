@@ -332,11 +332,11 @@
       Smp  = Q2IC - m22 + m12
       eta  = 2d0 * Q2IC / ( Spm + Del )
 *
-      I1     = dlog( ( Spp + Del ) / ( Spp - Del ) ) / Del
-      Cplus  = 2d0 * m1 * m2 * I1
-      C1m    = - ( Spm * I1 + dlog( m12 / m22 ) ) / Q2IC
-      C1p    = - ( Smp * I1 - dlog( m12 / m22 ) ) / Q2IC
-      CRm    = ( Del2 / 2d0 / Q2IC
+      I1    = dlog( ( Spp + Del ) / ( Spp - Del ) ) / Del
+      Cplus = 2d0 * m1 * m2 * I1
+      C1m   = - ( Spm * I1 + dlog( m12 / m22 ) ) / Q2IC
+      C1p   = - ( Smp * I1 - dlog( m12 / m22 ) ) / Q2IC
+      CRm   = ( Del2 / 2d0 / Q2IC
      1     + Spp * ( 1d0 + dlog( Q2IC / Del ) ) ) * I1
      2     + ( m22 - m12 ) / 2d0 / Q2IC * dlog( m12 / m22 )
      3     - dlog( Q2IC / m12 ) - dlog( Q2IC / m22 ) - 4d0

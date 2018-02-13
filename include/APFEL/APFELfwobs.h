@@ -175,6 +175,8 @@ extern "C" {
 #define fenablesfnloqedcorrections FC_FUNC(enablesfnloqedcorrections,ENABLESFNLOQEDCORRECTIONS)
   void fenablesfnloqedcorrections(int*);
 
+#define flhapdfgridstructurefunctions FC_FUNC(lhapdfgridstructurefunctions,LHAPDFGRIDSTRUCTUREFUNCTIONS)
+  void flhapdfgridstructurefunctions(int*, double*, char*);
 }
 
 #endif

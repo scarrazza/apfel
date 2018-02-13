@@ -8367,6 +8367,52 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_LHAPDFgridStructureFunctions(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  double arg2 ;
+  std::string *arg3 = 0 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  double val2 ;
+  int ecode2 = 0 ;
+  int res3 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:LHAPDFgridStructureFunctions",&obj0,&obj1,&obj2)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "LHAPDFgridStructureFunctions" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_double(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "LHAPDFgridStructureFunctions" "', argument " "2"" of type '" "double""'");
+  } 
+  arg2 = static_cast< double >(val2);
+  {
+    std::string *ptr = (std::string *)0;
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "LHAPDFgridStructureFunctions" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "LHAPDFgridStructureFunctions" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
+  }
+  APFEL::LHAPDFgridStructureFunctions(arg1,arg2,(std::string const &)*arg3);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res3)) delete arg3;
+  return NULL;
+}
+
+
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"SWIG_PyInstanceMethod_New", (PyCFunction)SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { (char *)"delete_SwigPyIterator", _wrap_delete_SwigPyIterator, METH_VARARGS, NULL},
@@ -8518,6 +8564,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"ComputeFKTables", _wrap_ComputeFKTables, METH_VARARGS, NULL},
 	 { (char *)"ComputeHardCrossSectionsDY", _wrap_ComputeHardCrossSectionsDY, METH_VARARGS, NULL},
 	 { (char *)"EnableSFNLOQEDCorrections", _wrap_EnableSFNLOQEDCorrections, METH_VARARGS, NULL},
+	 { (char *)"LHAPDFgridStructureFunctions", _wrap_LHAPDFgridStructureFunctions, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 

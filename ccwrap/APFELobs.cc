@@ -344,4 +344,10 @@ namespace APFEL {
     fenablesfnloqedcorrections(&qedsfc);
   }
 
+  void LHAPDFgridStructureFunctions(int Nrep, double Qin, const std::string& fname)
+  {
+    char cfname[SIZE+1];
+    strncpy(cfname, fname.c_str(), SIZE);
+    flhapdfgridstructurefunctions(&Nrep,&Qin,cfname);
+  }
 }
