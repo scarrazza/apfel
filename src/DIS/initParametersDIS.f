@@ -150,7 +150,8 @@
       if(TargetDIS(1:6).ne."proton".and.
      1   TargetDIS(1:7).ne."neutron".and.
      2   TargetDIS.ne."isoscalar".and.
-     3   TargetDIS(1:4).ne."iron")then
+     3   TargetDIS(1:4).ne."iron".and.
+     4   TargetDIS(1:4).ne."lead")then
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "Target unknown:"
          write(6,*) "TargetDIS = ",TargetDIS
@@ -160,6 +161,7 @@
          write(6,*) "- 'neutron'"
          write(6,*) "- 'isoscalar'"
          write(6,*) "- 'iron'"
+         write(6,*) "- 'lead'"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif

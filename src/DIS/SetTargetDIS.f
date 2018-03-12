@@ -23,6 +23,8 @@
          TargetDIS = tar
       elseif(tar(1:4).eq."iron")then
          TargetDIS = tar(1:4)
+      elseif(tar(1:4).eq."lead")then
+         TargetDIS = tar(1:4)
       endif
       InTargetDIS = "done"
 *

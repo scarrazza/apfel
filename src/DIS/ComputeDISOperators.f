@@ -141,6 +141,8 @@
          frac = 0.5d0
       elseif(TargetDIS(1:4).eq."iron")then
          frac = 0.47166350921037d0 !23.403d0 / 49.618d0
+      elseif(TargetDIS(1:4).eq."lead")then
+         frac = 0.396d0
       endif
 *
 *     Factor to use in front of T3 and V3
