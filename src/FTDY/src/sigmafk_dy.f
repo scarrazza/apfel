@@ -147,7 +147,7 @@
          zarat = 1d0        ! proton target
          ich   = 1
          ibos  = 1          ! Photon production
-         norm  = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
+         norm  = 1d0 !( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
       elseif(obslbl(1:7).eq."DYP_CPS")then
          zarat = 1d0        ! proton target
          ich   = 1
