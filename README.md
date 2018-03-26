@@ -6,25 +6,19 @@
 
 Visit: http://apfel.hepforge.org and http://apfel.mi.infn.it/
  
-APFEL is able to perform DGLAP evolution up to NNLO in QCD and to LO
-in QED, both with pole and MSbar masses. The coupled DGLAP QCD+QED
-evolution equations are solved in x-space by means of higher order
-interpolations and Runge-Kutta techniques, allowing to explore
-different options for the treatment of subleading terms.
+APFEL is a library able to perform DGLAP evolution up to NNLO in QCD
+and to NLO in QED, both with pole and MSbar masses. The coupled DGLAP
+QCD+QED evolution equations are solved in x-space by means of higher
+order interpolations and Runge-Kutta techniques.
 
-The APFEL library implements the following tools:
-
-- APFEL Web: APFEL provides an online web-app which integrates several
-HEP softwares providing a complete suite for PDF analysis
-(http://apfel.mi.infn.it/).
-
-- APFEL GUI: APFEL provides the user with a graphical interface which
-performs PDF, luminosity and DIS observables plots in real time,
-granting an easy access to all the APFEL's functionalities.
+The APFEL library is accessible also through APFEL Web
+interface. APFEL Web provides an online web-application which
+integrates several HEP softwares providing a complete suite plotting
+tools for PDF analyses (http://apfel.mi.infn.it/).
 
 ## Download
 
-You can obtain APFEL directly from the github repository:
+You can obtain APFEL directly from the GitHub repository:
 
 https://github.com/scarrazza/apfel/releases
 
@@ -52,18 +46,9 @@ cd apfel
 make && make install
 ```
 
-By the default, if prefix is not set the program is installed in
-/usr/local. If you define a custom prefix, remember to export
-apfel/lib to the LD_LIBRARY_PATH. APFEL GUI requires ROOT (> 5), qmake
-(> 4.5) and APFEL (> 1.0.1). The installation steps are:
-
-```Shell
-cd apfel/apfelGUI
-qmake
-make && make install
-apfelgui
-```
-If you observe problems when running the GUI please set your LC_ALL=C.
+By the default, if prefix is not set, the program is installed in
+/usr/local. If you define a different prefix, remember to export
+apfel/lib to the LD_LIBRARY_PATH.
 
 ## References
 
