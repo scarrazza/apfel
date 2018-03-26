@@ -11,10 +11,10 @@ and to NLO in QED, both with pole and MSbar masses. The coupled DGLAP
 QCD+QED evolution equations are solved in x-space by means of higher
 order interpolations and Runge-Kutta techniques.
 
-The APFEL library is accessible also through APFEL Web
+The APFEL library is accessible also through the APFEL Web
 interface. APFEL Web provides an online web-application which
 integrates several HEP softwares providing a complete suite plotting
-tools for PDF analyses (http://apfel.mi.infn.it/).
+tools for PDFs and many related quantities (http://apfel.mi.infn.it/).
 
 ## Download
 
@@ -48,15 +48,12 @@ make && make install
 
 By the default, if prefix is not set, the program is installed in
 /usr/local. If you define a different prefix, remember to export
-apfel/lib to the LD_LIBRARY_PATH.
+it into the LD_LIBRARY_PATH.
 
 ## References
 
-- V. Bertone, S. Carrazza, J. Rojo, *Doped Parton Distributions*, [arXiv:1509.04022](http://arxiv.org/abs/1509.04022).
-- V. Bertone, S. Carrazza, D. Pagani, M. Zaro, *On the Impact of Lepton PDFs*, [arXiv:1508.07002](http://arxiv.org/abs/1508.07002).
-- V. Bertone, S. Carrazza, E. Nocera, *Reference results for time-like evolution up to O(α_s^3)*, [arXiv:1501.00494](http://arxiv.org/abs/1501.00494).
-- S. Carrazza, A. Ferrara, D. Palazzo, J. Rojo, *APFEL Web: a web-based application for the graphical visualization of parton distribution functions*, [arXiv:1410.5456](http://arxiv.org/abs/1410.5456).
 - V. Bertone, S. Carrazza, J. Rojo, *APFEL: A PDF Evolution Library with QED corrections*, [arXiv:1310.1394](http://arxiv.org/abs/arXiv:1310.1394).
+- S. Carrazza, A. Ferrara, D. Palazzo, J. Rojo, *APFEL Web: a web-based application for the graphical visualization of parton distribution functions*, [arXiv:1410.5456](http://arxiv.org/abs/1410.5456).
 
 ## Contact Information
 
