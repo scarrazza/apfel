@@ -34,7 +34,7 @@
       integer nfi,nff
       integer Nl_FF,nli,nlf
       integer dnf,snf
-      double precision mur2th(3:6),mur2lep(3)
+      double precision mur2th(3:6),mur2lep(4)
       double precision mur2,mur20
       double precision aqedi,aqedr0
       double precision alphaqedev
@@ -217,7 +217,7 @@ c      return
                aqedr0 = aqedi
                mur20  = mur2
                mur2   = mur2lep(il+sgnl)
-               if(sgnl.gt.0) mur2 = mur2lep(il+sgnl+1)
+               if(sgnl.lt.0) mur2 = mur2lep(il+sgnl+1)
                if(il.eq.nlf-sgnl) mur2 = kren * mu2f
             enddo
             a_QED = aqedi
