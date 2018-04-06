@@ -15,7 +15,7 @@
 *     Variables
 *
       integer ln
-      character name*(*)
+      character*(*) name
       logical islhapdf6
 
 *     Sorting if/else conditions based on the size to avoid leaks
