@@ -15,7 +15,7 @@
 *     Variables
 *
       integer ln
-      character*(*) name
+      character*100 name
       logical islhapdf6
 
 *     Sorting if/else conditions based on the size to avoid leaks
@@ -42,11 +42,9 @@
       elseif(name(1:7).eq."kretzer")then
          ln = 7
       elseif(name(1:8).eq."external")then
-         if(len(name).gt.9) then
-            if(name(9:9).eq."1") ln = 9
-         else
-            ln = 8
-         endif
+         ln = 8
+      elseif(name(1:9).eq."external1") then
+         ln = 9
       elseif(name(1:11).eq."repexternal")then
          ln = 11
       elseif(name(1:12).eq."leptexternal")then
@@ -54,12 +52,10 @@
 *
 *     Pretabulated PDFs (for internal use).
 *
-      elseif(name(1:12).eq."pretabulated")then
-         if(len(name).gt.12) then
-            if(name(13:13).eq."1") ln = 13
-         else
-            ln = 12
-         endif
+      elseif(name(1:12).eq."pretabulated")then         
+         ln = 12
+      elseif(name(1:13).eq."pretabulated1")then
+         ln = 13
 *
 *     External LHAPDF grids
 *
