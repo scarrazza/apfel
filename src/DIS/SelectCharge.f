@@ -14,7 +14,7 @@
 *
 *     Variables
 *
-      character*7 selch
+      character*(*) selch
 *
       if(selch(1:4).eq."down")then
          SelectedCharge = selch(1:4)

@@ -15,8 +15,8 @@
 *     Variables
 *
       integer ln
-c      character name*(*)
-      character*100 name
+      character*(*) name
+c      character*100 name
       logical islhapdf6
 *
 *     Internal PDFs
