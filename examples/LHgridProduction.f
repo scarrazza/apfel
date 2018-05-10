@@ -7,13 +7,7 @@
 *
       implicit none
 *
-      double precision Qin
-*
-c      call SetFFNS(3)
-c      call SetPerturbativeOrder(1)
-c      call SetPoleMasses(dsqrt(2d0),1d5,1d5)
-*
-      Qin = dsqrt(2d0)
-      call LHAPDFgrid(0,Qin,"ApfelPDFs")
+      call SetPDFSet("NNPDF31_nnlo_as_0118")      
+      call LHAPDFgrid(1,1.65d0,"ApfelPDFs")
 *
       end

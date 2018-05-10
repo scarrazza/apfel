@@ -7,7 +7,7 @@ xlha = [1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2,
 
 # activate some options
 apfel.SetPerturbativeOrder(2);
-apfel.SetPDFSet("MRST2004qed.LHgrid");
+apfel.SetPDFSet("MRST2004qed");
 
 # initializes integrals on the grids
 apfel.InitializeAPFEL()
