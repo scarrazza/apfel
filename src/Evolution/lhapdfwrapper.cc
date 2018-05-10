@@ -14,20 +14,14 @@
 LHAPDF::PDF* _pdfs;
 extern "C" {
 
-  void   mkpdfs_(int *mem, int *size, char* setname, int len)
+  void   mkpdfs_(int *mem, char* setname, int len)
   {
-    std::string str = setname;
-    str.resize(*size);
+    std::string str(setname, len);
 
     if (_pdfs) delete _pdfs;
     try { _pdfs =  LHAPDF::mkPDF(str, *mem); }
     catch(LHAPDF::Exception e) { std::cout << e.what() << std::endl; }
   }
-
-  //int numberpdf_()
-  //{
-  //  return std::atoi(_pdfs->info().get_entry("NumMembers").c_str())-1;
-  //}
 
   double xfxq_(int *fl, double *x, double *Q)
   {
@@ -39,10 +33,9 @@ extern "C" {
 #else
 
 extern "C" {
-  void   mkpdfs_(int *size, char* setname, int len)
+  void   mkpdfs_(char* setname, int len)
   {
-    std::string str = setname;
-    str.resize(*size);
+    std::string str(setname, len);
     LHAPDF::initPDFSetByName(str);
   }
 
@@ -52,11 +45,6 @@ extern "C" {
     std::vector<double> pdf = LHAPDF::xfx(*x, *Q);
     return pdf[*fl+6];
   }
-
-  //int numberpdf_()
-  //{
-  //  return LHAPDF::numberPDF();
-  //}
 
   bool   islhapdf6_() { return false; }
 }

@@ -16,7 +16,7 @@
 *
       character*(*) selch
 *
-      SelectedCharge = selch
+      SelectedCharge = trim(selch)
       InSelectedCharge = "done"
 *
       return

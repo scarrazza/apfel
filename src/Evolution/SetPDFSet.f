@@ -16,8 +16,8 @@
 *
       character*(*) name
 *
-      pdfset = name
-      pdfsetlen = len(name)
+      pdfset = trim(name)
+      pdfsetlen = len(trim(name))
       InPDFs = "done"
 *     
       return

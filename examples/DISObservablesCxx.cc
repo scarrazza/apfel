@@ -36,13 +36,13 @@ int main()
   //APFEL::SetTauMass(1e10);
   //APFEL::SetPerturbativeOrder(0);
   //APFEL::SetPDFEvolution("exactalpha");
-  //APFEL::SetPDFSet("NNPDF30_nlo_as_0118.LHgrid");
-  //APFEL::SetPDFSet("MRST2004qed.LHgrid");
+  //APFEL::SetPDFSet("NNPDF30_nlo_as_0118");
+  //APFEL::SetPDFSet("MRST2004qed");
   //APFEL::SetNumberOfGrids(1);
   //APFEL::SetGridParameters(1,30,3,1e-5);
   //APFEL::SetGridParameters(2,30,3,2e-1);
   //APFEL::SetGridParameters(3,30,3,8e-1);
-  //APFEL::SetPDFSet("NNPDF30_nnlo_as_0118.LHgrid");
+  //APFEL::SetPDFSet("NNPDF30_nnlo_as_0118");
   //APFEL::SetAlphaQCDRef(0.118,91.2);
   //APFEL::SetAlphaEvolution("expanded");
   //APFEL::SetPDFEvolution("expandalpha");

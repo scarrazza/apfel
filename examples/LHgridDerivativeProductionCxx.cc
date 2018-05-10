@@ -5,7 +5,7 @@
 int main()
 {
   APFEL::SetPerturbativeOrder(0);
-  APFEL::SetPDFSet("NNPDF23_nlo_as_0118.LHgrid");
+  APFEL::SetPDFSet("NNPDF23_nlo_as_0118");
 
   APFEL::LHAPDFgridDerivative(0,"NNPDF23_nlo_as_0118_derived");
 
