@@ -199,7 +199,17 @@ c      integer Nrep,numberPDF
                   f0lep(ilept,alpha) = flext0(ilept)
                enddo
             enddo
-        endif
+         endif
+      elseif(pdfset(1:15).eq."reppretabulated")then
+         do alpha=0,nin(igrid)
+            call pretabulatedPDFsRep(igrid,alpha,irep,f0)
+            do ifl=-6,6
+               f0ph(ifl,alpha) = f0(ifl)
+            enddo
+            do ilept=-3,3
+               f0lep(ilept,alpha) = 0d0
+            enddo
+         enddo
 *
 *     LHAPDF set
 *
