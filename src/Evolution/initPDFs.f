@@ -33,6 +33,9 @@ c      integer Nrep,numberPDF
       external ExternalSetAPFEL
       external ExternalSetAPFEL1
       external ExternalSetAPFELLept
+      external ExternalSetAPFELRep
+      external ExternalSetAPFELRep1
+      external pretabulatedPDFsRep
 *
 *     User defined PDFs
 *
