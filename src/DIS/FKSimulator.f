@@ -332,6 +332,66 @@
      2               -   ym  * ExternalDISOperator("F3",7,i,x,beta) )
          FKSimulator = norm * FKSimulator
 *
+****  Neutrino scattering Reduced Cross-Section (light)
+*
+      elseif(obs(1:12).eq."DIS_SNU_L_Pb")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKSimulator = ( ypc * ExternalDISOperator("F2",3,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",3,i,x,beta)
+     2               +   ym  * ExternalDISOperator("F3",3,i,x,beta) )
+         FKSimulator = norm * FKSimulator
+*
+****  Antineutrino scattering Reduced Cross-Section (light)
+*
+      elseif(obs(1:12).eq."DIS_SNB_L_Pb")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKSimulator = ( ypc * ExternalDISOperator("F2",3,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",3,i,x,beta)
+     2               -   ym  * ExternalDISOperator("F3",3,i,x,beta) )
+         FKSimulator = norm * FKSimulator
+*
+****  Neutrino scattering Reduced Cross-Section (charm)
+*
+      elseif(obs(1:12).eq."DIS_SNU_C_Pb")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKSimulator = ( ypc * ExternalDISOperator("F2",4,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",4,i,x,beta)
+     2               +   ym  * ExternalDISOperator("F3",4,i,x,beta) )
+         FKSimulator = norm * FKSimulator
+*
+****  Antineutrino scattering Reduced Cross-Section (charm)
+*
+      elseif(obs(1:12).eq."DIS_SNB_C_Pb")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKSimulator = ( ypc * ExternalDISOperator("F2",4,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",4,i,x,beta)
+     2               -   ym  * ExternalDISOperator("F3",4,i,x,beta) )
+         FKSimulator = norm * FKSimulator
+*
+****  Neutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:10).eq."DIS_SNU_Pb")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKSimulator = ( ypc * ExternalDISOperator("F2",7,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",7,i,x,beta)
+     2               +   ym  * ExternalDISOperator("F3",7,i,x,beta) )
+         FKSimulator = norm * FKSimulator
+*
+****  Antineutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:10).eq."DIS_SNB_Pb")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKSimulator = ( ypc * ExternalDISOperator("F2",7,i,x,beta) 
+     1               -   y2  * ExternalDISOperator("FL",7,i,x,beta)
+     2               -   ym  * ExternalDISOperator("F3",7,i,x,beta) )
+         FKSimulator = norm * FKSimulator
+*
 ****  Dimuon neutrino and anti-neutrino cross section
 *
 ************************************************************************
