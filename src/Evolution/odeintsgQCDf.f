@@ -250,7 +250,8 @@
       double precision mu2
       double precision integralsQCD
       double precision coup,a_QCD
-      double precision integ(0:nint_max,2,2)
+      double precision integ1(0:nint_max,2,2)
+      double precision integ2(0:nint_max,0:nint_max,2,2)
 **
 *     Output Variables
 *
@@ -270,27 +271,60 @@
       mapp(2,1) = 6
       mapp(2,2) = 7
 *
-      do alpha=0,nin(igrid)
-         do i=1,2
-            do k=1,2
-               integ(alpha,i,k) = integralsQCD(0,alpha,coup,mapp(i,k))
-            enddo
-         enddo
-      enddo
+*     Perform the convolution between the splitting matrix and
+*     distributions. If the computation of the evolution operator has
+*     been enabled, perform the convolution in a more general way (no
+*     possibility to use the shift symmetry of the splitting matrix).
 *
-*     Initialization
-*
-      do i=1,2
+      if(IsExt(igrid))then
          do alpha=0,nin(igrid)
-            dfdt(i,alpha) = 0d0
-            do delta=0,nin(igrid)-alpha
-               do k=1,2
-                  dfdt(i,alpha) = dfdt(i,alpha)
-     1            + integ(delta,i,k) * f(k,alpha+delta)
+            do delta=alpha,nin(igrid)
+               do i=1,2
+                  do k=1,2
+                     integ2(alpha,delta,i,k) =
+     1               integralsQCD(alpha,delta,coup,mapp(i,k))
+                  enddo
                enddo
             enddo
          enddo
-      enddo
+*
+*     Convolution
+*
+         do i=1,2
+            do alpha=0,nin(igrid)
+               dfdt(i,alpha) = 0d0
+               do delta=alpha,nin(igrid)
+                  do k=1,2
+                     dfdt(i,alpha) = dfdt(i,alpha)
+     1                    + integ2(alpha,delta,i,k) * f(k,delta)
+                  enddo
+               enddo
+            enddo
+         enddo
+      else
+         do alpha=0,nin(igrid)
+            do i=1,2
+               do k=1,2
+                  integ1(alpha,i,k) =
+     1                 integralsQCD(0,alpha,coup,mapp(i,k))
+               enddo
+            enddo
+         enddo
+*
+*     Convolution
+*
+         do i=1,2
+            do alpha=0,nin(igrid)
+               dfdt(i,alpha) = 0d0
+               do delta=0,nin(igrid)-alpha
+                  do k=1,2
+                     dfdt(i,alpha) = dfdt(i,alpha)
+     1                    + integ1(delta,i,k) * f(k,alpha+delta)
+                  enddo
+               enddo
+            enddo
+         enddo
+      endif
 *
       return
       end

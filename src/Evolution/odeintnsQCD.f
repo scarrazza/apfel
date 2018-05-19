@@ -278,7 +278,7 @@
             enddo
          enddo
 *
-*     Initialization
+*     Convolution
 *
          do alpha=0,nin(igrid)
             do beta=alpha,nin(igrid)
@@ -294,7 +294,7 @@
             integ1(alpha) = integralsQCD(0,alpha,coup,i)
          enddo
 *
-*     Initialization
+*     Convolution
 *
          do alpha=0,nin(igrid)
             do beta=alpha,nin(igrid)

@@ -226,7 +226,8 @@
       double precision mu2
       double precision integralsQCD
       double precision coup,a_QCD
-      double precision integ(0:nint_max)
+      double precision integ1(0:nint_max)
+      double precision integ2(0:nint_max,0:nint_max)
 **
 *     Output Variables
 *
@@ -239,19 +240,42 @@
          coup = t
       endif
 *
-      do alpha=0,nin(igrid)
-         integ(alpha) = integralsQCD(0,alpha,coup,i)
-      enddo
+*     Perform the convolution between the splitting matrix and
+*     distributions. If the computation of the evolution operator has
+*     been enabled, perform the convolution in a more general way (no
+*     possibility to use the shift symmetry of the splitting matrix).
 *
-*     Initialization
-*
-      do alpha=0,nin(igrid)
-         dfdt(alpha) = 0d0
-         do delta=0,nin(igrid)-alpha
-            dfdt(alpha) = dfdt(alpha)
-     1                  + integ(delta) * f(alpha+delta) 
+      if(IsExt(igrid))then
+         do alpha=0,nin(igrid)
+            do delta=alpha,nin(igrid)
+               integ2(alpha,delta) = integralsQCD(alpha,delta,coup,i)
+            enddo
          enddo
-      enddo
+*
+*     Convolution
+*
+         do alpha=0,nin(igrid)
+            dfdt(alpha) = 0d0
+            do delta=alpha,nin(igrid)
+               dfdt(alpha) = dfdt(alpha)
+     1              + integ2(alpha,delta) * f(delta)
+            enddo
+         enddo
+      else
+         do alpha=0,nin(igrid)
+            integ1(alpha) = integralsQCD(0,alpha,coup,i)
+         enddo
+*
+*     Convolution
+*
+         do alpha=0,nin(igrid)
+            dfdt(alpha) = 0d0
+            do delta=0,nin(igrid)-alpha
+               dfdt(alpha) = dfdt(alpha)
+     1              + integ1(delta) * f(alpha+delta)
+            enddo
+         enddo
+      endif
 *
       return
       end

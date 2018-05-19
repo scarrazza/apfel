@@ -24,7 +24,7 @@ extern "C" {
   void externalsetapfelrep_(double x, double Q, int irep, double* xf)  { return; }
   void externalsetapfelrep1_(double x, double Q, int irep, double* xf) { return; }
   void externalsetapfellept_(double x, double Q, int irep, double* xl, double* xf) { return; }
-  void pretabulatedpdfsrep_(int igrid,int alpha, int irep, double* f0) { return; }
+  void pretabulatedpdfsrep_(int igrid, int alpha, int irep, double* f0) { return; }
 #endif
 
 }

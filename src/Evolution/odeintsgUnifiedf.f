@@ -259,7 +259,8 @@
       double precision coupQCD,a_QCD,muR2,bts,fbeta
       double precision coupQED,a_QED
       double precision Deltaud
-      double precision integ(0:nint_max,5,5)
+      double precision integ1(0:nint_max,5,5)
+      double precision integ2(0:nint_max,0:nint_max,5,5)
 **
 *     Output Variables
 *
@@ -284,103 +285,212 @@
       Deltaud = 0d0
       if(wnf.eq.3.or.wnf.eq.5) Deltaud = - 1d0 / dble(wnf)
 *
-      do alpha=0,nin(igrid)
-*     QCD
-         integ(alpha,1,1) = integralsQCD(0,alpha,coupQCD,7)
-         integ(alpha,1,2) = 0d0
-         integ(alpha,1,3) = integralsQCD(0,alpha,coupQCD,6)
-         integ(alpha,1,4) = 0d0
-         integ(alpha,1,5) = 0d0
+*     Perform the convolution between the splitting matrix and
+*     distributions. If the computation of the evolution operator has
+*     been enabled, perform the convolution in a more general way (no
+*     possibility to use the shift symmetry of the splitting matrix).
 *
-         integ(alpha,2,1) = 0d0
-         integ(alpha,2,2) = 0d0
-         integ(alpha,2,3) = 0d0
-         integ(alpha,2,4) = 0d0
-         integ(alpha,2,5) = 0d0
-*
-         integ(alpha,3,1) = integralsQCD(0,alpha,coupQCD,5)
-         integ(alpha,3,2) = 0d0
-         integ(alpha,3,3) = integralsQCD(0,alpha,coupQCD,4)
-         integ(alpha,3,4) = 0d0
-         integ(alpha,3,5) = 0d0
-*
-         integ(alpha,4,1) = Deltaud * integralsQCD(0,alpha,coupQCD,5)
-         integ(alpha,4,2) = 0d0
-         integ(alpha,4,3) = Deltaud * ( integralsQCD(0,alpha,coupQCD,4)
-     1                    - integralsQCD(0,alpha,coupQCD,1) )
-         integ(alpha,4,4) = integralsQCD(0,alpha,coupQCD,1)
-         integ(alpha,4,5) = 0d0
-*
-         integ(alpha,5,1) = 0d0
-         integ(alpha,5,2) = 0d0
-         integ(alpha,5,3) = 0d0
-         integ(alpha,5,4) = 0d0
-         integ(alpha,5,5) = 0d0
-*     QED
-         integ(alpha,1,1) = integ(alpha,1,1)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,5)
-         integ(alpha,1,2) = integ(alpha,1,2)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,6)
-         integ(alpha,1,3) = integ(alpha,1,3)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,7)
-         integ(alpha,1,4) = integ(alpha,1,4)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,8)
-*
-         integ(alpha,2,1) = integ(alpha,2,1)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,9)
-         integ(alpha,2,2) = integ(alpha,2,2)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,10)
-         integ(alpha,2,3) = integ(alpha,2,3)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,11)
-         integ(alpha,2,4) = integ(alpha,2,4)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,12)
-         integ(alpha,2,5) = integ(alpha,2,5)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,24)
-*
-         integ(alpha,3,1) = integ(alpha,3,1)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,13)
-         integ(alpha,3,2) = integ(alpha,3,2)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,14)
-         integ(alpha,3,3) = integ(alpha,3,3)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,15)
-         integ(alpha,3,4) = integ(alpha,3,4)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,16)
-*
-         integ(alpha,4,1) = integ(alpha,4,1)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,17)
-         integ(alpha,4,2) = integ(alpha,4,2)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,18)
-         integ(alpha,4,3) = integ(alpha,4,3)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,19)
-         integ(alpha,4,4) = integ(alpha,4,4)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,20)
-*
-         integ(alpha,5,2) = integ(alpha,5,2)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,25)
-         integ(alpha,5,5) = integ(alpha,5,5)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,23)
-      enddo
-*     
-*     Initialization
-*
-      do i=1,5
+      if(IsExt(igrid))then
          do alpha=0,nin(igrid)
-            dfdt(i,alpha) = 0d0
-            do l=1,5
-               do delta=0,nin(igrid)-alpha
-                  dfdt(i,alpha) = dfdt(i,alpha)
-     1                          + integ(delta,i,l) * f(l,alpha+delta)
+            do delta=alpha,nin(igrid)
+*     QCD
+               integ2(alpha,delta,1,1) =
+     1              integralsQCD(alpha,delta,coupQCD,7)
+               integ2(alpha,delta,1,2) = 0d0
+               integ2(alpha,delta,1,3) =
+     1              integralsQCD(alpha,delta,coupQCD,6)
+               integ2(alpha,delta,1,4) = 0d0
+               integ2(alpha,delta,1,5) = 0d0
+*
+               integ2(alpha,delta,2,1) = 0d0
+               integ2(alpha,delta,2,2) = 0d0
+               integ2(alpha,delta,2,3) = 0d0
+               integ2(alpha,delta,2,4) = 0d0
+               integ2(alpha,delta,2,5) = 0d0
+*
+               integ2(alpha,delta,3,1) =
+     1              integralsQCD(alpha,delta,coupQCD,5)
+               integ2(alpha,delta,3,2) = 0d0
+               integ2(alpha,delta,3,3) =
+     1              integralsQCD(alpha,delta,coupQCD,4)
+               integ2(alpha,delta,3,4) = 0d0
+               integ2(alpha,delta,3,5) = 0d0
+*
+               integ2(alpha,delta,4,1) =
+     1              Deltaud * integralsQCD(alpha,delta,coupQCD,5)
+               integ2(alpha,delta,4,2) = 0d0
+               integ2(alpha,delta,4,3) =
+     1              Deltaud * ( integralsQCD(alpha,delta,coupQCD,4)
+     2              - integralsQCD(alpha,delta,coupQCD,1) )
+               integ2(alpha,delta,4,4) =
+     1              integralsQCD(alpha,delta,coupQCD,1)
+               integ2(alpha,delta,4,5) = 0d0
+*
+               integ2(alpha,delta,5,1) = 0d0
+               integ2(alpha,delta,5,2) = 0d0
+               integ2(alpha,delta,5,3) = 0d0
+               integ2(alpha,delta,5,4) = 0d0
+               integ2(alpha,delta,5,5) = 0d0
+*     QED
+               integ2(alpha,delta,1,1) = integ2(alpha,delta,1,1)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,5)
+               integ2(alpha,delta,1,2) = integ2(alpha,delta,1,2)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,6)
+               integ2(alpha,delta,1,3) = integ2(alpha,delta,1,3)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,7)
+               integ2(alpha,delta,1,4) = integ2(alpha,delta,1,4)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,8)
+*
+               integ2(alpha,delta,2,1) = integ2(alpha,delta,2,1)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,9)
+               integ2(alpha,delta,2,2) = integ2(alpha,delta,2,2)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,10)
+               integ2(alpha,delta,2,3) = integ2(alpha,delta,2,3)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,11)
+               integ2(alpha,delta,2,4) = integ2(alpha,delta,2,4)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,12)
+               integ2(alpha,delta,2,5) = integ2(alpha,delta,2,5)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,24)
+*
+               integ2(alpha,delta,3,1) = integ2(alpha,delta,3,1)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,13)
+               integ2(alpha,delta,3,2) = integ2(alpha,delta,3,2)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,14)
+               integ2(alpha,delta,3,3) = integ2(alpha,delta,3,3)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,15)
+               integ2(alpha,delta,3,4) = integ2(alpha,delta,3,4)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,16)
+*
+               integ2(alpha,delta,4,1) = integ2(alpha,delta,4,1)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,17)
+               integ2(alpha,delta,4,2) = integ2(alpha,delta,4,2)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,18)
+               integ2(alpha,delta,4,3) = integ2(alpha,delta,4,3)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,19)
+               integ2(alpha,delta,4,4) = integ2(alpha,delta,4,4)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,20)
+*
+               integ2(alpha,delta,5,2) = integ2(alpha,delta,5,2)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,25)
+               integ2(alpha,delta,5,5) = integ2(alpha,delta,5,5)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,23)
+            enddo
+         enddo
+*
+*     Convolution
+*
+         do i=1,5
+            do alpha=0,nin(igrid)
+               dfdt(i,alpha) = 0d0
+               do l=1,5
+                  do delta=alpha,nin(igrid)
+                     dfdt(i,alpha) = dfdt(i,alpha)
+     1                    + integ2(alpha,delta,i,l) * f(l,delta)
+                  enddo
                enddo
             enddo
          enddo
-      enddo
+      else
+         do alpha=0,nin(igrid)
+*     QCD
+            integ1(alpha,1,1) = integralsQCD(0,alpha,coupQCD,7)
+            integ1(alpha,1,2) = 0d0
+            integ1(alpha,1,3) = integralsQCD(0,alpha,coupQCD,6)
+            integ1(alpha,1,4) = 0d0
+            integ1(alpha,1,5) = 0d0
+*
+            integ1(alpha,2,1) = 0d0
+            integ1(alpha,2,2) = 0d0
+            integ1(alpha,2,3) = 0d0
+            integ1(alpha,2,4) = 0d0
+            integ1(alpha,2,5) = 0d0
+*
+            integ1(alpha,3,1) = integralsQCD(0,alpha,coupQCD,5)
+            integ1(alpha,3,2) = 0d0
+            integ1(alpha,3,3) = integralsQCD(0,alpha,coupQCD,4)
+            integ1(alpha,3,4) = 0d0
+            integ1(alpha,3,5) = 0d0
+*
+            integ1(alpha,4,1) =
+     1           Deltaud * integralsQCD(0,alpha,coupQCD,5)
+            integ1(alpha,4,2) = 0d0
+            integ1(alpha,4,3) =
+     1           Deltaud * ( integralsQCD(0,alpha,coupQCD,4)
+     2           - integralsQCD(0,alpha,coupQCD,1) )
+            integ1(alpha,4,4) = integralsQCD(0,alpha,coupQCD,1)
+            integ1(alpha,4,5) = 0d0
+*
+            integ1(alpha,5,1) = 0d0
+            integ1(alpha,5,2) = 0d0
+            integ1(alpha,5,3) = 0d0
+            integ1(alpha,5,4) = 0d0
+            integ1(alpha,5,5) = 0d0
+*     QED
+            integ1(alpha,1,1) = integ1(alpha,1,1)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,5)
+            integ1(alpha,1,2) = integ1(alpha,1,2)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,6)
+            integ1(alpha,1,3) = integ1(alpha,1,3)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,7)
+            integ1(alpha,1,4) = integ1(alpha,1,4)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,8)
+*
+            integ1(alpha,2,1) = integ1(alpha,2,1)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,9)
+            integ1(alpha,2,2) = integ1(alpha,2,2)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,10)
+            integ1(alpha,2,3) = integ1(alpha,2,3)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,11)
+            integ1(alpha,2,4) = integ1(alpha,2,4)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,12)
+            integ1(alpha,2,5) = integ1(alpha,2,5)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,24)
+*
+            integ1(alpha,3,1) = integ1(alpha,3,1)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,13)
+            integ1(alpha,3,2) = integ1(alpha,3,2)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,14)
+            integ1(alpha,3,3) = integ1(alpha,3,3)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,15)
+            integ1(alpha,3,4) = integ1(alpha,3,4)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,16)
+*
+            integ1(alpha,4,1) = integ1(alpha,4,1)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,17)
+            integ1(alpha,4,2) = integ1(alpha,4,2)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,18)
+            integ1(alpha,4,3) = integ1(alpha,4,3)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,19)
+            integ1(alpha,4,4) = integ1(alpha,4,4)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,20)
+*
+            integ1(alpha,5,2) = integ1(alpha,5,2)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,25)
+            integ1(alpha,5,5) = integ1(alpha,5,5)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,23)
+         enddo
+*
+*     Convolution
+*
+         do i=1,5
+            do alpha=0,nin(igrid)
+               dfdt(i,alpha) = 0d0
+               do l=1,5
+                  do delta=0,nin(igrid)-alpha
+                     dfdt(i,alpha) = dfdt(i,alpha)
+     1                    + integ1(delta,i,l) * f(l,alpha+delta)
+                  enddo
+               enddo
+            enddo
+         enddo
+      endif
 *
       return
       end
 *
 ************************************************************************
 *
-*     Second Singolet
+*     Second Singlet
 *
 ************************************************************************
       subroutine odeintsgUnifiedfS2(mu21,mu22,ystart,y)
@@ -632,7 +742,8 @@
       double precision coupQCD,a_QCD,muR2,bts,fbeta
       double precision coupQED,a_QED
       double precision Deltaud
-      double precision integ(0:nint_max,2,2)
+      double precision integ1(0:nint_max,2,2)
+      double precision integ2(0:nint_max,0:nint_max,2,2)
 **
 *     Output Variables
 *
@@ -657,39 +768,86 @@
       Deltaud = 0d0
       if(wnf.eq.3.or.wnf.eq.5) Deltaud = - 1d0 / dble(wnf)
 *
-      do alpha=0,nin(igrid)
-*     QCD
-         integ(alpha,1,1) = integralsQCD(0,alpha,coupQCD,3)
-         integ(alpha,1,2) = 0d0
+*     Perform the convolution between the splitting matrix and
+*     distributions. If the computation of the evolution operator has
+*     been enabled, perform the convolution in a more general way (no
+*     possibility to use the shift symmetry of the splitting matrix).
 *
-         integ(alpha,2,1) = Deltaud * ( integralsQCD(0,alpha,coupQCD,3)
-     1                    - integralsQCD(0,alpha,coupQCD,2) )
-         integ(alpha,2,2) = integralsQCD(0,alpha,coupQCD,2)
-*     QED
-         integ(alpha,1,1) = integ(alpha,1,1)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,21)
-         integ(alpha,1,2) = integ(alpha,1,2)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,22)
-*
-         integ(alpha,2,1) = integ(alpha,2,1)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,22)
-         integ(alpha,2,2) = integ(alpha,2,2)
-     1        + bts * integralsQED(0,alpha,coupQED,coupQCD,21)
-      enddo
-*
-*     Initialization
-*
-      do i=1,2
+      if(IsExt(igrid))then
          do alpha=0,nin(igrid)
-            dfdt(i,alpha) = 0d0
-            do l=1,2
-               do delta=0,nin(igrid)-alpha
-                  dfdt(i,alpha) = dfdt(i,alpha)
-     1            + integ(delta,i,l) * f(l,alpha+delta)
+            do delta=alpha,nin(igrid)
+*     QCD
+               integ2(alpha,delta,1,1) =
+     1              integralsQCD(alpha,delta,coupQCD,3)
+               integ2(alpha,delta,1,2) = 0d0
+*
+               integ2(alpha,delta,2,1) =
+     1              Deltaud * ( integralsQCD(alpha,delta,coupQCD,3)
+     2              - integralsQCD(alpha,delta,coupQCD,2) )
+               integ2(alpha,delta,2,2) =
+     1              integralsQCD(alpha,delta,coupQCD,2)
+*     QED
+               integ2(alpha,delta,1,1) = integ2(alpha,delta,1,1)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,21)
+               integ2(alpha,delta,1,2) = integ2(alpha,delta,1,2)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,22)
+*
+               integ2(alpha,delta,2,1) = integ2(alpha,delta,2,1)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,22)
+               integ2(alpha,delta,2,2) = integ2(alpha,delta,2,2)
+     1              + bts * integralsQED(alpha,delta,coupQED,coupQCD,21)
+            enddo
+         enddo
+*
+*     Convolution
+*
+         do i=1,2
+            do alpha=0,nin(igrid)
+               dfdt(i,alpha) = 0d0
+               do l=1,2
+                  do delta=alpha,nin(igrid)
+                     dfdt(i,alpha) = dfdt(i,alpha)
+     1                    + integ2(alpha,delta,i,l) * f(l,delta)
+                  enddo
                enddo
             enddo
          enddo
-      enddo
+      else
+         do alpha=0,nin(igrid)
+*     QCD
+            integ1(alpha,1,1) = integralsQCD(0,alpha,coupQCD,3)
+            integ1(alpha,1,2) = 0d0
+*
+            integ1(alpha,2,1) =
+     1           Deltaud * ( integralsQCD(0,alpha,coupQCD,3)
+     2           - integralsQCD(0,alpha,coupQCD,2) )
+            integ1(alpha,2,2) = integralsQCD(0,alpha,coupQCD,2)
+*     QED
+            integ1(alpha,1,1) = integ1(alpha,1,1)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,21)
+            integ1(alpha,1,2) = integ1(alpha,1,2)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,22)
+*
+            integ1(alpha,2,1) = integ1(alpha,2,1)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,22)
+            integ1(alpha,2,2) = integ1(alpha,2,2)
+     1           + bts * integralsQED(0,alpha,coupQED,coupQCD,21)
+         enddo
+*
+*     Convolution
+*
+         do i=1,2
+            do alpha=0,nin(igrid)
+               dfdt(i,alpha) = 0d0
+               do l=1,2
+                  do delta=0,nin(igrid)-alpha
+                     dfdt(i,alpha) = dfdt(i,alpha)
+     1                    + integ1(delta,i,l) * f(l,alpha+delta)
+                  enddo
+               enddo
+            enddo
+         enddo
+      endif
 *
       return
       end

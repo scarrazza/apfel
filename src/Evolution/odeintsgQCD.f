@@ -333,7 +333,7 @@
             enddo
          enddo
 *
-*     Initialization
+*     Convolution
 *
          do i=1,2
             do j=1,2
@@ -360,7 +360,7 @@
             enddo
          enddo
 *
-*     Initialization
+*     Convolution
 *
          do i=1,2
             do j=1,2
