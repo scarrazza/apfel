@@ -13,7 +13,7 @@ int main()
   // Activate some options
   //APFEL::SetFastEvolution(true);
   //APFEL::SetPerturbativeOrder(0);
-  //APFEL::SetPDFSet("MRST2004qed.LHgrid");
+  //APFEL::SetPDFSet("MRST2004qed");
   //APFEL::EnableEvolutionOperator(true);
   // Initializes integrals on the grids
   APFEL::InitializeAPFEL();

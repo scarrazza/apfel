@@ -217,7 +217,7 @@ c      integer Nrep,numberPDF
 *     LHAPDF set
 *
       else
-         if(igrid.eq.1) call mkPDFs(irep,pdfsetlen,pdfset)
+         if(igrid.eq.1) call mkPDFs(irep,trim(pdfset))
          do alpha=0,nin(igrid)
             do ifl=-6,6
                f0ph(ifl,alpha) = xfxQ(ifl,xg(igrid,alpha),dsqrt(Q20))
