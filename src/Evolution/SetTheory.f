@@ -13,13 +13,8 @@
 *
 *     Variables
 *
-      character*5 theory
-*
-      if(theory(1:3).eq."QCD")then
-         Th = theory(1:3)
-      else
-         Th = theory
-      endif
+      character*(*) theory
+      Th = trim(theory)
       InTheory = "done"
 *
       return

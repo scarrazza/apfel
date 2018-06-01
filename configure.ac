@@ -3,8 +3,8 @@ AC_INIT([APFEL],[3.0.2],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfe
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
-m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
-AM_MAINTAINER_MODE
+#m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+#AM_MAINTAINER_MODE
 
 AC_DEFINE_UNQUOTED(APFEL_VERSION, "$PACKAGE_VERSION", "APFEL version string")
 
@@ -13,7 +13,10 @@ AC_CONFIG_HEADERS([config/config.h include/APFEL/FortranWrappers.h])
 
 ## Set Fortran compiler behaviour
 if test "x$FCFLAGS" == "x"; then
-  FCFLAGS="-O3 -Wunused"
+#  FFLAGS="-fopenmp -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -O2 -pipe -fopenmp -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fvar-tracking-assignments -pipe -fsanitize=address"
+# CXXFLAGS="-fsanitize=address"
+# CCFLAGS="-fsanitize=address"
+  FCFLAGS="-g -O3 -Wunused"
 fi
 # Try to respect users' Fortran compiler variables
 if test "x$FC" == "x"; then

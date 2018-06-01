@@ -14,13 +14,13 @@
       include "../commons/Smallx.h"
 *
       logical sx
-      character*3 la
+      character*(*) la
 *
       Smallx = sx
       LogAcc = - 1
-      if(la(1:2).eq."LL")then
+      if(la.eq."LL")then
          LogAcc = 0
-      elseif(la(1:3).eq."NLL")then
+      elseif(la.eq."NLL")then
          LogAcc = 1
       endif
       InSmallx = "done"
