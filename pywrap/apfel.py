@@ -687,6 +687,10 @@ EnableSFNLOQEDCorrections = _apfel.EnableSFNLOQEDCorrections
 def LHAPDFgridStructureFunctions(Nrep, Qin, fname):
     return _apfel.LHAPDFgridStructureFunctions(Nrep, Qin, fname)
 LHAPDFgridStructureFunctions = _apfel.LHAPDFgridStructureFunctions
+
+def SetScaleVariationProcedure(svp):
+    return _apfel.SetScaleVariationProcedure(svp)
+SetScaleVariationProcedure = _apfel.SetScaleVariationProcedure
 # This file is compatible with both classic and new-style classes.
 
 

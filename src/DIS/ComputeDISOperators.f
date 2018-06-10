@@ -37,6 +37,7 @@
       include "../commons/integralsResDIS.h"
       include "../commons/NLOQEDCorrections.h"
       include "../commons/TimeLike.h"
+      include "../commons/ScaleVariationProcedure.h"
 **
 *     Internal Variables
 *
@@ -52,7 +53,7 @@
       integer ipr
       integer i
       integer ik
-      double precision Q2,muF2,muR,W2,M2(4:6),HeavyQuarkMass
+      double precision Q2,muF2,mu2as,muR,W2,M2(4:6),HeavyQuarkMass
       double precision as(0:2),a_QCD
       double precision bq(0:6),dq(0:6),bqt(0:6)
       double precision frac,fr3
@@ -97,11 +98,17 @@
 *
       rhop = MProton**2 / Q2
 *
-*     Compute alphas
-*     (Remember that a_QCD takes as an argument the factorization scale
-*     and converts it internally into the renormalization scale).
+*     Determine factorisation scale
 *
       muF2 = kfacQ * Q2
+*
+*     Compute alphas (a_QCD takes as an argument the factorization scale
+*     and converts it internally into the renormalization scale unless
+*     the scale variation procedure 1 is used. In that case there is no
+*     internal conversion because muR / muF = 1).
+*
+      mu2as = muF2
+      if(ScVarProc.eq.1) mu2as = krenQ * Q2
 *
 *     Scale down the perturbative order of the alphas evolution if one
 *     of the FFNSs has been chosen
@@ -110,10 +117,10 @@
       if(MassScheme(1:3).eq."FFN")then
          iptbkp = ipt
          call SetPerturbativeOrder(max(0,ipt-1))
-         as(1) = a_QCD(muF2)
+         as(1) = a_QCD(mu2as)
          call SetPerturbativeOrder(iptbkp)
       else
-         as(1) = a_QCD(muF2)
+         as(1) = a_QCD(mu2as)
       endif
       as(2) = as(1) * as(1)
 *

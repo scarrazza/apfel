@@ -173,6 +173,9 @@ namespace APFEL {
 
   /// Builds the *.LHgrid output file
   void LHAPDFgridStructureFunctions(int Nrep, double Qin, const std::string& fname);
+
+  /// Set procedure for the scale variation
+  void SetScaleVariationProcedure(int svp);
 }
 
 #endif

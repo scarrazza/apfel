@@ -385,3 +385,10 @@ ccccccccccccc
       character fname*(*)
       call LHAPDFgridStructureFunctions(Nrep, Qin, fname)
       end subroutine flhapdfgridstructurefunctions
+
+ccccccccccccc
+      subroutine fsetscalevariationprocedure(svp)
+      integer svp
+      call SetScaleVariationProcedure(svp)
+      end subroutine fsetscalevariationprocedure
+

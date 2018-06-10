@@ -350,4 +350,9 @@ namespace APFEL {
     strncpy(cfname, fname.c_str(), SIZE);
     flhapdfgridstructurefunctions(&Nrep,&Qin,cfname);
   }
+
+  void SetScaleVariationProcedure(int svp)
+  {
+    fsetscalevariationprocedure(&svp);
+  }
 }

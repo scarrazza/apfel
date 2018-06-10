@@ -486,6 +486,7 @@
      1           "[33mSpecial functions for the production of FK",
      2           " tables:"//achar(27)//"[0m"
       write(6,*) "  "
+      write(6,*) achar(27)//"[34m- SetScaleVariationProcedure(int scp)"
       write(6,*) achar(27)//"[34m- SetFKObservable(string obs)"
       write(6,*) achar(27)//"[34m- GetFKObservable()"
       write(6,*) achar(27)//"[34m- FKSimulator(string obs, double x,",
@@ -496,6 +497,7 @@
      1           "string inputfile, string outputfile)"
       write(6,*) achar(27)//"[34m- ComputeFKTables(string inputfile, ",
      1           "double Q0, int flmap[196])"//achar(27)//"[0m"
+      
       write(6,*) "   "
 *
       return

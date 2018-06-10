@@ -8413,6 +8413,27 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_SetScaleVariationProcedure(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SetScaleVariationProcedure",&obj0)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetScaleVariationProcedure" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  APFEL::SetScaleVariationProcedure(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 static PyMethodDef SwigMethods[] = {
 	 { (char *)"SWIG_PyInstanceMethod_New", (PyCFunction)SWIG_PyInstanceMethod_New, METH_O, NULL},
 	 { (char *)"delete_SwigPyIterator", _wrap_delete_SwigPyIterator, METH_VARARGS, NULL},
@@ -8565,6 +8586,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"ComputeHardCrossSectionsDY", _wrap_ComputeHardCrossSectionsDY, METH_VARARGS, NULL},
 	 { (char *)"EnableSFNLOQEDCorrections", _wrap_EnableSFNLOQEDCorrections, METH_VARARGS, NULL},
 	 { (char *)"LHAPDFgridStructureFunctions", _wrap_LHAPDFgridStructureFunctions, METH_VARARGS, NULL},
+	 { (char *)"SetScaleVariationProcedure", _wrap_SetScaleVariationProcedure, METH_VARARGS, NULL},
 	 { NULL, NULL, 0, NULL }
 };
 
