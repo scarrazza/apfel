@@ -16,6 +16,9 @@ int main()
   //APFEL::SetPDFSet("MRST2004qed");
   //APFEL::EnableEvolutionOperator(true);
   // Initializes integrals on the grids
+  APFEL::SetTheory("QCD");
+  APFEL::SetSmallxResummation(0, "NLL");
+  APFEL::SetPDFSet("NNPDF31_nnlo_as_0118");
   APFEL::InitializeAPFEL();
 
   double Q02, Q2, eps = 1e-10;

@@ -13,7 +13,10 @@ AC_CONFIG_HEADERS([config/config.h include/APFEL/FortranWrappers.h])
 
 ## Set Fortran compiler behaviour
 if test "x$FCFLAGS" == "x"; then
-  FCFLAGS="-O3 -Wunused"
+#  FFLAGS="-fopenmp -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -O2 -pipe -fopenmp -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fvar-tracking-assignments -pipe -fsanitize=address"
+# CXXFLAGS="-fsanitize=address"
+# CCFLAGS="-fsanitize=address"
+  FCFLAGS="-g -O3 -Wunused"
 fi
 # Try to respect users' Fortran compiler variables
 if test "x$FC" == "x"; then
