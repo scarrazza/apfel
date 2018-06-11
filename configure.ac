@@ -3,8 +3,8 @@ AC_INIT([APFEL],[3.0.2],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfe
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
-#m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
-#AM_MAINTAINER_MODE
+m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
+AM_MAINTAINER_MODE
 
 AC_DEFINE_UNQUOTED(APFEL_VERSION, "$PACKAGE_VERSION", "APFEL version string")
 
