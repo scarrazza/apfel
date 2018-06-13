@@ -201,7 +201,8 @@ am__objects_7 = Evolution/EvolutionQCD.lo \
 	Evolution/integralsQED.lo Evolution/RSLintegralsQED.lo \
 	Evolution/JoinOperatorsUni.lo \
 	Evolution/ExternalEvolutionMatrixEv2Ev.lo \
-	Evolution/ExternalEvolutionMatrixEv2Ph.lo
+	Evolution/ExternalEvolutionMatrixEv2Ph.lo \
+	Evolution/ExternalEvolutionMatrixPh2Ph.lo
 am__objects_8 = Evolution/PDFphys2evQCD.lo Evolution/PDFevQCD2phys.lo \
 	Evolution/EvolvePDFs.lo Evolution/EvolveQCD.lo \
 	Evolution/toyLHPDFs.lo Evolution/xPDF.lo Evolution/xgamma.lo \
@@ -548,7 +549,8 @@ EVOLUTION = Evolution/EvolutionQCD.f Evolution/EvolutionOperatorsQCD.f Evolution
 	Evolution/EqualOperatorsUnifiednf.f Evolution/EvolveUni.f Evolution/odeintnsUnified.f Evolution/odeintsgUnified.f \
 	Evolution/DerivativeOperatorsQCD.f Evolution/odeintnsQCDf.f Evolution/odeintsgQCDf.f Evolution/odeintnsUnifiedf.f \
 	Evolution/odeintsgUnifiedf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f \
-	Evolution/JoinOperatorsUni.f Evolution/ExternalEvolutionMatrixEv2Ev.f Evolution/ExternalEvolutionMatrixEv2Ph.f
+	Evolution/JoinOperatorsUni.f Evolution/ExternalEvolutionMatrixEv2Ev.f Evolution/ExternalEvolutionMatrixEv2Ph.f \
+	Evolution/ExternalEvolutionMatrixPh2Ph.f
 
 PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/EvolvePDFs.f Evolution/EvolveQCD.f Evolution/toyLHPDFs.f \
 	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f Evolution/JoinGrids.f \
@@ -884,6 +886,8 @@ Evolution/JoinOperatorsUni.lo: Evolution/$(am__dirstamp) \
 Evolution/ExternalEvolutionMatrixEv2Ev.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/ExternalEvolutionMatrixEv2Ph.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/ExternalEvolutionMatrixPh2Ph.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/PDFphys2evQCD.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
@@ -1427,7 +1431,6 @@ uninstall-am: uninstall-libLTLIBRARIES
 
 .PRECIOUS: Makefile
 
-	Evolution/ExternalEvolutionMatrixPh2Ph.f
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
