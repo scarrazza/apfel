@@ -9,7 +9,7 @@
       double precision k2th(4:6)
       character*4 InThrRatios
 *
-      double precision m2th(4:6)
+      double precision m2th(4:8)
 *
       common / MassPhysicalAPFEL / m2ph,InMasses
       common / MassScaleReferAPFEL / Q2th,m2q,InMassRef

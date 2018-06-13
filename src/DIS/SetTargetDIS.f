@@ -13,19 +13,9 @@
 *
 *     Variables
 *
-      character*9 tar
+      character*(*) tar
 *
-      if(tar(1:6).eq."proton")then
-         TargetDIS = tar(1:6)
-      elseif(tar(1:7).eq."neutron")then
-         TargetDIS = tar(1:7)
-      elseif(tar.eq."isoscalar")then
-         TargetDIS = tar
-      elseif(tar(1:4).eq."iron")then
-         TargetDIS = tar(1:4)
-      elseif(tar(1:4).eq."lead")then
-         TargetDIS = tar(1:4)
-      endif
+      TargetDIS = trim(tar)
       InTargetDIS = "done"
 *
       return

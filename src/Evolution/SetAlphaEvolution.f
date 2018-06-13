@@ -13,15 +13,9 @@
 *
 *     Variables
 *
-      character*8 ae
+      character*(*) ae
 *
-      if(ae(1:5).eq."exact")then
-         AlphaEvol = ae(1:5)
-      elseif(ae(1:8).eq."expanded")then
-         AlphaEvol = ae(1:8)
-      elseif(ae(1:6).eq."lambda")then
-         AlphaEvol = ae(1:6)
-      endif
+      AlphaEvol = trim(ae)
       InAlphaEvol = "done"
 *
       return

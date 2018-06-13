@@ -56,7 +56,7 @@ extern "C" {
   double fxleptonj(int*, double*);
 
 #define fexternalevolutionoperator FC_FUNC(externalevolutionoperator,EXTERNALEVOLUTIONOPERATOR)
-  double fexternalevolutionoperator(char*,int*,int*,double*,int*);
+  double fexternalevolutionoperator(char*,int*,int*,double*,int*,int len);
 
 #define fexternalevolutionmatrixev2ev FC_FUNC(externalevolutionmatrixev2ev,EXTERNALEVOLUTIONMATRIXEV2EV)
   double fexternalevolutionmatrixev2ev(int*,int*,int*,int*);
@@ -68,16 +68,16 @@ extern "C" {
   double fexternalevolutionmatrixph2ph(int*,int*,int*,int*);
 
 #define fcomputeexternalsplittingfunctions FC_FUNC(computeexternalsplittingfunctions,COMPUTEEXTERNALSPLITTINGFUNCTIONS)
-  void fcomputeexternalsplittingfunctions(char*,int*,int*,double*,int*);
+  void fcomputeexternalsplittingfunctions(char*,int*,int*,double*,int*,int len);
 
 #define fexternalsplittingfunctions FC_FUNC(externalsplittingfunctions,EXTERNALSPLITTINGFUNCTIONS)
   double fexternalsplittingfunctions(int*,int*);
 
 #define flhapdfgrid FC_FUNC(lhapdfgrid,LHAPDFGRID)
-  void flhapdfgrid(int*, double*, char*);
+  void flhapdfgrid(int*, double*, char*, int len);
 
 #define flhapdfgridderivative FC_FUNC(lhapdfgridderivative,LHAPDFGRIDDERIVATIVE)
-  void flhapdfgridderivative(int*, char*);
+  void flhapdfgridderivative(int*, char*,int len);
 
 #define falphaqcd FC_FUNC(alphaqcd,ALPHAQCD)
   double falphaqcd(double*);
@@ -128,7 +128,7 @@ extern "C" {
   void fenablemassrunning(int*);
 
 #define fsetsmallxresummation FC_FUNC(setsmallxresummation,SETSMALLXRESUMMATION)
-  void fsetsmallxresummation(int*,char*);
+  void fsetsmallxresummation(int*,char*,int len);
 
 #define fheavyquarkmass FC_FUNC(heavyquarkmass,HEAVYQUARKMASS)
   double fheavyquarkmass(int*,double*);
@@ -146,13 +146,13 @@ extern "C" {
   void fsetalphaqedref(double*,double*);
 
 #define fsetalphaevolution FC_FUNC(setalphaevolution,SETALPHAEVOLUTION)
-  void fsetalphaevolution(char*);
+  void fsetalphaevolution(char*,int len);
 
 #define fsetlambdaqcdref FC_FUNC(setlambdaqcdref,SETLAMBDAQCDREF)
   void fsetlambdaqcdref(double*,int*);
 
 #define fsetpdfevolution FC_FUNC(setpdfevolution,SETPDFEVOLUTION)
-  void fsetpdfevolution(char*);
+  void fsetpdfevolution(char*,int len);
 
 #define fsetepsilontruncation FC_FUNC(setepsilontruncation,SETEPSILONTRUNCATION)
   void fsetepsilontruncation(double*);
@@ -194,7 +194,7 @@ extern "C" {
   void fsetnumberofgrids(int*);
 
 #define fsetpdfset FC_FUNC(setpdfset,SETPDFSET)
-  void fsetpdfset(char*);
+  void fsetpdfset(char*,int len);
   
 #define fsetperturbativeorder FC_FUNC(setperturbativeorder,SETPERTURBATIVEORDER)
   void fsetperturbativeorder(int*);
@@ -221,7 +221,7 @@ extern "C" {
   void fsetreplica(int*);
 
 #define fsettheory FC_FUNC(settheory,SETTHEORY)
-  void fsettheory(char*);
+  void fsettheory(char*, int len);
 
 #define fenablenloqedcorrections FC_FUNC(enablenloqedcorrections,ENABLENLOQEDCORRECTIONS)
   void fenablenloqedcorrections(int*);
