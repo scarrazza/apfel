@@ -103,6 +103,21 @@ namespace APFEL {
     return fexternalevolutionoperator(cfname,&i,&j,&x,&beta);
   }
 
+  double ExternalEvolutionMatrixEv2Ev(int i, int j, int alpha, int beta)
+  {
+    return fexternalevolutionmatrixev2ev(&i,&j,&alpha,&beta);
+  }
+
+  double ExternalEvolutionMatrixEv2Ph(int i, int j, int alpha, int beta)
+  {
+    return fexternalevolutionmatrixev2ph(&i,&j,&alpha,&beta);
+  }
+
+  double ExternalEvolutionMatrixPh2Ph(int i, int j, int alpha, int beta)
+  {
+    return fexternalevolutionmatrixph2ph(&i,&j,&alpha,&beta);
+  }
+
   void ComputeExternalSplittingFunctions(const std::string& fname, int pt, int nf, double x, int beta)
   {
     char cfname[SIZE+1];

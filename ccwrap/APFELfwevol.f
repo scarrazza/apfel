@@ -116,6 +116,36 @@ ccccccccccccc
       end
 
 ccccccccccccc
+      function fexternalevolutionmatrixev2ev(i,j,alpha,beta)
+      integer i,j,alpha,beta
+      double precision fexternalevolutionmatrixev2ev
+      double precision ExternalEvolutionMatrixEv2Ev
+      fexternalevolutionmatrixev2ev = 
+     1     ExternalEvolutionMatrixEv2Ev(i,j,alpha,beta)
+      return
+      end
+
+ccccccccccccc
+      function fexternalevolutionmatrixev2ph(i,j,alpha,beta)
+      integer i,j,alpha,beta
+      double precision fexternalevolutionmatrixev2ph
+      double precision ExternalEvolutionMatrixEv2Ph
+      fexternalevolutionmatrixev2ph = 
+     1     ExternalEvolutionMatrixEv2Ph(i,j,alpha,beta)
+      return
+      end
+
+ccccccccccccc
+      function fexternalevolutionmatrixph2ph(i,j,alpha,beta)
+      integer i,j,alpha,beta
+      double precision fexternalevolutionmatrixph2ph
+      double precision ExternalEvolutionMatrixPh2Ph
+      fexternalevolutionmatrixph2ph = 
+     1     ExternalEvolutionMatrixPh2Ph(i,j,alpha,beta)
+      return
+      end
+
+ccccccccccccc
       subroutine fcomputeexternalsplittingfunctions(fname,pt,nf,x,beta)
       integer pt,nf,beta
       double precision x

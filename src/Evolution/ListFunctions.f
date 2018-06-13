@@ -307,6 +307,21 @@
      1           "string fname, int i, int j, double x, int beta):"//
      2           achar(27)//"[0m"
       write(6,*) "    returns the PDF evolution operator."
+      write(6,*) achar(27)//"[34m- ExternalEvolutionMatrixEv2Ev(",
+     1           "int i, int j, int alpha, int beta):"//
+     2           achar(27)//"[0m"
+      write(6,*) "    returns the PDF evolution matrix from"
+      write(6,*) "    evolution to evolution basis."
+      write(6,*) achar(27)//"[34m- ExternalEvolutionMatrixEv2Ph(",
+     1           "int i, int j, int alpha, int beta):"//
+     2           achar(27)//"[0m"
+      write(6,*) "    returns the PDF evolution matrix from"
+      write(6,*) "    evolution to physical basis."
+      write(6,*) achar(27)//"[34m- ExternalEvolutionMatrixPh2Ph(",
+     1           "int i, int j, int alpha, int beta):"//
+     2           achar(27)//"[0m"
+      write(6,*) "    returns the PDF evolution matrix from"
+      write(6,*) "    physical to physical basis."
       write(6,*) achar(27)//"[34m- ExternalSplittingFunctions(",
      1           "string fname, int pt, int nf, int i, int j,",
      2           " double x, int beta):"//achar(27)//"[0m"

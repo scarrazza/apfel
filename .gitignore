@@ -16,6 +16,8 @@ pywrap/setup.py
 *.la
 *.libs
 *.dirstamp
+*.table
+*.info
 pywrap/build
 examples/DISObservables
 examples/DISObservablesCxx

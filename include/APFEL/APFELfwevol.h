@@ -58,6 +58,15 @@ extern "C" {
 #define fexternalevolutionoperator FC_FUNC(externalevolutionoperator,EXTERNALEVOLUTIONOPERATOR)
   double fexternalevolutionoperator(char*,int*,int*,double*,int*);
 
+#define fexternalevolutionmatrixev2ev FC_FUNC(externalevolutionmatrixev2ev,EXTERNALEVOLUTIONMATRIXEV2EV)
+  double fexternalevolutionmatrixev2ev(int*,int*,int*,int*);
+
+#define fexternalevolutionmatrixev2ph FC_FUNC(externalevolutionmatrixev2ph,EXTERNALEVOLUTIONMATRIXEV2PH)
+  double fexternalevolutionmatrixev2ph(int*,int*,int*,int*);
+
+#define fexternalevolutionmatrixph2ph FC_FUNC(externalevolutionmatrixph2ph,EXTERNALEVOLUTIONMATRIXPH2PH)
+  double fexternalevolutionmatrixph2ph(int*,int*,int*,int*);
+
 #define fcomputeexternalsplittingfunctions FC_FUNC(computeexternalsplittingfunctions,COMPUTEEXTERNALSPLITTINGFUNCTIONS)
   void fcomputeexternalsplittingfunctions(char*,int*,int*,double*,int*);
 

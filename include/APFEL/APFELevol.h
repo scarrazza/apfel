@@ -71,6 +71,15 @@ namespace APFEL {
   /// External Evolution Operator
   double ExternalEvolutionOperator(const std::string& fname, int i, int j, double x, int beta);
 
+  /// External Evolution Matrix evolution to evolution
+  double ExternalEvolutionMatrixEv2Ev(int i, int j, int alpha, int beta);
+
+  /// External Evolution Matrix evolution to physical
+  double ExternalEvolutionMatrixEv2Ph(int i, int j, int alpha, int beta);
+
+  /// External Evolution Matrix evolution to physical
+  double ExternalEvolutionMatrixPh2Ph(int i, int j, int alpha, int beta);
+
   /// Compute External Splitting Functions
   void ComputeExternalSplittingFunctions(const std::string& fname, int pt, int nf, double x, int beta);
 

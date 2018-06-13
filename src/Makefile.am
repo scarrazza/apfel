@@ -38,7 +38,8 @@ EVOLUTION = Evolution/EvolutionQCD.f Evolution/EvolutionOperatorsQCD.f Evolution
 	Evolution/EqualOperatorsUnifiednf.f Evolution/EvolveUni.f Evolution/odeintnsUnified.f Evolution/odeintsgUnified.f \
 	Evolution/DerivativeOperatorsQCD.f Evolution/odeintnsQCDf.f Evolution/odeintsgQCDf.f Evolution/odeintnsUnifiedf.f \
 	Evolution/odeintsgUnifiedf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f \
-	Evolution/JoinOperatorsUni.f
+	Evolution/JoinOperatorsUni.f Evolution/ExternalEvolutionMatrixEv2Ev.f Evolution/ExternalEvolutionMatrixEv2Ph.f
+	Evolution/ExternalEvolutionMatrixPh2Ph.f
 
 PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/EvolvePDFs.f Evolution/EvolveQCD.f Evolution/toyLHPDFs.f \
 	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f Evolution/JoinGrids.f \
