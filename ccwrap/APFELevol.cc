@@ -242,12 +242,12 @@ namespace APFEL {
     return fgetthreshold(&i);
   }
 
-  int SetMaxFlavourAlpha()
+  int GetMaxFlavourAlpha()
   {
     return fgetmaxflavouralpha();
   }
 
-  int SetMaxFlavourPDFs()
+  int GetMaxFlavourPDFs()
   {
     return fgetmaxflavourpdfs();
   }
