@@ -272,6 +272,14 @@ def GetThreshold(arg1):
     return _apfel.GetThreshold(arg1)
 GetThreshold = _apfel.GetThreshold
 
+def GetMaxFlavourAlpha():
+    return _apfel.GetMaxFlavourAlpha()
+GetMaxFlavourAlpha = _apfel.GetMaxFlavourAlpha
+
+def GetMaxFlavourPDFs():
+    return _apfel.GetMaxFlavourPDFs()
+GetMaxFlavourPDFs = _apfel.GetMaxFlavourPDFs
+
 def HeavyQuarkThreshold(arg1):
     return _apfel.HeavyQuarkThreshold(arg1)
 HeavyQuarkThreshold = _apfel.HeavyQuarkThreshold

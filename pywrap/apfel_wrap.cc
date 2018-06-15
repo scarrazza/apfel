@@ -5633,6 +5633,32 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_GetMaxFlavourAlpha(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetMaxFlavourAlpha")) SWIG_fail;
+  result = (int)APFEL::GetMaxFlavourAlpha();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GetMaxFlavourPDFs(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetMaxFlavourPDFs")) SWIG_fail;
+  result = (int)APFEL::GetMaxFlavourPDFs();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_HeavyQuarkThreshold(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   int arg1 ;
@@ -8608,6 +8634,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AlphaQED", _wrap_AlphaQED, METH_VARARGS, NULL},
 	 { (char *)"HeavyQuarkMass", _wrap_HeavyQuarkMass, METH_VARARGS, NULL},
 	 { (char *)"GetThreshold", _wrap_GetThreshold, METH_VARARGS, NULL},
+	 { (char *)"GetMaxFlavourAlpha", _wrap_GetMaxFlavourAlpha, METH_VARARGS, NULL},
+	 { (char *)"GetMaxFlavourPDFs", _wrap_GetMaxFlavourPDFs, METH_VARARGS, NULL},
 	 { (char *)"HeavyQuarkThreshold", _wrap_HeavyQuarkThreshold, METH_VARARGS, NULL},
 	 { (char *)"NPDF", _wrap_NPDF, METH_VARARGS, NULL},
 	 { (char *)"Ngamma", _wrap_Ngamma, METH_VARARGS, NULL},

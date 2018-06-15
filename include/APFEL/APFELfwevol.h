@@ -136,6 +136,12 @@ extern "C" {
 #define fgetthreshold FC_FUNC(getthreshold,GETTHRESHOLD)
   double fgetthreshold(int*);
 
+#define fgetmaxflavouralpha FC_FUNC(getmaxflavouralpha,GETMAXFLAVOURALPHA)
+  int fgetmaxflavouralpha();
+
+#define fgetmaxflavourpdfs FC_FUNC(getmaxflavourpdfs,GETMAXFLAVOURPDFS)
+  int fgetmaxflavourpdfs();
+
 #define fheavyquarkthreshold FC_FUNC(heavyquarkthreshold,HEAVYQUARKTHRESHOLD)
   double fheavyquarkthreshold(int*);
 

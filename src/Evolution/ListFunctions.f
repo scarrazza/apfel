@@ -287,6 +287,14 @@
      1           achar(27)//"[0m"
       write(6,*) "    returns the value of the i-th heavy quark"
       write(6,*) "    threhold in GeV (i = 4,5,6)."
+      write(6,*) achar(27)//"[34m- GetMaxFlavourAlpha():"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return the maximum number of active flavours in"
+      write(6,*) "    the couplings evolution."
+      write(6,*) achar(27)//"[34m- GetMaxFlavourPDFs():"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return the maximum number of active flavours in"
+      write(6,*) "    the PDF evolution."
       write(6,*) achar(27)//"[34m- nIntervals():"//achar(27)//"[0m"
       write(6,*) "    returns the number of intervals of the joint"
       write(6,*) "    grid."

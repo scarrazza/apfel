@@ -242,6 +242,16 @@ namespace APFEL {
     return fgetthreshold(&i);
   }
 
+  int SetMaxFlavourAlpha()
+  {
+    return fgetmaxflavouralpha();
+  }
+
+  int SetMaxFlavourPDFs()
+  {
+    return fgetmaxflavourpdfs();
+  }
+
   double HeavyQuarkThreshold(int i)
   {
     return fheavyquarkthreshold(&i);

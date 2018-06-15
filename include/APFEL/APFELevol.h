@@ -104,6 +104,14 @@ namespace APFEL {
   /// Returns Heavy Quark Threholds
   double GetThreshold(int);
 
+  /// Gets the maximum number of flavours that the evolution 
+  /// of alphaQCD and alphaQED can reach
+  int GetMaxFlavourAlpha();
+
+  /// Gets the maximum number of flavours that the evolution 
+  /// of PDFs can reach.
+  int GetMaxFlavourPDFs();
+
   /// Returns Heavy Quark Threholds (identical to GetThreshold)
   double HeavyQuarkThreshold(int);
 
