@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-#include "math/special_functions.hh"
+#include "HELL/include/math/special_functions.hh"
 
 
 using namespace std;

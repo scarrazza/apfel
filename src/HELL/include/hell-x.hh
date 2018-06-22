@@ -19,8 +19,8 @@
 #include <vector>
 #include <map>
 #include <utility>
-#include "./math/matrix.hh"
-#include "version.hh"
+#include "HELL/include/math/matrix.hh"
+#include "HELL/include/version.hh"
 
 
 using namespace std;

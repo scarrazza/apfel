@@ -47,7 +47,7 @@ namespace HELLx {
   unsigned int factorial(unsigned int k) {
     if(k<7) return factorials[k];
     double res = 1;
-    for(int j=1; j<=k; j++) res *= j;
+    for(int j=1; j<=(int) k; j++) res *= j;
     return res;
   }
   double binomial(unsigned int k, unsigned int j) {
