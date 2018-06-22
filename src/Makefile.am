@@ -73,7 +73,7 @@ FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src
 
 EXTRA_DIST = commons FTDY/commons
 
-HELL = HELL/src/hell.cc HELL/src/hell_wrapper.cc
+HELL = HELL/src/hell-x.cc HELL/src/hell_wrapper.cc HELL/src/expansionSFs.cc
 
 libAPFELCore_la_SOURCES = $(INITCXX) $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
 

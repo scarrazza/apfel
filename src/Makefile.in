@@ -252,7 +252,8 @@ am__objects_10 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
 	DIS/IncludeNLOQEDCorrections.lo \
 	DIS/EnableSFNLOQEDCorrections.lo \
 	DIS/LHAPDFgridStructureFunctions.lo
-am__objects_11 = HELL/src/hell.lo HELL/src/hell_wrapper.lo
+am__objects_11 = HELL/src/hell-x.lo HELL/src/hell_wrapper.lo \
+	HELL/src/expansionSFs.lo
 am__objects_12 = FTDY/src/ComputeFKTables.lo \
 	FTDY/src/ComputeHardCrossSectionsDY.lo FTDY/src/gauleg.lo \
 	FTDY/src/initDYcouplings.lo FTDY/src/initxGridDY.lo \
@@ -296,7 +297,8 @@ depcomp = $(SHELL) $(top_srcdir)/config/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = Evolution/$(DEPDIR)/apfelversion.Plo \
 	Evolution/$(DEPDIR)/lhapdfwrapper.Plo \
-	HELL/src/$(DEPDIR)/hell.Plo \
+	HELL/src/$(DEPDIR)/expansionSFs.Plo \
+	HELL/src/$(DEPDIR)/hell-x.Plo \
 	HELL/src/$(DEPDIR)/hell_wrapper.Plo
 am__mv = mv -f
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
@@ -583,7 +585,7 @@ FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src
 	FTDY/src/writecDY.f FTDY/src/writeFK.f FTDY/src/xlineigen.f FTDY/src/PDFphys2ev.f
 
 EXTRA_DIST = commons FTDY/commons
-HELL = HELL/src/hell.cc HELL/src/hell_wrapper.cc
+HELL = HELL/src/hell-x.cc HELL/src/hell_wrapper.cc HELL/src/expansionSFs.cc
 libAPFELCore_la_SOURCES = $(INITCXX) $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
 libAPFELevol_la_LIBADD = $(FCLIBS) $(top_builddir)/ccwrap/libAPFELCCWrapEvol.la
 libAPFELevol_la_SOURCES = $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(HELL)
@@ -1088,9 +1090,11 @@ HELL/src/$(am__dirstamp):
 HELL/src/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) HELL/src/$(DEPDIR)
 	@: > HELL/src/$(DEPDIR)/$(am__dirstamp)
-HELL/src/hell.lo: HELL/src/$(am__dirstamp) \
+HELL/src/hell-x.lo: HELL/src/$(am__dirstamp) \
 	HELL/src/$(DEPDIR)/$(am__dirstamp)
 HELL/src/hell_wrapper.lo: HELL/src/$(am__dirstamp) \
+	HELL/src/$(DEPDIR)/$(am__dirstamp)
+HELL/src/expansionSFs.lo: HELL/src/$(am__dirstamp) \
 	HELL/src/$(DEPDIR)/$(am__dirstamp)
 FTDY/src/$(am__dirstamp):
 	@$(MKDIR_P) FTDY/src
@@ -1155,7 +1159,8 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@Evolution/$(DEPDIR)/apfelversion.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@Evolution/$(DEPDIR)/lhapdfwrapper.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/expansionSFs.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell-x.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@HELL/src/$(DEPDIR)/hell_wrapper.Plo@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
@@ -1348,7 +1353,8 @@ clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 distclean: distclean-am
 		-rm -f Evolution/$(DEPDIR)/apfelversion.Plo
 	-rm -f Evolution/$(DEPDIR)/lhapdfwrapper.Plo
-	-rm -f HELL/src/$(DEPDIR)/hell.Plo
+	-rm -f HELL/src/$(DEPDIR)/expansionSFs.Plo
+	-rm -f HELL/src/$(DEPDIR)/hell-x.Plo
 	-rm -f HELL/src/$(DEPDIR)/hell_wrapper.Plo
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -1397,7 +1403,8 @@ installcheck-am:
 maintainer-clean: maintainer-clean-am
 		-rm -f Evolution/$(DEPDIR)/apfelversion.Plo
 	-rm -f Evolution/$(DEPDIR)/lhapdfwrapper.Plo
-	-rm -f HELL/src/$(DEPDIR)/hell.Plo
+	-rm -f HELL/src/$(DEPDIR)/expansionSFs.Plo
+	-rm -f HELL/src/$(DEPDIR)/hell-x.Plo
 	-rm -f HELL/src/$(DEPDIR)/hell_wrapper.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
