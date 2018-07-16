@@ -440,7 +440,7 @@
       write(6,*) "    enables or disables the damping factor when the"
       write(6,*) "    FONLL structure functions are computed."
       write(6,*) achar(27)//"[34m- SetDampingPowerFONLL(int dpc,",
-     1     " int dpb, int dpt,):"//achar(27)//"[0m"
+     1     " int dpb, int dpt):"//achar(27)//"[0m"
       write(6,*) "    set the power with which damping factor"
       write(6,*) "    suppresses the subleading terms for charm,"
       write(6,*) "    bottom, and top, separately."
