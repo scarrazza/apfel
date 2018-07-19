@@ -349,7 +349,7 @@
 *
             do iq2=iq2in,iq2fi
                call SetProcessDIS("NC")
-               call SetProjectileDIS("electron")
+               call SetProjectileDIS("neutrino")
                if(Qin.gt.0d0)then
                   if(iq2.eq.iq2in.and.isg.ne.nfin)then
                      call ComputeStructureFunctionsAPFEL(Qin,
