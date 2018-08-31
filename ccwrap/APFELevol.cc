@@ -13,8 +13,6 @@ using namespace std;
 #define STR_EXPAND(top) #top
 #define STR(tok) STR_EXPAND(tok)
 
-#define SIZE 999
-
 namespace APFEL {
 
   void InitializeAPFEL(void) 
