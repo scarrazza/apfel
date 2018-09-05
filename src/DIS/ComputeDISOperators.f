@@ -114,7 +114,7 @@
 *     of the FFNSs has been chosen
 *
       as(0) = 1d0
-      if(MassScheme(1:3).eq."FFN")then
+      if(MassScheme(1:3).eq."FFN".and.ProcessDIS.eq."NC")then
          iptbkp = ipt
          call SetPerturbativeOrder(max(0,ipt-1))
          as(1) = a_QCD(mu2as)

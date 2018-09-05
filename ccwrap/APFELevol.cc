@@ -6,13 +6,12 @@
 #include <sstream>
 #include <cstring>
 #include <string>
+#include <vector>
 #include <iostream>
 using namespace std;
 
 #define STR_EXPAND(top) #top
 #define STR(tok) STR_EXPAND(tok)
-
-#define SIZE 999
 
 namespace APFEL {
 
@@ -98,16 +97,29 @@ namespace APFEL {
 
   double ExternalEvolutionOperator(const std::string& fname, int i, int j, double x, int beta)
   {
-    char cfname[SIZE+1];
-    strncpy(cfname, fname.c_str(), SIZE);
-    return fexternalevolutionoperator(cfname,&i,&j,&x,&beta);
+    std::vector<char> cstr(fname.c_str(), fname.c_str() + fname.size() + 1);
+    return fexternalevolutionoperator(cstr.data(),&i,&j,&x,&beta,cstr.size()-1);
+  }
+
+  double ExternalEvolutionMatrixEv2Ev(int i, int j, int alpha, int beta)
+  {
+    return fexternalevolutionmatrixev2ev(&i,&j,&alpha,&beta);
+  }
+
+  double ExternalEvolutionMatrixEv2Ph(int i, int j, int alpha, int beta)
+  {
+    return fexternalevolutionmatrixev2ph(&i,&j,&alpha,&beta);
+  }
+
+  double ExternalEvolutionMatrixPh2Ph(int i, int j, int alpha, int beta)
+  {
+    return fexternalevolutionmatrixph2ph(&i,&j,&alpha,&beta);
   }
 
   void ComputeExternalSplittingFunctions(const std::string& fname, int pt, int nf, double x, int beta)
   {
-    char cfname[SIZE+1];
-    strncpy(cfname, fname.c_str(), SIZE);
-    return fcomputeexternalsplittingfunctions(cfname,&pt,&nf,&x,&beta);
+    std::vector<char> cstr(fname.c_str(), fname.c_str() + fname.size() + 1);
+    return fcomputeexternalsplittingfunctions(cstr.data(),&pt,&nf,&x,&beta,cstr.size()-1);
   }
 
   double ExternalSplittingFunctions(int i, int j)
@@ -117,16 +129,14 @@ namespace APFEL {
 
   void LHAPDFgrid(int Nrep, double Qin, const std::string& fname)
   {
-    char cfname[SIZE+1];
-    strncpy(cfname, fname.c_str(), SIZE);
-    flhapdfgrid(&Nrep,&Qin,cfname);
+    std::vector<char> cstr(fname.c_str(), fname.c_str() + fname.size() + 1);
+    flhapdfgrid(&Nrep, &Qin, cstr.data(), cstr.size()-1);
   }
 
   void LHAPDFgridDerivative(int Nrep, const std::string& fname)
   {
-    char cfname[SIZE+1];
-    strncpy(cfname, fname.c_str(), SIZE);
-    flhapdfgridderivative(&Nrep,cfname);
+    std::vector<char> cstr(fname.c_str(), fname.c_str() + fname.size() + 1);
+    flhapdfgridderivative(&Nrep, cstr.data(), cstr.size()-1);
   }
 
   double AlphaQCD(double Q)
@@ -216,9 +226,8 @@ namespace APFEL {
 
   void SetSmallxResummation(int sx, const std::string& la)
   {
-    char cla[SIZE+1];
-    strncpy(cla, la.c_str(), SIZE);
-    fsetsmallxresummation(&sx,cla);
+    std::vector<char> cstr(la.c_str(), la.c_str() + la.size() + 1);
+    fsetsmallxresummation(&sx, cstr.data(), cstr.size()-1);
   }
 
   double HeavyQuarkMass(int i,double Q)
@@ -229,6 +238,16 @@ namespace APFEL {
   double GetThreshold(int i)
   {
     return fgetthreshold(&i);
+  }
+
+  int GetMaxFlavourAlpha()
+  {
+    return fgetmaxflavouralpha();
+  }
+
+  int GetMaxFlavourPDFs()
+  {
+    return fgetmaxflavourpdfs();
   }
 
   double HeavyQuarkThreshold(int i)
@@ -248,9 +267,8 @@ namespace APFEL {
 
   void SetAlphaEvolution(const std::string& evol)
   {
-    char cevol[SIZE+1];
-    strncpy(cevol, evol.c_str(), SIZE);
-    fsetalphaevolution(cevol);
+    std::vector<char> cstr(evol.c_str(), evol.c_str() + evol.size() + 1);
+    fsetalphaevolution(cstr.data(), cstr.size()-1);
   }
 
   void SetLambdaQCDRef(double lambdaref, int nref)
@@ -260,9 +278,8 @@ namespace APFEL {
 
   void SetPDFEvolution(const std::string& evolp)
   {
-    char cevolp[SIZE+1];
-    strncpy(cevolp, evolp.c_str(), SIZE);
-    fsetpdfevolution(cevolp);
+    std::vector<char> cstr(evolp.c_str(), evolp.c_str() + evolp.size() + 1);
+    fsetpdfevolution(cstr.data(), cstr.size()-1);
   }
 
   void SetEpsilonTruncation(double eps)
@@ -333,9 +350,8 @@ namespace APFEL {
 
   void SetPDFSet(const std::string& name)
   {
-    char cname[SIZE+1];
-    strncpy(cname, name.c_str(), SIZE);
-    fsetpdfset(cname);
+    std::vector<char> cstr(name.c_str(), name.c_str() + name.size() + 1);
+    fsetpdfset(cstr.data(), cstr.size()-1);
   }
 
   void SetPerturbativeOrder(int pto)
@@ -377,12 +393,11 @@ namespace APFEL {
   {
     fsetreplica(&nr);
   }
-  
+
   void SetTheory(const std::string& theory)
   {
-    char ctheory[SIZE+1];
-    strncpy(ctheory, theory.c_str(), SIZE);
-    fsettheory(ctheory);
+    std::vector<char> cstr(theory.c_str(), theory.c_str() + theory.size() + 1);
+    fsettheory(cstr.data(), cstr.size()-1);
   }
 
   void EnableNLOQEDCorrections(int qedc)

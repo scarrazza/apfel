@@ -22,7 +22,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f Evolution/SetLHgridParameters.f \
 	Evolution/SetEpsilonTruncation.f Evolution/GetMuF.f Evolution/SetPolarizedEvolution.f Evolution/SetMassMatchingScales.f \
 	Evolution/SetMassScaleReference.f Evolution/SetQGridParameters.f Evolution/GetThreshold.f Evolution/EnableNLOQEDCorrections.f \
-	Evolution/ExternalSplittingFunctions.f 
+	Evolution/ExternalSplittingFunctions.f Evolution/GetMaxFlavourPDFs.f Evolution/GetMaxFlavourAlpha.f
 
 INTER = Evolution/interpolants.f
 
@@ -38,7 +38,8 @@ EVOLUTION = Evolution/EvolutionQCD.f Evolution/EvolutionOperatorsQCD.f Evolution
 	Evolution/EqualOperatorsUnifiednf.f Evolution/EvolveUni.f Evolution/odeintnsUnified.f Evolution/odeintsgUnified.f \
 	Evolution/DerivativeOperatorsQCD.f Evolution/odeintnsQCDf.f Evolution/odeintsgQCDf.f Evolution/odeintnsUnifiedf.f \
 	Evolution/odeintsgUnifiedf.f Evolution/integrandsQED.f Evolution/integralsQED.f Evolution/RSLintegralsQED.f \
-	Evolution/JoinOperatorsUni.f
+	Evolution/JoinOperatorsUni.f Evolution/ExternalEvolutionMatrixEv2Ev.f Evolution/ExternalEvolutionMatrixEv2Ph.f \
+	Evolution/ExternalEvolutionMatrixPh2Ph.f
 
 PDF = Evolution/PDFphys2evQCD.f Evolution/PDFevQCD2phys.f Evolution/EvolvePDFs.f Evolution/EvolveQCD.f Evolution/toyLHPDFs.f \
 	Evolution/xPDF.f Evolution/xgamma.f Evolution/NPDF.f Evolution/Ngamma.f Evolution/LUMI.f Evolution/JoinGrids.f \
@@ -72,7 +73,7 @@ FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src
 
 EXTRA_DIST = commons FTDY/commons
 
-HELL = HELL/src/hell.cc HELL/src/hell_wrapper.cc
+HELL = HELL/src/hell-x.cc HELL/src/hell_wrapper.cc HELL/src/expansionSFs.cc HELL/src/math/special_functions.cc
 
 libAPFELCore_la_SOURCES = $(INITCXX) $(INIT) $(SETTINGS) $(INTER) $(SPLITTING_FUNCTIONS) $(COUPLINGS) $(EVOLUTION) $(PDF) $(UTILITIES) $(DIS) $(HELL) $(FTDY)
 

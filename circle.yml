@@ -5,6 +5,7 @@ dependencies:
   override:
     - sudo apt-get install gfortran g++ gcc
   post:
+    - autoreconf -f -i
     - ./configure --disable-lhapdf && make
 
 ## Customize test commands

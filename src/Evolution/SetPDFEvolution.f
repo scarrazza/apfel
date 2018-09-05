@@ -13,17 +13,9 @@
 *
 *     Variables
 *
-      character*11 pe
+      character*(*) pe
 *
-      if(pe(1:7).eq."exactmu")then
-         PDFEvol = pe(1:7)
-      elseif(pe(1:10).eq."exactalpha")then
-         PDFEvol = pe(1:10)
-      elseif(pe(1:11).eq."expandalpha")then
-         PDFEvol = pe(1:11)
-      elseif(pe(1:9).eq."truncated")then
-         PDFEvol = pe(1:9)
-      endif
+      PDFEvol = trim(pe)
       InPDFEvol = "done"
 *
       return

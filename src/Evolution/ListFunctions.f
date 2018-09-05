@@ -287,6 +287,14 @@
      1           achar(27)//"[0m"
       write(6,*) "    returns the value of the i-th heavy quark"
       write(6,*) "    threhold in GeV (i = 4,5,6)."
+      write(6,*) achar(27)//"[34m- GetMaxFlavourAlpha():"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return the maximum number of active flavours in"
+      write(6,*) "    the couplings evolution."
+      write(6,*) achar(27)//"[34m- GetMaxFlavourPDFs():"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return the maximum number of active flavours in"
+      write(6,*) "    the PDF evolution."
       write(6,*) achar(27)//"[34m- nIntervals():"//achar(27)//"[0m"
       write(6,*) "    returns the number of intervals of the joint"
       write(6,*) "    grid."
@@ -307,6 +315,21 @@
      1           "string fname, int i, int j, double x, int beta):"//
      2           achar(27)//"[0m"
       write(6,*) "    returns the PDF evolution operator."
+      write(6,*) achar(27)//"[34m- ExternalEvolutionMatrixEv2Ev(",
+     1           "int i, int j, int alpha, int beta):"//
+     2           achar(27)//"[0m"
+      write(6,*) "    returns the PDF evolution matrix from"
+      write(6,*) "    evolution to evolution basis."
+      write(6,*) achar(27)//"[34m- ExternalEvolutionMatrixEv2Ph(",
+     1           "int i, int j, int alpha, int beta):"//
+     2           achar(27)//"[0m"
+      write(6,*) "    returns the PDF evolution matrix from"
+      write(6,*) "    evolution to physical basis."
+      write(6,*) achar(27)//"[34m- ExternalEvolutionMatrixPh2Ph(",
+     1           "int i, int j, int alpha, int beta):"//
+     2           achar(27)//"[0m"
+      write(6,*) "    returns the PDF evolution matrix from"
+      write(6,*) "    physical to physical basis."
       write(6,*) achar(27)//"[34m- ExternalSplittingFunctions(",
      1           "string fname, int pt, int nf, int i, int j,",
      2           " double x, int beta):"//achar(27)//"[0m"
@@ -417,7 +440,7 @@
       write(6,*) "    enables or disables the damping factor when the"
       write(6,*) "    FONLL structure functions are computed."
       write(6,*) achar(27)//"[34m- SetDampingPowerFONLL(int dpc,",
-     1     " int dpb, int dpt,):"//achar(27)//"[0m"
+     1     " int dpb, int dpt):"//achar(27)//"[0m"
       write(6,*) "    set the power with which damping factor"
       write(6,*) "    suppresses the subleading terms for charm,"
       write(6,*) "    bottom, and top, separately."

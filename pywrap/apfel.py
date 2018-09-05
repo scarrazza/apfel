@@ -228,6 +228,18 @@ def ExternalEvolutionOperator(fname, i, j, x, beta):
     return _apfel.ExternalEvolutionOperator(fname, i, j, x, beta)
 ExternalEvolutionOperator = _apfel.ExternalEvolutionOperator
 
+def ExternalEvolutionMatrixEv2Ev(i, j, alpha, beta):
+    return _apfel.ExternalEvolutionMatrixEv2Ev(i, j, alpha, beta)
+ExternalEvolutionMatrixEv2Ev = _apfel.ExternalEvolutionMatrixEv2Ev
+
+def ExternalEvolutionMatrixEv2Ph(i, j, alpha, beta):
+    return _apfel.ExternalEvolutionMatrixEv2Ph(i, j, alpha, beta)
+ExternalEvolutionMatrixEv2Ph = _apfel.ExternalEvolutionMatrixEv2Ph
+
+def ExternalEvolutionMatrixPh2Ph(i, j, alpha, beta):
+    return _apfel.ExternalEvolutionMatrixPh2Ph(i, j, alpha, beta)
+ExternalEvolutionMatrixPh2Ph = _apfel.ExternalEvolutionMatrixPh2Ph
+
 def ComputeExternalSplittingFunctions(fname, pt, nf, x, beta):
     return _apfel.ComputeExternalSplittingFunctions(fname, pt, nf, x, beta)
 ComputeExternalSplittingFunctions = _apfel.ComputeExternalSplittingFunctions
@@ -259,6 +271,14 @@ HeavyQuarkMass = _apfel.HeavyQuarkMass
 def GetThreshold(arg1):
     return _apfel.GetThreshold(arg1)
 GetThreshold = _apfel.GetThreshold
+
+def GetMaxFlavourAlpha():
+    return _apfel.GetMaxFlavourAlpha()
+GetMaxFlavourAlpha = _apfel.GetMaxFlavourAlpha
+
+def GetMaxFlavourPDFs():
+    return _apfel.GetMaxFlavourPDFs()
+GetMaxFlavourPDFs = _apfel.GetMaxFlavourPDFs
 
 def HeavyQuarkThreshold(arg1):
     return _apfel.HeavyQuarkThreshold(arg1)

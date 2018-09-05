@@ -13,17 +13,9 @@
 *
 *     Variables
 *
-      character*12 lept
+      character*(*) lept
 *
-      if(lept(1:8).eq."electron")then
-         ProjectileDIS = lept(1:8)
-      elseif(lept(1:8).eq."positron")then
-         ProjectileDIS = lept(1:8)
-      elseif(lept(1:8).eq."neutrino")then
-         ProjectileDIS = lept(1:8)
-      elseif(lept.eq."antineutrino")then
-         ProjectileDIS = lept
-      endif
+      ProjectileDIS = trim(lept)
       InProjectileDIS = "done"
 *
       return

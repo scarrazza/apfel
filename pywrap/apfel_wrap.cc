@@ -5211,6 +5211,153 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_ExternalEvolutionMatrixEv2Ev(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int arg2 ;
+  int arg3 ;
+  int arg4 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:ExternalEvolutionMatrixEv2Ev",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ExternalEvolutionMatrixEv2Ev" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ExternalEvolutionMatrixEv2Ev" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ExternalEvolutionMatrixEv2Ev" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ExternalEvolutionMatrixEv2Ev" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  result = (double)APFEL::ExternalEvolutionMatrixEv2Ev(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExternalEvolutionMatrixEv2Ph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int arg2 ;
+  int arg3 ;
+  int arg4 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:ExternalEvolutionMatrixEv2Ph",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ExternalEvolutionMatrixEv2Ph" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ExternalEvolutionMatrixEv2Ph" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ExternalEvolutionMatrixEv2Ph" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ExternalEvolutionMatrixEv2Ph" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  result = (double)APFEL::ExternalEvolutionMatrixEv2Ph(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ExternalEvolutionMatrixPh2Ph(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  int arg2 ;
+  int arg3 ;
+  int arg4 ;
+  int val1 ;
+  int ecode1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int val3 ;
+  int ecode3 = 0 ;
+  int val4 ;
+  int ecode4 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  double result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOOO:ExternalEvolutionMatrixPh2Ph",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  ecode1 = SWIG_AsVal_int(obj0, &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ExternalEvolutionMatrixPh2Ph" "', argument " "1"" of type '" "int""'");
+  } 
+  arg1 = static_cast< int >(val1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ExternalEvolutionMatrixPh2Ph" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
+  ecode3 = SWIG_AsVal_int(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ExternalEvolutionMatrixPh2Ph" "', argument " "3"" of type '" "int""'");
+  } 
+  arg3 = static_cast< int >(val3);
+  ecode4 = SWIG_AsVal_int(obj3, &val4);
+  if (!SWIG_IsOK(ecode4)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "ExternalEvolutionMatrixPh2Ph" "', argument " "4"" of type '" "int""'");
+  } 
+  arg4 = static_cast< int >(val4);
+  result = (double)APFEL::ExternalEvolutionMatrixPh2Ph(arg1,arg2,arg3,arg4);
+  resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_ComputeExternalSplittingFunctions(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
@@ -5480,6 +5627,32 @@ SWIGINTERN PyObject *_wrap_GetThreshold(PyObject *SWIGUNUSEDPARM(self), PyObject
   arg1 = static_cast< int >(val1);
   result = (double)APFEL::GetThreshold(arg1);
   resultobj = SWIG_From_double(static_cast< double >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GetMaxFlavourAlpha(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetMaxFlavourAlpha")) SWIG_fail;
+  result = (int)APFEL::GetMaxFlavourAlpha();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_GetMaxFlavourPDFs(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)":GetMaxFlavourPDFs")) SWIG_fail;
+  result = (int)APFEL::GetMaxFlavourPDFs();
+  resultobj = SWIG_From_int(static_cast< int >(result));
   return resultobj;
 fail:
   return NULL;
@@ -8471,6 +8644,9 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"xLepton", _wrap_xLepton, METH_VARARGS, NULL},
 	 { (char *)"xLeptonj", _wrap_xLeptonj, METH_VARARGS, NULL},
 	 { (char *)"ExternalEvolutionOperator", _wrap_ExternalEvolutionOperator, METH_VARARGS, NULL},
+	 { (char *)"ExternalEvolutionMatrixEv2Ev", _wrap_ExternalEvolutionMatrixEv2Ev, METH_VARARGS, NULL},
+	 { (char *)"ExternalEvolutionMatrixEv2Ph", _wrap_ExternalEvolutionMatrixEv2Ph, METH_VARARGS, NULL},
+	 { (char *)"ExternalEvolutionMatrixPh2Ph", _wrap_ExternalEvolutionMatrixPh2Ph, METH_VARARGS, NULL},
 	 { (char *)"ComputeExternalSplittingFunctions", _wrap_ComputeExternalSplittingFunctions, METH_VARARGS, NULL},
 	 { (char *)"ExternalSplittingFunctions", _wrap_ExternalSplittingFunctions, METH_VARARGS, NULL},
 	 { (char *)"LHAPDFgrid", _wrap_LHAPDFgrid, METH_VARARGS, NULL},
@@ -8479,6 +8655,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"AlphaQED", _wrap_AlphaQED, METH_VARARGS, NULL},
 	 { (char *)"HeavyQuarkMass", _wrap_HeavyQuarkMass, METH_VARARGS, NULL},
 	 { (char *)"GetThreshold", _wrap_GetThreshold, METH_VARARGS, NULL},
+	 { (char *)"GetMaxFlavourAlpha", _wrap_GetMaxFlavourAlpha, METH_VARARGS, NULL},
+	 { (char *)"GetMaxFlavourPDFs", _wrap_GetMaxFlavourPDFs, METH_VARARGS, NULL},
 	 { (char *)"HeavyQuarkThreshold", _wrap_HeavyQuarkThreshold, METH_VARARGS, NULL},
 	 { (char *)"NPDF", _wrap_NPDF, METH_VARARGS, NULL},
 	 { (char *)"Ngamma", _wrap_Ngamma, METH_VARARGS, NULL},

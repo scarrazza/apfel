@@ -6,13 +6,12 @@
 #include <sstream>
 #include <cstring>
 #include <string>
+#include <vector>
 #include <iostream>
 using namespace std;
 
 #define STR_EXPAND(top) #top
 #define STR(tok) STR_EXPAND(tok)
-
-#define SIZE 999
 
 namespace APFEL {
 
@@ -33,9 +32,8 @@ namespace APFEL {
 
   void SetMassScheme(const std::string& ms)
   {
-    char cms[SIZE+1];
-    strncpy(cms, ms.c_str(), SIZE);
-    fsetmassscheme(cms);
+    std::vector<char> cms(ms.c_str(), ms.c_str() + ms.size() + 1);
+    fsetmassscheme(cms.data());
   }
 
   void SetPolarizationDIS(double pol)
@@ -45,37 +43,32 @@ namespace APFEL {
 
   void SetProcessDIS(const std::string& pr)
   {
-    char cpr[SIZE+1];
-    strncpy(cpr, pr.c_str(), SIZE);
-    fsetprocessdis(cpr);
+    std::vector<char> cpr(pr.c_str(), pr.c_str() + pr.size() + 1);
+    fsetprocessdis(cpr.data());
   }
 
   void SetProjectileDIS(const std::string& lept)
   {
-    char clept[SIZE+1];
-    strncpy(clept, lept.c_str(), SIZE);
-    fsetprojectiledis(clept);
+    std::vector<char> clept(lept.c_str(), lept.c_str() + lept.size() + 1);
+    fsetprojectiledis(clept.data());
   }
 
   void SetTargetDIS(const std::string& tar)
   {
-    char ctar[SIZE+1];
-    strncpy(ctar, tar.c_str(), SIZE);
-    fsettargetdis(ctar);
+    std::vector<char> ctar(tar.c_str(), tar.c_str() + tar.size() + 1);
+    fsettargetdis(ctar.data());
   }
 
   void SelectCharge(const std::string& selch)
   {
-    char cselch[SIZE+1];
-    strncpy(cselch, selch.c_str(), SIZE);
-    fselectcharge(cselch);
+    std::vector<char> cselch(selch.c_str(), selch.c_str() + selch.size() + 1);
+    fselectcharge(cselch.data());
   }
 
   double ExternalDISOperator(const std::string& SF,int ihq,int i,double x,int beta)
   {
-    char cSF[SIZE+1];
-    strncpy(cSF, SF.c_str(), SIZE);
-    return fexternaldisoperator(cSF,&ihq,&i,&x,&beta);
+    std::vector<char> cSF(SF.c_str(), SF.c_str() + SF.size() + 1);
+    return fexternaldisoperator(cSF.data(),&ihq,&i,&x,&beta);
   }
 
   double F2light(double x)
@@ -155,13 +148,10 @@ namespace APFEL {
 
   double StructureFunctionxQ(const std::string& proc, const std::string& sf, const std::string& comp, double x, double Q)
   {
-    char cproc[SIZE+1];
-    strncpy(cproc, proc.c_str(), SIZE);
-    char csf[SIZE+1];
-    strncpy(csf, sf.c_str(), SIZE);
-    char ccomp[SIZE+1];
-    strncpy(ccomp, comp.c_str(), SIZE);
-    return fstructurefunctionxq(cproc,csf,ccomp,&x,&Q);
+    std::vector<char> cproc(proc.c_str(), proc.c_str() + proc.size() + 1);
+    std::vector<char> csf(sf.c_str(), sf.c_str() + sf.size() + 1);
+    std::vector<char> ccomp(comp.c_str(), comp.c_str() + comp.size() + 1);
+    return fstructurefunctionxq(cproc.data(),csf.data(),ccomp.data(),&x,&Q);
   }
 
   void SetZMass(double massz)
@@ -256,9 +246,8 @@ namespace APFEL {
 
   double GetSIATotalCrossSection(int pto, double q, const std::string& comp)
   {
-    char ccomp[SIZE+1];
-    strncpy(ccomp, comp.c_str(), SIZE);
-    return fgetsiatotalcrosssection(&pto,&q,ccomp);
+    std::vector<char> ccomp(comp.c_str(), comp.c_str() + comp.size() + 1);
+    return fgetsiatotalcrosssection(&pto,&q,ccomp.data());
   }
 
   void EnableTargetMassCorrections(int tc)
@@ -303,9 +292,8 @@ namespace APFEL {
 
   void SetFKObservable(const std::string& obs)
   {
-    char cobs[SIZE+1];
-    strncpy(cobs, obs.c_str(), SIZE);
-    fsetfkobservable(cobs);
+    std::vector<char> cobs(obs.c_str(), obs.c_str() + obs.size() + 1);
+    fsetfkobservable(cobs.data());
   }
 
   void GetFKObservable()
@@ -321,22 +309,17 @@ namespace APFEL {
   void ComputeFKTables(const std::string& inputfile, const std::string& outputpath,
 		       double Q0, int* flmap)
   {
-    char cinputfile[SIZE+1];
-    strncpy(cinputfile, inputfile.c_str(), SIZE);
-    char coutputpath[SIZE+1];
-    strncpy(coutputpath, outputpath.c_str(), SIZE);
-    fcomputefktables(cinputfile,coutputpath,&Q0,flmap);    
+    std::vector<char> cinputfile(inputfile.c_str(), inputfile.c_str() + inputfile.size() + 1);
+    std::vector<char> coutputpath(outputpath.c_str(), outputpath.c_str() + outputpath.size() + 1);
+    fcomputefktables(cinputfile.data(),coutputpath.data(),&Q0,flmap);
   }
 
   void ComputeHardCrossSectionsDY(const std::string& inputfile, 
 				  const std::string& outputfile)
   {
-    char cinputfile[SIZE+1];
-    strncpy(cinputfile, inputfile.c_str(), SIZE);
-    char coutputfile[SIZE+1];
-    strncpy(coutputfile, outputfile.c_str(), SIZE);
-    
-    fcomputehardcrosssectionsdy(cinputfile,coutputfile);    
+    std::vector<char> cinputfile(inputfile.c_str(), inputfile.c_str() + inputfile.size() + 1);
+    std::vector<char> coutputfile(outputfile.c_str(), outputfile.c_str() + outputfile.size() + 1);
+    fcomputehardcrosssectionsdy(cinputfile.data(),coutputfile.data());
   }
 
   void EnableSFNLOQEDCorrections(int qedsfc)
@@ -346,9 +329,8 @@ namespace APFEL {
 
   void LHAPDFgridStructureFunctions(int Nrep, double Qin, const std::string& fname)
   {
-    char cfname[SIZE+1];
-    strncpy(cfname, fname.c_str(), SIZE);
-    flhapdfgridstructurefunctions(&Nrep,&Qin,cfname);
+    std::vector<char> cfname(fname.c_str(), fname.c_str() + fname.size() + 1);
+    flhapdfgridstructurefunctions(&Nrep,&Qin,cfname.data());
   }
 
   void SetScaleVariationProcedure(int svp)
