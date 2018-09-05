@@ -31,6 +31,7 @@
       include "../commons/DynScVar.h"
       include "../commons/IntrinsicCharm.h"
       include "../commons/NLOQEDCorrections.h"
+      include "../commons/ScaleVariationProcedure.h"
 *
 *     Print welcome message and report of the parameters (if enabled)
 *
@@ -78,6 +79,10 @@
          else
             write(6,"(a,f7.4)") " muR / Q = ",dsqrt(krenQ)
             write(6,"(a,f7.4)") " muF / Q = ",dsqrt(kfacQ)
+         endif
+*
+         if(ScVarProc.eq.1)then
+            write(6,*) "(No scale variation in the evolution)"
          endif
 *
          if(TMC)then

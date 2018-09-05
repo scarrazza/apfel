@@ -38,6 +38,7 @@
       include "../commons/coeffhqmellin.h"
       include "../commons/minimax.h"
       include "../commons/NLOQEDCorrections.h"
+      include "../commons/ScaleVariationProcedure.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
@@ -72,6 +73,7 @@
      1                                                   0d0,0d0)
       if(InSFNLOQED.ne."done")       call EnableSFNLOQEDCorrections
      1                                                          (.true.)
+      if(InScVarProc.ne."done")      call SetScaleVariationProcedure(0)
 *
 *     Check the consistency of the input parameters
 *
@@ -189,10 +191,23 @@
          call exit(-10)
       endif
 *
+      if(ScVarProc.lt.0.or.ScVarProc.gt.1)then
+         write(6,*) achar(27)//"[31mERROR:"
+         write(6,*) "Scale variation procedure unknown:"
+         write(6,*) "ScVarProc = ",ScVarProc
+         write(6,*) "  "
+         write(6,*) "The options are:"
+         write(6,*) "- 0"
+         write(6,*) "- 1"
+         write(6,*) achar(27)//"[0m"
+         call exit(-10)
+      endif
+*
 *     Additional settings
 *
       if(krenQ.ne.1d0.or.kfacQ.ne.1d0)then
          call SetRenFacRatio(dsqrt(krenQ/kfacQ))
+         if(ScVarProc.eq.1) call SetRenFacRatio(1d0)
       endif
 *
 *     Ensure that for the time-like evolution only proper settings are used

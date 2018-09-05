@@ -14,7 +14,6 @@
       include "../commons/ipt.h"
       include "../commons/alpha_ref_QCD.h"
       include "../commons/m2th.h"
-      include "../commons/kren.h"
       include "../commons/LHAgrid.h"
       include "../commons/Evs.h"
       include "../commons/MaxFlavourPDFs.h"

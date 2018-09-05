@@ -177,6 +177,9 @@ extern "C" {
 
 #define flhapdfgridstructurefunctions FC_FUNC(lhapdfgridstructurefunctions,LHAPDFGRIDSTRUCTUREFUNCTIONS)
   void flhapdfgridstructurefunctions(int*, double*, char*);
+
+#define fsetscalevariationprocedure FC_FUNC(setscalevariationprocedure,SETSCALEVARIATIONPROCEDURE)
+  void fsetscalevariationprocedure(int*);
 }
 
 #endif

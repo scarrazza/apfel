@@ -251,7 +251,8 @@ am__objects_10 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
 	DIS/hqcoef.lo DIS/initIntegralsDISRes.lo \
 	DIS/IncludeNLOQEDCorrections.lo \
 	DIS/EnableSFNLOQEDCorrections.lo \
-	DIS/LHAPDFgridStructureFunctions.lo
+	DIS/LHAPDFgridStructureFunctions.lo \
+	DIS/SetScaleVariationProcedure.lo
 am__objects_11 = HELL/src/hell-x.lo HELL/src/hell_wrapper.lo \
 	HELL/src/expansionSFs.lo HELL/src/math/special_functions.lo
 am__objects_12 = FTDY/src/ComputeFKTables.lo \
@@ -579,7 +580,7 @@ DIS = DIS/InitializeAPFEL_DIS.f DIS/initParametersDIS.f DIS/SetMassScheme.f DIS/
 	DIS/SetEWCouplings.f DIS/EnableDynamicalScaleVariations.f DIS/EnableIntrinsicCharm.f DIS/IncludeIntrinsicCharm.f \
 	DIS/integrandsIC.f DIS/CacheStructureFunctionsAPFEL.f DIS/StructureFunctionxQ.f DIS/SetDampingPowerFONLL.f \
 	DIS/hqcoef.f DIS/initIntegralsDISRes.f DIS/IncludeNLOQEDCorrections.f DIS/EnableSFNLOQEDCorrections.f \
-	DIS/LHAPDFgridStructureFunctions.f
+	DIS/LHAPDFgridStructureFunctions.f DIS/SetScaleVariationProcedure.f
 
 FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src/gauleg.f FTDY/src/initDYcouplings.f FTDY/src/initxGridDY.f \
 	FTDY/src/readcDY.f FTDY/src/ReadDataFile.f FTDY/src/sigmafk_dy.f FTDY/src/wcDYlo.f FTDY/src/wcDYqg.f FTDY/src/wcDYqq.f FTDY/src/wcoeffDY.f \
@@ -1084,6 +1085,8 @@ DIS/IncludeNLOQEDCorrections.lo: DIS/$(am__dirstamp) \
 DIS/EnableSFNLOQEDCorrections.lo: DIS/$(am__dirstamp) \
 	DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/LHAPDFgridStructureFunctions.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/SetScaleVariationProcedure.lo: DIS/$(am__dirstamp) \
 	DIS/$(DEPDIR)/$(am__dirstamp)
 HELL/src/$(am__dirstamp):
 	@$(MKDIR_P) HELL/src

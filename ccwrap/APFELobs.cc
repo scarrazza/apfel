@@ -332,4 +332,9 @@ namespace APFEL {
     std::vector<char> cfname(fname.c_str(), fname.c_str() + fname.size() + 1);
     flhapdfgridstructurefunctions(&Nrep,&Qin,cfname.data());
   }
+
+  void SetScaleVariationProcedure(int svp)
+  {
+    fsetscalevariationprocedure(&svp);
+  }
 }

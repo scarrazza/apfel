@@ -205,7 +205,7 @@
          if(kren.ne.1d0)then
             write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Renormalization scale variation not allowed"
-            write(6,*) "if the small-x resummation is enabled."
+            write(6,*) "if small-x resummation is enabled."
             write(6,*) achar(27)//"[0m"
             call exit(-10)
          endif
