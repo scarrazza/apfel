@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - run: sudo apt-get update
+      - run: sudo apt-get install gfortran g++ gcc
+      - run: autoreconf -f -i
+      - run: ./configure --disable-lhapdf && make
+      - run: ./examples/Luminosity
+      - run: ./examples/Tabulation < examples/input.txt
+      - run: ./examples/SumRules < examples/input.txt
+      - run: ./examples/DISObservables < examples/input.txt
+      - run: ./examples/CheckAPFEL
