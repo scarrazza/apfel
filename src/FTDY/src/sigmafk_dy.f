@@ -64,7 +64,7 @@
       double precision sigmady2(-6:6,13,mxgridsizeDY,0:mxgridsize)
       double precision lum_ns,lum_qg,lum_gq
       double precision ExternalEvolutionOperator
-      double precision HeavyQuarkMass,AlphaQCD
+      double precision HeavyQuarkMass,a_QCD!,AlphaQCD
       double precision xPDF
       double precision f1Q(-6:6,mxgridsizeDY),f2Q(-6:6,mxgridsizeDY)
       double precision xfev(13),xfph(-6:6),xfQ0(13,0:mxgridsize)
@@ -190,7 +190,8 @@
 *     compute alphas
 *
       as = 0d0
-      if(ipt.ge.1) as = AlphaQCD(Q) / 4d0 / pi
+      !if(ipt.ge.1) as = AlphaQCD(Q) / 4d0 / pi
+      if(ipt.ge.1) as = a_QCD(m2)
 *
 *     Initialize couplings
 *
