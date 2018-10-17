@@ -50,6 +50,14 @@ By the default, if prefix is not set, the program is installed in
 /usr/local. If you define a different prefix, remember to export
 it into the LD_LIBRARY_PATH.
 
+## Known issues
+
+If you observe memory issues while running APFEL on specific machines you can move the memory allocation to heap by adding the `-fno-automatic` flag:
+```bash
+export FFLAGS=$(echo $FFLAGS | sed 's/-fopenmp/-fno-automatic/g')
+./configure --prefix=$PREFIX 
+```
+
 ## References
 
 - V. Bertone, S. Carrazza, J. Rojo, *APFEL: A PDF Evolution Library with QED corrections*, [arXiv:1310.1394](http://arxiv.org/abs/arXiv:1310.1394).
