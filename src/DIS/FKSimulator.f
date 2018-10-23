@@ -61,52 +61,52 @@ c      au = 1.9d0/1d3**2
 c      ad = 1.8d0/1d3**2
 c      as =-3.0d0/1d3**2
 c      ac = 5.0d0/1d3**2
-cc     theory 173
+cc     theory 181
       au = 0.22d0/1d3**2
       ad = -0.26d0/1d3**2
       as = -0.26d0/1d3**2
       ac = 0.22d0/1d3**2
-c     theory 174
+c     theory 182
 c      au = -0.08d0/1d3**2
 c      ad = +0.06d0/1d3**2
 c      as = +0.06d0/1d3**2
 c      ac = -0.08d0/1d3**2
-c     theory 175
+c     theory 183
 c      au = +0.16d0/1d3**2
 c      ad = 0.d0
 c      as = 0.d0
 c      ac = +0.16d0/1d3**2
-c     theory 176
+c     theory 184
 c      au = -0.04d0/1d3**2
 c      ad = -0.19d0/1d3**2
 c      as = -0.19d0/1d3**2
 c      ac = -0.04d0/1d3**2
-c     theory 177
+c     theory 185
 c      au = +0.57d0/1d3**2
 c      ad = -0.48d0/1d3**2
 c      as = +0.48d0/1d3**2
 c      ac = -0.57d0/1d3**2
-c     theory 178
+c     theory 186
 c      au = -0.61d0/1d3**2
 c      ad = +0.43d0/1d3**2
 c      as = -0.43d0/1d3**2
 c      ac = +0.61d0/1d3**2
-c     theory 179
+c     theory 187
 c      au = +0.15d0/1d3**2
 c      ad = +0.09d0/1d3**2
 c      as = -0.09d0/1d3**2
 c      ac = -0.15d0/1d3**2
-c     theory 180
+c     theory 188
 c      au = 0.d0
 c      ad = +0.11d0/1d3**2
 c      as = -0.11d0/1d3**2
 c      ac = 0.d0
-c     theory 181
+c     theory 189
 c      au = 0.33d0/1d3**2
 c      ad = -0.33d0/1d3**2
 c      as = 0.33d0/1d3**2
 c      ac = -0.33d0/1d3**2
-c     theory 182
+c     theory 190
 c      au = -0.495d0/1d3**2
 c      ad = 0.495d0/1d3**2
 c      as = -0.495d0/1d3**2
