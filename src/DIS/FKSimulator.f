@@ -62,25 +62,25 @@ c      ad = 1.8d0/1d3**2
 c      as =-3.0d0/1d3**2
 c      ac = 5.0d0/1d3**2
 cc     theory 181
-      au = 0.22d0/1d3**2
-      ad = -0.26d0/1d3**2
-      as = -0.26d0/1d3**2
-      ac = 0.22d0/1d3**2
-c     theory 182
+c      au = 0.22d0/1d3**2
+c      ad = -0.26d0/1d3**2
+c      as = -0.26d0/1d3**2
+c      ac = 0.22d0/1d3**2
+cc     theory 182
 c      au = -0.08d0/1d3**2
 c      ad = +0.06d0/1d3**2
 c      as = +0.06d0/1d3**2
 c      ac = -0.08d0/1d3**2
-c     theory 183
+cc     theory 183
 c      au = +0.16d0/1d3**2
 c      ad = 0.d0
 c      as = 0.d0
 c      ac = +0.16d0/1d3**2
-c     theory 184
-c      au = -0.04d0/1d3**2
-c      ad = -0.19d0/1d3**2
-c      as = -0.19d0/1d3**2
-c      ac = -0.04d0/1d3**2
+cc     theory 184
+      au = -0.04d0/1d3**2
+      ad = -0.19d0/1d3**2
+      as = -0.19d0/1d3**2
+      ac = -0.04d0/1d3**2
 c     theory 185
 c      au = +0.57d0/1d3**2
 c      ad = -0.48d0/1d3**2
@@ -162,40 +162,42 @@ c      ac = 0.495d0/1d3**2
      2     * (xc+xcbar)
 
 ******************************************************
-*     F3 structure function - extra EFT contributions
+*     xF3 structure function - extra EFT contributions
+*     Note that cF3 give x*F3 to match the definition of 
+*     F3light(x) in APFEL
 ******************************************************
 *
 *     Up quark contribution
 *      
-      cF3u = -1d0 / 12d0 / x / e2**2
+      cF3u = -1d0 / 12d0 / e2**2 !/x
      1     * (3d0*au*au*Q2*Q2 - 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))
      2     * (xu-xubar)
 *     For deuteron data swap u <--> d
-      cF3u_d = -1d0 / 24d0 / x / e2**2
+      cF3u_d = -1d0 / 24d0 / e2**2 !/x
      1     * (3d0*au*au*Q2*Q2 - 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))
      2     * (xu -xubar + xd-xdbar)
 *
 *     Down quark contribution
 *      
-      cF3d =  -1d0 / 12d0 / x / e2**2
+      cF3d =  -1d0 / 12d0 / e2**2 !/x
      1     * (3d0*ad*ad*Q2*Q2 + 2d0*ad*e2*Q2*(1d0+4d0*K*s2w*s2w)) 
      2     * (xd-xdbar)
 *     For deuteron data swap u <--> d
-      cF3d_d =  -1d0 / 24d0 / x / e2**2
+      cF3d_d =  -1d0 / 24d0 / e2**2 !/x
      1     * (3d0*ad*ad*Q2*Q2 + 2d0*ad*e2*Q2*(1d0+4d0*K*s2w*s2w)) 
      2     * (xu-xubar + xd-xdbar)
 *
 *     Strange
 *
-      cF3s =  -1d0 / 12d0 / x / e2**2
+      cF3s =  -1d0 / 12d0 / e2**2!/x
      1     * (3d0*as*as*Q2*Q2 + 2d0*as*e2*Q2*(1d0+4d0*K*s2w*s2w)) 
      2     * (xs-xsbar)
 *
 *     Charm
 *
-      cF3c = -1d0 / 12d0 / x / e2**2 * 
+      cF3c = -1d0 / 12d0 / e2**2!/x 
      1     *  (3d0*ac*ac*Q2*Q2 - 4d0*ac*e2*Q2*(1d0+4d0*K*s2w*s2w))
-     2     *  (xc+xcbar)
+     2     *  (xc-xcbar)
 
 *******************************************************************
 *
