@@ -12,6 +12,7 @@
       include "../commons/consts.h"
       include "../commons/FKObservable.h"
       include "../commons/ipt.h"
+      include "../commons/eftcoeff.h"
 **
 *     Input Variables
 *
@@ -29,7 +30,7 @@
       double precision conv      
       double precision GetZMass,GetSin2ThetaW,AlphaQED ! EFT
       double precision e2,MZ2,xu,xubar,xd,xdbar,xs,xsbar,xc,xcbar
-      double precision K,ad,au,as,ac,s2w,c2w  ! EFT
+      double precision K,s2w,c2w  ! EFT
       double precision cF2u,cF2d,cF2u_d,cF2d_d,cF2s,cF2c ! EFT
       double precision cF3u,cF3d,cF3u_d,cF3d_d,cF3s,cF3c ! EFT
       parameter(conv=3.893793d10) ! conversion factor from GeV^-2 to 10^-38 cm^2
@@ -77,10 +78,10 @@ c      ad = 0.d0
 c      as = 0.d0
 c      ac = +0.16d0/1d3**2
 cc     theory 184
-      au = -0.04d0/1d3**2
-      ad = -0.19d0/1d3**2
-      as = -0.19d0/1d3**2
-      ac = -0.04d0/1d3**2
+c      au = -0.04d0/1d3**2
+c      ad = -0.19d0/1d3**2
+c      as = -0.19d0/1d3**2
+c      ac = -0.04d0/1d3**2
 c     theory 185
 c      au = +0.57d0/1d3**2
 c      ad = -0.48d0/1d3**2
