@@ -116,7 +116,7 @@ c
       MZ2 = GetZMass()**2
       s2w = GetSin2ThetaW()
       c2w = 1d0 - s2w
-      K = Q2 / 4d0 / c2w / s2w / (Q2-MZ2)
+      K = Q2 / 4d0 / c2w / s2w / (Q2+MZ2)
       xd   = xPDFj(1,x)
       xdbar= xPDFj(-1,x)
       xu   = xPDFj(2,x)
@@ -171,33 +171,33 @@ c
 *     Up quark contribution
 *      
       cF3u = -1d0 / 12d0 / e2**2 !/x
-     1     * (3d0*au*au*Q2*Q2 - 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))
+     1     * (3d0*au*au*Q2*Q2 + 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))
      2     * (xu-xubar)
 *     For deuteron data swap u <--> d
       cF3u_d = -1d0 / 24d0 / e2**2 !/x
-     1     * (3d0*au*au*Q2*Q2 - 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))
+     1     * (3d0*au*au*Q2*Q2 + 4d0*au*e2*Q2*(1d0+4d0*K*s2w*s2w))
      2     * (xu -xubar + xd-xdbar)
 *
 *     Down quark contribution
 *      
       cF3d =  -1d0 / 12d0 / e2**2 !/x
-     1     * (3d0*ad*ad*Q2*Q2 + 2d0*ad*e2*Q2*(1d0+4d0*K*s2w*s2w)) 
+     1     * (3d0*ad*ad*Q2*Q2 - 2d0*ad*e2*Q2*(1d0+4d0*K*s2w*s2w))
      2     * (xd-xdbar)
 *     For deuteron data swap u <--> d
       cF3d_d =  -1d0 / 24d0 / e2**2 !/x
-     1     * (3d0*ad*ad*Q2*Q2 + 2d0*ad*e2*Q2*(1d0+4d0*K*s2w*s2w)) 
+     1     * (3d0*ad*ad*Q2*Q2 - 2d0*ad*e2*Q2*(1d0+4d0*K*s2w*s2w))
      2     * (xu-xubar + xd-xdbar)
 *
 *     Strange
 *
       cF3s =  -1d0 / 12d0 / e2**2!/x
-     1     * (3d0*as*as*Q2*Q2 + 2d0*as*e2*Q2*(1d0+4d0*K*s2w*s2w)) 
+     1     * (3d0*as*as*Q2*Q2 - 2d0*as*e2*Q2*(1d0+4d0*K*s2w*s2w))
      2     * (xs-xsbar)
 *
 *     Charm
 *
       cF3c = -1d0 / 12d0 / e2**2!/x 
-     1     *  (3d0*ac*ac*Q2*Q2 - 4d0*ac*e2*Q2*(1d0+4d0*K*s2w*s2w))
+     1     *  (3d0*ac*ac*Q2*Q2 + 4d0*ac*e2*Q2*(1d0+4d0*K*s2w*s2w))
      2     *  (xc-xcbar)
 
 ******************************************************
