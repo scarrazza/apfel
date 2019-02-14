@@ -199,8 +199,8 @@
          write(6,*) "The options are:"
          write(6,*) "-0 consistent scale variation in DIS and evolution"
          write(6,*) "-1 variation only in the DIS structure functions"
-         write(6,*) "-2 ren. scale variation in structure functions,"
-         write(6,*) "factorisation scale variation in evolution"
+         write(6,*) "-2 renormalisation scale variation in structure
+              functions, factorisation scale variation in the evolution"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
