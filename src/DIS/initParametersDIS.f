@@ -191,14 +191,16 @@
          call exit(-10)
       endif
 *
-      if(ScVarProc.lt.0.or.ScVarProc.gt.1)then
+      if(ScVarProc.lt.0.or.ScVarProc.gt.2)then
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "Scale variation procedure unknown:"
          write(6,*) "ScVarProc = ",ScVarProc
          write(6,*) "  "
          write(6,*) "The options are:"
-         write(6,*) "- 0"
-         write(6,*) "- 1"
+         write(6,*) "-0 consistent scale variation in DIS and evolution"
+         write(6,*) "-1 variation only in the DIS structure functions"
+         write(6,*) "-2 renormalisation scale variation in structure
+              functions, factorisation scale variation in the evolution"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
@@ -208,6 +210,7 @@
       if(krenQ.ne.1d0.or.kfacQ.ne.1d0)then
          call SetRenFacRatio(dsqrt(krenQ/kfacQ))
          if(ScVarProc.eq.1) call SetRenFacRatio(1d0)
+         if(ScVarProc.eq.2) kfacQ = 1d0
       endif
 *
 *     Ensure that for the time-like evolution only proper settings are used
