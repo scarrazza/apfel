@@ -140,7 +140,7 @@
 *
 *     Define the ratio # of protons / # of nucleons of the target
 *
-      if(TargetDIS(1:7).eq."proton")then
+      if(TargetDIS(1:6).eq."proton")then
          frac = 1d0
       elseif(TargetDIS(1:7).eq."neutron")then
          frac = 0d0
@@ -1224,7 +1224,7 @@ c            damp(4) = 1d0
                            C3nsm(ihq) = C3nsm(3)
                         enddo
                      endif
-                  elseif(MassScheme.eq."FFN0")then
+                  elseif(MassScheme(1:4).eq."FFN0")then
                      do pt=0,ipt
                         C2g(3)   = C2g(3)
      1                    + as(pt) * SC2zm(jgrid,Nf_FF,1,pt,alpha,beta)
@@ -1358,7 +1358,7 @@ c            damp(4) = 1d0
                            enddo
                         endif
                      endif
-                  elseif(MassScheme.eq."FFNS")then
+                  elseif(MassScheme(1:4).eq."FFNS")then
                      do pt=0,ipt
                         C2g(3)   = C2g(3)
      1                    + as(pt) * SC2zm(jgrid,Nf_FF,1,pt,alpha,beta)
