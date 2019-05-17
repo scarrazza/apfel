@@ -25,7 +25,6 @@
 *     Internal Variables
 *
       DOUBLE PRECISION A_QCD,ASQ,ASI,ASIM,ASTH(4:6),ASTHM(4:6)
-      DOUBLE PRECISION LN
       DOUBLE PRECISION INMASS,EVF
       DOUBLE PRECISION EVMASS,DECOUP
       DOUBLE PRECISION EPS
@@ -54,52 +53,62 @@
       ASI      = asthUp(IM)
       ASIM     = asthDown(IM)
 *
-      INMASS = DSQRT(M2TH(IM))
+      INMASS = DSQRT(M2PH(IM))
 *
       IF(EVS.EQ."FF")THEN
          EVF = EVMASS(NF_FF,ASI,ASQ)
       ELSEIF(EVS.EQ."VF")THEN
-         LN = DLOG(KREN)
 *        Charm
          IF(IM.EQ.4)THEN
             IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
-               EVF = EVMASS(4,ASI,ASTHM(5)) * DECOUP("UP",5,LN)
-     1             * EVMASS(5,ASTH(5),ASTHM(6)) * DECOUP("UP",6,LN)
-     2             * EVMASS(6,ASTH(6),ASQ)
+               EVF = EVMASS(4,ASI,ASTHM(5))
+     1              * DECOUP("UP",5,DLOG(K2TH(5)))
+     2              * EVMASS(5,ASTH(5),ASTHM(6))
+     3              * DECOUP("UP",6,DLOG(K2TH(6)))
+     4              * EVMASS(6,ASTH(6),ASQ)
             ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
-               EVF = EVMASS(4,ASI,ASTHM(5)) * DECOUP("UP",5,LN)
-     1             * EVMASS(5,ASTH(5),ASQ)
+               EVF = EVMASS(4,ASI,ASTHM(5))
+     1              * DECOUP("UP",5,DLOG(K2TH(5)))
+     2              * EVMASS(5,ASTH(5),ASQ)
             ELSEIF(Q2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
                EVF = EVMASS(4,ASI,ASQ)
             ELSE
-               EVF = DECOUP("DW",4,LN) / EVMASS(3,ASQ,ASIM) 
+               EVF = DECOUP("DW",4,DLOG(K2TH(4))) / EVMASS(3,ASQ,ASIM)
             ENDIF
 *        Bottom
          ELSEIF(IM.EQ.5)THEN
             IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
-               EVF = EVMASS(5,ASI,ASTHM(6)) * DECOUP("UP",6,LN)
-     1             * EVMASS(6,ASTH(6),ASQ)
+               EVF = EVMASS(5,ASI,ASTHM(6))
+     1              * DECOUP("UP",6,DLOG(K2TH(6)))
+     2              * EVMASS(6,ASTH(6),ASQ)
             ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
-               EVF = EVMASS(5,ASI,ASQ) 
+               EVF = EVMASS(5,ASI,ASQ)
             ELSEIF(Q2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
-               EVF = DECOUP("DW",5,LN) / EVMASS(4,ASQ,ASIM) 
+               EVF = DECOUP("DW",5,DLOG(K2TH(5))) / EVMASS(4,ASQ,ASIM)
             ELSE
-               EVF = DECOUP("DW",4,LN) / EVMASS(3,ASQ,ASTHM(4)) 
-     1             * DECOUP("DW",5,LN) / EVMASS(4,ASTH(4),ASIM) 
+               EVF = DECOUP("DW",4,DLOG(K2TH(4)))
+     1              / EVMASS(3,ASQ,ASTHM(4))
+     2              * DECOUP("DW",5,DLOG(K2TH(5)))
+     3              / EVMASS(4,ASTH(4),ASIM)
             ENDIF
 *        Top
          ELSEIF(IM.EQ.6)THEN
             IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
-               EVF = EVMASS(6,ASI,ASQ) 
+               EVF = EVMASS(6,ASI,ASQ)
             ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
-               EVF = DECOUP("DW",6,LN) / EVMASS(5,ASQ,ASIM) 
+               EVF = DECOUP("DW",6,DLOG(K2TH(6))) / EVMASS(5,ASQ,ASIM)
             ELSEIF(Q2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
-               EVF = DECOUP("DW",5,LN) / EVMASS(4,ASQ,ASIM) 
-     1             * DECOUP("DW",6,LN) / EVMASS(5,ASTH(5),ASTHM(6)) 
+               EVF = DECOUP("DW",5,DLOG(K2TH(5)))
+     1              / EVMASS(4,ASQ,ASIM)
+     2              * DECOUP("DW",6,DLOG(K2TH(6)))
+     3              / EVMASS(5,ASTH(5),ASTHM(6))
             ELSE
-               EVF = DECOUP("DW",4,LN) / EVMASS(3,ASQ,ASIM)
-     1             * DECOUP("DW",5,LN) / EVMASS(4,ASTH(4),ASTHM(5)) 
-     2             * DECOUP("DW",6,LN) / EVMASS(5,ASTH(5),ASTHM(6)) 
+               EVF = DECOUP("DW",4,DLOG(K2TH(4)))
+     1              / EVMASS(3,ASQ,ASIM)
+     2              * DECOUP("DW",5,DLOG(K2TH(5)))
+     3              / EVMASS(4,ASTH(4),ASTHM(5))
+     4              * DECOUP("DW",6,DLOG(K2TH(6)))
+     5              / EVMASS(5,ASTH(5),ASTHM(6))
             ENDIF
          ENDIF
       ENDIF
