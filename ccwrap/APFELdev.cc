@@ -58,11 +58,11 @@ namespace APFEL
       std::cerr << " ERROR: Unrecognised MODEV: "<< par.at(kModEv) <<std::endl;
       exit(-1);
     }
-        
+
     // Coupling
     APFEL::SetAlphaQCDRef(atof(par.at(kalphas).c_str()), atof(par.at(kQref).c_str()));
     if (atoi(par.at(kQED).c_str())) APFEL::SetAlphaQEDRef(atof(par.at(kalphaqed).c_str()),atof(par.at(kQedref).c_str()));
-    
+
     // EW
     APFEL::SetWMass(atof(par.at(kMW).c_str()));
     APFEL::SetZMass(atof(par.at(kMZ).c_str()));
@@ -100,7 +100,7 @@ namespace APFEL
       APFEL::SetFFNS(atoi(par.at(kNfFF).c_str()));
     else
       APFEL::SetVFNS();
-    
+
     APFEL::SetMaxFlavourAlpha(atoi(par.at(kMaxNfAs).c_str()));
     APFEL::SetMaxFlavourPDFs(atoi(par.at(kMaxNfPdf).c_str()));
 
@@ -115,6 +115,9 @@ namespace APFEL
 
     // Intrinsic charm
     APFEL::EnableIntrinsicCharm(atoi(par.at(kIC).c_str()));
+
+   // Enable scale variation procedure
+   APFEL::SetScaleVariationProcedure((int)!atoi(par.at(kEScaleVar).c_str()));
 
     // Not included in the map
     /*

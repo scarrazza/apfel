@@ -53,11 +53,12 @@ namespace APFEL
   const string kTMC      = "TMC";
   const string kMP       = "MP";
   const string kComments = "Comments";
+  const string kEScaleVar= "EScaleVar";
 
   const string values[] = { kID, kPTO, kFNS, kDAMP, kIC, kModEv, kXIR, kXIF, kNfFF, kMaxNfAs,
                             kMaxNfPdf, kQ0, kalphas, kQref, kQED, kalphaqed, kQedref, kSxRes,
                             kSxOrd, kHQ, kmc, kQmc, kmb, kQmb, kmt, kQmt, kcThr, kbThr, ktThr,
-			    kCKM, kMZ, kMW, kGF, kSIN2TW, kTMC, kMP, kComments };
+			    kCKM, kMZ, kMW, kGF, kSIN2TW, kTMC, kMP, kComments, kEScaleVar };
 
   const vector<string> kValues(values,  values + sizeof values/sizeof values[0]);
 
