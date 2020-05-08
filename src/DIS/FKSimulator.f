@@ -56,32 +56,37 @@
 *
 ****  Up antiquark PDF
 *
-      elseif(obs(1:6).eq."DIS_XUA")then
+      elseif(obs(1:7).eq."DIS_XUA")then
          FKSimulator = 1
 *
 ****  Down quark PDF
 *
-      elseif(obs(1:6).eq."DIS_XDQ")then
+      elseif(obs(1:7).eq."DIS_XDQ")then
          FKSimulator = 1
 *
 ****  Down antiquark PDF
 *
-      elseif(obs(1:6).eq."DIS_XDA")then
+      elseif(obs(1:7).eq."DIS_XDA")then
          FKSimulator = 1
 *
 ****  Strange quark PDF
 *
-      elseif(obs(1:6).eq."DIS_XSQ")then
+      elseif(obs(1:7).eq."DIS_XSQ")then
          FKSimulator = 1
 *
 ****  Strange antiquark PDF
 *
-      elseif(obs(1:6).eq."DIS_XSA")then
+      elseif(obs(1:7).eq."DIS_XSA")then
          FKSimulator = 1
 *
 ****  Charm quark PDF
 *
-      elseif(obs(1:6).eq."DIS_XCQ")then
+      elseif(obs(1:7).eq."DIS_XCQ")then
+         FKSimulator = 1
+*
+****  Gluon PDF
+*
+      elseif(obs(1:7).eq."DIS_XGL")then
          FKSimulator = 1
 *
 ****  Light structure function F2light

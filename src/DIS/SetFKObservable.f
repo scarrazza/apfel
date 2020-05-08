@@ -18,9 +18,21 @@
 *
       FKObservable = obs
 *
+****  PDFs for positivity observables
+*
+      if(obs(1:7).eq."DIS_XUQ".or.
+     1     obs(1:7).eq."DIS_XUB".or.
+     2     obs(1:7).eq."DIS_XDQ".or.
+     3     obs(1:7).eq."DIS_XDB".or.
+     4     obs(1:7).eq."DIS_XSQ".or.
+     5     obs(1:7).eq."DIS_XSB".or.
+     6     obs(1:7).eq."DIS_XCQ".or.
+     7     obs(1:7).eq."DIS_XGL")then
+         call SetTargetDIS("proton") 
+*
 ****  Light structure function F2light
 *
-      if(obs(1:7).eq."DIS_F2L")then
+      elseif(obs(1:7).eq."DIS_F2L")then
          call SetProcessDIS("EM")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
