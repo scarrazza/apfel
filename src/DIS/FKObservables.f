@@ -53,42 +53,42 @@
 *
 ****  Up quark PDF
 *
-      if(obs(1:6).eq."DIS_UQ")then
+      if(obs(1:6).eq."DIS_XUQ")then
          FKObservables = xPDF(2,x)
 *
 ****  Up antiquark PDF
 *
-      if(obs(1:6).eq."DIS_UA")then
+      elseif(obs(1:6).eq."DIS_XUA")then
          FKObservables = xPDF(-2,x)
 *
 ****  Down quark PDF
 *
-      if(obs(1:6).eq."DIS_DQ")then
+      elseif(obs(1:6).eq."DIS_XDQ")then
          FKObservables = xPDF(1,x)
 *
 ****  Down antiquark PDF
 *
-      if(obs(1:6).eq."DIS_DA")then
+      elseif(obs(1:6).eq."DIS_XDA")then
          FKObservables = xPDF(-1,x)
 *
 ****  Strange quark PDF
 *
-      if(obs(1:6).eq."DIS_SQ")then
+      elseif(obs(1:6).eq."DIS_XSQ")then
          FKObservables = xPDF(3,x)
 *
 ****  Strange antiquark PDF
 *
-      if(obs(1:6).eq."DIS_SA")then
+      elseif(obs(1:6).eq."DIS_XSA")then
          FKObservables = xPDF(-3,x)
 *
 ****  Charm quark PDF
 *
-      if(obs(1:6).eq."DIS_CQ")then
+      elseif(obs(1:6).eq."DIS_XCQ")then
          FKObservables = xPDF(4,x)
 *
 ****  Light structure function F2light
 *
-      if(obs(1:7).eq."DIS_F2L")then         
+      elseif(obs(1:7).eq."DIS_F2L")then         
          FKObservables = F2light(x)
 *
 ****  Up structure function F2u

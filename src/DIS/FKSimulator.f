@@ -51,42 +51,42 @@
 *
 ****  Up quark PDF
 *
-      if(obs(1:6).eq."DIS_UQ")then
+      if(obs(1:6).eq."DIS_XUQ")then
          FKSimulator = 1
 *
 ****  Up antiquark PDF
 *
-      if(obs(1:6).eq."DIS_UA")then
+      elseif(obs(1:6).eq."DIS_XUA")then
          FKSimulator = 1
 *
 ****  Down quark PDF
 *
-      if(obs(1:6).eq."DIS_DQ")then
+      elseif(obs(1:6).eq."DIS_XDQ")then
          FKSimulator = 1
 *
 ****  Down antiquark PDF
 *
-      if(obs(1:6).eq."DIS_DA")then
+      elseif(obs(1:6).eq."DIS_XDA")then
          FKSimulator = 1
 *
 ****  Strange quark PDF
 *
-      if(obs(1:6).eq."DIS_SQ")then
+      elseif(obs(1:6).eq."DIS_XSQ")then
          FKSimulator = 1
 *
 ****  Strange antiquark PDF
 *
-      if(obs(1:6).eq."DIS_SA")then
+      elseif(obs(1:6).eq."DIS_XSA")then
          FKSimulator = 1
 *
 ****  Charm quark PDF
 *
-      if(obs(1:6).eq."DIS_CQ")then
+      elseif(obs(1:6).eq."DIS_XCQ")then
          FKSimulator = 1
 *
 ****  Light structure function F2light
 *
-      if(obs(1:7).eq."DIS_F2L")then
+      elseif(obs(1:7).eq."DIS_F2L")then
          FKSimulator = ExternalDISOperator("F2",3,i,x,beta)
 *
 ****  Up structure function F2u
