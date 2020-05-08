@@ -56,7 +56,7 @@
 *
 ****  Up antiquark PDF
 *
-      elseif(obs(1:7).eq."DIS_XUA")then
+      elseif(obs(1:7).eq."DIS_XUB")then
          FKSimulator = 1
 *
 ****  Down quark PDF
@@ -66,7 +66,7 @@
 *
 ****  Down antiquark PDF
 *
-      elseif(obs(1:7).eq."DIS_XDA")then
+      elseif(obs(1:7).eq."DIS_XDB")then
          FKSimulator = 1
 *
 ****  Strange quark PDF
@@ -76,7 +76,7 @@
 *
 ****  Strange antiquark PDF
 *
-      elseif(obs(1:7).eq."DIS_XSA")then
+      elseif(obs(1:7).eq."DIS_XSB")then
          FKSimulator = 1
 *
 ****  Charm quark PDF

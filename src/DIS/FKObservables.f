@@ -58,7 +58,7 @@
 *
 ****  Up antiquark PDF
 *
-      elseif(obs(1:7).eq."DIS_XUA")then
+      elseif(obs(1:7).eq."DIS_XUB")then
          FKObservables = xPDF(-2,x)
 *
 ****  Down quark PDF
@@ -68,7 +68,7 @@
 *
 ****  Down antiquark PDF
 *
-      elseif(obs(1:7).eq."DIS_XDA")then
+      elseif(obs(1:7).eq."DIS_XDB")then
          FKObservables = xPDF(-1,x)
 *
 ****  Strange quark PDF
@@ -78,7 +78,7 @@
 *
 ****  Strange antiquark PDF
 *
-      elseif(obs(1:7).eq."DIS_XSA")then
+      elseif(obs(1:7).eq."DIS_XSB")then
          FKObservables = xPDF(-3,x)
 *
 ****  Charm quark PDF
