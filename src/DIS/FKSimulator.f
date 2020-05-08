@@ -51,7 +51,7 @@
 *
 ****  Up quark PDF
 *
-      if(obs(1:6).eq."DIS_XUQ")then
+      if(obs(1:7).eq."DIS_XUQ")then
          FKSimulator = 1
 *
 ****  Up antiquark PDF
