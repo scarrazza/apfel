@@ -49,6 +49,41 @@
       ym  = 1d0 - ( 1d0 - y )**2
       y2  = y * y
 *
+****  Up quark PDF
+*
+      if(obs(1:6).eq."DIS_UQ")then
+         FKSimulator = 1
+*
+****  Up antiquark PDF
+*
+      if(obs(1:6).eq."DIS_UA")then
+         FKSimulator = 1
+*
+****  Down quark PDF
+*
+      if(obs(1:6).eq."DIS_DQ")then
+         FKSimulator = 1
+*
+****  Down antiquark PDF
+*
+      if(obs(1:6).eq."DIS_DA")then
+         FKSimulator = 1
+*
+****  Strange quark PDF
+*
+      if(obs(1:6).eq."DIS_SQ")then
+         FKSimulator = 1
+*
+****  Strange antiquark PDF
+*
+      if(obs(1:6).eq."DIS_SA")then
+         FKSimulator = 1
+*
+****  Charm quark PDF
+*
+      if(obs(1:6).eq."DIS_CQ")then
+         FKSimulator = 1
+*
 ****  Light structure function F2light
 *
       if(obs(1:7).eq."DIS_F2L")then

@@ -22,6 +22,7 @@
       double precision F2light,F2charm,F2bottom,F2top,F2total
       double precision FLlight,FLcharm,FLbottom,FLtop,FLtotal
       double precision F3light,F3charm,F3bottom,F3top,F3total
+      double precision xPDF
       double precision GetWMass,GetGFermi,GetProtonMass
       double precision GetSIATotalCrossSection
       double precision yp,ym,y2,ypc
@@ -49,6 +50,41 @@
       yp  = 1d0 + ( 1d0 - y )**2
       ym  = 1d0 - ( 1d0 - y )**2
       y2  = y * y
+*
+****  Up quark PDF
+*
+      if(obs(1:6).eq."DIS_UQ")then
+         FKObservables = xPDF(2,x)
+*
+****  Up antiquark PDF
+*
+      if(obs(1:6).eq."DIS_UA")then
+         FKObservables = xPDF(-2,x)
+*
+****  Down quark PDF
+*
+      if(obs(1:6).eq."DIS_DQ")then
+         FKObservables = xPDF(1,x)
+*
+****  Down antiquark PDF
+*
+      if(obs(1:6).eq."DIS_DA")then
+         FKObservables = xPDF(-1,x)
+*
+****  Strange quark PDF
+*
+      if(obs(1:6).eq."DIS_SQ")then
+         FKObservables = xPDF(3,x)
+*
+****  Strange antiquark PDF
+*
+      if(obs(1:6).eq."DIS_SA")then
+         FKObservables = xPDF(-3,x)
+*
+****  Charm quark PDF
+*
+      if(obs(1:6).eq."DIS_CQ")then
+         FKObservables = xPDF(4,x)
 *
 ****  Light structure function F2light
 *
