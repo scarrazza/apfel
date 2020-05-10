@@ -2,7 +2,7 @@
 *
 *     FKSimulator.f:
 *
-*     This function returns simulates the FKgenerator of the NNPDF code.
+*     This function simulates the FKgenerator of the NNPDF code.
 *
 ************************************************************************
       function FKSimulator(x,Q,y,i,beta)
@@ -21,6 +21,7 @@
 *     Internal Variables
 *
       double precision ExternalDISOperator
+      double precision ExternalEvolutionOperator
       double precision GetWMass,GetGFermi,GetProtonMass
       double precision GetSIATotalCrossSection
       double precision yp,ym,y2,ypc
@@ -52,42 +53,42 @@
 ****  Up quark PDF
 *
       if(obs(1:7).eq."DIS_XUQ")then
-         FKSimulator = 1
+         FKSimulator = ExternalEvolutionOperator("Ev2Ph",2,i,x,beta)
 *
 ****  Up antiquark PDF
 *
       elseif(obs(1:7).eq."DIS_XUB")then
-         FKSimulator = 1
+         FKSimulator = ExternalEvolutionOperator("Ev2Ph",-2,i,x,beta)
 *
 ****  Down quark PDF
 *
       elseif(obs(1:7).eq."DIS_XDQ")then
-         FKSimulator = 1
+         FKSimulator = ExternalEvolutionOperator("Ev2Ph",1,i,x,beta)
 *
 ****  Down antiquark PDF
 *
       elseif(obs(1:7).eq."DIS_XDB")then
-         FKSimulator = 1
+         FKSimulator = ExternalEvolutionOperator("Ev2Ph",-1,i,x,beta)
 *
 ****  Strange quark PDF
 *
       elseif(obs(1:7).eq."DIS_XSQ")then
-         FKSimulator = 1
+         FKSimulator = ExternalEvolutionOperator("Ev2Ph",3,i,x,beta)
 *
 ****  Strange antiquark PDF
 *
       elseif(obs(1:7).eq."DIS_XSB")then
-         FKSimulator = 1
+         FKSimulator = ExternalEvolutionOperator("Ev2Ph",-3,i,x,beta)
 *
 ****  Charm quark PDF
 *
       elseif(obs(1:7).eq."DIS_XCQ")then
-         FKSimulator = 1
+         FKSimulator = ExternalEvolutionOperator("Ev2Ph",4,i,x,beta)
 *
 ****  Gluon PDF
 *
       elseif(obs(1:7).eq."DIS_XGL")then
-         FKSimulator = 1
+         FKSimulator = ExternalEvolutionOperator("Ev2Ph",0,i,x,beta)
 *
 ****  Light structure function F2light
 *
