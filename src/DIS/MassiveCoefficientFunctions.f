@@ -469,7 +469,9 @@ c            endif
       c2ns1cca = 2d0 * CF * ( - ( 1d0 + z**2 ) * dlog(z) / ( 1d0 - z )
      1         + ( 2d0 - dlog( kQF2 / lambda ) 
      2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
-     3         * ( 1d0 + z ) + 1d0 / lambda )
+     3         * ( 1d0 + z ) + 1d0 / lambda
+     4         + ( 2d0 * lambda**2 - lambda - 1d0 ) / lambda 
+     4         / ( 1d0 - lambda * z ) )
 *
       return
       end
@@ -501,9 +503,7 @@ c            endif
       c2ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
      1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z ) 
      2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z )
-     3         + ( 2d0 * lambda**2 - lambda - 1d0 ) / lambda 
-     4         / ( 1d0 - lambda * z ) + ( 1d0 - z ) 
-     5         / ( 1d0 - lambda * z )**2 / 2d0 )
+     3         + ( 1d0 - z ) / ( 1d0 - lambda * z )**2 / 2d0 )
 *
       return
       end
@@ -542,9 +542,8 @@ c            endif
      2         + 3d0 * dlog( kQF2 / lambda ) / 2d0
      3         + 2d0 * ln1mz**2 - 2d0 * Rf 
      4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
-     5         + ( 2d0 * lambda**2 - lambda - 1d0 / 2d0 ) 
-     6         * ln1mlz / lambda**2 + ( 1d0 - lambda ) * z 
-     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
+     5         + ln1mlz / 2d0 / lambda**2 + ( 1d0 - lambda ) * z 
+     6         / 2d0 / lambda / ( 1d0 - lambda * z ) )
 *
       return
       end
@@ -611,8 +610,8 @@ c            endif
       clns1cca = 2d0 * CF * ( ( - ( 1d0 + z**2 ) * dlog(z) 
      1         / ( 1d0 - z ) + ( - dlog( kQF2 / lambda ) 
      2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
-     3         * ( 1d0 + z ) + 3d0 ) * ( 1d0 - lambda ) 
-     4         + ( 1d0 + lambda ) * z )
+     3         * ( 1d0 + z ) + 3d0 - 2d0 / ( 1d0 - lambda * z ) )
+     4         * ( 1d0 - lambda ) + ( 1d0 + lambda ) * z )
 *
       return
       end
@@ -644,8 +643,8 @@ c            endif
       clns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
      1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z )
      2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z ) 
-     3         - 2d0 / ( 1d0 - lambda * z ) + ( 1d0 - z ) 
-     4         / ( 1d0 - lambda * z )**2 / 2d0 ) * ( 1d0 - lambda )
+     3         + ( 1d0 - z ) / ( 1d0 - lambda * z )**2 / 2d0 )
+     4         * ( 1d0 - lambda )
 *
       return
       end
@@ -684,8 +683,7 @@ c            endif
      2         + 3d0 * dlog( kQF2 / lambda ) / 2d0
      3         + 2d0 * ln1mz**2 - 2d0 * Rf 
      4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
-     5         + ( - 2d0 * lambda + 1d0 / 2d0 ) 
-     6         * ln1mlz / lambda**2 + ( 1d0 - lambda ) * z 
+     5         + ln1mlz / 2d0 / lambda**2 + ( 1d0 - lambda ) * z 
      7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
      8         * ( 1d0 - lambda ) + lambda * KA )
 *
@@ -756,7 +754,8 @@ c            endif
       c3ns1cca = 2d0 * CF * ( - ( 1d0 + z**2 ) * dlog(z) / ( 1d0 - z ) 
      1         + ( 1d0 - dlog( kQF2 / lambda ) 
      2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
-     3         * ( 1d0 + z ) + 1d0 / lambda )
+     3         * ( 1d0 + z ) + 1d0 / lambda + ( lambda - 1d0 ) / lambda 
+     4         / ( 1d0 - lambda * z ) )
 *
       return
       end
@@ -788,9 +787,7 @@ c            endif
       c3ns1ccb = 2d0 * CF * ( 2d0 * ( 2d0 * dlog( 1d0 - z ) 
      1         - dlog( 1d0 - lambda * z ) ) / ( 1d0 - z )
      2         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) / ( 1d0 - z ) 
-     3         + ( lambda - 1d0 ) / lambda 
-     4         / ( 1d0 - lambda * z ) + ( 1d0 - z ) 
-     5         / ( 1d0 - lambda * z )**2 / 2d0 )
+     3         + ( 1d0 - z ) / ( 1d0 - lambda * z )**2 / 2d0 )
 *
       return
       end
@@ -829,8 +826,7 @@ c            endif
      2         + 3d0 * dlog( kQF2 / lambda ) / 2d0 
      3         + 2d0 * ln1mz**2 - 2d0 * Rf 
      4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
-     5         + ( lambda - 1d0 / 2d0 ) 
-     6         * ln1mlz / lambda**2 + ( 1d0 - lambda ) * z 
+     5         + ln1mlz / 2d0 / lambda**2 + ( 1d0 - lambda ) * z 
      7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
 *
       return
