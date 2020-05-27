@@ -245,8 +245,8 @@
       write(13,*) "DataVersion: 1"
       write(13,*) "NumMembers:",Nrep+1
       write(13,*) "Particle: 2212"
-      write(13,*) "Flavors: [1001, 1002, 1003, 2001, 2002,",
-     1     " 2003, 3001, 3002, 3003]" ! F2, FL, F3
+      write(13,*) "Flavors: [908, 909, 910, 930, 931,",
+     1     " 932, 940, 941, 942]" ! F2, FL, F3
       write(13,*) "OrderQCD:",ipt
       write(13,*) "FlavorScheme: variable"
       write(13,*) "NumFlavors: ",nfMaxPDFs
@@ -343,8 +343,8 @@
          do isg=nfin,nffi
             write(13,*) (xbLHA(ix),ix=1,nxLHA)
             write(13,*) (dsqrt(q2LHA(iq2)),iq2=iq2in,iq2fi)
-            write(13,*) "1001 1002 1003 2001 2002 2003",
-     1           " 3001 3002 3003"
+            write(13,*) "908 909 910 930 931 932",
+     1           " 940 941 942"
 *
             do iq2=iq2in,iq2fi
                call SetProcessDIS("NC")
@@ -379,7 +379,7 @@
                enddo
 *
                call SetProcessDIS("CC")
-               call SetProjectileDIS("neutrino")
+               call SetProjectileDIS("electron")
                if(Qin.gt.0d0)then
                   if(iq2.eq.iq2in.and.isg.ne.nfin)then
                      call ComputeStructureFunctionsAPFEL(Qin,
@@ -409,7 +409,7 @@
                   sfLHA(6,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
                enddo
 *
-               call SetProjectileDIS("antineutrino")
+               call SetProjectileDIS("positron")
                if(Qin.gt.0d0)then
                   if(iq2.eq.iq2in.and.isg.ne.nfin)then
                      call ComputeStructureFunctionsAPFEL(Qin,
