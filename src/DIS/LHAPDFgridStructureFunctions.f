@@ -348,7 +348,7 @@
 *
             do iq2=iq2in,iq2fi
                call SetProcessDIS("NC")
-               call SetProjectileDIS("neutrino")
+               call SetProjectileDIS("electron")
                if(Qin.gt.0d0)then
                   if(iq2.eq.iq2in.and.isg.ne.nfin)then
                      call ComputeStructureFunctionsAPFEL(Qin,
@@ -375,7 +375,7 @@
                do ix=1,nxLHA
                   sfLHA(1,ix,iq2) = F2total(xbLHA(ix))
                   sfLHA(2,ix,iq2) = FLtotal(xbLHA(ix))
-                  sfLHA(3,ix,iq2) = F3total(xbLHA(ix))
+                  sfLHA(3,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
                enddo
 *
                call SetProcessDIS("CC")
@@ -406,7 +406,7 @@
                do ix=1,nxLHA
                   sfLHA(4,ix,iq2) = F2total(xbLHA(ix))
                   sfLHA(5,ix,iq2) = FLtotal(xbLHA(ix))
-                  sfLHA(6,ix,iq2) = F3total(xbLHA(ix))
+                  sfLHA(6,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
                enddo
 *
                call SetProjectileDIS("antineutrino")
@@ -436,7 +436,7 @@
                do ix=1,nxLHA
                   sfLHA(7,ix,iq2) = F2total(xbLHA(ix))
                   sfLHA(8,ix,iq2) = FLtotal(xbLHA(ix))
-                  sfLHA(9,ix,iq2) = F3total(xbLHA(ix))
+                  sfLHA(9,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
                enddo
             enddo
 *
