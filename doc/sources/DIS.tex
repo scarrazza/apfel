@@ -492,7 +492,7 @@ The explicit expressions of the NLO quark coefficient functions read:
                    z)}{1-z}\right]_++
                    2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
   \\ &+& \displaystyle
-         \frac{\lambda-1}{\lambda^2}\left[\frac{1}{1-\lambda z}\right]_+
+         \frac{\lambda-1}{\lambda^2}\left[\frac{1}{1-\lambda z}\right]
          +\frac{1}{2}\left[\frac{1-z}{(1-\lambda z)^2}\right]_+\bigg\}
 \end{array}\,,
 \end{equation}
@@ -509,7 +509,7 @@ The explicit expressions of the NLO quark coefficient functions read:
                                                                                                                 2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
   \\ &+& \displaystyle
          \frac{2\lambda^2-\lambda-1}{\lambda}\left[\frac{1}{1-\lambda
-         z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+         z}\right] +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
          z)^2}\right]_+\bigg\}
 \end{array}\,,
 \end{equation}
@@ -525,7 +525,7 @@ The explicit expressions of the NLO quark coefficient functions read:
                                                                                                                 \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++
                                                                                                                 2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
   \\ &+& \displaystyle \frac{\lambda-1}{\lambda}\left[\frac{1}{1-\lambda
-         z}\right]_+ +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
+         z}\right] +\frac{1}{2}\left[\frac{1-z}{(1-\lambda
          z)^2}\right]_+\bigg\}
 \end{array}\,,
 \end{equation}
@@ -541,7 +541,7 @@ The explicit expressions of the NLO quark coefficient functions read:
                                                                        z)\right)(1+z)+3\\ \\ &+&\displaystyle 2
                                                                                                  \left[\frac{2\ln(1-z)-\ln(1-\lambda z)}{1-z}\right]_++ 2
                                                                                                  \left(-1+\ln\frac{K_F^2}{\lambda}\right)\left[\frac{1}{1-z}\right]_+\\
-  \\ &-& \displaystyle 2\left[\frac{1}{1-\lambda z}\right]_+
+  \\ &-& \displaystyle 2\left[\frac{1}{1-\lambda z}\right]
          +\frac{1}{2}\left[\frac{1-z}{(1-\lambda z)^2}\right]_+\bigg\} + 2C_F
          \left[\lambda K_A \delta(1-z) + (1+\lambda)z\right]
 \end{array}\,.
@@ -575,10 +575,6 @@ analytically:
   \ln^2(1-x)\,,
 \end{equation}
 \begin{equation}
-  -\int_0^x\frac{dz}{1-\lambda z} =
-  \frac{1}{\lambda}\ln(1-\lambda x)\,,
-\end{equation}
-\begin{equation}
   -\int_0^xdz\frac{1-z}{(1-\lambda z)^2} =
   \frac{1}{\lambda^2}\ln(1-\lambda
   x)+\frac{1-\lambda}{\lambda}\frac{x}{1-\lambda x}\,,
@@ -598,8 +594,7 @@ terms the following functions:
   C^{(1)}_{1,q}&\rightarrow& \displaystyle
                              C^{(1)}_{1,q} +
                              2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
-  \\ &&\displaystyle +\frac{\lambda-1}{\lambda^3}\ln(1-\lambda
-        x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+ \\ &&\displaystyle +\frac{1}{2\lambda^2}\ln(1-\lambda
         x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
 \end{array}\,,
 \end{equation}
@@ -609,8 +604,7 @@ terms the following functions:
                              C^{(1)}_{2,q} +
                              2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
   \\ &&\displaystyle
-        +\frac{2\lambda^2-\lambda-1}{\lambda^2}\ln(1-\lambda
-        x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+        +\frac{1}{2\lambda^2}\ln(1-\lambda
         x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
 \end{array}\,,
 \end{equation}
@@ -619,8 +613,7 @@ terms the following functions:
   C^{(1)}_{3,q}&\rightarrow& \displaystyle
                              C^{(1)}_{3,q} +
                              2C_F\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
-  \\ &&\displaystyle +\frac{\lambda-1}{\lambda^2}\ln(1-\lambda
-        x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+  \\ &&\displaystyle +\frac{1}{2\lambda^2}\ln(1-\lambda
         x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
 \end{array}\,,
 \end{equation}
@@ -629,8 +622,7 @@ terms the following functions:
   C^{(1)}_{L,q}&\rightarrow& \displaystyle
                              C^{(1)}_{L,q} +
                              2C_F(1-\lambda)\bigg[2\ln^2(1-x)-2R(x)+2\left(-1+\ln\frac{K_F^2}{\lambda}\right)\ln(1-x)\\
-  \\ &&\displaystyle -\frac{2}{\lambda}\ln(1-\lambda
-        x)+\frac{1}{2\lambda^2}\ln(1-\lambda
+  \\ &&\displaystyle +\frac{1}{2\lambda^2}\ln(1-\lambda
         x)+\frac{1-\lambda}{2\lambda}\frac{x}{1-\lambda x}\bigg]\delta(1-z)
 \end{array}\,.
 \end{equation}
