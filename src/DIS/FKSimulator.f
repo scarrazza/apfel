@@ -107,12 +107,12 @@
 *
 ****  Valence V3
 *
-      elseif(obs(1:6).eq."DIS_XV3")then
+      elseif(obs(1:7).eq."DIS_XV3")then
          FKSimulator = ExternalEvolutionOperator("Ev2Ev",4,i,x,beta)
 *
 ****  Valence V8
 *
-      elseif(obs(1:6).eq."DIS_XV8")then
+      elseif(obs(1:7).eq."DIS_XV8")then
          FKSimulator = ExternalEvolutionOperator("Ev2Ev",5,i,x,beta)
 *
 *
