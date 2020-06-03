@@ -105,12 +105,6 @@
       elseif(obs(1:10).eq."INTEG_XT15")then
          FKSimulator = ExternalEvolutionOperator("Ev2Ev",11,i,x,beta)
 *
-*
-****  Valence V
-*
-      elseif(obs(1:8).eq."INTEG_XV")then
-         FKSimulator = ExternalEvolutionOperator("Ev2Ev",3,i,x,beta)
-*
 ****  Valence V3
 *
       elseif(obs(1:9).eq."INTEG_XV3")then
@@ -120,6 +114,12 @@
 *
       elseif(obs(1:9).eq."INTEG_XV8")then
          FKSimulator = ExternalEvolutionOperator("Ev2Ev",5,i,x,beta)
+*
+*
+****  Valence V
+*
+      elseif(obs(1:8).eq."INTEG_XV")then
+         FKSimulator = ExternalEvolutionOperator("Ev2Ev",3,i,x,beta)
 *
 ****  Light structure function F2light
 *

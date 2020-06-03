@@ -95,22 +95,35 @@
 *
       elseif(obs(1:9).eq."INTEG_XT3")then
          FKObservables = xPDF(+2,x) + xpdf(-2,x)
-     1        - ( xPDF(+1,x) + xPDF(-1,x) )
+     1        - 1d0 * ( xPDF(+1,x) + xPDF(-1,x) )
 *
 ****  Non-singlet T8
 *
       elseif(obs(1:9).eq."INTEG_XT8")then
          FKObservables = xPDF(+2,x) + xpdf(-2,x)
-     1        + ( xPDF(+1,x) + xPDF(-1,x) )
+     1        + 1d0 * ( xPDF(+1,x) + xPDF(-1,x) )
      1        - 2d0 * ( xPDF(+3,x) + xPDF(-3,x) )
 *
 ****  Non-singlet T15
 *
       elseif(obs(1:10).eq."INTEG_XT15")then
          FKObservables = xPDF(+2,x) + xpdf(-2,x)
-     1        + ( xPDF(+1,x) + xPDF(-1,x) )
-     1        + ( xPDF(+3,x) + xPDF(-3,x) )
+     1        + 1d0 * ( xPDF(+1,x) + xPDF(-1,x) )
+     1        + 1d0 * ( xPDF(+3,x) + xPDF(-3,x) )
      1        - 3d0 * ( xPDF(+4,x) + xPDF(-4,x) )
+*
+****  Valence V3
+*
+      elseif(obs(1:9).eq."INTEG_XV3")then
+         FKObservables = xPDF(+2,x) - xPDF(-2,x) 
+     1        - 1d0 * ( xPDF(+1,x) - xPDF(-1,x) )
+*
+****  Valence V8
+*
+      elseif(obs(1:9).eq."INTEG_XV8")then
+         FKObservables = xPDF(+2,x) - xPDF(-2,x) 
+     1        + 1d0 * ( xPDF(+1,x) - xPDF(-1,x) )
+     2        - 2d0 * ( xPDF(+3,x) - xPDF(-3,x) )
 *
 *
 ****  Valence V
@@ -122,19 +135,6 @@
      1        + xPDF(+4,x) - xPDF(-4,x) 
      1        + xPDF(+5,x) - xPDF(-5,x)
      1        + xPDF(+6,x) - xPDF(-6,x) 
-*
-****  Valence V3
-*
-      elseif(obs(1:9).eq."INTEG_XV3")then
-         FKObservables = xPDF(+2,x) - xPDF(-2,x) 
-     1        - ( xPDF(+1,x) - xPDF(-1,x) )
-*
-****  Valence V8
-*
-      elseif(obs(1:9).eq."INTEG_XV8")then
-         FKObservables = xPDF(+2,x) - xPDF(-2,x) 
-     1        + ( xPDF(+1,x) - xPDF(-1,x) )
-     2        - 2d0 * ( xPDF(+3,x) - xPDF(-3,x) )
 *
 ****  Light structure function F2light
 *
