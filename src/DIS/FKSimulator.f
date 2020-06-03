@@ -92,33 +92,33 @@
 *
 ****  Non-singlet T3
 *
-      elseif(obs(1:9).eq."INTEG_XT3")then
+      elseif(obs(1:7).eq."DIS_XT3")then
          FKSimulator = ExternalEvolutionOperator("Ev2Ev",9,i,x,beta)
 *
 ****  Non-singlet T8
 *
-      elseif(obs(1:9).eq."INTEG_XT8")then
+      elseif(obs(1:7).eq."DIS_XT8")then
          FKSimulator = ExternalEvolutionOperator("Ev2Ev",10,i,x,beta)
 *
 ****  Non-singlet T15
 *
-      elseif(obs(1:10).eq."INTEG_XT15")then
+      elseif(obs(1:8).eq."DIS_XT15")then
          FKSimulator = ExternalEvolutionOperator("Ev2Ev",11,i,x,beta)
 *
 ****  Valence V3
 *
-      elseif(obs(1:9).eq."INTEG_XV3")then
+      elseif(obs(1:6).eq."DIS_XV3")then
          FKSimulator = ExternalEvolutionOperator("Ev2Ev",4,i,x,beta)
 *
 ****  Valence V8
 *
-      elseif(obs(1:9).eq."INTEG_XV8")then
+      elseif(obs(1:6).eq."DIS_XV8")then
          FKSimulator = ExternalEvolutionOperator("Ev2Ev",5,i,x,beta)
 *
 *
 ****  Valence V
 *
-      elseif(obs(1:8).eq."INTEG_XV")then
+      elseif(obs(1:6).eq."DIS_XV")then
          FKSimulator = ExternalEvolutionOperator("Ev2Ev",3,i,x,beta)
 *
 ****  Light structure function F2light

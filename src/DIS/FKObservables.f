@@ -93,20 +93,20 @@
 *
 ****  Non-singlet T3
 *
-      elseif(obs(1:9).eq."INTEG_XT3")then
+      elseif(obs(1:7).eq."DIS_XT3")then
          FKObservables = xPDF(+2,x) + xpdf(-2,x)
      1        - 1d0 * ( xPDF(+1,x) + xPDF(-1,x) )
 *
 ****  Non-singlet T8
 *
-      elseif(obs(1:9).eq."INTEG_XT8")then
+      elseif(obs(1:7).eq."DIS_XT8")then
          FKObservables = xPDF(+2,x) + xpdf(-2,x)
      1        + 1d0 * ( xPDF(+1,x) + xPDF(-1,x) )
      1        - 2d0 * ( xPDF(+3,x) + xPDF(-3,x) )
 *
 ****  Non-singlet T15
 *
-      elseif(obs(1:10).eq."INTEG_XT15")then
+      elseif(obs(1:8).eq."DIS_XT15")then
          FKObservables = xPDF(+2,x) + xpdf(-2,x)
      1        + 1d0 * ( xPDF(+1,x) + xPDF(-1,x) )
      1        + 1d0 * ( xPDF(+3,x) + xPDF(-3,x) )
@@ -114,13 +114,13 @@
 *
 ****  Valence V3
 *
-      elseif(obs(1:9).eq."INTEG_XV3")then
+      elseif(obs(1:7).eq."DIS_XV3")then
          FKObservables = xPDF(+2,x) - xPDF(-2,x) 
      1        - 1d0 * ( xPDF(+1,x) - xPDF(-1,x) )
 *
 ****  Valence V8
 *
-      elseif(obs(1:9).eq."INTEG_XV8")then
+      elseif(obs(1:7).eq."DIS_XV8")then
          FKObservables = xPDF(+2,x) - xPDF(-2,x) 
      1        + 1d0 * ( xPDF(+1,x) - xPDF(-1,x) )
      2        - 2d0 * ( xPDF(+3,x) - xPDF(-3,x) )
@@ -128,7 +128,7 @@
 *
 ****  Valence V
 *
-      elseif(obs(1:8).eq."INTEG_XV")then
+      elseif(obs(1:6).eq."DIS_XV")then
          FKObservables = xPDF(+2,x) - xPDF(-2,x) 
      1        + xPDF(+1,x) - xPDF(-1,x)
      1        + xPDF(+3,x) - xPDF(-3,x)
