@@ -28,7 +28,12 @@
      5     obs(1:7).eq."DIS_XSB".or.
      6     obs(1:7).eq."DIS_XCQ".or.
      7     obs(1:7).eq."DIS_XGL".or.
-     8     obs(1:5).eq."INTEG")then
+     8     obs(1:7).eq."DIS_XT3".or.
+     9     obs(1:7).eq."DIS_XT8".or.
+     1     obs(1:8).eq."DIS_XT15".or.
+     2     obs(1:7).eq."DIS_XV3".or.
+     3     obs(1:7).eq."DIS_XV8".or.
+     4     obs(1:6).eq."DIS_XV")then
          call SetTargetDIS("proton") 
 *
 ****  Light structure function F2light
