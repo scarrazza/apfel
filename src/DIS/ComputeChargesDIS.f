@@ -20,6 +20,7 @@
       include "../commons/MaxFlavourPDFs.h"
       include "../commons/PropagatorCorrection.h"
       include "../commons/EWCouplings.h"
+      include "../commons/NCComponent.h"
 **
 *     Input Variables
 *
@@ -180,19 +181,42 @@
 *     Apply propagator correction
          pz  = pz  / ( 1d0 - DeltaR )
          pz2 = pz2 / ( 1d0 - DeltaR )**2
-         do i=nfi,nff
-            bq(i)  = eq2(i) 
-     1             - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
-     2             + ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
-     3             * ( vq(i)**2 + aq(i)**2 ) * pz2
-            dq(i)  = - 2d0 * eq(i) * aq(i) * ( ae + ie * pol * ve ) * pz
-     1             + 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae 
-     2             + ie * pol * ( ve**2 + ae**2 ) ) * pz2
-            bqt(i) = eq2(i) 
-     1             - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
-     2             + ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
-     3             * ( vq(i)**2 - aq(i)**2 ) * pz2
-         enddo
+         if(NCComponent.eq."gg")then
+            do i=nfi,nff
+               bq(i)  = eq2(i)
+               dq(i)  = 0d0
+               bqt(i) = eq2(i)
+            enddo
+         elseif(NCComponent.eq."gZ")then
+            do i=nfi,nff
+               bq(i)  = - 2d0*eq(i)*vq(i) * ( ve + ie * pol * ae ) * pz
+               dq(i)  = - 2d0*eq(i)*aq(i) * ( ae + ie * pol * ve ) * pz
+               bqt(i) = - 2d0*eq(i)*vq(i) * ( ve + ie * pol * ae ) * pz
+            enddo
+         elseif(NCComponent.eq."ZZ")then
+            do i=nfi,nff
+               bq(i)  = ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
+     1              * ( vq(i)**2 + aq(i)**2 ) * pz2
+               dq(i)  = 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae
+     1              + ie * pol * ( ve**2 + ae**2 ) ) * pz2
+               bqt(i) = ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
+     1              * ( vq(i)**2 - aq(i)**2 ) * pz2
+            enddo
+         else
+            do i=nfi,nff
+               bq(i)  = eq2(i)
+     1              - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
+     2              + ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
+     3              * ( vq(i)**2 + aq(i)**2 ) * pz2
+               dq(i)  = - 2d0*eq(i)*aq(i) * ( ae + ie * pol * ve ) * pz
+     1              + 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae
+     2              + ie * pol * ( ve**2 + ae**2 ) ) * pz2
+               bqt(i) = eq2(i)
+     1              - 2d0 * eq(i) * vq(i) * ( ve + ie * pol * ae ) * pz
+     2              + ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
+     3              * ( vq(i)**2 - aq(i)**2 ) * pz2
+            enddo
+         endif
       endif
 *
 *     Normalize charges for the SIA structure functions

@@ -41,7 +41,7 @@
       double precision xbLHA(nxmax),q2LHA(nq2max),as(nxmax)
       double precision lnQmin,lnQmax
       double precision eps,eps2,offset
-      double precision sfLHA(9,nxmax,nq2max)
+      double precision sfLHA(17,nxmax,nq2max)
       double precision F2total,FLtotal,F3total
       double precision AlphaQCD
       character*30  str
@@ -245,8 +245,8 @@
       write(13,*) "DataVersion: 1"
       write(13,*) "NumMembers:",Nrep+1
       write(13,*) "Particle: 2212"
-      write(13,*) "Flavors: [908, 909, 910, 930, 931,",
-     1     " 932, 940, 941, 942]" ! F2, FL, F3
+      write(13,*) "Flavors: [900, 901, 902, 903, 904, 905, 906, 907,",
+     1           " 908, 909, 910, 930, 931, 932, 940, 941, 942]"
       write(13,*) "OrderQCD:",ipt
       write(13,*) "FlavorScheme: variable"
       write(13,*) "NumFlavors: ",nfMaxPDFs
@@ -343,11 +343,11 @@
          do isg=nfin,nffi
             write(13,*) (xbLHA(ix),ix=1,nxLHA)
             write(13,*) (dsqrt(q2LHA(iq2)),iq2=iq2in,iq2fi)
-            write(13,*) "908 909 910 930 931 932",
-     1           " 940 941 942"
+            write(13,*) "900 901 902 903 904 905 906 907 908",
+     1           " 909 910 930 931 932 940 941 942"
 *
             do iq2=iq2in,iq2fi
-               call SetProcessDIS("NC")
+               call SetProcessDIS("EM")
                call SetProjectileDIS("electron")
                if(Qin.gt.0d0)then
                   if(iq2.eq.iq2in.and.isg.ne.nfin)then
@@ -375,7 +375,102 @@
                do ix=1,nxLHA
                   sfLHA(1,ix,iq2) = F2total(xbLHA(ix))
                   sfLHA(2,ix,iq2) = FLtotal(xbLHA(ix))
-                  sfLHA(3,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
+               enddo
+*
+               call SetProcessDIS("NC")
+               call SetNCComponent("gZ")
+               call SetProjectileDIS("electron")
+               if(Qin.gt.0d0)then
+                  if(iq2.eq.iq2in.and.isg.ne.nfin)then
+                     call ComputeStructureFunctionsAPFEL(Qin,
+     1                    dsqrt(q2LHA(iq2)+eps2))
+                  elseif(iq2.eq.iq2fi.and.isg.ne.nffi)then
+                     call ComputeStructureFunctionsAPFEL(Qin,
+     1                    dsqrt(q2LHA(iq2)-eps2))
+                  else
+                     call ComputeStructureFunctionsAPFEL(Qin,
+     1                    dsqrt(q2LHA(iq2)))
+                  endif
+               else
+                  if(iq2.eq.iq2in.and.isg.ne.nfin)then
+                     call ComputeStructureFunctionsAPFEL
+     1                   (dsqrt(q2LHA(iq2)+eps2),dsqrt(q2LHA(iq2)+eps2))
+                  elseif(iq2.eq.iq2fi.and.isg.ne.nffi)then
+                     call ComputeStructureFunctionsAPFEL
+     1                   (dsqrt(q2LHA(iq2)-eps2),dsqrt(q2LHA(iq2)-eps2))
+                  else
+                     call ComputeStructureFunctionsAPFEL
+     1                   (dsqrt(q2LHA(iq2)),dsqrt(q2LHA(iq2)))
+                  endif
+               endif
+               do ix=1,nxLHA
+                  sfLHA(3,ix,iq2)  = F2total(xbLHA(ix))
+                  sfLHA(4,ix,iq2) = FLtotal(xbLHA(ix))
+                  sfLHA(5,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
+               enddo
+*
+               call SetProcessDIS("NC")
+               call SetNCComponent("ZZ")
+               call SetProjectileDIS("electron")
+               if(Qin.gt.0d0)then
+                  if(iq2.eq.iq2in.and.isg.ne.nfin)then
+                     call ComputeStructureFunctionsAPFEL(Qin,
+     1                    dsqrt(q2LHA(iq2)+eps2))
+                  elseif(iq2.eq.iq2fi.and.isg.ne.nffi)then
+                     call ComputeStructureFunctionsAPFEL(Qin,
+     1                    dsqrt(q2LHA(iq2)-eps2))
+                  else
+                     call ComputeStructureFunctionsAPFEL(Qin,
+     1                    dsqrt(q2LHA(iq2)))
+                  endif
+               else
+                  if(iq2.eq.iq2in.and.isg.ne.nfin)then
+                     call ComputeStructureFunctionsAPFEL
+     1                   (dsqrt(q2LHA(iq2)+eps2),dsqrt(q2LHA(iq2)+eps2))
+                  elseif(iq2.eq.iq2fi.and.isg.ne.nffi)then
+                     call ComputeStructureFunctionsAPFEL
+     1                   (dsqrt(q2LHA(iq2)-eps2),dsqrt(q2LHA(iq2)-eps2))
+                  else
+                     call ComputeStructureFunctionsAPFEL
+     1                   (dsqrt(q2LHA(iq2)),dsqrt(q2LHA(iq2)))
+                  endif
+               endif
+               do ix=1,nxLHA
+                  sfLHA(6,ix,iq2)  = F2total(xbLHA(ix))
+                  sfLHA(7,ix,iq2) = FLtotal(xbLHA(ix))
+                  sfLHA(8,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
+               enddo
+*
+               call SetProcessDIS("NC")
+               call SetNCComponent("al")
+               call SetProjectileDIS("electron")
+               if(Qin.gt.0d0)then
+                  if(iq2.eq.iq2in.and.isg.ne.nfin)then
+                     call ComputeStructureFunctionsAPFEL(Qin,
+     1                    dsqrt(q2LHA(iq2)+eps2))
+                  elseif(iq2.eq.iq2fi.and.isg.ne.nffi)then
+                     call ComputeStructureFunctionsAPFEL(Qin,
+     1                    dsqrt(q2LHA(iq2)-eps2))
+                  else
+                     call ComputeStructureFunctionsAPFEL(Qin,
+     1                    dsqrt(q2LHA(iq2)))
+                  endif
+               else
+                  if(iq2.eq.iq2in.and.isg.ne.nfin)then
+                     call ComputeStructureFunctionsAPFEL
+     1                   (dsqrt(q2LHA(iq2)+eps2),dsqrt(q2LHA(iq2)+eps2))
+                  elseif(iq2.eq.iq2fi.and.isg.ne.nffi)then
+                     call ComputeStructureFunctionsAPFEL
+     1                   (dsqrt(q2LHA(iq2)-eps2),dsqrt(q2LHA(iq2)-eps2))
+                  else
+                     call ComputeStructureFunctionsAPFEL
+     1                   (dsqrt(q2LHA(iq2)),dsqrt(q2LHA(iq2)))
+                  endif
+               endif
+               do ix=1,nxLHA
+                  sfLHA(9,ix,iq2)  = F2total(xbLHA(ix))
+                  sfLHA(10,ix,iq2) = FLtotal(xbLHA(ix))
+                  sfLHA(11,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
                enddo
 *
                call SetProcessDIS("CC")
@@ -404,9 +499,9 @@
                   endif
                endif
                do ix=1,nxLHA
-                  sfLHA(4,ix,iq2) = F2total(xbLHA(ix))
-                  sfLHA(5,ix,iq2) = FLtotal(xbLHA(ix))
-                  sfLHA(6,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
+                  sfLHA(12,ix,iq2) = F2total(xbLHA(ix))
+                  sfLHA(13,ix,iq2) = FLtotal(xbLHA(ix))
+                  sfLHA(14,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
                enddo
 *
                call SetProjectileDIS("positron")
@@ -434,15 +529,15 @@
                   endif
                endif
                do ix=1,nxLHA
-                  sfLHA(7,ix,iq2) = F2total(xbLHA(ix))
-                  sfLHA(8,ix,iq2) = FLtotal(xbLHA(ix))
-                  sfLHA(9,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
+                  sfLHA(15,ix,iq2) = F2total(xbLHA(ix))
+                  sfLHA(16,ix,iq2) = FLtotal(xbLHA(ix))
+                  sfLHA(17,ix,iq2) = F3total(xbLHA(ix))/xbLHA(ix)
                enddo
             enddo
 *
             do ix=1,nxLHA
                do iq2=iq2in,iq2fi
-                  write(13,40) (sfLHA(isf,ix,iq2),isf=1,9)
+                  write(13,40) (sfLHA(isf,ix,iq2),isf=1,17)
                enddo
             enddo
             write(13,"(a)") "---"
@@ -458,7 +553,7 @@
       write(6,*) "File ",fname(1:ln)," grid produced"
       write(6,*) achar(27)//"[0m"
 *
- 40   format(9(es14.7,1x))
+ 40   format(17(es14.7,1x))
 *
       return
       end

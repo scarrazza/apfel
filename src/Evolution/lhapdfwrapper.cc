@@ -16,6 +16,7 @@ extern "C" {
 
   void   mkpdfs_(int *mem, char* setname, int len)
   {
+    LHAPDF::setVerbosity(0);
     std::string str(setname, len);
 
     if (_pdfs) delete _pdfs;
