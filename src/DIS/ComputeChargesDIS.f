@@ -189,18 +189,24 @@
             enddo
          elseif(NCComponent.eq."gZ")then
             do i=nfi,nff
-               bq(i)  = - 2d0*eq(i)*vq(i) * ( ve + ie * pol * ae ) * pz
-               dq(i)  = - 2d0*eq(i)*aq(i) * ( ae + ie * pol * ve ) * pz
-               bqt(i) = - 2d0*eq(i)*vq(i) * ( ve + ie * pol * ae ) * pz
+c               bq(i)  = - 2d0*eq(i)*vq(i) * ( ve + ie * pol * ae ) * pz
+c               dq(i)  = - 2d0*eq(i)*aq(i) * ( ae + ie * pol * ve ) * pz
+c               bqt(i) = - 2d0*eq(i)*vq(i) * ( ve + ie * pol * ae ) * pz
+               bq(i)  = 2d0 * eq(i) * vq(i)
+               dq(i)  = 2d0 * eq(i) * aq(i)
+               bqt(i) = 2d0 * eq(i) * vq(i)
             enddo
          elseif(NCComponent.eq."ZZ")then
             do i=nfi,nff
-               bq(i)  = ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
-     1              * ( vq(i)**2 + aq(i)**2 ) * pz2
-               dq(i)  = 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae
-     1              + ie * pol * ( ve**2 + ae**2 ) ) * pz2
-               bqt(i) = ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
-     1              * ( vq(i)**2 - aq(i)**2 ) * pz2
+c               bq(i)  = ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
+c     1              * ( vq(i)**2 + aq(i)**2 ) * pz2
+c               dq(i)  = 2d0 * vq(i) * aq(i) * ( 2d0 * ve * ae
+c     1              + ie * pol * ( ve**2 + ae**2 ) ) * pz2
+c               bqt(i) = ( ve**2 + ae**2 + ie * pol * 2d0 * ve * ae )
+c     1              * ( vq(i)**2 - aq(i)**2 ) * pz2
+               bq(i)  = vq(i)**2 + aq(i)**2
+               dq(i)  = 2d0 * vq(i) * aq(i)
+               bqt(i) = vq(i)**2 - aq(i)**2
             enddo
          else
             do i=nfi,nff
