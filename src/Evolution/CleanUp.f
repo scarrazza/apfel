@@ -66,6 +66,7 @@
       include "../commons/StructureFunctionsxQ.h"
       include "../commons/NLOQEDCorrections.h"
       include "../commons/ScaleVariationProcedure.h"
+      include "../commons/NCComponent.h"
 *
 *     Set all the initialization flags to "xxxx" so that
 *     they will be initialized again by InitializeAPFEL.
@@ -110,6 +111,7 @@
 *
       InMassScheme      = "xxxx"
       InProcessDIS      = "xxxx"
+      InNCComponent     = "xxxx"
       InPolarizationDIS = "xxxx"
       InProjectileDIS   = "xxxx"
       InTargetDIS       = "xxxx"

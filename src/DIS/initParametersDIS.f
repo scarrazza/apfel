@@ -39,12 +39,14 @@
       include "../commons/minimax.h"
       include "../commons/NLOQEDCorrections.h"
       include "../commons/ScaleVariationProcedure.h"
+      include "../commons/NCComponent.h"
 *
 *     Initialize default parameters (those that were not initialized before)
 *
       if(InWelcome.ne."done")        call EnableWelcomeMessage(.true.)
       if(InMassScheme.ne."done")     call SetMassScheme("ZM-VFNS")
       if(InProcessDIS.ne."done")     call SetProcessDIS("EM")
+      if(InNCComponent.ne."done")    call SetNCComponent("al")
       if(InPolarizationDIS.ne."done")call SetPolarizationDIS(0d0)
       if(InProjectileDIS.ne."done")  call SetProjectileDIS("electron")
       if(InTargetDIS.ne."done")      call SetTargetDIS("proton")

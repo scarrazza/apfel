@@ -375,6 +375,11 @@
      1           achar(27)//"[0m"
       write(6,*) "    sets process ('pr' = 'EM', 'NC', 'CC', default"
       write(6,*) "    'pr' = 'EM')."
+      write(6,*) achar(27)//"[34m- SetNCComponent(string cm):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    sets the component of the NC structure functions"
+      write(6,*) "    ('cm' = 'gg', 'gZ', 'ZZ', 'al', default"
+      write(6,*) "    'cm' = 'al')."
       write(6,*) achar(27)//"[34m- SetProjectileDIS(string lept):"//
      1           achar(27)//"[0m"
       write(6,*) "    sets the projectile ('lept' = 'electron',"

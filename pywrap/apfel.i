@@ -2,6 +2,8 @@
 
 %include "std_string.i"
 %include "std_vector.i"
+%include "carrays.i"
+%array_functions(double,doubles)
 //%include "std_except.i"
 
 %{
