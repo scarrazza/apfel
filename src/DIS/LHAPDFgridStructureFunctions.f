@@ -91,7 +91,7 @@
 *
 *     Compute x-space grid
 *
-      xbLHA(1) = xminLHA
+      xbLHA(1) = xminLHA * ( 1d0 + eps )
       do ix=2,nxLHA
          if(ix.le.nxmLHA)then
             xbLHA(ix) = xminLHA * ( xmLHA / xminLHA )
