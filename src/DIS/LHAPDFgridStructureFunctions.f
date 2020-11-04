@@ -60,7 +60,7 @@
      1                                                1d0,50,1d0,1d10)
       call SetQLimits(dsqrt(q2minLHA)-offset,dsqrt(q2maxLHA)+offset)
       call SetNumberOfGrids(3)
-      call SetGridParameters(1,85,3,xminLHA * ( 1d0 - eps2 ))
+      call SetGridParameters(1,85,3,xminLHA)
       call SetGridParameters(2,75,5,xmLHA)
       call SetGridParameters(3,55,5,0.65d0)
       call LockGrids(.true.)
@@ -91,7 +91,8 @@
 *
 *     Compute x-space grid
 *
-      do ix=1,nxLHA
+      xbLHA(1) = xminLHA
+      do ix=2,nxLHA
          if(ix.le.nxmLHA)then
             xbLHA(ix) = xminLHA * ( xmLHA / xminLHA )
      1                **( 2d0 * dble( ix-1 ) / dble( nxLHA - 1 ) )
