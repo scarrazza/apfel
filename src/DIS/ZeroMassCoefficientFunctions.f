@@ -1566,10 +1566,10 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 *
 *     Order alphas coefficient functions (NLO) for the polarized
 *     structure functions. Expansion parameter alphas/4*pi
-*     Reference: hep-ph/9603366
+*     Reference: hep-ph/9305204; hep-ph/9412255; hep-ph/9603366
 *
 ************************************************************************
-*     F2: quark non-singlet - regular term (A)
+*     F2 (-g4): quark non-singlet - regular term (A)
 ************************************************************************
       FUNCTION C2NS1PA(X)
 *
@@ -1586,13 +1586,13 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
       DOUBLE PRECISION C2NS1PA
 *
       C2NS1PA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
-     1     - ( 1D0 + X**2 ) * DLOG(X) / ( 1D0 - X ) + 2D0 + X )
+     1     - ( 1D0 + X**2 ) * DLOG(X) / ( 1D0 - X ) + 3D0 + 2D0*X )
 *
       RETURN
       END
 *
 ************************************************************************
-*     F2: quark non-singlet - singular term (B)
+*     F2 (-g4): quark non-singlet - singular term (B)
 ************************************************************************
       FUNCTION C2NS1PB(X)
 *
@@ -1615,7 +1615,7 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
       END
 *
 ************************************************************************
-*     F2: quark non-singlet - local term (C)
+*     F2 (-g4): quark non-singlet - local term (C)
 ************************************************************************
       FUNCTION C2NS1PC(X)
 *
@@ -1640,9 +1640,10 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
       END
 *
 ************************************************************************
-*     F2: gluon - regular term (A)
+*     FL (-gL): quark non-singlet - regular term (A)
 ************************************************************************
-      FUNCTION C2G1PA(X)
+*
+      FUNCTION CLNS1PA(X)
 *
       IMPLICIT NONE
 *
@@ -1654,9 +1655,102 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 **
 *     Output Variables
 *
-      DOUBLE PRECISION C2G1PA
+      DOUBLE PRECISION CLNS1PA
 *
-      C2G1PA = 4D0 * TR * ( ( 2D0 * X - 1D0 ) * DLOG( ( 1D0 - X ) / X )
+      CLNS1PA = 2D0 * CF * 2D0 * x
+*
+      RETURN
+      END
+*     
+************************************************************************
+*     F3 (g1/2): quark non-singlet - regular term (A)
+************************************************************************
+      FUNCTION C3NS1PA(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C3NS1PA
+*
+      C3NS1PA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
+     1     - ( 1D0 + X**2 ) * DLOG(X) / ( 1D0 - X ) + 2D0 + X )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F3(g1/2): quark non-singlet - singular term (B)
+************************************************************************
+      FUNCTION C3NS1PB(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C3NS1PB
+*
+      C3NS1PB = 2D0 * CF * ( 2D0 * DLOG( 1D0 - X ) - 3D0 / 2D0 ) 
+     1       / ( 1D0 - X )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F3(g1/2): quark non-singlet - local term (C)
+************************************************************************
+      FUNCTION C3NS1PC(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+      INCLUDE "../commons/consts.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C3NS1PC
+*
+      C3NS1PC = 2D0 * CF * ( DLOG( 1D0 - X )**2 
+     1       - 3D0 * DLOG( 1D0 - X ) / 2D0 
+     2       - ( 2D0 * ZETA2 + 9D0 / 2D0 ) )
+*
+      RETURN
+      END
+*
+************************************************************************
+*     F3(g1/2): gluon - regular term (A)
+************************************************************************
+      FUNCTION C3G1PA(X)
+*
+      IMPLICIT NONE
+*
+      INCLUDE "../commons/ColorFactors.h"
+**
+*     Input Variables
+*
+      DOUBLE PRECISION X
+**
+*     Output Variables
+*
+      DOUBLE PRECISION C3G1PA
+*
+      C3G1PA = 4D0 * TR * ( ( 2D0 * X - 1D0 ) * DLOG( ( 1D0 - X ) / X )
      1     - 4D0 * X + 3D0 )
 *
       RETURN
