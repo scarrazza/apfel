@@ -22,7 +22,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f Evolution/SetLHgridParameters.f \
 	Evolution/SetEpsilonTruncation.f Evolution/GetMuF.f Evolution/SetPolarizedEvolution.f Evolution/SetMassMatchingScales.f \
 	Evolution/SetMassScaleReference.f Evolution/SetQGridParameters.f Evolution/GetThreshold.f Evolution/EnableNLOQEDCorrections.f \
-	Evolution/ExternalSplittingFunctions.f Evolution/GetMaxFlavourPDFs.f Evolution/GetMaxFlavourAlpha.f
+	Evolution/ExternalSplittingFunctions.f Evolution/GetMaxFlavourPDFs.f Evolution/GetMaxFlavourAlpha.f Evolution/GetLambdaQCD.f
 
 INTER = Evolution/interpolants.f
 
