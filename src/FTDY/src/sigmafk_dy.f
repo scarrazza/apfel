@@ -27,7 +27,6 @@
       include "../commons/sigmafk.h"
       include "../commons/xxDY.h"
       include "../commons/cutoff.h"
-      include "../commons/corrections.h"
 **
 *     Input Variables
 *
@@ -52,7 +51,6 @@
       integer ibin
       double precision norm
       double precision zarat
-      double precision acc
       double precision tau,shad,m2,Q,as
       double precision gmu,GetGFermi
       double precision mz,GetZMass
@@ -129,76 +127,16 @@
          zarat = 1d0        ! Proton target
          ich   = 1
          ibos  = 1          ! Photon production
-         if(obslbl(11:15).eq."BIN01")then
-            ibin = 1
-         elseif(obslbl(11:15).eq."BIN02")then
-            ibin = 2
-         elseif(obslbl(11:15).eq."BIN03")then
-            ibin = 3
-         elseif(obslbl(11:15).eq."BIN04")then
-            ibin = 4
-         elseif(obslbl(11:15).eq."BIN05")then
-            ibin = 5
-         elseif(obslbl(11:15).eq."BIN06")then
-            ibin = 6
-         elseif(obslbl(11:15).eq."BIN07")then
-            ibin = 7
-         elseif(obslbl(11:15).eq."BIN08")then
-            ibin = 8
-         elseif(obslbl(11:15).eq."BIN09")then
-            ibin = 9
-         elseif(obslbl(11:15).eq."BIN10")then
-            ibin = 10
-         else
-            write(*,*) "A problem occurred - invalid bin"
-         endif
-         m2          = MASS(ibin,idat)**2d0 !q2dat(idat)
-         x1dat(idat) = XTDAT(ibin,idat)
-         x2dat(idat) = XBDAT(ibin,idat)
-         tau         = x1dat(idat) * x2dat(idat)
-         shad        = m2 / tau
-         Q           = MASS(ibin,idat)
-         acc         = ACCEPTANCE(ibin,idat)
          fact1 = ( 4d0 * pi *alphae**2d0 ) / ( 9d0 * m2 * shad )
          fact2 = 2d0 * m2**2d0
-         norm  = acc * fact1 * fact2 * convfact * 1d-3
+         norm  =  fact1 * fact2 * convfact * 1d-3
       elseif(obslbl(1:9).eq."DYP_E906D")then
          zarat = 0.5d0      ! Isoscalar target
          ich   = 1
          ibos  = 1              ! Photon production
-         if(obslbl(11:15).eq."BIN01")then
-            ibin = 1
-         elseif(obslbl(11:15).eq."BIN02")then
-            ibin = 2
-         elseif(obslbl(11:15).eq."BIN03")then
-            ibin = 3
-         elseif(obslbl(11:15).eq."BIN04")then
-            ibin = 4
-         elseif(obslbl(11:15).eq."BIN05")then
-            ibin = 5
-         elseif(obslbl(11:15).eq."BIN06")then
-            ibin = 6
-         elseif(obslbl(11:15).eq."BIN07")then
-            ibin = 7
-         elseif(obslbl(11:15).eq."BIN08")then
-            ibin = 8
-         elseif(obslbl(11:15).eq."BIN09")then
-            ibin = 9
-         elseif(obslbl(11:15).eq."BIN10")then
-            ibin = 10
-         else
-            write(*,*) "A problem occurred - invalid bin"
-         endif
-         m2          = MASS(ibin,idat)**2d0 !q2dat(idat)
-         x1dat(idat) = XTDAT(ibin,idat)
-         x2dat(idat) = XBDAT(ibin,idat)
-         tau         = x1dat(idat) * x2dat(idat)
-         shad        = m2 / tau
-         Q           = MASS(ibin,idat)
-         acc         = ACCEPTANCE(ibin,idat)  
          fact1 = ( 4d0 * pi *alphae**2d0 ) / ( 9d0 * m2 * shad )
          fact2 = 2d0 * m2**2d0
-         norm  = acc * fact1 * fact2 * convfact * 1d-3
+         norm  =  fact1 * fact2 * convfact * 1d-3
       elseif(obslbl.eq."EWK_ZRAP")then
          zarat = 1d0        ! antiproton target
          ich   = - 1
