@@ -51,6 +51,26 @@ c      call EnableWelcomeMessage(.false.)
 *
       if(set.eq."DYE886R")then
          set = "DYE886R_P"
+      elseif(set.eq."DYE906R_BIN01")then
+         set = "DYE906R_P_BIN01"
+      elseif(set.eq."DYE906R_BIN02")then
+         set = "DYE906R_P_BIN02"
+      elseif(set.eq."DYE906R_BIN03")then
+         set = "DYE906R_P_BIN03"
+      elseif(set.eq."DYE906R_BIN04")then
+         set = "DYE906R_P_BIN04"
+      elseif(set.eq."DYE906R_BIN05")then
+         set = "DYE906R_P_BIN05"
+      elseif(set.eq."DYE906R_BIN06")then
+         set = "DYE906R_P_BIN06"
+      elseif(set.eq."DYE906R_BIN07")then
+         set = "DYE906R_P_BIN07"
+      elseif(set.eq."DYE906R_BIN08")then
+         set = "DYE906R_P_BIN08"
+      elseif(set.eq."DYE906R_BIN09")then
+         set = "DYE906R_P_BIN09"
+      elseif(set.eq."DYE906R_BIN10")then
+         set = "DYE906R_P_BIN10"
       elseif(set.eq."CDFWASYM")then
          set = "CDFWASYM_WP"
       endif
@@ -75,6 +95,29 @@ c      call EnableWelcomeMessage(.false.)
             obs(idat) = "DYP_E886P"
          elseif(set.eq."DYE886R_D")then
             obs(idat) = "DYP_E886D"
+         elseif(set.eq."DYE906R_P_BIN01"
+     1           .or.set.eq."DYE906R_P_BIN02"
+     1           .or.set.eq."DYE906R_P_BIN03"
+     1           .or.set.eq."DYE906R_P_BIN03"
+     1           .or.set.eq."DYE906R_P_BIN04"
+     1           .or.set.eq."DYE906R_P_BIN05"
+     1           .or.set.eq."DYE906R_P_BIN06"
+     1           .or.set.eq."DYE906R_P_BIN07"
+     1           .or.set.eq."DYE906R_P_BIN08"
+     1           .or.set.eq."DYE906R_P_BIN09"
+     1           .or.set.eq."DYE906R_P_BIN10")then
+            obs(idat) = "DYP_E906P"
+         elseif(set.eq."DYE906R_D_BIN01"
+     1           .or.set.eq."DYE906R_D_BIN02"
+     1           .or.set.eq."DYE906R_D_BIN03"
+     1           .or.set.eq."DYE906R_D_BIN04"
+     1           .or.set.eq."DYE906R_D_BIN05"
+     1           .or.set.eq."DYE906R_D_BIN06"
+     1           .or.set.eq."DYE906R_D_BIN07"
+     1           .or.set.eq."DYE906R_D_BIN08"
+     1           .or.set.eq."DYE906R_D_BIN09"
+     1           .or.set.eq."DYE906R_D_BIN10")then
+            obs(idat) = "DYP_E906D"   
          elseif(set.eq."CDFWASYM_WP")then
             obs(idat) = "EWK_WASYM_WP"
          elseif(set.eq."CDFWASYM_WM")then
@@ -100,6 +143,36 @@ c      call EnableWelcomeMessage(.false.)
       if(set.eq."DYE886R_P")then
          set = "DYE886R_D"
          goto 103
+      elseif(set.eq."DYE906R_P_BIN01")then
+         set = "DYE906R_D_BIN01"
+         goto 103
+      elseif(set.eq."DYE906R_P_BIN02")then
+         set = "DYE906R_D_BIN02"
+         goto 103
+      elseif(set.eq."DYE906R_P_BIN03")then
+         set = "DYE906R_D_BIN03"
+         goto 103
+      elseif(set.eq."DYE906R_P_BIN04")then
+         set = "DYE906R_D_BIN04"
+         goto 103
+      elseif(set.eq."DYE906R_P_BIN05")then
+         set = "DYE906R_D_BIN05"
+         goto 103
+      elseif(set.eq."DYE906R_P_BIN06")then
+         set = "DYE906R_D_BIN06"
+         goto 103
+      elseif(set.eq."DYE906R_P_BIN07")then
+         set = "DYE906R_D_BIN07"
+         goto 103
+      elseif(set.eq."DYE906R_P_BIN08")then
+         set = "DYE906R_D_BIN08"
+         goto 103
+      elseif(set.eq."DYE906R_P_BIN09")then
+         set = "DYE906R_D_BIN09"
+         goto 103
+      elseif(set.eq."DYE906R_P_BIN10")then
+         set = "DYE906R_D_BIN10"
+         goto 103  
       elseif(set.eq."CDFWASYM_WP")then
          set = "CDFWASYM_WM"
          goto 103

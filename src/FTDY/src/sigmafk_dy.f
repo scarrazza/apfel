@@ -48,6 +48,7 @@
       integer ipt,GetPerturbativeOrder
       integer i,kx
       integer ixpfk(2)
+      integer ibin
       double precision norm
       double precision zarat
       double precision tau,shad,m2,Q,as
@@ -104,7 +105,7 @@
       if(obslbl.eq."DYP_E605")then
          zarat = 0.5d0      ! Isoscalar target
          ich   = 1
-         ibos  = 1          ! Photon production
+         ibos  = 1                    ! Photon production
          fact1 = ( 4d0 * pi * alphae**2d0 ) / ( 9d0 * m2 * shad )
          fact2 = 2d0 * shad**( 3d0 / 2d0 ) * dsqrt(m2)
          norm  = fact1 * fact2 * convfact * 1d-3
@@ -122,6 +123,20 @@
          fact1 = ( 4d0 * pi *alphae**2d0 ) / ( 9d0 * m2 * shad )
          fact2 = 2d0 * m2**2d0
          norm  = fact1 * fact2 * convfact * 1d-3
+      elseif(obslbl(1:9).eq."DYP_E906P")then
+         zarat = 1d0        ! Proton target
+         ich   = 1
+         ibos  = 1          ! Photon production
+         fact1 = ( 4d0 * pi *alphae**2d0 ) / ( 9d0 * m2 * shad )
+         fact2 = 2d0 * m2**2d0
+         norm  =  fact1 * fact2 * convfact * 1d-3
+      elseif(obslbl(1:9).eq."DYP_E906D")then
+         zarat = 0.5d0      ! Isoscalar target
+         ich   = 1
+         ibos  = 1              ! Photon production
+         fact1 = ( 4d0 * pi *alphae**2d0 ) / ( 9d0 * m2 * shad )
+         fact2 = 2d0 * m2**2d0
+         norm  =  fact1 * fact2 * convfact * 1d-3
       elseif(obslbl.eq."EWK_ZRAP")then
          zarat = 1d0        ! antiproton target
          ich   = - 1
