@@ -482,9 +482,24 @@
      1           " F3charm(double x), F3bottom(double x),"
       write(6,*) "  F3top(double x), F3total(double x):"//
      1           achar(27)//"[0m"
-      write(6,*) "    return the F2, FL and xF3 struncture functions in"
+      write(6,*) "    return the F2, FL and xF3 structure functions in"
       write(6,*) "    'x' at the final scale 'Q' [GeV] defined in"
       write(6,*) "    'ComputeStructureFunctionsAPFEL'."
+      write(6,*) achar(27)//"[34m- g1light(double x),",
+     1           " g1charm(double x), g1bottom(double x),"
+      write(6,*) "  g1top(double x), g1total(double x):"//
+     1           achar(27)//"[0m"
+      write(6,*) achar(27)//"[34m- gLlight(double x),",
+     1           " gLcharm(double x), gLbottom(double x),"
+      write(6,*) "  gLtop(double x), gLtotal(double x):"//
+     1           achar(27)//"[0m"
+      write(6,*) achar(27)//"[34m- g4light(double x),",
+     1           " g4charm(double x), g4bottom(double x),"
+      write(6,*) "  g4top(double x), g4total(double x):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return the g1, gL and xg4 polarised structure"
+      write(6,*) "    functions in 'x' at the final scale 'Q' [GeV]"
+      write(6,*) "     defined in 'ComputeStructureFunctionsAPFEL'."
       write(6,*) achar(27)//"[34m- GetZMass():"//achar(27)//"[0m"
       write(6,*) "    returns the value of the mass of the Z boson"
       write(6,*) achar(27)//"[34m- GetWMass():"//achar(27)//"[0m"

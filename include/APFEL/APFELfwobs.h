@@ -82,6 +82,51 @@ extern "C" {
 #define ff3total FC_FUNC(f3total,F3TOTAL)
   double ff3total(double*);
 
+#define fg1light FC_FUNC(g1light,G1LIGHT)
+  double fg1light(double*);
+
+#define fg1charm FC_FUNC(g1charm,G1CHARM)
+  double fg1charm(double*);
+
+#define fg1bottom FC_FUNC(g1bottom,G1BOTTOM)
+  double fg1bottom(double*);
+
+#define fg1top FC_FUNC(g1top,G1TOP)
+  double fg1top(double*);
+
+#define fg1total FC_FUNC(g1total,G1TOTAL)
+  double fg1total(double*);
+
+#define fgllight FC_FUNC(gllight,GLLIGHT)
+  double fgllight(double*);
+
+#define fglcharm FC_FUNC(glcharm,GLCHARM)
+  double fglcharm(double*);
+
+#define fglbottom FC_FUNC(glbottom,GLBOTTOM)
+  double fglbottom(double*);
+
+#define fgltop FC_FUNC(gltop,GLTOP)
+  double fgltop(double*);
+
+#define fgltotal FC_FUNC(gltotal,GLTOTAL)
+  double fgltotal(double*);
+
+#define fg4light FC_FUNC(g4light,G4LIGHT)
+  double fg4light(double*);
+
+#define fg4charm FC_FUNC(g4charm,G4CHARM)
+  double fg4charm(double*);
+
+#define fg4bottom FC_FUNC(g4bottom,G4BOTTOM)
+  double fg4bottom(double*);
+
+#define fg4top FC_FUNC(g4top,G4TOP)
+  double fg4top(double*);
+
+#define fg4total FC_FUNC(g4total,G4TOTAL)
+  double fg4total(double*);
+
 #define fstructurefunctionxq FC_FUNC(structurefunctionxq,STRUCTUREFUNCTIONXQ)
   double fstructurefunctionxq(char*,char*,char*,double*,double*);
 
