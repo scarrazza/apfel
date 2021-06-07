@@ -26,7 +26,6 @@
       double precision w_int_gen
       double precision tol
       parameter(tol=1d-10)
-      double precision F3light
 **
 *     Output Variables
 *
@@ -48,16 +47,13 @@
 *     
 *     Interpolation
 *     
-            F3light = 0d0
+            g1light = 0d0
             n = inter_degree(0)
             do alpha=0,nin(0)
-               F3light = F3light + w_int_gen(n,alpha,x) * F3(3,0,alpha)
+               g1light = g1light + w_int_gen(n,alpha,x) * F2(3,0,alpha)
             enddo
-            if(dabs(F3light).le.1d-14) F3light = 0d0
+            if(dabs(g1light).le.1d-14) g1light = 0d0
          endif
-*
-         g1light = F3light / 2d0
-*
       else
          write(6,*) "g1 structure function not available",
      1        " for unpolarised DIS"

@@ -1569,9 +1569,9 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 *     Reference: hep-ph/9305204; hep-ph/9412255; hep-ph/9603366
 *
 ************************************************************************
-*     F2 (-g4): quark non-singlet - regular term (A)
+*     g4: quark non-singlet - regular term (A)
 ************************************************************************
-      FUNCTION C2NS1PA(X)
+      FUNCTION G4NS1PA(X)
 *
       IMPLICIT NONE
 *
@@ -1583,18 +1583,18 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 **
 *     Output Variables
 *
-      DOUBLE PRECISION C2NS1PA
+      DOUBLE PRECISION G4NS1PA
 *
-      C2NS1PA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
+      G4NS1PA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
      1     - ( 1D0 + X**2 ) * DLOG(X) / ( 1D0 - X ) + 3D0 + 2D0*X )
 *
       RETURN
       END
 *
 ************************************************************************
-*     F2 (-g4): quark non-singlet - singular term (B)
+*     g4: quark non-singlet - singular term (B)
 ************************************************************************
-      FUNCTION C2NS1PB(X)
+      FUNCTION G4NS1PB(X)
 *
       IMPLICIT NONE
 *
@@ -1606,18 +1606,18 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 **
 *     Output Variables
 *
-      DOUBLE PRECISION C2NS1PB
+      DOUBLE PRECISION G4NS1PB
 *
-      C2NS1PB = 2D0 * CF * ( 2D0 * DLOG( 1D0 - X ) - 3D0 / 2D0 ) 
+      G4NS1PB = 2D0 * CF * ( 2D0 * DLOG( 1D0 - X ) - 3D0 / 2D0 ) 
      1       / ( 1D0 - X )
 *
       RETURN
       END
 *
 ************************************************************************
-*     F2 (-g4): quark non-singlet - local term (C)
+*     g4: quark non-singlet - local term (C)
 ************************************************************************
-      FUNCTION C2NS1PC(X)
+      FUNCTION G4NS1PC(X)
 *
       IMPLICIT NONE
 *
@@ -1630,9 +1630,9 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 **
 *     Output Variables
 *
-      DOUBLE PRECISION C2NS1PC
+      DOUBLE PRECISION G4NS1PC
 *
-      C2NS1PC = 2D0 * CF * ( DLOG( 1D0 - X )**2 
+      G4NS1PC = 2D0 * CF * ( DLOG( 1D0 - X )**2 
      1       - 3D0 * DLOG( 1D0 - X ) / 2D0 
      2       - ( 2D0 * ZETA2 + 9D0 / 2D0 ) )
 *
@@ -1640,10 +1640,10 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
       END
 *
 ************************************************************************
-*     FL (-gL): quark non-singlet - regular term (A)
+*     gL: quark non-singlet - regular term (A)
 ************************************************************************
 *
-      FUNCTION CLNS1PA(X)
+      FUNCTION GLNS1PA(X)
 *
       IMPLICIT NONE
 *
@@ -1655,17 +1655,17 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 **
 *     Output Variables
 *
-      DOUBLE PRECISION CLNS1PA
+      DOUBLE PRECISION GLNS1PA
 *
-      CLNS1PA = 2D0 * CF * 2D0 * x
+      GLNS1PA = 2D0 * CF * 2D0 * x
 *
       RETURN
       END
-*     
+*
 ************************************************************************
-*     F3 (g1/2): quark non-singlet - regular term (A)
+*     g1: quark non-singlet - regular term (A)
 ************************************************************************
-      FUNCTION C3NS1PA(X)
+      FUNCTION G1NS1PA(X)
 *
       IMPLICIT NONE
 *
@@ -1677,18 +1677,18 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 **
 *     Output Variables
 *
-      DOUBLE PRECISION C3NS1PA
+      DOUBLE PRECISION G1NS1PA
 *
-      C3NS1PA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
+      G1NS1PA = 2D0 * CF * ( - ( 1D0 + X ) * DLOG( 1D0 - X ) 
      1     - ( 1D0 + X**2 ) * DLOG(X) / ( 1D0 - X ) + 2D0 + X )
 *
       RETURN
       END
 *
 ************************************************************************
-*     F3(g1/2): quark non-singlet - singular term (B)
+*     g1: quark non-singlet - singular term (B)
 ************************************************************************
-      FUNCTION C3NS1PB(X)
+      FUNCTION G1NS1PB(X)
 *
       IMPLICIT NONE
 *
@@ -1700,18 +1700,18 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 **
 *     Output Variables
 *
-      DOUBLE PRECISION C3NS1PB
+      DOUBLE PRECISION G1NS1PB
 *
-      C3NS1PB = 2D0 * CF * ( 2D0 * DLOG( 1D0 - X ) - 3D0 / 2D0 ) 
+      G1NS1PB = 2D0 * CF * ( 2D0 * DLOG( 1D0 - X ) - 3D0 / 2D0 ) 
      1       / ( 1D0 - X )
 *
       RETURN
       END
 *
 ************************************************************************
-*     F3(g1/2): quark non-singlet - local term (C)
+*     g1: quark non-singlet - local term (C)
 ************************************************************************
-      FUNCTION C3NS1PC(X)
+      FUNCTION G1NS1PC(X)
 *
       IMPLICIT NONE
 *
@@ -1724,9 +1724,9 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 **
 *     Output Variables
 *
-      DOUBLE PRECISION C3NS1PC
+      DOUBLE PRECISION G1NS1PC
 *
-      C3NS1PC = 2D0 * CF * ( DLOG( 1D0 - X )**2 
+      G1NS1PC = 2D0 * CF * ( DLOG( 1D0 - X )**2 
      1       - 3D0 * DLOG( 1D0 - X ) / 2D0 
      2       - ( 2D0 * ZETA2 + 9D0 / 2D0 ) )
 *
@@ -1734,9 +1734,9 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
       END
 *
 ************************************************************************
-*     F3(g1/2): gluon - regular term (A)
+*     g1: gluon - regular term (A)
 ************************************************************************
-      FUNCTION C3G1PA(X)
+      FUNCTION G1G1PA(X)
 *
       IMPLICIT NONE
 *
@@ -1748,9 +1748,9 @@ C     6       + 5.2903D0 * ( 1D0 - Y )**2 / Y )
 **
 *     Output Variables
 *
-      DOUBLE PRECISION C3G1PA
+      DOUBLE PRECISION G1G1PA
 *
-      C3G1PA = 4D0 * TR * ( ( 2D0 * X - 1D0 ) * DLOG( ( 1D0 - X ) / X )
+      G1G1PA = 4D0 * TR * ( ( 2D0 * X - 1D0 ) * DLOG( ( 1D0 - X ) / X )
      1     - 4D0 * X + 3D0 )
 *
       RETURN

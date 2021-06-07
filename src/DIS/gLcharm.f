@@ -34,6 +34,8 @@
 *
       double precision gLcharm
 *
+      write(6,*) "gL structure function not available yet."
+      call exit(-10)
 *
       if(Polarized)then
 *      

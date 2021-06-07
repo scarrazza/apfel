@@ -34,6 +34,9 @@
 *
       double precision gLtop
 *
+      write(6,*) "gL structure function not available yet."
+      call exit(-10)
+*
       if(Polarized)then
 *  
          if(TMC)then

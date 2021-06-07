@@ -14,7 +14,8 @@
       include "../commons/grid.h"
       include "../commons/TimeLike.h"
       include "../commons/Smallx.h"
-      include "../commons/InAPFELDIS.h"
+      include "../commons/Polarized.h"
+      Include "../commons/InAPFELDIS.h"
 *
 *     Variables
 *
@@ -41,7 +42,11 @@
          enddo
       else
          do igrid=1,ngrid
-            call initIntegralsDIS
+            if(Polarized)then
+               call initIntegralspDIS
+            else
+               call initIntegralsDIS
+            endif
             if(Smallx) call initIntegralsDISRes
          enddo
       endif

@@ -24,9 +24,9 @@
 *
 *        sf  Structure Function
 *     --------------------------
-*        1          F2 (g4)
-*        2          FL (gL)
-*        3          F3 (g1)
+*        1          g1
+*        2          gL
+*        3          g4
 *
 *     that are contained in the common block wrapDIS.h
 *
@@ -50,9 +50,9 @@
 *
       double precision z,w_int,fR,fS,fL
       double precision CR,CS
-      double precision C3G1PA, C3NS1PA, C3NS1PB
-      double precision CLNS1PA
-      double precision C2NS1PA, C2NS1PB
+      double precision G1G1PA, G1NS1PA, G1NS1PB
+      double precision GLNS1PA
+      double precision G4NS1PA, G4NS1PB
 **
 *     Output Variables
 *
@@ -76,78 +76,30 @@
 *     NLO
 *
       if(wipt.eq.1)then
-*     C2
-         if(sf.eq.1)then
+*     g4
+         if(sf.eq.3)then
 *     Non-singlet-plus/minus
             if(k.eq.3.or.k.eq.4)then
-               CR = C2NS1PA(y)
-               CS = C2NS1PB(y)
+               CR = G4NS1PA(y)
+               CS = G4NS1PB(y)
             endif
-*     CL
+*     gL
          elseif(sf.eq.2)then
 *     Non-singlet-plus/minus
             if(k.eq.3.or.k.eq.4)then
-               CR = CLNS1PA(y)
+               CR = GLNS1PA(y)
             endif
-*     C3
-         elseif(sf.eq.3)then
+*     g1
+         elseif(sf.eq.1)then
 *     Gluon
             if(k.eq.1)then
-               CR = C3G1PA(y)
+               CR = G1G1PA(y)
 *     Non-singlet-plus/minus
             elseif(k.eq.3.or.k.eq.4)then
-               CR = C3NS1PA(y)
-               CS = C3NS1PB(y)
+               CR = G1NS1PA(y)
+               CS = G1NS1PB(y)
             endif
          endif
-C $$$ *
-C $$$ *     NNLO
-C $$$ *
-C $$$     elseif(wipt.eq.2)then
-C $$$ *     C2
-C $$$        if(sf.eq.1)then
-C $$$ *     Gluon
-C $$$           if(k.eq.1)then
-C $$$              CR = C2G2TA(y,1)
-C $$$ *     Pure-singlet
-C $$$           elseif(k.eq.2)then
-C $$$              CR = C2PS2TA(y,1)
-C $$$ *     Non-singlet-plus
-C $$$           elseif(k.eq.3)then
-C $$$              CR = C2NSP2TA(y,wnf)
-C $$$              CS = C2NS2TB(y,wnf)
-C $$$ *     Non-singlet-minus
-C $$$           elseif(k.eq.4)then
-C $$$              CR = C2NSP2TA(y,wnf)
-C $$$              CS = C2NS2TB(y,wnf)
-C $$$           endif
-C $$$ *     CL
-C $$$        elseif(sf.eq.2)then
-C $$$ *     Gluon
-C $$$           if(k.eq.1)then
-C $$$              CR = CLG2TA(y,1)
-C $$$ *     Pure-singlet
-C $$$           elseif(k.eq.2)then
-C $$$              CR = CLPS2TA(y,1)
-C $$$ *     Non-singlet-plus
-C $$$           elseif(k.eq.3)then
-C $$$              CR = CLNSP2TA(y,wnf)
-C $$$ *     Non-singlet-minus
-C $$$           elseif(k.eq.4)then
-C $$$              CR = CLNSP2TA(y,wnf)
-C $$$           endif
-C $$$ *     C3
-C $$$        elseif(sf.eq.3)then
-C $$$ *     Non-singlet-plus
-C $$$           if(k.eq.3)then
-C $$$              CR = C3NSP2TA(y,wnf)
-C $$$              CS = C3NS2TB(y,wnf)
-C $$$ *     Non-singlet-minus
-C $$$           elseif(k.eq.4)then
-C $$$              CR = C3NSP2TA(y,wnf)
-C $$$              CS = C3NS2TB(y,wnf)
-C $$$           endif
-C $$$        endif
       endif
 *
       integrandspDISzm = CR * fR + CS * fS

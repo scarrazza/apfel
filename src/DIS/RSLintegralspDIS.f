@@ -10,14 +10,14 @@
 *
 *        sf  Coefficient Function
 *     --------------------------
-*        1           C2 
-*        2           CL
-*        3           C3
+*        1           G1
+*        2           GL
+*        3           G4
 
 *
-*     while the index kk runs like that:
+*     while the index k runs like that:
 *
-*        kk     combination
+*        k      combination
 *     --------------------------
 *        1         gluon  
 *        2      pure-singlet
@@ -44,18 +44,13 @@ c      include "../commons/ipt.h"
 *     Internal Variables
 *
       integer bound,inf,ipt_ZM
-      double precision C2L(0:2),CLL(0:2),C3L(0:2)
+      double precision G4L(0:2),GLL(0:2),G1L(0:2)
       double precision fL
       double precision dgauss,a,b,eps(2)
       double precision integrandspDISzm
-      double precision integC2(0:2),integCL(0:2),integC3(0:2)
-      double precision C2ns1RS,C2ns1L,CLns1RS,C3ns1RS,C3ns1L,C3g1R
-!      double precision C2g2R,CLg2R,C2ps2R,CLps2R,C3ps2R
-!      double precision C2nsp2RS,CLnsp2RS,C3nsp2RS
-!      double precision C2nsp2L,C3nsp2L
-!      double precision C2nsm2RS,CLnsm2RS,C3nsm2RS
-!      double precision C2nsm2L,C3nsm2L      
-      double precision C2NS1PC,C3NS1PC
+      double precision integG4(0:2),integGL(0:2),integG1(0:2)
+      double precision G4ns1RS,G4ns1L,GLns1RS,G1ns1RS,G1ns1L,G1g1R
+      double precision G4NS1PC,G1NS1PC
       external integrandspDISzm
 c      data eps / 5d-8, 1d-3 /
 c      data eps / 5d-8, 1d-5 /
@@ -102,172 +97,87 @@ c      data eps / 1d-7, 1d-5 /
          if(ipt_ZM.ge.1)then
             wipt = 1
 *
-            sf = 1
+            sf = 3
             k = 3
-            C2ns1RS = dgauss(integrandspDISzm,a,b,eps(wipt))
-            C2ns1L  = C2NS1PC(a)
+            G4ns1RS = dgauss(integrandspDISzm,a,b,eps(wipt))
+            G4ns1L  = G4NS1PC(a)
 *
             sf = 2
             k = 3
-            CLns1RS = dgauss(integrandspDISzm,a,b,eps(wipt))
+            GLns1RS = dgauss(integrandspDISzm,a,b,eps(wipt))
 *
-            sf = 3
-            k =1
-            C3g1R = dgauss(integrandspDISzm,a,b,eps(wipt))
+            sf = 1
+            k = 1
+            G1g1R = dgauss(integrandspDISzm,a,b,eps(wipt))
             k = 3
-            C3ns1RS = dgauss(integrandspDISzm,a,b,eps(wipt))
-            C3ns1L  = C3NS1PC(a)
+            G1ns1RS = dgauss(integrandspDISzm,a,b,eps(wipt))
+            G1ns1L  = G1NS1PC(a)
          endif
-C $$$          if(ipt_ZM.ge.2)then
-C $$$             wipt = 2
-C $$$ *
-C $$$             sf = 1
-C $$$             k = 1
-C $$$             C2g2R    = dgauss(integrandspDISzm,a,b,eps(wipt))
-C $$$             k = 2
-C $$$             C2ps2R   = dgauss(integrandspDISzm,a,b,eps(wipt))
-C $$$             k = 3
-C $$$             C2nsp2RS = dgauss(integrandspDISzm,a,b,eps(wipt))
-C $$$             C2nsp2L  = C2NSP2TC(a,inf)
-C $$$             k = 4
-C $$$             C2nsm2RS = C2nsp2RS
-C $$$             C2nsm2L  = C2nsp2L
-C $$$ *
-C $$$             sf = 2
-C $$$             k = 1
-C $$$             CLg2R    = dgauss(integrandspDISzm,a,b,eps(wipt))
-C $$$             k = 2
-C $$$             CLps2R   = dgauss(integrandspDISzm,a,b,eps(wipt))
-C $$$             k = 3
-C $$$             CLnsp2RS = dgauss(integrandspDISzm,a,b,eps(wipt))
-C $$$             k = 4
-C $$$             CLnsm2RS = CLnsp2RS
-C $$$ *
-C $$$             sf = 3
-C $$$             k = 2
-C $$$             C3ps2R   = dgauss(integrandspDISzm,a,b,eps(wipt))
-C $$$             k = 3
-C $$$             C3nsp2RS = dgauss(integrandspDISzm,a,b,eps(wipt))
-C $$$             C3nsp2L  = C3NSP2TC(a,inf)
-C $$$             k = 4
-C $$$             C3nsm2RS = C3nsp2RS
-C $$$             C3nsm2L  = C3nsp2L
-C $$$          endif
 *
          do k=1,4
 *
 *     LO
 *
-*     C2
-            C2L(0) = 0d0
-            if(k.eq.3.or.k.eq.4) C2L(0) = 1d0
-            integC2(0) = 0d0
-*     CL
-            CLL(0) = 0d0
-            integCL(0) = 0d0
-*     C3
-            C3L(0) = 0d0
-            if(k.eq.3.or.k.eq.4) C3L(0) = 1d0
-            integC3(0) = 0d0
+*     G4
+            G4L(0) = 0d0
+            if(k.eq.3.or.k.eq.4) G4L(0) = 1d0
+            integG4(0) = 0d0
+*     GL
+            GLL(0) = 0d0
+            integGL(0) = 0d0
+*     G1
+            G1L(0) = 0d0
+            if(k.eq.3.or.k.eq.4) G1L(0) = 1d0
+            integG1(0) = 0d0
 *
 *     NLO
 *
             if(ipt_ZM.ge.1)then
 *     Gluon
                if(k.eq.1)then
-*     C2
-                  C2L(1)   = 0d0
-                  integC2(1) = 0d0
-*     CL
-                  CLL(1)   = 0d0
-                  integCL(1) = 0d0
-*     C3
-                  C3L(1)   = 0d0
-                  integC3(1) = C3g1R
+*     G4
+                  G4L(1) = 0d0
+                  integG4(1) = 0d0
+*     GL
+                  GLL(1) = 0d0
+                  integGL(1) = 0d0
+*     G1
+                  G1L(1) = 0d0
+                  integG1(1) = G1g1R
 *     Pure-Singlet
                elseif(k.eq.2)then
-*     C2
-                  C2L(1)   = 0d0
-                  integC2(1) = 0d0
-*     CL
-                  CLL(1)   = 0d0
-                  integCL(1) = 0d0
-*     C3
-                  C3L(1)   = 0d0
-                  integC3(1) = 0d0
+*     G4
+                  G4L(1) = 0d0
+                  integG4(1) = 0d0
+*     GL
+                  GLL(1) = 0d0
+                  integGL(1) = 0d0
+*     G1
+                  G1L(1) = 0d0
+                  integG1(1) = 0d0
 *     Non-singlet-plus/minus
                elseif(k.eq.3.or.k.eq.4)then
-*     C2
-                  C2L(1)   = C2ns1L
-                  integC2(1) = C2ns1RS
-*     CL
-                  CLL(1)   = 0d0
-                  integCL(1) = CLns1RS
-*     C3
-                  C3L(1)   = C3ns1L
-                  integC3(1) = C3ns1RS
+*     G4
+                  G4L(1) = G4ns1L
+                  integG4(1) = G4ns1RS
+*     GL
+                  GLL(1) = 0d0
+                  integGL(1) = GLns1RS
+*     G1
+                  G1L(1) = G1ns1L
+                  integG1(1) = G1ns1RS
                endif
             endif
-C $$$ *
-C $$$ *     NNLO
-C $$$ *
-C $$$             if(ipt_ZM.ge.2)then
-C $$$ *     Gluon
-C $$$                if(k.eq.1)then
-C $$$ *     C2
-C $$$                   C2L(2)   = 0d0
-C $$$                   integC2(2) = C2g2R
-C $$$ *     CL
-C $$$                   CLL(2)   = 0d0
-C $$$                   integCL(2) = CLg2R
-C $$$ *     C3
-C $$$                   C3L(2)   = 0d0
-C $$$                   integC3(2) = 0d0
-C $$$ *     Pure-Singlet
-C $$$                elseif(k.eq.2)then
-C $$$ *     C2
-C $$$                   C2L(2)   = 0d0
-C $$$                   integC2(2) = C2ps2R
-C $$$ *     CL
-C $$$                   CLL(2)   = 0d0
-C $$$                   integCL(2) = CLps2R
-C $$$ *     C3
-C $$$                   C3L(2)   = 0d0
-C $$$                   integC3(2) = 0d0
-C $$$ *     Non-singlet-plus
-C $$$                elseif(k.eq.3)then
-C $$$ *     C2
-C $$$                   C2L(2)   = C2nsp2L
-C $$$                   integC2(2) = C2nsp2RS
-C $$$ *     CL
-C $$$                   CLL(2)   = 0d0
-C $$$                   integCL(2) = CLnsp2RS
-C $$$ *     C3
-C $$$                   C3L(2)   = C3nsp2L
-C $$$                   integC3(2) = C3nsp2RS
-C $$$ *     Non-singlet-minus
-C $$$                elseif(k.eq.4)then
-C $$$ *     C2
-C $$$                   C2L(2)   = C2nsm2L
-C $$$                   integC2(2) = C2nsm2RS
-C $$$ *     CL
-C $$$                   CLL(2)   = 0d0
-C $$$                   integCL(2) = CLnsm2RS
-C $$$ *     C3
-C $$$                   C3L(2)   = C3nsm2L
-C $$$                   integC3(2) = C3nsm2RS
-C $$$                endif
-C $$$             endif
 *
 *     Integrals
 *
             do wipt=0,ipt_ZM
-               SC2zm(igrid,inf,k,wipt,beta,alpha) = integC2(wipt) 
-     1                                            + C2L(wipt) * fL
-               SCLzm(igrid,inf,k,wipt,beta,alpha) = integCL(wipt) 
-     1                                            + CLL(wipt) * fL
-               SC3zm(igrid,inf,k,wipt,beta,alpha) = integC3(wipt) 
-     1                                            + C3L(wipt) * fL
+               SC2zm(igrid,inf,k,wipt,beta,alpha) = integG1(wipt) 
+     1                                            + G1L(wipt) * fL
+               SCLzm(igrid,inf,k,wipt,beta,alpha) = integGL(wipt) 
+     1                                            + GLL(wipt) * fL
+               SC3zm(igrid,inf,k,wipt,beta,alpha) = integG4(wipt) 
+     1                                            + G4L(wipt) * fL
             enddo
          enddo
       enddo
