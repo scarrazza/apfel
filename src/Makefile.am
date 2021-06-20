@@ -65,7 +65,11 @@ DIS =   DIS/InitializeAPFEL_DIS.f DIS/initParametersDIS.f DIS/SetMassScheme.f DI
 	DIS/SetEWCouplings.f DIS/EnableDynamicalScaleVariations.f DIS/EnableIntrinsicCharm.f DIS/IncludeIntrinsicCharm.f \
 	DIS/integrandsIC.f DIS/CacheStructureFunctionsAPFEL.f DIS/StructureFunctionxQ.f DIS/SetDampingPowerFONLL.f \
 	DIS/hqcoef.f DIS/initIntegralsDISRes.f DIS/IncludeNLOQEDCorrections.f DIS/EnableSFNLOQEDCorrections.f \
-	DIS/LHAPDFgridStructureFunctions.f DIS/SetScaleVariationProcedure.f DIS/SetNCComponent.f
+	DIS/LHAPDFgridStructureFunctions.f DIS/SetScaleVariationProcedure.f DIS/SetNCComponent.f \
+	DIS/RSLintegralspDIS.f DIS/integrandspDIS.f DIS/initIntegralspDIS.f \
+	DIS/g4total.f DIS/g4light.f DIS/g4charm.f DIS/g4bottom.f DIS/g4top.f \
+	DIS/g1total.f DIS/g1light.f DIS/g1charm.f DIS/g1bottom.f DIS/g1top.f \
+	DIS/gLtotal.f DIS/gLlight.f DIS/gLcharm.f DIS/gLbottom.f DIS/gLtop.f
 
 FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src/gauleg.f FTDY/src/initDYcouplings.f FTDY/src/initxGridDY.f \
 	FTDY/src/readcDY.f FTDY/src/ReadDataFile.f FTDY/src/sigmafk_dy.f FTDY/src/wcDYlo.f FTDY/src/wcDYqg.f FTDY/src/wcDYqq.f FTDY/src/wcoeffDY.f \

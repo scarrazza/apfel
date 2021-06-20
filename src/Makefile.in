@@ -253,7 +253,13 @@ am__objects_10 = DIS/InitializeAPFEL_DIS.lo DIS/initParametersDIS.lo \
 	DIS/IncludeNLOQEDCorrections.lo \
 	DIS/EnableSFNLOQEDCorrections.lo \
 	DIS/LHAPDFgridStructureFunctions.lo \
-	DIS/SetScaleVariationProcedure.lo DIS/SetNCComponent.lo
+	DIS/SetScaleVariationProcedure.lo DIS/SetNCComponent.lo \
+	DIS/RSLintegralspDIS.lo DIS/integrandspDIS.lo \
+	DIS/initIntegralspDIS.lo DIS/g4total.lo DIS/g4light.lo \
+	DIS/g4charm.lo DIS/g4bottom.lo DIS/g4top.lo DIS/g1total.lo \
+	DIS/g1light.lo DIS/g1charm.lo DIS/g1bottom.lo DIS/g1top.lo \
+	DIS/gLtotal.lo DIS/gLlight.lo DIS/gLcharm.lo DIS/gLbottom.lo \
+	DIS/gLtop.lo
 am__objects_11 = HELL/src/hell-x.lo HELL/src/hell_wrapper.lo \
 	HELL/src/expansionSFs.lo HELL/src/math/special_functions.lo
 am__objects_12 = FTDY/src/ComputeFKTables.lo \
@@ -399,7 +405,6 @@ BINRELOC_LIBS = @BINRELOC_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
-CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
 CXXCPP = @CXXCPP@
@@ -512,6 +517,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -581,7 +587,11 @@ DIS = DIS/InitializeAPFEL_DIS.f DIS/initParametersDIS.f DIS/SetMassScheme.f DIS/
 	DIS/SetEWCouplings.f DIS/EnableDynamicalScaleVariations.f DIS/EnableIntrinsicCharm.f DIS/IncludeIntrinsicCharm.f \
 	DIS/integrandsIC.f DIS/CacheStructureFunctionsAPFEL.f DIS/StructureFunctionxQ.f DIS/SetDampingPowerFONLL.f \
 	DIS/hqcoef.f DIS/initIntegralsDISRes.f DIS/IncludeNLOQEDCorrections.f DIS/EnableSFNLOQEDCorrections.f \
-	DIS/LHAPDFgridStructureFunctions.f DIS/SetScaleVariationProcedure.f DIS/SetNCComponent.f
+	DIS/LHAPDFgridStructureFunctions.f DIS/SetScaleVariationProcedure.f DIS/SetNCComponent.f \
+	DIS/RSLintegralspDIS.f DIS/integrandspDIS.f DIS/initIntegralspDIS.f \
+	DIS/g4total.f DIS/g4light.f DIS/g4charm.f DIS/g4bottom.f DIS/g4top.f \
+	DIS/g1total.f DIS/g1light.f DIS/g1charm.f DIS/g1bottom.f DIS/g1top.f \
+	DIS/gLtotal.f DIS/gLlight.f DIS/gLcharm.f DIS/gLbottom.f DIS/gLtop.f
 
 FTDY = FTDY/src/ComputeFKTables.f FTDY/src/ComputeHardCrossSectionsDY.f FTDY/src/gauleg.f FTDY/src/initDYcouplings.f FTDY/src/initxGridDY.f \
 	FTDY/src/readcDY.f FTDY/src/ReadDataFile.f FTDY/src/sigmafk_dy.f FTDY/src/wcDYlo.f FTDY/src/wcDYqg.f FTDY/src/wcDYqq.f FTDY/src/wcoeffDY.f \
@@ -1093,6 +1103,27 @@ DIS/SetScaleVariationProcedure.lo: DIS/$(am__dirstamp) \
 	DIS/$(DEPDIR)/$(am__dirstamp)
 DIS/SetNCComponent.lo: DIS/$(am__dirstamp) \
 	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/RSLintegralspDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/integrandspDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/initIntegralspDIS.lo: DIS/$(am__dirstamp) \
+	DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/g4total.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/g4light.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/g4charm.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/g4bottom.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/g4top.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/g1total.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/g1light.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/g1charm.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/g1bottom.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/g1top.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/gLtotal.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/gLlight.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/gLcharm.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/gLbottom.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
+DIS/gLtop.lo: DIS/$(am__dirstamp) DIS/$(DEPDIR)/$(am__dirstamp)
 HELL/src/$(am__dirstamp):
 	@$(MKDIR_P) HELL/src
 	@: > HELL/src/$(am__dirstamp)

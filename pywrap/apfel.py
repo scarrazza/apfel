@@ -447,6 +447,51 @@ def F3top(x):
 def F3total(x):
     return _apfel.F3total(x)
 
+def g1light(x):
+    return _apfel.g1light(x)
+
+def g1charm(x):
+    return _apfel.g1charm(x)
+
+def g1bottom(x):
+    return _apfel.g1bottom(x)
+
+def g1top(x):
+    return _apfel.g1top(x)
+
+def g1total(x):
+    return _apfel.g1total(x)
+
+def gLlight(x):
+    return _apfel.gLlight(x)
+
+def gLcharm(x):
+    return _apfel.gLcharm(x)
+
+def gLbottom(x):
+    return _apfel.gLbottom(x)
+
+def gLtop(x):
+    return _apfel.gLtop(x)
+
+def gLtotal(x):
+    return _apfel.gLtotal(x)
+
+def g4light(x):
+    return _apfel.g4light(x)
+
+def g4charm(x):
+    return _apfel.g4charm(x)
+
+def g4bottom(x):
+    return _apfel.g4bottom(x)
+
+def g4top(x):
+    return _apfel.g4top(x)
+
+def g4total(x):
+    return _apfel.g4total(x)
+
 def StructureFunctionxQ(proc, sf, comp, x, Q):
     return _apfel.StructureFunctionxQ(proc, sf, comp, x, Q)
 
