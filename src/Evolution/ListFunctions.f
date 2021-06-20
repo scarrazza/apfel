@@ -283,6 +283,10 @@
       write(6,*) "    returns the mass of the i-th heavy quark"
       write(6,*) "    (i = 4,5,6) scale 'Q' [GeV] (the masses run only"
       write(6,*) "    when using the MSbar scheme)."
+      write(6,*) achar(27)//"[34m- GetLambdaQCD(int i):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    returns the value of LambdaQCD with in GeV with"
+      write(6,*) "    'i' active flavours (i = 4,5,6)."
       write(6,*) achar(27)//"[34m- GetThreshold(int i):"//
      1           achar(27)//"[0m"
       write(6,*) "    returns the value of the i-th heavy quark"

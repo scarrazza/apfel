@@ -177,7 +177,8 @@ am__objects_3 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetQGridParameters.lo Evolution/GetThreshold.lo \
 	Evolution/EnableNLOQEDCorrections.lo \
 	Evolution/ExternalSplittingFunctions.lo \
-	Evolution/GetMaxFlavourPDFs.lo Evolution/GetMaxFlavourAlpha.lo
+	Evolution/GetMaxFlavourPDFs.lo Evolution/GetMaxFlavourAlpha.lo \
+	Evolution/GetLambdaQCD.lo
 am__objects_4 = Evolution/interpolants.lo
 am__objects_5 = Evolution/SplittingFunctions.lo
 am__objects_6 = Evolution/a_QCD.lo Evolution/a_QED.lo \
@@ -547,7 +548,7 @@ SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQL
 	Evolution/GetPerturbativeOrder.f Evolution/SetTauMass.f Evolution/EnableLeptonEvolution.f Evolution/SetLHgridParameters.f \
 	Evolution/SetEpsilonTruncation.f Evolution/GetMuF.f Evolution/SetPolarizedEvolution.f Evolution/SetMassMatchingScales.f \
 	Evolution/SetMassScaleReference.f Evolution/SetQGridParameters.f Evolution/GetThreshold.f Evolution/EnableNLOQEDCorrections.f \
-	Evolution/ExternalSplittingFunctions.f Evolution/GetMaxFlavourPDFs.f Evolution/GetMaxFlavourAlpha.f
+	Evolution/ExternalSplittingFunctions.f Evolution/GetMaxFlavourPDFs.f Evolution/GetMaxFlavourAlpha.f Evolution/GetLambdaQCD.f
 
 INTER = Evolution/interpolants.f
 SPLITTING_FUNCTIONS = Evolution/SplittingFunctions.f
@@ -827,6 +828,8 @@ Evolution/ExternalSplittingFunctions.lo: Evolution/$(am__dirstamp) \
 Evolution/GetMaxFlavourPDFs.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/GetMaxFlavourAlpha.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/GetLambdaQCD.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/interpolants.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
