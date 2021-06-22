@@ -10,7 +10,7 @@
 
 extern "C" {
   #define fgetapfelversion FC_FUNC(getapfelversion, GETAPFELVERSION)
-  void fgetapfelversion(char* fversion, int length) {
+  void fgetapfelversion(char* fversion, int) {
     std::string version = STR(APFEL_VERSION);
     strncpy(fversion, version.c_str(),  version.length()+1);
     for (size_t i = strlen(fversion); i < (unsigned) version.length()+1; ++i) {
@@ -19,12 +19,12 @@ extern "C" {
   }
   // define external functions for OS compilation
 #ifndef DARWIN
-  void externalsetapfel_(double x, double Q, double* xf)  { return; }
-  void externalsetapfel1_(double x, double Q, double* xf) { return; }
-  void externalsetapfelrep_(double x, double Q, int irep, double* xf)  { return; }
-  void externalsetapfelrep1_(double x, double Q, int irep, double* xf) { return; }
-  void externalsetapfellept_(double x, double Q, int irep, double* xl, double* xf) { return; }
-  void pretabulatedpdfsrep_(int igrid, int alpha, int irep, double* f0) { return; }
+  void externalsetapfel_(double, double, double*)  { return; }
+  void externalsetapfel1_(double, double, double*) { return; }
+  void externalsetapfelrep_(double, double, int, double*)  { return; }
+  void externalsetapfelrep1_(double, double, int, double*) { return; }
+  void externalsetapfellept_(double, double, int, double*, double*) { return; }
+  void pretabulatedpdfsrep_(int, int, int, double*) { return; }
 #endif
 
 }

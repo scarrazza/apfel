@@ -90,7 +90,7 @@ namespace HELLx {
     double *xdC2g, *xdCLg;
     void Init();
   public:
-    xTableC(string filename, bool nll) : xTable(filename) { Init(); }
+    xTableC(string filename, bool) : xTable(filename) { Init(); }
     ~xTableC() { delete[] xdC2g; delete[] xdCLg; };
     void eval(double x, double &dC2g, double &dCLg);
   };
@@ -103,7 +103,7 @@ namespace HELLx {
     double Q;
     void Init();
   public:
-    xTableCm(string filename, bool nll) : xTable(filename) { Init(); }
+    xTableCm(string filename, bool) : xTable(filename) { Init(); }
     ~xTableCm() { for(int i=0; i<Nmass; i++) {delete[] xdCLg[i]; delete[] xdC2g[i]; delete[] xdCLaxg[i]; delete[] xdC2axg[i]; delete[] xdCLCCg[i]; delete[] xdC2CCg[i]; delete[] xdC3CCg[i]; delete[] xdKhg[i];} delete[] xdCLg; delete[] xdC2g; delete[] xdKhg; delete[] mQvals; };
     void eval(double x, double mQ, double &dKhg, double &dC2g, double &dCLg, double &dC2axg, double &dCLaxg, double &dC2CCg, double &dCLCCg, double &dC3CCg, double as, int nf);
   };
@@ -115,7 +115,7 @@ namespace HELLx {
     double c10, c20, c11, c30, c21;
     void Init();
   public:
-    xTableCggH(string filename, bool nll) : xTable(filename) { Init(); }
+    xTableCggH(string filename, bool) : xTable(filename) { Init(); }
     ~xTableCggH() { delete[] xdCggH; delete[] xdCggHaux; };
     void eval(double x, double &dCggH, double &dCggHaux);
     double GetCoeff10() { return c10; };

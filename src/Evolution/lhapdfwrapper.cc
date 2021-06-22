@@ -61,4 +61,4 @@ extern "C" bool islhapdf6_() { return true; }
 #endif
 
 // function to create folder for LHAPDFgrid.f
-extern "C" void mkdir_(char* name, int length) { mkdir(name, 0777); }
+extern "C" void mkdir_(char* name, int) { mkdir(name, 0777); }

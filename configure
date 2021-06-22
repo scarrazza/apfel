@@ -3180,7 +3180,8 @@ program_transform_name=`printf "%s\n" "$program_transform_name" | sed "$ac_scrip
 # Expand $ac_aux_dir to an absolute path.
 am_aux_dir=`cd "$ac_aux_dir" && pwd`
 
-if test x"${MISSING+set}" != xset; then
+
+  if test x"${MISSING+set}" != xset; then
   MISSING="\${SHELL} '$am_aux_dir/missing'"
 fi
 # Use eval to expand $SHELL
@@ -6685,10 +6686,6 @@ AM_FFLAGS=$AM_FCFLAGS
 FFLAGS="$FFLAGS $FCFLAGS"
 
 
-
-
-
-enable_dlopen=yes
 
 
 
@@ -10363,6 +10360,8 @@ func_stripname_cnf ()
 # Set options
 
 
+
+        enable_dlopen=no
 
 
   enable_win32_dll=no
