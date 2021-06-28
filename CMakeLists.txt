@@ -65,7 +65,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 
 # generate list of source files
-file(GLOB_RECURSE  source_files src/* ccwrap/* pywrap/*)
+file(GLOB_RECURSE  source_files src/* ccwrap/*)
 
 # build test codes
 enable_testing()
