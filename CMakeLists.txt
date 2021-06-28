@@ -34,6 +34,10 @@ set(includedir "${prefix}/include")
 set(libdir "${prefix}/lib")
 configure_file("${PROJECT_SOURCE_DIR}/bin/apfel-config.in" "${PROJECT_SOURCE_DIR}/bin/apfel-config")
 
+# Fortran wrappers =========================================================================
+
+configure_file("${PROJECT_SOURCE_DIR}/include/APFEL/FortranWrappers.h.cmake" "${PROJECT_SOURCE_DIR}/include/APFEL/FortranWrappers.h")
+
 # FINALIZE ==================================================================================
 
 # LHAPDF
