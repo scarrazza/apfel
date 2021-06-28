@@ -47,3 +47,4 @@ examples/CMakeFiles/
 examples/CTestTestfile.cmake
 examples/cmake_install.cmake
 lib/libapfel.dylib
+lib/_apfel.so

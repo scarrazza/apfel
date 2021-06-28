@@ -72,6 +72,9 @@ add_library(apfel SHARED ${source_files})
 # define libraries to be linked
 target_link_libraries(apfel ${LHAPDF_LIBRARIES})
 
+# Add swig subdirectory
+add_subdirectory(pywrap)
+
 # install
 install(TARGETS apfel
            RUNTIME DESTINATION bin
@@ -79,4 +82,9 @@ install(TARGETS apfel
 install(DIRECTORY include/APFEL DESTINATION include)
 install(FILES ${PROJECT_SOURCE_DIR}/bin/apfel-config
 ${CMAKE_CURRENT_BINARY_DIR}/examples/CheckAPFEL ${CMAKE_CURRENT_BINARY_DIR}/examples/ListFunctions DESTINATION bin
-PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ
+GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
+
+execute_process(COMMAND python3 -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())" OUTPUT_VARIABLE PYTHON_SITE_PACKAGES OUTPUT_STRIP_TRAILING_WHITESPACE)
+install(TARGETS _apfel DESTINATION ${PYTHON_SITE_PACKAGES})
+install(FILES ${CMAKE_BINARY_DIR}/pywrap/apfel.py DESTINATION ${PYTHON_SITE_PACKAGES})
