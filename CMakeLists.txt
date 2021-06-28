@@ -3,6 +3,9 @@
 # define minimum version of cmake
 cmake_minimum_required (VERSION 3.5)
 
+cmake_policy(SET CMP0086 OLD)
+cmake_policy(SET CMP0078 OLD)
+
 # define project name and its language
 project(apfel CXX Fortran)
 
