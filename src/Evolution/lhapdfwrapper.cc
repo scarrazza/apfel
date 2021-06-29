@@ -13,15 +13,22 @@
 // global objects
 LHAPDF::PDF* _pdfs;
 extern "C" {
-
   void   mkpdfs_(int *mem, char* setname, int len)
   {
     LHAPDF::setVerbosity(0);
     std::string str(setname, len);
 
-    if (_pdfs) delete _pdfs;
-    try { _pdfs =  LHAPDF::mkPDF(str, *mem); }
-    catch(LHAPDF::Exception e) { std::cout << e.what() << std::endl; }
+    if (_pdfs)
+      delete _pdfs;
+    try
+      {
+	_pdfs = LHAPDF::mkPDF(str, *mem);
+	std::cout << "ma non esco\n";
+      }
+    catch(LHAPDF::Exception e)
+      {
+	std::cout << e.what() << std::endl;
+      }
   }
 
   double xfxq_(int *fl, double *x, double *Q)
@@ -29,7 +36,10 @@ extern "C" {
     return _pdfs->xfxQ(*fl, *x, *Q);
   }
 
-  bool   islhapdf6_() { return true;  }
+  bool islhapdf6_()
+  {
+    return true;
+  }
 }
 #else
 
@@ -53,7 +63,7 @@ extern "C" {
 #endif
 
 #else
-extern "C" void stop() { printf(" [Error] LHAPDF support disabled with --disable-lhapdf.\n"); exit(-1); }
+extern "C" void stop() { printf(" [Error] LHAPDF disabled.\n"); exit(-1); }
 extern "C" void mkpdfs_(){ stop(); return ; }
 extern "C" double xfxq_(){ stop(); return 0;}
 extern "C" int numberpdf_(){ stop(); return 0;}
