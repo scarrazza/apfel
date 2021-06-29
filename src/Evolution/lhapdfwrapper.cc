@@ -23,7 +23,6 @@ extern "C" {
     try
       {
 	_pdfs = LHAPDF::mkPDF(str, *mem);
-	std::cout << "ma non esco\n";
       }
     catch(LHAPDF::Exception e)
       {
