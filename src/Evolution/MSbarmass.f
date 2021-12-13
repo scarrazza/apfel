@@ -104,11 +104,11 @@
      3              / EVMASS(5,ASTH(5),ASTHM(6))
             ELSE
                EVF = DECOUP("DW",4,DLOG(K2TH(4)))
-     1              / EVMASS(3,ASQ,ASIM)
+     1              / EVMASS(3,ASQ,ASTH(4))
      2              * DECOUP("DW",5,DLOG(K2TH(5)))
      3              / EVMASS(4,ASTH(4),ASTHM(5))
      4              * DECOUP("DW",6,DLOG(K2TH(6)))
-     5              / EVMASS(5,ASTH(5),ASTHM(6))
+     5              / EVMASS(5,ASTH(5),ASIM)
             ENDIF
          ENDIF
       ENDIF
