@@ -99,9 +99,9 @@
                EVF = DECOUP("DW",6,DLOG(K2TH(6))) / EVMASS(5,ASQ,ASIM)
             ELSEIF(Q2.GE.M2TH(4).AND.NFMAXALPHA.GE.4)THEN
                EVF = DECOUP("DW",5,DLOG(K2TH(5)))
-     1              / EVMASS(4,ASQ,ASIM)
+     1              / EVMASS(4,ASQ,ASTH(5))
      2              * DECOUP("DW",6,DLOG(K2TH(6)))
-     3              / EVMASS(5,ASTH(5),ASTHM(6))
+     3              / EVMASS(5,ASTH(5),ASIM)
             ELSE
                EVF = DECOUP("DW",4,DLOG(K2TH(4)))
      1              / EVMASS(3,ASQ,ASTH(4))
