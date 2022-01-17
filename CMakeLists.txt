@@ -8,7 +8,7 @@ cmake_policy(SET CMP0078 OLD)
 
 # define project name, version and its languages
 project(apfel CXX Fortran)
-set(apfel_VERSION 3.0.5)
+set(apfel_VERSION 3.0.6)
 
 # define c++ standard and issue all the warning demanded by this standard
 set(CMAKE_BUILD_TYPE Release)
