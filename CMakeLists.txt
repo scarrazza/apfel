@@ -8,7 +8,7 @@ cmake_policy(SET CMP0078 OLD)
 
 # define project name, version and its languages
 project(apfel CXX Fortran)
-set(apfel_VERSION 3.1.0)
+set(apfel_VERSION 3.0.5)
 
 # define c++ standard and issue all the warning demanded by this standard
 set(CMAKE_BUILD_TYPE Release)
@@ -16,7 +16,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -fPIC")
-set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS}  -fPIC")
+set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} -fPIC -cpp")
 set(CMAKE_SHARED_LINKER_FLAGS -w)
 
 if (NOT DEFINED CMAKE_MACOSX_RPATH)
@@ -30,6 +30,7 @@ set(prefix ${CMAKE_INSTALL_PREFIX})
 set(exec_prefix "${prefix}")
 set(includedir "${prefix}/include")
 set(libdir "${prefix}/lib")
+set(PACKAGE_VERSION "${apfel_VERSION}")
 configure_file("${PROJECT_SOURCE_DIR}/bin/apfel-config.in" "${PROJECT_SOURCE_DIR}/bin/apfel-config")
 
 # Fortran wrappers =========================================================================
