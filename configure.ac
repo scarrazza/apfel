@@ -1,4 +1,4 @@
-AC_PREREQ([2.71])
+AC_PREREQ([2.69])
 AC_INIT([APFEL],[3.0.5],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfel])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
@@ -94,7 +94,7 @@ if test x$enable_pywrap == xyes; then
  ## Test for Python header
   if test -x "$PYTHON"; then
     AC_MSG_CHECKING([for Python include path])
-    python_incpath=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc();"`
+    python_incpath=`$PYTHON -c "import distutils.sysconfig; print(distutils.sysconfig.get_python_inc());"`
     AC_MSG_RESULT([$python_incpath])
     python_header="$python_incpath/Python.h"
     if test -z "$python_incpath"; then

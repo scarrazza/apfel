@@ -21402,7 +21402,7 @@ fi
   if test -x "$PYTHON"; then
     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Python include path" >&5
 printf %s "checking for Python include path... " >&6; }
-    python_incpath=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc();"`
+    python_incpath=`$PYTHON -c "import distutils.sysconfig; print(distutils.sysconfig.get_python_inc());"`
     { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $python_incpath" >&5
 printf "%s\n" "$python_incpath" >&6; }
     python_header="$python_incpath/Python.h"
