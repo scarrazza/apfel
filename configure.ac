@@ -1,4 +1,4 @@
-AC_PREREQ([2.69])
+AC_PREREQ([2.71])
 AC_INIT([APFEL],[3.0.5],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfel])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
@@ -49,12 +49,11 @@ AC_SUBST(FFLAGS)
 AC_SUBST(F77)
 AC_SUBST(AM_FFLAGS)
 
-AC_LIBTOOL_DLOPEN
-AC_PROG_LIBTOOL
+LT_INIT
 
 ## Enable debugging symbols.
 AC_ARG_ENABLE([debug],
-  [AC_HELP_STRING(--enable-debug, [build with debugging symbols (default=no)])],
+  [AS_HELP_STRING([--enable-debug],[build with debugging symbols (default=no)])],
   [], [enable_debug=no])
 if test x$enable_debug == xyes; then
   [AM_FCFLAGS="$AM_FCFLAGS -g"]
@@ -73,7 +72,7 @@ esac
 
 ## Build Doxygen if possible
 AC_ARG_ENABLE([lhapdf],
-  [AC_HELP_STRING(--disable-lhapdf, [don't link to LHAPDF])],
+  [AS_HELP_STRING([--disable-lhapdf],[don't link to LHAPDF])],
   [], [enable_lhapdf=yes])
 if test x$enable_lhapdf == xyes; then
   AC_SEARCH_LHAPDF  
@@ -83,8 +82,7 @@ fi
 AM_CONDITIONAL(ENABLE_LHAPDF, [test x$enable_lhapdf == xyes])
 
 ## Python extension
-AC_ARG_ENABLE(pywrap, [AC_HELP_STRING(--disable-pywrap,
-  [don't build Python module (default=build)])],
+AC_ARG_ENABLE(pywrap, [AS_HELP_STRING([--disable-pywrap],[don't build Python module (default=build)])],
   [], [enable_pywrap=yes])   
 
 enable_pywrap=yes

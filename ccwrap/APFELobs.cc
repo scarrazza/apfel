@@ -146,6 +146,81 @@ namespace APFEL {
     return ff3total(&x);
   }
 
+  double g1light(double x)
+  {
+    return fg1light(&x);
+  }
+
+  double g1charm(double x)
+  {
+    return fg1charm(&x);
+  }
+
+  double g1bottom(double x)
+  {
+    return fg1bottom(&x);
+  }
+
+  double g1top(double x)
+  {
+    return fg1top(&x);
+  }
+
+  double g1total(double x)
+  {
+    return fg1total(&x);
+  }
+
+  double gLlight(double x)
+  {
+    return fgllight(&x);
+  }
+
+  double gLcharm(double x)
+  {
+    return fglcharm(&x);
+  }
+
+  double gLbottom(double x)
+  {
+    return fglbottom(&x);
+  }
+
+  double gLtop(double x)
+  {
+    return fgltop(&x);
+  }
+
+  double gLtotal(double x)
+  {
+    return fgltotal(&x);
+  }
+
+  double g4light(double x)
+  {
+    return fg4light(&x);
+  }
+
+  double g4charm(double x)
+  {
+    return fg4charm(&x);
+  }
+
+  double g4bottom(double x)
+  {
+    return fg4bottom(&x);
+  }
+
+  double g4top(double x)
+  {
+    return fg4top(&x);
+  }
+
+  double g4total(double x)
+  {
+    return fg4total(&x);
+  }
+
   double StructureFunctionxQ(const std::string& proc, const std::string& sf, const std::string& comp, double x, double Q)
   {
     std::vector<char> cproc(proc.c_str(), proc.c_str() + proc.size() + 1);

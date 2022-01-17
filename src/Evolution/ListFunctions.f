@@ -283,6 +283,10 @@
       write(6,*) "    returns the mass of the i-th heavy quark"
       write(6,*) "    (i = 4,5,6) scale 'Q' [GeV] (the masses run only"
       write(6,*) "    when using the MSbar scheme)."
+      write(6,*) achar(27)//"[34m- GetLambdaQCD(int i):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    returns the value of LambdaQCD with in GeV with"
+      write(6,*) "    'i' active flavours (i = 4,5,6)."
       write(6,*) achar(27)//"[34m- GetThreshold(int i):"//
      1           achar(27)//"[0m"
       write(6,*) "    returns the value of the i-th heavy quark"
@@ -375,6 +379,11 @@
      1           achar(27)//"[0m"
       write(6,*) "    sets process ('pr' = 'EM', 'NC', 'CC', default"
       write(6,*) "    'pr' = 'EM')."
+      write(6,*) achar(27)//"[34m- SetNCComponent(string cm):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    sets the component of the NC structure functions"
+      write(6,*) "    ('cm' = 'gg', 'gZ', 'ZZ', 'al', default"
+      write(6,*) "    'cm' = 'al')."
       write(6,*) achar(27)//"[34m- SetProjectileDIS(string lept):"//
      1           achar(27)//"[0m"
       write(6,*) "    sets the projectile ('lept' = 'electron',"
@@ -420,6 +429,14 @@
       write(6,*) achar(27)//"[34m- SetFacQRatio(double ratio):"//
      1           achar(27)//"[0m"
       write(6,*) "    sets the ratio muF / Q (default 1)"
+      write(6,*) achar(27)//"[34m- SetScaleVariationProcedure(int",
+     1           " scp):"//achar(27)//"[0m"
+      write(6,*) "    sets the scale variation procedure (default: 0)."
+      write(6,*) "    The options are:"
+      write(6,*) "    - 0: scale variations in evolution"
+      write(6,*) "         and structure functions."
+      write(6,*) "    - 1: scale variations in structure functions"
+      write(6,*) "         only."
       write(6,*) achar(27)//"[34m- EnableDynamicalScaleVariations(",
      1           "bool):"//achar(27)//"[0m"
       write(6,*) "    enables or disables the possibility to perform"
@@ -477,9 +494,24 @@
      1           " F3charm(double x), F3bottom(double x),"
       write(6,*) "  F3top(double x), F3total(double x):"//
      1           achar(27)//"[0m"
-      write(6,*) "    return the F2, FL and xF3 struncture functions in"
+      write(6,*) "    return the F2, FL and xF3 structure functions in"
       write(6,*) "    'x' at the final scale 'Q' [GeV] defined in"
       write(6,*) "    'ComputeStructureFunctionsAPFEL'."
+      write(6,*) achar(27)//"[34m- g1light(double x),",
+     1           " g1charm(double x), g1bottom(double x),"
+      write(6,*) "  g1top(double x), g1total(double x):"//
+     1           achar(27)//"[0m"
+      write(6,*) achar(27)//"[34m- gLlight(double x),",
+     1           " gLcharm(double x), gLbottom(double x),"
+      write(6,*) "  gLtop(double x), gLtotal(double x):"//
+     1           achar(27)//"[0m"
+      write(6,*) achar(27)//"[34m- g4light(double x),",
+     1           " g4charm(double x), g4bottom(double x),"
+      write(6,*) "  g4top(double x), g4total(double x):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    return the g1, gL and xg4 polarised structure"
+      write(6,*) "    functions in 'x' at the final scale 'Q' [GeV]"
+      write(6,*) "     defined in 'ComputeStructureFunctionsAPFEL'."
       write(6,*) achar(27)//"[34m- GetZMass():"//achar(27)//"[0m"
       write(6,*) "    returns the value of the mass of the Z boson"
       write(6,*) achar(27)//"[34m- GetWMass():"//achar(27)//"[0m"
@@ -509,7 +541,6 @@
      1           "[33mSpecial functions for the production of FK",
      2           " tables:"//achar(27)//"[0m"
       write(6,*) "  "
-      write(6,*) achar(27)//"[34m- SetScaleVariationProcedure(int scp)"
       write(6,*) achar(27)//"[34m- SetFKObservable(string obs)"
       write(6,*) achar(27)//"[34m- GetFKObservable()"
       write(6,*) achar(27)//"[34m- FKSimulator(string obs, double x,",

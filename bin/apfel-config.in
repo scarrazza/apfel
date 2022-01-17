@@ -12,6 +12,7 @@ if [[ $# -eq 0 || -n $( echo $* | egrep -- "--help|-h" ) ]]; then
     echo "Usage: apfel-config [[--help|-h] | [--prefix] | [--ldflags]]"
     echo "Options:"
     echo "  --help | -h    : show this help message"
+    echo "  --version      : show the code version"
     echo "  --prefix       : show the installation prefix (cf. autoconf)"
     echo "  --incdir       : show the path to the APFEL header directory (for C++ interface)"
     echo "  --libdir       : show the path to the APFEL library directory"
@@ -56,6 +57,6 @@ test -n "$tmp" && CheckAPFEL
 
 ## Version
 tmp=$( echo "$*" | egrep -- '--\<version\>')
-test -n "$tmp" && OUT="$OUT @PACKAGE_VERSION@"
+test -n "$tmp" && OUT="$OUT @apfel_VERSION@"
 
 echo $OUT

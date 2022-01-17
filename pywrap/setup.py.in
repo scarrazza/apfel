@@ -49,12 +49,12 @@ setup(name = 'APFEL',
       ext_modules=[ext],
       py_modules = ['apfel'],
 
-      author = ['Stefano Carrazza'],
-      author_email = 'stefano.carrazza@mi.infn.it',
-      url = 'http://projects.hepforge.org/apfel/',
-      description = '',
+      author = ['Valerio Bertone'],
+      author_email = 'valerio.bertone@cern.ch',
+      url = 'https://github.com/vbertone/apfel',
+      description = 'A PDF Evolution Library',
       long_description = longdesc,
-      keywords = 'generator montecarlo simulation data hep physics particle validation analysis tuning',
+      keywords = 'PDFs, FFs, DGLAP, DIS, structure functions',
       license = 'GPL',
       )
 

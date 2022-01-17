@@ -71,6 +71,25 @@ namespace APFEL {
   double F3top(double x);
   double F3total(double x);
 
+  /// Polarised structure functions
+  double g1light(double x);
+  double g1charm(double x);
+  double g1bottom(double x);
+  double g1top(double x);
+  double g1total(double x);
+
+  double gLlight(double x);
+  double gLcharm(double x);
+  double gLbottom(double x);
+  double gLtop(double x);
+  double gLtotal(double x);
+
+  double g4light(double x);
+  double g4charm(double x);
+  double g4bottom(double x);
+  double g4top(double x);
+  double g4total(double x);
+
   /// Chached structure functions
   double StructureFunctionxQ(const std::string& proc,const std::string& sf,const std::string& comp,double x,double Q);
 
