@@ -1,5 +1,5 @@
-AC_PREREQ([2.71])
-AC_INIT([APFEL],[3.0.5],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfel])
+AC_PREREQ([2.69])
+AC_INIT([APFEL],[3.0.7],[valerio.bertone@cern.ch,stefano.carrazza@cern.ch],[apfel])
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([subdir-objects])
@@ -16,7 +16,7 @@ if test "x$FCFLAGS" == "x"; then
 #  FFLAGS="-fopenmp -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -O2 -pipe -fopenmp -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-all -Og -g -Wall -Wextra -fcheck=all -fbacktrace -fvar-tracking-assignments -pipe -fsanitize=address"
 # CXXFLAGS="-fsanitize=address"
 # CCFLAGS="-fsanitize=address"
-  FCFLAGS="-g -O3 -Wunused"
+  FCFLAGS="-g -O3 -Wunused -cpp"
 fi
 # Try to respect users' Fortran compiler variables
 if test "x$FC" == "x"; then
@@ -94,7 +94,7 @@ if test x$enable_pywrap == xyes; then
  ## Test for Python header
   if test -x "$PYTHON"; then
     AC_MSG_CHECKING([for Python include path])
-    python_incpath=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc();"`
+    python_incpath=`$PYTHON -c "import distutils.sysconfig; print(distutils.sysconfig.get_python_inc());"`
     AC_MSG_RESULT([$python_incpath])
     python_header="$python_incpath/Python.h"
     if test -z "$python_incpath"; then
