@@ -21383,11 +21383,11 @@ fi
   #AZ_PYTHON_VERSION_ENSURE([2.3])
  ## Test for Python header
   if test -x "$PYTHON"; then
-    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking for Python include path" >&5
-printf %s "checking for Python include path... " >&6; }
-    python_incpath=`$PYTHON -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc();"`
-    { printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: $python_incpath" >&5
-printf "%s\n" "$python_incpath" >&6; }
+    { $as_echo "$as_me:${as_lineno-$LINENO}: checking for Python include path" >&5
+$as_echo_n "checking for Python include path... " >&6; }
+    python_incpath=`$PYTHON -c "import distutils.sysconfig; print(distutils.sysconfig.get_python_inc());"`
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: $python_incpath" >&5
+$as_echo "$python_incpath" >&6; }
     python_header="$python_incpath/Python.h"
     if test -z "$python_incpath"; then
       { printf "%s\n" "$as_me:${as_lineno-$LINENO}: WARNING: Can't build Python extension since include directory cannot be determined from distutils" >&5

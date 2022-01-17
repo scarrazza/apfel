@@ -471,7 +471,7 @@ c            endif
      2         -  2d0 * dlog( 1d0 - z ) + dlog( 1d0 - lambda * z ) ) 
      3         * ( 1d0 + z ) + 1d0 / lambda
      4         + ( 2d0 * lambda**2 - lambda - 1d0 ) / lambda 
-     4         / ( 1d0 - lambda * z ) )
+     5         / ( 1d0 - lambda * z ) ) 
 *
       return
       end
@@ -684,8 +684,8 @@ c            endif
      3         + 2d0 * ln1mz**2 - 2d0 * Rf 
      4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
      5         + ln1mlz / 2d0 / lambda**2 + ( 1d0 - lambda ) * z 
-     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
-     8         * ( 1d0 - lambda ) + lambda * KA )
+     6         / 2d0 / lambda / ( 1d0 - lambda * z ) )
+     7         * ( 1d0 - lambda ) + lambda * KA )
 *
       return
       end
@@ -827,7 +827,7 @@ c            endif
      3         + 2d0 * ln1mz**2 - 2d0 * Rf 
      4         + 2d0 * ( - 1d0 + dlog( kQF2 / lambda ) ) * ln1mz
      5         + ln1mlz / 2d0 / lambda**2 + ( 1d0 - lambda ) * z 
-     7         / 2d0 / lambda / ( 1d0 - lambda * z ) )
+     6         / 2d0 / lambda / ( 1d0 - lambda * z ) )
 *
       return
       end

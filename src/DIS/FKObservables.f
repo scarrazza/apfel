@@ -22,6 +22,7 @@
       double precision F2light,F2charm,F2bottom,F2top,F2total
       double precision FLlight,FLcharm,FLbottom,FLtop,FLtotal
       double precision F3light,F3charm,F3bottom,F3top,F3total
+      double precision xPDF
       double precision GetWMass,GetGFermi,GetProtonMass
       double precision GetSIATotalCrossSection
       double precision yp,ym,y2,ypc
@@ -50,9 +51,94 @@
       ym  = 1d0 - ( 1d0 - y )**2
       y2  = y * y
 *
+****  Up quark PDF
+*
+      if(obs(1:7).eq."DIS_XUQ")then
+         FKObservables = xPDF(2,x)
+*
+****  Up antiquark PDF
+*
+      elseif(obs(1:7).eq."DIS_XUB")then
+         FKObservables = xPDF(-2,x)
+*
+****  Down quark PDF
+*
+      elseif(obs(1:7).eq."DIS_XDQ")then
+         FKObservables = xPDF(1,x)
+*
+****  Down antiquark PDF
+*
+      elseif(obs(1:7).eq."DIS_XDB")then
+         FKObservables = xPDF(-1,x)
+*
+****  Strange quark PDF
+*
+      elseif(obs(1:7).eq."DIS_XSQ")then
+         FKObservables = xPDF(3,x)
+*
+****  Strange antiquark PDF
+*
+      elseif(obs(1:7).eq."DIS_XSB")then
+         FKObservables = xPDF(-3,x)
+*
+****  Charm quark PDF
+*
+      elseif(obs(1:7).eq."DIS_XCQ")then
+         FKObservables = xPDF(4,x)
+*
+****  Gluon PDF
+*
+      elseif(obs(1:7).eq."DIS_XGL")then
+         FKObservables = xPDF(0,x)
+*
+****  Non-singlet T3
+*
+      elseif(obs(1:7).eq."DIS_XT3")then
+         FKObservables = xPDF(+2,x) + xpdf(-2,x)
+     1        - 1d0 * ( xPDF(+1,x) + xPDF(-1,x) )
+*
+****  Non-singlet T8
+*
+      elseif(obs(1:7).eq."DIS_XT8")then
+         FKObservables = xPDF(+2,x) + xpdf(-2,x)
+     1        + 1d0 * ( xPDF(+1,x) + xPDF(-1,x) )
+     1        - 2d0 * ( xPDF(+3,x) + xPDF(-3,x) )
+*
+****  Non-singlet T15
+*
+      elseif(obs(1:8).eq."DIS_XT15")then
+         FKObservables = xPDF(+2,x) + xpdf(-2,x)
+     1        + 1d0 * ( xPDF(+1,x) + xPDF(-1,x) )
+     1        + 1d0 * ( xPDF(+3,x) + xPDF(-3,x) )
+     1        - 3d0 * ( xPDF(+4,x) + xPDF(-4,x) )
+*
+****  Valence V3
+*
+      elseif(obs(1:7).eq."DIS_XV3")then
+         FKObservables = xPDF(+2,x) - xPDF(-2,x) 
+     1        - 1d0 * ( xPDF(+1,x) - xPDF(-1,x) )
+*
+****  Valence V8
+*
+      elseif(obs(1:7).eq."DIS_XV8")then
+         FKObservables = xPDF(+2,x) - xPDF(-2,x) 
+     1        + 1d0 * ( xPDF(+1,x) - xPDF(-1,x) )
+     2        - 2d0 * ( xPDF(+3,x) - xPDF(-3,x) )
+*
+*
+****  Valence V
+*
+      elseif(obs(1:6).eq."DIS_XV")then
+         FKObservables = xPDF(+2,x) - xPDF(-2,x) 
+     1        + xPDF(+1,x) - xPDF(-1,x)
+     1        + xPDF(+3,x) - xPDF(-3,x)
+     1        + xPDF(+4,x) - xPDF(-4,x) 
+     1        + xPDF(+5,x) - xPDF(-5,x)
+     1        + xPDF(+6,x) - xPDF(-6,x) 
+*
 ****  Light structure function F2light
 *
-      if(obs(1:7).eq."DIS_F2L")then         
+      elseif(obs(1:7).eq."DIS_F2L")then         
          FKObservables = F2light(x)
 *
 ****  Up structure function F2u
@@ -275,66 +361,6 @@
 *
 ****  Neutrino scattering Reduced Cross-Section (light)
 *
-      elseif(obs(1:9).eq."DIS_SNU_L")then
-         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
-         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
-         FKObservables = ( ypc * F2light(x) 
-     1                 -   y2  * FLlight(x)
-     2                 +   ym  * F3light(x) )
-         FKObservables = norm * FKObservables
-*
-****  Antineutrino scattering Reduced Cross-Section (light)
-*
-      elseif(obs(1:9).eq."DIS_SNB_L")then
-         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
-         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
-         FKObservables = ( ypc * F2light(x) 
-     1                 -   y2  * FLlight(x)
-     2                 -   ym  * F3light(x) )
-         FKObservables = norm * FKObservables
-*
-****  Neutrino scattering Reduced Cross-Section (charm)
-*
-      elseif(obs(1:9).eq."DIS_SNU_C")then
-         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
-         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
-         FKObservables = ( ypc * F2charm(x) 
-     1                 -   y2  * FLcharm(x)
-     2                 +   ym  * F3charm(x) )
-         FKObservables = norm * FKObservables
-*
-****  Antineutrino scattering Reduced Cross-Section (charm)
-*
-      elseif(obs(1:9).eq."DIS_SNB_C")then
-         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
-         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
-         FKObservables = ( ypc * F2charm(x) 
-     1                 -   y2  * FLcharm(x)
-     2                 -   ym  * F3charm(x) )
-         FKObservables = norm * FKObservables
-*
-****  Neutrino scattering Reduced Cross-Section (inclusive)
-*
-      elseif(obs(1:7).eq."DIS_SNU")then
-         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
-         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
-         FKObservables = ( ypc * F2total(x) 
-     1                 -   y2  * FLtotal(x)
-     2                 +   ym  * F3total(x) )
-         FKObservables = norm * FKObservables
-*
-****  Antineutrino scattering Reduced Cross-Section (inclusive)
-*
-      elseif(obs(1:7).eq."DIS_SNB")then
-         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
-         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
-         FKObservables = ( ypc * F2total(x) 
-     1                 -   y2  * FLtotal(x)
-     2                 -   ym  * F3total(x) )
-         FKObservables = norm * FKObservables
-*
-****  Neutrino scattering Reduced Cross-Section (light)
-*
       elseif(obs(1:12).eq."DIS_SNU_L_Pb")then
          ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
          norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
@@ -392,6 +418,67 @@
      1                 -   y2  * FLtotal(x)
      2                 -   ym  * F3total(x) )
          FKObservables = norm * FKObservables
+*
+****  Neutrino scattering Reduced Cross-Section (light)
+*
+      elseif(obs(1:9).eq."DIS_SNU_L")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKObservables = ( ypc * F2light(x) 
+     1                 -   y2  * FLlight(x)
+     2                 +   ym  * F3light(x) )
+         FKObservables = norm * FKObservables
+*
+****  Antineutrino scattering Reduced Cross-Section (light)
+*
+      elseif(obs(1:9).eq."DIS_SNB_L")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKObservables = ( ypc * F2light(x) 
+     1                 -   y2  * FLlight(x)
+     2                 -   ym  * F3light(x) )
+         FKObservables = norm * FKObservables
+*
+****  Neutrino scattering Reduced Cross-Section (charm)
+*
+      elseif(obs(1:9).eq."DIS_SNU_C")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKObservables = ( ypc * F2charm(x) 
+     1                 -   y2  * FLcharm(x)
+     2                 +   ym  * F3charm(x) )
+         FKObservables = norm * FKObservables
+*
+****  Antineutrino scattering Reduced Cross-Section (charm)
+*
+      elseif(obs(1:9).eq."DIS_SNB_C")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKObservables = ( ypc * F2charm(x) 
+     1                 -   y2  * FLcharm(x)
+     2                 -   ym  * F3charm(x) )
+         FKObservables = norm * FKObservables
+*
+****  Neutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:7).eq."DIS_SNU")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKObservables = ( ypc * F2total(x) 
+     1                 -   y2  * FLtotal(x)
+     2                 +   ym  * F3total(x) )
+         FKObservables = norm * FKObservables
+*
+****  Antineutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:7).eq."DIS_SNB")then
+         ypc  = yp - 2d0 * ( MN * x * y )**2 / Q2
+         norm = conv * GF2 * MN / ( 2d0 * pi * ( 1d0 + Q2 / MW2 )**2 )
+         FKObservables = ( ypc * F2total(x) 
+     1                 -   y2  * FLtotal(x)
+     2                 -   ym  * F3total(x) )
+         FKObservables = norm * FKObservables
+
 *
 ****  Dimuon neutrino and anti-neutrino cross section
 *

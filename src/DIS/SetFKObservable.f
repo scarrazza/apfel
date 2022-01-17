@@ -18,9 +18,27 @@
 *
       FKObservable = obs
 *
+****  PDFs for positivity observables
+*
+      if(obs(1:7).eq."DIS_XUQ".or.
+     1     obs(1:7).eq."DIS_XUB".or.
+     2     obs(1:7).eq."DIS_XDQ".or.
+     3     obs(1:7).eq."DIS_XDB".or.
+     4     obs(1:7).eq."DIS_XSQ".or.
+     5     obs(1:7).eq."DIS_XSB".or.
+     6     obs(1:7).eq."DIS_XCQ".or.
+     7     obs(1:7).eq."DIS_XGL".or.
+     8     obs(1:7).eq."DIS_XT3".or.
+     9     obs(1:7).eq."DIS_XT8".or.
+     1     obs(1:8).eq."DIS_XT15".or.
+     2     obs(1:7).eq."DIS_XV3".or.
+     3     obs(1:7).eq."DIS_XV8".or.
+     4     obs(1:6).eq."DIS_XV")then
+         call SetTargetDIS("proton") 
+*
 ****  Light structure function F2light
 *
-      if(obs(1:7).eq."DIS_F2L")then
+      elseif(obs(1:7).eq."DIS_F2L")then
          call SetProcessDIS("EM")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
@@ -276,48 +294,6 @@
 *
 ****  Neutrino scattering Reduced Cross-Section (light)
 *
-      elseif(obs(1:9).eq."DIS_SNU_L")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("neutrino")
-         call SetTargetDIS("isoscalar")
-*
-****  Antineutrino scattering Reduced Cross-Section (light)
-*
-      elseif(obs(1:9).eq."DIS_SNB_L")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("antineutrino")
-         call SetTargetDIS("isoscalar")
-*
-****  Neutrino scattering Reduced Cross-Section (charm)
-*
-      elseif(obs(1:9).eq."DIS_SNU_C")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("neutrino")
-         call SetTargetDIS("isoscalar")
-*
-****  Antineutrino scattering Reduced Cross-Section (charm)
-*
-      elseif(obs(1:9).eq."DIS_SNB_C")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("antineutrino")
-         call SetTargetDIS("isoscalar")
-*
-****  Neutrino scattering Reduced Cross-Section (inclusive)
-*
-      elseif(obs(1:7).eq."DIS_SNU")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("neutrino")
-         call SetTargetDIS("isoscalar")
-*
-****  Antineutrino scattering Reduced Cross-Section (inclusive)
-*
-      elseif(obs(1:7).eq."DIS_SNB")then
-         call SetProcessDIS("CC")
-         call SetProjectileDIS("antineutrino")
-         call SetTargetDIS("isoscalar")
-*
-****  Neutrino scattering Reduced Cross-Section (light)
-*
       elseif(obs(1:12).eq."DIS_SNU_L_Pb")then
          call SetProcessDIS("CC")
          call SetProjectileDIS("neutrino")
@@ -357,6 +333,48 @@
          call SetProcessDIS("CC")
          call SetProjectileDIS("antineutrino")
          call SetTargetDIS("lead")
+*
+****  Neutrino scattering Reduced Cross-Section (light)
+*
+      elseif(obs(1:9).eq."DIS_SNU_L")then
+         call SetProcessDIS("CC")
+         call SetProjectileDIS("neutrino")
+         call SetTargetDIS("isoscalar")
+*
+****  Antineutrino scattering Reduced Cross-Section (light)
+*
+      elseif(obs(1:9).eq."DIS_SNB_L")then
+         call SetProcessDIS("CC")
+         call SetProjectileDIS("antineutrino")
+         call SetTargetDIS("isoscalar")
+*
+****  Neutrino scattering Reduced Cross-Section (charm)
+*
+      elseif(obs(1:9).eq."DIS_SNU_C")then
+         call SetProcessDIS("CC")
+         call SetProjectileDIS("neutrino")
+         call SetTargetDIS("isoscalar")
+*
+****  Antineutrino scattering Reduced Cross-Section (charm)
+*
+      elseif(obs(1:9).eq."DIS_SNB_C")then
+         call SetProcessDIS("CC")
+         call SetProjectileDIS("antineutrino")
+         call SetTargetDIS("isoscalar")
+*
+****  Neutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:7).eq."DIS_SNU")then
+         call SetProcessDIS("CC")
+         call SetProjectileDIS("neutrino")
+         call SetTargetDIS("isoscalar")
+*
+****  Antineutrino scattering Reduced Cross-Section (inclusive)
+*
+      elseif(obs(1:7).eq."DIS_SNB")then
+         call SetProcessDIS("CC")
+         call SetProjectileDIS("antineutrino")
+         call SetTargetDIS("isoscalar")
 *
 ****  Dimuon neutrino cross section
 *
