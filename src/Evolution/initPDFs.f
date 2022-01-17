@@ -28,8 +28,7 @@
 *
       integer alpha
       integer ifl,ilept
-c      integer Nrep,numberPDF
-      double precision f0(-6:6),fext0(-6:7),flext0(-3:3), xfxQ
+      double precision f0(-6:6),fext0(-6:7),flext0(-3:3),xfxQ
       external ExternalSetAPFEL
       external ExternalSetAPFEL1
       external ExternalSetAPFELLept
@@ -268,3 +267,39 @@ c      integer Nrep,numberPDF
 *
       return
       end
+*
+************************************************************************
+*
+*     Define external functions for OS compilation
+*
+************************************************************************
+#ifndef DARWIN
+      subroutine ExternalSetAPFEL(x,Q,xf)
+      double precision x,Q,xf(-6:7)
+      return
+      end
+      subroutine ExternalSetAPFEL1(x,Q,xf)
+      double precision x,Q,xf(-6:7)
+      return
+      end
+      subroutine ExternalSetAPFELLept(x,Q,i,xl,xf)
+      integer i
+      double precision x,Q,xl(-3,3),xf(-6:7)
+      return
+      end
+      subroutine ExternalSetAPFELRep(x,Q,i,xf)
+      integer i
+      double precision x,Q,xf(-6:7)
+      return
+      end
+      subroutine ExternalSetAPFELRep1(x,Q,i,xf)
+      integer i
+      double precision x,Q,xf(-6:7)
+      return
+      end
+      subroutine pretabulatedPDFsRep(ig,alpha,i,xf)
+      integer ig,alpha,i
+      double precision xf(-6:6)
+      return
+      end
+#endif
