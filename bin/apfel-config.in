@@ -57,6 +57,6 @@ test -n "$tmp" && CheckAPFEL
 
 ## Version
 tmp=$( echo "$*" | egrep -- '--\<version\>')
-test -n "$tmp" && OUT="$OUT @apfel_VERSION@"
+test -n "$tmp" && OUT="$OUT @PACKAGE_VERSION@"
 
 echo $OUT

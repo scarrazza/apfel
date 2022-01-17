@@ -48,7 +48,6 @@
       integer ipt,GetPerturbativeOrder
       integer i,kx
       integer ixpfk(2)
-      integer ibin
       double precision norm
       double precision zarat
       double precision tau,shad,m2,Q,as

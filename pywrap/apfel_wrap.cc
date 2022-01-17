@@ -8857,6 +8857,7 @@ static PyMethodDef SwigMethods[] = {
 	 { "SetScaleVariationProcedure", _wrap_SetScaleVariationProcedure, METH_O, NULL},
 	 { NULL, NULL, 0, NULL }
 };
+
 static PyMethodDef SwigMethods_proxydocs[] = {
 	 { NULL, NULL, 0, NULL }
 };

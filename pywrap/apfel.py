@@ -135,22 +135,6 @@ def doubles_getitem(ary, index):
 def doubles_setitem(ary, index, value):
     return _apfel.doubles_setitem(ary, index, value)
 
-def new_doubles(nelements):
-    return _apfel.new_doubles(nelements)
-new_doubles = _apfel.new_doubles
-
-def delete_doubles(ary):
-    return _apfel.delete_doubles(ary)
-delete_doubles = _apfel.delete_doubles
-
-def doubles_getitem(ary, index):
-    return _apfel.doubles_getitem(ary, index)
-doubles_getitem = _apfel.doubles_getitem
-
-def doubles_setitem(ary, index, value):
-    return _apfel.doubles_setitem(ary, index, value)
-doubles_setitem = _apfel.doubles_setitem
-
 def InitializeAPFEL():
     return _apfel.InitializeAPFEL()
 
