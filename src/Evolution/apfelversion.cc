@@ -17,14 +17,4 @@ extern "C" {
       fversion[i] = ' ';
     }
   }
-  // define external functions for OS compilation
-#ifndef DARWIN
-  void externalsetapfel_(double, double, double*)  { return; }
-  void externalsetapfel1_(double, double, double*) { return; }
-  void externalsetapfelrep_(double, double, int, double*)  { return; }
-  void externalsetapfelrep1_(double, double, int, double*) { return; }
-  void externalsetapfellept_(double, double, int, double*, double*) { return; }
-  void pretabulatedpdfsrep_(int, int, int, double*) { return; }
-#endif
-
 }
