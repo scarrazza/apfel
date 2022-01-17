@@ -82,7 +82,7 @@
          endif
 *
          if(ScVarProc.eq.1)then
-            write(6,*) "(No scale variation in the evolution)"
+            write(6,*) "No scale variations in the evolution"
          endif
 *
          if(TMC)then

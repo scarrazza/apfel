@@ -429,6 +429,14 @@
       write(6,*) achar(27)//"[34m- SetFacQRatio(double ratio):"//
      1           achar(27)//"[0m"
       write(6,*) "    sets the ratio muF / Q (default 1)"
+      write(6,*) achar(27)//"[34m- SetScaleVariationProcedure(int",
+     1           " scp):"//achar(27)//"[0m"
+      write(6,*) "    sets the scale variation procedure (default: 0)."
+      write(6,*) "    The options are:"
+      write(6,*) "    - 0: scale variations in evolution"
+      write(6,*) "         and structure functions."
+      write(6,*) "    - 1: scale variations in structure functions"
+      write(6,*) "         only."
       write(6,*) achar(27)//"[34m- EnableDynamicalScaleVariations(",
      1           "bool):"//achar(27)//"[0m"
       write(6,*) "    enables or disables the possibility to perform"
@@ -533,7 +541,6 @@
      1           "[33mSpecial functions for the production of FK",
      2           " tables:"//achar(27)//"[0m"
       write(6,*) "  "
-      write(6,*) achar(27)//"[34m- SetScaleVariationProcedure(int scp)"
       write(6,*) achar(27)//"[34m- SetFKObservable(string obs)"
       write(6,*) achar(27)//"[34m- GetFKObservable()"
       write(6,*) achar(27)//"[34m- FKSimulator(string obs, double x,",

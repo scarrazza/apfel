@@ -199,8 +199,9 @@
          write(6,*) "ScVarProc = ",ScVarProc
          write(6,*) "  "
          write(6,*) "The options are:"
-         write(6,*) "- 0"
-         write(6,*) "- 1"
+         write(6,*) "- 0: scale variations in evolution"
+         write(6,*) "     and structure functions"
+         write(6,*) "- 1: scale variations in structure functions only"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
@@ -250,19 +251,9 @@
             call SetPolarizationDIS(0d0)
          endif
          if(TargetDIS(1:6).ne."proton")then
-c            write(6,*) achar(27)//"[33m"//
-c     1                 "WARNING: Computation of the SIA structure ",
-c     2                 "functions possible only using protons targets"
-c            write(6,*) "         ... setting 'proton' targets"
-c     1                 //achar(27)//"[0m"
             call SetTargetDIS("proton")
          endif
          if(ProcessDIS.eq."CC")then
-c            write(6,*) achar(27)//"[33m"//
-c     1                 "WARNING: Computation of the SIA structure ",
-c     2                 "functions not available for CC processes"
-c            write(6,*) "         ... setting EM process"
-c     1                 //achar(27)//"[0m"
             call SetProcessDIS("EM")
          endif
       endif
