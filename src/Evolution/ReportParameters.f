@@ -21,7 +21,8 @@
       include "../commons/lambda_ref_QCD.h"
       include "../commons/AlphaEvolution.h"
       include "../commons/PDFEvolution.h"
-      include "../commons/kren.h"
+      include "../commons/krenpdf.h"
+      include "../commons/krenalpha.h"
       include "../commons/mass_scheme.h"
       include "../commons/m2th.h"
       include "../commons/MaxFlavourPDFs.h"
@@ -154,7 +155,8 @@
      1                 " with the physical masses"
          endif
 *
-         write(6,"(a,f7.4)") " muR / muF = ",dsqrt(kren)
+         write(6,"(a,f7.4)") " muR / muF (PDF) = ",dsqrt(kren)
+         write(6,"(a,f7.4)") " muR / muF (Coupling) = ",dsqrt(krena)
 *
          if(LeptEvol.and.Th.eq."QUniD")then
             write(6,"(a,f6.3,a)") " Mass of the tau lepton =",MTau,

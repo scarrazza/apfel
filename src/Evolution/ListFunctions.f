@@ -110,11 +110,17 @@
      1           achar(27)//"[0m"
       write(6,*) "    sets the maximum number of active flavours in the"
       write(6,*) "    PDF evolution (default 'nf' = 6)."
-      write(6,*) achar(27)//"[34m- SetRenFacRatio(double ratio):"//
+      write(6,*) achar(27)//"[34m- SetRenFacRatioPDF(double ratio):"//
      1           achar(27)//"[0m"
       write(6,*) "    sets the ratio between factorization and"
-      write(6,*) "    renormalization scales both in GeV (default"
-      write(6,*) "    'ratio' = 1)."
+      write(6,*) "    renormalization scales for the PDF evolution"
+      write(6,*) "    (default 'ratio' = 1)."
+      write(6,*) achar(27)//"[34m- SetRenFacRatioAlpha(double ratio):"//
+     1           achar(27)//"[0m"
+      write(6,*) "    sets the ratio between factorization and"
+      write(6,*) "    renormalization scales for coupling evolution"
+      write(6,*) "    (default 'ratio' = 1)."
+
       write(6,*) achar(27)//"[34m- SetTimeLikeEvolution(bool):"//
      1           achar(27)//"[0m"
       write(6,*) "    sets the time-like evolution (frag. functions)"
@@ -437,6 +443,8 @@
       write(6,*) "         and structure functions."
       write(6,*) "    - 1: scale variations in structure functions"
       write(6,*) "         only."
+      write(6,*) "    - 2: indipendent scale variations in evolution"
+      write(6,*) "         and structure functions."
       write(6,*) achar(27)//"[34m- EnableDynamicalScaleVariations(",
      1           "bool):"//achar(27)//"[0m"
       write(6,*) "    enables or disables the possibility to perform"

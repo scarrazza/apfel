@@ -11,7 +11,6 @@
       IMPLICIT NONE
 *
       include "../commons/m2th.h"
-      include "../commons/kren.h"
       include "../commons/Evs.h"
       include "../commons/MaxFlavourAlpha.h"
       include "../commons/Nf_FF.h"
@@ -213,7 +212,6 @@
 *
       include "../commons/ipt.h"
       include "../commons/m2th.h"
-      include "../commons/kren.h"
       include "../commons/ThresholdAlphaQCD.h"
 **
 *     Input Variables
@@ -382,7 +380,7 @@
       implicit none
 *
       include "../commons/m2th.h"
-      include "../commons/kren.h"
+      include "../commons/krenalpha.h"
       include "../commons/Evs.h"
       include "../commons/MaxFlavourAlpha.h"
       include "../commons/Nf_FF.h"
@@ -407,8 +405,8 @@
 *
       Q2  = Q * Q
 *
-      ASI = A_QCD(Q2)
-      ASQ = A_QCD(Q2TH(I))
+      ASI = A_QCD(KRENA * Q2)
+      ASQ = A_QCD(KRENA * Q2TH(I))
 *
       ASTH(4)  = asthUp(4)
       ASTH(5)  = asthUp(5)
@@ -423,14 +421,14 @@
       IF(EVS.EQ."FF")THEN
          EVF = EVMASS(NF_FF,ASI,ASQ)
       ELSEIF(EVS.EQ."VF")THEN
-         LN = DLOG(KREN)
+         LN = DLOG(KRENA)
 *        Charm
          IF(I.EQ.4)THEN
             IF(Q2.GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
                EVF = EVMASS(6,ASI,ASQ)
             ELSEIF(Q2.GE.M2TH(5).AND.NFMAXALPHA.GE.5)THEN
                IF(Q2TH(4).GE.M2TH(6).AND.NFMAXALPHA.GE.6)THEN
-                  EVF = EVMASS(5,ASI,    ASTHM(6)) * DECOUP("UP",6,LN)
+                  EVF = EVMASS(5,ASI,ASTHM(6)) * DECOUP("UP",6,LN)
      1                * EVMASS(6,ASTH(6),ASQ)
                ELSE
                   EVF = EVMASS(5,ASI,ASQ)

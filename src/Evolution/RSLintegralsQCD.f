@@ -21,7 +21,7 @@
       include "../commons/wrap.h"
       include "../commons/grid.h"
       include "../commons/integrals.h"
-      include "../commons/kren.h"
+      include "../commons/krenpdf.h"
 **
 *     Input Variables
 *
@@ -248,7 +248,7 @@
       include "../commons/wrap.h"
       include "../commons/grid.h"
       include "../commons/integrals.h"
-      include "../commons/kren.h"
+      include "../commons/krenpdf.h"
 **
 *     Input Variables
 *
@@ -534,7 +534,7 @@
       include "../commons/wrap.h"
       include "../commons/grid.h"
       include "../commons/integrals.h"
-      include "../commons/kren.h"
+      include "../commons/krenpdf.h"
 **
 *     Input Variables
 *

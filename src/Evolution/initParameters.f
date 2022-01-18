@@ -22,7 +22,8 @@
       include "../commons/lambda_ref_QCD.h"
       include "../commons/AlphaEvolution.h"
       include "../commons/PDFEvolution.h"
-      include "../commons/kren.h"
+      include "../commons/krenpdf.h"
+      include "../commons/krenalpha.h"
       include "../commons/mass_scheme.h"
       include "../commons/m2th.h"
       include "../commons/MaxFlavourPDFs.h"
@@ -63,7 +64,8 @@
       if(InEpsTrunc.ne."done")    call SetEpsilonTruncation(1d-2)
       if(InAlphaEvol.ne."done")   call SetAlphaEvolution("exact")
       if(InPDFEvol.ne."done")     call SetPDFEvolution("exactalpha")
-      if(InKren.ne."done")        call SetRenFacRatio(1d0)
+      if(InKrenPDF.ne."done")     call SetRenFacRatioPDF(1d0)
+      if(InKrenAlpha.ne."done")   call SetRenFacRatioAlpha(1d0)
       if(InMasses.ne."done")      call SetPoleMasses(dsqrt(2d0),4.5d0,
      1                                               175d0)
       if(InThrRatios.ne."done")   call SetMassMatchingScales(1d0,1d0,
@@ -202,7 +204,7 @@
             write(6,*) achar(27)//"[0m"
             call exit(-10)
          endif
-         if(kren.ne.1d0)then
+         if(kren.ne.1d0.or.krena.ne.1d0)then
             write(6,*) achar(27)//"[31mERROR:"
             write(6,*) "Renormalization scale variation not allowed"
             write(6,*) "if small-x resummation is enabled."
