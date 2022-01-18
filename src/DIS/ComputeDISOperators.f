@@ -114,14 +114,14 @@
 *     of the FFNSs has been chosen
 *
       as(0) = 1d0
-      if(MassScheme(1:3).eq."FFN".and.ProcessDIS.eq."NC")then
-         iptbkp = ipt
-         call SetPerturbativeOrder(max(0,ipt-1))
+c      if(MassScheme(1:3).eq."FFN".and.ProcessDIS.eq."NC")then
+c         iptbkp = ipt
+c         call SetPerturbativeOrder(max(0,ipt-1))
+c         as(1) = a_QCD(mu2as)
+c         call SetPerturbativeOrder(iptbkp)
+c      else
          as(1) = a_QCD(mu2as)
-         call SetPerturbativeOrder(iptbkp)
-      else
-         as(1) = a_QCD(mu2as)
-      endif
+c      endif
       as(2) = as(1) * as(1)
 *
 *     Find number of active flavours at the scale Q2

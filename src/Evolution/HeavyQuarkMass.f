@@ -13,7 +13,7 @@
       implicit none
 *
       include "../commons/consts.h"
-      include "../commons/kren.h"
+      include "../commons/krenalpha.h"
       include "../commons/m2th.h"
       include "../commons/mass_scheme.h"
       include "../commons/MassRunning.h"
@@ -42,7 +42,7 @@
 *
       if(mass_scheme.eq."MSbar")then
          if(MassRunning)then
-            Q2 = Q * Q / kren
+            Q2 = Q * Q / krena
             HeavyQuarkMass = MSbarmass(i,Q2)
          else
             HeavyQuarkMass = dsqrt(m2ph(i))

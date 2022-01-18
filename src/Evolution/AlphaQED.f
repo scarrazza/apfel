@@ -13,7 +13,7 @@
       implicit none
 *
       include "../commons/consts.h"
-      include "../commons/kren.h"
+      include "../commons/krenalpha.h"
 **
 *     Input Variables
 *
@@ -28,7 +28,7 @@
 *
       double precision AlphaQED
 *
-      Q2 = Q * Q / kren
+      Q2 = Q * Q / krena
 *
       AlphaQED = 4d0 * pi * a_QED(Q2)
 *

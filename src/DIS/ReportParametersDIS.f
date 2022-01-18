@@ -81,8 +81,14 @@
             write(6,"(a,f7.4)") " muF / Q = ",dsqrt(kfacQ)
          endif
 *
-         if(ScVarProc.eq.1)then
+         if(ScVarProc.eq.0)then
+            write(6,*) "Same scale variations in evolution and ",
+     1           "structure functions"
+         elseif(ScVarProc.eq.1)then
             write(6,*) "No scale variations in the evolution"
+         elseif(ScVarProc.eq.2)then
+            write(6,*) "Independent scale variations in evolution and ",
+     1           "structure functions"
          endif
 *
          if(TMC)then

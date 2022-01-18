@@ -384,9 +384,14 @@ namespace APFEL {
     fsettaumass(&masst);
   }
 
-  void SetRenFacRatio(double ratio)
+  void SetRenFacRatioPDF(double ratio)
   {
-    fsetrenfacratio(&ratio);
+    fsetrenfacratiopdf(&ratio);
+  }
+
+  void SetRenFacRatioAlpha(double ratio)
+  {
+    fsetrenfacratioalpha(&ratio);
   }
   
   void SetReplica(int nr)

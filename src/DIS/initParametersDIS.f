@@ -193,7 +193,7 @@
          call exit(-10)
       endif
 *
-      if(ScVarProc.lt.0.or.ScVarProc.gt.1)then
+      if(ScVarProc.lt.0.or.ScVarProc.gt.2)then
          write(6,*) achar(27)//"[31mERROR:"
          write(6,*) "Scale variation procedure unknown:"
          write(6,*) "ScVarProc = ",ScVarProc
@@ -202,6 +202,8 @@
          write(6,*) "- 0: scale variations in evolution"
          write(6,*) "     and structure functions"
          write(6,*) "- 1: scale variations in structure functions only"
+         write(6,*) "- 2: indipendent scale variations in evolution"
+         write(6,*) "     and structure functions"
          write(6,*) achar(27)//"[0m"
          call exit(-10)
       endif
@@ -209,8 +211,13 @@
 *     Additional settings
 *
       if(krenQ.ne.1d0.or.kfacQ.ne.1d0)then
-         call SetRenFacRatio(dsqrt(krenQ/kfacQ))
-         if(ScVarProc.eq.1) call SetRenFacRatio(1d0)
+         if(ScVarProc.eq.0)then
+            call SetRenFacRatioPDF(dsqrt(krenQ/kfacQ))
+            call SetRenFacRatioAlpha(dsqrt(krenQ/kfacQ))
+         elseif(ScVarProc.eq.1)then
+            call SetRenFacRatioPDF(1d0)
+            call SetRenFacRatioAlpha(1d0)
+         endif
       endif
 *
 *     Ensure that for the time-like evolution only proper settings are used

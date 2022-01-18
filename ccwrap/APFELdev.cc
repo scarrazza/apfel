@@ -105,7 +105,8 @@ namespace APFEL
     APFEL::SetMaxFlavourPDFs(atoi(par.at(kMaxNfPdf).c_str()));
 
     // Scale ratios
-    APFEL::SetRenFacRatio(atof(par.at(kXIR).c_str())/atof(par.at(kXIF).c_str()));
+    APFEL::SetRenFacRatioPDF(atof(par.at(kXIR).c_str())/atof(par.at(kXIF).c_str()));
+    APFEL::SetRenFacRatioAlpha(atof(par.at(kXIR).c_str())/atof(par.at(kXIF).c_str()));
     APFEL::SetRenQRatio(atof(par.at(kXIR).c_str()));
     APFEL::SetFacQRatio(atof(par.at(kXIF).c_str()));
 

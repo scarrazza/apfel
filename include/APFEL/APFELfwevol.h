@@ -220,8 +220,11 @@ extern "C" {
 #define fsettaumass FC_FUNC(settaumass,SETTAUMASS)
   void fsettaumass(double*);
 
-#define fsetrenfacratio FC_FUNC(setrenfacratio,SETRENFACRATIO)
-  void fsetrenfacratio(double*);
+#define fsetrenfacratiopdf FC_FUNC(setrenfacratiopdf,SETRENFACRATIOPDF)
+  void fsetrenfacratiopdf(double*);
+
+#define fsetrenfacratioalpha FC_FUNC(setrenfacratioalpha,SETRENFACRATIOALPHA)
+  void fsetrenfacratioalpha(double*);
 
 #define fsetreplica FC_FUNC(setreplica,SETREPLICA)
   void fsetreplica(int*);

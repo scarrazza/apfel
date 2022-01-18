@@ -64,14 +64,14 @@
 *     Scale down the perturbative order of the PDF evolution if one
 *     of the FFNSs has been chosen
 *
-      if(MassScheme(1:3).eq."FFN")then
-         iptbkp = ipt
-         call SetPerturbativeOrder(max(0,ipt-1))
+c      if(MassScheme(1:3).eq."FFN")then
+c         iptbkp = ipt
+c         call SetPerturbativeOrder(max(0,ipt-1))
+c         call EvolveAPFEL(muF0,muF)
+c         call SetPerturbativeOrder(iptbkp)
+c      else
          call EvolveAPFEL(muF0,muF)
-         call SetPerturbativeOrder(iptbkp)
-      else
-         call EvolveAPFEL(muF0,muF)
-      endif
+c      endif
 *
 *     Convolute evolved PDFs with the DIS coefficient functions
 *

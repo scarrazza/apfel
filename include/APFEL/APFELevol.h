@@ -249,8 +249,11 @@ namespace APFEL {
   /// Set the value of the tau mass in GeV
   void SetTauMass(double masst);
 
-  /// Sets the ratio between renormalization and factorization scales.
-  void SetRenFacRatio(double ratio);
+  /// Sets the ratio between renormalization and factorization scales for PDF evolution.
+  void SetRenFacRatioPDF(double ratio);
+
+  /// Sets the ratio between renormalization and factorization scales for coupling evolution.
+  void SetRenFacRatioAlpha(double ratio);
   
   /// Sets the replica to be used as initial PDFs (only with a LHAPDF grid)
   void SetReplica(int nr);
