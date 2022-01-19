@@ -6,7 +6,7 @@
 *     including that proportional to the photon PDF.
 *
 ************************************************************************
-      subroutine IncludeNLOQEDCorrections(Q2,muF2,nf,fr3,jxi,c0,c1,damp,
+      subroutine IncludeNLOQEDCorrections(Q2,muR2,nf,fr3,jxi,c0,c1,damp,
      1                                    bqi,dqi,ipr)
 *
       implicit none
@@ -26,7 +26,7 @@
       integer nf
       integer ipr
       integer jxi(4:6)
-      double precision Q2,muF2
+      double precision Q2,muR2
       double precision damp(4:6)
       double precision bqi(0:6),dqi(0:6)
       double precision c0(4:6),c1(4:6)
@@ -52,7 +52,7 @@
 *
 *     Compute alpha
 *
-      aem  = a_QED(muF2)
+      aem = a_QED(muR2)
 *
 *     Electromagnetic and Neutral current structure functions
 *
