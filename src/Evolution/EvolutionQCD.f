@@ -20,6 +20,7 @@
       include "../commons/MaxFlavourAlpha.h"
       include "../commons/f0ph.h"
       include "../commons/fph.h"
+      include "../commons/krenpdf.h"
 **
 *     Input Variables
 *
@@ -185,17 +186,17 @@
          mu2i(nfi) = muF20
          if(sgn.eq.1)then
             do inf=nfi+1,nff
-               mu2i(inf) = m2th(inf)
+               mu2i(inf) = m2th(inf)/kren
             enddo
             do inf=nfi,nff-1
-               mu2f(inf) = m2th(inf+1) - tiny
+               mu2f(inf) = m2th(inf+1)/kren - tiny
             enddo
          elseif(sgn.eq.-1)then
             do inf=nfi-1,nff,sgn
-               mu2i(inf) = m2th(inf+1) + tiny
+               mu2i(inf) = m2th(inf+1)/kren + tiny
             enddo
             do inf=nfi,nff+1,sgn
-               mu2f(inf) = m2th(inf)
+               mu2f(inf) = m2th(inf)/kren
             enddo
          endif
          mu2f(nff) = muF2

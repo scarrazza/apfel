@@ -12,6 +12,7 @@
 *
       include "../commons/PDFEvolution.h"
       include "../commons/grid.h"
+      include "../commons/krenpdf.h"
       include "../commons/odeint1.h"
 **
 *     Input Variables
@@ -38,8 +39,8 @@
          x1 = dlog(mu21)
          x2 = dlog(mu22)
       else
-         x1 = a_QCD(mu21)
-         x2 = a_QCD(mu22)
+         x1 = a_QCD(kren * mu21)
+         x2 = a_QCD(kren * mu22)
       endif
 *
       x = x1
@@ -240,6 +241,7 @@
       include "../commons/grid.h"
       include "../commons/wrap.h"
       include "../commons/ipt.h"
+      include "../commons/krenpdf.h"
 **
 *     Input Variables
 *
@@ -264,13 +266,13 @@
 *
       if(PDFEvol.eq."exactmu")then
          mu2     = dexp(t)
-         coupQCD = a_QCD(mu2)
-         coupQED = a_QED(mu2)
+         coupQCD = a_QCD(kren * mu2)
+         coupQED = a_QED(kren * mu2)
          bts     = 1d0
       else
          mu2     = muR2(t)
          coupQCD = t
-         coupQED = a_QED(mu2)
+         coupQED = a_QED(kren * mu2)
          bts     = 1d0 / fbeta(t,wnf,ipt)
       endif
 *

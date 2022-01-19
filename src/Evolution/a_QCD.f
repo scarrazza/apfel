@@ -17,7 +17,6 @@
       include "../commons/alpha_ref_QCD.h"
       include "../commons/lambda_ref_QCD.h"
       include "../commons/AlphaEvolution.h"
-      include "../commons/krenalpha.h"
       include "../commons/m2th.h"
       include "../commons/mass_scheme.h"
       include "../commons/Nf_FF.h"
@@ -50,9 +49,8 @@ c      return
       asr0 = alpha_ref_QCD / 4d0 / pi
 *
       mur20 = q2_ref_QCD
-      mur2  = krena * mu2F
+      mur2  = mu2F
       do i=4,6
-c         mur2th(i) = krena * m2th(i)
          mur2th(i) = m2th(i)
       enddo
       do i=3,6
@@ -115,7 +113,6 @@ c         mur2th(i) = krena * m2th(i)
 *     (4*pi) and (4*pi)^2 respectively to match the notations. Note that in terms 
 *     of the MSbar mass this coefficients change.
 *
-c         kappa = krena * k2th(nfi+snf)          ! mu_R / mu_F
          kappa = k2th(nfi+snf)          ! mu_R / mu_F
          ln = dlog(kappa)
 *     Pole Mass
@@ -371,10 +368,9 @@ c      ENDIF
          bt2 = beta2apf(nf)
          b0 = - bt0
          b1 = 0d0
-         if(ipt.ge.1) b1 = - bt1 - 2d0 * b0**2 * lk
+         if(ipt.ge.1) b1 = - bt1
          b2 = 0d0
-         if(ipt.ge.2) b2 = - bt2 - 5d0 * bt1 * bt0 * lk
-     1                     - 3d0 * bt0**3 * lk2
+         if(ipt.ge.2) b2 = - bt2
          beta0p = a2 * b0 + a3 * b1 + a4 * b2
          beta1p = 2d0 * a * b0 + 3d0 * a2 * b1 + 4d0 * a3 * b2
          beta2p = 2d0 * b0 + 6d0 * a * b1 + 12d0 * a2 * b2
@@ -412,16 +408,25 @@ c      ENDIF
       function beta1apf(nf)
 *
       implicit none
+*
+      include "../commons/krenalpha.h"
 **
 *     Input Variables
 *
       integer nf
+**
+*     Internal Variables
+*
+      double precision beta0apf
 **
 *     Output Variables
 *
       double precision beta1apf
 *
       beta1apf = 102d0 - 38d0 / 3d0 * nf
+*
+      if(krena.ne.1d0) beta1apf = beta1apf
+     1     + 2d0 * beta0apf(nf)**2 * dlog(1d0/krena) / 2d0
 *
       return
       end
@@ -430,10 +435,17 @@ c      ENDIF
       function beta2apf(nf)
 *
       implicit none
+*
+      include "../commons/krenalpha.h"
 **
 *     Input Variables
 *
       integer nf
+**
+*     Internal Variables
+*
+      double precision lk, lk2
+      double precision beta0apf, beta1apf
 **
 *     Output Variables
 *
@@ -441,6 +453,14 @@ c      ENDIF
 *
       beta2apf = 2857d0 / 2d0 - 5033d0 / 18d0 * nf 
      1         + 325d0 / 54d0 * nf**2
+*
+      if(krena.ne.1d0)then
+         lk  = dlog(1d0/krena) / 2d0
+         lk2 = lk * lk
+         beta2apf = beta2apf
+     1        + 5d0 *beta1apf(nf) * beta0apf(nf) * lk
+     2        - 7d0 * beta0apf(nf)**3 * lk2
+      endif
 *
       return
       end
@@ -556,7 +576,6 @@ c      ENDIF
 *
       include "../commons/lambda_ref_QCD.h"
       include "../commons/m2th.h"
-c      include "../commons/krenalpha.h"
       include "../commons/ipt.h"
       include "../commons/mass_scheme.h"
 **
@@ -577,8 +596,7 @@ c      include "../commons/krenalpha.h"
 *
 *     Matching condition
 *
-c      ln = dlog( krena * k2th(i) )
-      ln = dlog( k2th(i) )
+      ln = dlog(k2th(i))
 *     Pole Mass
       if(mass_scheme.eq."Pole")then
          c1 = 2d0 / 3d0 * ln
@@ -589,7 +607,6 @@ c      ln = dlog( krena * k2th(i) )
          c2 = 4d0 / 9d0 * ln**2 + 22d0 / 3d0 * ln - 22d0 / 9d0
       endif
 *
-c      thr = krena * m2th(i)
       thr = m2th(i)
       lambda2u = lambda**2
       lambda2d = LambdaQCD(i-1)**2
@@ -614,7 +631,6 @@ c      thr = krena * m2th(i)
 *
       include "../commons/lambda_ref_QCD.h"
       include "../commons/m2th.h"
-c      include "../commons/krenalpha.h"
       include "../commons/ipt.h"
       include "../commons/mass_scheme.h"
 **
@@ -633,8 +649,7 @@ c      include "../commons/krenalpha.h"
 *
       double precision LambdaMatchDown
 *
-c      ln = dlog( krena * k2th(i+1) )
-      ln = dlog( k2th(i+1) )
+      ln = dlog(k2th(i+1))
 *     Pole Mass
       if(mass_scheme.eq."Pole")then
          c1 = - 2d0 / 3d0 * ln
@@ -645,7 +660,6 @@ c      ln = dlog( krena * k2th(i+1) )
          c2 = 4d0 / 9d0 * ln**2 - 22d0 / 3d0 * ln + 22d0 / 9d0
       endif
 *
-c      thr = krena * m2th(i+1)
       thr = m2th(i+1)
       lambda2u = LambdaQCD(i+1)**2
       lambda2d = lambda**2
@@ -734,7 +748,6 @@ c      thr = krena * m2th(i+1)
       implicit none
 *
       include "../commons/ThresholdAlphaQCD.h"
-c      include "../commons/krenalpha.h"
       include "../commons/m2th.h"
 **
 *     Internal Variables
@@ -745,8 +758,6 @@ c      include "../commons/krenalpha.h"
       parameter(eps=1d-10)
 *
       do inf=4,6
-c         asthUp(inf)   = a_QCD( krena * m2th(inf) * ( 1d0 + eps ) )
-c         asthDown(inf) = a_QCD( krena * m2th(inf) * ( 1d0 - eps ) )
          asthUp(inf)   = a_QCD( m2th(inf) * ( 1d0 + eps ) )
          asthDown(inf) = a_QCD( m2th(inf) * ( 1d0 - eps ) )
       enddo

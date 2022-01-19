@@ -18,6 +18,7 @@
       include "../commons/wrap.h"
       include "../commons/MaxFlavourPDFs.h"
       include "../commons/MaxFlavourAlpha.h"
+      include "../commons/krenpdf.h"
 **
 *     Input Variables
 *
@@ -52,7 +53,7 @@
          if(inf.gt.nfmax) inf = nfmax
       endif
 *
-      coup = a_QCD(muF2)
+      coup = a_QCD(kren * muF2)
 *
 *     Compute operators
 *

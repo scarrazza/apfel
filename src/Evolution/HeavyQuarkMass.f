@@ -4,8 +4,6 @@
 *
 *     This function returns the value of i-th (i=4,5,6) heavy quark mass
 *     at the given scale using the parameters of the evolution.
-*     Be careful because for the MSbar masses, if kren.ne.1, the matching
-*     is not done at the heavy quark thresholds.
 *
 ************************************************************************
       function HeavyQuarkMass(i,Q)
@@ -13,7 +11,6 @@
       implicit none
 *
       include "../commons/consts.h"
-      include "../commons/krenalpha.h"
       include "../commons/m2th.h"
       include "../commons/mass_scheme.h"
       include "../commons/MassRunning.h"
@@ -42,7 +39,7 @@
 *
       if(mass_scheme.eq."MSbar")then
          if(MassRunning)then
-            Q2 = Q * Q / krena
+            Q2 = Q * Q
             HeavyQuarkMass = MSbarmass(i,Q2)
          else
             HeavyQuarkMass = dsqrt(m2ph(i))

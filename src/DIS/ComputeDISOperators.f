@@ -53,7 +53,7 @@
       integer ipr
       integer i
       integer ik
-      double precision Q2,muF2,mu2as,muR,W2,M2(4:6),HeavyQuarkMass
+      double precision Q2,muF2,muR2,W2,M2(4:6),HeavyQuarkMass
       double precision as(0:2),a_QCD
       double precision bq(0:6),dq(0:6),bqt(0:6)
       double precision frac,fr3
@@ -102,26 +102,15 @@
 *
       muF2 = kfacQ * Q2
 *
-*     Compute alphas (a_QCD takes as an argument the factorization scale
-*     and converts it internally into the renormalization scale unless
-*     the scale variation procedure 1 is used. In that case there is no
-*     internal conversion because muR / muF = 1).
+*     Renormalization scale
 *
-      mu2as = muF2
-      if(ScVarProc.eq.1) mu2as = krenQ * Q2
+      muR2 = krenQ * Q2
 *
 *     Scale down the perturbative order of the alphas evolution if one
 *     of the FFNSs has been chosen
 *
       as(0) = 1d0
-c      if(MassScheme(1:3).eq."FFN".and.ProcessDIS.eq."NC")then
-c         iptbkp = ipt
-c         call SetPerturbativeOrder(max(0,ipt-1))
-c         as(1) = a_QCD(mu2as)
-c         call SetPerturbativeOrder(iptbkp)
-c      else
-         as(1) = a_QCD(mu2as)
-c      endif
+      as(1) = a_QCD(muR2)
       as(2) = as(1) * as(1)
 *
 *     Find number of active flavours at the scale Q2
@@ -158,13 +147,9 @@ c      endif
 *
 *     Find "ixi" such that "xigrid(ixi)" < "xi" < "xigrid(ixi+1)"
 *
-*     Renormalization scale
-*
-      muR = dsqrt(krenQ) * Q
-*
       do ihq=4,6
          ixi(ihq) = 0
-         M2(ihq) = HeavyQuarkMass(ihq,muR)**2
+         M2(ihq) = HeavyQuarkMass(ihq,dsqrt(muR2))**2
          xi(ihq) = Q2 / M2(ihq)
          if(xi(ihq).le.xigrid(xistep))then
             ixi(ihq) = 0

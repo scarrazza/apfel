@@ -13,7 +13,6 @@
       implicit none
 *
       include "../commons/consts.h"
-      include "../commons/krenalpha.h"
 **
 *     Input Variables
 *
@@ -21,16 +20,13 @@
 **
 *     Internal Variables
 *
-      double precision Q2
       double precision a_QCD
 **
 *     Output Variables
 *
       double precision AlphaQCD
 *
-      Q2 = Q * Q / krena
-*
-      AlphaQCD = 4d0 * pi * a_QCD(Q2)
+      AlphaQCD = 4d0 * pi * a_QCD(Q * Q)
 *
       return
       end

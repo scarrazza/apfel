@@ -53,7 +53,7 @@
 *
       Q2 = Q * Q
 *
-      as(1) = a_QCD(Q2)
+      as(1) = a_QCD(kfacQ * Q2)
       as(2) = as(1) * as(1)
 *
       alpha2 = ( 4d0 * pi * a_QED(Q2) )**2

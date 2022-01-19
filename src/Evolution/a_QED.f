@@ -15,7 +15,6 @@
 *
       include "../commons/consts.h"
       include "../commons/alpha_ref_QED.h"
-      include "../commons/krenalpha.h"
       include "../commons/m2th.h"
       include "../commons/TauMass.h"
       include "../commons/mass_scheme.h"
@@ -63,7 +62,7 @@ c      a_QED  = aqedr0
 c      return
 *
       mur20 = q2_ref_QED
-      mur2  = krena * mu2F
+      mur2  = mu2F
 *
       if(Evs.eq."FF")then
 *     In the FFNS assume that there is no tau contribution
@@ -73,18 +72,13 @@ c      return
          a_QED = alphaqedev(Nf_FF,Nl_FF,mur2,mur20,aqedr0)
          return
       elseif(Evs.eq."VF")then
-c         mur2th(3) = krena * mlq * mlq
          mur2th(3) = mlq * mlq
          do i=4,6
-c            mur2th(i) = krena * m2th(i)
             mur2th(i) = m2th(i)
          enddo
 *
          nli = 0
          nlf = 0
-c         mur2lep(1) = krena * me * me
-c         mur2lep(2) = krena * mmu * mmu
-c         mur2lep(3) = krena * MTau * MTau
          mur2lep(1) = me * me
          mur2lep(2) = mmu * mmu
          mur2lep(3) = MTau * MTau
@@ -223,7 +217,7 @@ c         mur2lep(3) = krena * MTau * MTau
                mur20  = mur2
                mur2   = mur2lep(il+sgnl)
                if(sgnl.lt.0) mur2 = mur2lep(il+sgnl+1)
-               if(il.eq.nlf-sgnl) mur2 = krena * mu2f
+               if(il.eq.nlf-sgnl) mur2 = mu2f
             enddo
             a_QED = aqedi
             return

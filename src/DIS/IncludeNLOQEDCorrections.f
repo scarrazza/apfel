@@ -51,8 +51,6 @@
       parameter(e2u=4d0/9d0,e2d=1d0/9d0)
 *
 *     Compute alpha
-*     (Remember that a_QCD takes as an argument the factorization scale
-*     and converts it internally into the renormalization scale).
 *
       aem  = a_QED(muF2)
 *

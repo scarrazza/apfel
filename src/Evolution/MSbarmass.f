@@ -15,6 +15,7 @@
       include "../commons/MaxFlavourAlpha.h"
       include "../commons/Nf_FF.h"
       include "../commons/ThresholdAlphaQCD.h"
+      include "../commons/krenalpha.h"
 **
 *     Input Variables
 *
@@ -39,7 +40,7 @@
          CALL EXIT(-10)
       ENDIF
 *
-      ASQ      = A_QCD(Q2)
+      ASQ      = A_QCD(KRENA * Q2)
 *
       ASTH(4)  = asthUp(4)
       ASTH(5)  = asthUp(5)
