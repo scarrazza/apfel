@@ -154,7 +154,8 @@ am__objects_3 = Evolution/SetAlphaQCDRef.lo \
 	Evolution/SetGridParameters.lo Evolution/SetExternalGrid.lo \
 	Evolution/SetMSbarMasses.lo Evolution/SetNumberOfGrids.lo \
 	Evolution/SetPDFSet.lo Evolution/SetPoleMasses.lo \
-	Evolution/SetRenFacRatio.lo Evolution/SetTheory.lo \
+	Evolution/SetRenFacRatioAlpha.lo \
+	Evolution/SetRenFacRatioPDF.lo Evolution/SetTheory.lo \
 	Evolution/SetVFNS.lo Evolution/SetMaxFlavourPDFs.lo \
 	Evolution/SetMaxFlavourAlpha.lo Evolution/SetReplica.lo \
 	Evolution/AlphaQCD.lo Evolution/AlphaQED.lo \
@@ -540,7 +541,7 @@ INIT = Evolution/WelcomeMessage.f Evolution/initParameters.f Evolution/initGrid.
 SETTINGS = Evolution/SetAlphaQCDRef.f Evolution/SetAlphaQEDRef.f Evolution/SetQLimits.f \
 	Evolution/SetPerturbativeOrder.f Evolution/SetFFNS.f Evolution/SetGridParameters.f Evolution/SetExternalGrid.f \
 	Evolution/SetMSbarMasses.f Evolution/SetNumberOfGrids.f Evolution/SetPDFSet.f Evolution/SetPoleMasses.f \
-	Evolution/SetRenFacRatio.f Evolution/SetTheory.f Evolution/SetVFNS.f Evolution/SetMaxFlavourPDFs.f \
+	Evolution/SetRenFacRatioAlpha.f Evolution/SetRenFacRatioPDF.f Evolution/SetTheory.f Evolution/SetVFNS.f Evolution/SetMaxFlavourPDFs.f \
 	Evolution/SetMaxFlavourAlpha.f Evolution/SetReplica.f Evolution/AlphaQCD.f Evolution/AlphaQED.f Evolution/HeavyQuarkMass.f \
 	Evolution/LHAPDFgrid.f Evolution/CleanUp.f Evolution/EnableWelcomeMessage.f Evolution/EnableEvolutionOperator.f \
 	Evolution/ExternalEvolutionOperator.f Evolution/LockGrids.f Evolution/SetTimeLikeEvolution.f Evolution/SetAlphaEvolution.f \
@@ -752,7 +753,9 @@ Evolution/SetPDFSet.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetPoleMasses.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
-Evolution/SetRenFacRatio.lo: Evolution/$(am__dirstamp) \
+Evolution/SetRenFacRatioAlpha.lo: Evolution/$(am__dirstamp) \
+	Evolution/$(DEPDIR)/$(am__dirstamp)
+Evolution/SetRenFacRatioPDF.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)
 Evolution/SetTheory.lo: Evolution/$(am__dirstamp) \
 	Evolution/$(DEPDIR)/$(am__dirstamp)

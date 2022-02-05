@@ -46,7 +46,7 @@
 *     Internal Variables
 *
       integer jgrid,ipdf,ihq
-      integer pt,ipt_FF,iptbkp,ipt_max_IC
+      integer pt,ipt_FF,ipt_max_IC!,iptbkp
       integer alpha,beta,gamma,tau
       integer nf
       integer gbound

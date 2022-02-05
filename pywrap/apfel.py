@@ -351,8 +351,11 @@ def SetPoleMasses(mc, mb, mt):
 def SetTauMass(masst):
     return _apfel.SetTauMass(masst)
 
-def SetRenFacRatio(ratio):
-    return _apfel.SetRenFacRatio(ratio)
+def SetRenFacRatioPDF(ratio):
+    return _apfel.SetRenFacRatioPDF(ratio)
+
+def SetRenFacRatioAlpha(ratio):
+    return _apfel.SetRenFacRatioAlpha(ratio)
 
 def SetReplica(nr):
     return _apfel.SetReplica(nr)

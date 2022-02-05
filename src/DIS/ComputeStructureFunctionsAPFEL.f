@@ -24,7 +24,7 @@
 **
 *     Internal Variables
 *
-      integer iptbkp
+c      integer iptbkp
       double precision muF0,muF
 *
 *     Check that the APFEL DIS module has been initialized

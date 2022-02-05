@@ -6521,7 +6521,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_SetRenFacRatio(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+SWIGINTERN PyObject *_wrap_SetRenFacRatioPDF(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   double arg1 ;
   double val1 ;
@@ -6532,10 +6532,32 @@ SWIGINTERN PyObject *_wrap_SetRenFacRatio(PyObject *SWIGUNUSEDPARM(self), PyObje
   swig_obj[0] = args;
   ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
   if (!SWIG_IsOK(ecode1)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetRenFacRatio" "', argument " "1"" of type '" "double""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetRenFacRatioPDF" "', argument " "1"" of type '" "double""'");
   } 
   arg1 = static_cast< double >(val1);
-  APFEL::SetRenFacRatio(arg1);
+  APFEL::SetRenFacRatioPDF(arg1);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SetRenFacRatioAlpha(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  double arg1 ;
+  double val1 ;
+  int ecode1 = 0 ;
+  PyObject *swig_obj[1] ;
+  
+  if (!args) SWIG_fail;
+  swig_obj[0] = args;
+  ecode1 = SWIG_AsVal_double(swig_obj[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "SetRenFacRatioAlpha" "', argument " "1"" of type '" "double""'");
+  } 
+  arg1 = static_cast< double >(val1);
+  APFEL::SetRenFacRatioAlpha(arg1);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -8774,7 +8796,8 @@ static PyMethodDef SwigMethods[] = {
 	 { "GetMuF0", _wrap_GetMuF0, METH_NOARGS, NULL},
 	 { "SetPoleMasses", _wrap_SetPoleMasses, METH_VARARGS, NULL},
 	 { "SetTauMass", _wrap_SetTauMass, METH_O, NULL},
-	 { "SetRenFacRatio", _wrap_SetRenFacRatio, METH_O, NULL},
+	 { "SetRenFacRatioPDF", _wrap_SetRenFacRatioPDF, METH_O, NULL},
+	 { "SetRenFacRatioAlpha", _wrap_SetRenFacRatioAlpha, METH_O, NULL},
 	 { "SetReplica", _wrap_SetReplica, METH_O, NULL},
 	 { "SetTheory", _wrap_SetTheory, METH_O, NULL},
 	 { "EnableNLOQEDCorrections", _wrap_EnableNLOQEDCorrections, METH_O, NULL},
