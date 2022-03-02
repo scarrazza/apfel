@@ -699,8 +699,8 @@ c         kappa = 1d0                          ! mu_R / mu_F
       parameter(eps=1d-10)
 *
       do inf=4,6
-         asthUp(inf)   = a_QCD( kren * m2th(inf) * ( 1d0 + eps ) )
-         asthDown(inf) = a_QCD( kren * m2th(inf) * ( 1d0 - eps ) )
+         asthUp(inf)   = a_QCD( m2th(inf) * ( 1d0 + eps ) )
+         asthDown(inf) = a_QCD( m2th(inf) * ( 1d0 - eps ) )
       enddo
 *
       return
