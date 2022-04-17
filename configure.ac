@@ -60,7 +60,7 @@ AC_CANONICAL_HOST
 case $host_os in
   darwin*)
 	AM_CPPFLAGS=["$AM_CPPFLAGS -DDARWIN"]
-	FFLAGS=["$FFLAGS -DDARWIN=1"]
+	FFLAGS=["$FFLAGS -DDARWIN"]
         ;;
   linux*)
 	#AM_CPPFLAGS=["$AM_CPPFLAGS -DLINUX"]
