@@ -675,6 +675,9 @@ ENABLE_LHAPDF_TRUE
 LHAPDF_LDFLAGS
 LHAPDF_CPPFLAGS
 LHAPDFCONFIG
+AM_FFLAGS
+F77
+FFLAGS
 CXXCPP
 LT_SYS_LIBRARY_PATH
 OTOOL64
@@ -699,9 +702,6 @@ EGREP
 GREP
 SED
 LIBTOOL
-AM_FFLAGS
-F77
-FFLAGS
 BINRELOC_LIBS
 BINRELOC_CFLAGS
 am__fastdepCC_FALSE
@@ -6702,10 +6702,6 @@ printf "%s\n" "#define BR_PTHREAD 0" >>confdefs.h
 F77=$FC
 AM_FFLAGS=$AM_FCFLAGS
 FFLAGS="$FFLAGS $FCFLAGS"
-
-
-
-
 
 case `pwd` in
   *\ * | *\	*)
@@ -21360,11 +21356,17 @@ fi
 case $host_os in
   darwin*)
 	AM_CPPFLAGS="$AM_CPPFLAGS -DDARWIN"
+	FFLAGS="$FFLAGS -DDARWIN"
         ;;
   linux*)
 	#AM_CPPFLAGS=["$AM_CPPFLAGS -DLINUX"]
 	;;
 esac
+
+
+
+
+
 
 ## Build Doxygen if possible
 # Check whether --enable-lhapdf was given.
