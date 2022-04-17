@@ -267,39 +267,39 @@
 *
       return
       end
-*
-************************************************************************
-*
-*     Define external functions for OS compilation
-*
-************************************************************************
-#ifndef DARWIN
-      subroutine ExternalSetAPFEL(x,Q,xf)
-      double precision x,Q,xf(-6:7)
-      return
-      end
-      subroutine ExternalSetAPFEL1(x,Q,xf)
-      double precision x,Q,xf(-6:7)
-      return
-      end
-      subroutine ExternalSetAPFELLept(x,Q,i,xl,xf)
-      integer i
-      double precision x,Q,xl(-3,3),xf(-6:7)
-      return
-      end
-      subroutine ExternalSetAPFELRep(x,Q,i,xf)
-      integer i
-      double precision x,Q,xf(-6:7)
-      return
-      end
-      subroutine ExternalSetAPFELRep1(x,Q,i,xf)
-      integer i
-      double precision x,Q,xf(-6:7)
-      return
-      end
-      subroutine pretabulatedPDFsRep(ig,alpha,i,xf)
-      integer ig,alpha,i
-      double precision xf(-6:6)
-      return
-      end
-#endif
+c$$$*
+c$$$************************************************************************
+c$$$*
+c$$$*     Define external functions for OS compilation
+c$$$*
+c$$$************************************************************************
+c$$$#ifndef DARWIN
+c$$$      subroutine ExternalSetAPFEL(x,Q,xf)
+c$$$      double precision x,Q,xf(-6:7)
+c$$$      return
+c$$$      end
+c$$$      subroutine ExternalSetAPFEL1(x,Q,xf)
+c$$$      double precision x,Q,xf(-6:7)
+c$$$      return
+c$$$      end
+c$$$      subroutine ExternalSetAPFELLept(x,Q,i,xl,xf)
+c$$$      integer i
+c$$$      double precision x,Q,xl(-3,3),xf(-6:7)
+c$$$      return
+c$$$      end
+c$$$      subroutine ExternalSetAPFELRep(x,Q,i,xf)
+c$$$      integer i
+c$$$      double precision x,Q,xf(-6:7)
+c$$$      return
+c$$$      end
+c$$$      subroutine ExternalSetAPFELRep1(x,Q,i,xf)
+c$$$      integer i
+c$$$      double precision x,Q,xf(-6:7)
+c$$$      return
+c$$$      end
+c$$$      subroutine pretabulatedPDFsRep(ig,alpha,i,xf)
+c$$$      integer ig,alpha,i
+c$$$      double precision xf(-6:6)
+c$$$      return
+c$$$      end
+c$$$#endif
