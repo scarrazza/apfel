@@ -14,7 +14,7 @@ TabulationExternal_SOURCES = TabulationExternal.f
 ListFunctions_SOURCES = ListFunctions.f
 CheckAPFEL_SOURCES = CheckAPFEL.f
 
-noinst_PROGRAMS += TabulationCxx SumRulesCxx LHgridProductionCxx LHgridDerivativeProductionCxx LuminosityCxx Timing DISObservablesCxx TabulationStepCxx TabulationFragCxx ListFunctionsCxx CheckAPFELCxx
+noinst_PROGRAMS += TabulationCxx SumRulesCxx LHgridProductionCxx LHgridDerivativeProductionCxx LuminosityCxx Timing DISObservablesCxx TabulationStepCxx TabulationFragCxx TabulationExternalCxx ListFunctionsCxx CheckAPFELCxx
 TabulationCxx_SOURCES = TabulationCxx.cc
 SumRulesCxx_SOURCES = SumRulesCxx.cc
 LHgridProductionCxx_SOURCES = LHgridProductionCxx.cc
@@ -24,6 +24,7 @@ LuminosityCxx_SOURCES = LuminosityCxx.cc
 DISObservablesCxx_SOURCES = DISObservablesCxx.cc
 TabulationStepCxx_SOURCES = TabulationStepCxx.cc
 TabulationFragCxx_SOURCES = TabulationFragCxx.cc
+TabulationExternalCxx_SOURCES = TabulationExternalCxx.cc
 ListFunctionsCxx_SOURCES = ListFunctionsCxx.cc
 CheckAPFELCxx_SOURCES = CheckAPFELCxx.cc
 
