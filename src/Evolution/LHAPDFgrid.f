@@ -195,6 +195,8 @@
             lnQmin = dlog( ( q2LHA(iq2c) ) / Lambda2 )
             if(isg.eq.nffi-1)then
                lnQmax = dlog( q2maxLHA / Lambda2 )
+            elseif(isg.eq.nffi)then ! Unused but necessary to avoid computing ln(0).
+               lnQmax = lnQmin
             else
                lnQmax = dlog( ( m2th(isg+2) ) / Lambda2 )
             endif

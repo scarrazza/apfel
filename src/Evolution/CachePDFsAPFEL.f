@@ -128,6 +128,8 @@
             lnQmin = dlog( ( 1d0 + eps ) * Q2g(iq2c) / Lam2 )
             if(isg.eq.nffi-1)then
                lnQmax = dlog( Q2max / Lam2 )
+            elseif(isg.eq.nffi)then ! Unused but necessary to avoid computing ln(0).
+               lnQmax = lnQmin
             else
                lnQmax = dlog( m2th(isg+2) / Lam2 )
             endif
