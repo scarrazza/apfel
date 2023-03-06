@@ -161,6 +161,11 @@
       elseif(obs(1:7).eq."DIS_F2C")then
          FKObservables = F2charm(x)
 *
+****  Charm structure function F3charm
+*
+      elseif(obs(1:7).eq."DIS_F3C")then
+         FKObservables = F3charm(x)      
+*
 ****  Bottom structure function F2bottom
 *
       elseif(obs(1:7).eq."DIS_F2B")then

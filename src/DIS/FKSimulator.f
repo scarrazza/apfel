@@ -146,6 +146,11 @@
       elseif(obs(1:7).eq."DIS_F2C")then
          FKSimulator = ExternalDISOperator("F2",4,i,x,beta)
 *
+****  Charm structure function F3charm
+*
+      elseif(obs(1:7).eq."DIS_F3C")then
+         FKSimulator = ExternalDISOperator("F3",4,i,x,beta)
+*
 ****  Bottom structure function F2bottom
 *
       elseif(obs(1:7).eq."DIS_F2B")then
