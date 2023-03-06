@@ -159,12 +159,7 @@
 ****  Charm structure function F2charm
 *
       elseif(obs(1:7).eq."DIS_F2C")then
-         FKObservables = F2charm(x)
-*
-****  Charm structure function F3charm
-*
-      elseif(obs(1:7).eq."DIS_F3C")then
-         FKObservables = F3charm(x)      
+         FKObservables = F2charm(x)    
 *
 ****  Bottom structure function F2bottom
 *
@@ -190,6 +185,16 @@
 *
       elseif(obs(1:7).eq."DIS_F2D")then
          FKObservables = F2total(x)
+*
+****  Proton structure function F2 (charm, CC, W-)
+*
+      elseif(obs(1:11).eq."DIS_F2C_CCE")then
+         FKObservables = F2charm(x)
+*
+****  Proton structure function F2 (charm, CC, W+)
+*
+      elseif(obs(1:11).eq."DIS_F2C_CCP")then
+         FKObservables = F2charm(x)         
 *
 ****  Light structure function FLlight
 *
@@ -231,6 +236,11 @@
 *
       elseif(obs(1:10).eq."DIS_F3P_NC")then
          FKObservables = F3total(x)
+*
+****  Charm structure function F3charm
+*
+      elseif(obs(1:7).eq."DIS_F3C")then
+         FKObservables = F3charm(x)           
 *
 ****  Electron scattering Reduced Cross-Section (light)
 *

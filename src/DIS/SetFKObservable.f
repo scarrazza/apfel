@@ -72,14 +72,7 @@
       elseif(obs(1:7).eq."DIS_F2C")then
          call SetProcessDIS("EM")
          call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
-*
-****  Charm structure function F3charm
-*
-      elseif(obs(1:7).eq."DIS_F3C")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")         
+         call SetTargetDIS("proton")        
 *
 ****  Bottom structure function F2bottom
 *
@@ -151,6 +144,20 @@
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
 *
+****  Proton structure function F2 (charm, CC, W-)
+*
+      elseif(obs(1:11).eq."DIS_F2C_CCE")then
+         call SetProcessDIS("CC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")
+*
+****  Proton structure function F2 (charm, CC, W+)
+*
+      elseif(obs(1:11).eq."DIS_F2C_CCP")then
+         call SetProcessDIS("CC")
+         call SetProjectileDIS("positron")
+         call SetTargetDIS("proton")         
+*
 ****  Proton structure function FL (Neutral current)
 *
       elseif(obs(1:10).eq."DIS_FLP_NC".or.
@@ -172,6 +179,13 @@
          call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")
+*
+****  Charm structure function F3charm
+*
+      elseif(obs(1:7).eq."DIS_F3C")then
+         call SetProcessDIS("NC")
+         call SetProjectileDIS("electron")
+         call SetTargetDIS("proton")          
 *
 ****  Electron scattering Reduced Cross-Section (light)
 *
