@@ -77,7 +77,7 @@
 ****  Charm structure function F3charm
 *
       elseif(obs(1:7).eq."DIS_F3C")then
-         call SetProcessDIS("EM")
+         call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
          call SetTargetDIS("proton")         
 *
