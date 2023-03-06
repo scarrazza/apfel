@@ -156,6 +156,16 @@
       elseif(obs(1:7).eq."DIS_F2S")then
          FKObservables = F2light(x)
 *
+****  Proton structure function F2 (charm, CC, W-)
+*
+      elseif(obs(1:11).eq."DIS_F2C_CCE")then
+         FKObservables = F2charm(x)
+*
+****  Proton structure function F2 (charm, CC, W+)
+*
+      elseif(obs(1:11).eq."DIS_F2C_CCP")then
+         FKObservables = F2charm(x)        
+*
 ****  Charm structure function F2charm
 *
       elseif(obs(1:7).eq."DIS_F2C")then
@@ -184,17 +194,7 @@
 ****  Deuteron structure function F2
 *
       elseif(obs(1:7).eq."DIS_F2D")then
-         FKObservables = F2total(x)
-*
-****  Proton structure function F2 (charm, CC, W-)
-*
-      elseif(obs(1:11).eq."DIS_F2C_CCE")then
-         FKObservables = F2charm(x)
-*
-****  Proton structure function F2 (charm, CC, W+)
-*
-      elseif(obs(1:11).eq."DIS_F2C_CCP")then
-         FKObservables = F2charm(x)         
+         FKObservables = F2total(x)         
 *
 ****  Light structure function FLlight
 *
