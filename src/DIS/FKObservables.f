@@ -235,12 +235,7 @@
 ****  F3 structure function
 *
       elseif(obs(1:10).eq."DIS_F3P_NC")then
-         FKObservables = F3total(x)
-*
-****  Charm structure function F3charm
-*
-      elseif(obs(1:7).eq."DIS_F3C")then
-         FKObservables = F3charm(x)           
+         FKObservables = F3total(x)           
 *
 ****  Electron scattering Reduced Cross-Section (light)
 *

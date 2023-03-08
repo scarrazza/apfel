@@ -220,12 +220,7 @@
 ****  F3 structure function
 *
       elseif(obs(1:10).eq."DIS_F3P_NC")then
-         FKSimulator = ExternalDISOperator("F3",7,i,x,beta)
-*
-****  Charm structure function F3charm
-*
-      elseif(obs(1:7).eq."DIS_F3C")then
-         FKSimulator = ExternalDISOperator("F3",4,i,x,beta)         
+         FKSimulator = ExternalDISOperator("F3",7,i,x,beta)        
 *
 ****  Electron scattering Reduced Cross-Section (light)
 *

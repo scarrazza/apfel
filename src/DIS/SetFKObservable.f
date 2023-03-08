@@ -178,14 +178,7 @@
       elseif(obs(1:10).eq."DIS_F3P_NC")then
          call SetProcessDIS("NC")
          call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")
-*
-****  Charm structure function F3charm
-*
-      elseif(obs(1:7).eq."DIS_F3C")then
-         call SetProcessDIS("NC")
-         call SetProjectileDIS("electron")
-         call SetTargetDIS("proton")          
+         call SetTargetDIS("proton")         
 *
 ****  Electron scattering Reduced Cross-Section (light)
 *
