@@ -141,6 +141,16 @@
       elseif(obs(1:7).eq."DIS_F2S")then
          FKSimulator = ExternalDISOperator("F2",3,i,x,beta)
 *
+****  Proton structure function F2 (charm, CC, W-)
+*
+      elseif(obs(1:11).eq."DIS_F2C_CCE")then
+         FKSimulator = ExternalDISOperator("F2",4,i,x,beta)
+*
+****  Proton structure function F2 (charm, CC, W+)
+*
+      elseif(obs(1:11).eq."DIS_F2C_CCP")then
+         FKSimulator = ExternalDISOperator("F2",4,i,x,beta)         
+*
 ****  Charm structure function F2charm
 *
       elseif(obs(1:7).eq."DIS_F2C")then
@@ -210,7 +220,7 @@
 ****  F3 structure function
 *
       elseif(obs(1:10).eq."DIS_F3P_NC")then
-         FKSimulator = ExternalDISOperator("F3",7,i,x,beta)
+         FKSimulator = ExternalDISOperator("F3",7,i,x,beta)        
 *
 ****  Electron scattering Reduced Cross-Section (light)
 *
