@@ -11,7 +11,7 @@ a Python program.
 
 ## Extension definition
 import os
-wrapsrc = '@srcdir@/apfel_wrap.cc'
+wrapsrc = '@srcdir@/apfelPYTHON_wrap.cxx'
 incdir_src = os.path.abspath('@top_srcdir@/include')
 incdir_build = os.path.abspath('@top_builddir@/include')
 libdir = os.path.abspath('@top_builddir@/lib')
@@ -29,7 +29,7 @@ if status == 0:
     ext = Extension('_apfel',
                 [wrapsrc],
                 include_dirs=[incdir_src, incdir_build],
-                library_dirs=[libdir, os.path.join(libdir,'.libs'), lhapdfdir.replace('\n','')],
+                library_dirs=[libdir,libdir+"64", os.path.join(libdir,'.libs'), lhapdfdir.replace('\n','')],
                 extra_compile_args = cxxargs,
                 extra_link_args = ldargs,
                 libraries=['APFEL','LHAPDF'])
