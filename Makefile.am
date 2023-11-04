@@ -1,6 +1,9 @@
 ACLOCAL_AMFLAGS = -I m4
 
-SUBDIRS = include ccwrap src lib examples pywrap doc bin
+SUBDIRS = include ccwrap src lib examples  doc bin
+if ENABLE_PYWRAP
+SUBDIRS += pywrap
+endif
 dist_doc_DATA = README
 dist_pkgdata_DATA = src/HELL/data/*
 
