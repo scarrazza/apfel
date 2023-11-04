@@ -5,6 +5,7 @@ foreach(testsource ${testcodes})
   GET_FILENAME_COMPONENT(filename ${testsource} NAME_WE)
   add_executable(${filename} ${testsource})
   target_link_libraries(${filename} APFEL)
+  #Different tests require different arguments.
   if (${filename} STREQUAL "Timing" )
     add_test(NAME ${filename}  COMMAND sh -c "${CMAKE_CURRENT_BINARY_DIR}/${filename} 2 QCD" )
   elseif (${filename} STREQUAL "TabulationStep" )
@@ -16,7 +17,8 @@ foreach(testsource ${testcodes})
   endif()
 endforeach()
 
-
+# This will download the needed PDFS, unpack them into a build directory and makes the LHAPDF to use those PDFS.
+# This approach is important when user cannot or does not want to install the PDFs in the standard location.
 if (APFEL_DOWNLOAD_PDFS AND APFEL_ENABLE_LHAPDF)
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PDFS)
   file(DOWNLOAD https://lhapdfsets.web.cern.ch/current/NNPDF23_nlo_as_0118.tar.gz ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF23_nlo_as_0118.tar.gz)

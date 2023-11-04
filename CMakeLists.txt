@@ -10,7 +10,6 @@ cmake_policy(SET CMP0078 OLD)
 project(apfel LANGUAGES CXX Fortran)
 set(apfel_VERSION 3.0.7)
 set(CMAKE_VERBOSE_MAKEFILE OFF)
-#This module respects HFS, e.g. defines lib or lib64 when it is needed.
 include("GNUInstallDirs")
 
 option(APFEL_ENABLE_PYTHON      "Enables building of python bindings" ON)
@@ -26,6 +25,13 @@ add_compile_options("$<$<COMPILE_LANG_AND_ID:CXX,GNU>:-Wno-unused-parameter>")
 if (NOT DEFINED CMAKE_MACOSX_RPATH)
    set(CMAKE_MACOSX_RPATH 0)
 endif()
+
+message(STATUS "APFEL: CMAKE_CXX_COMPILER_ID=${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "APFEL: CMAKE_Fortran_COMPILER_ID=${CMAKE_Fortran_COMPILER_ID}")
+message(STATUS "APFEL: APFEL_ENABLE_PYTHON=${APFEL_ENABLE_PYTHON}")
+message(STATUS "APFEL: APFEL_ENABLE_TESTS=${APFEL_ENABLE_TESTS}")
+message(STATUS "APFEL: APFEL_ENABLE_LHAPDF=${APFEL_ENABLE_LHAPDF}")
+message(STATUS "APFEL: APFEL_DOWNLOAD_PDFS=${APFEL_DOWNLOAD_PDFS}")
 
 # CONFIG SCRIPT =========================================================================
 
@@ -45,7 +51,10 @@ configure_file("${PROJECT_SOURCE_DIR}/include/APFEL/FortranWrappers.h.cmake" "${
 
 # LHAPDF
 if (APFEL_ENABLE_LHAPDF)
-find_program(LHAPDF_CONFIG lhapdf-config)
+  find_program(LHAPDF_CONFIG lhapdf-config)
+  if (LHAPDF_CONFIG)
+    message(STATUS "APFEL: lhapdf-config found in  ${LHAPDF_CONFIG}.")
+  endif()
 endif()
 if (LHAPDF_CONFIG AND APFEL_ENABLE_LHAPDF)
   exec_program(${LHAPDF_CONFIG}
