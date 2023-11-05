@@ -85,7 +85,6 @@ AM_CONDITIONAL(ENABLE_LHAPDF, [test x$enable_lhapdf == xyes])
 AC_ARG_ENABLE(pywrap, [AS_HELP_STRING([--disable-pywrap],[don't build Python module (default=build)])],
   [], [enable_pywrap=yes])   
 
-enable_pywrap=yes
 AZ_PYTHON_DEFAULT
 ## Basic Python checks
 if test x$enable_pywrap == xyes; then
