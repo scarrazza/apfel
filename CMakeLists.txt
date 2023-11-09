@@ -212,6 +212,7 @@ set_target_properties(APFEL PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
     RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
     SOVERSION 0.0.0
+    EXPORT_NAME APFEL::APFEL
     )
 add_library(APFEL::APFEL ALIAS APFEL)
 
@@ -224,11 +225,12 @@ set_target_properties(APFELevol PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
     RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
     SOVERSION 0.0.0
+    EXPORT_NAME APFEL::APFELevol
     )
 add_library(APFEL::APFELevol ALIAS APFELevol)
 
 # Static libraries  ####################################################
-add_library(APFELstatic STATIC ${libAPFELCCWrapObs_la_SOURCES} ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELCore_la_SOURCES})
+add_library(APFEL_static STATIC ${libAPFELCCWrapObs_la_SOURCES} ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELCore_la_SOURCES})
 target_include_directories(APFEL_static PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 target_link_libraries(APFEL_static ${LHAPDF_LIBRARIES})
 target_compile_features(APFEL_static PRIVATE cxx_std_11)
@@ -237,17 +239,19 @@ set_target_properties(APFEL_static PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
     RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
     OUTPUT_NAME APFEL
+    EXPORT_NAME APFEL::APFEL_static
     )
 
-add_library(APFELevolstatic STATIC ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELEvol_la_SOURCES})
+add_library(APFELevol_static STATIC ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELEvol_la_SOURCES})
 target_include_directories(APFELevol_static PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
 target_link_libraries(APFELevol_static ${LHAPDF_LIBRARIES})
 target_compile_features(APFELevol_static PRIVATE cxx_std_11)
-set_target_properties(APFELevolstatic PROPERTIES 
+set_target_properties(APFELevol_static PROPERTIES 
     ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
     LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
     RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
     OUTPUT_NAME APFELevol
+    EXPORT_NAME APFEL::APFELevol_static
     )
 
 
