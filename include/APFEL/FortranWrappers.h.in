@@ -1,5 +1,5 @@
-#ifndef LHAPDF_FORTRANWRAPPERS_H
-#define LHAPDF_FORTRANWRAPPERS_H
+#ifndef APFEL_FORTRANWRAPPERS_H
+#define APFEL_FORTRANWRAPPERS_H
 
 /* Define to dummy `main' function (if any) required to link to the Fortran
    libraries. */
