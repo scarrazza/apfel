@@ -1,0 +1,8 @@
+name: 'Compile APFEL'
+description: 'APFEL'
+outputs:
+  fineapfel:
+    description: 'If the tests are fine'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

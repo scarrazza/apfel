@@ -1,0 +1,30 @@
+name: build
+on:
+ push:
+ pull_request:
+ schedule:
+#Every 50 days at midnight 
+    - cron:  "0 0 1/600 * *"
+
+jobs:
+  compilejobFedora:
+    runs-on: ubuntu-latest
+    name: APFEL_on_Fedora
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Compile
+      id: compileindocker
+      uses: ./.github/workflows/fedora
+    - name: Get the output status
+      run: exit ${{ steps.compileindocker.outputs.fineapfel }}
+
+  compilejobOSX:
+    runs-on: macos-latest
+    name: APFEL_on_OSX
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Compile
+      id: compile
+      run: ./.github/workflows/osx/entrypoint.sh
