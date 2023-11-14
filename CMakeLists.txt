@@ -70,10 +70,10 @@ FILE(WRITE   "${PROJECT_BINARY_DIR}/include/APFEL/FortranWrappers.h"
 #define APFEL_FORTRANWRAPPERS_H\n\
 \n\
 /* Mangling for Fortran global symbols without underscores. */\n\
-#define FC_FUNCTION(name,NAME) ${FortranCInterface_GLOBAL_PREFIX}${N}##${FortranCInterface_GLOBAL_SUFFIX} \n\
+#define FC_FUNC(name,NAME) ${FortranCInterface_GLOBAL_PREFIX}${N}##${FortranCInterface_GLOBAL_SUFFIX} \n\
 \n\
 /* Mangling for Fortran global symbols with underscores. */\n\
-#define FC_FUNCTION_(name,NAME) ${FortranCInterface_GLOBAL__PREFIX}${N_}##${FortranCInterface_GLOBAL__SUFFIX} \n\
+#define FC_FUNC_(name,NAME) ${FortranCInterface_GLOBAL__PREFIX}${N_}##${FortranCInterface_GLOBAL__SUFFIX} \n\
 #endif\n")
 
 # LHAPDF ===============================================================
