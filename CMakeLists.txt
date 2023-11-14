@@ -94,6 +94,12 @@ if (LHAPDF_CONFIG AND APFEL_ENABLE_LHAPDF)
     OUTPUT_VARIABLE LHAPDF_LIBRARIES
   )
   set(LHAPDF_LIBRARIES ${LHAPDF_LIBRARIES} CACHE STRING INTERNAL)
+
+  exec_program(${LHAPDF_CONFIG}
+    ARGS --incdir
+    OUTPUT_VARIABLE LHAPDF_INCLUDE_DIRS
+  )
+  set(LHAPDF_INCLUDE_DIRS ${LHAPDF_INCLUDE_DIRS} CACHE STRING INTERNAL)
 else()
   add_compile_definitions(NOLHAPDF)
   message("LHAPDF is disabled of not found!")
@@ -204,7 +210,7 @@ endif()
 
 # Shared libraries  ####################################################
 add_library(APFEL SHARED ${libAPFELCCWrapObs_la_SOURCES} ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELCore_la_SOURCES})
-target_include_directories(APFEL PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_include_directories(APFEL PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>  ${LHAPDF_INCLUDE_DIRS})
 target_link_libraries(APFEL ${LHAPDF_LIBRARIES})
 target_compile_features(APFEL PRIVATE cxx_std_11)
 set_target_properties(APFEL PROPERTIES 
@@ -217,7 +223,7 @@ set_target_properties(APFEL PROPERTIES
 add_library(APFEL::APFEL ALIAS APFEL)
 
 add_library(APFELevol SHARED ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELEvol_la_SOURCES})
-target_include_directories(APFELevol PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_include_directories(APFELevol PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>  ${LHAPDF_INCLUDE_DIRS})
 target_link_libraries(APFELevol ${LHAPDF_LIBRARIES})
 target_compile_features(APFELevol PRIVATE cxx_std_11)
 set_target_properties(APFELevol PROPERTIES 
@@ -231,7 +237,7 @@ add_library(APFEL::APFELevol ALIAS APFELevol)
 
 # Static libraries  ####################################################
 add_library(APFEL_static STATIC ${libAPFELCCWrapObs_la_SOURCES} ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELCore_la_SOURCES})
-target_include_directories(APFEL_static PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_include_directories(APFEL_static PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>  ${LHAPDF_INCLUDE_DIRS})
 target_link_libraries(APFEL_static ${LHAPDF_LIBRARIES})
 target_compile_features(APFEL_static PRIVATE cxx_std_11)
 set_target_properties(APFEL_static PROPERTIES 
@@ -243,7 +249,7 @@ set_target_properties(APFEL_static PROPERTIES
     )
 
 add_library(APFELevol_static STATIC ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELEvol_la_SOURCES})
-target_include_directories(APFELevol_static PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>)
+target_include_directories(APFELevol_static PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>  ${LHAPDF_INCLUDE_DIRS})
 target_link_libraries(APFELevol_static ${LHAPDF_LIBRARIES})
 target_compile_features(APFELevol_static PRIVATE cxx_std_11)
 set_target_properties(APFELevol_static PROPERTIES 
