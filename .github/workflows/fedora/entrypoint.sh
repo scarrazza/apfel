@@ -2,7 +2,7 @@
 set -x
 uname -a 
 cat /etc/issue
-yum -y install  gcc gcc-c++ gcc-gfortran make wget which cmake cmake-data cmake-filesystem lhapdf lhapdf-devel
+yum -y install  gcc gcc-c++ gcc-gfortran make wget which cmake cmake-data cmake-filesystem lhapdf lhapdf-devel swig python-devel
 out=0
 cmake -S . -B BUILD -DCMAKE_INSTALL_PREFIX=$(pwd)/../INSTALL || out=1
 cmake --build BUILD -j 2 || out=1
