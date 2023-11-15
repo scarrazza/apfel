@@ -213,6 +213,8 @@ endif()
 add_library(APFEL SHARED ${libAPFELCCWrapObs_la_SOURCES} ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELCore_la_SOURCES})
 target_include_directories(APFEL PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>  ${LHAPDF_INCLUDE_DIRS})
 target_link_libraries(APFEL ${LHAPDF_LIBRARIES})
+target_link_options(APFEL PRIVATE "LINKER:-z,defs")
+target_link_options(APFEL PRIVATE "LINKER:-z,now")
 target_compile_features(APFEL PRIVATE cxx_std_11)
 set_target_properties(APFEL PROPERTIES 
     ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
@@ -223,9 +225,11 @@ set_target_properties(APFEL PROPERTIES
     )
 add_library(APFEL::APFEL ALIAS APFEL)
 
-add_library(APFELevol SHARED ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELEvol_la_SOURCES})
+add_library(APFELevol SHARED ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELevol_la_SOURCES})
 target_include_directories(APFELevol PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>  ${LHAPDF_INCLUDE_DIRS})
-target_link_libraries(APFELevol ${LHAPDF_LIBRARIES})
+target_link_libraries(APFELevol ${LHAPDF_LIBRARIES} APFEL)
+target_link_options(APFELevol PRIVATE "LINKER:-z,defs")
+target_link_options(APFELevol PRIVATE "LINKER:-z,now")
 target_compile_features(APFELevol PRIVATE cxx_std_11)
 set_target_properties(APFELevol PROPERTIES 
     ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}/$<0:>
@@ -249,7 +253,7 @@ set_target_properties(APFEL_static PROPERTIES
     EXPORT_NAME APFEL::APFEL_static
     )
 
-add_library(APFELevol_static STATIC ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELEvol_la_SOURCES})
+add_library(APFELevol_static STATIC ${libAPFELCCWrapEvol_la_SOURCES} ${libAPFELevol_la_SOURCES})
 target_include_directories(APFELevol_static PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include> $<INSTALL_INTERFACE:include>  ${LHAPDF_INCLUDE_DIRS})
 target_link_libraries(APFELevol_static ${LHAPDF_LIBRARIES})
 target_compile_features(APFELevol_static PRIVATE cxx_std_11)
