@@ -25,7 +25,7 @@ jobs:
     - name: Compile
       run: |
           cmake -S . -B BUILD -DCMAKE_INSTALL_PREFIX=$(pwd)/../INSTALL
-          cmake --build BUILD -j 2
+          cmake --build BUILD -j
           cmake --install BUILD
           ctest --test-dir BUILD -j 2
 
