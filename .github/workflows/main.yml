@@ -8,16 +8,25 @@ on:
 
 jobs:
   compilejobFedora:
-    runs-on: ubuntu-latest
     name: APFEL_on_Fedora
+    runs-on: ubuntu-latest
+    container:
+        image: fedora:latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Install 
+      run: |
+           uname -a 
+           cat /etc/issue
+           yum -y install  gcc gcc-c++ gcc-gfortran make wget which cmake cmake-data cmake-filesystem lhapdf lhapdf-devel swig python-devel
     - name: Compile
-      id: compileindocker
-      uses: ./.github/workflows/fedora
-    - name: Get the output status
-      run: exit ${{ steps.compileindocker.outputs.out }}
+      run: |
+          cmake -S . -B BUILD -DCMAKE_INSTALL_PREFIX=$(pwd)/../INSTALL
+          cmake --build BUILD -j 2
+          cmake --install BUILD
+          ctest --test-dir BUILD -j 2
+
 
   compilejobOSX:
     runs-on: macos-latest
@@ -25,6 +34,14 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Install 
+      run: |
+          brew install wget coreutils gcc swig
+          brew tap davidchall/hep
+          brew install lhapdf
     - name: Compile
-      id: compile
-      run: ./.github/workflows/osx/entrypoint.sh
+      run: |
+          cmake -S . -B BUILD -DCMAKE_INSTALL_PREFIX=$(pwd)/../INSTALL -DCMAKE_Fortran_COMPILER=gfortran-13
+          cmake --build BUILD -j 2
+          cmake --install BUILD
+          ctest --test-dir BUILD -j 2
