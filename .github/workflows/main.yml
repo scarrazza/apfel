@@ -15,12 +15,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 3
     - name: Install 
       run: |
-           uname -a 
-           cat /etc/issue
            yum -y install  gcc gcc-c++ gcc-gfortran make wget which cmake cmake-data cmake-filesystem lhapdf lhapdf-devel swig python-devel
     - name: Compile
       run: |
@@ -36,8 +32,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-      with:
-        fetch-depth: 3
     - name: Install 
       run: |
           brew install wget coreutils gcc swig
