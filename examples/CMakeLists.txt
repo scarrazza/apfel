@@ -21,20 +21,20 @@ endforeach()
 # This approach is important when user cannot or does not want to install the PDFs in the standard location.
 if (APFEL_DOWNLOAD_PDFS AND APFEL_ENABLE_LHAPDF)
   file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PDFS)
-  file(DOWNLOAD https://lhapdfsets.web.cern.ch/current/NNPDF23_nlo_as_0118.tar.gz ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF23_nlo_as_0118.tar.gz)
-  file(DOWNLOAD https://lhapdfsets.web.cern.ch/current/NNPDF31_nnlo_as_0118.tar.gz ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF31_nnlo_as_0118.tar.gz)
-  add_custom_target( UNZIPPDFS ALL)
-  add_custom_command(TARGET UNZIPPDFS PRE_BUILD 
-         COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF23_nlo_as_0118
-         COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF31_nnlo_as_0118
-         COMMAND ${CMAKE_COMMAND} -E tar xzf ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF23_nlo_as_0118.tar.gz
-         COMMAND ${CMAKE_COMMAND} -E tar xzf ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF31_nnlo_as_0118.tar.gz
-         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/PDFS
-         DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF23_nlo_as_0118.tar.gz ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF31_nnlo_as_0118.tar.gz
-         COMMENT "Unpacking PDFs"
-         VERBATIM)
+  include(FetchContent)
+  FetchContent_Declare(NNPDF23_nlo_as_0118 URL https://lhapdfsets.web.cern.ch/current/NNPDF23_nlo_as_0118.tar.gz URL_HASH   MD5=139d93c4ed265d227294d8f8c72d6ef8)
+  FetchContent_GetProperties(NNPDF23_nlo_as_0118)
+  if (NOT NNPDF23_nlo_as_0118_nnlo_POPULATED)
+    FetchContent_Populate(NNPDF23_nlo_as_0118)
+    file(CREATE_LINK ${nnpdf23_nlo_as_0118_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF23_nlo_as_0118 SYMBOLIC)
+  endif()
+  FetchContent_Declare(NNPDF31_nnlo_as_0118 URL https://lhapdfsets.web.cern.ch/current/NNPDF31_nnlo_as_0118.tar.gz URL_HASH   MD5=4300488b31cd7995c1d375ed477b238e)
+  FetchContent_GetProperties(NNPDF31_nnlo_as_0118)
+  if (NOT NNPDF31_nnlo_as_0118_nnlo_POPULATED)
+    FetchContent_Populate(NNPDF31_nnlo_as_0118)
+    file(CREATE_LINK ${nnpdf31_nnlo_as_0118_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/PDFS/NNPDF31_nnlo_as_0118 SYMBOLIC)
+  endif()       
   foreach( t LHgridDerivativeProduction LHgridProduction LHgridDerivativeProductionCxx)
-    set_tests_properties( ${t} PROPERTIES ENVIRONMENT "LHAPDF_DATA_PATH=${CMAKE_CURRENT_BINARY_DIR}/PDFS" DEPENDS UNZIPPDFS)
+    set_tests_properties( ${t} PROPERTIES ENVIRONMENT "LHAPDF_DATA_PATH=${CMAKE_CURRENT_BINARY_DIR}/PDFS")
   endforeach()
-
 endif()
