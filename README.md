@@ -86,7 +86,7 @@ Remember to export the location of the libraries into the `LD_LIBRARY_PATH` or `
 
 The extra flags might be:
 - generic CMake flags, e.g. `-DCMAKE_INSTALL_PREFIX=/my/home/dir`, `-DCMAKE_Fortran_COMPILER=ifort`, `-DCMAKE_Fortran_FLAGS="-O2 -g"`, etc.
-- flags pointing to the dependencies, `-DLHAPDF_DIR=/where/the/LHAPDF/is`
+- flags pointing to the dependencies, `-DPython_DIR=/where/the/derised/python/is`
 - flags that steer the compilation. In the current version there are the following flags: 
    - `-DAPFEL_ENABLE_PYTHON=ON|OFF`, default=`ON`    Enables building of python bindings. Requires `SWIG` and Python headers if enabled. Tested only with CPython.
    - `-DAPFEL_ENABLE_TESTS=ON|OFF`, default=`ON`     Enables testing
