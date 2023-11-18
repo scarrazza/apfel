@@ -36,7 +36,15 @@ git checkout tags/tag_name
 ```
 
 ## Installation 
-
+### Dependencies
+ - Fortran and C++ compillers.
+ - (Optional) `make` for installation with `autotools`
+ - (Optional) `CMake` (https://cmake.org/) > 3.16 for installation with `CMake` and any build system -- `make`, `ninja`, etc.
+ - (Optional) `LHAPDF` library, for support PDFs in of Les Hauches format.
+ - (Optional) `CPython` headers and `SWIG`, for compilation of Python bindings.
+ - (Optional) Internet connection if the installation of PDFs was requested.
+ 
+### Compilation with autotools
 Checkout the code and compile the code using the
 following procedure:
 
@@ -48,14 +56,59 @@ make && make install
 
 By the default, if prefix is not set, the program is installed in
 /usr/local. If you define a different prefix, remember to export
-it into the LD_LIBRARY_PATH.
+it into the `LD_LIBRARY_PATH` or `DYLD_LIBRARY_PATH`.
 
-## Known issues
+#### Known issues
 
 If you observe memory issues while running APFEL on specific machines you can move the memory allocation to heap by adding the `-fno-automatic` flag:
 ```bash
 export FFLAGS=$(echo $FFLAGS | sed 's/-fopenmp/-fno-automatic/g')
 ./configure --prefix=$PREFIX 
+```
+
+### Compilation with CMake
+Checkout the code and compile the code using the
+following procedure:
+
+```Shell
+cd apfel
+cmake -S . -B BUILD  <extra flags>
+cmake --build BUILD
+cmake --install BUILD
+```
+and optionally, if the testing was enabled
+
+```Shell
+ctest --test-dir BUILD
+```
+
+Remember to export the location of the libraries into the `LD_LIBRARY_PATH` or `DYLD_LIBRARY_PATH`.
+
+The extra flags might be:
+- generic CMake flags, e.g. `-DCMAKE_INSTALL_PREFIX=/my/home/dir`, `-DCMAKE_Fortran_COMPILER=ifort`, `-DCMAKE_Fortran_FLAGS="-O2 -g"`, etc.
+- flags pointing to the dependencies, `-DLHAPDF_DIR=/where/the/LHAPDF/is`
+- flags that steer the compilation. In the current version there are the following flags: 
+   - `-DAPFEL_ENABLE_PYTHON=ON|OFF`, default=`ON`    Enables building of python bindings. Requires `SWIG` and Python headers if enabled. Tested only with CPython.
+   - `-DAPFEL_ENABLE_TESTS=ON|OFF`, default=`ON`     Enables testing
+   - `-DAPFEL_ENABLE_LHAPDF=ON|OFF`, default=`ON`    Enables compilation with `LHAPDF`. Requires `LHAPDF` if enabled.
+   - `-DAPFEL_DOWNLOAD_PDFS=ON|OFF`, default=`ON`    Download LHAPDF sets for tests. Makes sense only when the testing is enabled. Requires internet connection if enabled.
+   - `-DAPFEL_Python_SITEARCH=/path/to/install/python/modules|autoprefix`, default is the python system location. If "autoprefix" is used, the modules will be installed inside 
+    `CMAKE_INSTALL_PREFIX`. Makes sense only when the building of python bindings is enabled.
+The `CMake` installation also provides the `CMake` config files for APFEL, therefore it if possible to
+do in the `CMakeLists.txt` of the dependant projects:
+
+```Shell
+find_package(apfel)
+....
+target_link_libraries(mytarget PRIVATE APFEL::APFEL APFEL::APFELevol)
+
+```
+
+#### Known issues
+It is recommended to avoid using the source directory for the builds, i.e.
+```Shell
+cmake -S . -B . # do not do this
+cmake -S . # do not do this
 ```
 
 ## References
