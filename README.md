@@ -91,7 +91,7 @@ The extra flags might be:
    - `-DAPFEL_ENABLE_PYTHON=ON|OFF`, default=`ON`    Enables building of python bindings. Requires `SWIG` and Python headers if enabled. Tested only with CPython.
    - `-DAPFEL_ENABLE_TESTS=ON|OFF`, default=`ON`     Enables testing
    - `-DAPFEL_ENABLE_LHAPDF=ON|OFF`, default=`ON`    Enables compilation with `LHAPDF`. Requires `LHAPDF` if enabled.
-   - `-DAPFEL_DOWNLOAD_PDFS=ON|OFF`, default=`ON`    Download LHAPDF sets for tests. Makes sense only when the testing is enabled. Requires internet connection if enabled.
+   - `-DAPFEL_DOWNLOAD_PDFS=ON|OFF`, default=`ON`    Download LHAPDF sets for tests. Makes sense only when the testing and compilation with LHAPDF are enabled. Requires internet connection if enabled.
    - `-DAPFEL_Python_SITEARCH=/path/to/install/python/modules|autoprefix`, default is the python system location. If "autoprefix" is used, the modules will be installed inside 
     `CMAKE_INSTALL_PREFIX`. Makes sense only when the building of python bindings is enabled. Do not forget to add the location of modules to the `PYTHONPATH`.
 The `CMake` installation also provides the `CMake` config files for APFEL, therefore it if possible to
