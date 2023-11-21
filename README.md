@@ -1,5 +1,3 @@
-[![Circle CI](https://circleci.com/gh/scarrazza/apfel/tree/master.svg?style=svg)](https://circleci.com/gh/scarrazza/apfel/tree/master)
-
 ![alt text](https://github.com/scarrazza/apfel/raw/master/resources/logoapfel.png "Logo APFEL")
 
 # APFEL: A PDF Evolution Library
