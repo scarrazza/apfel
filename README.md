@@ -38,13 +38,12 @@ git checkout tags/tag_name
 ### Dependencies
 
 - Fortran and C++ compillers.
-- (Optional) `make` for installation with `autotools`
 - (Optional) `CMake` (https://cmake.org/) > 3.16 for installation with `CMake` and any build system -- `make`, `ninja`, etc.
 - (Optional) `LHAPDF` library, for support PDFs in of Les Houches format.
 - (Optional) `CPython` headers and `SWIG`, for compilation of Python bindings.
 - (Optional) Internet connection if the installation of PDFs was requested.
 
-### Compilation with CMake
+### From source
 
 Checkout the code and compile the code by using the
 following procedure:
