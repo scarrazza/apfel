@@ -23,7 +23,7 @@ jobs:
           cmake -S . -B BUILD -DCMAKE_INSTALL_PREFIX=$(pwd)/../INSTALL
           cmake --build BUILD -j
           cmake --install BUILD
-          ctest --test-dir BUILD -j 2
+          ctest --output-on-failure --test-dir BUILD -j 2
 
 
   compilejobOSX:
@@ -42,4 +42,4 @@ jobs:
           cmake -S . -B BUILD -DCMAKE_INSTALL_PREFIX=$(pwd)/../INSTALL -DCMAKE_Fortran_COMPILER=gfortran-13
           cmake --build BUILD -j 2
           cmake --install BUILD
-          ctest --test-dir BUILD -j 2
+          ctest --output-on-failure --test-dir BUILD -j 2
