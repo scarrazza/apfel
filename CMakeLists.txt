@@ -43,8 +43,7 @@ message(STATUS "APFEL: APFEL_ENABLE_LHAPDF=${APFEL_ENABLE_LHAPDF}")
 message(STATUS "APFEL: APFEL_DOWNLOAD_PDFS=${APFEL_DOWNLOAD_PDFS}")
 
 # CONFIG SCRIPT ========================================================
-set(prefix ${CMAKE_INSTALL_PREFIX})
-set(exec_prefix "${prefix}")
+set(prefix "${CMAKE_INSTALL_PREFIX}")
 set(includedir "${CMAKE_INSTALL_FULL_INCLUDEDIR}")
 set(libdir "${CMAKE_INSTALL_FULL_LIBDIR}")
 set(PACKAGE_VERSION "${apfel_VERSION}")
